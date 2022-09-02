@@ -72,7 +72,7 @@
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d일 %2$d시간 남음</item>
     </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
@@ -158,7 +158,7 @@
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="empty_deck">이 뭉치는 비어있습니다.</string>
     <string name="search_deck" comment="Deck search for selecting it">뭉치 검색</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">뭉치 검색</string>
     <string name="empty_deck_add_note">카드 추가</string>
     <string name="invalid_deck_name">유효하지 않은 뭉치 이름입니다</string>
     <string name="studyoptions_empty">이 카드 묶음은 비어있습니다. + 버튼을 눌러 새 컨텐츠를 추가하세요.</string>

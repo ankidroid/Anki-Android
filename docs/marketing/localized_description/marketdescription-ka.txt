@@ -25,12 +25,12 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • ბარათების საძიებელი
 • პლანშეტის განლაგება
 • არსებული კოლექციების იმპორტირება (Anki Desktop-ის მეშვეობით)
-• add cards by intent from other applications like dictionaries
-• custom font support
+• ბარათების დამატება სხვა აპლიკაციებიდან (მაგ. ლექსიკონებიდან)
+• სხვა შრიფტების მხარდაჭერა
 • დახვეწილი სარეზერვო სისტემა
 • ნავიგაცია ჟესტებით
 • მორგებადი
 • დინამიკური დასტები
 • ღამის რეჟიმი
 • თარგმნილია 27 ენაზე
-• All previous AnkiDroid versions can be downloaded from the website
+• AnkiDroid-ის ყველა წინა ვერსია შეგიძლიათ საიტიდან ჩამოტვირთოთ

@@ -24,7 +24,7 @@ package com.ichi2.libanki
 
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.av_tags_to_native
 import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.model.to_backend_note
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.JSONObject
@@ -114,7 +114,7 @@ class TemplateManager {
         note: Note,
         browser: bool = false,
         notetype: NoteType? = null,
-        template: Dict<str, str>? = null,
+        template: JSONObject? = null,
         fill_empty: bool = false
     ) {
 
@@ -124,7 +124,7 @@ class TemplateManager {
         internal var _card: Card = card
         internal var _note: Note = note
         internal var _browser: bool = browser
-        internal var _template: Dict<str, str>? = template
+        internal var _template: JSONObject? = template
         internal var _fill_empty: bool = fill_empty
         private var _fields: Dict<str, str>? = null
         internal var _note_type: NoteType = notetype ?: note.model()
@@ -144,7 +144,7 @@ class TemplateManager {
                 note: Note,
                 card: Card,
                 notetype: NoteType,
-                template: Dict<str, str>,
+                template: JSONObject,
                 fill_empty: bool,
             ): TemplateRenderContext {
                 return TemplateRenderContext(
@@ -170,9 +170,9 @@ class TemplateManager {
                 fields["Tags"] = _note.stringTags().trim()
                 fields["Type"] = _note_type.name
                 fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
-                fields["Subdeck"] = Decks.basename(fields["Deck"])
+                fields["Subdeck"] = Decks.basename(fields["Deck"]!!)
                 if (_template != null) {
-                    fields["Card"] = _template!!["name"]
+                    fields["Card"] = _template!!["name"] as String
                 } else {
                     fields["Card"] = ""
                 }
@@ -244,9 +244,9 @@ class TemplateManager {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(
-                        _note.to_backend_note(),
+                        _note.toBackendNote(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template!!.toMap())),
+                        BackendUtils.to_json_bytes(JSONObject(_template!!)),
                         _fill_empty,
                     )
                 } else {

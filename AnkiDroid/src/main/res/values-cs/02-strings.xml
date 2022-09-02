@@ -188,7 +188,7 @@
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
     <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
     <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
     <string name="import_stats_error">Došlo k chybám při importu následujících souborů:\n%s</string>
@@ -312,34 +312,7 @@
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
     <string name="title_whiteboard_pen_color">Barva pera tabule</string>
     <string name="title_whiteboard_editor">Editor tabule</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Nalezeny prázdné karty. Spusťte prosím Nástroje>Prázdné karty.]]></string>
-    <string name="note_importer_error_empty_first_field">Prázdné první pole: %s</string>
-    <string name="note_importer_error_first_field_matched">První pole se shoduje: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Přidána duplicita s prvním polem: %s</string>
-    <string name="note_importer_error_appeared_twice">Objevilo se dvakrát v souboru: %s</string>
-    <string name="note_importer_error_empty_notes">Jedna nebo více poznámek nebyla importována, protože nevytvořila žádné karty. To se může stát, pokud máte prázdná pole nebo pokud jste nepřiřadili obsah textového souboru ke správným polím</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ měl %2$d polí, očekáváno %3$d</string>
-    <string name="csv_importer_error_exception">Přerušeno: %s</string>
     <string name="user_is_a_robot">Zjištěn automatizovaný test. Pokud jste člověk, kontaktujte podporu AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d poznámka přidána</item>
-        <item quantity="few">%d poznámky přidány</item>
-        <item quantity="many">%d poznámky přidáno</item>
-        <item quantity="other">%d poznámek přidáno</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d poznámka aktualizována</item>
-        <item quantity="few">%d poznámky aktualizovány</item>
-        <item quantity="many">%d poznámky aktualizováno</item>
-        <item quantity="other">%d poznámek aktualizováno</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d poznámka nezměněna</item>
-        <item quantity="few">%d poznámky nezměněny</item>
-        <item quantity="many">%d poznámky nezměněno</item>
-        <item quantity="other">%d poznámek nezměněno</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Tato karta používá nepodporované funkce AnkiDroid. Kontaktujte vývojáře %1$s nebo si prohlédněte wiki. %2$s</string>
     <string name="invalid_json_data">Karta poskytla neplatná data. %s</string>
@@ -405,10 +378,6 @@
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
     <string name="search_using_deck_name">Hledat pomocí názvu balíčku</string>
     <string name="home">Domů</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Přiřazeno k %s</string>
-    <string name="import_mapped_to_tags">Přiřazeno ke štítkům</string>
-    <string name="import_mapped_to_nothing">Ignorováno</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Karta přeskočena</string>
     <string name="buried_note">Poznámka přeskočena</string>
@@ -441,4 +410,15 @@
     <string name="expand_tag">Rozbalit štítek „%s“</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Studujte méně</string>
+    <string name="intro_ankidroid_tagline_two">Pamatujte si více</string>
+    <string name="intro_short_ankidroid_explanation">Plánovač karet Anki šetří čas posílením vašich nejslabších vzpomínek a zachováním těch nejsilnějších</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Začínáme</string>
+    <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
+    <string name="already_logged_in">Již jste přihlášeni</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

@@ -312,34 +312,7 @@
     <string name="white_board_image_saved">Obrázok tabule sa uložil do %s</string>
     <string name="title_whiteboard_pen_color">Farba pera pre tabuľu</string>
     <string name="title_whiteboard_editor">Editor tabule</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Našli sa prázdne kartičky. Spustite, prosím, Nástroje>Vyprázdniť kartičky.]]></string>
-    <string name="note_importer_error_empty_first_field">Prázdne prvé pole: %s</string>
-    <string name="note_importer_error_first_field_matched">Prvé pole zhodné: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Pridaný duplikát s prvým poľom: %s</string>
-    <string name="note_importer_error_appeared_twice">Vyskytujúce sa v súbore dvakrát: %s</string>
-    <string name="note_importer_error_empty_notes">Jedna alebo viac poznámok neboli naimportované, pretože nevygenerovali žiadne kartičky. Toto môže nastať, keď máte prázdne polia alebo keď ste nenamapovali obsah v textovom súbore do správnych polí.</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ malo %2$d polí, očakávalo sa %3$d</string>
-    <string name="csv_importer_error_exception">Prerušené: %s</string>
     <string name="user_is_a_robot">Bol zachytený automatizovaný test. Ak ste človek, kontaktuje AnkiDroid podporu</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d pridaná poznámka</item>
-        <item quantity="few">%d pridané poznámky</item>
-        <item quantity="many">%d pridaných poznámok</item>
-        <item quantity="other">%d pridaných poznámok</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d aktualizovaná poznámka</item>
-        <item quantity="few">%d aktualizované poznámky</item>
-        <item quantity="many">%d aktualizovaných poznámok</item>
-        <item quantity="other">%d aktualizovaných poznámok</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nezmenená poznámka</item>
-        <item quantity="few">%d nezmenené poznámky</item>
-        <item quantity="many">%d nezmenených poznámok</item>
-        <item quantity="other">%d nezmenených poznámok</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Táto kartička používa nepodporované prvky AnkiDroidu. Kontaktujte vývojára %1$s, alebo si pozrite wiki. %2$s</string>
     <string name="invalid_json_data">Kartička poskytla chybné dáta. %s</string>
@@ -405,10 +378,6 @@
     <string name="check_network">Prosím, skontrolujte vaše sieťové pripojenie</string>
     <string name="search_using_deck_name">Hľadať pomocou názvu balíčka</string>
     <string name="home">Domov</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Namapované na  %s</string>
-    <string name="import_mapped_to_tags">Namapované na Štítky</string>
-    <string name="import_mapped_to_nothing">Odignorované</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Kartička zahrabaná.</string>
     <string name="buried_note">Poznámka zahrabaná.</string>
@@ -441,4 +410,15 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

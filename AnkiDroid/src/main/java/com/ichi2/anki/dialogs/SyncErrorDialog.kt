@@ -25,8 +25,8 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.libanki.CollectionGetter
-import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.utils.contentNullable
+import com.ichi2.utils.iconAttr
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener : CollectionGetter {
@@ -52,7 +52,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
                 // User not logged in; take them to login screen
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
+                    iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.log_in) {
                         (activity as SyncErrorDialogListener).loginToSyncServer()
                     }
@@ -63,7 +63,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
                 // Connection error; allow user to retry or cancel
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
+                    iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.retry) {
                         (activity as SyncErrorDialogListener).sync()
                         dismissAllDialogFragments()
@@ -77,7 +77,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
+                    iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.sync_conflict_keep_local_new) {
                         (activity as SyncErrorDialogListener?)
                             ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
@@ -95,7 +95,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
                 // Confirmation before pushing local collection to server after sync conflict
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
+                    iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.dialog_positive_replace) {
                         val activity = activity as SyncErrorDialogListener?
                         activity!!.sync(ConflictResolution.FULL_UPLOAD)
@@ -108,7 +108,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
                 // Confirmation before overwriting local collection with server collection after sync conflict
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
+                    iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.dialog_positive_replace) {
                         val activity = activity as SyncErrorDialogListener?
                         activity!!.sync(ConflictResolution.FULL_DOWNLOAD)

@@ -18,7 +18,9 @@ package com.ichi2.utils
 
 import android.content.DialogInterface
 import android.widget.EditText
+import androidx.annotation.DrawableRes
 import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.themes.Themes
 
 // Extension methods for MaterialDialog workarounds in Kotlin
 // Previously the methods accepted null into a @NonNull parameter,
@@ -47,4 +49,13 @@ fun MaterialDialog.cancelListenerNullable(cancelListener: DialogInterface.OnCanc
  */
 fun MaterialDialog.displayKeyboard(editText: EditText) {
     AndroidUiUtils.setFocusAndOpenKeyboard(editText, window!!)
+}
+
+/**
+ * Shows an icon to the left of the dialog title.
+ */
+fun MaterialDialog.iconAttr(
+    @DrawableRes res: Int
+): MaterialDialog = apply {
+    this.icon(Themes.getResFromAttr(this.context, res))
 }

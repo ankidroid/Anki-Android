@@ -22,11 +22,6 @@ import android.database.SQLException
 import android.text.TextUtils
 import android.util.Pair
 import androidx.annotation.CheckResult
-import com.ichi2.async.CancelListener
-import com.ichi2.async.CancelListener.Companion.isCancelled
-import com.ichi2.async.CollectionTask.PartialSearch
-import com.ichi2.async.ProgressSender
-import com.ichi2.async.ProgressSender.Companion.publishProgress
 import com.ichi2.libanki.SortOrder.*
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager.time
@@ -44,20 +39,13 @@ class Finder(private val col: Collection) {
     /** Return a list of card ids for QUERY  */
     @CheckResult
     fun findCards(query: String, _order: SortOrder): List<Long> {
-        return findCards(query, _order, null)
-    }
-
-    @CheckResult
-    fun findCards(query: String, _order: SortOrder, task: PartialSearch?): List<Long> {
-        return _findCards(query, _order, task, task?.progressSender)
+        return _findCards(query, _order)
     }
 
     @CheckResult
     private fun _findCards(
         query: String,
         _order: SortOrder,
-        cancellation: CancelListener?,
-        progress: ProgressSender<Long>?
     ): List<Long> {
         val tokens = _tokenize(query)
         val res1 = _where(tokens)
@@ -75,11 +63,7 @@ class Finder(private val col: Collection) {
         try {
             col.db.database.query(sql, args).use { cur ->
                 while (cur.moveToNext()) {
-                    if (isCancelled(cancellation)) {
-                        return ArrayList(0)
-                    }
                     res.add(cur.getLong(0))
-                    publishProgress(progress, cur.getLong(0))
                 }
             }
         } catch (e: SQLException) {

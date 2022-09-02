@@ -16,21 +16,16 @@
 package com.ichi2.anki.tests.libanki
 
 import android.Manifest
-import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SdkSuppress
 import androidx.test.rule.GrantPermissionRule
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.Shared
-import com.ichi2.anki.testutil.TestEnvironment.isDisplayingDefaultEnglishStrings
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.importer.*
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers.*
 import org.junit.*
 import org.junit.Assert.*
@@ -109,7 +104,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
-        assertTrue(n.fields[0]!!.contains("foo.mp3"))
+        assertTrue("foo.mp3" in n.fields[0])
         // if the local file content is different, and import should trigger a rename
         empty.remCards(empty.db.queryLongList("select id from cards"))
         os = FileOutputStream(File(empty.media.dir(), "foo.mp3"), false)
@@ -122,7 +117,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
-        assertTrue(n.fields[0]!!.contains("_"))
+        assertTrue(n.fields[0].contains("_"))
         // if the localized media file already exists, we rewrite the note and media
         empty.remCards(empty.db.queryLongList("select id from cards"))
         os = FileOutputStream(File(empty.media.dir(), "foo.mp3"))
@@ -135,7 +130,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
-        assertTrue(n.fields[0]!!.contains("_"))
+        assertTrue(n.fields[0].contains("_"))
         empty.close()
     }
 
@@ -228,156 +223,6 @@ class ImportTest : InstrumentedTest() {
         assertTrue(mTestCol!!.db.queryString("select flds from notes").startsWith("goodbye"))
     }
 
-    @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Throws(IOException::class)
-    fun testCsv() {
-        val file = Shared.getTestFilePath(testContext, "text-2fields.txt")
-        val i = TextImporter(mTestCol!!, file)
-        i.initMapping()
-        i.run()
-        if (isDisplayingDefaultEnglishStrings()) {
-            MatcherAssert.assertThat<List<String>>(
-                i.log,
-                contains(
-                    "‘多すぎる too many fields’ had 3 fields, expected 2",
-                    "‘not, enough, fields’ had 1 fields, expected 2",
-                    "Appeared twice in file: 飲む",
-                    "Empty first field:  to play",
-                    "5 notes added, 0 notes updated, 0 notes unchanged."
-                )
-            )
-        } else {
-            MatcherAssert.assertThat<List<String>>(i.log, hasSize(5))
-        }
-        assertEquals(5, i.total.toLong())
-        // if we run the import again, it should update instead
-        i.run()
-        if (isDisplayingDefaultEnglishStrings()) {
-            MatcherAssert.assertThat<List<String>>(
-                i.log,
-                contains(
-                    "‘多すぎる too many fields’ had 3 fields, expected 2",
-                    "‘not, enough, fields’ had 1 fields, expected 2",
-                    "Appeared twice in file: 飲む",
-                    "Empty first field:  to play",
-                    "0 notes added, 0 notes updated, 5 notes unchanged.",
-                    "First field matched: 食べる",
-                    "First field matched: 飲む",
-                    "First field matched: テスト",
-                    "First field matched: to eat",
-                    "First field matched: 遊ぶ"
-                )
-            )
-        } else {
-            MatcherAssert.assertThat<List<String>>(i.log, hasSize(10))
-        }
-        assertEquals(5, i.total.toLong())
-        // but importing should not clobber tags if they're unmapped
-        val n = mTestCol!!.getNote(mTestCol!!.db.queryLongScalar("select id from notes"))
-        n.addTag("test")
-        n.flush()
-        i.run()
-        n.load()
-        MatcherAssert.assertThat(n.tags, contains("test"))
-        MatcherAssert.assertThat(n.tags, hasSize(1))
-        // if add-only mode, count will be 0
-        i.setImportMode(NoteImporter.ImportMode.IGNORE_MODE)
-        i.run()
-        assertEquals(0, i.total.toLong())
-        // and if dupes mode, will reimport everything
-        assertEquals(5, mTestCol!!.cardCount().toLong())
-        i.setImportMode(NoteImporter.ImportMode.ADD_MODE)
-        i.run()
-        // includes repeated field
-        assertEquals(6, i.total.toLong())
-        assertEquals(11, mTestCol!!.cardCount().toLong())
-    }
-
-    @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Throws(IOException::class, ConfirmModSchemaException::class)
-    fun testCsv2() {
-        val mm = mTestCol!!.models
-        val m = mm.current()
-        val f = mm.newField("Three")
-        mm.addField(m!!, f)
-        mm.save(m)
-        val n = mTestCol!!.newNote()
-        n.setField(0, "1")
-        n.setField(1, "2")
-        n.setField(2, "3")
-        mTestCol!!.addNote(n)
-        // an update with unmapped fields should not clobber those fields
-        val file = Shared.getTestFilePath(testContext, "text-update.txt")
-        val i = TextImporter(mTestCol!!, file)
-        i.initMapping()
-        i.run()
-        n.load()
-        val fields = Arrays.asList(*n.fields)
-        MatcherAssert.assertThat(fields, contains("1", "x", "3"))
-    }
-
-    @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Throws(IOException::class)
-    fun testCsvWithByteOrderMark() {
-        val file = Shared.getTestFilePath(testContext, "text-utf8-bom.txt")
-        val i = TextImporter(mTestCol!!, file)
-        i.initMapping()
-        i.run()
-        val n = mTestCol!!.getNote(mTestCol!!.db.queryLongScalar("select id from notes"))
-        MatcherAssert.assertThat(Arrays.asList(*n.fields), contains("Hello", "world"))
-    }
-
-    @Test
-    @Ignore("Not yet handled")
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Throws(
-        IOException::class
-    )
-    fun testUcs2CsvWithByteOrderMark() {
-        val file = Shared.getTestFilePath(testContext, "text-ucs2-be-bom.txt")
-        val i = TextImporter(mTestCol!!, file)
-        i.initMapping()
-        i.run()
-        val n = mTestCol!!.getNote(mTestCol!!.db.queryLongScalar("select id from notes"))
-        MatcherAssert.assertThat(Arrays.asList(*n.fields), contains("Hello", "world"))
-    }
-
-    @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Throws(IOException::class, ConfirmModSchemaException::class)
-    fun csvManualBasicExample() {
-        val file = Shared.getTestFilePath(testContext, "text-anki-manual-csv-single-line.txt")
-        addFieldToCurrentModel("Third")
-        val i = TextImporter(mTestCol!!, file)
-        i.setAllowHtml(true)
-        i.initMapping()
-        i.run()
-        val n = mTestCol!!.getNote(mTestCol!!.db.queryLongScalar("select id from notes"))
-        MatcherAssert.assertThat(
-            Arrays.asList(*n.fields),
-            contains("foo bar", "bar baz", "baz quux")
-        )
-    }
-
-    @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Throws(IOException::class)
-    fun csvManualLineBreakExample() {
-        val file = Shared.getTestFilePath(testContext, "text-anki-manual-csv-multi-line.txt")
-        val i = TextImporter(mTestCol!!, file)
-        i.setAllowHtml(true)
-        i.initMapping()
-        i.run()
-        val n = mTestCol!!.getNote(mTestCol!!.db.queryLongScalar("select id from notes"))
-        MatcherAssert.assertThat(
-            Arrays.asList(*n.fields),
-            contains("hello", "this is\na two line answer")
-        )
-    }
-
     /**
      * Custom tests for AnkiDroid.
      */
@@ -395,14 +240,5 @@ class ImportTest : InstrumentedTest() {
         assertEquals(1, imp.dupes)
         assertEquals(0, imp.added)
         assertEquals(0, imp.updated)
-    }
-
-    @Throws(ConfirmModSchemaException::class)
-    private fun addFieldToCurrentModel(fieldName: String) {
-        val mm = mTestCol!!.models
-        val m = mm.current()
-        val f = mm.newField(fieldName)
-        mm.addField(m!!, f)
-        mm.save(m)
     }
 }

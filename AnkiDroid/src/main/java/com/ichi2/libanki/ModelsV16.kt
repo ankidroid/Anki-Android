@@ -28,7 +28,7 @@ package com.ichi2.libanki
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.R
 import com.ichi2.libanki.Consts.MODEL_CLOZE
-import com.ichi2.libanki.Utils.*
+import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.*

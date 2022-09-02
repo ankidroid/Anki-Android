@@ -88,6 +88,11 @@
             android:configChanges="keyboardHidden|locale|orientation|screenSize|uiMode"
             />
         <activity
+            android:name="com.ichi2.anki.pages.PagesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
@@ -387,6 +392,19 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name="com.ichi2.anki.LoginActivity"
+            android:label="@string/menu_my_account"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            />
+        <!-- TODO: Fix LockedOrientationActivity - introduction_layout.xml -->
+        <activity android:name=".IntroductionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="userPortrait"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            tools:ignore="LockedOrientationActivity" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />

@@ -48,7 +48,7 @@ class TemporaryModel(model: Model) {
         val outState = Bundle()
         outState.putString(
             INTENT_MODEL_FILENAME,
-            saveTempModel(AnkiDroidApp.getInstance().applicationContext, model)
+            saveTempModel(AnkiDroidApp.instance.applicationContext, model)
         )
         outState.putSerializable("mTemplateChanges", mTemplateChanges)
         return outState
@@ -83,7 +83,7 @@ class TemporaryModel(model: Model) {
     val css: String
         get() = model.getString("css")
 
-    fun updateTemplate(ordinal: Int, template: JSONObject?) {
+    fun updateTemplate(ordinal: Int, template: JSONObject) {
         model.getJSONArray("tmpls").put(ordinal, template)
     }
 
@@ -380,7 +380,7 @@ class TemporaryModel(model: Model) {
         @JvmStatic
         fun clearTempModelFiles(): Int {
             var deleteCount = 0
-            for (c in AnkiDroidApp.getInstance().cacheDir.listFiles()) {
+            for (c in AnkiDroidApp.instance.cacheDir.listFiles()) {
                 val absolutePath = c.absolutePath
                 if (absolutePath.contains("editedTemplate") && absolutePath.endsWith("json")) {
                     if (!c.delete()) {

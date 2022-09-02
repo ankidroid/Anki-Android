@@ -290,28 +290,7 @@
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>
     <string name="title_whiteboard_pen_color">വൈറ്റ്ബോർഡ് പേന നിറം</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ശൂന്യമായ കാർഡുകൾ കണ്ടെത്തി. ഉപകരണങ്ങൾ> ശൂന്യ കാർഡുകൾ പ്രവർത്തിപ്പിക്കുക.]]></string>
-    <string name="note_importer_error_empty_first_field">ആദ്യ ഫീൽഡ് ശൂന്യമാക്കുക:%s</string>
-    <string name="note_importer_error_first_field_matched">ആദ്യ ഫീൽഡ് പൊരുത്തപ്പെട്ടു: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">ആദ്യ ഫീൽഡിനൊപ്പം തനിപ്പകർപ്പ് ചേർത്തു:%s</string>
-    <string name="note_importer_error_appeared_twice">ഫയലിൽ രണ്ടുതവണ പ്രത്യക്ഷപ്പെട്ടു:%s</string>
-    <string name="note_importer_error_empty_notes">ഒന്നോ അതിലധികമോ കുറിപ്പുകൾ ഇറക്കുമതി ചെയ്തിട്ടില്ല, കാരണം അവ കാർഡുകളൊന്നും സൃഷ്ടിച്ചിട്ടില്ല. നിങ്ങൾക്ക് ശൂന്യമായ ഫീൽഡുകൾ ഉള്ളപ്പോൾ അല്ലെങ്കിൽ ടെക്സ്റ്റ് ഫയലിലെ ഉള്ളടക്കം ശരിയായ ഫീൽഡുകളിലേക്ക് മാപ്പ് ചെയ്യാത്തപ്പോൾ ഇത് സംഭവിക്കാം</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ന്%2$d ഫീൽഡുകൾ ഉണ്ടായിരുന്നു, പ്രതീക്ഷിച്ച %3$d</string>
-    <string name="csv_importer_error_exception">ഉപേക്ഷിച്ചു:%s</string>
     <string name="user_is_a_robot">യാന്ത്രിക പരിശോധന കണ്ടെത്തി. നിങ്ങൾ ഒരു മനുഷ്യനാണെങ്കിൽ, അങ്കിഡ്രോയിഡ് പിന്തുണയുമായി ബന്ധപ്പെടുക</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d കുറിപ്പ് ചേർത്തു</item>
-        <item quantity="other">%d കുറിപ്പുകൾ ചേർത്തു</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d കുറിപ്പ് അപ്‌ഡേറ്റുചെയ്‌തു</item>
-        <item quantity="other">%d കുറിപ്പുകൾ അപ്‌ഡേറ്റുചെയ്‌തു</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d കുറിപ്പ് മാറ്റമില്ല</item>
-        <item quantity="other">%d കുറിപ്പുകൾ മാറ്റമില്ല</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">ഈ കാർഡ് പിന്തുണയ്‌ക്കാത്ത അങ്കിഡ്രോയിഡ് സവിശേഷതകൾ ഉപയോഗിക്കുന്നു. %1$s ഡവലപ്പറുമായി ബന്ധപ്പെടുക, അല്ലെങ്കിൽ വിക്കി കാണുക. %2$s</string>
     <string name="invalid_json_data">കാർഡ് അസാധുവായ ഡാറ്റ നൽകി. %s</string>
@@ -377,10 +356,6 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
@@ -413,4 +388,15 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

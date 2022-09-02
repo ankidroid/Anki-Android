@@ -76,7 +76,7 @@ class TextNoteExporterTest(
                 row.add(note.guId)
             }
             for (field in note.fields) {
-                row.add(mExporter!!.processText(field!!))
+                row.add(mExporter!!.processText(field))
             }
             if (includeTags) {
                 row.add(TextUtils.join(" ", note.tags))

@@ -176,11 +176,11 @@
     <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache ait été effacé pendant le traitement.\nVeuillez réessayer</string>
     <string name="import_succeeded_but_check_database">L\'importation des données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
     <string name="import_error_corrupt_zip">Le fichier APKG est corrompu. Veuillez le supprimer et le retélécharger.\n\nRaison racine : %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Échec de la mise en cache du fichier (éventuellement à court d\'espace de stockage)</string>
     <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
     <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
     <string name="import_stats_error">Des erreurs se sont produites lors de l\'importation des fichiers suivants :\n%s</string>
@@ -290,28 +290,7 @@
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
     <string name="title_whiteboard_pen_color">Couleur du stylo du tableau blanc</string>
     <string name="title_whiteboard_editor">Éditeur de tableau blanc</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Cartes vides trouvées. Veuillez exécuter Outils>Cartes vides.]]></string>
-    <string name="note_importer_error_empty_first_field">Premier champ vide : %s</string>
-    <string name="note_importer_error_first_field_matched">Premier champ correspondant : %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Duplication ajoutée avec le premier champ : %s</string>
-    <string name="note_importer_error_appeared_twice">Apparu deux fois dans le fichier : %s</string>
-    <string name="note_importer_error_empty_notes">Une ou plusieurs notes n\'ont pas été importées, car elles n\'ont généré aucune carte. Ceci peut se produire lorsque vous avez des champs vides ou lorsque vous n\'avez pas désigné le contenu du fichier texte dans les bons champs</string>
-    <string name="csv_importer_error_invalid_field_count">« %1$s » avait %2$d champs, sur %3$d attendus</string>
-    <string name="csv_importer_error_exception">Abandonné : %s</string>
     <string name="user_is_a_robot">Test automatisé détecté. Si vous êtes humain, contactez l\'assistance AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note ajoutée</item>
-        <item quantity="other">%d notes ajoutées</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note mise à jour</item>
-        <item quantity="other">%d notes mises à jour</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note inchangée</item>
-        <item quantity="other">%d notes inchangées</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Cette carte utilise des fonctionnalités AnkiDroid non prises en charge. Contactez le développeur %1$s ou allez voir le wiki %2$s</string>
     <string name="invalid_json_data">La carte a fourni des données invalides. %s</string>
@@ -377,10 +356,6 @@
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
     <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
     <string name="home">Accueil</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Classé dans %s</string>
-    <string name="import_mapped_to_tags">Classé dans les Étiquettes</string>
-    <string name="import_mapped_to_nothing">Ignoré</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Carte enterrée</string>
     <string name="buried_note">Note enterrée</string>
@@ -411,4 +386,15 @@
     <string name="expand_tag">Développer le tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

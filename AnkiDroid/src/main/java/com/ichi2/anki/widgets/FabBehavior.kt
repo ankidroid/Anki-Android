@@ -75,7 +75,7 @@ private const val SNACKBAR_FADE_OUT_DURATION = 75L
  * It extends to the very bottom of the screen.
  * We allow the fab and the snackbar to overlap a bit, so that the fab doesn't appear too high.
  */
-private val MAX_OVERLAP = UIUtils.convertDpToPixel(10f, AnkiDroidApp.getInstance().applicationContext)
+private val MAX_OVERLAP = UIUtils.convertDpToPixel(10f, AnkiDroidApp.instance.applicationContext)
 
 private fun calculateFabTranslationYForSnackbar(fab: View, snackbar: View): Float {
     val untranslatedFabBottom = fab.bottom

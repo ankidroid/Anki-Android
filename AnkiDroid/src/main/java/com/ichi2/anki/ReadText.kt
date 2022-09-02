@@ -30,8 +30,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
-import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
+import com.ichi2.utils.iconAttr
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
@@ -89,7 +89,7 @@ object ReadText {
      * @param qa   The card question or card answer
      */
     @SuppressLint("CheckResult")
-    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?, context: Context) {
+    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
         questionAnswer = qa
@@ -104,7 +104,7 @@ object ReadText {
         if (availableTtsLocales.isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
             dialog.message(R.string.no_tts_available_message)
-                .icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                .iconAttr(R.attr.dialogErrorIcon)
                 .positiveButton(R.string.dialog_ok)
         } else {
             val dialogItems = ArrayList<CharSequence>(availableTtsLocales.size)
@@ -152,7 +152,7 @@ object ReadText {
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int, context: Context) {
+    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int) {
         var isFirstText = true
         var playedSound = false
         for (textToRead in textsToRead) {
@@ -164,8 +164,7 @@ object ReadText {
                 did,
                 ord,
                 cardSide,
-                if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD,
-                context
+                if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD
             )
             isFirstText = false
         }
@@ -195,7 +194,7 @@ object ReadText {
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      * @return false if a sound was not played
      */
-    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int, context: Context): Boolean {
+    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
         mDid = did
@@ -233,7 +232,7 @@ object ReadText {
                 false
             )
         }
-        selectTts(textToSpeak, mDid, mOrd, questionAnswer, context)
+        selectTts(textToSpeak, mDid, mOrd, questionAnswer)
         return true
     }
 

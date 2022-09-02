@@ -18,7 +18,7 @@ package com.ichi2.libanki
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.Decks.CURRENT_DECK
+import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList

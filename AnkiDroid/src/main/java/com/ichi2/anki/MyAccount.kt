@@ -36,12 +36,16 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.lang.Exception
 import java.net.UnknownHostException
 
-class MyAccount : AnkiActivity() {
+/**
+ * Note: [LoginActivity] extends this and should not handle account creation
+ */
+open class MyAccount : AnkiActivity() {
     private lateinit var mLoginToMyAccountView: View
     private lateinit var mLoggedIntoMyAccountView: View
     private lateinit var mUsername: EditText
@@ -52,7 +56,7 @@ class MyAccount : AnkiActivity() {
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
-    private fun switchToState(newState: Int) {
+    open fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
                 val username = AnkiDroidApp.getSharedPrefs(baseContext).getString("username", "")
@@ -242,7 +246,7 @@ class MyAccount : AnkiActivity() {
                     showSnackbar(messageResource)
                 }
             } else {
-                val res = AnkiDroidApp.getAppResources()
+                val res = AnkiDroidApp.appResources
                 showSimpleMessageDialog(title = res.getString(messageResource), message = loginMessage)
             }
         }
@@ -352,7 +356,8 @@ class MyAccount : AnkiActivity() {
     }
 
     companion object {
-        private const val STATE_LOG_IN = 1
-        private const val STATE_LOGGED_IN = 2
+        @KotlinCleanup("change to enum")
+        internal const val STATE_LOG_IN = 1
+        internal const val STATE_LOGGED_IN = 2
     }
 }

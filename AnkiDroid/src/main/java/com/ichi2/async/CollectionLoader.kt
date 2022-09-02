@@ -45,7 +45,7 @@ object CollectionLoader {
                     // load collection
                     try {
                         Timber.d("CollectionLoader accessing collection")
-                        val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().applicationContext)
+                        val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.instance.applicationContext)
                         Timber.i("CollectionLoader obtained collection")
                         col
                     } catch (e: RuntimeException) {

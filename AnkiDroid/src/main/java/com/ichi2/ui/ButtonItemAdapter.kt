@@ -32,27 +32,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.ui.ButtonItemAdapter.ButtonVH
-import com.ichi2.utils.KotlinCleanup
-import java.util.*
 
 /**
  * RecyclerView.Adapter class copied almost completely from the Material Dialogs library example
  * {@see [](https://github.com/afollestad/material-dialogs/blob/0.9.6.0/sample/src/main/java/com/afollestad/materialdialogssample/ButtonItemAdapter.java>ButtonItemAdapter.java</a>
  ) */
-@KotlinCleanup("Fix all IDE lint issues")
-class ButtonItemAdapter(private val items: kotlin.collections.ArrayList<String>) : RecyclerView.Adapter<ButtonVH>() {
-    @KotlinCleanup("make field non null")
-    private var mItemCallback: ItemCallback? = null
-    @KotlinCleanup("make field non null")
-    private var mButtonCallback: ButtonCallback? = null
-
+class ButtonItemAdapter(
+    private val items: ArrayList<String>,
+    private val itemCallback: ItemCallback,
+    private val buttonCallback: ButtonCallback
+) : RecyclerView.Adapter<ButtonVH>() {
     fun remove(searchName: String) {
         items.remove(searchName)
-    }
-
-    fun setCallbacks(itemCallback: ItemCallback, buttonCallback: ButtonCallback) {
-        mItemCallback = itemCallback
-        mButtonCallback = buttonCallback
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonVH {
@@ -62,46 +53,28 @@ class ButtonItemAdapter(private val items: kotlin.collections.ArrayList<String>)
     }
 
     override fun onBindViewHolder(holder: ButtonVH, position: Int) {
-        holder.mTitle.text = items[position]
-        holder.mButton.tag = items[position]
+        holder.title.text = items[position]
+        holder.button.tag = items[position]
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = items.size
 
-    @KotlinCleanup("make this a fun interface to use a lambda at the call site")
-    interface ItemCallback {
-        fun onItemClicked(searchName: String)
-    }
-
-    @KotlinCleanup("make this a fun interface to use a lambda at the call site")
-    interface ButtonCallback {
-        fun onButtonClicked(searchName: String)
-    }
-
-    inner class ButtonVH constructor(itemView: View, adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val mTitle: TextView
-        val mButton: ImageButton
-        private val mAdapter: ButtonItemAdapter
+    inner class ButtonVH constructor(itemView: View, private val adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        val title: TextView = itemView.findViewById(R.id.card_browser_my_search_name_textview)
+        val button: ImageButton = itemView.findViewById<ImageButton?>(R.id.card_browser_my_search_remove_button).apply {
+            setOnClickListener(this@ButtonVH)
+        }
 
         override fun onClick(view: View) {
-            if (mAdapter.mItemCallback == null) {
-                return
-            }
             if (view is ImageButton) {
-                mAdapter.mButtonCallback!!.onButtonClicked(items[bindingAdapterPosition])
+                adapter.buttonCallback.onButtonClicked(items[bindingAdapterPosition])
             } else {
-                mAdapter.mItemCallback!!.onItemClicked(items[bindingAdapterPosition])
+                adapter.itemCallback.onItemClicked(items[bindingAdapterPosition])
             }
         }
 
         init {
-            mTitle = itemView.findViewById(R.id.card_browser_my_search_name_textview)
-            mButton = itemView.findViewById(R.id.card_browser_my_search_remove_button)
-            mAdapter = adapter
             itemView.setOnClickListener(this)
-            mButton.setOnClickListener(this)
         }
     }
 
@@ -112,5 +85,13 @@ class ButtonItemAdapter(private val items: kotlin.collections.ArrayList<String>)
     fun notifyAdapterDataSetChanged() {
         items.sortWith { obj: String, str: String -> obj.compareTo(str, ignoreCase = true) }
         super.notifyDataSetChanged()
+    }
+
+    fun interface ItemCallback {
+        fun onItemClicked(searchName: String)
+    }
+
+    fun interface ButtonCallback {
+        fun onButtonClicked(searchName: String)
     }
 }

@@ -31,10 +31,10 @@ import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
+import com.ichi2.utils.iconAttr
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
@@ -73,7 +73,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -90,7 +90,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -145,7 +145,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     i++
                 }
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     negativeButton(R.string.dialog_cancel)
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (mRepairValues[index]) {
@@ -183,7 +183,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // Allow user to run BackupManager.repairCollection()
                 dialog.show {
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.dialog_positive_repair) {
                         (activity as DeckPicker).repairCollection()
                         dismissAllDialogFragments()
@@ -194,7 +194,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_RESTORE_BACKUP -> {
 
                 // Allow user to restore one of the backups
-                val path = CollectionHelper.getCollectionPath(activity)
+                val path = CollectionHelper.getCollectionPath(requireContext())
                 mBackups = BackupManager.getBackups(File(path))
                 if (mBackups.isEmpty()) {
                     dialog.title(R.string.backup_restore)
@@ -263,7 +263,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         val ch = CollectionHelper.getInstance()
                         val time = TimeManager.time
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
-                        val path1 = CollectionHelper.getCollectionPath(activity)
+                        val path1 = CollectionHelper.getCollectionPath(requireContext())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             (activity as DeckPicker).restartActivity()
                         } else {
@@ -332,7 +332,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.close) {
                         exit()
                     }

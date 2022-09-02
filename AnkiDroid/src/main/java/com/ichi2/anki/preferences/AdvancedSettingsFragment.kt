@@ -25,11 +25,13 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 class AdvancedSettingsFragment : SettingsFragment() {
@@ -38,13 +40,17 @@ class AdvancedSettingsFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
         get() = "prefs.advanced"
 
+    @RustCleanup(
+        "Remove 'Default deck for statistics' and 'Advanced statistics' preferences" +
+            "once the new backend is the default"
+    )
     override fun initSubscreen() {
         removeUnnecessaryAdvancedPrefs()
 
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
-                val newPath = newValue as String?
+                val newPath = newValue as String
                 try {
                     CollectionHelper.initializeAnkiDroidDirectory(newPath)
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
@@ -86,15 +92,30 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
             true
         }
-        // Advanced statistics
-        requirePreference<Preference>(R.string.pref_advanced_statistics_key).setSummaryProvider {
-            if (AnkiDroidApp.getSharedPrefs(requireContext()).getBoolean("advanced_statistics_enabled", false)) {
-                getString(R.string.enabled)
-            } else {
-                getString(R.string.disabled)
+        // Default deck for statistics
+        requirePreference<Preference>(R.string.stats_default_deck_key).apply {
+            // It doesn't have an effect on the new Statistics page,
+            // which is enabled together with the new backend
+            if (!BackendFactory.defaultLegacySchema) {
+                isEnabled = false
             }
         }
 
+        // Advanced statistics
+        requirePreference<Preference>(R.string.pref_advanced_statistics_key).apply {
+            // It doesn't have an effect on the new Statistics page,
+            // which is enabled together with the new backend
+            if (!BackendFactory.defaultLegacySchema) {
+                isEnabled = false
+            }
+            setSummaryProvider {
+                if (AnkiDroidApp.getSharedPrefs(requireContext()).getBoolean("advanced_statistics_enabled", false)) {
+                    getString(R.string.enabled)
+                } else {
+                    getString(R.string.disabled)
+                }
+            }
+        }
         // Enable API
         requirePreference<SwitchPreference>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
             val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
@@ -107,11 +128,28 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
         }
+
+        // v3 scheduler
+        @RustCleanup("move this to Reviewing > Scheduling once the new backend is the default")
+        val v3schedPref = requirePreference<SwitchPreference>(R.string.enable_v3_sched_key).apply {
+            launchCatchingTask { withCol { isChecked = v3Enabled } }
+            // if new backend was enabled on local.properties, remove the pref dependency
+            if (!BuildConfig.LEGACY_SCHEMA) {
+                dependency = null
+                isEnabled = true
+            }
+            setOnPreferenceChangeListener { newValue: Any ->
+                Timber.d("v3 scheduler set to $newValue")
+                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
+            }
+        }
+
         // Use V16 backend
         requirePreference<SwitchPreference>(R.string.pref_rust_backend_key).apply {
             if (!BuildConfig.LEGACY_SCHEMA) {
                 title = "New schema already enabled on local.properties"
                 isEnabled = false
+                isChecked = true
             }
             setOnPreferenceChangeListener { newValue ->
                 if (newValue == true) {
@@ -126,6 +164,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     )
                 } else {
                     BackendFactory.defaultLegacySchema = true
+                    v3schedPref.isChecked = false
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                 }
             }

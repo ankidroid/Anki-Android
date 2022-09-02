@@ -9,7 +9,7 @@ buildscript {
     ext.kotlin_version = '1.7.10'
     ext.lint_version = '30.2.2'
     ext.acra_version = '5.7.0'
-    ext.ankidroid_backend_version = '0.1.15-anki2.1.54'
+    ext.ankidroid_backend_version = '0.1.15-anki2.1.54' // this is parsed in tools/setup-anki-backend.sh
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.9.0'
     ext.coroutines_version = '1.6.4'
@@ -28,7 +28,7 @@ buildscript {
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.3.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
     }
 }
 

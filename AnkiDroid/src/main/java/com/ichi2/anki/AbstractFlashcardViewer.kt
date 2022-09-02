@@ -50,6 +50,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -101,6 +102,7 @@ import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
+import com.ichi2.utils.iconAttr
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -267,7 +269,7 @@ abstract class AbstractFlashcardViewer :
     private val mLongClickHandler = newHandler()
     private val mLongClickTestRunnable = Runnable {
         Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick")
-        compat.vibrate(AnkiDroidApp.getInstance().applicationContext, 50)
+        compat.vibrate(AnkiDroidApp.instance.applicationContext, 50)
         mLongClickHandler.postDelayed(mStartLongClickAction, 300)
     }
     private val mStartLongClickAction = Runnable { mGestureProcessor.onLongTap() }
@@ -398,28 +400,32 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mUpdateCardHandler: TaskListener<Card, Computation<*>?> = object : TaskListener<Card, Computation<*>?>() {
-        private var mNoMoreCards = false
+    private val mUpdateCardHandler: TaskListener<Void, Card?> = object : TaskListener<Void, Card?>() {
         override fun onPreExecute() {
             showProgressBar()
         }
 
-        override fun onProgressUpdate(value: Card) {
-            if (mCurrentCard !== value) {
+        override fun onPostExecute(result: Card?) {
+            if (result == null) {
+                // RuntimeException occurred on update cards
+                closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
+                return
+            }
+
+            if (mCurrentCard !== result) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
                  */
                 sDisplayAnswer = false
             }
-            currentCard = value
+            currentCard = result
             TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
             // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
-                mNoMoreCards = true
                 showProgressBar()
-                return
+                closeReviewer(RESULT_NO_MORE_CARDS, true)
             }
             onCardEdited(mCurrentCard)
             if (sDisplayAnswer) {
@@ -431,17 +437,6 @@ abstract class AbstractFlashcardViewer :
                 displayCardQuestion()
             }
             hideProgressBar()
-        }
-
-        override fun onPostExecute(result: Computation<*>?) {
-            if (!result!!.succeeded()) {
-                // RuntimeException occurred on update cards
-                closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
-                return
-            }
-            if (mNoMoreCards) {
-                closeReviewer(RESULT_NO_MORE_CARDS, true)
-            }
         }
     }
 
@@ -883,7 +878,7 @@ abstract class AbstractFlashcardViewer :
 
     fun generateQuestionSoundList() {
         val tags = Sound.extractTagsFromLegacyContent(mCurrentCard!!.qSimple())
-        mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.QUESTION)
+        mSoundPlayer.addSounds(mBaseUrl!!, tags, SoundSide.QUESTION)
     }
 
     @KotlinCleanup("remove _ variables")
@@ -891,7 +886,7 @@ abstract class AbstractFlashcardViewer :
         val res = resources
         MaterialDialog(this).show {
             title(R.string.delete_card_title)
-            icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+            iconAttr(R.attr.dialogErrorIcon)
             message(
                 text = res.getString(
                     R.string.delete_note_message,
@@ -942,20 +937,33 @@ abstract class AbstractFlashcardViewer :
     }
 
     open fun answerCard(@BUTTON_TYPE ease: Int) {
-        if (mInAnswer) {
-            return
+        launchCatchingTask {
+            if (mInAnswer) {
+                return@launchCatchingTask
+            }
+            mIsSelecting = false
+            val buttonNumber = col.sched.answerButtons(mCurrentCard!!)
+            // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
+            if (buttonNumber < ease) {
+                return@launchCatchingTask
+            }
+            // Temporarily sets the answer indicator dots appearing below the toolbar
+            mPreviousAnswerIndicator!!.displayAnswerIndicator(ease, buttonNumber)
+            mSoundPlayer.stopSounds()
+            mCurrentEase = ease
+            val oldCard = mCurrentCard!!
+            val newCard = withCol {
+                Timber.i("Answering card %d", oldCard.id)
+                col.sched.answerCard(oldCard, ease)
+                Timber.i("Obtaining next card")
+                sched.card?.apply { render_output(reload = true) }
+            }
+            // TODO: this handling code is unnecessarily complex, and would be easier to follow
+            //  if written imperatively
+            val handler = answerCardHandler(true)
+            handler.before?.run()
+            handler.after?.accept(Computation.ok(NextCard.withNoResult(newCard)))
         }
-        mIsSelecting = false
-        val buttonNumber = col.sched.answerButtons(mCurrentCard!!)
-        // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
-        if (buttonNumber < ease) {
-            return
-        }
-        // Temporarily sets the answer indicator dots appearing below the toolbar
-        mPreviousAnswerIndicator!!.displayAnswerIndicator(ease, buttonNumber)
-        mSoundPlayer.stopSounds()
-        mCurrentEase = ease
-        AnswerAndGetCard(mCurrentCard!!, mCurrentEase).runWithHandler(answerCardHandler(true))
     }
 
     // Set the content view to the one provided and initialize accessors.
@@ -1452,7 +1460,7 @@ abstract class AbstractFlashcardViewer :
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
-            mSoundPlayer.addSounds(mBaseUrl, answerSounds.get(), SoundSide.ANSWER)
+            mSoundPlayer.addSounds(mBaseUrl!!, answerSounds.get(), SoundSide.ANSWER)
             mAnswerSoundsAdded = true
         }
     }
@@ -1471,7 +1479,7 @@ abstract class AbstractFlashcardViewer :
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds()
             mAnswerSoundsAdded = false
-            mSoundPlayer.addSounds(mBaseUrl, content.getSoundTags(Side.FRONT), SoundSide.QUESTION)
+            mSoundPlayer.addSounds(mBaseUrl!!, content.getSoundTags(Side.FRONT), SoundSide.QUESTION)
             if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig!!.autoplay) {
                 addAnswerSounds { content.getSoundTags(Side.BACK) }
             }
@@ -1542,7 +1550,7 @@ abstract class AbstractFlashcardViewer :
     private fun readCardTts(soundSide: SoundSide) {
         val tags = legacyGetTtsTags(mCurrentCard!!, soundSide, this)
         if (tags != null) {
-            mTTS.readCardText(tags, mCurrentCard!!, soundSide, baseContext)
+            mTTS.readCardText(tags, mCurrentCard!!, soundSide)
         }
     }
 
@@ -2489,7 +2497,7 @@ abstract class AbstractFlashcardViewer :
                     else -> null
                 }
                 filename?.let {
-                    Sound.getSoundPath(mBaseUrl, it)
+                    Sound.getSoundPath(mBaseUrl!!, it)
                 } ?: return
             }
             if (replacedUrl != mSoundPlayer.currentAudioUri || mSoundPlayer.isCurrentAudioFinished) {

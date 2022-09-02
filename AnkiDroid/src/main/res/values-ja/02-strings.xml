@@ -100,7 +100,7 @@
         <item>ノート編集日</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">適用する</string>
+    <string name="apply_filter">適用</string>
     <string name="filter_by_flags">フラグ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
@@ -279,25 +279,7 @@
     <string name="white_board_image_saved">ホワイトボードの画像を %s に保存しました</string>
     <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
     <string name="title_whiteboard_editor">ホワイトボードエディタ</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[空のカードが見つかりました。ツール>空のカードを実行してください。]]></string>
-    <string name="note_importer_error_empty_first_field">最初のフィールドが空: %s</string>
-    <string name="note_importer_error_first_field_matched">最初のフィールドが一致しました: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">最初のフィールドに重複を追加: %s</string>
-    <string name="note_importer_error_appeared_twice">重複するデータがあります: %s</string>
-    <string name="note_importer_error_empty_notes">カードが生成できなかったため、1 つ以上のノートはインポートされませんでした。 空のフィールドがある場合や、テキストファイル内のコンテンツを間違ったフィールドに入れようとした場合に発生する可能性があります。</string>
-    <string name="csv_importer_error_invalid_field_count">\'%1$s\'は %2$d のフィールドがあります。予測値は %3$d</string>
-    <string name="csv_importer_error_exception">中止: %s</string>
     <string name="user_is_a_robot">自動テストが検出されました。AnkiDroidサポートにお問い合わせください。</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d枚のカードを追加しました</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d枚のカードを更新しました</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d枚のカードは更新されませんでした</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">このカードはサポートされない機能を使用しています。開発者 %1$sに連絡するか、Wikiで確認してください。 %2$s</string>
     <string name="invalid_json_data">カードに無効なデータがあります; %s</string>
@@ -363,10 +345,6 @@
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">デッキ名で検索</string>
     <string name="home">ホーム</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">カードを延期しました</string>
     <string name="buried_note">ノートを延期しました</string>
@@ -397,4 +375,15 @@
     <string name="expand_tag">タグ \'%s \' を展開</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

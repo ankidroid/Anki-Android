@@ -38,9 +38,14 @@ class ImportFileSelectionFragment {
             // this needs a deckPicker for now. See use of PICK_APKG_FILE
 
             // This is required for serialization of the lambda
-            class OpenFilePicker(val requestCode: Int, var multiple: Boolean = false, val mimeType: String = "*/*") : FunctionItem.ActivityConsumer {
+            class OpenFilePicker(
+                val requestCode: Int,
+                var multiple: Boolean = false,
+                val mimeType: String = "*/*",
+                val extraMimes: Array<String>? = null
+            ) : FunctionItem.ActivityConsumer {
                 override fun consume(activity: AnkiActivity) {
-                    openImportFilePicker(activity, requestCode, multiple, mimeType)
+                    openImportFilePicker(activity, requestCode, multiple, mimeType, extraMimes)
                 }
             }
 
@@ -59,12 +64,18 @@ class ImportFileSelectionFragment {
                 ),
             )
             if (!BackendFactory.defaultLegacySchema) {
+                val mimes = arrayOf("text/plain", "text/comma-separated-values", "text/csv", "text/tab-separated-values")
                 importItems.add(
                     FunctionItem(
                         R.string.import_csv,
                         R.drawable.ic_baseline_description_24,
                         UsageAnalytics.Actions.IMPORT_CSV_FILE,
-                        OpenFilePicker(DeckPicker.PICK_CSV_FILE, multiple = false, mimeType = "text/plain")
+                        OpenFilePicker(
+                            DeckPicker.PICK_CSV_FILE,
+                            multiple = false,
+                            mimeType = "*/*",
+                            extraMimes = mimes
+                        )
                     )
                 )
             }
@@ -73,7 +84,13 @@ class ImportFileSelectionFragment {
 
         // needs to be static for serialization
         @JvmStatic
-        fun openImportFilePicker(activity: AnkiActivity, requestCode: Int, multiple: Boolean = false, mimeType: String = "*/*") {
+        fun openImportFilePicker(
+            activity: AnkiActivity,
+            requestCode: Int,
+            multiple: Boolean = false,
+            mimeType: String = "*/*",
+            extraMimes: Array<String>? = null
+        ) {
             Timber.d("openImportFilePicker() delegating to file picker intent")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -82,6 +99,7 @@ class ImportFileSelectionFragment {
             intent.putExtra("android.content.extra.FANCY", true)
             intent.putExtra("android.content.extra.SHOW_FILESIZE", true)
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
+            extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
             activity.startActivityForResultWithoutAnimation(intent, requestCode)
         }
     }

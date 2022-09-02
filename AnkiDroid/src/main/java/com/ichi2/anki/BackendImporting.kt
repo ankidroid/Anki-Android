@@ -19,12 +19,18 @@
 package com.ichi2.anki
 
 import anki.import_export.ImportResponse
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.pages.PagesActivity
+import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.importer.importCsvRaw
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
 
 fun DeckPicker.importApkgs(apkgPaths: List<String>) {
@@ -43,6 +49,29 @@ fun DeckPicker.importApkgs(apkgPaths: List<String>) {
             }
             showSimpleMessageDialog(summarizeReport(col.tr, report))
         }
+    }
+}
+
+@Suppress("BlockingMethodInNonBlockingContext") // ImportResponse.parseFrom
+suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
+    return withContext(Dispatchers.Main) {
+        val output = withProgress(
+            extractProgress = {
+                if (progress.hasImporting()) {
+                    text = progress.importing
+                }
+            },
+            op = { withCol { (this as CollectionV16).importCsvRaw(input) } }
+        )
+        val importResponse = ImportResponse.parseFrom(output)
+        undoableOp { importResponse }
+        MaterialDialog(this@importCsvRaw).show {
+            message(text = summarizeReport(col.tr, importResponse))
+            positiveButton(R.string.dialog_ok) {
+                this@importCsvRaw.finish()
+            }
+        }
+        output
     }
 }
 

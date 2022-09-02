@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">Remoto</string>
     <string name="force_full_sync_title">Forza sincronizzazione completa</string>
     <string name="force_full_sync_summary">Alla prossima sincronizzazione, forza le modifiche in una direzione</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Forza sincronizzazione completa</string>
     <string name="full_sync_confirmation">La modifica richiesta provocherà il caricamento completo del database la prossima volta che sincronizzi la collezione. Se hai delle ripetizioni o degli altri cambiamenti in sospeso su un altro dispositivo che non sono ancora stati sincronizzati qui, andranno persi. Continuare?</string>
     <string name="full_sync_confirmation_upgrade">A causa di un bug nella versione precedentemente installata di AnkiDroid, si consiglia di forzare una sincronizzazione completa.</string>
     <string name="sync_error_407_proxy_required">Autenticazione proxy richiesta.</string>

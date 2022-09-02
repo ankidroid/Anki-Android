@@ -40,11 +40,11 @@ import java.util.*
 
 object HelpDialog {
     private fun openManual(ankiActivity: AnkiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()))
+        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.manualUrl))
     }
 
     fun openFeedback(ankiActivity: AnkiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()))
+        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.feedbackUrl))
     }
 
     @JvmStatic

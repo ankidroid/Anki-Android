@@ -246,6 +246,7 @@
         <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
         <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>
     <string name="deck_picker_rev">इस डेक में आज के लिए पत्तियों की संख्या।</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>

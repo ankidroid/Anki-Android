@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">Czułość przy przewijaniu</string>
     <string name="tts" maxLength="41">Przetwarzanie tekstu na mowę</string>
     <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Pobierz media przy synchronizacji</string>
     <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
@@ -349,6 +352,7 @@
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>

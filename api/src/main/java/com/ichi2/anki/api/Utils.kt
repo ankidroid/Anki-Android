@@ -34,10 +34,11 @@ internal object Utils {
     private val tagPattern = Pattern.compile("<.*?>")
     private val imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
-    private val FIELD_SEPARATOR = Character.toString('\u001f')
+    private const val FIELD_SEPARATOR = '\u001f'.toString()
 
+    // TODO: Add contract for null -> null and non-null to non-null.
     @JvmStatic
-    fun joinFields(list: Array<String?>?): String? {
+    fun joinFields(list: Array<String>?): String? {
         return if (list != null) TextUtils.join("\u001f", list) else null
     }
 

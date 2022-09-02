@@ -40,7 +40,7 @@ object InitialActivity {
         if (CollectionHelper.getInstance().getColSafe(context) != null) {
             return null
         }
-        if (!AnkiDroidApp.isSdCardMounted()) {
+        if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SD_CARD_NOT_MOUNTED
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
@@ -79,8 +79,7 @@ object InitialActivity {
     @JvmStatic
     @CheckResult
     fun performSetupFromFreshInstallOrClearedPreferences(preferences: SharedPreferences): Boolean {
-        val lastVersionWasSet = "" != preferences.getString("lastVersion", "")
-        if (lastVersionWasSet) {
+        if (!wasFreshInstall(preferences)) {
             Timber.d("Not a fresh install [preferences]")
             return false
         }
@@ -89,6 +88,14 @@ object InitialActivity {
         setUpgradedToLatestVersion(preferences)
         return true
     }
+
+    /**
+     * true if the app was launched the first time
+     * false if the app was launched for the second time after a successful initialisation
+     * false if the app was launched after an update
+     */
+    fun wasFreshInstall(preferences: SharedPreferences) =
+        "" == preferences.getString("lastVersion", "")
 
     /** Sets the preference stating that the latest version has been applied  */
     @JvmStatic

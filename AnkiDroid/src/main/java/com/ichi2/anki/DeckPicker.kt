@@ -47,6 +47,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -80,6 +81,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
@@ -110,6 +112,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
+import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
@@ -146,6 +149,9 @@ import kotlin.math.roundToLong
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
 @KotlinCleanup("lots to do")
+@NeedsTest("On a new startup, the App Intro is displayed")
+@NeedsTest("If the collection has been created, the app intro is not displayed")
+@NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :
     NavigationDrawerActivity(),
     StudyOptionsListener,
@@ -379,6 +385,19 @@ open class DeckPicker :
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
+
+        // handle the first load: display the app introduction
+        if (!hasShownAppIntro()) {
+            val appIntro = Intent(this, IntroductionActivity::class.java)
+            appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivityWithoutAnimation(appIntro)
+            finish() // calls onDestroy() immediately
+            return
+        }
+        if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
+            mSyncOnResume = true
+        }
+
         setContentView(R.layout.homescreen)
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
@@ -460,6 +479,23 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
     }
 
+    private fun hasShownAppIntro(): Boolean {
+        val prefs = AnkiDroidApp.getSharedPrefs(this)
+
+        // if moving from 2.15 to 2.16 then we do not want to show the intro
+        // remove this after ~2.17 and default to 'false' if the pref is not set
+        if (!prefs.contains(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN)) {
+            return if (!InitialActivity.wasFreshInstall(prefs)) {
+                prefs.edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+                true
+            } else {
+                false
+            }
+        }
+
+        return prefs.getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
+    }
+
     /**
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
@@ -487,7 +523,6 @@ open class DeckPicker :
     }
 
     @VisibleForTesting
-    @KotlinCleanup("remove parameters named _")
     fun handleStartupFailure(failure: StartupFailure?) {
         when (failure) {
             SD_CARD_NOT_MOUNTED -> {
@@ -513,7 +548,7 @@ open class DeckPicker :
                 message(
                     text = getString(
                         R.string.ankidroid_init_failed_webview,
-                        AnkiDroidApp.getWebViewErrorMessage()
+                        AnkiDroidApp.webViewErrorMessage
                     )
                 )
                 positiveButton(R.string.close) {
@@ -554,37 +589,35 @@ open class DeckPicker :
         }
     }
 
-    @KotlinCleanup("remove parameters named _")
-    @KotlinCleanup("return early and remove else")
     fun requestStoragePermission() {
-        val storagePermissions = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+        fun showStoragePermissionDialog() {
+            val storagePermissions = arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
+        }
 
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
         val welcomeDialogDismissed = sharedPrefs.getBoolean("welcomeDialogDismissed", false)
         if (welcomeDialogDismissed) {
             // DEFECT #5847: This fails if the activity is killed.
             // Even if the dialog is showing, we want to show it again.
-            ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
-        } else {
-            Timber.i("Displaying initial permission request dialog")
-            // Request storage permission if we don't have it (e.g. on Android 6.0+)
-            MaterialDialog(this).show {
-                title(R.string.collection_load_welcome_request_permissions_title)
-                message(R.string.collection_load_welcome_request_permissions_details)
-                positiveButton(R.string.dialog_ok) {
-                    sharedPrefs.edit().putBoolean("welcomeDialogDismissed", true).apply()
-                    ActivityCompat.requestPermissions(
-                        this@DeckPicker,
-                        storagePermissions,
-                        REQUEST_STORAGE_PERMISSION
-                    )
-                }
-                cancelable(false)
-                cancelOnTouchOutside(false)
+            showStoragePermissionDialog()
+            return
+        }
+
+        Timber.i("Displaying initial permission request dialog")
+        // Request storage permission if we don't have it (e.g. on Android 6.0+)
+        MaterialDialog(this).show {
+            title(R.string.collection_load_welcome_request_permissions_title)
+            message(R.string.collection_load_welcome_request_permissions_details)
+            positiveButton(R.string.dialog_ok) {
+                sharedPrefs.edit { putBoolean("welcomeDialogDismissed", true) }
+                showStoragePermissionDialog()
             }
+            cancelable(false)
+            cancelOnTouchOutside(false)
         }
     }
 
@@ -828,8 +861,8 @@ open class DeckPicker :
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
             }
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
-            ImportUtils.getFileCachedCopy(this, data!!) ?: return
-            showThemedToast(this, "CSV importer is not implemented yet", true)
+            val path = ImportUtils.getFileCachedCopy(this, data!!) ?: return
+            startActivity(CsvImporter.getIntent(this, path))
         }
     }
 
@@ -861,7 +894,8 @@ open class DeckPicker :
 
     fun refreshState() {
         mActivityPaused = false
-        if (mSyncOnResume) {
+        // Due to the App Introduction, this may be called before permission has been granted.
+        if (mSyncOnResume && hasStorageAccessPermission(this)) {
             Timber.i("Performing Sync on Resume")
             sync()
             mSyncOnResume = false
@@ -924,19 +958,20 @@ open class DeckPicker :
     private fun automaticSync() {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
-        // Check whether the option is selected, the user is signed in and last sync was AUTOMATIC_SYNC_TIME ago
-        // (currently 10 minutes)
-        val hkey = preferences.getString("hkey", "")
+        // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
+        // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
+        val isLoggedIn = preferences.getString("hkey", "")!!.isNotEmpty()
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
-        if (hkey!!.isNotEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
-            Connection.isOnline && TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
-        ) {
+        val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
+        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+        val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
+
+        if (isLoggedIn && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
     }
 
-    @KotlinCleanup("once in Kotlin: use HandlerUtils.executeFunctionWithDelay")
     override fun onBackPressed() {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         if (isDrawerOpen) {
@@ -950,10 +985,10 @@ open class DeckPicker :
                     automaticSync()
                     finishWithAnimation()
                 } else {
-                    showThemedToast(this, getString(R.string.back_pressed_once), true)
+                    showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
                 mBackButtonPressedToExit = true
-                Handler(Looper.getMainLooper()).postDelayed({ mBackButtonPressedToExit = false }, Consts.SHORT_TOAST_DURATION)
+                HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToExit = false }
             }
         }
     }
@@ -1058,7 +1093,6 @@ open class DeckPicker :
         startActivityForResultWithAnimation(intent, ADD_NOTE, START)
     }
 
-    @KotlinCleanup(".remove { _: MaterialDialog?, _: DialogAction? -> } ")
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
 
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
@@ -1067,7 +1101,7 @@ open class DeckPicker :
         ) {
             if (!preferences.contains("softwareRender")) {
                 Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.")
-                preferences.edit().putBoolean("softwareRender", true).apply()
+                preferences.edit { putBoolean("softwareRender", true) }
             } else {
                 Timber.i("Android 8/8.1 detected, software render preference already exists.")
             }
@@ -1078,7 +1112,7 @@ open class DeckPicker :
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
             Timber.i("No space left")
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance())
-            preferences.edit().remove("noSpaceLeft").apply()
+            preferences.edit { remove("noSpaceLeft") }
         } else if (InitialActivity.performSetupFromFreshInstallOrClearedPreferences(preferences)) {
             onFinishedStartup()
         } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
@@ -1343,14 +1377,14 @@ open class DeckPicker :
     @KotlinCleanup("nullOrEmpty")
     fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             showSimpleNotification(
                 res.getString(R.string.app_name),
                 res.getString(messageResource),
                 NotificationChannels.Channel.SYNC
             )
         } else {
-            if (syncMessage == null || syncMessage.isEmpty()) {
+            if (syncMessage.isNullOrEmpty()) {
                 if (messageResource == R.string.youre_offline && !Connection.allowLoginSyncOnNoConnection) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     showSnackbar(messageResource) {
@@ -1363,13 +1397,12 @@ open class DeckPicker :
                     showSnackbar(messageResource)
                 }
             } else {
-                val res = AnkiDroidApp.getAppResources()
+                val res = AnkiDroidApp.appResources
                 showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
             }
         }
     }
 
-    @KotlinCleanup("?:")
     fun showImportDialog(id: Int, messageList: ArrayList<String>) {
         Timber.d("showImportDialog() delegating to ImportDialog")
         if (messageList.isEmpty()) {
@@ -1419,7 +1452,6 @@ open class DeckPicker :
     }
 
     // Callback method to handle database integrity check
-    @KotlinCleanup("remove _ parameters")
     override fun integrityCheck() {
         // #5852 - We were having issues with integrity checks where the users had run out of space.
         // display a dialog box if we don't have the space
@@ -1567,24 +1599,29 @@ open class DeckPicker :
             Timber.w("User not logged in")
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
-        } else {
+            return
+        }
+        /** Nested function that makes the connection to
+         * the sync server and starts syncing the data */
+        fun doSync() {
             val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
-
             if (!BackendFactory.defaultLegacySchema) {
                 handleNewSync(conflict, syncMedia)
             } else {
-                Connection.sync(
-                    mSyncListener,
-                    Connection.Payload(
-                        arrayOf(
-                            hkey,
-                            syncMedia,
-                            conflict,
-                            HostNumFactory.getInstance(baseContext)
-                        )
-                    )
-                )
+                val data = arrayOf(hkey, syncMedia, conflict, HostNumFactory.getInstance(baseContext))
+                Connection.sync(mSyncListener, Connection.Payload(data))
             }
+        }
+        // Warn the user in case the connection is metered
+        val meteredSyncIsAllowed = preferences.getBoolean(getString(R.string.metered_sync_key), false)
+        if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
+            MaterialDialog(this).show {
+                message(R.string.metered_sync_warning)
+                positiveButton(R.string.dialog_continue) { doSync() }
+                negativeButton(R.string.dialog_cancel)
+            }
+        } else {
+            doSync()
         }
     }
 
@@ -1608,7 +1645,6 @@ open class DeckPicker :
             mDialogDisplayFailure = false
         }
 
-        @KotlinCleanup("remove some _ parameters")
         override fun onPreExecute() {
             mCountUp = 0
             mCountDown = 0
@@ -1667,8 +1703,7 @@ open class DeckPicker :
 
             // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
             // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
-            val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-            preferences.edit().putLong("lastSyncTime", syncStartTime).apply()
+            AnkiDroidApp.getSharedPrefs(baseContext).edit { putLong("lastSyncTime", syncStartTime) }
         }
 
         override fun onProgressUpdate(vararg values: Any?) {
@@ -1724,11 +1759,10 @@ open class DeckPicker :
                     when (resultType) {
                         ConnectionResultType.BAD_AUTH -> {
                             // delete old auth information
-                            val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-                            val editor = preferences.edit()
-                            editor.putString("username", "")
-                            editor.putString("hkey", "")
-                            editor.apply()
+                            AnkiDroidApp.getSharedPrefs(baseContext).edit {
+                                putString("username", "")
+                                putString("hkey", "")
+                            }
                             // then show not logged in dialog
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
                         }
@@ -2506,11 +2540,10 @@ open class DeckPicker :
         return HandleEmptyCardListener(this)
     }
 
-    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int?, List<Long?>?>(deckPicker) {
+    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int, List<Long?>?>(deckPicker) {
         private val mNumberOfCards: Int = deckPicker.col.cardCount()
         private val mOnePercent: Int = mNumberOfCards / 100
         private var mIncreaseSinceLastUpdate = 0
-        @KotlinCleanup("remove _ parameters")
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
             MaterialDialog(deckPicker).show {
                 message(R.string.confirm_cancel)
@@ -2523,8 +2556,7 @@ open class DeckPicker :
             }
         }
 
-        @KotlinCleanup("scope function")
-        @KotlinCleanup("remove _ parameters")
+        @KotlinCleanup("Material Progress Dialog")
         override fun actualOnPreExecute(context: DeckPicker) {
             val onCancel = DialogInterface.OnCancelListener { _: DialogInterface? ->
                 val emptyCardTask = context.mEmptyCardTask
@@ -2536,16 +2568,12 @@ open class DeckPicker :
                 setTitle(R.string.emtpy_cards_finding)
                 setCancelable(true)
                 show()
+                setOnCancelListener(onCancel)
+                setCanceledOnTouchOutside(false)
             }
-            context.mProgressDialog!!.setOnCancelListener(onCancel)
-            context.mProgressDialog!!.setCanceledOnTouchOutside(false)
         }
 
-        @KotlinCleanup("don't handle null")
-        override fun actualOnProgressUpdate(context: DeckPicker, value: Int?) {
-            if (value == null) {
-                return
-            }
+        override fun actualOnProgressUpdate(context: DeckPicker, value: Int) {
             mIncreaseSinceLastUpdate += value
             // Increase each time at least a percent of card has been processed since last update
             if (mIncreaseSinceLastUpdate > mOnePercent) {
@@ -2613,7 +2641,7 @@ open class DeckPicker :
     internal inner class CheckDatabaseListener : TaskListener<String, Pair<Boolean, CheckDatabaseResult?>?>() {
         override fun onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker, AnkiDroidApp.getAppResources().getString(R.string.app_name),
+                this@DeckPicker, AnkiDroidApp.appResources.getString(R.string.app_name),
                 resources.getString(R.string.check_db_message), false
             )
         }
@@ -2689,6 +2717,14 @@ open class DeckPicker :
         const val RESULT_MEDIA_EJECTED = 202
         const val RESULT_DB_ERROR = 203
         const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
+
+        /**
+         * If passed into the intent, the user should have been logged in and DeckPicker
+         * should sync immediately.
+         *
+         * This is for the 'download existing collection from AnkiWeb' use case
+         */
+        const val INTENT_SYNC_FROM_LOGIN = "syncFromLogin"
 
         /**
          * Available options performed by other activities (request codes for onActivityResult())

@@ -76,7 +76,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         get() {
             val title: String
             title = if (mWholeCollection) {
-                AnkiDroidApp.getInstance().resources.getString(R.string.card_browser_all_decks)
+                AnkiDroidApp.instance.resources.getString(R.string.card_browser_all_decks)
             } else {
                 col.decks.get(mDeckId).getString("name")
             }
@@ -712,7 +712,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
     /**
      * Intervals ***********************************************************************************************
      */
-    fun calculateIntervals(context: Context?, type: AxisType): Boolean {
+    fun calculateIntervals(context: Context, type: AxisType): Boolean {
         mDynamicAxis = true
         mType = type
         var all: Double

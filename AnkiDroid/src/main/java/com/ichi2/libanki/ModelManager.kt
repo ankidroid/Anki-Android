@@ -258,9 +258,9 @@ abstract class ModelManager(protected val col: Collection) {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
-    open fun getCardIdsForModel(modelId: NoteTypeId, ords: IntArray): List<Long?>? {
+    open fun getCardIdsForModel(modelId: NoteTypeId, ords: IntArray): List<Long>? {
         val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
-        val cids: List<Long?> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
+        val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, modelId, Utils.ids2str(ords))
 

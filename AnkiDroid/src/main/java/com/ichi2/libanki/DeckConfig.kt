@@ -46,7 +46,7 @@ class DeckConfig : JSONObject {
     /**
      * Creates a deck config object form a json string
      */
-    constructor(json: String?, source: Source) : super(json) {
+    constructor(json: String, source: Source) : super(json) {
         this.source = source
     }
 

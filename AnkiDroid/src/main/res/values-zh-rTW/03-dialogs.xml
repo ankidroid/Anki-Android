@@ -237,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">此牌組中今天要看的新卡片數</string>
     <string name="deck_picker_rev">詞牌組今天到期的卡片數量</string>
     <string name="deck_picker_lrn">詞牌組中學習中的卡片數</string>

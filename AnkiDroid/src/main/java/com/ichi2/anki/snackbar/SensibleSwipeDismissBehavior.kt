@@ -179,6 +179,6 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
 @VisibleForTesting enum class Dismiss { DoNotDismiss, ToTheLeft, ToTheRight }
 
 private val FLING_TO_DISMISS_SPEED_THRESHOLD =
-    UIUtils.convertDpToPixel(1000f, AnkiDroidApp.getInstance().applicationContext)
+    UIUtils.convertDpToPixel(1000f, AnkiDroidApp.instance.applicationContext)
 
 private const val DRAG_TO_DISMISS_DISTANCE_RATIO = .5f

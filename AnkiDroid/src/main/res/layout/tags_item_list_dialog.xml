@@ -2,7 +2,7 @@
 <LinearLayout android:id="@+id/tags_dialog_tag_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
@@ -12,8 +12,7 @@
     android:orientation="horizontal"
     android:paddingBottom="5dp"
     android:paddingEnd="8dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
+    android:paddingStart="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
@@ -34,8 +33,8 @@
 
     <com.ichi2.ui.CheckBoxTriStates
         android:id="@+id/tags_dialog_tag_item_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:clickable="false"
         app:cycle_checked_to_indeterminate="false"
         app:cycle_indeterminate_to_checked="false"/>

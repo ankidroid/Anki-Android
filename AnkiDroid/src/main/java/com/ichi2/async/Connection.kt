@@ -20,9 +20,6 @@ package com.ichi2.async
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.PowerManager
 import android.os.PowerManager.WakeLock
 import android.util.Pair
@@ -46,6 +43,7 @@ import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import okhttp3.Response
 import timber.log.Timber
@@ -87,7 +85,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     override fun onPreExecute() {
         super.onPreExecute()
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().applicationContext)) {
+        if (Permissions.canUseWakeLock(AnkiDroidApp.instance.applicationContext)) {
             mWakeLock.acquire()
         }
         if (mListener != null) {
@@ -254,7 +252,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         // A number AnkiWeb told us to send back. Probably to choose the best server for the user
         val hostNum = data.data[3] as HostNum
         // Use safe version that catches exceptions so that full sync is still possible
-        val col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance())
+        val col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.instance)
         var colCorruptFullSync = false
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
             colCorruptFullSync = if (FULL_DOWNLOAD == conflictResolution) {
@@ -375,10 +373,10 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                     ret = mediaClient.sync()
                     if (ret.first == null) {
                         mediaError =
-                            AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)
+                            AnkiDroidApp.appResources.getString(R.string.sync_media_error)
                     } else {
                         if (CORRUPT == ret.first) {
-                            mediaError = AnkiDroidApp.getAppResources()
+                            mediaError = AnkiDroidApp.appResources
                                 .getString(R.string.sync_media_db_error)
                             noMediaChanges = true
                         }
@@ -387,7 +385,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             noMediaChanges = true
                         }
                         if (MEDIA_SANITY_FAILED == ret.first) {
-                            mediaError = AnkiDroidApp.getAppResources()
+                            mediaError = AnkiDroidApp.appResources
                                 .getString(R.string.sync_media_sanity_failed)
                         } else {
                             publishProgress(R.string.sync_media_success)
@@ -405,9 +403,9 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                     val downloadedCount = mediaClient.getDownloadCount()
                     val uploadedCount = mediaClient.getUploadCount()
                     mediaError = if (downloadedCount == 0 && uploadedCount == 0) {
-                        "${AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)}\n\n${e.localizedMessage}"
+                        "${AnkiDroidApp.appResources.getString(R.string.sync_media_error)}\n\n${e.localizedMessage}"
                     } else {
-                        "${AnkiDroidApp.getAppResources().getString(R.string.sync_media_partial_updated,downloadedCount,uploadedCount)}\n\n${e.localizedMessage}"
+                        "${AnkiDroidApp.appResources.getString(R.string.sync_media_partial_updated,downloadedCount,uploadedCount)}\n\n${e.localizedMessage}"
                     }
                 }
             }
@@ -532,7 +530,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         // #7108: AsyncTask
         @KotlinCleanup("Scoped function")
         private fun launchConnectionTask(listener: TaskListener, data: Payload): Connection? {
-            if (!isOnline) {
+            if (!NetworkUtils.isOnline && !allowLoginSyncOnNoConnection) {
                 data.success = false
                 listener.onDisconnected()
                 return null
@@ -575,31 +573,6 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             return data
         }
 
-        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
-        val isOnline: Boolean
-            get() {
-                if (allowLoginSyncOnNoConnection) {
-                    return true
-                }
-                val cm = AnkiDroidApp.getInstance().applicationContext
-                    .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val network = cm.activeNetwork ?: return false
-                    val networkCapabilities = cm.getNetworkCapabilities(network) ?: return false
-                    val isInternetSuspended =
-                        !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
-                    (
-                        networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-                            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) &&
-                            !isInternetSuspended
-                        )
-                } else {
-                    val networkInfo = cm.activeNetworkInfo
-                    networkInfo != null && networkInfo.isConnected
-                }
-            }
-
         @Synchronized // #7108: AsyncTask
         fun cancel() {
             Timber.d("Cancelled Connection task")
@@ -609,11 +582,11 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     }
 
     init {
-        val context = AnkiDroidApp.getInstance().applicationContext
+        val context = AnkiDroidApp.instance.applicationContext
         val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         mWakeLock = pm.newWakeLock(
             PowerManager.PARTIAL_WAKE_LOCK,
-            AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection"
+            AnkiDroidApp.appResources.getString(R.string.app_name) + ":Connection"
         )
     }
 }

@@ -17,6 +17,9 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.VisibleForTesting
+import anki.backend.backendError
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
@@ -24,6 +27,7 @@ import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
@@ -47,8 +51,12 @@ object CollectionManager {
      */
     private var collection: Collection? = null
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
+
+    private val robolectric = "robolectric" == Build.FINGERPRINT
+
+    @VisibleForTesting
+    var emulateOpenFailure = false
 
     /**
      * Execute the provided block on a serial queue, to ensure concurrent access
@@ -151,7 +159,7 @@ object CollectionManager {
     /** See [ensureBackend]. This must only be run inside the queue. */
     private fun ensureBackendInner() {
         if (backend == null) {
-            backend = BackendFactory.getBackend(AnkiDroidApp.getInstance())
+            backend = BackendFactory.getBackend(AnkiDroidApp.instance)
         }
     }
 
@@ -192,19 +200,39 @@ object CollectionManager {
     /** See [ensureOpen]. This must only be run inside the queue. */
     private fun ensureOpenInner() {
         ensureBackendInner()
+        if (emulateOpenFailure) {
+            throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
+        }
         if (collection == null || collection!!.dbClosed) {
             val path = createCollectionPath()
             collection =
-                collection(AnkiDroidApp.getInstance(), path, server = false, log = true, backend)
+                collection(AnkiDroidApp.instance, path, server = false, log = true, backend)
         }
     }
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
     fun createCollectionPath(): String {
-        val dir = CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance())
+        val dir = CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance)
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
+    }
+
+    /**
+     * Like [withQueue], but can be used in a synchronous context.
+     *
+     * Note: Because [runBlocking] inside [runTest] will lead to
+     * deadlocks, this will not block when run under Robolectric,
+     * and there is no guarantee about concurrent access.
+     */
+    private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
+        return if (robolectric) {
+            block(this)
+        } else {
+            runBlocking {
+                withQueue(block)
+            }
+        }
     }
 
     @JvmStatic
@@ -220,7 +248,12 @@ object CollectionManager {
      */
     @JvmStatic
     fun getColUnsafe(): Collection {
-        return logUIHangs { runBlocking { withCol { this } } }
+        return logUIHangs {
+            blockForQueue {
+                ensureOpenInner()
+                collection!!
+            }
+        }
     }
 
     /**
@@ -263,8 +296,10 @@ object CollectionManager {
     @JvmStatic
     fun isOpenUnsafe(): Boolean {
         return logUIHangs {
-            runBlocking {
-                withQueue {
+            blockForQueue {
+                if (emulateOpenFailure) {
+                    false
+                } else {
                     collection?.dbClosed == false
                 }
             }
@@ -277,13 +312,11 @@ object CollectionManager {
      */
     @JvmStatic
     fun setColForTests(col: Collection?) {
-        runBlocking {
-            withQueue {
-                if (col == null) {
-                    ensureClosedInner()
-                }
-                collection = col
+        blockForQueue {
+            if (col == null) {
+                ensureClosedInner()
             }
+            collection = col
         }
     }
 
@@ -329,5 +362,11 @@ object CollectionManager {
             ensureBackendInner()
             importCollectionPackage(backend!!, createCollectionPath(), colpkgPath)
         }
+    }
+
+    fun setTestDispatcher(dispatcher: CoroutineDispatcher) {
+        // note: we avoid the call to .limitedParallelism() here,
+        // as it does not seem to be compatible with the test scheduler
+        queue = dispatcher
     }
 }

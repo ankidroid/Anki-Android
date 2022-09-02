@@ -89,7 +89,7 @@ class PieChartParameterizedTest {
 
     companion object {
         private const val PRECISION = (2 * 1E-3f).toDouble()
-        private fun closeTo(v: Double): FloatMatcher {
+        private fun closeTo(v: Double): (argument: Float) -> Boolean {
             return FloatMatcher.closeTo(v, PRECISION)
         }
 

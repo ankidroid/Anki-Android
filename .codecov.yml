@@ -14,3 +14,13 @@ coverage:
         # dropping slightly is ok - this stops the check failing on test timing variability
         # .12 was observed as the largest variability owing to timing forcing different test branch choice
         threshold: 0.15
+        # BUG: our coverage fluctuates, so codecov marks this as a build failure (#12227)
+        # stop codecov from failing CI until this is fixed
+        # https://docs.codecov.com/docs/commit-status#informational
+        informational: true
+    patch:
+      default:
+        # BUG: our coverage fluctuates, so codecov marks this as a build failure (#12227)
+        # stop codecov from failing CI until this is fixed
+        # https://docs.codecov.com/docs/commit-status#informational
+        informational: true

@@ -21,7 +21,6 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
 import com.ichi2.utils.Computation
@@ -67,17 +66,6 @@ class SchedulerService {
                 newCard?.render_output(true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
-        }
-    }
-
-    class AnswerAndGetCard(
-        private val oldCard: Card,
-        @BUTTON_TYPE private val ease: Int
-    ) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            Timber.i("Answering card %d", oldCard.id)
-            col.sched.answerCard(oldCard, ease)
-            return GetCard.getCard(this)
         }
     }
 

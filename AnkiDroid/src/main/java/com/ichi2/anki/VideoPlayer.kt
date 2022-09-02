@@ -31,6 +31,7 @@ import timber.log.Timber
 
 @KotlinCleanup("for better possibly-null handling")
 class VideoPlayer : Activity(), SurfaceHolder.Callback {
+    @KotlinCleanup("lateinit")
     private var mVideoView: VideoView? = null
     private var mPath: String? = null
     private var mSoundPlayer: Sound? = null
@@ -64,9 +65,10 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             finish()
             return
         }
-        mSoundPlayer!!.playSound(mPath, { mp: MediaPlayer? ->
+        mSoundPlayer!!.playSound(mPath!!, { mp: MediaPlayer? ->
             finish()
-            val originalListener = mSoundPlayer!!.mediaCompletionListener
+
+            val originalListener = Sound.mediaCompletionListener
             originalListener?.onCompletion(mp)
         }, mVideoView, null)
     }
@@ -87,7 +89,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        mSoundPlayer!!.notifyConfigurationChanged(mVideoView)
+        mSoundPlayer!!.notifyConfigurationChanged(mVideoView!!)
     }
 
     public override fun onStop() {

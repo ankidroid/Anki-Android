@@ -242,7 +242,7 @@ object CrashReportService {
     @JvmStatic
     fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?, onlyIfSilent: Boolean) {
         sendAnalyticsException(e, false)
-        AnkiDroidApp.sSentExceptionReportHack = true
+        AnkiDroidApp.sentExceptionReportHack = true
         if (onlyIfSilent) {
             val reportMode = AnkiDroidApp.getSharedPrefs(mApplication.applicationContext).getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
             if (FEEDBACK_REPORT_ALWAYS != reportMode) {

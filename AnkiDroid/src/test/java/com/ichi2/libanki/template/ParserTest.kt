@@ -18,9 +18,9 @@ package com.ichi2.libanki.template
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.template.TokenizerTest.Companion.new_to_legacy_template
+import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -51,25 +51,17 @@ class ParserTest : RobolectricTest() {
         )
         testParsing("{{#Foo}}{{Test}}{{/Foo}}", Conditional("Foo", Replacement("Test")))
         testParsing("{{^Foo}}{{Test}}{{/Foo}}", NegatedConditional("Foo", Replacement("Test")))
-        try {
+        assertThrows<TemplateError.NoClosingBrackets> {
             ParsedNode.parse_inner("{{foo")
-            fail()
-        } catch (ncb: TemplateError.NoClosingBrackets) {
         }
-        try {
+        assertThrows<TemplateError.ConditionalNotClosed> {
             ParsedNode.parse_inner("{{#foo}}")
-            fail()
-        } catch (ncb: TemplateError.ConditionalNotClosed) {
         }
-        try {
+        assertThrows<TemplateError.ConditionalNotOpen> {
             ParsedNode.parse_inner("{{/foo}}")
-            fail()
-        } catch (ncb: TemplateError.ConditionalNotOpen) {
         }
-        try {
+        assertThrows<TemplateError.WrongConditionalClosed> {
             ParsedNode.parse_inner("{{#bar}}{{/foo}}")
-            fail()
-        } catch (ncb: TemplateError.WrongConditionalClosed) {
         }
     }
 

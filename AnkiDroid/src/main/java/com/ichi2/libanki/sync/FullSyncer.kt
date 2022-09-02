@@ -82,7 +82,7 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
         } else {
             // Allow for case where collection is completely unreadable
             Timber.w("Collection was unexpectedly null when doing full sync download")
-            path = CollectionHelper.getCollectionPath(AnkiDroidApp.getInstance())
+            path = CollectionHelper.getCollectionPath(AnkiDroidApp.instance)
         }
         val tpath = "$path.tmp"
         try {
@@ -107,7 +107,7 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
         mCon.publishProgress(R.string.sync_check_download_file)
         var tempDb: DB? = null
         try {
-            tempDb = DB.withAndroidFramework(AnkiDroidApp.getInstance(), tpath)
+            tempDb = DB.withAndroidFramework(AnkiDroidApp.instance, tpath)
             if (!"ok".equals(tempDb.queryString("PRAGMA integrity_check"), ignoreCase = true)) {
                 Timber.e("Full sync - downloaded file corrupt")
                 return ConnectionResultType.REMOTE_DB_ERROR

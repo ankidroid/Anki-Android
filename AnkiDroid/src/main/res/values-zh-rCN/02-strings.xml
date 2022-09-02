@@ -172,11 +172,11 @@
     <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
     <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
     <string name="import_error_corrupt_zip">apkg 文件已损坏。请删除并重新下载。\n\n根原因：%s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
     <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">缓存文件失败 (可能超出存储空间)</string>
     <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
     <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
     <string name="import_stats_error">导入以下文件时发生了一些错误：\n%s</string>
@@ -279,25 +279,7 @@
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
     <string name="title_whiteboard_editor">白板编辑器</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[找到空的卡片。请运行 工具 > 空卡片。]]></string>
-    <string name="note_importer_error_empty_first_field">第一个字段为空：%s</string>
-    <string name="note_importer_error_first_field_matched">第一个字段匹配：%s</string>
-    <string name="note_importer_error_added_duplicate_first_field">已添加重复的第一个字段：%s</string>
-    <string name="note_importer_error_appeared_twice">在文件中出现两次：%s</string>
-    <string name="note_importer_error_empty_notes">一个或多个笔记未被导入，因为它们没有生成任何卡片。 当您有空字段或您未将文本文件中的内容映射到正确字段时，可能发生此情况</string>
-    <string name="csv_importer_error_invalid_field_count">“%1$s”有 %2$d 个字段，而期望 %3$d 个字段</string>
-    <string name="csv_importer_error_exception">已中止：%s</string>
     <string name="user_is_a_robot">检测到自动测试。如果您是真人，请联系 AnkiDroid 支持</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d 条笔记已添加</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d 条笔记已更新</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d 条笔记未变更</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">此卡片使用不受支持的 AnkiDroid 功能。请联系开发者 %1$s，或查看维基。%2$s</string>
     <string name="invalid_json_data">卡片提供了无效数据。%s</string>
@@ -363,10 +345,6 @@
     <string name="check_network">请检查您的网络连接。</string>
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="home">主页</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">已映射到 %s</string>
-    <string name="import_mapped_to_tags">映射到标签</string>
-    <string name="import_mapped_to_nothing">已忽略</string>
     <!-- Reviewer actions -->
     <string name="buried_card">搁置的卡片</string>
     <string name="buried_note">隐藏的笔记</string>
@@ -399,4 +377,15 @@
     <string name="expand_tag">展开标签 \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">访问牌组集合失败。请重试！</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">学得更少</string>
+    <string name="intro_ankidroid_tagline_two">记得更多</string>
+    <string name="intro_short_ankidroid_explanation">Anki 的卡片调度器通过增强你最薄弱的记忆和保存你最强大的记忆来节省时间</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">开始</string>
+    <string name="intro_sync_from_ankiweb">从 AnkiWeb 同步</string>
+    <string name="already_logged_in">已经登录</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

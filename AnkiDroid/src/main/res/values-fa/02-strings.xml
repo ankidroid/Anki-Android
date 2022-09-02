@@ -288,28 +288,7 @@
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[کارت های خالی پیدا شد. لطفا ابزار>کارت های خالی را اجرا کنید.]]></string>
-    <string name="note_importer_error_empty_first_field">فیلد اول خالی: %s</string>
-    <string name="note_importer_error_first_field_matched">فیلد اول مطابق با: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">دوبار در فایل %s وجود دارد</string>
-    <string name="note_importer_error_empty_notes">یک یا تعداد بیشتری یادداشت، درون‌ریزی نشدند زیرا کارتی تولید نکردند. این اتفاق می‌تواند زمانی رخ دهد که فیلدهای خالی داشته و یا نتوانسته باشید نگاشت محتوای داخل متن روی فیلدها را به درستی انجام دهید.</string>
-    <string name="csv_importer_error_invalid_field_count">\'%1$s\' دارای %2$d فیلد است، تعداد مورد انتظار: %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d یادداشت اضافه شد</item>
-        <item quantity="other">%d یادداشت اضافه شد</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d یادداشت به روزرسانی شد</item>
-        <item quantity="other">%d یادداشت به روزرسانی شد</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d یادداشت بدون تغییر</item>
-        <item quantity="other">%d یادداشت بدون تغییر</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
@@ -375,10 +354,6 @@
     <string name="check_network">لطفا اتصال اینترنت خود را چک کنید</string>
     <string name="search_using_deck_name">جست و جو با استفاده از اسم دسته</string>
     <string name="home">خانه</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">انتقال به %s</string>
-    <string name="import_mapped_to_tags">انتقال به تگ ها</string>
-    <string name="import_mapped_to_nothing">صرف نظر</string>
     <!-- Reviewer actions -->
     <string name="buried_card">کارت دفن شد</string>
     <string name="buried_note">یادداشت دفن شد</string>
@@ -411,4 +386,15 @@
     <string name="expand_tag">گسترش تگ \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">دسترسی به مجموعه ناموقف بود. لطفا دوباره تلاش کنید</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

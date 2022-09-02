@@ -38,7 +38,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask
-import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
@@ -53,10 +52,10 @@ import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -131,6 +130,9 @@ open class Collection(
         get() = dbInternal!!
 
     var dbInternal: DB? = null
+
+    /** whether the v3 scheduler is enabled */
+    open var v3Enabled: Boolean = false
 
     /**
      * Getters/Setters ********************************************************** *************************************
@@ -258,7 +260,7 @@ open class Collection(
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            if (!BackendFactory.defaultLegacySchema && newBackend.v3Enabled) {
+            if (v3Enabled) {
                 sched = SchedV3(this.newBackend)
             } else {
                 sched = SchedV2(this)
@@ -483,6 +485,9 @@ open class Collection(
             dbInternal = db_
             media.connect()
             _openLog()
+            if (afterFullSync) {
+                _loadScheduler()
+            }
             return created
         } else {
             return false
@@ -685,7 +690,7 @@ open class Collection(
         return ncards
     }
 
-    fun remNotes(ids: LongArray?) {
+    open fun remNotes(ids: LongArray) {
         val list = db
             .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
         remCards(list)
@@ -760,14 +765,14 @@ open class Collection(
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
     fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int?, Int>>(Utils.collection2Array(nids), model)
+        return genCards<CollectionTask<Int, Int>>(Utils.collection2Array(nids), model)
     }
 
     fun <T> genCards(
         nids: kotlin.collections.Collection<Long>,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
@@ -780,7 +785,7 @@ open class Collection(
         nid: NoteId,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards("($nid)", model, task)
     }
 
@@ -794,7 +799,7 @@ open class Collection(
         nids: LongArray,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         // build map of (nid,ord) so we don't create dupes
         val snids = Utils.ids2str(nids)
         return genCards(snids, model, task)
@@ -808,11 +813,12 @@ open class Collection(
      * @param <T>
      </T> */
     @KotlinCleanup("see if we can cleanup if (!have.containsKey(nid)) { to a default dict or similar?")
+    @KotlinCleanup("use task framework to handle cancellation, don't return null")
     fun <T> genCards(
         snids: String,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         val nbCount = noteCount()
         // For each note, indicates ords of cards it contains
         val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
@@ -1073,7 +1079,7 @@ open class Collection(
         _remNotes(nids)
     }
 
-    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int?>?, T : CancelListener? {
+    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
         val rem: MutableList<Long> = ArrayList()
         for (m in models.all()) {
             rem.addAll(genCards(models.nids(m), m, task)!!)
@@ -1167,7 +1173,7 @@ open class Collection(
         did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int
     ): HashMap<String, String> {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
@@ -1180,7 +1186,7 @@ open class Collection(
         did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int,
         browser: Boolean,
         qfmtParam: String?,
@@ -1192,7 +1198,7 @@ open class Collection(
         var afmt = afmtParam
         val fmap = Models.fieldMap(model)
         val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String?> = HashUtil.HashMapInit(maps.size + 8)
+        val fields: MutableMap<String, String> = HashUtil.HashMapInit(maps.size + 8)
         for ((key, value) in maps) {
             fields[key] = flist[value.first]
         }
@@ -1200,7 +1206,7 @@ open class Collection(
         fields["Tags"] = tags.trim { it <= ' ' }
         fields["Type"] = model.getString("name")
         fields["Deck"] = decks.name(did)
-        val baseName = Decks.basename(fields["Deck"])
+        val baseName = Decks.basename(fields["Deck"]!!)
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
         val template: JSONObject = if (model.isStd) {
@@ -1231,7 +1237,7 @@ open class Collection(
                     .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
                 // the following line differs from libanki // TODO: why?
                 fields["FrontSide"] =
-                    d["q"] // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                    d["q"]!! // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
             var html: String
             html = try {
@@ -1309,16 +1315,8 @@ open class Collection(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    fun findCards(search: String, order: SortOrder): List<Long> {
+    open fun findCards(search: String, order: SortOrder): List<Long> {
         return Finder(this).findCards(search, order)
-    }
-
-    /**
-     * @return A list of card ids
-     * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
-     */
-    open fun findCards(search: String, order: SortOrder, task: PartialSearch?): List<Long?>? {
-        return Finder(this).findCards(search, order, task)
     }
 
     /** Return a list of card ids  */
@@ -1459,6 +1457,15 @@ open class Collection(
         return lastUndo.undo(this)
     }
 
+    @BlocksSchemaUpgrade("audit all UI actions that call this, and make sure they call a backend method")
+    @RustCleanup("this will be unnecessary after legacy schema dropped")
+    /**
+     * In the legacy schema, this adds the undo action to the undo list.
+     * In the new schema, this action is not useful, as the backend stores its own
+     * undo information, and will clear the [undo] list when the backend has an undo
+     * operation available. If you find an action is not undoable with the new backend,
+     * you probably need to be calling the relevant backend method to perform it,
+     * instead of trying to do it with raw SQL. */
     fun markUndo(undoAction: UndoAction) {
         Timber.d("markUndo() of type %s", undoAction.javaClass)
         undo.add(undoAction)
@@ -2544,6 +2551,13 @@ open class Collection(
         }
     }
 
+    open fun setDeck(cids: LongArray, did: Long) {
+        db.execute(
+            "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
+            did, usn(), time.intTime()
+        )
+    }
+
     class CheckDatabaseResult(private val oldSize: Long) {
         private val mProblems: MutableList<String?> = ArrayList()
         var cardsWithFixedHomeDeckCount = 0
@@ -2592,9 +2606,8 @@ open class Collection(
      * Allows a collection to be used as a CollectionGetter
      * @return Itself.
      */
-    override fun getCol(): Collection {
-        return this
-    }
+    override val col: Collection
+        get() = this
 
     /** https://stackoverflow.com/questions/62150333/lateinit-property-mock-object-has-not-been-initialized */
     @VisibleForTesting

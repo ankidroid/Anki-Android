@@ -18,8 +18,8 @@ package com.ichi2.libanki
 import android.content.Context
 import android.content.res.Resources
 import anki.config.ConfigKey
-import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.utils.TimeManager
@@ -70,6 +70,14 @@ class CollectionV16(
 
     override val newDecks: DecksV16
         get() = this.decks as DecksV16
+
+    /** True if the V3 scheduled is enabled when schedVer is 2. */
+    override var v3Enabled: Boolean
+        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+        set(value) {
+            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
+            _loadScheduler()
+        }
 
     override fun load() {
         _config = initConf(null)
@@ -125,15 +133,10 @@ class CollectionV16(
         return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
     }
 
-    @RustCleanup("drop the PartialSearch handling in the browse screen, which slows things down")
     override fun findCards(
         search: String,
         order: SortOrder,
-        task: CollectionTask.PartialSearch?
     ): List<Long> {
-        if (task?.isCancelled() == true) {
-            return listOf()
-        }
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
@@ -219,11 +222,21 @@ class CollectionV16(
         return super.undo()
     }
 
-    /** True if the V3 scheduled is enabled when schedVer is 2. */
-    var v3Enabled: Boolean
-        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
-        set(value) {
-            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
-            _loadScheduler()
-        }
+    override fun remNotes(ids: LongArray) {
+        backend.removeNotes(noteIds = ids.asIterable(), cardIds = listOf())
+    }
+
+    override fun setDeck(cids: LongArray, did: Long) {
+        backend.setDeck(cardIds = cids.asIterable(), deckId = did)
+    }
+
+    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. */
+    fun updateNote(note: Note) {
+        backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
+    }
+
+    /** Change the flag color of the specified cards. flag=0 removes flag. */
+    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
+        backend.setFlag(cardIds = cids, flag = flag)
+    }
 }

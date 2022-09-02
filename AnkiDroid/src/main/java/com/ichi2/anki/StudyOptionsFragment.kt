@@ -352,7 +352,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
             // Switch on or off undo depending on whether undo is available
 
+
             menu.findItem(R.id.action_undo).isVisible = false
+
 
             if (!mFragmented) {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
