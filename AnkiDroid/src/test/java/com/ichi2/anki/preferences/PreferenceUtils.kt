@@ -16,11 +16,57 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
+import androidx.annotation.XmlRes
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.utils.getInstanceFromClassName
+import org.xmlpull.v1.XmlPullParser
 import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceUtils {
+    private fun getFragmentsClassNamesFromXml(context: Context, @XmlRes xml: Int): List<String> {
+        val fragments = mutableListOf<String>()
+
+        val xrp = context.resources.getXml(xml).apply {
+            setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true)
+            setFeature(XmlPullParser.FEATURE_REPORT_NAMESPACE_ATTRIBUTES, true)
+        }
+
+        while (xrp.eventType != XmlPullParser.END_DOCUMENT) {
+            if (xrp.eventType == XmlPullParser.START_TAG) {
+                val attr = xrp.getAttributeValue(AnkiDroidApp.ANDROID_NAMESPACE, "fragment")
+                if (attr != null) {
+                    fragments.add(attr)
+                }
+            }
+            xrp.next()
+        }
+        return fragments.toList()
+    }
+
+    /** @return fragments found on [xml] */
+    private fun getFragmentsFromXml(context: Context, @XmlRes xml: Int): List<Fragment> {
+        return getFragmentsClassNamesFromXml(context, xml).map { getInstanceFromClassName(it) }
+    }
+
+    /** @return recursively fragments found on [xml] and on their children **/
+    private fun getFragmentsFromXmlRecursively(context: Context, @XmlRes xml: Int): List<Fragment> {
+        val fragments = getFragmentsFromXml(context, xml).toMutableList()
+        for (fragment in fragments.filterIsInstance<SettingsFragment>()) {
+            fragments.addAll(getFragmentsFromXmlRecursively(context, fragment.preferenceResource))
+        }
+        return fragments.toList()
+    }
+
+    /** @return [List] of all the distinct preferences fragments **/
+    fun getAllPreferencesFragments(context: Context): List<Fragment> {
+        val fragments = getFragmentsFromXmlRecursively(context, R.xml.preference_headers) + HeaderFragment()
+        return fragments.distinctBy { it::class } // and remove any repeated fragments
+    }
+
     @JvmStatic
     fun getAllCustomButtonKeys(context: Context): Set<String> {
         val ret = AtomicReference<Set<String>>()

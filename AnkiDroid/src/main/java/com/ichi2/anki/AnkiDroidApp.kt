@@ -307,6 +307,7 @@ open class AnkiDroidApp : Application() {
         @JvmField
         var TESTING_SCOPED_STORAGE = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
+        const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 
         // Tag for logging messages.
         const val TAG = "AnkiDroid"
