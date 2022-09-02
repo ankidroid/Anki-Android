@@ -46,6 +46,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.util.*
 
@@ -93,7 +94,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
             HeaderFragment()
         } else {
             try {
-                Class.forName(fragmentClassName).newInstance() as Fragment
+                getInstanceFromClassName<Fragment>(fragmentClassName)
             } catch (e: Exception) {
                 throw RuntimeException("Failed to load $fragmentClassName", e)
             }
