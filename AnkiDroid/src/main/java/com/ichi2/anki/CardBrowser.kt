@@ -141,9 +141,8 @@ open class CardBrowser :
     lateinit var cardsListView: ListView
     private var mSearchView: CardBrowserSearchView? = null
 
-    @JvmField
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var mCardsAdapter: MultiColumnListAdapter? = null
+    lateinit var cardsAdapter: MultiColumnListAdapter
 
     private var mSearchTerms: String = ""
     private var mRestrictOnDeck: String? = null
@@ -443,7 +442,7 @@ open class CardBrowser :
         selectedCardIds.run { // to prevent computing selectedCardIds multiple times
             if (isEmpty()) {
                 endMultiSelectMode()
-                mCardsAdapter!!.notifyDataSetChanged()
+                cardsAdapter.notifyDataSetChanged()
             } else {
                 if (contains(reviewerCardId)) {
                     mReloadRequired = true
@@ -565,9 +564,9 @@ open class CardBrowser :
                     mColumn1Index = pos
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit()
                         .putInt("cardBrowserColumn1", mColumn1Index).apply()
-                    val fromMap = mCardsAdapter!!.fromMapping
+                    val fromMap = cardsAdapter.fromMapping
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index]
-                    mCardsAdapter!!.fromMapping = fromMap
+                    cardsAdapter.fromMapping = fromMap
                 }
             }
 
@@ -594,9 +593,9 @@ open class CardBrowser :
                     mColumn2Index = pos
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit()
                         .putInt("cardBrowserColumn2", mColumn2Index).apply()
-                    val fromMap = mCardsAdapter!!.fromMapping
+                    val fromMap = cardsAdapter.fromMapping
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index]
-                    mCardsAdapter!!.fromMapping = fromMap
+                    cardsAdapter.fromMapping = fromMap
                 }
             }
 
@@ -609,7 +608,7 @@ open class CardBrowser :
         val sflCustomFont = preferences.getString("browserEditorFont", "")
         val columnsContent = arrayOf(COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index])
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
-        mCardsAdapter = MultiColumnListAdapter(
+        cardsAdapter = MultiColumnListAdapter(
             this,
             R.layout.card_item_browser,
             columnsContent, intArrayOf(R.id.card_sfld, R.id.card_column2),
@@ -617,7 +616,7 @@ open class CardBrowser :
             sflCustomFont
         )
         // link the adapter to the main mCardsListView
-        cardsListView.adapter = mCardsAdapter
+        cardsListView.adapter = cardsAdapter
         // make the items (e.g. question & answer) render dynamically when scrolling
         cardsListView.setOnScrollListener(RenderOnScroll())
         // set the spinner index
@@ -664,7 +663,7 @@ open class CardBrowser :
                 cb.toggle()
                 onCheck(position, view)
                 recenterListView(view)
-                mCardsAdapter!!.notifyDataSetChanged()
+                cardsAdapter.notifyDataSetChanged()
             }
             true
         }
@@ -1239,11 +1238,11 @@ open class CardBrowser :
 
         if (truncate.isChecked) {
             isTruncated = false
-            mCardsAdapter!!.notifyDataSetChanged()
+            cardsAdapter.notifyDataSetChanged()
             truncate.isChecked = false
         } else {
             isTruncated = true
-            mCardsAdapter!!.notifyDataSetChanged()
+            cardsAdapter.notifyDataSetChanged()
             truncate.isChecked = true
         }
     }
@@ -1258,7 +1257,7 @@ open class CardBrowser :
         )
         mCheckedCards.clear()
         endMultiSelectMode()
-        mCardsAdapter!!.notifyDataSetChanged()
+        cardsAdapter.notifyDataSetChanged()
     }
 
     @VisibleForTesting
@@ -1490,7 +1489,7 @@ open class CardBrowser :
         }
         // clear the existing card list
         mCards.reset()
-        mCardsAdapter!!.notifyDataSetChanged()
+        cardsAdapter.notifyDataSetChanged()
         val query = searchText!!
         val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
         launchCatchingTask {
@@ -1544,8 +1543,8 @@ open class CardBrowser :
     }
 
     private fun updateList() {
-        if (colIsOpen() && mCardsAdapter != null) {
-            mCardsAdapter!!.notifyDataSetChanged()
+        if (colIsOpen()) {
+            cardsAdapter.notifyDataSetChanged()
             deckSpinnerSelection.notifyDataSetChanged()
             onSelectionChanged()
             updatePreviewMenuItem()
@@ -1710,7 +1709,7 @@ open class CardBrowser :
             browser.hideProgressBar()
             browser.searchCards()
             browser.endMultiSelectMode()
-            browser.mCardsAdapter!!.notifyDataSetChanged()
+            browser.cardsAdapter.notifyDataSetChanged()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (!result!!.succeeded()) {
                 Timber.i("changeDeckHandler failed, not offering undo")
@@ -1826,7 +1825,7 @@ open class CardBrowser :
             // reload whole view
             browser.forceRefreshSearch()
             browser.endMultiSelectMode()
-            browser.mCardsAdapter!!.notifyDataSetChanged()
+            browser.cardsAdapter.notifyDataSetChanged()
             browser.updatePreviewMenuItem()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
         }
@@ -1881,7 +1880,7 @@ open class CardBrowser :
         override fun actualOnProgressUpdate(context: CardBrowser, value: Int) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
-            context.mCardsAdapter!!.notifyDataSetChanged()
+            context.cardsAdapter.notifyDataSetChanged()
         }
 
         override fun actualOnPreExecute(context: CardBrowser) {
@@ -1901,7 +1900,7 @@ open class CardBrowser :
                     Timber.e(e, "failed to hide cards")
                 }
                 context.hideProgressBar()
-                context.mCardsAdapter!!.notifyDataSetChanged()
+                context.cardsAdapter.notifyDataSetChanged()
                 Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
             } else {
                 // Might want to do something more proactive here like show a message box?
@@ -2179,7 +2178,7 @@ open class CardBrowser :
             mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
         } finally {
             if (colIsOpen()) {
-                mCardsAdapter?.notifyDataSetChanged()
+                cardsAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -2200,7 +2199,7 @@ open class CardBrowser :
                 props.reload()
             }
         }
-        mCardsAdapter!!.notifyDataSetChanged()
+        cardsAdapter.notifyDataSetChanged()
     }
 
     private val allCardIds: LongArray
@@ -2464,7 +2463,7 @@ open class CardBrowser :
         val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
         view?.let { recenterListView(it) }
         // update adapter to remove check boxes
-        mCardsAdapter!!.notifyDataSetChanged()
+        cardsAdapter.notifyDataSetChanged()
         // update action bar
         invalidateOptionsMenu()
         deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)

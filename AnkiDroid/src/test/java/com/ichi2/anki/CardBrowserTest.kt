@@ -719,7 +719,7 @@ class CardBrowserTest : RobolectricTest() {
 
         // Testing whether each card is truncated and ellipsized
         for (i in 0 until (cardBrowser.cardsListView.childCount)) {
-            val row = cardBrowser.mCardsAdapter!!.getView(i, null, cardBrowser.cardsListView)
+            val row = cardBrowser.cardsAdapter.getView(i, null, cardBrowser.cardsListView)
             val column1 = row.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
 
@@ -743,7 +743,7 @@ class CardBrowserTest : RobolectricTest() {
 
         // Testing whether each card is expanded and not ellipsized
         for (i in 0 until (cardBrowser.cardsListView.childCount)) {
-            val row = cardBrowser.mCardsAdapter!!.getView(i, null, cardBrowser.cardsListView)
+            val row = cardBrowser.cardsAdapter.getView(i, null, cardBrowser.cardsListView)
             val column1 = row.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
 
