@@ -116,8 +116,8 @@ open class CardBrowser :
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             val deckId = deck.deckId
-            mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-            mDeckSpinnerSelection!!.selectDeckById(deckId, true)
+            deckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            deckSpinnerSelection.selectDeckById(deckId, true)
             selectDeckAndSave(deckId)
         }
     }
@@ -134,8 +134,7 @@ open class CardBrowser :
      * When the list is changed, the position member of its elements should get changed. */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val mCards = CardCollection<CardCache>()
-    @JvmField
-    var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
     @KotlinCleanup("move to onCreate and make lateinit")
     @JvmField
@@ -672,25 +671,25 @@ open class CardBrowser :
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val deckId = col.decks.selected()
-        mDeckSpinnerSelection = DeckSpinnerSelection(
+        deckSpinnerSelection = DeckSpinnerSelection(
             this, col, findViewById(R.id.toolbar_spinner),
             showAllDecks = true, alwaysShowDefault = false, showFilteredDecks = true
         )
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        deckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
         if (lastDeckId != null && lastDeckId == ALL_DECKS_ID) {
             selectAllDecks()
         } else if (lastDeckId != null && col.decks.get(lastDeckId!!, false) != null) {
-            mDeckSpinnerSelection!!.selectDeckById(lastDeckId!!, false)
+            deckSpinnerSelection.selectDeckById(lastDeckId!!, false)
         } else {
-            mDeckSpinnerSelection!!.selectDeckById(col.decks.selected(), false)
+            deckSpinnerSelection.selectDeckById(col.decks.selected(), false)
         }
     }
 
     fun selectDeckAndSave(deckId: DeckId) {
-        mDeckSpinnerSelection!!.selectDeckById(deckId, true)
+        deckSpinnerSelection.selectDeckById(deckId, true)
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
@@ -766,7 +765,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun selectAllDecks() {
-        mDeckSpinnerSelection!!.selectAllDecks()
+        deckSpinnerSelection.selectAllDecks()
         mRestrictOnDeck = ""
         saveLastDeckId(ALL_DECKS_ID)
         searchCards()
@@ -1548,7 +1547,7 @@ open class CardBrowser :
     private fun updateList() {
         if (colIsOpen() && mCardsAdapter != null) {
             mCardsAdapter!!.notifyDataSetChanged()
-            mDeckSpinnerSelection!!.notifyDataSetChanged()
+            deckSpinnerSelection.notifyDataSetChanged()
             onSelectionChanged()
             updatePreviewMenuItem()
         }
@@ -1573,7 +1572,7 @@ open class CardBrowser :
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
-        get() = mDeckSpinnerSelection!!.dropDownDecks
+        get() = deckSpinnerSelection.dropDownDecks
             .filterNot { d -> Decks.isDynamic(d) }
 
     @RustCleanup("this isn't how Desktop Anki does it")
@@ -2450,7 +2449,7 @@ open class CardBrowser :
         // show title and hide spinner
         mActionBarTitle!!.visibility = View.VISIBLE
         mActionBarTitle!!.text = checkedCardCount().toString()
-        mDeckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
+        deckSpinnerSelection.setSpinnerVisibility(View.GONE)
         // reload the actionbar using the multi-select mode actionbar
         invalidateOptionsMenu()
     }
@@ -2469,7 +2468,7 @@ open class CardBrowser :
         mCardsAdapter!!.notifyDataSetChanged()
         // update action bar
         invalidateOptionsMenu()
-        mDeckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+        deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
         mActionBarTitle!!.visibility = View.GONE
     }
 
