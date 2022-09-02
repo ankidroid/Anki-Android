@@ -23,9 +23,9 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceActionView
  * ActionView class to search through preferences
  */
 class PreferencesSearchView : SearchPreferenceActionView {
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     // Close the SearchPreferenceFragment in case the user taps on the toolbar's back button
     override fun onActionViewCollapsed() {
