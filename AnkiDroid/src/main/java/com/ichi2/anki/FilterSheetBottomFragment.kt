@@ -36,7 +36,6 @@ import anki.search.SearchNodeKt.group
 import anki.search.searchNode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.bool
@@ -100,7 +99,7 @@ class FilterSheetBottomFragment :
 
         /* list of all flags */
 
-        flagListAdapter = FlagsAdapter(activity, Flags.values(), flagSearchItems)
+        flagListAdapter = FlagsAdapter(Flags.values())
 
         flagRecyclerView = requireView().findViewById<RecyclerView?>(R.id.filter_bottom_flag_list).apply {
             this.layoutManager = LinearLayoutManager(activity)
@@ -191,36 +190,14 @@ class FilterSheetBottomFragment :
      */
 
     inner class FlagsAdapter(
-        val context: Context?,
         /** The collection of data to be displayed*/
         private var dataset: Array<Flags>,
-        /** The collection of data currently selected for filtering */
-        private val selectedItems: List<SearchNode.Flag>,
     ) :
         RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val itemTextView: TextView = view.findViewById(R.id.filter_list_item)
             val icon: ImageView = view.findViewById(R.id.filter_list_icon)
-
-            fun bind(
-                currFlag: Flags,
-                position: Int
-            ) {
-                itemTextView.text = currFlag.getFlagName(itemView.context)
-                icon.setImageResource(currFlag.flagIcon)
-
-                // If flag is currently selected, bind the view with the selected item background and text color
-                @NeedsTest("Test if background color is being correctly set if item is selected. Looks fine when testing on mobile, would like a unit test.")
-                if (currFlag.flagNode in selectedItems) {
-                    itemView.setBackgroundColor(getColorFromAttr(context, R.attr.filterItemBackgroundSelected))
-                    itemTextView.setTextColor(getColorFromAttr(context, R.attr.filterItemTextColorSelected))
-                }
-
-                itemView.setOnClickListener {
-                    onFlagItemClicked(currFlag, position)
-                }
-            }
 
             private fun onFlagItemClicked(item: Flags, position: Int) {
                 val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
@@ -235,6 +212,18 @@ class FilterSheetBottomFragment :
                     itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
 
                     flagSearchItems.remove(item.flagNode)
+                }
+            }
+
+            fun bind(
+                currFlag: Flags,
+                position: Int
+            ) {
+                itemTextView.text = currFlag.getFlagName(itemView.context)
+                icon.setImageResource(currFlag.flagIcon)
+
+                itemView.setOnClickListener {
+                    onFlagItemClicked(currFlag, position)
                 }
             }
 
