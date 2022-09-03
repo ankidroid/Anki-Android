@@ -13,41 +13,26 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing.AtomTypes;
+package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.parsing.Atom;
-import com.wildplot.android.parsing.ExpressionFormatException;
-import com.wildplot.android.parsing.TopLevelParser;
-import com.wildplot.android.parsing.TreeElement;
+import android.annotation.SuppressLint
+import com.wildplot.android.parsing.Atom.AtomType
+import com.wildplot.android.parsing.ExpressionFormatException
+import com.wildplot.android.parsing.TopLevelParser
+import com.wildplot.android.parsing.TreeElement
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class XVariableAtom implements TreeElement {
-
-    private final Atom.AtomType atomType = Atom.AtomType.VARIABLE;
-    private final TopLevelParser parser;
-
-
-    public XVariableAtom(TopLevelParser parser) {
-        this.parser = parser;
-    }
-
-
-    @Override
-    public double getValue() {
-
-        if (atomType != Atom.AtomType.INVALID) {
-
-            return parser.getX();
+class XVariableAtom(private val parser: TopLevelParser) : TreeElement {
+    private val atomType = AtomType.VARIABLE
+    override fun getValue(): Double {
+        return if (atomType !== AtomType.INVALID) {
+            parser.x
         } else {
-            throw new ExpressionFormatException("Number is Invalid, cannot parse");
+            throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
     }
 
-
-    @Override
-    public boolean isVariable() {
-        return true;
+    override fun isVariable(): Boolean {
+        return true
     }
 }
