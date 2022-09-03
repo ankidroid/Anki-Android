@@ -19,6 +19,7 @@ package com.ichi2.libanki.sync
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -93,15 +94,17 @@ class RemoteMediaServerTest {
     }
 
     private fun setCustomServerWithNoUrl() {
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-        userPreferences.edit { putBoolean("useCustomSyncServer", true) }
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            .edit {
+                putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, true)
+            }
     }
 
     private fun setCustomMediaServer(s: String) {
         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
             .edit {
-                putBoolean("useCustomSyncServer", true)
-                putString("syncMediaUrl", s)
+                putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, true)
+                putString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, s)
             }
     }
 

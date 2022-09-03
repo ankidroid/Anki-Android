@@ -111,12 +111,12 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun check_custom_media_sync_url() {
-        var syncURL = "https://msync.ankiweb.net"
+    fun `Legacy custom media sync URL is removed during upgrade`() {
+        val syncURL = "https://msync.ankiweb.net"
         mPrefs.edit { putString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, syncURL) }
-        assertThat("Preference of custom media sync url is set to ($syncURL).", CustomSyncServer.getMediaSyncUrl(mPrefs).equals(syncURL))
+        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null), equalTo(syncURL))
         PreferenceUpgrade.RemoveLegacyMediaSyncUrl().performUpgrade(mPrefs)
-        assertThat("Preference of custom media sync url is removed.", CustomSyncServer.getMediaSyncUrl(mPrefs).equals(null))
+        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null), equalTo(null))
     }
 
     @Test
