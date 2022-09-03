@@ -2324,9 +2324,14 @@ open class DeckPicker :
             startActivityWithAnimation(i, FADE)
         } else {
             // otherwise open regular options
-            val i = Intent(this@DeckPicker, DeckOptions::class.java)
-            i.putExtra("did", did)
-            startActivityWithAnimation(i, FADE)
+            val intent = if (BackendFactory.defaultLegacySchema) {
+                Intent(this@DeckPicker, DeckOptions::class.java).apply {
+                    putExtra("did", did)
+                }
+            } else {
+                com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
+            }
+            startActivityWithAnimation(intent, FADE)
         }
     }
 
