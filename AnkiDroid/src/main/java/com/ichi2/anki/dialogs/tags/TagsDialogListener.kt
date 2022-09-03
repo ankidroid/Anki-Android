@@ -35,14 +35,14 @@ interface TagsDialogListener {
      * @param option selection radio option, should be ignored if not expected
      */
     fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int)
-    fun <F> registerFragmentResultReceiver(fragment: F) where F : Fragment?, F : TagsDialogListener? {
-        fragment!!.parentFragmentManager.setFragmentResultListener(
-            ON_SELECTED_TAGS_KEY, fragment,
+    fun <F> F.registerFragmentResultReceiver() where F : Fragment, F : TagsDialogListener {
+        parentFragmentManager.setFragmentResultListener(
+            ON_SELECTED_TAGS_KEY, this,
             FragmentResultListener { _: String?, bundle: Bundle ->
                 val selectedTags: List<String> = bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
                 val indeterminateTags: List<String> = bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)!!
                 val option = bundle.getInt(ON_SELECTED_TAGS__OPTION)
-                fragment.onSelectedTags(selectedTags, indeterminateTags, option)
+                onSelectedTags(selectedTags, indeterminateTags, option)
             }
         )
     }

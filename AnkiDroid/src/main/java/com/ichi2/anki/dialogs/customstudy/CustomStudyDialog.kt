@@ -83,7 +83,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerFragmentResultReceiver(this)
+        registerFragmentResultReceiver()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
