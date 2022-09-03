@@ -28,7 +28,6 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.RemovedPreferences
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
-import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.HashUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -37,10 +36,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class) // no point in Application init if we don't use it
 class PreferenceUpgradeServiceTest : RobolectricTest() {
 
     private lateinit var mPrefs: SharedPreferences
@@ -183,5 +180,23 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
         assertThat(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE), equalTo(false))
         assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), equalTo("http://foo/sync/"))
+    }
+
+    @Test
+    fun `Removed Use custom sync server preference is applied to both sync URL preferences after upgrade`() {
+        mPrefs.edit {
+            putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, "http://foo/sync/")
+            putBoolean(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
+        }
+
+        assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
+        assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
+
+        PreferenceUpgrade.UpgradeCustomSyncServerEnabled().performUpgrade(mPrefs)
+
+        assertThat(mPrefs.getBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, false), equalTo(true))
+        assertThat(mPrefs.getBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, false), equalTo(false))
+        assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo("http://foo/sync/"))
+        assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
     }
 }

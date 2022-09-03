@@ -87,6 +87,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeGesturesToControls())
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeCustomCollectionSyncUrl())
+                yield(UpgradeCustomSyncServerEnabled())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -386,6 +387,26 @@ object PreferenceUpgradeService {
                 preferences.edit {
                     remove(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE)
                     if (newUrl != null) putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, newUrl)
+                }
+            }
+        }
+
+        internal class UpgradeCustomSyncServerEnabled : PreferenceUpgrade(8) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val customSyncServerEnabled = preferences.getBoolean(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false)
+                val customCollectionSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, null)
+                val customMediaSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
+
+                preferences.edit {
+                    remove(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER)
+                    putBoolean(
+                        CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED,
+                        customSyncServerEnabled && !customCollectionSyncUrl.isNullOrEmpty()
+                    )
+                    putBoolean(
+                        CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED,
+                        customSyncServerEnabled && !customMediaSyncUrl.isNullOrEmpty()
+                    )
                 }
             }
         }
