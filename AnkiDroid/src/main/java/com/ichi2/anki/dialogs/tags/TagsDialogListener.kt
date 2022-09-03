@@ -52,10 +52,11 @@ interface TagsDialogListener {
         fun createFragmentResultSender(fragmentManager: FragmentManager): TagsDialogListener? {
             return object : TagsDialogListener {
                 override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
-                    val bundle = Bundle()
-                    bundle.putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
-                    bundle.putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
-                    bundle.putInt(ON_SELECTED_TAGS__OPTION, option)
+                    val bundle = Bundle().apply {
+                        putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
+                        putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
+                        putInt(ON_SELECTED_TAGS__OPTION, option)
+                    }
                     fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
                 }
             }
