@@ -53,6 +53,7 @@ import java.util.*
  * Preferences dialog.
  */
 class Preferences : AnkiActivity(), SearchPreferenceResultListener {
+    val searchConfiguration: SearchConfiguration by lazy { configureSearchBar() }
     lateinit var searchView: PreferencesSearchView
 
     // ----------------------------------------------------------------------------
@@ -109,17 +110,16 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         val searchIcon = menu.findItem(R.id.preferences_search)
         searchView = searchIcon.actionView as PreferencesSearchView
         searchView.setActivity(this)
-
-        configureSearchBar(searchView.searchConfiguration)
+        searchView.searchConfiguration = searchConfiguration
 
         return super.onCreateOptionsMenu(menu)
     }
 
     /**
-     * Configures [searchConfig] for AnkiDroid's settings search bar and return it back
+     * @return the default [SearchConfiguration] for AnkiDroid settings
      */
-    fun configureSearchBar(searchConfig: SearchConfiguration): SearchConfiguration {
-        searchConfig.apply {
+    private fun configureSearchBar(): SearchConfiguration {
+        val searchConfig = SearchConfiguration(this).apply {
             setFragmentContainerViewId(R.id.settings_container)
             setBreadcrumbsEnabled(true)
             setFuzzySearchEnabled(false)
