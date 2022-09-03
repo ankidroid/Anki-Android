@@ -933,7 +933,7 @@ class Models(col: Collection) : ModelManager(col) {
          * @return Whether the standard card is empty
          */
         @Throws(TemplateError::class)
-        fun emptyStandardCard(tmpl: JSONObject, nonEmptyFields: Set<String?>?): Boolean {
+        fun emptyStandardCard(tmpl: JSONObject, nonEmptyFields: Set<String>): Boolean {
             return ParsedNode.parse_inner(tmpl.getString("qfmt")).template_is_empty(nonEmptyFields)
         }
 

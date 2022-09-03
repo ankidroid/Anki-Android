@@ -13,158 +13,158 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.template
 
-package com.ichi2.libanki.template;
-
-import android.content.Context;
-import android.util.Pair;
-
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
+import android.content.Context
+import android.util.Pair
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.R
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.template.TemplateError.*
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+import java.util.*
 
 /**
  * Represents a template, allow to check in linear time which card is empty/render card.
  */
-public abstract class ParsedNode {
-
-    public static final String TEMPLATE_ERROR_LINK =
-            "https://anki.tenderapp.com/kb/problems/card-template-has-a-problem";
-    public static final String TEMPLATE_BLANK_LINK =
-            "https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank";
-    public static final String TEMPLATE_BLANK_CLOZE_LINK =
-            "https://anki.tenderapp.com/kb/problems/no-cloze-found-on-card";
-
+@KotlinCleanup("fix ide lint issues")
+abstract class ParsedNode {
     /**
      * @param nonempty_fields A set of fields that are not empty
      * @return Whether the card is empty. I.e. no non-empty fields are shown
      */
-    public abstract boolean template_is_empty(Set<String> nonempty_fields);
+    abstract fun template_is_empty(nonempty_fields: Set<String>): Boolean
 
     // Used only fot testing
     @VisibleForTesting
-    public boolean template_is_empty(String... nonempty_fields) {
-        return template_is_empty(new HashSet<>(Arrays.asList(nonempty_fields)));
+    fun template_is_empty(vararg nonempty_fields: String?): Boolean {
+        return template_is_empty(HashSet(Arrays.asList(*nonempty_fields)))
     }
 
-    public abstract void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) throws TemplateError;
+    @Throws(TemplateError::class)
+    abstract fun render_into(
+        fields: Map<String, String>,
+        nonempty_fields: Set<String>,
+        builder: StringBuilder
+    )
 
+    fun render(fields: Map<String, String>, question: Boolean, context: Context): String {
+        return try {
+            val builder = StringBuilder()
+            render_into(fields, Utils.nonEmptyFields(fields), builder)
+            builder.toString()
+        } catch (er: TemplateError) {
+            Timber.w(er)
+            val side =
+                if (question) context.getString(R.string.card_template_editor_front) else context.getString(
+                    R.string.card_template_editor_back
+                )
+            val explanation = context.getString(R.string.has_a_problem, side, er.message(context))
+            val more_explanation =
+                "<a href=\"" + TEMPLATE_ERROR_LINK + "\">" + context.getString(R.string.more_information) + "</a>"
+            "$explanation<br/>$more_explanation"
+        }
+    }
 
-    /**
-     * Associate to each template its node, or the error it generates
-     */
-    private static WeakHashMap<String, Pair<ParsedNode, TemplateError>> parse_inner_cache = new WeakHashMap<>();
+    companion object {
+        const val TEMPLATE_ERROR_LINK =
+            "https://anki.tenderapp.com/kb/problems/card-template-has-a-problem"
+        const val TEMPLATE_BLANK_LINK =
+            "https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank"
+        const val TEMPLATE_BLANK_CLOZE_LINK =
+            "https://anki.tenderapp.com/kb/problems/no-cloze-found-on-card"
 
-    /**
-     * @param template A question or answer template
-     * @return A tree representing the template.
-     * @throws TemplateError if the template is not valid
-     */
-    public static @NonNull ParsedNode parse_inner(@NonNull String template) throws TemplateError{
-        if (!parse_inner_cache.containsKey(template)) {
-            Pair<ParsedNode, TemplateError> res;
-            try {
-                ParsedNode node = parse_inner(new Tokenizer(template));
-                res = new Pair<>(node, null);
-            } catch (TemplateError er) {
-                res = new Pair<>(null, er);
+        /**
+         * Associate to each template its node, or the error it generates
+         */
+        private val parse_inner_cache = WeakHashMap<String, Pair<ParsedNode?, TemplateError?>>()
+
+        /**
+         * @param template A question or answer template
+         * @return A tree representing the template.
+         * @throws TemplateError if the template is not valid
+         */
+        @Throws(TemplateError::class)
+        fun parse_inner(template: String): ParsedNode {
+            if (!parse_inner_cache.containsKey(template)) {
+                val res: Pair<ParsedNode?, TemplateError?>
+                res = try {
+                    val node = parse_inner(Tokenizer(template))
+                    Pair(node, null)
+                } catch (er: TemplateError) {
+                    Pair(null, er)
+                }
+                parse_inner_cache[template] = res
             }
-            parse_inner_cache.put(template, res);
+            val res = parse_inner_cache[template]!!
+            if (res.first != null) {
+                return res.first!!
+            }
+            throw res.second!!
         }
-        Pair<ParsedNode, TemplateError> res = parse_inner_cache.get(template);
-        if (res.first != null) {
-            return res.first;
+
+        /**
+         * @param tokens An iterator returning a list of token obtained from a template
+         * @return A tree representing the template
+         * @throws TemplateError Any reason meaning the data is not valid as a template.
+         */
+        @Throws(TemplateError::class)
+        protected fun parse_inner(tokens: Iterator<Tokenizer.Token>): ParsedNode {
+            return parse_inner(tokens, null)!!
         }
-        throw res.second;
-    }
 
-    /**
-     * @param tokens An iterator returning a list of token obtained from a template
-     * @return A tree representing the template
-     * @throws TemplateError Any reason meaning the data is not valid as a template.
-     */
-    protected static @NonNull ParsedNode parse_inner(@NonNull Iterator<Tokenizer.Token> tokens) throws TemplateError{
-        return parse_inner(tokens, null);
-    }
-
-    /**
-     * @param tokens An iterator returning a list of token obtained from a template
-     * @param open_tag The last opened tag that is not yet closed, or null
-     * @return A tree representing the template, or null if no text can be generated.
-     * @throws TemplateError Any reason meaning the data is not valid as a template.
-     */
-    private static @Nullable ParsedNode parse_inner(@NonNull Iterator<Tokenizer.Token> tokens, @Nullable String open_tag) throws TemplateError{
-        List<ParsedNode> nodes = new ArrayList<>();
-        while (tokens.hasNext()) {
-            Tokenizer.Token token = tokens.next();
-            switch (token.getKind()) {
-                case TEXT: {
-                    nodes.add(new Text(token.getText()));
-                    break;
-                }
-                case REPLACEMENT: {
-                    String[] it = token.getText().split(":", -1);
-                    String key = it[it.length - 1];
-                    List<String> filters = new ArrayList<>(it.length - 1);
-                    for (int i = it.length - 2; i >= 0; i--) {
-                        filters.add(it[i]);
+        /**
+         * @param tokens An iterator returning a list of token obtained from a template
+         * @param open_tag The last opened tag that is not yet closed, or null
+         * @return A tree representing the template, or null if no text can be generated.
+         * @throws TemplateError Any reason meaning the data is not valid as a template.
+         */
+        @Throws(TemplateError::class)
+        private fun parse_inner(tokens: Iterator<Tokenizer.Token>, open_tag: String?): ParsedNode? {
+            val nodes: MutableList<ParsedNode> = ArrayList()
+            while (tokens.hasNext()) {
+                val token = tokens.next()
+                when (token.kind) {
+                    Tokenizer.TokenKind.TEXT -> {
+                        nodes.add(Text(token.text))
                     }
-                    nodes.add(new Replacement(key, filters, token.getText()));
-                    break;
-                }
-                case OPEN_CONDITIONAL: {
-                    String tag = token.getText();
-                    nodes.add(new Conditional(tag, parse_inner(tokens, tag)));
-                    break;
-                }
-                case OPEN_NEGATED: {
-                    String tag = token.getText();
-                    nodes.add(new NegatedConditional(tag, parse_inner(tokens, tag)));
-                    break;
-                }
-                case CLOSE_CONDITIONAL: {
-                    String tag = token.getText();
-                    if (open_tag == null) {
-                        throw new TemplateError.ConditionalNotOpen(tag);
+                    Tokenizer.TokenKind.REPLACEMENT -> {
+                        val it = token.text.split(":".toRegex()).toTypedArray()
+                        val key = it[it.size - 1]
+                        val filters: MutableList<String> = ArrayList(it.size - 1)
+                        var i = it.size - 2
+                        while (i >= 0) {
+                            filters.add(it[i])
+                            i--
+                        }
+                        nodes.add(Replacement(key, filters, token.text))
                     }
-                    if (!tag.equals(open_tag)) { // open_tag may be null, tag is not
-                        throw new TemplateError.WrongConditionalClosed(tag, open_tag);
-                    } else {
-                        return ParsedNodes.create(nodes);
+                    Tokenizer.TokenKind.OPEN_CONDITIONAL -> {
+                        val tag = token.text
+                        nodes.add(Conditional(tag, parse_inner(tokens, tag)!!))
+                    }
+                    Tokenizer.TokenKind.OPEN_NEGATED -> {
+                        val tag = token.text
+                        nodes.add(NegatedConditional(tag, parse_inner(tokens, tag)!!))
+                    }
+                    Tokenizer.TokenKind.CLOSE_CONDITIONAL -> {
+                        val tag = token.text
+                        if (open_tag == null) {
+                            throw ConditionalNotOpen(tag)
+                        }
+                        return if (tag != open_tag) { // open_tag may be null, tag is not
+                            throw WrongConditionalClosed(tag, open_tag)
+                        } else {
+                            ParsedNodes.create(nodes)
+                        }
                     }
                 }
             }
-        }
-        if (open_tag != null) {
-            throw new TemplateError.ConditionalNotClosed(open_tag);
-        }
-        return ParsedNodes.create(nodes);
-    }
-
-    public @NonNull String render(Map<String, String> fields, boolean question, Context context) {
-        try {
-            StringBuilder builder = new StringBuilder();
-            render_into(fields, Utils.nonEmptyFields(fields), builder);
-            return builder.toString();
-        } catch (TemplateError er) {
-            Timber.w(er);
-            String side = (question)? context.getString(R.string.card_template_editor_front): context.getString(R.string.card_template_editor_back);
-            String explanation = context.getString(R.string.has_a_problem, side, er.message(context));
-            String more_explanation = "<a href=\""+ TEMPLATE_ERROR_LINK+"\">" + context.getString(R.string.more_information) + "</a>";
-            return explanation + "<br/>" + more_explanation;
+            if (open_tag != null) {
+                throw ConditionalNotClosed(open_tag)
+            }
+            return ParsedNodes.create(nodes)
         }
     }
 }
