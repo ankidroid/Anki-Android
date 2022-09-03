@@ -47,13 +47,13 @@ import com.ichi2.themes.Themes.getColorFromAttr
  */
 class FilterSheetBottomFragment :
     BottomSheetDialogFragment(),
-    FlagsAdapter.OnItemClickListener,
     CollectionGetter {
     private lateinit var behavior: BottomSheetBehavior<View>
 
     private var flagSearchItems = mutableListOf<SearchNode.Flag>()
 
     private lateinit var flagRecyclerView: RecyclerView
+    private lateinit var flagListAdapter: FlagsAdapter
 
     private var lastClickTime = 0
 
@@ -99,7 +99,7 @@ class FilterSheetBottomFragment :
 
         /* list of all flags */
 
-        val flagListAdapter = FlagsAdapter(activity, Flags.values(), this)
+        flagListAdapter = FlagsAdapter(Flags.values())
 
         flagRecyclerView = requireView().findViewById<RecyclerView?>(R.id.filter_bottom_flag_list).apply {
             this.layoutManager = LinearLayoutManager(activity)
@@ -189,68 +189,61 @@ class FilterSheetBottomFragment :
      * TODO: background color should be retained if selected and swiped down
      */
 
-    override fun onFlagItemClicked(item: Flags, position: Int) {
+    inner class FlagsAdapter(
+        /** The collection of data to be displayed*/
+        private var dataset: Array<Flags>,
+    ) :
+        RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
 
-        val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            private val itemTextView: TextView = view.findViewById(R.id.filter_list_item)
+            val icon: ImageView = view.findViewById(R.id.filter_list_icon)
 
-        if (!isSelected(item, flagSearchItems)) {
-            flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
-            itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
+            private fun onFlagItemClicked(item: Flags, position: Int) {
+                val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
-            flagSearchItems.add(item.flagNode)
-        } else {
-            flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
-            itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
+                if (!isSelected(item, flagSearchItems)) {
+                    itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
+                    itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
 
-            flagSearchItems.remove(item.flagNode)
-        }
-    }
+                    flagSearchItems.add(item.flagNode)
+                } else {
+                    flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
+                    itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
 
-    fun isSelected(flag: Flags, flagSearchItems: List<SearchNode.Flag>): bool {
-        return flagSearchItems.contains(flag.flagNode)
-    }
-}
+                    flagSearchItems.remove(item.flagNode)
+                }
+            }
 
-class FlagsAdapter(
-    val context: Context?,
-    private var dataSet: Array<FilterSheetBottomFragment.Flags>,
-    private val listener: OnItemClickListener
-) :
-    RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
+            fun bind(
+                currFlag: Flags,
+                position: Int
+            ) {
+                itemTextView.text = currFlag.getFlagName(itemView.context)
+                icon.setImageResource(currFlag.flagIcon)
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val item: TextView = view.findViewById(R.id.filter_list_item)
-        val icon: ImageView = view.findViewById(R.id.filter_list_icon)
+                itemView.setOnClickListener {
+                    onFlagItemClicked(currFlag, position)
+                }
+            }
 
-        fun bind(
-            currFlag: FilterSheetBottomFragment.Flags,
-            clickListener: OnItemClickListener,
-            position: Int
-        ) {
-            item.text = currFlag.getFlagName(itemView.context)
-            icon.setImageResource(currFlag.flagIcon)
-
-            itemView.setOnClickListener {
-                clickListener.onFlagItemClicked(currFlag, position)
+            fun isSelected(flag: Flags, flagSearchItems: List<SearchNode.Flag>): bool {
+                return flagSearchItems.contains(flag.flagNode)
             }
         }
-    }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.filter_list_flag_item_layout, viewGroup, false)
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.filter_list_flag_item_layout, viewGroup, false)
 
-        return ViewHolder(view)
-    }
+            return ViewHolder(view)
+        }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val currTag = dataSet[position]
-        viewHolder.bind(currTag, listener, position)
-    }
+        override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+            val currTag = dataset[position]
+            viewHolder.bind(currTag, position)
+        }
 
-    override fun getItemCount() = dataSet.size
-
-    interface OnItemClickListener {
-        fun onFlagItemClicked(item: FilterSheetBottomFragment.Flags, position: Int)
+        override fun getItemCount() = dataset.size
     }
 }
