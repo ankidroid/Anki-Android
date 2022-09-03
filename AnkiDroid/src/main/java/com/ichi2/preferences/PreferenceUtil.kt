@@ -19,9 +19,28 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceFragmentCompat
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+
+/**
+ * By implementing this interface, a preference can specify which dialog fragment is opened on click.
+ * The library does this in a slightly roundabout way, requiring that
+ * a third party is aware of all the combinations of preferences and their dialogs;
+ * see [PreferenceFragmentCompat.onDisplayPreferenceDialog].
+ */
+interface DialogFragmentProvider {
+
+    /**
+     * @return A DialogFragment to show.
+     *   The dialog must have a zero-parameter constructor.
+     *   Any arguments set via [Fragment.setArguments] may get overridden.
+     */
+    fun makeDialogFragment(): DialogFragment
+}
 
 /**
  * Run a [block] on a [TypedArray] receiver that is recycled at the end.
