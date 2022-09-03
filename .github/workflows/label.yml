@@ -38,6 +38,19 @@ jobs:
             });
           }
 
+          async function addPostMergeComments() {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Maintainers: Please [Sync Translations](https://github.com/ankidroid/Anki-Android/actions/workflows/sync_translations.yml) to produce a commit with only the automated changes from this PR.
+              
+          Read more about updating strings on the wiki,
+          - [localization-administration](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#localization-administration)
+          - [download-localized-strings](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#download-localized-strings)`
+            })
+          }
+
           let result = await github.rest.issues.listLabelsOnIssue({
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -50,6 +63,11 @@ jobs:
                 if (removeLabelsList.includes(label.name)) {
                   console.log("Removed: ", label.name);
                   removeLabel(label.name);
+                }
+
+                // add post merge comments for 'strings' labeled PR
+                if (label.name == "strings") {
+                  addPostMergeComments();
                 }
             }
           }
