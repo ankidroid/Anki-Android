@@ -30,10 +30,11 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 
 class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTruncated: Boolean) : AppCompatDialogFragment() {
-    private var newCardsMode = true
     private lateinit var dialogView: View
 
     private val positiveButtonClick = { _: DialogInterface, _: Int ->
+        val newCardsMode: Boolean
+
         @IdRes val selectedButtonId = dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
         newCardsMode = selectedButtonId == R.id.select_cards_mode
         if (inCardsMode != newCardsMode) {
