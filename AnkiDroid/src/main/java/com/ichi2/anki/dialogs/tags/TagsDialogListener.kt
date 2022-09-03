@@ -34,13 +34,13 @@ interface TagsDialogListener {
      * otherwise it should be removed @see [TagsUtil.getUpdatedTags]
      * @param option selection radio option, should be ignored if not expected
      */
-    fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>?, option: Int)
+    fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int)
     fun <F> registerFragmentResultReceiver(fragment: F) where F : Fragment?, F : TagsDialogListener? {
         fragment!!.parentFragmentManager.setFragmentResultListener(
             ON_SELECTED_TAGS_KEY, fragment,
             FragmentResultListener { _: String?, bundle: Bundle ->
                 val selectedTags: List<String> = bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
-                val indeterminateTags: List<String>? = bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)
+                val indeterminateTags: List<String> = bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)!!
                 val option = bundle.getInt(ON_SELECTED_TAGS__OPTION)
                 fragment.onSelectedTags(selectedTags, indeterminateTags, option)
             }
@@ -51,10 +51,10 @@ interface TagsDialogListener {
         @KotlinCleanup("remove the ?")
         fun createFragmentResultSender(fragmentManager: FragmentManager): TagsDialogListener? {
             return object : TagsDialogListener {
-                override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>?, option: Int) {
+                override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
                     val bundle = Bundle()
                     bundle.putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
-                    bundle.putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags!!))
+                    bundle.putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
                     bundle.putInt(ON_SELECTED_TAGS__OPTION, option)
                     fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
                 }

@@ -1104,7 +1104,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     override fun onSelectedTags(
         selectedTags: List<String>,
-        indeterminateTags: List<String>?,
+        indeterminateTags: List<String>,
         option: Int
     ) {
         if (mSelectedTags != selectedTags) {
