@@ -1098,6 +1098,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
             if (!mLrnDayQueue.isEmpty) {
                 // order
+                @KotlinCleanup(".apply { }")
                 val r = Random()
                 r.setSeed(mToday!!.toLong())
                 mLrnDayQueue.shuffle(r)
