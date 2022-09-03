@@ -720,7 +720,7 @@ class CardContentProvider : ContentProvider() {
      * This implementation optimizes for when the notes are grouped according to model.
      */
     private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
-        if (valuesArr == null || valuesArr.size == 0) {
+        if (valuesArr == null || valuesArr.isEmpty()) {
             return 0
         }
         val col = CollectionHelper.getInstance().getCol(mContext)

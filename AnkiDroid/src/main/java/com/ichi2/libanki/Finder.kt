@@ -597,7 +597,7 @@ class Finder(private val col: Collection) {
                 }
             }
         }
-        if (ids == null || ids.isEmpty()) {
+        if (ids?.isEmpty() != false) {
             return null
         }
         val sids = Utils.ids2str(ids)

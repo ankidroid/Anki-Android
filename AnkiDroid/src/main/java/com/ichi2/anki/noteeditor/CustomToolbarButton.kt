@@ -32,7 +32,7 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
     companion object {
         const val KEEP_EMPTY_ENTRIES = -1
         fun fromString(s: String?): CustomToolbarButton? {
-            if (s == null || s.isEmpty()) {
+            if (s?.isEmpty() != false) {
                 return null
             }
             val fields = s.split(Consts.FIELD_SEPARATOR.toRegex(), KEEP_EMPTY_ENTRIES.coerceAtLeast(0)).toTypedArray()

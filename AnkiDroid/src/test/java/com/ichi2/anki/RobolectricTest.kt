@@ -449,7 +449,7 @@ open class RobolectricTest : CollectionGetter {
         val listener: TaskListener<Progress, Result?> = object : TaskListener<Progress, Result?>() {
             override fun onPreExecute() {}
             override fun onPostExecute(result: Result?) {
-                require(!(result == null || !result.succeeded())) { "Task failed" }
+                require(result?.succeeded() == true) { "Task failed" }
                 completed[0] = true
                 val RobolectricTest = ReentrantLock()
                 val condition = RobolectricTest.newCondition()

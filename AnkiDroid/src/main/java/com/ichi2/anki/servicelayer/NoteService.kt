@@ -168,7 +168,7 @@ object NoteService {
             return fields
         }
         for (e in editFields) {
-            if (e == null || e.fieldText == null) {
+            if (e?.fieldText == null) {
                 continue
             }
             val fieldValue = convertToHtmlNewline(e.fieldText!!, replaceNewlines)

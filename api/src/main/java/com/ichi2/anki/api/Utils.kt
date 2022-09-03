@@ -50,7 +50,7 @@ internal object Utils {
 
     @JvmStatic
     fun joinTags(tags: Set<String?>?): String {
-        if (tags == null || tags.isEmpty()) {
+        if (tags?.isEmpty() != false) {
             return ""
         }
         for (t in tags) {

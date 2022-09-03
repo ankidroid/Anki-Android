@@ -945,7 +945,7 @@ class ContentProviderTest : InstrumentedTest() {
             java.lang.Long.toString(deckId)
         )
         contentResolver.query(deckUri, null, null, null, null).use { decksCursor ->
-            if (decksCursor == null || !decksCursor.moveToFirst()) {
+            if (decksCursor?.moveToFirst() != true) {
                 fail("No deck received. Should have delivered deck with id $deckId")
             } else {
                 val returnedDeckID =

@@ -31,7 +31,7 @@ object BundleUtils {
      */
     @JvmStatic
     fun getNullableLong(bundle: Bundle?, key: String): Long? {
-        return if (bundle == null || !bundle.containsKey(key)) {
+        return if (bundle?.containsKey(key) != true) {
             null
         } else bundle.getLong(key)
     }

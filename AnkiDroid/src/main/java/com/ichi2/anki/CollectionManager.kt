@@ -203,7 +203,7 @@ object CollectionManager {
         if (emulateOpenFailure) {
             throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
         }
-        if (collection == null || collection!!.dbClosed) {
+        if (collection?.dbClosed != false) {
             val path = createCollectionPath()
             collection =
                 collection(AnkiDroidApp.instance, path, server = false, log = true, backend)

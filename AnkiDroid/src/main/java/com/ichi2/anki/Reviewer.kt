@@ -305,7 +305,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     private fun selectDeckFromExtra() {
         val extras = intent.extras
-        if (extras == null || !extras.containsKey("deckId")) {
+        if (extras?.containsKey("deckId") != true) {
             // deckId is not set, load default
             return
         }

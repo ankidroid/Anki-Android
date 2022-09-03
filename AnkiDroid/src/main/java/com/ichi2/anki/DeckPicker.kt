@@ -352,7 +352,7 @@ open class DeckPicker :
         }
 
         override fun actualOnPreExecute(context: DeckPicker) {
-            if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
+            if (context.mProgressDialog?.isShowing != true) {
                 context.mProgressDialog = StyledProgressDialog.show(
                     context,
                     context.resources.getString(R.string.import_title),
@@ -1649,7 +1649,7 @@ open class DeckPicker :
             mCountUp = 0
             mCountDown = 0
             val syncStartTime = TimeManager.time.intTimeMS()
-            if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
+            if (mProgressDialog!!.isShowing != true) {
                 try {
                     mProgressDialog = StyledProgressDialog.show(
                         this@DeckPicker, resources.getString(R.string.sync_title),

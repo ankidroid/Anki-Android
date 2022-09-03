@@ -36,7 +36,7 @@ abstract class SystemContextMenu(private val context: Context) {
 
     fun ensureConsistentStateWithPreferenceStatus(preferenceStatus: Boolean) {
         val actualStatus = systemMenuStatus
-        if (actualStatus == null || actualStatus != preferenceStatus) {
+        if (actualStatus != preferenceStatus) {
             Timber.d("Modifying Context Menu Status: Preference was %b", preferenceStatus)
             setSystemMenuEnabled(preferenceStatus)
         }

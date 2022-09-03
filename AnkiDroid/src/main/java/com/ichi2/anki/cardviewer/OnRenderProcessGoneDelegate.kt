@@ -51,7 +51,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
         Timber.i("Obtained write lock for card")
         try {
             writeLock.lock()
-            if (cardWebView == null || cardWebView != view) {
+            if (cardWebView != view) {
                 // A view crashed that wasn't ours.
                 // We have nothing to handle. Returning false is a desire to crash, so return true.
                 Timber.i("Unrelated WebView Renderer terminated. Crashed: %b", detail.didCrash())

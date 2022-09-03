@@ -52,7 +52,7 @@ fun <K, V> HashMap<K, V>.items(): List<Pair<K, V>> {
 }
 
 fun <T> List<T>?.isNullOrEmpty(): Boolean {
-    return this == null || this.isEmpty()
+    return this?.isEmpty() != false
 }
 
 fun <T> List<T>?.isNotNullOrEmpty(): Boolean {

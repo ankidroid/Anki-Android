@@ -262,7 +262,7 @@ open class MyAccount : AnkiActivity() {
 
         override fun onPreExecute() {
             Timber.d("loginListener.onPreExecute()")
-            if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
+            if (mProgressDialog?.isShowing != true) {
                 mProgressDialog = StyledProgressDialog.show(
                     this@MyAccount, null,
                     resources.getString(R.string.alert_logging_message), false
@@ -271,9 +271,7 @@ open class MyAccount : AnkiActivity() {
         }
 
         override fun onPostExecute(data: Connection.Payload) {
-            if (mProgressDialog != null) {
-                mProgressDialog!!.dismiss()
-            }
+            mProgressDialog?.dismiss()
             if (data.success) {
                 Timber.i("User successfully logged in!")
                 saveUserInformation(data.data[0] as String, data.data[1] as String)

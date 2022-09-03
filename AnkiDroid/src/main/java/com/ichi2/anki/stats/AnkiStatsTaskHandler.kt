@@ -121,7 +121,7 @@ class AnkiStatsTaskHandler private constructor(
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
         ): AnkiStatsTaskHandler {
-            if (instance == null || instance!!.collectionData !== collection) {
+            if (instance?.collectionData !== collection) {
                 instance = AnkiStatsTaskHandler(collection, mainDispatcher, defaultDispatcher)
             }
             return instance!!

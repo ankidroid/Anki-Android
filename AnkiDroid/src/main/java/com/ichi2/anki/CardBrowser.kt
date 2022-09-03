@@ -966,9 +966,7 @@ open class CardBrowser :
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
-        if (mActionBarMenu == null || mActionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
-            return
-        }
+        mActionBarMenu?.findItem(R.id.action_suspend_card) ?: return
         if (mCheckedCards.isNotEmpty()) {
             TaskManager.cancelAllTasks(CheckCardSelection::class.java)
             TaskManager.launchCollectionTask(
@@ -1509,7 +1507,7 @@ open class CardBrowser :
         mCards.replaceWith(cards)
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
-        if (mSearchView == null || mSearchView!!.isIconified) {
+        if (mSearchView?.isIconified != false) {
             return
         }
         if (hasSelectedAllDecks()) {
@@ -2408,18 +2406,17 @@ open class CardBrowser :
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
      */
     private fun registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finishWithoutAnimation()
-                    }
+        if (mUnmountReceiver != null) return
+        mUnmountReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
+                    finishWithoutAnimation()
                 }
             }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
         }
+        val iFilter = IntentFilter()
+        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
+        registerReceiver(mUnmountReceiver, iFilter)
     }
 
     /**

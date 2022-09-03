@@ -368,7 +368,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // Switch on or off unbury depending on if there are cards to unbury
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
             // Switch on or off undo depending on whether undo is available
-            if (col == null || !col!!.undoAvailable()) {
+            if (col?.undoAvailable() != true) {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 menu.findItem(R.id.action_undo).isVisible = true

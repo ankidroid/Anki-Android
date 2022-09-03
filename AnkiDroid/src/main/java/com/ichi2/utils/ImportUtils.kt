@@ -346,7 +346,7 @@ object ImportUtils {
             fun getUris(intent: Intent): ArrayList<Uri>? {
                 if (intent.data == null) {
                     Timber.i("No intent data. Attempting to read clip data.")
-                    if (intent.clipData == null || intent.clipData!!.itemCount == 0) {
+                    if (intent.clipData.let { it == null || it.itemCount == 0 }) {
                         return null
                     }
                     val clipUriList: ArrayList<Uri> = ArrayList()
