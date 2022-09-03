@@ -23,6 +23,7 @@ class Statistics : PageFragment() {
     override val title = R.string.statistics
     override val pageName = "graphs"
     override var webViewClient = PageWebViewClient()
+    override var webChromeClient = PageChromeClient()
 
     companion object {
         fun getIntent(context: Context): Intent {
