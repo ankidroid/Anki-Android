@@ -211,11 +211,14 @@ class FilterSheetBottomFragment :
 
             private fun onFlagItemClicked(item: Flags, position: Int) {
                 val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
+                /** Checks whether flagSearchItems was empty before adding new element to it */
+                var wasEmpty = false
 
                 if (!isSelected(item)) {
                     itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
                     itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
 
+                    wasEmpty = flagSearchItems.isEmpty()
                     flagSearchItems.add(item.flagNode)
                 } else {
                     flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
@@ -223,16 +226,17 @@ class FilterSheetBottomFragment :
 
                     flagSearchItems.remove(item.flagNode)
                 }
-                
+
                 // Change color of filter header to indicate a filter has been selected
 
                 val filterHeader = flagsButton.findViewById<TextView>(R.id.filterByFlagsText)
                 val filterIcon = flagsButton.findViewById<ImageView>(R.id.filter_by_flags_icon)
-                if (flagSearchItems.isNotEmpty()) {
+
+                if (wasEmpty) {
                     filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
                     filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
                     flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
-                } else {
+                } else if (flagSearchItems.isEmpty()) {
                     filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
                     filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
                     flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
