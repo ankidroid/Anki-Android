@@ -18,7 +18,6 @@
 package com.ichi2.preferences
 
 import android.content.Context
-import android.os.Bundle
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -29,7 +28,7 @@ import android.widget.LinearLayout
 import com.ichi2.anki.R
 
 /** Marker class to be used in preferences */
-class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat {
+class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, DialogFragmentProvider {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -115,15 +114,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat {
             mLastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
             editText.setText(mLastValidEntry.toString())
         }
-
-        companion object {
-            fun newInstance(key: String?): IncrementerNumberRangeDialogFragmentCompat {
-                val fragment = IncrementerNumberRangeDialogFragmentCompat()
-                val b = Bundle(1)
-                b.putString(ARG_KEY, key)
-                fragment.arguments = b
-                return fragment
-            }
-        }
     }
+
+    override fun makeDialogFragment() = IncrementerNumberRangeDialogFragmentCompat()
 }
