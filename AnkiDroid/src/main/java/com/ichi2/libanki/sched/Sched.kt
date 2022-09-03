@@ -16,335 +16,294 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-import android.app.Activity;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.text.TextUtils;
+import android.database.SQLException
+import android.text.TextUtils
+import androidx.annotation.VisibleForTesting
+import com.ichi2.async.CancelListener
+import com.ichi2.async.CancelListener.Companion.isCancelled
+import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.Consts.CARD_QUEUE
+import com.ichi2.libanki.Consts.DECK_STD
+import com.ichi2.libanki.Consts.REVLOG_TYPE
+import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
+import com.ichi2.libanki.sched.Counts.Queue
+import com.ichi2.libanki.sched.Counts.Queue.*
+import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
+import com.ichi2.utils.*
+import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
+import timber.log.Timber
+import java.util.*
 
-import com.ichi2.async.CancelListener;
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Note;
-import com.ichi2.libanki.SortOrder;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.DeckConfig;
-
-import com.ichi2.utils.Assert;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-import com.ichi2.utils.SyncStatus;
-
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
-
-import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_STD;
-import static com.ichi2.libanki.sched.Counts.Queue.*;
-import static com.ichi2.libanki.sched.Counts.Queue;
-import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
-
-@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-                    "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
-                    "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
-public class Sched extends SchedV2 {
-
-
-
-    // Not in libanki
-    private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
-
-    // Queues
-    private @NonNull LinkedList<Long> mRevDids = new LinkedList<>();
-
-    /**
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("cleanup: use formatted string for all queries")
+class Sched(col: Collection) : SchedV2(col) {
+    /*
      * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
      * revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram
      * positive revlog intervals are in days (rev), negative in seconds (lrn)
      */
 
-    public Sched(@NonNull Collection col) {
-        super(col);
-    }
-
-    @Override
-    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        getCol().log();
-        getCol().markReview(card);
-        discardCurrentCard();
-        _burySiblings(card);
-        card.incrReps();
+    // Queues
+    private var mRevDids = LinkedList<Long>()
+    override fun answerCard(card: Card, @BUTTON_TYPE ease: Int) {
+        col.log()
+        col.markReview(card)
+        discardCurrentCard()
+        _burySiblings(card)
+        card.incrReps()
         // former is for logging new cards, latter also covers filt. decks
-        card.setWasNew((card.getType() == Consts.CARD_TYPE_NEW));
-        boolean wasNewQ = (card.getQueue() == Consts.QUEUE_TYPE_NEW);
+        card.wasNew = card.type == Consts.CARD_TYPE_NEW
+        val wasNewQ = card.queue == Consts.QUEUE_TYPE_NEW
         if (wasNewQ) {
             // came from the new queue, move to learning
-            card.setQueue(Consts.QUEUE_TYPE_LRN);
+            card.queue = Consts.QUEUE_TYPE_LRN
             // if it was a new card, it's now a learning card
-            if (card.getType() == Consts.CARD_TYPE_NEW) {
-                card.setType(Consts.CARD_TYPE_LRN);
+            if (card.type == Consts.CARD_TYPE_NEW) {
+                card.type = Consts.CARD_TYPE_LRN
             }
             // init reps to graduation
-            card.setLeft(_startingLeft(card));
+            card.left = _startingLeft(card)
             // dynamic?
-            if (card.isInDynamicDeck() && card.getType() == Consts.CARD_TYPE_REV) {
+            if (card.isInDynamicDeck && card.type == Consts.CARD_TYPE_REV) {
                 if (_resched(card)) {
                     // reviews get their ivl boosted on first sight
-                    card.setIvl(_dynIvlBoost(card));
-                    card.setODue(mToday + card.getIvl());
+                    card.ivl = _dynIvlBoost(card)
+                    card.oDue = (mToday!! + card.ivl).toLong()
                 }
             }
-            _updateStats(card, "new");
+            _updateStats(card, "new")
         }
-        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            _answerLrnCard(card, ease);
+        if (card.queue == Consts.QUEUE_TYPE_LRN || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
+            _answerLrnCard(card, ease)
             if (!wasNewQ) {
-                _updateStats(card, "lrn");
+                _updateStats(card, "lrn")
             }
-        } else if (card.getQueue() == Consts.QUEUE_TYPE_REV) {
-            _answerRevCard(card, ease);
-            _updateStats(card, "rev");
+        } else if (card.queue == Consts.QUEUE_TYPE_REV) {
+            _answerRevCard(card, ease)
+            _updateStats(card, "rev")
         } else {
-            throw new RuntimeException("Invalid queue");
+            throw RuntimeException("Invalid queue")
         }
-        _updateStats(card, "time", card.timeTaken());
-        card.setMod(getTime().intTime());
-        card.setUsn(getCol().usn());
-        card.flushSched();
+        _updateStats(card, "time", card.timeTaken().toLong())
+        card.mod = time.intTime()
+        card.usn = col.usn()
+        card.flushSched()
     }
 
-
-    @Override
-    public @NonNull Counts counts(@NonNull Card card) {
-        Counts counts = counts();
-        Counts.Queue idx = countIdx(card);
-        if (idx == LRN) {
-            counts.addLrn(card.getLeft() / 1000);
+    override fun counts(card: Card): Counts {
+        val counts = counts()
+        val idx = countIdx(card)
+        if (idx === LRN) {
+            counts.addLrn(card.left / 1000)
         } else {
-            counts.changeCount(idx, 1);
+            counts.changeCount(idx, 1)
         }
-        return counts;
+        return counts
     }
 
-
-    @Override
-    public Queue countIdx(@NonNull Card card) {
-        switch (card.getQueue()) {
-            case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
-            case Consts.QUEUE_TYPE_LRN:
-                return LRN;
-            case Consts.QUEUE_TYPE_NEW:
-                return NEW;
-            case Consts.QUEUE_TYPE_REV:
-                return REV;
-            default:
-                throw new RuntimeException("Index " + card.getQueue() + " does not exists.");
+    override fun countIdx(card: Card): Queue {
+        return when (card.queue) {
+            Consts.QUEUE_TYPE_DAY_LEARN_RELEARN, Consts.QUEUE_TYPE_LRN -> LRN
+            Consts.QUEUE_TYPE_NEW -> NEW
+            Consts.QUEUE_TYPE_REV -> REV
+            else -> throw RuntimeException("Index " + card.queue + " does not exists.")
         }
     }
 
-
-    @Override
-    public int answerButtons(@NonNull Card card) {
-        if (card.getODue() != 0) {
+    override fun answerButtons(card: Card): Int {
+        return if (card.oDue != 0L) {
             // normal review in dyn deck?
-            if (card.isInDynamicDeck() && card.getQueue() == Consts.QUEUE_TYPE_REV) {
-                return 4;
+            if (card.isInDynamicDeck && card.queue == Consts.QUEUE_TYPE_REV) {
+                return 4
             }
-            JSONObject conf = _lrnConf(card);
-            if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == Consts.CARD_TYPE_LRN || conf.getJSONArray("delays").length() > 1) {
-                return 3;
-            }
-            return 2;
-        } else if (card.getQueue() == Consts.QUEUE_TYPE_REV) {
-            return 4;
+            val conf = _lrnConf(card)
+            if (card.type == Consts.CARD_TYPE_NEW || card.type == Consts.CARD_TYPE_LRN || conf.getJSONArray(
+                    "delays"
+                ).length() > 1
+            ) {
+                3
+            } else 2
+        } else if (card.queue == Consts.QUEUE_TYPE_REV) {
+            4
         } else {
-            return 3;
+            3
         }
     }
 
-
-    private void unburyCardsForDeck(@NonNull List<Long> allDecks) {
+    private fun unburyCardsForDeck(allDecks: List<Long>) {
         // Refactored to allow unburying an arbitrary deck
-        String sids = Utils.ids2str(allDecks);
-        getCol().log(getCol().getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet() + " and did in " + sids));
-        getCol().getDb().execute("update cards set mod=?,usn=?," + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet() + " and did in " + sids,
-                getTime().intTime(), getCol().usn());
+        val sids = Utils.ids2str(allDecks)
+        col.log(col.db.queryLongList("select id from cards where " + queueIsBuriedSnippet() + " and did in " + sids))
+        col.db.execute(
+            "update cards set mod=?,usn=?," + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet() + " and did in " + sids,
+            time.intTime(), col.usn()
+        )
     }
-
     /*
       Deck list **************************************************************** *******************************
      */
-
-
     /**
      * Returns [deckname, did, rev, lrn, new]
      */
-    @Override
-    protected @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener cancelListener) {
-        _checkDay();
-        getCol().getDecks().checkIntegrity();
-        List<Deck> allDecksSorted = getCol().getDecks().allSorted();
-        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(allDecksSorted.size());
-        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(allDecksSorted.size());
-        for (Deck deck : allDecksSorted) {
-            if (isCancelled(cancelListener)) {
-                return null;
+    override fun deckDueList(collectionTask: CancelListener?): List<DeckDueTreeNode>? {
+        _checkDay()
+        col.decks.checkIntegrity()
+        val allDecksSorted = col.decks.allSorted()
+        @KotlinCleanup("input should be non-null")
+        val lims = HashUtil.HashMapInit<String?, Array<Int>>(allDecksSorted.size)
+        val deckNodes = ArrayList<DeckDueTreeNode>(allDecksSorted.size)
+        for (deck in allDecksSorted) {
+            if (isCancelled(collectionTask)) {
+                return null
             }
-            String deckName = deck.getString("name");
-            String p = Decks.parent(deckName);
+            val deckName = deck.getString("name")
+            val p = Decks.parent(deckName)
             // new
-            int nlim = _deckNewLimitSingle(deck, false);
-            int rlim = _deckRevLimitSingle(deck, false);
+            var nlim = _deckNewLimitSingle(deck, false)
+            var rlim = _deckRevLimitSingle(deck, false)
             if (!TextUtils.isEmpty(p)) {
-                Integer[] parentLims = lims.get(Decks.normalizeName(p));
+                val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
-                Assert.that(parentLims != null, "Deck %s is supposed to have parent %s. It has not be found.", deckName, p);
-                nlim = Math.min(nlim, parentLims[0]);
+                Assert.that(
+                    parentLims != null,
+                    "Deck %s is supposed to have parent %s. It has not be found.",
+                    deckName,
+                    p
+                )
+                nlim = Math.min(nlim, parentLims!![0])
                 // review
-                rlim = Math.min(rlim, parentLims[1]);
+                rlim = Math.min(rlim, parentLims[1])
             }
-            int _new = _newForDeck(deck.getLong("id"), nlim);
+            val _new = _newForDeck(deck.getLong("id"), nlim)
             // learning
-            int lrn = _lrnForDeck(deck.getLong("id"));
+            val lrn = _lrnForDeck(deck.getLong("id"))
             // reviews
-            int rev = _revForDeck(deck.getLong("id"), rlim);
+            val rev = _revForDeck(deck.getLong("id"), rlim)
             // save to list
-            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, false, false));
+            deckNodes.add(
+                DeckDueTreeNode(
+                    deck.getString("name"),
+                    deck.getLong("id"),
+                    rev,
+                    lrn,
+                    _new,
+                    false,
+                    false
+                )
+            )
             // add deck as a parent
-            lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
+            lims[Decks.normalizeName(deck.getString("name"))] = arrayOf(nlim, rlim)
         }
-        return deckNodes;
+        return deckNodes
     }
-
-
     /*
       Getting the next card ****************************************************
       *******************************************
      */
-
     /**
      * Return the next due card, or null.
      */
-    @Override
-    protected @Nullable Card _getCard() {
+    override fun _getCard(): Card? {
         // learning card due?
-        @Nullable Card c = _getLrnCard(false);
+        var c = _getLrnCard(false)
         if (c != null) {
-            return c;
+            return c
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
-            c = _getNewCard();
+            c = _getNewCard()
             if (c != null) {
-                return c;
+                return c
             }
         }
         // Card due for review?
-        c = _getRevCard();
+        c = _getRevCard()
         if (c != null) {
-            return c;
+            return c
         }
         // day learning card due?
-        c = _getLrnDayCard();
+        c = _getLrnDayCard()
         if (c != null) {
-            return c;
+            return c
         }
         // New cards left?
-        c = _getNewCard();
-        if (c != null) {
-            return c;
-        }
+        c = _getNewCard()
+        return c ?: _getLrnCard(true)
         // collapse or finish
-        return _getLrnCard(true);
     }
 
-
-    protected @NonNull CardQueue<? extends Card.Cache>[] _fillNextCard() {
+    @KotlinCleanup("simplify fun with when")
+    override fun _fillNextCard(): Array<CardQueue<out Card.Cache?>> {
         // learning card due?
         if (_preloadLrnCard(false)) {
-            return new CardQueue<?>[]{mLrnQueue};
+            return arrayOf(mLrnQueue)
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
             if (_fillNew()) {
-                return new CardQueue<?>[]{mLrnQueue, mNewQueue};
+                return arrayOf(mLrnQueue, mNewQueue)
             }
         }
         // Card due for review?
         if (_fillRev()) {
-            return new CardQueue<?>[]{mLrnQueue, mRevQueue};
+            return arrayOf(mLrnQueue, mRevQueue)
         }
         // day learning card due?
         if (_fillLrnDay()) {
-            return new CardQueue<?>[]{mLrnQueue, mLrnDayQueue};
+            return arrayOf(mLrnQueue, mLrnDayQueue)
         }
         // New cards left?
         if (_fillNew()) {
-            return new CardQueue<?>[]{mLrnQueue, mNewQueue};
+            return arrayOf(mLrnQueue, mNewQueue)
         }
         // collapse or finish
-        if (_preloadLrnCard(true)) {
-            return new CardQueue<?>[]{mLrnQueue};
-        }
-        return new CardQueue<?>[]{};
+        return if (_preloadLrnCard(true)) {
+            arrayOf(mLrnQueue)
+        } else arrayOf()
     }
+
     /**
      * Learning queues *********************************************************** ************************************
      */
-
-    @Override
-    protected void _resetLrnCount() {
-        _resetLrnCount(null);
+    override fun _resetLrnCount() {
+        _resetLrnCount(null)
     }
-    protected void _resetLrnCount(@Nullable CancelListener cancelListener) {
+
+    override fun _resetLrnCount(cancelListener: CancelListener?) {
         // sub-day
-        mLrnCount = getCol().getDb().queryScalar(
-                "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? and id != ? LIMIT ?)",
-                getDayCutoff(), currentCardId(), mReportLimit);
-        if (isCancelled(cancelListener)) return;
+        mLrnCount = col.db.queryScalar(
+            "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit() +
+                " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? and id != ? LIMIT ?)",
+            dayCutoff, currentCardId(), mReportLimit
+        )
+        if (isCancelled(cancelListener)) return
         // day
-        mLrnCount += getCol().getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? "+
-                        "AND id != ? LIMIT ?",
-                mToday, currentCardId(), mReportLimit);
+        mLrnCount += col.db.queryScalar(
+            "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? " +
+                "AND id != ? LIMIT ?",
+            mToday!!, currentCardId(), mReportLimit
+        )
     }
 
-    @Override
-    protected void _resetLrnQueue() {
-        mLrnQueue.clear();
-        mLrnDayQueue.clear();
-        mLrnDids = getCol().getDecks().active();
+    override fun _resetLrnQueue() {
+        mLrnQueue.clear()
+        mLrnDayQueue.clear()
+        mLrnDids = col.decks.active()
     }
-
 
     // sub-day learning
-    @Override
-    protected boolean _fillLrn() {
+    override fun _fillLrn(): Boolean {
         if (mHaveCounts && mLrnCount == 0) {
-            return false;
+            return false
         }
-        if (!mLrnQueue.isEmpty()) {
-            return true;
+        if (!mLrnQueue.isEmpty) {
+            return true
         }
-        mLrnQueue.clear();
+        mLrnQueue.clear()
         /* Difference with upstream:
          * Current card can't come in the queue.
          *
@@ -352,255 +311,248 @@ public class Sched extends SchedV2 {
          * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
          * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
          * required when the card is reviewed.
-         */
-        mLrnQueue.setFilled();
-        try (Cursor cur = getCol().getDb().query(
-                           "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                getDayCutoff(), currentCardId(), mReportLimit)) {
+         */mLrnQueue.setFilled()
+        col.db.query(
+            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
+            dayCutoff, currentCardId(), mReportLimit
+        ).use { cur ->
             while (cur.moveToNext()) {
-                mLrnQueue.add(cur.getLong(0), cur.getLong(1));
+                mLrnQueue.add(cur.getLong(0), cur.getLong(1))
             }
             // as it arrives sorted by did first, we need to sort it
-            mLrnQueue.sort();
-            return !mLrnQueue.isEmpty();
+            mLrnQueue.sort()
+            return !mLrnQueue.isEmpty
         }
     }
 
-
-    @Override
-    protected @Nullable Card _getLrnCard(boolean collapse) {
+    override fun _getLrnCard(collapse: Boolean): Card? {
         if (_fillLrn()) {
-            long cutoff = getTime().intTime();
+            var cutoff = time.intTime()
             if (collapse) {
-                cutoff += getCol().get_config_int("collapseTime");
+                cutoff += col.get_config_int("collapseTime").toLong()
             }
-            if (mLrnQueue.getFirstDue() < cutoff) {
-                return mLrnQueue.removeFirstCard();
+            if (mLrnQueue.firstDue < cutoff) {
+                return mLrnQueue.removeFirstCard()
                 // mLrnCount -= card.getLeft() / 1000; See decrementCount()
             }
         }
-        return null;
+        return null
     }
-
 
     /**
      * @param ease 1=no, 2=yes, 3=remove
      */
-    @Override
-    protected void _answerLrnCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        JSONObject conf = _lrnConf(card);
-        @Consts.REVLOG_TYPE int type;
-        if (card.isInDynamicDeck() && !card.getWasNew()) {
-            type = Consts.REVLOG_CRAM;
-        } else if (card.getType() == Consts.CARD_TYPE_REV) {
-            type = Consts.REVLOG_RELRN;
+    override fun _answerLrnCard(card: Card, @BUTTON_TYPE ease: Int) {
+        val conf = _lrnConf(card)
+        @REVLOG_TYPE val type: Int
+        type = if (card.isInDynamicDeck && !card.wasNew) {
+            Consts.REVLOG_CRAM
+        } else if (card.type == Consts.CARD_TYPE_REV) {
+            Consts.REVLOG_RELRN
         } else {
-            type = Consts.REVLOG_LRN;
+            Consts.REVLOG_LRN
         }
-        boolean leaving = false;
+        var leaving = false
         // lrnCount was decremented once when card was fetched
-        int lastLeft = card.getLeft();
+        val lastLeft = card.left
         // immediate graduate?
         if (ease == Consts.BUTTON_THREE) {
-            _rescheduleAsRev(card, conf, true);
-            leaving = true;
+            _rescheduleAsRev(card, conf, true)
+            leaving = true
             // graduation time?
-        } else if (ease == Consts.BUTTON_TWO && (card.getLeft() % 1000) - 1 <= 0) {
-            _rescheduleAsRev(card, conf, false);
-            leaving = true;
+        } else if (ease == Consts.BUTTON_TWO && card.left % 1000 - 1 <= 0) {
+            _rescheduleAsRev(card, conf, false)
+            leaving = true
         } else {
             // one step towards graduation
             if (ease == Consts.BUTTON_TWO) {
                 // decrement real left count and recalculate left today
-                int left = (card.getLeft() % 1000) - 1;
-                card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
+                val left = card.left % 1000 - 1
+                card.left = _leftToday(conf.getJSONArray("delays"), left) * 1000 + left
                 // failed
             } else {
-                card.setLeft(_startingLeft(card));
-                boolean resched = _resched(card);
+                card.left = _startingLeft(card)
+                val resched = _resched(card)
                 if (conf.has("mult") && resched) {
                     // review that's lapsed
-                    card.setIvl(Math.max(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))), conf.getInt("minInt")));
+                    card.ivl = Math.max(
+                        Math.max(1, (card.ivl * conf.getDouble("mult")).toInt()),
+                        conf.getInt("minInt")
+                    )
                 } else {
                     // new card; no ivl adjustment
                     // pass
                 }
-                if (resched && card.isInDynamicDeck()) {
-                    card.setODue(mToday + 1);
+                if (resched && card.isInDynamicDeck) {
+                    card.oDue = (mToday!! + 1).toLong()
                 }
             }
-            int delay = _delayForGrade(conf, card.getLeft());
-            if (card.getDue() < getTime().intTime()) {
+            var delay = _delayForGrade(conf, card.left)
+            if (card.due < time.intTime()) {
                 // not collapsed; add some randomness
-                delay *= Utils.randomFloatInRange(1f, 1.25f);
+                delay *= Utils.randomFloatInRange(1f, 1.25f).toInt()
             }
-            card.setDue(getTime().intTime() + delay);
+            card.due = time.intTime() + delay
 
             // due today?
-            if (card.getDue() < getDayCutoff()) {
-                mLrnCount += card.getLeft() / 1000;
+            if (card.due < dayCutoff) {
+                mLrnCount += card.left / 1000
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
-                card.setQueue(Consts.QUEUE_TYPE_LRN);
-                if (!mLrnQueue.isEmpty() && revCount() == 0 && newCount() == 0) {
-                    long smallestDue = mLrnQueue.getFirstDue();
-                    card.setDue(Math.max(card.getDue(), smallestDue + 1));
+                card.queue = Consts.QUEUE_TYPE_LRN
+                if (!mLrnQueue.isEmpty && revCount() == 0 && newCount() == 0) {
+                    val smallestDue = mLrnQueue.firstDue
+                    card.due = Math.max(card.due, smallestDue + 1)
                 }
-                _sortIntoLrn(card.getDue(), card.getId());
+                _sortIntoLrn(card.due, card.id)
             } else {
                 // the card is due in one or more days, so we need to use the day learn queue
-                long ahead = ((card.getDue() - getDayCutoff()) / SECONDS_PER_DAY) + 1;
-                card.setDue(mToday + ahead);
-                card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
+                val ahead = (card.due - dayCutoff) / SECONDS_PER_DAY + 1
+                card.due = mToday!! + ahead
+                card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
             }
         }
-        _logLrn(card, ease, conf, leaving, type, lastLeft);
+        _logLrn(card, ease, conf, leaving, type, lastLeft)
     }
 
-
-    @Override
-    protected @NonNull JSONObject _lrnConf(@NonNull Card card) {
-        if (card.getType() == Consts.CARD_TYPE_REV) {
-            return _lapseConf(card);
+    override fun _lrnConf(card: Card): JSONObject {
+        return if (card.type == Consts.CARD_TYPE_REV) {
+            _lapseConf(card)
         } else {
-            return _newConf(card);
+            _newConf(card)
         }
     }
 
-
-    @Override
-    protected void _rescheduleAsRev(@NonNull Card card, @NonNull JSONObject conf, boolean early) {
-        boolean lapse = (card.getType() == Consts.CARD_TYPE_REV);
+    override fun _rescheduleAsRev(card: Card, conf: JSONObject, early: Boolean) {
+        val lapse = card.type == Consts.CARD_TYPE_REV
         if (lapse) {
             if (_resched(card)) {
-                card.setDue(Math.max(mToday + 1, card.getODue()));
+                card.due = Math.max((mToday!! + 1).toLong(), card.oDue)
             } else {
-                card.setDue(card.getODue());
+                card.due = card.oDue
             }
-            card.setODue(0);
+            card.oDue = 0
         } else {
-            _rescheduleNew(card, conf, early);
+            _rescheduleNew(card, conf, early)
         }
-        card.setQueue(Consts.QUEUE_TYPE_REV);
-        card.setType(Consts.CARD_TYPE_REV);
+        card.queue = Consts.QUEUE_TYPE_REV
+        card.type = Consts.CARD_TYPE_REV
         // if we were dynamic, graduating means moving back to the old deck
-        boolean resched = _resched(card);
-        if (card.isInDynamicDeck()) {
-            card.setDid(card.getODid());
-            card.setODue(0);
-            card.setODid(0);
+        val resched = _resched(card)
+        if (card.isInDynamicDeck) {
+            card.did = card.oDid
+            card.oDue = 0
+            card.oDid = 0
             // if rescheduling is off, it needs to be set back to a new card
             if (!resched && !lapse) {
-                card.setType(Consts.CARD_TYPE_NEW);
-                card.setQueue(Consts.QUEUE_TYPE_NEW);
-                card.setDue(getCol().nextID("pos"));
+                card.type = Consts.CARD_TYPE_NEW
+                card.queue = Consts.QUEUE_TYPE_NEW
+                card.due = col.nextID("pos").toLong()
             }
         }
     }
 
-
-    @Override
-    protected int _startingLeft(@NonNull Card card) {
-        JSONObject conf;
-        if (card.getType() == Consts.CARD_TYPE_REV) {
-            conf = _lapseConf(card);
+    override fun _startingLeft(card: Card): Int {
+        val conf: JSONObject
+        conf = if (card.type == Consts.CARD_TYPE_REV) {
+            _lapseConf(card)
         } else {
-            conf = _lrnConf(card);
+            _lrnConf(card)
         }
-        int tot = conf.getJSONArray("delays").length();
-        int tod = _leftToday(conf.getJSONArray("delays"), tot);
-        return tot + tod * 1000;
+        val tot = conf.getJSONArray("delays").length()
+        val tod = _leftToday(conf.getJSONArray("delays"), tot)
+        return tot + tod * 1000
     }
 
-
-    private int _graduatingIvl(@NonNull Card card, @NonNull JSONObject conf, boolean early, boolean adj) {
-        if (card.getType() == Consts.CARD_TYPE_REV) {
+    private fun _graduatingIvl(card: Card, conf: JSONObject, early: Boolean, adj: Boolean): Int {
+        if (card.type == Consts.CARD_TYPE_REV) {
             // lapsed card being relearnt
-            if (card.isInDynamicDeck()) {
+            if (card.isInDynamicDeck) {
                 if (conf.getBoolean("resched")) {
-                    return _dynIvlBoost(card);
+                    return _dynIvlBoost(card)
                 }
             }
-            return card.getIvl();
+            return card.ivl
         }
-        int ideal;
-        JSONArray ints = conf.getJSONArray("ints");
-        if (!early) {
+        val ideal: Int
+        val ints = conf.getJSONArray("ints")
+        ideal = if (!early) {
             // graduate
-            ideal = ints.getInt(0);
+            ints.getInt(0)
         } else {
-            ideal = ints.getInt(1);
+            ints.getInt(1)
         }
-        if (adj) {
-            return _adjRevIvl(card, ideal);
+        return if (adj) {
+            _adjRevIvl(ideal)
         } else {
-            return ideal;
+            ideal
         }
     }
-
 
     /* Reschedule a new card that's graduated for the first time. */
-    private void _rescheduleNew(@NonNull Card card, @NonNull JSONObject conf, boolean early) {
-        card.setIvl(_graduatingIvl(card, conf, early));
-        card.setDue(mToday + card.getIvl());
-        card.setFactor(conf.getInt("initialFactor"));
+    private fun _rescheduleNew(card: Card, conf: JSONObject, early: Boolean) {
+        card.ivl = _graduatingIvl(card, conf, early)
+        card.due = (mToday!! + card.ivl).toLong()
+        card.factor = conf.getInt("initialFactor")
     }
-
 
     @VisibleForTesting
-    public void removeLrn() {
-        removeLrn(null);
+    fun removeLrn() {
+        removeLrn(null)
     }
 
-    /** Remove cards from the learning queues. */
-    private void removeLrn(@NonNull long[] ids) {
-        String extra;
-        if (ids != null && ids.length > 0) {
-            extra = " AND id IN " + Utils.ids2str(ids);
+    /** Remove cards from the learning queues.  */
+    private fun removeLrn(ids: LongArray?) {
+        val extra: String
+        extra = if (ids != null && ids.size > 0) {
+            " AND id IN " + Utils.ids2str(ids)
         } else {
             // benchmarks indicate it's about 10x faster to search all decks with the index than scan the table
-            extra = " AND did IN " + Utils.ids2str(getCol().getDecks().allIds());
+            " AND did IN " + Utils.ids2str(col.decks.allIds())
         }
         // review cards in relearning
-        getCol().getDb().execute(
-                "update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", mod = ?" +
+        col.db.execute(
+            "update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", mod = ?" +
                 ", usn = ?, odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type = " + Consts.CARD_TYPE_REV + " " + extra,
-                getTime().intTime(), getCol().usn());
+            time.intTime(), col.usn()
+        )
         // new cards in learning
-        forgetCards(getCol().getDb().queryLongList( "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra));
+        forgetCards(col.db.queryLongList("SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra))
     }
 
-    private int _lrnForDeck(long did) {
-        try {
-            int cnt = getCol().getDb().queryScalar(
-                    "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?"
-                            + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
-                            + " LIMIT ?)",
-                    did, (getTime().intTime() + getCol().get_config_int("collapseTime")), mReportLimit);
-            return cnt + getCol().getDb().queryScalar(
-                    "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ?"
-                            + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
-                            + " LIMIT ?)",
-                    did, mToday, mReportLimit);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    private fun _lrnForDeck(did: Long): Int {
+        return try {
+            val cnt = col.db.queryScalar(
+                "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?" +
+                    " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?" +
+                    " LIMIT ?)",
+                did, time.intTime() + col.get_config_int("collapseTime"), mReportLimit
+            )
+            cnt + col.db.queryScalar(
+                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ?" +
+                    " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?" +
+                    " LIMIT ?)",
+                did, mToday!!, mReportLimit
+            )
+        } catch (e: SQLException) {
+            throw RuntimeException(e)
         }
     }
-
-
     /*
       Reviews ****************************************************************** *****************************
      */
-
     /**
      *
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
-    protected int _deckRevLimit(long did, boolean considerCurrentCard) {
-        return _deckNewLimit(did, d -> _deckRevLimitSingle(d, considerCurrentCard), considerCurrentCard);
+    protected fun _deckRevLimit(did: Long, considerCurrentCard: Boolean): Int {
+        return _deckNewLimit(
+            did,
+            { d: Deck? -> _deckRevLimitSingle(d, considerCurrentCard) },
+            considerCurrentCard
+        )
     }
-
     /**
      * Maximal number of rev card still to see today in deck d. It's computed as:
      * the number of rev card to see by day according
@@ -609,78 +561,86 @@ public class Sched extends SchedV2 {
      *
      * Limits of its ancestors are not applied.  Current card is treated the same way as other cards.
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
-     * */
-    @Override
-    protected int _deckRevLimitSingle(@NonNull Deck d, boolean considerCurrentCard) {
-        if (d.isDyn()) {
-            return mReportLimit;
+     */
+    @KotlinCleanup("remove nullable on deck")
+    override fun _deckRevLimitSingle(d: Deck?, considerCurrentCard: Boolean): Int {
+        if (d!!.isDyn) {
+            return mReportLimit
         }
-        long did = d.getLong("id");
-        DeckConfig c = getCol().getDecks().confForDid(did);
-        int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        val did = d.getLong("id")
+        val c = col.decks.confForDid(did)
+        var lim = Math.max(
+            0,
+            c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1)
+        )
         if (considerCurrentCard && currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
-            lim--;
+            lim--
         }
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 rev card, it means, 6 rev card including current card will be seen today.
         // So currentCard does not have to be taken into consideration in this method
-        return lim;
+        return lim
     }
 
-
-    private int _revForDeck(long did, int lim) {
-        lim = Math.min(lim, mReportLimit);
-        return getCol().getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-                                        did, mToday, lim);
+    private fun _revForDeck(did: Long, lim: Int): Int {
+        @Suppress("NAME_SHADOWING")
+        var lim = lim
+        lim = Math.min(lim, mReportLimit)
+        return col.db.queryScalar(
+            "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+            did, mToday!!, lim
+        )
     }
 
-
-    @Override
-    protected void _resetRevCount() {
-        _resetRevCount(null);
-    }
-    protected void _resetRevCount(@Nullable CancelListener cancelListener) {
-        mRevCount = _walkingCount(d -> _deckRevLimitSingle(d, true),
-                                  this::_cntFnRev, cancelListener);
+    @KotlinCleanup("see if these functions can be combined into one")
+    override fun _resetRevCount() {
+        _resetRevCount(null)
     }
 
+    override fun _resetRevCount(cancelListener: CancelListener?) {
+        mRevCount = _walkingCount(
+            { d: Deck? -> _deckRevLimitSingle(d, true) },
+            { did: Long, lim: Int -> _cntFnRev(did, lim) },
+            cancelListener
+        )
+    }
 
     // Dynamically invoked in _walkingCount, passed as a parameter in _resetRevCount
-    @SuppressWarnings("unused")
-    protected int _cntFnRev(long did, int lim) {
-        //protected because _walkingCount need to be able to access it.
-        return getCol().getDb().queryScalar(
-                "SELECT count() FROM (SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " and due <= ? "
-                        + " AND id != ? LIMIT ?)", did, mToday, currentCardId(), lim);
+    protected fun _cntFnRev(did: Long, lim: Int): Int {
+        // protected because _walkingCount need to be able to access it.
+        return col.db.queryScalar(
+            "SELECT count() FROM (SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " and due <= ? " +
+                " AND id != ? LIMIT ?)",
+            did, mToday!!, currentCardId(), lim
+        )
     }
 
-
-    @Override
-    protected void _resetRevQueue() {
-        mRevQueue.clear();
-        mRevDids = getCol().getDecks().active();
+    override fun _resetRevQueue() {
+        mRevQueue.clear()
+        mRevDids = col.decks.active()
     }
 
-
-    @Override
-    protected boolean _fillRev(boolean allowSibling) {
-        if (!mRevQueue.isEmpty()) {
-            return true;
+    override fun _fillRev(allowSibling: Boolean): Boolean {
+        if (!mRevQueue.isEmpty) {
+            return true
         }
         if (mHaveCounts && mRevCount == 0) {
-            return false;
+            return false
         }
         while (!mRevDids.isEmpty()) {
-            long did = mRevDids.getFirst();
-            int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
+            val did = mRevDids.first
+            val lim = Math.min(mQueueLimit, _deckRevLimit(did, false))
             if (lim != 0) {
-                mRevQueue.clear();
+                mRevQueue.clear()
                 // fill the queue with the current did
-                String idName = (allowSibling) ? "id": "nid";
-                long id = (allowSibling) ? currentCardId(): currentCardNid();
-                for (long cid: getCol().getDb().queryLongList(
-                        "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
-                                + " AND " + idName + " != ? LIMIT ?",
-                        did, mToday, id, lim)) {
+                val idName = if (allowSibling) "id" else "nid"
+                val id = if (allowSibling) currentCardId() else currentCardNid()
+                for (
+                    cid in col.db.queryLongList(
+                        "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
+                            " AND " + idName + " != ? LIMIT ?",
+                        did, mToday!!, id, lim
+                    )
+                ) {
                     /* Difference with upstream: we take current card into account.
                      *
                      * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -690,585 +650,557 @@ public class Sched extends SchedV2 {
                      * queue is not empty if it should not be empty (important for the conditional belows), but the
                      * front of the queue contains distinct card.
                      */
-                    mRevQueue.add(cid);
+                    mRevQueue.add(cid)
                 }
-                if (!mRevQueue.isEmpty()) {
+                if (!mRevQueue.isEmpty) {
                     // ordering
-                    if (getCol().getDecks().get(did).isDyn()) {
+                    if (col.decks.get(did).isDyn) {
                         // dynamic decks need due order preserved
                         // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
                         // AnkiDroid differs by leaving the queue intact and returning the *first* element
                         // in _getRevCard().
                     } else {
-                        Random r = new Random();
-                        r.setSeed(mToday);
-                        mRevQueue.shuffle(r);
+                        @KotlinCleanup(".apply")
+                        val r = Random()
+                        r.setSeed(mToday!!.toLong())
+                        mRevQueue.shuffle(r)
                     }
                     // is the current did empty?
                     if (mRevQueue.size() < lim) {
-                        mRevDids.remove();
+                        mRevDids.remove()
                     }
-                    return true;
+                    return true
                 }
             }
             // nothing left in the deck; move to next
-            mRevDids.remove();
+            mRevDids.remove()
         }
         if (mHaveCounts && mRevCount != 0) {
             // if we didn't get a card but the count is non-zero,
             // we need to check again for any cards that were
             // removed from the queue but not buried
-            _resetRev();
-            return _fillRev(true);
+            _resetRev()
+            return _fillRev(true)
         }
-        return false;
+        return false
     }
-
 
     /**
      * Answering a review card **************************************************
      * *********************************************
      */
-
-    @Override
-    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        int delay = 0;
+    override fun _answerRevCard(card: Card, @BUTTON_TYPE ease: Int) {
+        var delay = 0
         if (ease == Consts.BUTTON_ONE) {
-            delay = _rescheduleLapse(card);
+            delay = _rescheduleLapse(card)
         } else {
-            _rescheduleRev(card, ease);
+            _rescheduleRev(card, ease)
         }
-        _logRev(card, ease, delay, Consts.REVLOG_REV);
+        _logRev(card, ease, delay, Consts.REVLOG_REV)
     }
 
-
-    @Override
-    protected int _rescheduleLapse(@NonNull Card card) {
-        JSONObject conf = _lapseConf(card);
-        card.setLastIvl(card.getIvl());
+    override fun _rescheduleLapse(card: Card): Int {
+        val conf = _lapseConf(card)
+        card.lastIvl = card.ivl
         if (_resched(card)) {
-            card.setLapses(card.getLapses() + 1);
-            card.setIvl(_nextLapseIvl(card, conf));
-            card.setFactor(Math.max(1300, card.getFactor() - 200));
-            card.setDue(mToday + card.getIvl());
+            card.lapses = card.lapses + 1
+            card.ivl = _nextLapseIvl(card, conf)
+            card.factor = Math.max(1300, card.factor - 200)
+            card.due = (mToday!! + card.ivl).toLong()
             // if it's a filtered deck, update odue as well
-            if (card.isInDynamicDeck()) {
-                card.setODue(card.getDue());
+            if (card.isInDynamicDeck) {
+                card.oDue = card.due
             }
         }
         // if suspended as a leech, nothing to do
-        int delay = 0;
-        if (_checkLeech(card, conf) && card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
-            return delay;
+        var delay = 0
+        if (_checkLeech(card, conf) && card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+            return delay
         }
         // if no relearning steps, nothing to do
         if (conf.getJSONArray("delays").length() == 0) {
-            return delay;
+            return delay
         }
         // record rev due date for later
-        if (card.getODue() == 0) {
-            card.setODue(card.getDue());
+        if (card.oDue == 0L) {
+            card.oDue = card.due
         }
-        delay = _delayForGrade(conf, 0);
-        card.setDue(delay + getTime().intTime());
-        card.setLeft(_startingLeft(card));
+        delay = _delayForGrade(conf, 0)
+        card.due = delay + time.intTime()
+        card.left = _startingLeft(card)
         // queue 1
-        if (card.getDue() < getDayCutoff()) {
-            mLrnCount += card.getLeft() / 1000;
-            card.setQueue(Consts.QUEUE_TYPE_LRN);
-            _sortIntoLrn(card.getDue(), card.getId());
+        if (card.due < dayCutoff) {
+            mLrnCount += card.left / 1000
+            card.queue = Consts.QUEUE_TYPE_LRN
+            _sortIntoLrn(card.due, card.id)
         } else {
             // day learn queue
-            long ahead = ((card.getDue() - getDayCutoff()) / SECONDS_PER_DAY) + 1;
-            card.setDue(mToday + ahead);
-            card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
+            val ahead = (card.due - dayCutoff) / SECONDS_PER_DAY + 1
+            card.due = mToday!! + ahead
+            card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
         }
-        return delay;
+        return delay
     }
 
-
-    private int _nextLapseIvl(@NonNull Card card, @NonNull JSONObject conf) {
-        return Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult")));
+    private fun _nextLapseIvl(card: Card, conf: JSONObject): Int {
+        return Math.max(conf.getInt("minInt"), (card.ivl * conf.getDouble("mult")).toInt())
     }
 
-
-    private void _rescheduleRev(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    private fun _rescheduleRev(card: Card, @BUTTON_TYPE ease: Int) {
         // update interval
-        card.setLastIvl(card.getIvl());
+        card.lastIvl = card.ivl
         if (_resched(card)) {
-            _updateRevIvl(card, ease);
+            _updateRevIvl(card, ease)
             // then the rest
-            card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease - 2]));
-            card.setDue(mToday + card.getIvl());
+            card.factor = Math.max(1300, card.factor + FACTOR_ADDITION_VALUES[ease - 2])
+            card.due = (mToday!! + card.ivl).toLong()
         } else {
-            card.setDue(card.getODue());
+            card.due = card.oDue
         }
-        if (card.isInDynamicDeck()) {
-            card.setDid(card.getODid());
-            card.setODid(0);
-            card.setODue(0);
+        if (card.isInDynamicDeck) {
+            card.did = card.oDid
+            card.oDid = 0
+            card.oDue = 0
         }
     }
-
-
     /*
       Interval management ******************************************************
       *****************************************
      */
-
     /**
      * Ideal next interval for CARD, given EASE.
      */
-    private int _nextRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        long delay = _daysLate(card);
-        int interval = 0;
-        JSONObject conf = _revConf(card);
-        double fct = card.getFactor() / 1000.0;
-        int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
-        int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
-        int ivl4 = _constrainedIvl((int)((card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3);
+    private fun _nextRevIvl(card: Card, @BUTTON_TYPE ease: Int): Int {
+        val delay = _daysLate(card)
+        var interval = 0
+        val conf = _revConf(card)
+        val fct = card.factor / 1000.0
+        val ivl2 =
+            _constrainedIvl(((card.ivl + delay / 4) * 1.2).toInt(), conf, card.ivl.toDouble())
+        val ivl3 = _constrainedIvl(((card.ivl + delay / 2) * fct).toInt(), conf, ivl2.toDouble())
+        val ivl4 = _constrainedIvl(
+            ((card.ivl + delay) * fct * conf.getDouble("ease4")).toInt(),
+            conf,
+            ivl3.toDouble()
+        )
         if (ease == Consts.BUTTON_TWO) {
-            interval = ivl2;
+            interval = ivl2
         } else if (ease == Consts.BUTTON_THREE) {
-            interval = ivl3;
+            interval = ivl3
         } else if (ease == Consts.BUTTON_FOUR) {
-            interval = ivl4;
+            interval = ivl4
         }
         // interval capped?
-        return Math.min(interval, conf.getInt("maxIvl"));
+        return Math.min(interval, conf.getInt("maxIvl"))
     }
 
-
-    /** Integer interval after interval factor and prev+1 constraints applied */
-    private int _constrainedIvl(int ivl, @NonNull JSONObject conf, double prev) {
-        double newIvl = ivl * conf.optDouble("ivlFct",1.0);
-        return (int) Math.max(newIvl, prev + 1);
+    /** Integer interval after interval factor and prev+1 constraints applied  */
+    private fun _constrainedIvl(ivl: Int, conf: JSONObject, prev: Double): Int {
+        val newIvl = ivl * conf.optDouble("ivlFct", 1.0)
+        return Math.max(newIvl, prev + 1).toInt()
     }
 
-
-
-    @Override
-    protected void _updateRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    @KotlinCleanup("remove catch")
+    override fun _updateRevIvl(card: Card, @BUTTON_TYPE ease: Int) {
         try {
-            int idealIvl = _nextRevIvl(card, ease);
-            JSONObject conf = _revConf(card);
-            card.setIvl(Math.min(
-                    Math.max(_adjRevIvl(card, idealIvl), card.getIvl() + 1),
-                    conf.getInt("maxIvl")));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            val idealIvl = _nextRevIvl(card, ease)
+            val conf = _revConf(card)
+            card.ivl = Math.min(
+                Math.max(_adjRevIvl(idealIvl), card.ivl + 1),
+                conf.getInt("maxIvl")
+            )
+        } catch (e: JSONException) {
+            throw RuntimeException(e)
         }
-
     }
 
-    @SuppressWarnings("PMD.UnusedFormalParameter") // it's unused upstream as well
-    private int _adjRevIvl(@NonNull Card card, int idealIvl) {
-        idealIvl = _fuzzedIvl(idealIvl);
-        return idealIvl;
+    // it's unused upstream as well
+    @KotlinCleanup("simplify fun")
+    private fun _adjRevIvl(idealIvl: Int): Int {
+        @Suppress("NAME_SHADOWING")
+        var idealIvl = idealIvl
+        idealIvl = _fuzzedIvl(idealIvl)
+        return idealIvl
     }
-
 
     /**
      * Dynamic deck handling ******************************************************************
      * *****************************
      */
-
-    @Override
-    public void rebuildDyn(long did) {
-        Deck deck = getCol().getDecks().get(did);
-        if (deck.isStd()) {
-            Timber.e("error: deck is not a filtered deck");
-            return;
+    override fun rebuildDyn(did: Long) {
+        val deck = col.decks.get(did)
+        if (deck.isStd) {
+            Timber.e("error: deck is not a filtered deck")
+            return
         }
         // move any existing cards back first, then fill
-        emptyDyn(did);
-        List<Long> ids = _fillDyn(deck);
+        emptyDyn(did)
+        val ids = _fillDyn(deck)
         if (ids.isEmpty()) {
-            return;
+            return
         }
         // and change to our new deck
-        getCol().getDecks().select(did);
+        col.decks.select(did)
     }
 
-
-    private List<Long> _fillDyn(@NonNull Deck deck) {
-        JSONArray terms = deck.getJSONArray("terms").getJSONArray(0);
-        String search = terms.getString(0);
-        int limit = terms.getInt(1);
-        int order = terms.getInt(2);
-        SortOrder orderLimit = new SortOrder.AfterSqlOrderBy(_dynOrder(order, limit));
-        if (!TextUtils.isEmpty(search.trim())) {
-            search = String.format(Locale.US, "(%s)", search);
+    private fun _fillDyn(deck: Deck): List<Long> {
+        val terms = deck.getJSONArray("terms").getJSONArray(0)
+        var search = terms.getString(0)
+        val limit = terms.getInt(1)
+        val order = terms.getInt(2)
+        val orderLimit: SortOrder = AfterSqlOrderBy(_dynOrder(order, limit))
+        if (!TextUtils.isEmpty(search.trim { it <= ' ' })) {
+            search = String.format(Locale.US, "(%s)", search)
         }
-        search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search);
-        List<Long> ids = getCol().findCards(search, orderLimit);
+        search =
+            String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search)
+        val ids = col.findCards(search, orderLimit)
         if (ids.isEmpty()) {
-            return ids;
+            return ids
         }
         // move the cards over
-        getCol().log(deck.getLong("id"), ids);
-        _moveToDyn(deck.getLong("id"), ids);
-        return ids;
+        col.log(deck.getLong("id"), ids)
+        _moveToDyn(deck.getLong("id"), ids)
+        return ids
     }
 
-
-    @Override
-    public void emptyDyn(String lim) {
-        getCol().log(getCol().getDb().queryLongList("select id from cards where " + lim));
+    override fun emptyDyn(lim: String) {
+        col.log(col.db.queryLongList("select id from cards where $lim"))
         // move out of cram queue
-        getCol().getDb().execute(
-                "update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " " +
+        col.db.execute(
+            "update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " " +
                 "else type end), type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " else type end), " +
                 "due = odue, odue = 0, odid = 0, usn = ? where " + lim,
-                getCol().usn());
+            col.usn()
+        )
     }
 
-
-    private void _moveToDyn(long did, @NonNull List<Long> ids) {
-        ArrayList<Object[]> data = new ArrayList<>(ids.size());
-        //long t = getTime().intTime(); // unused variable present (and unused) upstream
-        int u = getCol().usn();
-        for (long c = 0; c < ids.size(); c++) {
+    private fun _moveToDyn(did: Long, ids: List<Long>) {
+        val data = ArrayList<Array<Any?>>(ids.size)
+        // long t = getTime().intTime(); // unused variable present (and unused) upstream
+        val u = col.usn()
+        for (c in ids.indices) {
             // start at -100000 so that reviews are all due
-            data.add(new Object[] { did, -100000 + c, u, ids.get((int) c) });
+            data.add(arrayOf(did, -100000 + c, u, ids[c]))
         }
         // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
-        String queue = "(CASE WHEN type = " + Consts.CARD_TYPE_REV + " AND (CASE WHEN odue THEN odue <= " + mToday +
-                " ELSE due <= " + mToday + " END) THEN " + Consts.QUEUE_TYPE_REV + " ELSE " + Consts.QUEUE_TYPE_NEW + " END)";
-        getCol().getDb().executeMany(
-                "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
-                        "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
-                        queue + ", due = ?, usn = ? WHERE id = ?", data);
+        val queue =
+            "(CASE WHEN type = " + Consts.CARD_TYPE_REV + " AND (CASE WHEN odue THEN odue <= " + mToday +
+                " ELSE due <= " + mToday + " END) THEN " + Consts.QUEUE_TYPE_REV + " ELSE " + Consts.QUEUE_TYPE_NEW + " END)"
+        col.db.executeMany(
+            "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
+                "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
+                queue + ", due = ?, usn = ? WHERE id = ?",
+            data
+        )
     }
 
-
-    private int _dynIvlBoost(@NonNull Card card) {
-        if (!card.isInDynamicDeck() || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
-            Timber.e("error: deck is not a filtered deck");
-            return 0;
+    private fun _dynIvlBoost(card: Card): Int {
+        if (!card.isInDynamicDeck || card.type != Consts.CARD_TYPE_REV || card.factor == 0) {
+            Timber.e("error: deck is not a filtered deck")
+            return 0
         }
-        long elapsed = card.getIvl() - (card.getODue() - mToday);
-        double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
-        int ivl = Math.max(1, Math.max(card.getIvl(), (int) (elapsed * factor)));
-        JSONObject conf = _revConf(card);
-        return Math.min(conf.getInt("maxIvl"), ivl);
+        val elapsed = card.ivl - (card.oDue - mToday!!)
+        val factor = (card.factor / 1000.0 + 1.2) / 2.0
+        val ivl = Math.max(1, Math.max(card.ivl, (elapsed * factor).toInt()))
+        val conf = _revConf(card)
+        return Math.min(conf.getInt("maxIvl"), ivl)
     }
-
-
     /*
       Leeches ****************************************************************** *****************************
      */
-
-    /** Leech handler. True if card was a leech. */
-    @Override
-    protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) {
-        int lf = conf.getInt("leechFails");
+    /** Leech handler. True if card was a leech.  */
+    override fun _checkLeech(card: Card, conf: JSONObject): Boolean {
+        val lf = conf.getInt("leechFails")
         if (lf == 0) {
-            return false;
+            return false
         }
         // if over threshold or every half threshold reps after that
-        if (card.getLapses() >= lf && (card.getLapses() - lf) % Math.max(lf / 2, 1) == 0) {
+        if (card.lapses >= lf && (card.lapses - lf) % Math.max(lf / 2, 1) == 0) {
             // add a leech tag
-            Note n = card.note();
-            n.addTag("leech");
-            n.flush();
+            val n = card.note()
+            n.addTag("leech")
+            n.flush()
             // handle
             if (conf.getInt("leechAction") == Consts.LEECH_SUSPEND) {
                 // if it has an old due, remove it from cram/relearning
-                if (card.getODue() != 0) {
-                    card.setDue(card.getODue());
+                if (card.oDue != 0L) {
+                    card.due = card.oDue
                 }
-                if (card.isInDynamicDeck()) {
-                    card.setDid(card.getODid());
+                if (card.isInDynamicDeck) {
+                    card.did = card.oDid
                 }
-                card.setODue(0);
-                card.setODid(0);
-                card.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
+                card.oDue = 0
+                card.oDid = 0
+                card.queue = Consts.QUEUE_TYPE_SUSPENDED
             }
             // notify UI
             if (mContextReference != null) {
-                Activity context = mContextReference.get();
-                leech(card, context);
+                val context = mContextReference!!.get()
+                leech(card, context)
             }
-            return true;
+            return true
         }
-        return false;
+        return false
     }
-
 
     /**
      * Tools ******************************************************************** ***************************
      */
-
-    @Override
-    protected @NonNull JSONObject _newConf(@NonNull Card card) {
-        DeckConfig conf = _cardConf(card);
-        if (!card.isInDynamicDeck()) {
-            return conf.getJSONObject("new");
+    override fun _newConf(card: Card): JSONObject {
+        val conf = _cardConf(card)
+        if (!card.isInDynamicDeck) {
+            return conf.getJSONObject("new")
         }
         // dynamic deck; override some attributes, use original deck for others
-        DeckConfig oconf = getCol().getDecks().confForDid(card.getODid());
-        JSONArray delays = conf.optJSONArray("delays");
+        val oconf = col.decks.confForDid(card.oDid)
+        @KotlinCleanup("use ?:")
+        var delays = conf.optJSONArray("delays")
         if (delays == null) {
-            delays = oconf.getJSONObject("new").getJSONArray("delays");
+            delays = oconf.getJSONObject("new").getJSONArray("delays")
         }
-        JSONObject dict = new JSONObject();
+        @KotlinCleanup("use apply with dict")
+        val dict = JSONObject()
         // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
+        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
+        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
+        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
         // overrides
-        dict.put("delays", delays);
-        dict.put("separate", conf.getBoolean("separate"));
-        dict.put("order", Consts.NEW_CARDS_DUE);
-        dict.put("perDay", mReportLimit);
-        return dict;
+        dict.put("delays", delays)
+        dict.put("separate", conf.getBoolean("separate"))
+        dict.put("order", Consts.NEW_CARDS_DUE)
+        dict.put("perDay", mReportLimit)
+        return dict
     }
 
-
-    @Override
-    protected @NonNull JSONObject _lapseConf(@NonNull Card card) {
-        DeckConfig conf = _cardConf(card);
-        if (!card.isInDynamicDeck()) {
-            return conf.getJSONObject("lapse");
+    override fun _lapseConf(card: Card): JSONObject {
+        val conf = _cardConf(card)
+        if (!card.isInDynamicDeck) {
+            return conf.getJSONObject("lapse")
         }
         // dynamic deck; override some attributes, use original deck for others
-        DeckConfig oconf = getCol().getDecks().confForDid(card.getODid());
-        JSONArray delays = conf.optJSONArray("delays");
+        val oconf = col.decks.confForDid(card.oDid)
+        var delays = conf.optJSONArray("delays")
+        @KotlinCleanup("use :?")
         if (delays == null) {
-            delays = oconf.getJSONObject("lapse").getJSONArray("delays");
+            delays = oconf.getJSONObject("lapse").getJSONArray("delays")
         }
-        JSONObject dict = new JSONObject();
+        @KotlinCleanup("use apply with dict")
+        val dict = JSONObject()
         // original deck
-        dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"));
-        dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"));
-        dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
-        dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"));
+        dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
+        dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
+        dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
+        dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
         // overrides
-        dict.put("delays", delays);
-        dict.put("resched", conf.getBoolean("resched"));
-        return dict;
+        dict.put("delays", delays)
+        dict.put("resched", conf.getBoolean("resched"))
+        return dict
     }
 
-
-    private boolean _resched(@NonNull Card card) {
-        DeckConfig conf = _cardConf(card);
-        if (conf.getInt("dyn") == DECK_STD) {
-            return true;
-        }
-        return conf.getBoolean("resched");
+    @KotlinCleanup("conf.getInt(dyn) == DECK_STD or conf.getBoolean(resched)")
+    private fun _resched(card: Card): Boolean {
+        val conf = _cardConf(card)
+        return if (conf.getInt("dyn") == DECK_STD) {
+            true
+        } else conf.getBoolean("resched")
     }
-
 
     /**
      * Daily cutoff ************************************************************* **********************************
      * This function uses GregorianCalendar so as to be sensitive to leap years, daylight savings, etc.
      */
-
-    @Override
-    public void _updateCutoff() {
-        Integer oldToday = mToday;
+    override fun _updateCutoff() {
+        val oldToday = mToday
         // days since col created
-        mToday = (int) ((getTime().intTime() - getCol().getCrt()) / SECONDS_PER_DAY);
+        mToday = ((time.intTime() - col.crt) / SECONDS_PER_DAY).toInt()
         // end of day cutoff
-        setDayCutoff(getCol().getCrt() + ((mToday + 1) * SECONDS_PER_DAY));
-        if (!mToday.equals(oldToday)) {
-            getCol().log(mToday, getDayCutoff());
+        dayCutoff = col.crt + (mToday!! + 1) * SECONDS_PER_DAY
+        if (mToday != oldToday) {
+            col.log(mToday, dayCutoff)
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
-        for (Deck deck : getCol().getDecks().all()) {
-            update(deck);
+        for (deck in col.decks.all()) {
+            update(deck)
         }
         // unbury if the day has rolled over
-        int unburied = getCol().get_config("lastUnburied", 0);
-        if (unburied < mToday) {
-            SyncStatus.ignoreDatabaseModification(this::unburyCards);
+        @Suppress("USELESS_CAST") // not useless
+        val unburied: Int = col.get_config("lastUnburied", 0 as Int)!!
+        if (unburied < mToday!!) {
+            ignoreDatabaseModification { unburyCards() }
         }
     }
-
 
     /**
      * Deck finished state ******************************************************
      * *****************************************
      */
-
-
-    @Override
-    public boolean haveBuried() {
-        return haveBuried(getCol().getDecks().active());
+    @KotlinCleanup("convert to expression")
+    override fun haveBuried(): Boolean {
+        return haveBuried(col.decks.active())
     }
 
-    private boolean haveBuried(@NonNull List<Long> allDecks) {
+    @KotlinCleanup("convert to expression")
+    private fun haveBuried(allDecks: List<Long>): Boolean {
         // Refactored to allow querying an arbitrary deck
-        String sdids = Utils.ids2str(allDecks);
-        int cnt = getCol().getDb().queryScalar(
-                "select 1 from cards where " + queueIsBuriedSnippet() + " and did in " + sdids + " limit 1");
-        return cnt != 0;
+        val sdids = Utils.ids2str(allDecks)
+        val cnt = col.db.queryScalar(
+            "select 1 from cards where " + queueIsBuriedSnippet() + " and did in " + sdids + " limit 1"
+        )
+        return cnt != 0
     }
-
-
     /*
       Next time reports ********************************************************
       ***************************************
      */
-
     /**
      * Return the next interval for CARD, in seconds.
      */
-    @Override
-    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            return _nextLrnIvl(card, ease);
+    override fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long {
+        return if (card.queue == Consts.QUEUE_TYPE_NEW || card.queue == Consts.QUEUE_TYPE_LRN || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
+            _nextLrnIvl(card, ease)
         } else if (ease == Consts.BUTTON_ONE) {
             // lapsed
-            JSONObject conf = _lapseConf(card);
+            val conf = _lapseConf(card)
             if (conf.getJSONArray("delays").length() > 0) {
-                return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
-            }
-            return _nextLapseIvl(card, conf) * SECONDS_PER_DAY;
+                (conf.getJSONArray("delays").getDouble(0) * 60.0).toLong()
+            } else _nextLapseIvl(
+                card,
+                conf
+            ) * SECONDS_PER_DAY
         } else {
             // review
-            return _nextRevIvl(card, ease) * SECONDS_PER_DAY;
+            _nextRevIvl(card, ease) * SECONDS_PER_DAY
         }
     }
 
-
-    @Override
-    protected long _nextLrnIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    override fun _nextLrnIvl(card: Card, @BUTTON_TYPE ease: Int): Long {
         // this isn't easily extracted from the learn code
-        if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
-            card.setLeft(_startingLeft(card));
+        if (card.queue == Consts.QUEUE_TYPE_NEW) {
+            card.left = _startingLeft(card)
         }
-        JSONObject conf = _lrnConf(card);
-        if (ease == Consts.BUTTON_ONE) {
+        val conf = _lrnConf(card)
+        return if (ease == Consts.BUTTON_ONE) {
             // fail
-            return _delayForGrade(conf, conf.getJSONArray("delays").length());
+            _delayForGrade(conf, conf.getJSONArray("delays").length()).toLong()
         } else if (ease == Consts.BUTTON_THREE) {
             // early removal
             if (!_resched(card)) {
-                return 0;
-            }
-            return _graduatingIvl(card, conf, true, false) * SECONDS_PER_DAY;
+                0
+            } else _graduatingIvl(
+                card,
+                conf,
+                true,
+                false
+            ) * SECONDS_PER_DAY
         } else {
-            int left = card.getLeft() % 1000 - 1;
+            val left = card.left % 1000 - 1
             if (left <= 0) {
                 // graduate
                 if (!_resched(card)) {
-                    return 0;
-                }
-                return _graduatingIvl(card, conf, false, false) * SECONDS_PER_DAY;
+                    0
+                } else _graduatingIvl(
+                    card,
+                    conf,
+                    false,
+                    false
+                ) * SECONDS_PER_DAY
             } else {
-                return _delayForGrade(conf, left);
+                _delayForGrade(conf, left).toLong()
             }
         }
     }
-
-
     /*
       Suspending *************************************************************** ********************************
      */
-
     /**
      * Suspend cards.
      */
-    @Override
-    public void suspendCards(@NonNull long[] ids) {
-        getCol().log(ids);
-        remFromDyn(ids);
-        removeLrn(ids);
-        getCol().getDb().execute(
-                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
-                        + Utils.ids2str(ids),
-                getTime().intTime(), getCol().usn());
+    override fun suspendCards(ids: LongArray) {
+        col.log(*ids.toTypedArray())
+        remFromDyn(ids)
+        removeLrn(ids)
+        col.db.execute(
+            "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN " +
+                Utils.ids2str(ids),
+            time.intTime(), col.usn()
+        )
     }
 
-    protected @NonNull String queueIsBuriedSnippet() {
-        return "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
+    override fun queueIsBuriedSnippet(): String {
+        return "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED
     }
 
-    protected @NonNull String _restoreQueueSnippet() {
-        return "queue = type";
+    override fun _restoreQueueSnippet(): String {
+        return "queue = type"
     }
 
     /**
      * Unsuspend cards
      */
-    @Override
-    public void buryCards(@NonNull long[] cids, boolean manual) {
+    override fun buryCards(cids: LongArray, manual: Boolean) {
         // The boolean is useless here. However, it ensures that we are override the method with same parameter in SchedV2.
-        getCol().log(cids);
-        remFromDyn(cids);
-        removeLrn(cids);
-        getCol().getDb().execute("update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
-                getTime().intTime(), getCol().usn());
+        col.log(*cids.toTypedArray())
+        remFromDyn(cids)
+        removeLrn(cids)
+        col.db.execute(
+            "update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(
+                cids
+            ),
+            time.intTime(), col.usn()
+        )
     }
-
-
-
 
     /*
      * ***********************************************************
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    @Override
-    public boolean haveBuried(long did) {
-        List<Long> all = new ArrayList<>(getCol().getDecks().children(did).values());
-        all.add(did);
-        return haveBuried(all);
+    override fun haveBuried(did: Long): Boolean {
+        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
+        all.add(did)
+        return haveBuried(all)
     }
 
-    @Override
-    public void unburyCardsForDeck(long did) {
-        List<Long> all = new ArrayList<>(getCol().getDecks().children(did).values());
-        all.add(did);
-        unburyCardsForDeck(all);
+    override fun unburyCardsForDeck(did: Long) {
+        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
+        all.add(did)
+        unburyCardsForDeck(all)
     }
 
     /* Need to override. Otherwise it get SchedV2.mName variable*/
-    @NonNull
-    @Override
-    public String getName() {
-        return "std";
-    }
-
+    @KotlinCleanup("don't need 'get'")
+    override val name: String
+        get() = "std"
     /*
       Counts
      */
-
     /**
      * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.
      *
      * @param discardCard A card sent to reviewer that should not be
      * counted.
      */
-    @Override
-    public void decrementCounts(@Nullable Card discardCard) {
+    override fun decrementCounts(discardCard: Card?) {
         if (discardCard == null) {
-            return;
+            return
         }
-        @Consts.CARD_QUEUE int type = discardCard.getQueue();
-        switch (type) {
-        case Consts.QUEUE_TYPE_NEW:
-            mNewCount--;
-            break;
-        case Consts.QUEUE_TYPE_LRN:
-            mLrnCount -= discardCard.getLeft() / 1000;
-            break;
-        case Consts.QUEUE_TYPE_REV:
-            mRevCount--;
-            break;
-        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
-            mLrnCount--;
-            break;
+        @CARD_QUEUE val type = discardCard.queue
+        when (type) {
+            Consts.QUEUE_TYPE_NEW -> mNewCount--
+            Consts.QUEUE_TYPE_LRN -> mLrnCount -= discardCard.left / 1000
+            Consts.QUEUE_TYPE_REV -> mRevCount--
+            Consts.QUEUE_TYPE_DAY_LEARN_RELEARN -> mLrnCount--
         }
     }
 
     /** The button to press on a new card to answer "good".*/
-    @Override
-    @VisibleForTesting
-    public @Consts.BUTTON_TYPE int getGoodNewButton() {
-        return Consts.BUTTON_TWO;
+    override val goodNewButton: Int
+        get() = Consts.BUTTON_TWO
+
+    companion object {
+        // Not in libanki
+        private val FACTOR_ADDITION_VALUES = intArrayOf(-150, 0, 150)
     }
 }
