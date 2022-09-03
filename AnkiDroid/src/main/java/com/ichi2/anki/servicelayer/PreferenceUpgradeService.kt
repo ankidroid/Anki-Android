@@ -192,8 +192,8 @@ object PreferenceUpgradeService {
          */
         internal class RemoveLegacyMediaSyncUrl : PreferenceUpgrade(3) {
             override fun upgrade(preferences: SharedPreferences) {
-                val mediaSyncUrl = CustomSyncServer.getMediaSyncUrl(preferences) ?: return
-                if (mediaSyncUrl.startsWith("https://msync.ankiweb.net")) {
+                val mediaSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
+                if (mediaSyncUrl?.startsWith("https://msync.ankiweb.net") == true) {
                     preferences.edit { remove(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL) }
                 }
             }
@@ -394,4 +394,5 @@ object PreferenceUpgradeService {
 
 object RemovedPreferences {
     const val PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl"
+    const val PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER = "useCustomSyncServer"
 }

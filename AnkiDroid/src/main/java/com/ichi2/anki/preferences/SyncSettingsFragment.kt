@@ -57,10 +57,17 @@ class SyncSettingsFragment : SettingsFragment() {
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
             val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
-            if (!CustomSyncServer.isEnabled(preferences)) {
-                getString(R.string.disabled)
+            val collectionSyncUrl = CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(preferences)
+            val mediaSyncUrl = CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(preferences)
+
+            if (collectionSyncUrl == null && mediaSyncUrl == null) {
+                getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
             } else {
-                CustomSyncServer.getCollectionSyncUrl(preferences) ?: ""
+                getString(
+                    R.string.custom_sync_server_summary_both_or_either_of_the_two_servers_used,
+                    collectionSyncUrl ?: getString(R.string.custom_sync_server_summary_placeholder_default),
+                    mediaSyncUrl ?: getString(R.string.custom_sync_server_summary_placeholder_default)
+                )
             }
         }
     }
