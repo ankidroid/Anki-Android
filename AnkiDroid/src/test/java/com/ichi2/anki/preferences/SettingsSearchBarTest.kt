@@ -34,7 +34,7 @@ class SettingsSearchBarTest : RobolectricTest() {
     @Suppress("UNCHECKED_CAST")
     fun `All indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes`() {
         val preferencesActivity = getPreferencesActivity()
-        val searchConfig = preferencesActivity.configureSearchBar(SearchConfiguration(preferencesActivity))
+        val searchConfig = preferencesActivity.searchConfiguration
 
         // Use reflection to access some private fields
         val filesToIndexField = getJavaFieldAsAccessible(SearchConfiguration::class.java, "filesToIndex")

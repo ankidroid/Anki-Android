@@ -17,6 +17,7 @@ package com.ichi2.anki.preferences
 
 import android.content.Context
 import android.util.AttributeSet
+import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceActionView
 
 /**
@@ -26,6 +27,11 @@ class PreferencesSearchView : SearchPreferenceActionView {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    fun setSearchConfiguration(searchConfiguration: SearchConfiguration) {
+        this.searchConfiguration = searchConfiguration
+        this.searchConfiguration.setSearchBarEnabled(false)
+    }
 
     // Close the SearchPreferenceFragment in case the user taps on the toolbar's back button
     override fun onActionViewCollapsed() {
