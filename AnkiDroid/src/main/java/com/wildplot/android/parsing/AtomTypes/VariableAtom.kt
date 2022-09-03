@@ -13,57 +13,35 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing.AtomTypes;
+package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.parsing.Atom;
-import com.wildplot.android.parsing.ExpressionFormatException;
-import com.wildplot.android.parsing.TopLevelParser;
-import com.wildplot.android.parsing.TreeElement;
-
-import java.util.regex.Pattern;
-
+import android.annotation.SuppressLint
+import com.wildplot.android.parsing.Atom.AtomType
+import com.wildplot.android.parsing.ExpressionFormatException
+import com.wildplot.android.parsing.TopLevelParser
+import com.wildplot.android.parsing.TreeElement
+import java.util.regex.Pattern
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class VariableAtom implements TreeElement {
-
-    private Atom.AtomType atomType = Atom.AtomType.NUMBER;
-    private final TopLevelParser parser;
-    private final String varName;
-
-
-    public VariableAtom(String factorString, TopLevelParser parser) {
-        this.parser = parser;
-        this.varName = factorString;
-        Pattern p = Pattern.compile("[^a-zA-Z0-9]");
-        boolean hasSpecialChar = p.matcher(varName).find();
-        if (!hasSpecialChar && varName.length() > 0) {
-            return;
-        }
-        this.atomType = Atom.AtomType.INVALID;
-    }
-
-
-    public Atom.AtomType getAtomType() {
-        return atomType;
-    }
-
-
-    @Override
-    public double getValue() {
-
-        if (atomType != Atom.AtomType.INVALID) {
-
-            return parser.getVarVal(varName);
+class VariableAtom(private val varName: String, private val parser: TopLevelParser) : TreeElement {
+    var atomType = AtomType.NUMBER
+    override fun getValue(): Double {
+        return if (atomType !== AtomType.INVALID) {
+            parser.getVarVal(varName)
         } else {
-            throw new ExpressionFormatException("Number is Invalid, cannot parse");
+            throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
     }
 
+    override fun isVariable(): Boolean {
+        return true
+    }
 
-    @Override
-    public boolean isVariable() {
-        return true;
+    init {
+        val p = Pattern.compile("[^a-zA-Z0-9]")
+        val hasSpecialChar = p.matcher(varName).find()
+        if (hasSpecialChar || varName.length <= 0) {
+            atomType = AtomType.INVALID
+        }
     }
 }
