@@ -139,7 +139,6 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             Timber.i("CreateDeckDialog::createFilteredDeck...")
             val newDeckId = col.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
-            // 11668: Display feedback if a deck is created
         } catch (ex: DeckRenameException) {
             showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
             return false
