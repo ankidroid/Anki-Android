@@ -123,7 +123,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
             setFragmentContainerViewId(R.id.settings_container)
             setBreadcrumbsEnabled(true)
             setFuzzySearchEnabled(false)
-            setHistoryEnabled(false)
+            setHistoryEnabled(true)
             textNoResults = getString(R.string.pref_search_no_results)
 
             index(R.xml.preferences_general)
