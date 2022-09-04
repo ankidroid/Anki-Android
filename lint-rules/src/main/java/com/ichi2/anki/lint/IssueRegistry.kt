@@ -25,7 +25,6 @@ import com.ichi2.anki.lint.rules.KotlinMigrationBrokenEmails
 import com.ichi2.anki.lint.rules.KotlinMigrationFixLineBreaks
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
 import com.ichi2.anki.lint.rules.NonPublicNonStaticJavaFieldDetector
-import com.ichi2.anki.lint.rules.PreferIsEmptyOverSizeCheck
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.VariableNamingDetector
 
@@ -50,7 +49,6 @@ class IssueRegistry : IssueRegistry() {
                 JUnitNullAssertionDetector.ISSUE,
                 KotlinMigrationBrokenEmails.ISSUE,
                 KotlinMigrationFixLineBreaks.ISSUE,
-                PreferIsEmptyOverSizeCheck.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
                 NonPublicNonStaticJavaFieldDetector.ISSUE,
