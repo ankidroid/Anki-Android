@@ -15,14 +15,17 @@
  ****************************************************************************************/
 
 package com.ichi2.async
+import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Note
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
  * Remove this comment when migration has been completed
+ * TODO: All functions associated to Collection can be converted to extension function to avoid redundant parameter [col] in each.
  */
 
 /**
@@ -61,5 +64,38 @@ fun updateCard(
         }
     } else {
         editCard
+    }
+}
+
+// TODO: Rename to saveEditedNotesToDisk or something more descriptive
+/**
+ * Takes a list of edited notes and saves them permanently to disk
+ * @param col Collection
+ * @param notesToUpdate a list of edited notes that is to be saved
+ * @param shouldUpdateCards whether each card inside the notes should be updated
+ * @return list of updated (in disk) notes
+ */
+fun doInBackgroundUpdateMultipleNotes(
+    col: Collection,
+    notesToUpdate: List<Note>,
+    shouldUpdateCards: Boolean = false
+): List<Note>? {
+    Timber.d("doInBackgroundUpdateMultipleNotes")
+    return try {
+        col.db.executeInTransaction {
+            for (note in notesToUpdate) {
+                note.flush()
+                if (shouldUpdateCards) {
+                    for (card in note.cards()) {
+                        card.flush()
+                    }
+                }
+            }
+            notesToUpdate
+        }
+    } catch (e: RuntimeException) {
+        Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
+        CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
+        return null
     }
 }
