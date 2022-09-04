@@ -130,7 +130,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mNoteTypeSpinner: Spinner? = null
     private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
 
-    // Non Null after onCollectionLoaded, but still null after construction. So essentially @NonNull but it would fail.
+    // non-null after onCollectionLoaded
     private var mEditorNote: Note? = null
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */private var mCurrentEditedCard: Card? =
         null

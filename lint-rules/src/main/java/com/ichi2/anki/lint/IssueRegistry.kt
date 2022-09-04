@@ -17,7 +17,6 @@ import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
 import com.ichi2.anki.lint.rules.DuplicateTextInPreferencesXml
 import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
-import com.ichi2.anki.lint.rules.InconsistentAnnotationUsage
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.KotlinMigrationBrokenEmails
@@ -43,7 +42,6 @@ class IssueRegistry : IssueRegistry() {
                 DuplicateCrowdInStrings.ISSUE,
                 DuplicateTextInPreferencesXml.ISSUE,
                 HardcodedPreferenceKey.ISSUE,
-                InconsistentAnnotationUsage.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
                 KotlinMigrationBrokenEmails.ISSUE,
                 KotlinMigrationFixLineBreaks.ISSUE,
