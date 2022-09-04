@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +56,11 @@ class FilterSheetBottomFragment :
 
     private lateinit var flagsButton: LinearLayout
     private lateinit var flagToggleIcon: ImageView
+
+    /** Heading of the Flags filter section */
+    private lateinit var filterHeader: TextView
+    /** Icon of the Flags filter section */
+    private lateinit var filterIcon: ImageView
 
     private var lastClickTime = 0
 
@@ -131,14 +135,14 @@ class FilterSheetBottomFragment :
          */
 
         flagsButton = requireView().findViewById(R.id.filterByFlagsLayout)
+        filterHeader = flagsButton.findViewById(R.id.filterByFlagsText)
+        filterIcon = flagsButton.findViewById(R.id.filter_by_flags_icon)
+
         flagToggleIcon = requireView().findViewById(R.id.filter_flagListToggle)
         val flagsRecyclerViewLayout =
             requireView().findViewById<LinearLayout>(R.id.flagsRecyclerViewLayout)
 
         if (flagSearchItems.isNotEmpty()) {
-            val filterHeader = flagsButton.findViewById<TextView>(R.id.filterByFlagsText)
-            val filterIcon = flagsButton.findViewById<ImageView>(R.id.filter_by_flags_icon)
-
             filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
             filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
             flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
@@ -208,29 +212,17 @@ class FilterSheetBottomFragment :
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val itemTextView: TextView = view.findViewById(R.id.filter_list_item)
             val icon: ImageView = view.findViewById(R.id.filter_list_icon)
+            /** Checks whether flagSearchItems was empty before adding new element to it */
+            var wasEmpty = false
 
-            private fun onFlagItemClicked(item: Flags, position: Int) {
-                val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
-                /** Checks whether flagSearchItems was empty before adding new element to it */
-                var wasEmpty = false
+            private fun onFlagItemClicked(item: Flags) {
+                // set default as false on every click
+                // explicitly set true if condition satisfies
+                wasEmpty = false
 
-                if (!isSelected(item)) {
-                    itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
-                    itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
-
-                    wasEmpty = flagSearchItems.isEmpty()
-                    flagSearchItems.add(item.flagNode)
-                } else {
-                    flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
-                    itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
-
-                    flagSearchItems.remove(item.flagNode)
-                }
-
-                // Change color of filter header to indicate a filter has been selected
-
-                val filterHeader = flagsButton.findViewById<TextView>(R.id.filterByFlagsText)
-                val filterIcon = flagsButton.findViewById<ImageView>(R.id.filter_by_flags_icon)
+                // Change color of filter header to indicate a filter has been selected.
+                // Set wasEmpty to true if applicable.
+                setBackgroundColor(item, false)
 
                 if (wasEmpty) {
                     filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
@@ -244,21 +236,45 @@ class FilterSheetBottomFragment :
             }
 
             fun bind(
-                currFlag: Flags,
-                position: Int
+                currFlag: Flags
             ) {
                 itemTextView.text = currFlag.getFlagName(itemView.context)
                 icon.setImageResource(currFlag.flagToggleIcon)
 
                 // If [currFlag] is currently selected, bind the view with the selected item background and text color
                 @NeedsTest("Test if background color is being correctly set if item is selected")
-                if (isSelected(currFlag)) {
-                    itemView.setBackgroundColor(getColorFromAttr(context, R.attr.filterItemBackgroundSelected))
-                    itemTextView.setTextColor(getColorFromAttr(context, R.attr.filterItemTextColorSelected))
-                }
+                setBackgroundColor(currFlag, true)
 
                 itemView.setOnClickListener {
-                    onFlagItemClicked(currFlag, position)
+                    onFlagItemClicked(currFlag)
+                }
+            }
+
+            fun setBackgroundColor(flag: Flags, setIfSelected: Boolean) {
+                // if setIfSelected is true, the function sets the color in bind
+                // if it is false, the function performs the functionality needed in onFlagItemClicked
+
+                if (setIfSelected) {
+                    if (isSelected(flag)) {
+                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
+                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
+                    } else {
+                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
+                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
+                    }
+                } else {
+                    if (!isSelected(flag)) {
+                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
+                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
+
+                        wasEmpty = flagSearchItems.isEmpty()
+                        flagSearchItems.add(flag.flagNode)
+                    } else {
+                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
+                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
+
+                        flagSearchItems.remove(flag.flagNode)
+                    }
                 }
             }
 
@@ -276,7 +292,7 @@ class FilterSheetBottomFragment :
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             val currTag = dataset[position]
-            viewHolder.bind(currTag, position)
+            viewHolder.bind(currTag)
         }
 
         override fun getItemCount() = dataset.size
