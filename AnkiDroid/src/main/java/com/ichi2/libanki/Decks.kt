@@ -39,6 +39,7 @@ import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.HashMap
 
 // fixmes:
 // - make sure users can't set grad interval < 1
@@ -150,24 +151,14 @@ class Decks(private val col: Collection) : DeckManager() {
     override fun load(@Language("JSON") decks: String, dconf: String) {
         val decksarray = JSONObject(decks)
         var ids = decksarray.names()
-        this.decks = HashMapInit(decksarray.length())
-        if (ids != null) {
-            for (id in ids.stringIterable()) {
-                val o = Deck(decksarray.getJSONObject(id))
-                val longId = id.toLong()
-                this.decks!!.put(longId, o)
-            }
-        }
+        this.decks =
+            ids?.stringIterable()?.associate { id -> id.toLong() to Deck(decksarray.getJSONObject(id)) }
+                ?.toMutableMap()
+                ?: HashMap()
         mNameMap = NameMap.constructor(this.decks!!.values)
         val confarray = JSONObject(dconf)
         ids = confarray.names()
-        mDconf = HashMapInit(confarray.length())
-        if (ids != null) {
-            for (id in ids.stringIterable()) {
-                mDconf!![id.toLong()] =
-                    DeckConfig(confarray.getJSONObject(id), DeckConfig.Source.DECK_CONFIG)
-            }
-        }
+        mDconf = ids?.stringIterable()?.associate { id -> id.toLong() to DeckConfig(confarray.getJSONObject(id), DeckConfig.Source.DECK_CONFIG) }?.toMutableMap() ?: HashMap()
         mChanged = false
     }
 

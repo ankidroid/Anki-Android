@@ -21,7 +21,6 @@ import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -40,7 +39,7 @@ class RemoteServer(
     @Throws(UnknownHttpResponseException::class)
     fun hostKey(user: String?, pw: String?): Response? {
         return try {
-            postVars = HashMapInit(0)
+            postVars = mutableMapOf()
             val credentials = JSONObject()
             credentials.put("u", user)
             credentials.put("p", pw)
@@ -53,9 +52,10 @@ class RemoteServer(
 
     @Throws(UnknownHttpResponseException::class)
     fun meta(): Response {
-        postVars = HashMapInit(2)
-        postVars["k"] = hKey
-        postVars["s"] = checksumKey
+        postVars = mutableMapOf(
+            "k" to hKey,
+            "s" to checksumKey
+        )
         val meta = JSONObject()
         meta.put("v", Consts.SYNC_VER)
         meta.put("cv", String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc()))

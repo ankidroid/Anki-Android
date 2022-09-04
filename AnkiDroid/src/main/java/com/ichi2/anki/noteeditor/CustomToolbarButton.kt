@@ -18,7 +18,6 @@ package com.ichi2.anki.noteeditor
 import android.text.TextUtils
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.HashSetInit
 import timber.log.Timber
 import java.util.*
 
@@ -63,16 +62,7 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
             return buttons
         }
 
-        fun toStringSet(buttons: ArrayList<CustomToolbarButton>): Set<String> {
-            val ret = HashSetInit<String>(buttons.size)
-            for (b in buttons) {
-                val values = arrayOf(b.index.toString(), b.buttonText, b.prefix, b.suffix)
-                for (i in values.indices) {
-                    values[i] = values[i].replace(Consts.FIELD_SEPARATOR, "")
-                }
-                ret.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
-            }
-            return ret
-        }
+        fun toStringSet(buttons: ArrayList<CustomToolbarButton>) =
+            buttons.map { b -> TextUtils.join(Consts.FIELD_SEPARATOR, listOf(b.index.toString(), b.buttonText, b.prefix, b.suffix).map { it.replace(Consts.FIELD_SEPARATOR, "") }) }.toSet()
     }
 }

@@ -27,7 +27,6 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HttpFetcher
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -329,7 +328,7 @@ open class HttpSyncer(
         @KotlinCleanup("move to constructor")
         this.con = con
         @KotlinCleanup("combined declaration and initialization")
-        postVars = HashMapInit(0) // New map is created each time it is filled. No need to allocate room
+        postVars = mutableMapOf() // New map is created each time it is filled. No need to allocate room
         @KotlinCleanup("move to constructor")
         mHostNum = hostNum
     }

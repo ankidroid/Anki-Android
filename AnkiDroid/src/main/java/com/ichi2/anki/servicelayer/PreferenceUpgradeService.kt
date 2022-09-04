@@ -33,7 +33,6 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.themes.Themes
-import com.ichi2.utils.HashSetInit
 import timber.log.Timber
 
 private typealias VersionIdentifier = Int
@@ -215,7 +214,7 @@ object PreferenceUpgradeService {
 
             private fun getNewToolbarButtons(preferences: SharedPreferences): ArrayList<CustomToolbarButton> {
                 // get old toolbar prefs
-                val set = preferences.getStringSet("note_editor_custom_buttons", HashSetInit<String>(0)) as Set<String?>
+                val set = preferences.getStringSet("note_editor_custom_buttons", setOf()) as Set<String?>
                 // new list with buttons size
                 val buttons = ArrayList<CustomToolbarButton>(set.size)
 

@@ -25,7 +25,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
@@ -608,10 +607,7 @@ class Models(col: Collection) : ModelManager(col) {
         val mid = newModel.getLong("id")
         val sflds = col.db.queryString("select flds from notes where id = ?", nid)
         val flds = Utils.splitFields(sflds)
-        val newflds: MutableMap<Int?, String> = HashMapInit(map.size)
-        for ((key, value) in map) {
-            newflds[value] = flds[key]
-        }
+        val newflds: Map<Int?, String> = map.entries.associate { it.value to flds[it.key] }
         val flds2: MutableList<String> = ArrayList(nfields)
         for (c in 0 until nfields) {
             @KotlinCleanup("getKeyOrDefault")
@@ -792,20 +788,8 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     val templateNames: Map<Long, Map<Int, String>>
-        get() {
-            val result = HashMapInit<Long, Map<Int, String>>(
-                mModels!!.size
-            )
-            for (m in mModels!!.values) {
-                val templates = m.getJSONArray("tmpls")
-                val names = HashMapInit<Int, String>(templates.length())
-                for (t in templates.jsonObjectIterable()) {
-                    names[t.getInt("ord")] = t.getString("name")
-                }
-                result[m.getLong("id")] = names
-            }
-            return result
-        }
+        get() =
+            mModels!!.values.associate { m -> m.getLong("id") to m.getJSONArray("tmpls").jsonObjectIterable().associate { t -> t.getInt("ord") to t.getString("name") } }
 
     override fun getModels(): HashMap<Long, Model> {
         return mModels!!
@@ -882,15 +866,7 @@ class Models(col: Collection) : ModelManager(col) {
         }
 
         /** "Mapping of field name -> (ord, field).  */
-        fun fieldMap(m: Model): Map<String, Pair<Int, JSONObject>> {
-            val flds = m.getJSONArray("flds")
-            // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-            val result: MutableMap<String, Pair<Int, JSONObject>> = HashMapInit(flds.length())
-            for (f in flds.jsonObjectIterable()) {
-                result[f.getString("name")] = Pair(f.getInt("ord"), f)
-            }
-            return result
-        }
+        fun fieldMap(m: Model): Map<String, Pair<Int, JSONObject>> = m.getJSONArray("flds").jsonObjectIterable().associate { f -> f.getString("name") to Pair(f.getInt("ord"), f) }
 
         /*
      * Templates ***********************************************************************************************

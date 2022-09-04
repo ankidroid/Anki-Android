@@ -21,7 +21,6 @@ import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.AnkiFont
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashMapInit
 
 class ReviewerCustomFonts(context: Context) {
     private val mCustomStyle: String
@@ -37,7 +36,7 @@ class ReviewerCustomFonts(context: Context) {
      *
      * @return the default font style, or the empty string if no default font is set
      */
-    private fun getDefaultFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
+    private fun getDefaultFontStyle(context: Context, customFontsMap: Map<String, AnkiFont>): String? {
         if (mDefaultFontStyle == null) {
             val preferences = AnkiDroidApp.getSharedPrefs(context)
             val defaultFont = customFontsMap[preferences.getString("defaultFont", null)]
@@ -56,7 +55,7 @@ class ReviewerCustomFonts(context: Context) {
      *
      * @return the override font style, or the empty string if no override font is set
      */
-    private fun getOverrideFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
+    private fun getOverrideFontStyle(context: Context, customFontsMap: Map<String, AnkiFont>): String? {
         if (mOverrideFontStyle == null) {
             val preferences = AnkiDroidApp.getSharedPrefs(context)
             val defaultFont = customFontsMap[preferences.getString("defaultFont", null)]
@@ -76,7 +75,7 @@ class ReviewerCustomFonts(context: Context) {
      *
      * @return the font style, or the empty string if none applies
      */
-    private fun getDominantFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
+    private fun getDominantFontStyle(context: Context, customFontsMap: Map<String, AnkiFont>): String? {
         if (mDominantFontStyle == null) {
             mDominantFontStyle = getOverrideFontStyle(context, customFontsMap)
             if (TextUtils.isEmpty(mDominantFontStyle)) {
@@ -104,7 +103,7 @@ class ReviewerCustomFonts(context: Context) {
          * <p>
          * Each font is mapped to the font family by the same name as the name of the font without the extension.
          */
-        private fun getCustomFontsStyle(customFontsMap: Map<String?, AnkiFont>): String {
+        private fun getCustomFontsStyle(customFontsMap: Map<String, AnkiFont>): String {
             val builder = StringBuilder()
             for (font in customFontsMap.values) {
                 builder.append(font.declaration)
@@ -118,14 +117,7 @@ class ReviewerCustomFonts(context: Context) {
          * <p>
          * The list of constructed lazily the first time is needed.
          */
-        private fun getCustomFontsMap(context: Context): Map<String?, AnkiFont> {
-            val fonts = Utils.getCustomFonts(context)
-            val customFontsMap: MutableMap<String?, AnkiFont> = HashMapInit(fonts.size)
-            for (f in fonts) {
-                customFontsMap[f.name] = f
-            }
-            return customFontsMap
-        }
+        private fun getCustomFontsMap(context: Context): Map<String, AnkiFont> = Utils.getCustomFonts(context).associateBy { it.name }
     }
 
     init {

@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import com.ichi2.utils.HashMapInit
 import com.wildplot.android.rendering.interfaces.Function2D
 import com.wildplot.android.rendering.interfaces.Function3D
 import java.util.regex.Pattern
@@ -23,7 +22,10 @@ import java.util.regex.Pattern
 class TopLevelParser(expressionString: String, parserRegister: HashMap<String, TopLevelParser>) :
     Function2D, Function3D, Cloneable {
     private val parserRegister: HashMap<String, TopLevelParser>
-    private val varMap = HashMapInit<String, Double>(2) // Number form initVarMap
+    private val varMap = mapOf(
+        "e" to Math.E,
+        "pi" to Math.PI
+    )
     var x = 0.0
     var y = 0.0
     private val expression: Expression
@@ -33,18 +35,12 @@ class TopLevelParser(expressionString: String, parserRegister: HashMap<String, T
     private var yName = "y"
 
     init {
-        initVarMap()
         this.parserRegister = parserRegister
         this.expressionString = expressionString
         val isValidExpressionString = initExpressionString()
         expression = Expression(this.expressionString, this)
         isValid =
             expression.expressionType != Expression.ExpressionType.INVALID && isValidExpressionString
-    }
-
-    private fun initVarMap() {
-        varMap["e"] = Math.E
-        varMap["pi"] = Math.PI
     }
 
     private fun initExpressionString(): Boolean {

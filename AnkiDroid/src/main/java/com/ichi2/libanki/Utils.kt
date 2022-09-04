@@ -35,8 +35,6 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
-import com.ichi2.utils.HashMapInit
-import com.ichi2.utils.HashSetInit
 import com.ichi2.utils.ImportUtils.isValidPackageName
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
@@ -724,7 +722,7 @@ object Utils {
             throw IOException("Failed to create target directory: $targetDirectory")
         }
         if (zipEntryToFilenameMap == null) {
-            zipEntryToFilenameMap = HashMapInit(0)
+            zipEntryToFilenameMap = mapOf()
         }
         for (requestedEntry in zipEntries) {
             val ze = zipFile.getEntry(requestedEntry)
@@ -1126,15 +1124,6 @@ object Utils {
      * @return The set of non empty field values.
      */
     @KotlinCleanup("remove TextUtils at least. Maybe .filter { }")
-    fun nonEmptyFields(fields: Map<String, String>): Set<String> {
-        val nonempty_fields: MutableSet<String> = HashSetInit(fields.size)
-        for (kv in fields.entries) {
-            var value = kv.value
-            value = stripHTMLMedia(value).trim { it <= ' ' }
-            if (!TextUtils.isEmpty(value)) {
-                nonempty_fields.add(kv.key)
-            }
-        }
-        return nonempty_fields
-    }
+    fun nonEmptyFields(fields: Map<String, String>) =
+        fields.entries.filter { kv -> !TextUtils.isEmpty(stripHTMLMedia(kv.value).trim()) }.map { it.key }.toSet()
 }

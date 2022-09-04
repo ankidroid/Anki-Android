@@ -27,7 +27,6 @@ import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
@@ -83,8 +82,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
                 // The filename that we extract should be collection.anki2
                 // Importing collection.anki21 fails due to some media regexes expecting collection.anki2.
                 // We follow how Anki does it and fix the problem here.
-                val mediaToFileNameMap = HashMapInit<String, String>(1)
-                mediaToFileNameMap[colname] = CollectionHelper.COLLECTION_FILENAME
+                val mediaToFileNameMap = mapOf(colname to CollectionHelper.COLLECTION_FILENAME)
                 Utils.unzipFiles(mZip!!, tempDir.absolutePath, arrayOf(colname, "media"), mediaToFileNameMap)
                 colname = CollectionHelper.COLLECTION_FILENAME
             } catch (e: IOException) {

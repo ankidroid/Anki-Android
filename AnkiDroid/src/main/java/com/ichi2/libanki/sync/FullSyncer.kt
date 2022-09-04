@@ -30,7 +30,6 @@ import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.ARBITRARY_STRING
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.OVERWRITE_ERROR
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.SUCCESS
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Response
@@ -49,9 +48,10 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
     private val mCon: Connection
 
     init {
-        postVars = HashMapInit(2)
-        postVars["k"] = hkey
-        postVars["v"] = String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
+        postVars = mutableMapOf(
+            "k" to hkey,
+            "v" to String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
+        )
         @KotlinCleanup("move to constructor")
         mCol = col
         mCon = con

@@ -23,7 +23,6 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -49,9 +48,10 @@ class RemoteMediaServer(
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
     fun begin(): JSONObject {
         return try {
-            postVars = HashMapInit(2)
-            postVars["k"] = hKey
-            postVars["v"] = String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
+            postVars = mutableMapOf(
+                "k" to hKey,
+                "v" to String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
+            )
             val resp = req("begin", getInputStream(Utils.jsonToString(JSONObject())))
             val jresp = JSONObject(resp.body!!.string())
             val ret = dataOnly(jresp, JSONObject::class.java)
@@ -66,8 +66,7 @@ class RemoteMediaServer(
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
     fun mediaChanges(lastUsn: Int): JSONArray {
         return try {
-            postVars = HashMapInit(1)
-            postVars["sk"] = checksumKey
+            postVars = mutableMapOf("sk" to checksumKey)
             val resp = req(
                 "mediaChanges",
                 getInputStream(Utils.jsonToString(JSONObject().put("lastUsn", lastUsn)))

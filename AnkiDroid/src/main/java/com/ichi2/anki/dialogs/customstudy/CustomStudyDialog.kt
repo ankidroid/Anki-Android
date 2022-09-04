@@ -51,7 +51,6 @@ import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
@@ -295,18 +294,18 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val keyValueMap: Map<Int, String>
         get() {
             val res = resources
-            val keyValueMap = HashMapInit<Int, String>(10)
-            keyValueMap[STANDARD.value] = res.getString(R.string.custom_study)
-            keyValueMap[STUDY_NEW.value] = res.getString(R.string.custom_study_increase_new_limit)
-            keyValueMap[STUDY_REV.value] = res.getString(R.string.custom_study_increase_review_limit)
-            keyValueMap[STUDY_FORGOT.value] = res.getString(R.string.custom_study_review_forgotten)
-            keyValueMap[STUDY_AHEAD.value] = res.getString(R.string.custom_study_review_ahead)
-            keyValueMap[STUDY_RANDOM.value] = res.getString(R.string.custom_study_random_selection)
-            keyValueMap[STUDY_PREVIEW.value] = res.getString(R.string.custom_study_preview_new)
-            keyValueMap[STUDY_TAGS.value] = res.getString(R.string.custom_study_limit_tags)
-            keyValueMap[DECK_OPTIONS.value] = res.getString(R.string.menu__deck_options)
-            keyValueMap[MORE_OPTIONS.value] = res.getString(R.string.more_options)
-            return keyValueMap
+            return mapOf(
+                STANDARD.value to res.getString(R.string.custom_study),
+                STUDY_NEW.value to res.getString(R.string.custom_study_increase_new_limit),
+                STUDY_REV.value to res.getString(R.string.custom_study_increase_review_limit),
+                STUDY_FORGOT.value to res.getString(R.string.custom_study_review_forgotten),
+                STUDY_AHEAD.value to res.getString(R.string.custom_study_review_ahead),
+                STUDY_RANDOM.value to res.getString(R.string.custom_study_random_selection),
+                STUDY_PREVIEW.value to res.getString(R.string.custom_study_preview_new),
+                STUDY_TAGS.value to res.getString(R.string.custom_study_limit_tags),
+                DECK_OPTIONS.value to res.getString(R.string.menu__deck_options),
+                MORE_OPTIONS.value to res.getString(R.string.more_options)
+            )
         }
 
     /**

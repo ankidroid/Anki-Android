@@ -58,7 +58,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import com.ichi2.utils.HashMapInit
-import com.ichi2.utils.HashSetInit
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
@@ -1102,11 +1101,7 @@ open class Collection(
         var qfmt = qfmtParam
         var afmt = afmtParam
         val fmap = Models.fieldMap(model)
-        val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String> = HashMapInit(maps.size + 8)
-        for ((key, value) in maps) {
-            fields[key] = flist[value.first]
-        }
+        val fields: MutableMap<String, String> = fmap.mapValues { flist[it.value.first] }.toMutableMap()
         val cardNum = ord + 1
         fields["Tags"] = tags.trim { it <= ' ' }
         fields["Type"] = model.getString("name")
@@ -1696,10 +1691,7 @@ open class Collection(
 
         // obtain a list of all valid dconf IDs
         val allConf = decks.allConf()
-        val configIds = HashSetInit<Long>(allConf.size)
-        for (conf in allConf) {
-            configIds.add(conf.getLong("id"))
-        }
+        val configIds = allConf.map { conf -> conf.getLong("id") }.toSet()
         notifyProgress.run()
         @KotlinCleanup("use count { }")
         var changed = 0

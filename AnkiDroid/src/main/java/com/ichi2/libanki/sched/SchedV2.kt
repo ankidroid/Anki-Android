@@ -2383,13 +2383,10 @@ end)  """
             return
         }
         // determine nid ordering
-        val due = HashMapInit<Long?, Long>(nids.size)
         if (shuffle) {
             Collections.shuffle(nids)
         }
-        for (c in nids.indices) {
-            due[nids[c]] = (start + c * step).toLong()
-        }
+        val due = nids.indices.associate { c -> nids[c] to (start + c * step).toLong() }
         val high = start + step * (nids.size - 1)
         // shift?
         if (shift) {

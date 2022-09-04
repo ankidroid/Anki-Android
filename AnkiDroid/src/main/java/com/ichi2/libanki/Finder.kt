@@ -662,17 +662,11 @@ class Finder(private val col: Collection) {
         val pattern = Pattern.compile("\\Q$javaVal\\E", Pattern.CASE_INSENSITIVE or Pattern.DOTALL)
 
         // find models that have that field
-        val mods: MutableMap<Long, Array<Any>> = HashMapInit(col.models.count())
-        for (m in col.models.all()) {
-            val flds = m.getJSONArray("flds")
-            for (f in flds.jsonObjectIterable()) {
-                var fieldName = f.getString("name")
-                fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC)
-                if (fieldName.equals(field, ignoreCase = true)) {
-                    mods[m.getLong("id")] = arrayOf(m, f.getInt("ord"))
-                }
-            }
-        }
+        val mods: Map<Long, Array<Any>> = col.models.all().flatMap { m ->
+            m.getJSONArray("flds").jsonObjectIterable()
+                .filter { f -> Normalizer.normalize(f.getString("name"), Normalizer.Form.NFC).equals(field, ignoreCase = true) }.map { f -> m.getLong("id") to arrayOf(m, f.getInt("ord")) }
+        }.toMap()
+
         if (mods.isEmpty()) {
             // nothing has that field
             return null

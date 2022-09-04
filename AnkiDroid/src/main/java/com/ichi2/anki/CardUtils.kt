@@ -4,7 +4,6 @@ package com.ichi2.anki
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
-import com.ichi2.utils.HashSetInit
 import java.util.*
 
 /**
@@ -14,13 +13,7 @@ object CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    fun getNotes(cards: Collection<Card>): Set<Note> {
-        val notes: MutableSet<Note> = HashSetInit(cards.size)
-        for (card in cards) {
-            notes.add(card.note())
-        }
-        return notes
-    }
+    fun getNotes(cards: Collection<Card>) = cards.map { it.note() }.toSet()
 
     /**
      * @return All cards of all notes

@@ -1735,7 +1735,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private val toolbarButtons: ArrayList<CustomToolbarButton>
         get() {
             val set = AnkiDroidApp.getSharedPrefs(this)
-                .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, HashSetInit(0))
+                .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, setOf())
             return CustomToolbarButton.fromStringSet(set!!)
         }
 
