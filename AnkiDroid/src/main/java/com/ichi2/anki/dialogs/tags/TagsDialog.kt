@@ -130,7 +130,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     private val tagsDialogListener: TagsDialogListener
         get() = mListener
-            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)!!
+            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
 
     @NeedsTest(
         "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +

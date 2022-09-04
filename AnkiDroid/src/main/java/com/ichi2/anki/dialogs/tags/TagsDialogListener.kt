@@ -48,17 +48,14 @@ interface TagsDialogListener {
     }
 
     companion object {
-        @KotlinCleanup("remove the ?")
-        fun createFragmentResultSender(fragmentManager: FragmentManager): TagsDialogListener? {
-            return object : TagsDialogListener {
-                override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
-                    val bundle = Bundle().apply {
-                        putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
-                        putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
-                        putInt(ON_SELECTED_TAGS__OPTION, option)
-                    }
-                    fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
+        fun createFragmentResultSender(fragmentManager: FragmentManager) = object : TagsDialogListener {
+            override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
+                val bundle = Bundle().apply {
+                    putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
+                    putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
+                    putInt(ON_SELECTED_TAGS__OPTION, option)
                 }
+                fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
             }
         }
 
