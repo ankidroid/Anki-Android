@@ -463,7 +463,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         refreshInterface(resetSched = false, resetDecklist = false)
     }
 
-    @KotlinCleanup("default value + JvmOverloads")
+    @KotlinCleanup("default value + add overloads")
     private fun refreshInterfaceAndDecklist(resetSched: Boolean) {
         refreshInterface(resetSched, true)
     }

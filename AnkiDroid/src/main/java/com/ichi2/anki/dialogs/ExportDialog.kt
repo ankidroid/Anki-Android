@@ -42,7 +42,6 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
      *            if did is null then the whole collection of decks will be exported
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
-    @JvmOverloads
     fun withArguments(dialogMessage: String, did: DeckId? = null): ExportDialog {
         val args = this.arguments ?: Bundle()
         if (did != null) {

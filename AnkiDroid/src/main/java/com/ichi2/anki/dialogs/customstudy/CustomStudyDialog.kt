@@ -66,7 +66,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int)
     }
 
-    @JvmOverloads
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
         var args = this.arguments
         if (args == null) {

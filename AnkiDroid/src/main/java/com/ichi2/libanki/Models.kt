@@ -965,7 +965,6 @@ class Models(col: Collection) : ModelManager(col) {
             )
         }
 
-        @JvmOverloads
         fun availOrds(
             m: Model,
             sfld: Array<String>,
@@ -980,7 +979,6 @@ class Models(col: Collection) : ModelManager(col) {
             } else _availStandardOrds(m, sfld, allowEmpty == AllowEmpty.TRUE)
         }
 
-        @JvmOverloads
         fun _availStandardOrds(
             m: Model,
             sfld: Array<String>,
@@ -1047,7 +1045,6 @@ class Models(col: Collection) : ModelManager(col) {
          * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
          * @return The indexes (in increasing order) of cards that should be generated according to req rules.
          */
-        @JvmOverloads
         @KotlinCleanup("sflds: String? to string")
         @KotlinCleanup("return arrayListOf(0)")
         fun _availClozeOrds(

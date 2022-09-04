@@ -33,7 +33,7 @@ import java.util.*
     "the migration assigned the docs of the 2 previous java constructors to the init{} block, " +
         "try to refactor that documentation into the class documentation"
 )
-class TagsList @JvmOverloads constructor(
+class TagsList constructor(
     allTags: List<String>,
     checkedTags: List<String>,
     uncheckedTags: List<String>? = null
@@ -164,7 +164,6 @@ class TagsList @JvmOverloads constructor(
      * Mark a tag as checked tag.
      * @see .check
      */
-    @JvmOverloads
     @KotlinCleanup("fix the double documentation for this method")
     fun check(tag: String, processAncestors: Boolean = true): Boolean {
         if (!mAllTags.contains(tag)) {

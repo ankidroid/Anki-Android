@@ -33,7 +33,10 @@ import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-open class NumberRangePreferenceCompat @JvmOverloads constructor(
+@NeedsTest("removing JvmOverloads should fail")
+open class NumberRangePreferenceCompat
+@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
+constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.editTextPreferenceStyle,

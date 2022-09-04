@@ -197,7 +197,6 @@ abstract class BaseSched(val col: Collection) {
      * @param shuffle Whether the list should be shuffled.
      * @param shift Whether the cards already new should be shifted to make room for cards of cids
      */
-    @JvmOverloads
     open fun sortCards(
         cids: List<Long>,
         start: Int,

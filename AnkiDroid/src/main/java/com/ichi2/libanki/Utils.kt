@@ -341,7 +341,6 @@ object Utils {
     /**
      * Strip HTML but keep media filenames
      */
-    @JvmOverloads
     @KotlinCleanup("replacement: non-null")
     @JvmStatic
     fun stripHTMLMedia(s: String, replacement: String? = " $1 "): String {
@@ -352,7 +351,6 @@ object Utils {
     /**
      * Strip sound but keep media filenames
      */
-    @JvmOverloads
     @KotlinCleanup("replacement & s: non-null")
     @JvmStatic
     fun stripSoundMedia(s: String?, replacement: String? = " $1 "): String {

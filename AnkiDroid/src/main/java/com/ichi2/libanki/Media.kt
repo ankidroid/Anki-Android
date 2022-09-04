@@ -207,7 +207,6 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * String manipulation
      * ***********************************************************
      */
-    @JvmOverloads
     fun filesInStr(mid: Long?, string: String, includeRemote: Boolean = false): List<String> {
         val l: MutableList<String> = ArrayList()
         val model = col.models.get(mid!!)
@@ -952,7 +951,6 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
          * @param string The string to search for image references and escape the filenames.
          * @return The string with the filenames of any local images percent-escaped as UTF-8.
          */
-        @JvmOverloads
         @KotlinCleanup("fix 'string' as var")
         fun escapeImages(string: String, unescape: Boolean = false): String {
             @Suppress("NAME_SHADOWING")

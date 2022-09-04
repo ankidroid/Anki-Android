@@ -357,7 +357,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
             @JvmStatic
-            @JvmOverloads
             fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
                 val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)

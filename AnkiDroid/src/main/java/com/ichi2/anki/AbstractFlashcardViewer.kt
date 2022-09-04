@@ -855,7 +855,6 @@ abstract class AbstractFlashcardViewer :
         finishWithoutAnimation()
     }
 
-    @JvmOverloads
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected open fun editCard(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {

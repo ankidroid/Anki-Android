@@ -123,7 +123,6 @@ open class HttpSyncer(
     }
 
     /** Note: Return value must be closed  */
-    @JvmOverloads
     @Throws(UnknownHttpResponseException::class)
     @KotlinCleanup("use template strings")
     fun req(method: String?, fobj: InputStream? = null, comp: Int = 6): Response {

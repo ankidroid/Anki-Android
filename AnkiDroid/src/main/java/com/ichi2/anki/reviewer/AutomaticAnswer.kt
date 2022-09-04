@@ -167,7 +167,6 @@ class AutomaticAnswer(
      * If enabled in preferences, call [AutomaticallyAnswered.automaticShowAnswer]
      * after a user-specified duration, plus an additional delay for media
      */
-    @JvmOverloads
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceAnswer) return
@@ -178,7 +177,6 @@ class AutomaticAnswer(
      * If enabled in preferences, call [AutomaticallyAnswered.automaticShowQuestion]
      * after a user-specified duration, plus an additional delay for media
      */
-    @JvmOverloads
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceQuestion) return

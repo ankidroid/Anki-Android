@@ -25,7 +25,9 @@ import com.ichi2.anki.R
 /**
  * Preference used on the headers of [com.ichi2.anki.preferences.HeaderFragment]
  */
-class HeaderPreference @JvmOverloads constructor(
+class HeaderPreference
+@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.HeaderPreference
+constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.preferenceStyle,

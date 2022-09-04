@@ -42,11 +42,15 @@ import androidx.preference.DialogPreference
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("fix IDE lint issues")
-class SeekBarPreferenceCompat @JvmOverloads constructor(
+@NeedsTest("removing JvmOverloads should fail")
+class SeekBarPreferenceCompat
+@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.SeekBarPreferenceCompat
+constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.dialogPreferenceStyle,

@@ -109,7 +109,6 @@ class Note : Cloneable {
     /*
      * If fields or tags have changed, write changes to disk.
      */
-    @JvmOverloads
     @BlocksSchemaUpgrade("new path must update to native note adding/updating routine")
     fun flush(mod: Long? = null, changeUsn: Boolean = true) {
         assert(mScm == col.scm)

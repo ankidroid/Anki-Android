@@ -31,7 +31,7 @@ import com.ichi2.anki.UIUtils
  * fab up.
  */
 @Suppress("UNUSED")
-class FabBehavior @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+class FabBehavior constructor(context: Context, attrs: AttributeSet? = null) :
     CoordinatorLayout.Behavior<View>(context, attrs) {
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
