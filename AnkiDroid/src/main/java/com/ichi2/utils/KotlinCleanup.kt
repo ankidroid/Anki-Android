@@ -13,6 +13,12 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:KotlinCleanup("Remove most @JvmStatic annotations")
+@file:KotlinCleanup("Remove most @JvmField annotations")
+@file:KotlinCleanup(
+    "Remove all TextUtils references then see if we can remove " +
+        "@RunWith(AndroidJUnit4::class) to speed up tests (if no other Android references)"
+)
 
 package com.ichi2.utils
 
@@ -21,7 +27,7 @@ package com.ichi2.utils
     AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
     AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
     AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE,
-    AnnotationTarget.CONSTRUCTOR
+    AnnotationTarget.CONSTRUCTOR, AnnotationTarget.FILE
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable
