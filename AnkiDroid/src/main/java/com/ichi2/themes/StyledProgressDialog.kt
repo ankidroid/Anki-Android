@@ -52,7 +52,6 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
     @Suppress("Deprecation") // ProgressDialog deprecation
     companion object {
         @JvmStatic
-        @JvmOverloads
         fun show(
             context: Context,
             title: CharSequence?,

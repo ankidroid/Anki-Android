@@ -56,7 +56,6 @@ typealias SnackbarBuilder = Snackbar.() -> Unit
  *     or exact duration in milliseconds.
  * @param snackbarBuilder Optional. A configuration block with the [Snackbar] as `this`.
  */
-@JvmOverloads
 fun Activity.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,

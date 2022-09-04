@@ -48,7 +48,6 @@ object UIUtils {
     }
 
     @JvmStatic
-    @JvmOverloads
     fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
         if (CollectionHelper.instance.colIsOpen()) {
             val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {

@@ -33,7 +33,6 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.lang.Exception
 import kotlin.Throws
-import kotlin.jvm.JvmOverloads
 
 object Storage {
     var isInMemory = false
@@ -78,7 +77,6 @@ object Storage {
     /**
      *  Open a new or existing collection. Path must be unicode
      * */
-    @JvmOverloads
     @JvmStatic
     fun collection(
         context: Context,

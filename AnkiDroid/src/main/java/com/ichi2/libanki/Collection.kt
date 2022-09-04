@@ -370,7 +370,6 @@ open class Collection(
     /**
      * Flush state to DB, updating mod time.
      */
-    @JvmOverloads
     open fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
         this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
@@ -428,7 +427,6 @@ open class Collection(
 
     @Synchronized
     @KotlinCleanup("remove/rename val db")
-    @JvmOverloads
     fun close(save: Boolean, downgrade: Boolean, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
@@ -453,7 +451,6 @@ open class Collection(
     }
 
     /** True if DB was created */
-    @JvmOverloads
     fun reopen(afterFullSync: Boolean = false): Boolean {
         Timber.i("(Re)opening Database: %s", path)
         return if (dbClosed) {
@@ -597,7 +594,6 @@ open class Collection(
      * the configuration (curModel)
      * @return The new note
      */
-    @JvmOverloads
     fun newNote(forDeck: Boolean = true): Note {
         return newNote(models.current(forDeck)!!)
     }
@@ -618,7 +614,6 @@ open class Collection(
      * @return Number of card added
      * @return Number of card added.
      */
-    @JvmOverloads
     fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
         val cms = findTemplates(note, allowEmpty)
@@ -668,7 +663,6 @@ open class Collection(
      * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    @JvmOverloads
     fun findTemplates(
         note: Note,
         allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE
@@ -748,7 +742,6 @@ open class Collection(
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    @JvmOverloads
     fun <T> genCards(
         nids: LongArray,
         model: Model,
@@ -990,7 +983,7 @@ open class Collection(
         remCards(ids, true)
     }
 
-    @KotlinCleanup("JvmOverloads")
+    @KotlinCleanup("add overloads")
     fun remCards(ids: kotlin.collections.Collection<Long>, notes: Boolean) {
         if (ids.isEmpty()) {
             return
@@ -1238,7 +1231,6 @@ open class Collection(
     /** Return a list of note ids
      * @param order only used in overridden V16 findNotes() method
      * */
-    @JvmOverloads
     open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
         return Finder(this).findNotes(query)
     }

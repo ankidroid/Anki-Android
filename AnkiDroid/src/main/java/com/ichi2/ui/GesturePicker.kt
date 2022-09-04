@@ -37,7 +37,7 @@ import timber.log.Timber
  * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
  */
 // This class exists as elements resized when adding in the spinner to GestureDisplay.kt
-class GesturePicker @JvmOverloads
+class GesturePicker
 constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(ctx, attributeSet, defStyleAttr) {
 

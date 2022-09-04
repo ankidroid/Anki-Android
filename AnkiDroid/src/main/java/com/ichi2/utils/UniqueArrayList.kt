@@ -147,7 +147,6 @@ private constructor(
          * @param comparator used to judge uniqueness
          */
         @JvmStatic
-        @JvmOverloads
         fun <E> from(source: List<E>, comparator: Comparator<in E>? = null): UniqueArrayList<E> {
             val set: Set<E> = if (comparator == null) {
                 HashSet()

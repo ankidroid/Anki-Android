@@ -174,7 +174,6 @@ open class Card : Cloneable {
         note = null
     }
 
-    @JvmOverloads
     fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
             mod = TimeManager.time.intTime()
@@ -229,7 +228,6 @@ open class Card : Cloneable {
         col.log(this)
     }
 
-    @JvmOverloads
     fun q(reload: Boolean = false, browser: Boolean = false): String {
         return render_output(reload, browser).question_and_style()
     }
@@ -254,7 +252,6 @@ open class Card : Cloneable {
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
-    @JvmOverloads
     @RustCleanup("move col.render_output back to Card once the java collection is removed")
     open fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (render_output == null || reload) {

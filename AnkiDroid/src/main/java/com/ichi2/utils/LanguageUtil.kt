@@ -256,7 +256,6 @@ object LanguageUtil {
 
     /** If locale is not provided, the current locale will be used. */
     @JvmStatic
-    @JvmOverloads
     fun setDefaultBackendLanguages(locale: String = "") {
         BackendFactory.defaultLanguages = listOf(localeToBackendCode(getLocale(locale)))
     }

@@ -39,7 +39,6 @@ import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.ArrayList
 import kotlin.Throws
-import kotlin.jvm.JvmOverloads
 
 /**
  * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
@@ -210,7 +209,6 @@ class DB(db: SupportSQLiteDatabase) {
         }
     }
     /** update must always be called via DB in order to mark the db as changed  */
-    @JvmOverloads
     fun update(
         table: String,
         values: ContentValues,

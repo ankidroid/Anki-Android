@@ -217,7 +217,6 @@ class Finder(private val col: Collection) {
         var join = false
         var q: String? = ""
         var bad = false
-        @JvmOverloads
         fun add(txt: String?, wrap: Boolean = true) {
             // failed command?
             @Suppress("NAME_SHADOWING")
@@ -773,7 +772,6 @@ class Finder(private val col: Collection) {
          * @param dst The text to change to.
          * @return Number of notes with fields that were updated.
          */
-        @JvmOverloads
         fun findReplace(
             col: Collection,
             nids: List<Long?>,
@@ -901,7 +899,6 @@ class Finder(private val col: Collection) {
          * @param search A search query, as in the browser
          * @return List of Pair("dupestr", List[nids]), with nids note satisfying the search query, and having a field fieldName with value duepstr. Each list has at least two elements.
          */
-        @JvmOverloads
         fun findDupes(
             col: Collection,
             fieldName: String?,

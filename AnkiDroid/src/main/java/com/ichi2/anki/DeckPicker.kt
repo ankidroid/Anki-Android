@@ -2759,7 +2759,6 @@ open class DeckPicker :
         }
 
         // Animation utility methods used by renderPage() method
-        @JvmOverloads
         fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
             view!!.alpha = 0f
             view.translationY = translation
@@ -2770,7 +2769,6 @@ open class DeckPicker :
                 .withStartAction(startAction)
         }
 
-        @JvmOverloads
         fun fadeOut(view: View?, duration: Int, translation: Float = 0f, endAction: Runnable? = Runnable { view!!.visibility = View.GONE }): ViewPropertyAnimator {
             view!!.alpha = 1f
             view.translationY = 0f
