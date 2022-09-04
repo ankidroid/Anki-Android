@@ -15,9 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import android.annotation.SuppressLint
-
-@SuppressLint("NonPublicNonStaticFieldName")
 class Factor(factorString: String, private val parser: TopLevelParser) : TreeElement {
     enum class FactorType {
         PLUS_FACTOR, MINUS_FACTOR, POW, INVALID

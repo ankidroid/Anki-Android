@@ -30,8 +30,6 @@
     "FunctionName",
     "ConvertToStringTemplate",
     "LocalVariableName",
-    "NonPublicNonStaticFieldName",
-    "ConstantFieldName"
 )
 
 package com.ichi2.libanki

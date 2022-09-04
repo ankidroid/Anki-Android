@@ -16,7 +16,4 @@
 
 package com.ichi2.libanki.backend.model
 
-import android.annotation.SuppressLint
-
-@SuppressLint("NonPublicNonStaticFieldName")
 data class TagUsnTuple(val tag: String, val usn: Int)

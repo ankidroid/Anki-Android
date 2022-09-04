@@ -15,9 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import android.annotation.SuppressLint
-
-@SuppressLint("NonPublicNonStaticFieldName")
 class Pow(powString: String, private val parser: TopLevelParser) : TreeElement {
     enum class PowType {
         ATOM, ATOM_POW_FACTOR, ATOM_SQRT_FACTOR, INVALID

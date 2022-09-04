@@ -15,9 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import android.annotation.SuppressLint
-
-@SuppressLint("NonPublicNonStaticFieldName")
 class Expression(expressionString: String, private val parser: TopLevelParser) : TreeElement {
     enum class ExpressionType {
         EXP_PLUS_TERM, EXP_MINUS_TERM, TERM, INVALID

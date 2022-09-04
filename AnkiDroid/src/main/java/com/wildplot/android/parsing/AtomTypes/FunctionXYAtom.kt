@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint
 import com.wildplot.android.parsing.Atom.AtomType
 import com.wildplot.android.parsing.Expression
 import com.wildplot.android.parsing.ExpressionFormatException
@@ -27,7 +26,6 @@ import kotlin.Throws
 /**
  * @author Michael Goldbach
  */
-@SuppressLint("NonPublicNonStaticFieldName")
 class FunctionXYAtom(funcString: String, private val parser: TopLevelParser) : TreeElement {
     var atomType = AtomType.FUNCTION_X
         private set

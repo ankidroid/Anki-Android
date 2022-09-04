@@ -16,7 +16,6 @@
 @file:Suppress("PackageName") // AtomTypes: copied from wildplot library
 package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint
 import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.parsing.AtomTypes.MathFunctionAtom.MathType
 import com.wildplot.android.parsing.Expression
@@ -25,7 +24,6 @@ import com.wildplot.android.parsing.TopLevelParser
 import com.wildplot.android.parsing.TreeElement
 import kotlin.Throws
 
-@SuppressLint("NonPublicNonStaticFieldName")
 @KotlinCleanup("IDE Lint")
 class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) : TreeElement {
     enum class MathType {

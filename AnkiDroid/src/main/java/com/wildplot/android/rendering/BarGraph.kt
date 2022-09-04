@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering
 
-import android.annotation.SuppressLint
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
@@ -33,7 +32,6 @@ import com.wildplot.android.rendering.interfaces.Legendable
  * @param points    start points (x,y) from each bar
  * @param color     color of the bar
 */
-@SuppressLint("NonPublicNonStaticFieldName")
 class BarGraph(
     private val plotSheet: PlotSheet,
     private val size: Double,
