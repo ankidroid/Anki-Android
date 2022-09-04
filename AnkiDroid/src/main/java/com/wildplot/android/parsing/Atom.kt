@@ -119,21 +119,19 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
         } else false
     }
 
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return when (atomType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = when (atomType) {
             EXP_IN_BRACKETS -> expression.value
             VARIABLE, NUMBER, FUNCTION_MATH, FUNCTION_X, FUNCTION_X_Y -> atomObject.value
             INVALID -> throw ExpressionFormatException("Cannot parse Atom object")
         }
-    }
 
-    @Throws(ExpressionFormatException::class)
-    override fun isVariable(): Boolean {
-        return when (atomType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = when (atomType) {
             EXP_IN_BRACKETS -> expression.isVariable
             VARIABLE, NUMBER, FUNCTION_MATH, FUNCTION_X, FUNCTION_X_Y -> atomObject.isVariable
             INVALID -> throw ExpressionFormatException("Cannot parse Atom object")
         }
-    }
 }

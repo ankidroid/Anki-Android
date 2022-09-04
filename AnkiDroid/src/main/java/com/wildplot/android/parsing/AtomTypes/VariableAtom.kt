@@ -25,17 +25,17 @@ import java.util.regex.Pattern
 @SuppressLint("NonPublicNonStaticFieldName")
 class VariableAtom(private val varName: String, private val parser: TopLevelParser) : TreeElement {
     var atomType = AtomType.NUMBER
-    override fun getValue(): Double {
-        return if (atomType !== AtomType.INVALID) {
+
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = if (atomType !== AtomType.INVALID) {
             parser.getVarVal(varName)
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
-    override fun isVariable(): Boolean {
-        return true
-    }
+    override val isVariable: Boolean
+        get() = true
 
     init {
         val p = Pattern.compile("[^a-zA-Z0-9]")

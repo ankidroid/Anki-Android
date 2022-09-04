@@ -71,9 +71,9 @@ class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) :
         return false
     }
 
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return if (hasSavedValue) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = if (hasSavedValue) {
             savedValue
         } else when (mathType) {
             MathType.SIN -> Math.sin(expression!!.value)
@@ -89,15 +89,14 @@ class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) :
             MathType.LN -> Math.log(expression!!.value)
             MathType.INVALID -> throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
-    override fun isVariable(): Boolean {
-        return if (mathType != MathType.INVALID) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = if (mathType != MathType.INVALID) {
             expression!!.isVariable
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
     init {
         val isValid = init(funcString)

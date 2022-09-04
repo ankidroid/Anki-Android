@@ -13,12 +13,9 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing;
+package com.wildplot.android.parsing
 
-
-public interface TreeElement {
-
-    double getValue();
-
-    boolean isVariable();
+interface TreeElement {
+    val value: Double
+    val isVariable: Boolean
 }

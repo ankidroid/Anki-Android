@@ -66,28 +66,22 @@ class Factor(factorString: String, private val parser: TopLevelParser) : TreeEle
         return false
     }
 
-    // @Suppress because the IDE thinks factor.value is a recursive call, this is most likely
-    // an IDE bug because getValue() is invoked on another object(of the same type) which
-    // eventually will end in one of the two other cases(POW or INVALID)
-    @Suppress("RecursivePropertyAccessor")
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return when (factorType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = when (factorType) {
             FactorType.PLUS_FACTOR -> factor!!.value
             FactorType.MINUS_FACTOR -> -factor!!.value
             FactorType.POW -> pow!!.value
             FactorType.INVALID -> throw ExpressionFormatException("cannot parse expression at factor level")
         }
-    }
 
-    @Throws(ExpressionFormatException::class)
-    override fun isVariable(): Boolean {
-        return when (factorType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = when (factorType) {
             FactorType.PLUS_FACTOR, FactorType.MINUS_FACTOR -> factor!!.isVariable
             FactorType.POW -> pow!!.isVariable
             FactorType.INVALID -> throw ExpressionFormatException("cannot parse expression at factor level")
         }
-    }
 
     init {
         if (!TopLevelParser.stringHasValidBrackets(factorString)) {

@@ -78,27 +78,22 @@ class Term(termString: String, private val parser: TopLevelParser) : TreeElement
         return false
     }
 
-    // @Suppress because the IDE thinks term.value is a recursive call, this is most likely
-    // an IDE bug because getValue() is invoked on another object(of the same type) which
-    // eventually will end in one of the two other cases(FACTOR or INVALID)
-    @Suppress("RecursivePropertyAccessor")
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return when (termType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = when (termType) {
             TermType.TERM_MUL_FACTOR -> term!!.value * factor!!.value
             TermType.TERM_DIV_FACTOR -> term!!.value / factor!!.value
             TermType.FACTOR -> factor!!.value
             TermType.INVALID -> throw ExpressionFormatException("could not parse Term")
         }
-    }
 
-    override fun isVariable(): Boolean {
-        return when (termType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = when (termType) {
             TermType.TERM_MUL_FACTOR, TermType.TERM_DIV_FACTOR -> term!!.isVariable || factor!!.isVariable
             TermType.FACTOR -> factor!!.isVariable
             TermType.INVALID -> throw ExpressionFormatException("could not parse Term")
         }
-    }
 
     init {
         if (!TopLevelParser.stringHasValidBrackets(termString)) {
