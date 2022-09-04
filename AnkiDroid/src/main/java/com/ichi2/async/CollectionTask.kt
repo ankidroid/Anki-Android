@@ -165,26 +165,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         private val notesToUpdate: List<Note>,
         private val shouldUpdateCards: Boolean = false
     ) : TaskDelegate<Void, List<Note>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<Note>? {
-            Timber.d("doInBackgroundUpdateMultipleNotes")
-            return try {
-                col.db.executeInTransaction {
-                    for (note in notesToUpdate) {
-                        note.flush()
-                        if (shouldUpdateCards) {
-                            for (card in note.cards()) {
-                                card.flush()
-                            }
-                        }
-                    }
-                    notesToUpdate
-                }
-            } catch (e: RuntimeException) {
-                Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
-                return null
-            }
-        }
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<Note>? =
+            doInBackgroundUpdateMultipleNotes(col, notesToUpdate, shouldUpdateCards)
     }
 
     @KotlinCleanup("can quickDeckDueTree return null?")
