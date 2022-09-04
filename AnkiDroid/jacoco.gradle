@@ -104,12 +104,11 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
         html.destination htmlOutDir
     }
 
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
     def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree, kotlinClasses])
+    classDirectories.from = files([kotlinClasses])
     executionData.from = fileTree(dir: project.buildDir, includes: [
             '**/*.exec',
             '**/*.ec'
@@ -129,12 +128,11 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
         html.destination htmlOutDir
     }
 
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
     def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree, kotlinClasses])
+    classDirectories.from = files([kotlinClasses])
     executionData.from = fileTree(dir: project.buildDir, includes: [
             '**/*.exec'
 
@@ -154,12 +152,11 @@ task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebug
         html.destination htmlOutDir
     }
 
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
     def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree, kotlinClasses])
+    classDirectories.from = files([kotlinClasses])
     executionData.from = fileTree(dir: project.buildDir, includes: [
             '**/*.ec'
     ])
