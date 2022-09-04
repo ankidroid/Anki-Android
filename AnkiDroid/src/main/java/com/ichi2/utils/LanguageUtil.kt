@@ -20,7 +20,7 @@ import android.content.res.Resources
 import android.text.TextUtils
 import androidx.core.os.ConfigurationCompat
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.Preferences
+import com.ichi2.anki.preferences.Preferences
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.text.DateFormat

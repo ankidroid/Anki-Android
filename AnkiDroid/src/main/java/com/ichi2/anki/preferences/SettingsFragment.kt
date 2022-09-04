@@ -22,7 +22,6 @@ import androidx.annotation.XmlRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.Preferences
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.libanki.Collection
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat

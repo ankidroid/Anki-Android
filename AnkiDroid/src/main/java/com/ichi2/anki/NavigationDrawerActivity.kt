@@ -42,6 +42,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes

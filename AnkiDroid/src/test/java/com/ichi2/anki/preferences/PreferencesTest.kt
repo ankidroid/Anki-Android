@@ -13,11 +13,12 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki
+package com.ichi2.anki.preferences
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.Preferences.Companion.getDayOffset
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.preferences.HeaderPreference
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

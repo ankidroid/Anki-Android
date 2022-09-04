@@ -18,8 +18,8 @@ package com.ichi2.testutils
 import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.ichi2.anki.Preferences
 import com.ichi2.anki.preferences.CustomButtonsSettingsFragment
+import com.ichi2.anki.preferences.Preferences
 import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceUtils {

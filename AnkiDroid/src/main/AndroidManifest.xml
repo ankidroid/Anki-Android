@@ -261,7 +261,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
         <activity
-            android:name="com.ichi2.anki.Preferences"
+            android:name="com.ichi2.anki.preferences.Preferences"
             android:label="@string/settings"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"

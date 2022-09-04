@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
