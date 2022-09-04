@@ -23,7 +23,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.themes.Themes
 
 // Extension methods for MaterialDialog workarounds in Kotlin
-// Previously the methods accepted null into a @NonNull parameter,
+// Previously the methods accepted null into a non-null parameter,
 // and fixing this would break the fluent interface
 
 fun MaterialDialog.titleNullable(title: String?): MaterialDialog {

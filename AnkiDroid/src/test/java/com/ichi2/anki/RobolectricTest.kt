@@ -23,7 +23,6 @@ import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
-import androidx.annotation.NonNull
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
@@ -124,7 +123,6 @@ open class RobolectricTest : CollectionGetter {
         return false
     }
 
-    @NonNull
     protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory {
         if (useInMemoryDatabase()) {
             Timber.w("Using in-memory database for test. Collection should not be re-opened")
@@ -523,7 +521,6 @@ open class RobolectricTest : CollectionGetter {
         MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
-    @NonNull
     @CheckResult
     @KotlinCleanup("scope function")
     protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
