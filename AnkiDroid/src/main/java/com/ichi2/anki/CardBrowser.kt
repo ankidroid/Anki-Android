@@ -33,6 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.edit
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -157,6 +158,14 @@ open class CardBrowser :
     private var mPreviewItem: MenuItem? = null
     private var mUndoSnackbar: Snackbar? = null
 
+    /**
+     * Boolean that keeps track of whether the browser is working in
+     * Cards mode or Notes mode.
+     * True by default.
+     * */
+    @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var inCardsMode: Boolean = true
+
     // card that was clicked (not marked)
     private var mCurrentCardId: CardId = 0
     private var mOrder = 0
@@ -234,7 +243,6 @@ open class CardBrowser :
         private set
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isTruncated = false
-        private set
     private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())
     private var mLastSelectedPosition = 0
     private var mActionBarMenu: Menu? = null
@@ -676,6 +684,8 @@ open class CardBrowser :
             this, col, findViewById(R.id.toolbar_spinner),
             showAllDecks = true, alwaysShowDefault = false, showFilteredDecks = true
         )
+        inCardsMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("inCardsMode", true)
+        isTruncated = AnkiDroidApp.getSharedPrefs(this).getBoolean("isTruncated", false)
         mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
@@ -903,7 +913,6 @@ open class CardBrowser :
                 // Provide SearchView with the previous search terms
                 mSearchView!!.setQuery(mSearchTerms, false)
             }
-            menu.findItem(R.id.action_truncate).isChecked = isTruncated
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
@@ -1229,25 +1238,34 @@ open class CardBrowser :
             R.id.action_edit_tags -> {
                 showEditTagsDialog()
             }
-            R.id.action_truncate -> {
-                onTruncate()
+            R.id.action_open_options -> {
+                showOptionsDialog()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun onTruncate() {
-        val truncate = mActionBarMenu!!.findItem(R.id.action_truncate)
+    fun switchCardOrNote(newCardsMode: bool) {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
 
-        if (truncate.isChecked) {
-            isTruncated = false
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.isChecked = false
-        } else {
-            isTruncated = true
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.isChecked = true
+        sharedPrefs.edit {
+            this.putBoolean("inCardsMode", newCardsMode)
+            this.apply()
         }
+
+        inCardsMode = newCardsMode
+        searchCards()
+    }
+
+    fun onTruncate(newTruncateValue: Boolean) {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+
+        sharedPrefs.edit {
+            putBoolean("isTruncated", newTruncateValue)
+        }
+
+        isTruncated = newTruncateValue
+        mCardsAdapter!!.notifyDataSetChanged()
     }
 
     protected fun deleteSelectedNote() {
@@ -1439,6 +1457,11 @@ open class CardBrowser :
         showDialogFragment(dialog)
     }
 
+    private fun showOptionsDialog() {
+        val dialog = BrowserOptionsDialog(inCardsMode, isTruncated)
+        dialog.show(supportFragmentManager, "browserOptionsDialog")
+    }
+
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         // Save current search terms
         savedInstanceState.putString("mSearchTerms", mSearchTerms)
@@ -1449,6 +1472,7 @@ open class CardBrowser :
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
         savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
         savedInstanceState.putBoolean("mIsTruncated", isTruncated)
+        savedInstanceState.putBoolean("inCardsMode", inCardsMode)
         super.onSaveInstanceState(savedInstanceState)
     }
 
@@ -1462,6 +1486,7 @@ open class CardBrowser :
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
         isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
         isTruncated = savedInstanceState.getBoolean("mIsTruncated")
+        inCardsMode = savedInstanceState.getBoolean("inCardsMode")
         searchCards()
     }
 
@@ -1478,7 +1503,8 @@ open class CardBrowser :
     }
 
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
-    private fun searchCards() {
+    @VisibleForTesting
+    fun searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate()
         if ("" != mSearchTerms && mSearchView != null) {
@@ -1496,7 +1522,7 @@ open class CardBrowser :
         val query = searchText!!
         val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
         launchCatchingTask {
-            val cards = withProgress { searchForCards(query, order) }
+            val cards = withProgress { searchForCards(query, order, inCardsMode) }
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
                 cards[i].load(false, mColumn1Index, mColumn2Index)
@@ -1560,7 +1586,11 @@ open class CardBrowser :
     override val subtitleText: String
         get() {
             val count = cardCount
-            return resources.getQuantityString(R.plurals.card_browser_subtitle, count, count)
+            @androidx.annotation.StringRes val subtitleId = if (inCardsMode)
+                R.plurals.card_browser_subtitle
+            else
+                R.plurals.card_browser_subtitle_notes_mode
+            return resources.getQuantityString(subtitleId, count, count)
         }
 
     // convenience method for updateCardsInList(...)
@@ -2668,10 +2698,11 @@ open class CardBrowser :
 
 suspend fun searchForCards(
     query: String,
-    order: SortOrder
+    order: SortOrder,
+    inCardsMode: Boolean = true
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
-        findCards(query, order).asSequence()
+        (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
             .mapIndexed { idx, cid ->
                 CardBrowser.CardCache(cid, col, idx)
             }.toMutableList()

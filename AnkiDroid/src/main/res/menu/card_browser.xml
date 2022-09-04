@@ -88,10 +88,8 @@
         android:title="@string/card_browser_select_all"/>
 
     <item
-        android:id="@+id/action_truncate"
-        android:checkable="true"
-        android:checked="false"
-        android:title="@string/card_browser_truncate"
+        android:id="@+id/action_open_options"
+        android:title="@string/study_options"
         ankidroid:showAsAction="never"/>
 
 </menu>
