@@ -1577,10 +1577,10 @@ open class CardBrowser :
             .filterNot { d -> Decks.isDynamic(d) }
 
     @RustCleanup("this isn't how Desktop Anki does it")
-    override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
         when (mTagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags!!, option)
-            TagsDialogListenerAction.EDIT_TAGS -> editSelectedCardsTags(selectedTags!!, indeterminateTags!!)
+            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, option)
+            TagsDialogListenerAction.EDIT_TAGS -> editSelectedCardsTags(selectedTags, indeterminateTags)
             else -> {}
         }
     }
