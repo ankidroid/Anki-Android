@@ -92,24 +92,22 @@ class Pow(powString: String, private val parser: TopLevelParser) : TreeElement {
         return false
     }
 
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return when (powType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = when (powType) {
             PowType.ATOM -> atom!!.value
             PowType.ATOM_POW_FACTOR -> Math.pow(atom!!.value, factor!!.value)
             PowType.ATOM_SQRT_FACTOR -> Math.pow(atom!!.value, 1.0 / factor!!.value)
             PowType.INVALID -> throw ExpressionFormatException("cannot parse Atom expression")
         }
-    }
 
-    @Throws(ExpressionFormatException::class)
-    override fun isVariable(): Boolean {
-        return when (powType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = when (powType) {
             PowType.ATOM -> atom!!.isVariable
             PowType.ATOM_POW_FACTOR, PowType.ATOM_SQRT_FACTOR -> atom!!.isVariable || factor!!.isVariable
             PowType.INVALID -> throw ExpressionFormatException("cannot parse Atom expression")
         }
-    }
 
     init {
         if (!TopLevelParser.stringHasValidBrackets(powString)) {

@@ -97,25 +97,20 @@ class Expression(expressionString: String, private val parser: TopLevelParser) :
         return false
     }
 
-    // @Suppress because the IDE thinks expression!!.value is a recursive call, this is most likely
-    // an IDE bug because getValue() is invoked on another object(of the same type) which
-    // eventually will end in one of the two other cases(TERM or INVALID)
-    @Suppress("RecursivePropertyAccessor")
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return when (expressionType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = when (expressionType) {
             ExpressionType.EXP_PLUS_TERM -> expression!!.value + term!!.value
             ExpressionType.EXP_MINUS_TERM -> expression!!.value - term!!.value
             ExpressionType.TERM -> term!!.value
             ExpressionType.INVALID -> throw ExpressionFormatException("could not parse Expression")
         }
-    }
 
-    override fun isVariable(): Boolean {
-        return when (expressionType) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = when (expressionType) {
             ExpressionType.EXP_PLUS_TERM, ExpressionType.EXP_MINUS_TERM -> expression!!.isVariable || term!!.isVariable
             ExpressionType.TERM -> term!!.isVariable
             ExpressionType.INVALID -> throw ExpressionFormatException("could not parse Expression")
         }
-    }
 }

@@ -72,23 +72,21 @@ class FunctionXYAtom(funcString: String, private val parser: TopLevelParser) : T
         return false
     }
 
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return if (atomType !== AtomType.INVALID) {
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = if (atomType !== AtomType.INVALID) {
             parser.getFuncVal(funcName!!, expressionLeft!!.value, expressionRight!!.value)
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
-    @Throws(ExpressionFormatException::class)
-    override fun isVariable(): Boolean {
-        return if (atomType !== AtomType.INVALID) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = if (atomType !== AtomType.INVALID) {
             expressionLeft!!.isVariable || expressionRight!!.isVariable
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
     init {
         val isValid = init(funcString)

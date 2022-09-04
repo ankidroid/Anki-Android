@@ -24,15 +24,15 @@ import com.wildplot.android.parsing.TreeElement
 @SuppressLint("NonPublicNonStaticFieldName")
 class YVariableAtom(private val parser: TopLevelParser) : TreeElement {
     private val atomType = AtomType.VARIABLE
-    override fun getValue(): Double {
-        return if (atomType !== AtomType.INVALID) {
+
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = if (atomType !== AtomType.INVALID) {
             parser.y
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
-    override fun isVariable(): Boolean {
-        return true
-    }
+    override val isVariable: Boolean
+        get() = true
 }
