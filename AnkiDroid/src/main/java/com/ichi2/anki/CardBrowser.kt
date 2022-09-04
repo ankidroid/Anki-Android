@@ -1261,8 +1261,7 @@ open class CardBrowser :
         val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
 
         sharedPrefs.edit {
-            this.putBoolean("isTruncated", newTruncateValue)
-            this.apply()
+            putBoolean("isTruncated", newTruncateValue)
         }
 
         isTruncated = newTruncateValue
