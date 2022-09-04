@@ -31,7 +31,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.HashUtil
+import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
@@ -56,7 +56,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var pref: PreferenceHack
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
+        val mValues: MutableMap<String, String> = HashMapInit(30) // At most as many as in cacheValues
         val mSummaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 

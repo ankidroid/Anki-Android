@@ -33,7 +33,7 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.themes.Themes
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashSetInit
 import timber.log.Timber
 
 private typealias VersionIdentifier = Int

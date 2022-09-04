@@ -27,7 +27,7 @@ import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber

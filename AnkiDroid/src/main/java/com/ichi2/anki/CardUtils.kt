@@ -4,7 +4,7 @@ package com.ichi2.anki
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashSetInit
 import java.util.*
 
 /**

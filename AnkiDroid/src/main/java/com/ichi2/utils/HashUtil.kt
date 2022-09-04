@@ -15,24 +15,12 @@
  ****************************************************************************************/
 package com.ichi2.utils
 
-import java.util.HashMap
-import java.util.HashSet
+/**
+ * @param size Number of elements expected in the hash structure
+ * @return Initial capacity for the hash structure. Copied from HashMap code
+ */
+private fun capacity(size: Int) = ((size / .75f).toInt() + 1).coerceAtLeast(16)
 
-object HashUtil {
-    /**
-     * @param size Number of elements expected in the hash structure
-     * @return Initial capacity for the hash structure. Copied from HashMap code
-     */
-    private fun capacity(size: Int): Int {
-        return Math.max((size / .75f).toInt() + 1, 16)
-    }
+fun <T> HashSetInit(size: Int) = HashSet<T>(capacity(size))
 
-    fun <T> HashSetInit(size: Int): HashSet<T> {
-        return HashSet(capacity(size))
-    }
-
-    @KotlinCleanup("return mutableMap")
-    fun <T, U> HashMapInit(size: Int): HashMap<T, U> {
-        return HashMap(capacity(size))
-    }
-}
+fun <T, U> HashMapInit(size: Int) = HashMap<T, U>(capacity(size))

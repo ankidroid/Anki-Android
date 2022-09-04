@@ -35,8 +35,8 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
-import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashMapInit
+import com.ichi2.utils.HashSetInit
 import com.ichi2.utils.ImportUtils.isValidPackageName
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException

@@ -21,7 +21,7 @@ import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.AnkiFont
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 
 class ReviewerCustomFonts(context: Context) {
     private val mCustomStyle: String

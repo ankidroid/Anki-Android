@@ -18,7 +18,7 @@ package com.ichi2.anki.noteeditor
 import android.text.TextUtils
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashSetInit
 import timber.log.Timber
 import java.util.*
 

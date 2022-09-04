@@ -25,7 +25,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
@@ -791,9 +791,9 @@ class Models(col: Collection) : ModelManager(col) {
         mChanged = true
     }
 
-    val templateNames: HashMap<Long, HashMap<Int, String>>
+    val templateNames: Map<Long, Map<Int, String>>
         get() {
-            val result = HashMapInit<Long, HashMap<Int, String>>(
+            val result = HashMapInit<Long, Map<Int, String>>(
                 mModels!!.size
             )
             for (m in mModels!!.values) {

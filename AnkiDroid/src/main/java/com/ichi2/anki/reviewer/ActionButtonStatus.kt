@@ -22,7 +22,7 @@ import android.view.MenuItem
 import androidx.annotation.IdRes
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import timber.log.Timber
 
 // loads of unboxing issues, which are safe

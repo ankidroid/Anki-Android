@@ -32,7 +32,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.*
 import com.ichi2.utils.CollectionUtils.addAll
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
@@ -51,9 +51,9 @@ class Decks(private val col: Collection) : DeckManager() {
     @get:RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     @KotlinCleanup("lateinit")
     @get:VisibleForTesting
-    var decks: HashMap<Long, Deck>? = null
+    var decks: MutableMap<Long, Deck>? = null
         private set
-    private var mDconf: HashMap<Long, DeckConfig>? = null
+    private var mDconf: MutableMap<Long, DeckConfig>? = null
 
     // Never access mNameMap directly. Uses byName
     @KotlinCleanup("lateinit (it's set in load)")
@@ -66,7 +66,7 @@ class Decks(private val col: Collection) : DeckManager() {
      */
     @KotlinCleanup("nullability")
     private class NameMap private constructor(size: Int) {
-        private val mNameMap: HashMap<String?, Deck>
+        private val mNameMap: MutableMap<String?, Deck>
 
         /**
          * @param name A name of deck to get

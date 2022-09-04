@@ -142,7 +142,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mAllModelIds: ArrayList<Long>? = null
     @KotlinCleanup("this ideally should be Int, Int?")
     private var mModelChangeFieldMap: MutableMap<Int, Int>? = null
-    private var mModelChangeCardMap: HashMap<Int, Int?>? = null
+    private var mModelChangeCardMap: MutableMap<Int, Int?>? = null
     private val mCustomViewIds = ArrayList<Int>()
 
     /* indicates if a new note is added or a card is edited */
@@ -1735,7 +1735,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private val toolbarButtons: ArrayList<CustomToolbarButton>
         get() {
             val set = AnkiDroidApp.getSharedPrefs(this)
-                .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, HashUtil.HashSetInit(0))
+                .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, HashSetInit(0))
             return CustomToolbarButton.fromStringSet(set!!)
         }
 
@@ -1989,13 +1989,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 // Initialize mapping between fields of old model -> new model
                 val itemsLength = mEditorNote!!.items().size
-                mModelChangeFieldMap = HashUtil.HashMapInit(itemsLength)
+                mModelChangeFieldMap = HashMapInit(itemsLength)
                 for (i in 0 until itemsLength) {
                     mModelChangeFieldMap!![i] = i
                 }
                 // Initialize mapping between cards new model -> old model
                 val templatesLength = tmpls.length()
-                mModelChangeCardMap = HashUtil.HashMapInit(templatesLength)
+                mModelChangeCardMap = HashMapInit(templatesLength)
                 for (i in 0 until templatesLength) {
                     if (i < mEditorNote!!.numberOfCards()) {
                         mModelChangeCardMap!![i] = i

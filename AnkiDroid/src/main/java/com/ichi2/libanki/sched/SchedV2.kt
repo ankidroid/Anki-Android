@@ -43,6 +43,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
+import com.ichi2.utils.HashMapInit
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -400,7 +401,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         cancelListener: CancelListener? = null
     ): Int {
         var tot = 0
-        val pcounts = HashUtil.HashMapInit<Long, Int>(col.decks.count())
+        val pcounts = HashMapInit<Long, Int>(col.decks.count())
         // for each of the active decks
         for (did in col.decks.active()) {
             if (isCancelled(cancelListener)) return -1
@@ -453,7 +454,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         _checkDay()
         col.decks.checkIntegrity()
         val allDecksSorted = col.decks.allSorted()
-        val lims = HashUtil.HashMapInit<String?, Array<Int>>(allDecksSorted.size)
+        val lims = HashMapInit<String?, Array<Int>>(allDecksSorted.size)
         val deckNodes = ArrayList<DeckDueTreeNode>(allDecksSorted.size)
         val childMap = col.decks.childMap()
         for (deck in allDecksSorted) {
@@ -2382,7 +2383,7 @@ end)  """
             return
         }
         // determine nid ordering
-        val due = HashUtil.HashMapInit<Long?, Long>(nids.size)
+        val due = HashMapInit<Long?, Long>(nids.size)
         if (shuffle) {
             Collections.shuffle(nids)
         }

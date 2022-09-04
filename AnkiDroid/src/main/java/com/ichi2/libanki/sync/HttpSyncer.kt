@@ -27,7 +27,7 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HttpFetcher
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl

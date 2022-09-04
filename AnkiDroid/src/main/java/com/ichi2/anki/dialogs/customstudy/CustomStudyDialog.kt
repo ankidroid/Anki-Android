@@ -51,7 +51,7 @@ import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
@@ -157,7 +157,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     @KotlinCleanup("make this use enum instead of Int")
-    fun getValuesFromKeys(map: HashMap<Int, String>, keys: IntArray): Array<String?> {
+    fun getValuesFromKeys(map: Map<Int, String>, keys: IntArray): Array<String?> {
         val values = arrayOfNulls<String>(keys.size)
         for (i in keys.indices) {
             values[i] = map[keys[i]]
@@ -292,7 +292,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         return dialog
     }
 
-    private val keyValueMap: HashMap<Int, String>
+    private val keyValueMap: Map<Int, String>
         get() {
             val res = resources
             val keyValueMap = HashMapInit<Int, String>(10)

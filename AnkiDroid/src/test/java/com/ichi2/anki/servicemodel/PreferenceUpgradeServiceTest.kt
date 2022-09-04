@@ -29,7 +29,7 @@ import com.ichi2.anki.servicelayer.RemovedPreferences
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.utils.HashUtil
+import com.ichi2.utils.HashSetInit
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.lessThan
@@ -122,7 +122,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun note_editor_toolbar_button_text() {
         // add two example toolbar buttons
-        val buttons = HashUtil.HashSetInit<String>(2)
+        val buttons = HashSetInit<String>(2)
 
         var values = arrayOf(0, "<h1>", "</h1>")
         buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
@@ -137,7 +137,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         // now update it and check it
         PreferenceUpgrade.UpdateNoteEditorToolbarPrefs().performUpgrade(mPrefs)
 
-        val set = mPrefs.getStringSet("note_editor_custom_buttons", HashUtil.HashSetInit<String>(0)) as Set<String?>
+        val set = mPrefs.getStringSet("note_editor_custom_buttons", HashSetInit<String>(0)) as Set<String?>
         val toolbarButtons = CustomToolbarButton.fromStringSet(set)
 
         assertEquals("Set size", 2, set.size)

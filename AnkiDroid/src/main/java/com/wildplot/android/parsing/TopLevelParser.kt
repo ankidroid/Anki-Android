@@ -15,7 +15,7 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import com.wildplot.android.rendering.interfaces.Function2D
 import com.wildplot.android.rendering.interfaces.Function3D
 import java.util.regex.Pattern

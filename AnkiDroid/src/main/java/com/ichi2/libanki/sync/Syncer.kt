@@ -32,7 +32,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject

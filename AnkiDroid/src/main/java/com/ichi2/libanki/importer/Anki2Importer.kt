@@ -34,7 +34,8 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.HashUtil
+import com.ichi2.utils.HashMapInit
+import com.ichi2.utils.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.BufferedInputStream
@@ -100,7 +101,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     private fun _import() {
-        mDecks = HashUtil.HashMapInit(src.decks.count())
+        mDecks = HashMapInit(src.decks.count())
         try {
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
@@ -170,8 +171,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     private fun _importNotes() {
         val noteCount = dst.noteCount()
         // build guid -> (id,mod,mid) hash & map of existing note ids
-        mNotes = HashUtil.HashMapInit(noteCount)
-        val existing: MutableSet<Long> = HashUtil.HashSetInit(noteCount)
+        mNotes = HashMapInit(noteCount)
+        val existing: MutableSet<Long> = HashSetInit(noteCount)
         dst.db.query("select id, guid, mod, mid from notes").use { cur ->
             while (cur.moveToNext()) {
                 val id = cur.getLong(0)
@@ -367,7 +368,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      */
     /** Prepare index of schema hashes.  */
     private fun _prepareModels() {
-        mModelMap = HashUtil.HashMapInit(src.models.count())
+        mModelMap = HashMapInit(src.models.count())
     }
 
     /** Return local id for remote MID.  */
@@ -486,8 +487,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
          * Java: guid -> ord -> cid
          */
         val nbCard = dst.cardCount()
-        val cardsByGuid: MutableMap<String, MutableMap<Int, Long>> = HashUtil.HashMapInit(nbCard)
-        val existing: MutableSet<Long> = HashUtil.HashSetInit(nbCard)
+        val cardsByGuid: MutableMap<String, MutableMap<Int, Long>> = HashMapInit(nbCard)
+        val existing: MutableSet<Long> = HashSetInit(nbCard)
         dst.db.query(
             "select f.guid, c.ord, c.id from cards c, notes f " +
                 "where c.nid = f.id"

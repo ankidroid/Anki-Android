@@ -20,7 +20,7 @@ import android.text.TextUtils
 import androidx.annotation.CheckResult
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
-import com.ichi2.utils.HashUtil
+import com.ichi2.utils.HashSetInit
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -89,7 +89,7 @@ class Model : JSONObject {
     @KotlinCleanup("filter")
     fun nonEmptyFields(sfld: Array<String>): Set<String> {
         val fieldNames = fieldsNames
-        val nonemptyFields: MutableSet<String> = HashUtil.HashSetInit(sfld.size)
+        val nonemptyFields: MutableSet<String> = HashSetInit(sfld.size)
         for (i in sfld.indices) {
             if (!TextUtils.isEmpty(sfld[i].trim { it <= ' ' })) {
                 nonemptyFields.add(fieldNames[i])

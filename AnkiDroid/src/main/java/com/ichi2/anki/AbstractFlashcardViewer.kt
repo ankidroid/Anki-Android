@@ -99,7 +99,7 @@ import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import com.ichi2.utils.iconAttr

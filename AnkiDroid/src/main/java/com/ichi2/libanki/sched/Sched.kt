@@ -34,6 +34,11 @@ import com.ichi2.libanki.sched.Counts.Queue
 import com.ichi2.libanki.sched.Counts.Queue.*
 import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
 import com.ichi2.utils.*
+import com.ichi2.utils.Assert.that
+import com.ichi2.utils.HashMapInit
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import timber.log.Timber
 import java.util.*
@@ -154,7 +159,7 @@ class Sched(col: Collection) : SchedV2(col) {
         col.decks.checkIntegrity()
         val allDecksSorted = col.decks.allSorted()
         @KotlinCleanup("input should be non-null")
-        val lims = HashUtil.HashMapInit<String?, Array<Int>>(allDecksSorted.size)
+        val lims = HashMapInit<String?, Array<Int>>(allDecksSorted.size)
         val deckNodes = ArrayList<DeckDueTreeNode>(allDecksSorted.size)
         for (deck in allDecksSorted) {
             if (isCancelled(collectionTask)) {

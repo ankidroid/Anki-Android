@@ -57,6 +57,8 @@ import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
+import com.ichi2.utils.HashMapInit
+import com.ichi2.utils.HashSetInit
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
@@ -768,11 +770,11 @@ open class Collection(
     ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         val nbCount = noteCount()
         // For each note, indicates ords of cards it contains
-        val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
+        val have = HashMapInit<Long, HashMap<Int, Long>>(nbCount)
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
-        val dids = HashUtil.HashMapInit<Long, Long>(nbCount)
+        val dids = HashMapInit<Long, Long>(nbCount)
         // For each note, an arbitrary due of one of its due card processed, if any exists
-        val dues = HashUtil.HashMapInit<Long, Long>(nbCount)
+        val dues = HashMapInit<Long, Long>(nbCount)
         var nodes: List<ParsedNode?>? = null
         if (model.getInt("type") != Consts.MODEL_CLOZE) {
             nodes = model.parsedNodes()
@@ -1078,7 +1080,7 @@ open class Collection(
         tags: String,
         flist: Array<String>,
         flags: Int
-    ): HashMap<String, String> {
+    ): Map<String, String> {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
     }
 
@@ -1094,14 +1096,14 @@ open class Collection(
         browser: Boolean,
         qfmtParam: String?,
         afmtParam: String?
-    ): HashMap<String, String> {
+    ): Map<String, String> {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         var qfmt = qfmtParam
         var afmt = afmtParam
         val fmap = Models.fieldMap(model)
         val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String> = HashUtil.HashMapInit(maps.size + 8)
+        val fields: MutableMap<String, String> = HashMapInit(maps.size + 8)
         for ((key, value) in maps) {
             fields[key] = flist[value.first]
         }
@@ -1120,7 +1122,7 @@ open class Collection(
         fields["Card"] = template.getString("name")
         fields[String.format(Locale.US, "c%d", cardNum)] = "1"
         // render q & a
-        val d = HashUtil.HashMapInit<String, String>(2)
+        val d = HashMapInit<String, String>(2)
         d["id"] = cid.toString()
         qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
         afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
@@ -1390,7 +1392,7 @@ open class Collection(
         } else {
             c.did
         }
-        val qa: HashMap<String, String> = if (browser) {
+        val qa: Map<String, String> = if (browser) {
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
@@ -1694,7 +1696,7 @@ open class Collection(
 
         // obtain a list of all valid dconf IDs
         val allConf = decks.allConf()
-        val configIds = HashUtil.HashSetInit<Long>(allConf.size)
+        val configIds = HashSetInit<Long>(allConf.size)
         for (conf in allConf) {
             configIds.add(conf.getLong("id"))
         }
