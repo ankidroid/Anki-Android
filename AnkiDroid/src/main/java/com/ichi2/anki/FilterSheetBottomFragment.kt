@@ -37,7 +37,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
-import com.ichi2.libanki.bool
 import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
@@ -206,33 +205,50 @@ class FilterSheetBottomFragment :
     inner class FlagsAdapter(
         /** The collection of data to be displayed*/
         private var dataset: Array<Flags>
-    ) :
-        RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val itemTextView: TextView = view.findViewById(R.id.filter_list_item)
             val icon: ImageView = view.findViewById(R.id.filter_list_icon)
             /** Checks whether flagSearchItems was empty before adding new element to it */
-            var wasEmpty = false
 
             private fun onFlagItemClicked(item: Flags) {
                 // set default as false on every click
                 // explicitly set true if condition satisfies
-                wasEmpty = false
-
-                // Change color of filter header to indicate a filter has been selected.
-                // Set wasEmpty to true if applicable.
-                setBackgroundColor(item, false)
-
-                if (wasEmpty) {
-                    filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
-                    filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
-                    flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
-                } else if (flagSearchItems.isEmpty()) {
-                    filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
-                    filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
-                    flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
+                if (isSelected(item)) {
+                    unselect(item)
+                } else {
+                    select(item)
                 }
+            }
+
+            /**
+             * Unselect current lines, corresponding to [item]
+             */
+            private fun unselect(item: Flags) {
+                flagSearchItems.remove(item.flagNode)
+                if (flagSearchItems.isNotEmpty()) {
+                    return
+                }
+                setUnselectedColor()
+                filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
+                filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
+                flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
+            }
+
+            /**
+             * Select current lines, corresponding to [item]
+             */
+            private fun select(item: Flags) {
+                val wasNotEmpty = flagSearchItems.isNotEmpty()
+                flagSearchItems.add(item.flagNode)
+                if (wasNotEmpty) {
+                    return
+                }
+                setSelectedColor()
+                filterHeader.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
+                filterIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
+                flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
             }
 
             fun bind(
@@ -243,44 +259,34 @@ class FilterSheetBottomFragment :
 
                 // If [currFlag] is currently selected, bind the view with the selected item background and text color
                 @NeedsTest("Test if background color is being correctly set if item is selected")
-                setBackgroundColor(currFlag, true)
+                if (isSelected(currFlag)) {
+                    setSelectedColor()
+                } else {
+                    setUnselectedColor()
+                }
 
                 itemView.setOnClickListener {
                     onFlagItemClicked(currFlag)
                 }
             }
 
-            fun setBackgroundColor(flag: Flags, setIfSelected: Boolean) {
-                // if setIfSelected is true, the function sets the color in bind
-                // if it is false, the function performs the functionality needed in onFlagItemClicked
-
-                if (setIfSelected) {
-                    if (isSelected(flag)) {
-                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
-                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
-                    } else {
-                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
-                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
-                    }
-                } else {
-                    if (!isSelected(flag)) {
-                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
-                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
-
-                        wasEmpty = flagSearchItems.isEmpty()
-                        flagSearchItems.add(flag.flagNode)
-                    } else {
-                        itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
-                        itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
-
-                        flagSearchItems.remove(flag.flagNode)
-                    }
-                }
+            /**
+             * Update the section header to indicate some of its content is selected.
+             */
+            private fun setSelectedColor() {
+                itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
+                itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
             }
 
-            fun isSelected(flag: Flags): bool {
-                return flagSearchItems.contains(flag.flagNode)
+            /**
+             * Update the section header to indicate none of its content is selected.
+             */
+            private fun setUnselectedColor() {
+                itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
+                itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
             }
+
+            fun isSelected(flag: Flags) = flagSearchItems.contains(flag.flagNode)
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
