@@ -685,7 +685,7 @@ open class CardBrowser :
             showAllDecks = true, alwaysShowDefault = false, showFilteredDecks = true
         )
         inCardsMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("inCardsMode", true)
-        isTruncated = AnkiDroidApp.getSharedPrefs(this).getBoolean("isTruncated", true)
+        isTruncated = AnkiDroidApp.getSharedPrefs(this).getBoolean("isTruncated", false)
         mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
