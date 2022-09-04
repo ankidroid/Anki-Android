@@ -5,7 +5,6 @@ import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
-import com.ichi2.anki.lint.rules.ConstantJavaFieldDetector
 import com.ichi2.anki.lint.rules.CopyrightHeaderExists
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
@@ -24,7 +23,6 @@ import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.KotlinMigrationBrokenEmails
 import com.ichi2.anki.lint.rules.KotlinMigrationFixLineBreaks
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
-import com.ichi2.anki.lint.rules.NonPublicNonStaticJavaFieldDetector
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.VariableNamingDetector
 
@@ -51,8 +49,6 @@ class IssueRegistry : IssueRegistry() {
                 KotlinMigrationFixLineBreaks.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
-                NonPublicNonStaticJavaFieldDetector.ISSUE,
-                ConstantJavaFieldDetector.ISSUE,
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,

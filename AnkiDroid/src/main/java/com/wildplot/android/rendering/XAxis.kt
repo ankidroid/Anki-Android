@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering
 
-import android.annotation.SuppressLint
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
 import com.wildplot.android.rendering.interfaces.Drawable
@@ -24,7 +23,6 @@ import java.text.DecimalFormat
 /**
  * This Class represents a Drawable x-axis
  */
-@SuppressLint("NonPublicNonStaticFieldName")
 class XAxis
 /**
  * Constructor for an X-axis object

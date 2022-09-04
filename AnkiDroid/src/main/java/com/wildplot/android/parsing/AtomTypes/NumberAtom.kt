@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint
 import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.parsing.Atom.AtomType
 import com.wildplot.android.parsing.ExpressionFormatException
@@ -24,7 +23,6 @@ import timber.log.Timber
 import java.lang.NumberFormatException
 import kotlin.Throws
 
-@SuppressLint("NonPublicNonStaticFieldName")
 class NumberAtom(factorString: String) : TreeElement {
 
     private var atomType = AtomType.NUMBER

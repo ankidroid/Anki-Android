@@ -15,13 +15,11 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint
 import com.wildplot.android.parsing.Atom.AtomType
 import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TopLevelParser
 import com.wildplot.android.parsing.TreeElement
 
-@SuppressLint("NonPublicNonStaticFieldName")
 class YVariableAtom(private val parser: TopLevelParser) : TreeElement {
     private val atomType = AtomType.VARIABLE
 

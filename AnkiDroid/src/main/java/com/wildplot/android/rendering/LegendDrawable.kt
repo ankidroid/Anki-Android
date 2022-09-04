@@ -16,13 +16,11 @@
 
 package com.wildplot.android.rendering
 
-import android.annotation.SuppressLint
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import com.wildplot.android.rendering.interfaces.Drawable
 import com.wildplot.android.rendering.interfaces.Legendable
 
-@SuppressLint("NonPublicNonStaticFieldName")
 class LegendDrawable : Drawable, Legendable {
     override var name: String = ""
         set(value) {

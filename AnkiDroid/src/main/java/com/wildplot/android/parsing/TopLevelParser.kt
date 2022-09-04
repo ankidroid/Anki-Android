@@ -15,13 +15,11 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import android.annotation.SuppressLint
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.wildplot.android.rendering.interfaces.Function2D
 import com.wildplot.android.rendering.interfaces.Function3D
 import java.util.regex.Pattern
 
-@SuppressLint("NonPublicNonStaticFieldName")
 class TopLevelParser(expressionString: String, parserRegister: HashMap<String, TopLevelParser>) :
     Function2D, Function3D, Cloneable {
     private val parserRegister: HashMap<String, TopLevelParser>

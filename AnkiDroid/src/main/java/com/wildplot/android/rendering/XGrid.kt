@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering
 
-import android.annotation.SuppressLint
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
@@ -24,7 +23,6 @@ import com.wildplot.android.rendering.interfaces.Drawable
 /**
  * This class represents grid lines parallel to the x-axis
  */
-@SuppressLint("NonPublicNonStaticFieldName")
 class XGrid
 /**
  * Constructor for an X-Grid object

@@ -15,9 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import android.annotation.SuppressLint
-
-@SuppressLint("NonPublicNonStaticFieldName")
 class Term(termString: String, private val parser: TopLevelParser) : TreeElement {
     enum class TermType {
         TERM_MUL_FACTOR, TERM_DIV_FACTOR, FACTOR, INVALID

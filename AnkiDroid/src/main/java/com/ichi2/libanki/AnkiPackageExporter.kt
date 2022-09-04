@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.ichi2.anki.CollectionHelper
@@ -114,7 +113,6 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
     // Actual capacity will be set when known, if media are imported.
     val mMediaFiles = ArrayList<String>(0)
 
-    @SuppressLint("NonPublicNonStaticFieldName")
     var _v2sched = false
 
     /**
