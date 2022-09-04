@@ -350,7 +350,6 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
-apply from: "./kotlinMigration.gradle"
 
 android {
     testOptions {
