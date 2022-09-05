@@ -67,12 +67,10 @@ object AnkiAssert {
         assertListEquals(expected.toList(), actual)
     }
 
-    @JvmStatic
     fun without_unicode_isolation(s: String): String {
         return s.replace("\u2068", "").replace("\u2069", "")
     }
 
-    @JvmStatic
     @KotlinCleanup("scope function")
     fun checkRevIvl(c: Card, targetIvl: Int): Boolean {
         val minMax = SchedV2._fuzzIvlRange(targetIvl)

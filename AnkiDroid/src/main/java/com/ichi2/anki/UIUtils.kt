@@ -14,27 +14,22 @@ import timber.log.Timber
 import java.util.*
 
 object UIUtils {
-    @JvmStatic
     fun showThemedToast(context: Context?, text: String?, shortLength: Boolean) {
         Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
     }
 
-    @JvmStatic
     fun showThemedToast(context: Context?, text: CharSequence?, shortLength: Boolean) {
         showThemedToast(context, text.toString(), shortLength)
     }
 
-    @JvmStatic
     fun showThemedToast(context: Context?, @StringRes textResource: Int, shortLength: Boolean) {
         Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
     }
 
-    @JvmStatic
     fun getDensityAdjustedValue(context: Context, value: Float): Float {
         return context.resources.displayMetrics.density * value
     }
 
-    @JvmStatic
     fun getDayStart(time: Time): Long {
         val cal = time.calendar()
         if (cal[Calendar.HOUR_OF_DAY] < 4) {
@@ -47,7 +42,6 @@ object UIUtils {
         return cal.timeInMillis
     }
 
-    @JvmStatic
     fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
         if (CollectionHelper.instance.colIsOpen()) {
             val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {
@@ -70,7 +64,6 @@ object UIUtils {
      * @param context Context to get resources and device specific display metrics.
      * @return A float value to represent px value which is equivalent to the passed dp value.
      */
-    @JvmStatic
     fun convertDpToPixel(dp: Float, context: Context): Float {
         return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }

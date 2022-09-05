@@ -50,7 +50,7 @@ class TagsUtilTest {
 
         companion object {
             // suppressed to have a symmetry in all parameters, listOf(...) should be all you need.
-            @JvmStatic
+            @JvmStatic // required for Parameters
             @Parameterized.Parameters
             fun data(): Collection<Array<Any>> {
                 return listOf(

@@ -193,13 +193,11 @@ class AutomaticAnswer(
     }
 
     companion object {
-        @JvmStatic
         @CheckResult
         fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer {
             return AutomaticAnswer(target, AutomaticAnswerSettings())
         }
 
-        @JvmStatic
         @CheckResult
         fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
             val settings = AutomaticAnswerSettings.createInstance(preferences, col)
@@ -244,7 +242,6 @@ class AutomaticAnswerSettings(
          * @return null if the deck is dynamic (use global settings),
          * or if "useGeneralTimeoutSettings" is set
          */
-        @JvmStatic
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
@@ -269,7 +266,6 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
-        @JvmStatic
         fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
@@ -277,7 +273,6 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
-        @JvmStatic
         fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
             // deck specific options take precedence over general (preference-based) options.
             // the action can only be set via preferences (but is stored in the collection).

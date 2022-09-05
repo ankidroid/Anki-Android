@@ -517,7 +517,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     companion object {
         private const val TOUCH_TOLERANCE = 4f
         private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
-        @JvmStatic
         fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
             val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods

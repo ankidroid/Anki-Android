@@ -135,13 +135,10 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
         companion object {
             fun none(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = false)
 
-            @JvmStatic
             fun ctrl(): ModifierKeys = ModifierKeys(shift = false, ctrl = true, alt = false)
 
-            @JvmStatic
             fun shift(): ModifierKeys = ModifierKeys(shift = true, ctrl = false, alt = false)
 
-            @JvmStatic
             fun alt(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = true)
 
             /**
@@ -204,7 +201,6 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
         const val GAMEPAD_PREFIX = "🎮"
 
         /** This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is  */
-        @JvmStatic
         fun key(event: KeyEvent): List<Binding> {
             val modifiers = ModifierKeys(event.isShiftPressed, event.isCtrlPressed, event.isAltPressed)
             val ret: MutableList<Binding> = ArrayList()
@@ -231,7 +227,6 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
          * Specifies a unicode binding from an unknown input device
          * See [AppDefinedModifierKeys]
          */
-        @JvmStatic
         fun unicode(unicodeChar: Char): Binding =
             unicode(AppDefinedModifierKeys.allowShift(), unicodeChar)
 
@@ -240,10 +235,8 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
             return Binding(modifierKeys, null, unicodeChar, null)
         }
 
-        @JvmStatic
         fun keyCode(keyCode: Int): Binding = keyCode(ModifierKeys.none(), keyCode)
 
-        @JvmStatic
         fun keyCode(modifiers: ModifierKeys?, keyCode: Int): Binding =
             Binding(modifiers, keyCode, null, null)
 

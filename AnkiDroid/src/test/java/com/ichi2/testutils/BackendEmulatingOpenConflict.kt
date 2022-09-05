@@ -39,12 +39,10 @@ class BackendEmulatingOpenConflict(context: Context) : Backend(context) {
     }
 
     companion object {
-        @JvmStatic
         fun enable() {
             BackendFactory.setOverride() { context, _, _ -> BackendEmulatingOpenConflict(context) }
         }
 
-        @JvmStatic
         fun disable() {
             BackendFactory.setOverride(null)
         }

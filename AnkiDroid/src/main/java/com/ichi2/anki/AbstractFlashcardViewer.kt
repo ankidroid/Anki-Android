@@ -2198,7 +2198,6 @@ abstract class AbstractFlashcardViewer :
         const val ANSWER_ORDINAL_2 = 6
         const val ANSWER_ORDINAL_3 = 7
         const val ANSWER_ORDINAL_4 = 8
-        @JvmStatic
         fun getSignalFromUrl(url: String): Int {
             when (url) {
                 "signal:typefocus" -> return TYPE_FOCUS
@@ -2635,7 +2634,6 @@ abstract class AbstractFlashcardViewer :
         const val INITIAL_HIDE_DELAY = 200
         // I don't see why we don't do this by intent.
         /** to be sent to and from the card editor  */
-        @JvmStatic
         @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         var editorCard: Card? = null
         @JvmField

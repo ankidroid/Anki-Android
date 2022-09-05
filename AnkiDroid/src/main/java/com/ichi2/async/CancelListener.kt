@@ -24,7 +24,6 @@ fun interface CancelListener {
          * @param cancelListener Either null or a cancel listener
          * @return whether the listener exists and is cancelled
          */
-        @JvmStatic
         fun isCancelled(cancelListener: CancelListener?): Boolean {
             return cancelListener != null && cancelListener.isCancelled()
         }

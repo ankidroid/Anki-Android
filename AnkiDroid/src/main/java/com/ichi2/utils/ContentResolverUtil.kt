@@ -29,7 +29,6 @@ import java.util.*
 
 object ContentResolverUtil {
     /** Obtains the filename from the url. Throws if all methods return exception  */
-    @JvmStatic
     @CheckResult
     fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
         try {

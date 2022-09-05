@@ -59,7 +59,6 @@ object ImportUtils {
      * @param intent contains the file to import
      * @return null if successful, otherwise error message
      */
-    @JvmStatic
     fun handleFileImport(context: Context, intent: Intent): ImportResult {
         return FileImporter().handleFileImport(context, intent)
     }
@@ -71,7 +70,6 @@ object ImportUtils {
         return FileImporter().getFileCachedCopy(context, intent)
     }
 
-    @JvmStatic
     fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
@@ -81,7 +79,6 @@ object ImportUtils {
     }
 
     /** @return Whether the file is either a deck, or a collection package */
-    @JvmStatic
     @Contract("null -> false")
     fun isValidPackageName(filename: String?): Boolean {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename)
@@ -91,7 +88,6 @@ object ImportUtils {
      * Whether importUtils can handle the given intent
      * Caused by #6312 - A launcher was sending ACTION_VIEW instead of ACTION_MAIN
      */
-    @JvmStatic
     fun isInvalidViewIntent(intent: Intent): Boolean {
         return intent.data == null && intent.clipData == null
     }

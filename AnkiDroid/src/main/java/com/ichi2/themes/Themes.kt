@@ -47,7 +47,6 @@ object Themes {
     /**
      * Sets theme to [currentTheme]
      */
-    @JvmStatic
     fun setTheme(context: Context) {
         context.setTheme(currentTheme.resId)
     }
@@ -65,7 +64,6 @@ object Themes {
      * on `Day` or `Night` theme according to system's current mode
      * Otherwise, updates to the selected theme.
      */
-    @JvmStatic
     fun updateCurrentTheme() {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.applicationContext)
 
@@ -83,7 +81,6 @@ object Themes {
     /**
      * #8150: Fix icons not appearing in Note Editor due to MIUI 12's "force dark" mode
      */
-    @JvmStatic
     fun disableXiaomiForceDarkMode(context: Context) {
         // Setting a theme is an additive operation, so this adds a single property.
         context.setTheme(R.style.ThemeOverlay_Xiaomi)
@@ -103,14 +100,14 @@ object Themes {
         return attrs
     }
 
-    @JvmStatic
+    @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
     fun getColorFromAttr(context: Context?, colorAttr: Int): Int {
         val attrs = intArrayOf(colorAttr)
         return getColorFromAttr(context!!, attrs)[0]
     }
 
-    @JvmStatic
+    @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
     fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
@@ -132,7 +129,6 @@ object Themes {
     /**
      * @return if current selected theme is `Follow system`
      */
-    @JvmStatic
     fun themeFollowsSystem(): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.applicationContext)
         return prefs.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE

@@ -55,7 +55,6 @@ object ChessFilter {
         "    return '<div align=\"center\" width=\"100%%\"><table class=\"chess_board\" cellspacing=\"0\" cellpadding=\"0\"><tr>'+fentxt+'</tr></table></div>';" +
         "})('%s', %b)"
 
-    @JvmStatic
     fun fenToChessboard(text: String, context: Context?): String {
         if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
             return text

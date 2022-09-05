@@ -127,7 +127,6 @@ class FieldState private constructor(private val editor: NoteEditor) {
         var newModel: Model? = null
 
         companion object {
-            @JvmStatic
             fun refreshWithMap(newModel: Model?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
                 typeClass.newModel = newModel
@@ -135,22 +134,18 @@ class FieldState private constructor(private val editor: NoteEditor) {
                 return typeClass
             }
 
-            @JvmStatic
             fun refresh(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.REFRESH, replaceNewlines)
             }
 
-            @JvmStatic
             fun refreshWithStickyFields(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines)
             }
 
-            @JvmStatic
             fun changeFieldCount(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines)
             }
 
-            @JvmStatic
             fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.INIT, replaceNewlines)
             }
@@ -170,7 +165,6 @@ class FieldState private constructor(private val editor: NoteEditor) {
             return oldFields.size > 2
         }
 
-        @JvmStatic
         fun fromEditor(editor: NoteEditor): FieldState {
             return FieldState(editor)
         }

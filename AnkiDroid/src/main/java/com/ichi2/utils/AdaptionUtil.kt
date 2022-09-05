@@ -33,7 +33,6 @@ import java.util.*
 object AdaptionUtil {
     private var sHasRunWebBrowserCheck = false
     private var sHasWebBrowser = true
-    @JvmStatic
     fun hasWebBrowser(context: Context): Boolean {
         if (sHasRunWebBrowserCheck) {
             return sHasWebBrowser
@@ -43,7 +42,6 @@ object AdaptionUtil {
         return sHasWebBrowser
     }
 
-    @JvmStatic
     val isUserATestClient: Boolean
         get() = try {
             ActivityManager.isUserAMonkey() ||
@@ -143,7 +141,6 @@ object AdaptionUtil {
     }
 
     /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
-    @JvmStatic
     val isVivo: Boolean
         get() {
             val manufacturer = Build.MANUFACTURER ?: return false
@@ -155,7 +152,6 @@ object AdaptionUtil {
      * is imported.
      * https://stackoverflow.com/questions/28550370/how-to-detect-whether-android-app-is-running-ui-test-with-espresso
      */
-    @JvmStatic
     val isRunningAsUnitTest: Boolean
         get() {
             try {

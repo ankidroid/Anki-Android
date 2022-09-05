@@ -61,7 +61,6 @@ object TemplateFilters {
      * @param tag The entire content of the tag.
      * @return Result of filter on current txt.
      */
-    @JvmStatic
     @KotlinCleanup("maybe change var to val")
     fun apply_filter(txtInput: String, filterInput: String, field_name: String, tag: String): String {
         // Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);

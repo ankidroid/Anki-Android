@@ -37,7 +37,6 @@ class NotificationService : BroadcastReceiver() {
         /** The id of the notification for due cards.  */
         private const val WIDGET_NOTIFY_ID = 1
 
-        @JvmStatic
         fun triggerNotificationFor(context: Context) {
             Timber.i("NotificationService: OnStartCommand")
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

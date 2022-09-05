@@ -18,13 +18,11 @@ package com.ichi2.utils
 import android.view.KeyEvent
 
 object KeyUtils {
-    @JvmStatic
     fun isDigit(event: KeyEvent): Boolean {
         val unicodeChar = event.getUnicodeChar(0)
         return unicodeChar >= '0'.code && unicodeChar <= '9'.code
     }
 
-    @JvmStatic
     fun getDigit(event: KeyEvent): Int {
         val unicodeChar = event.getUnicodeChar(0)
         return unicodeChar - '0'.code

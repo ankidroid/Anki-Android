@@ -83,7 +83,7 @@ class LayoutValidationTest : InstrumentedTest() {
             InvocationTargetException::class,
             InstantiationException::class
         )
-        @JvmStatic
+        @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             val ctor: Constructor<*> = com.ichi2.anki.R.layout::class.java.declaredConstructors[0]
             ctor.isAccessible = true // Required for at least API 16, maybe later.

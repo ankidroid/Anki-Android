@@ -149,7 +149,6 @@ class IntentHandler : Activity() {
             return !isInvalidViewIntent(intent)
         }
 
-        @JvmStatic
         @VisibleForTesting
         @CheckResult
         fun getLaunchType(intent: Intent): LaunchType {

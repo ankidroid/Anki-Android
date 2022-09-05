@@ -24,7 +24,6 @@ import java.util.*
 
 class RecursivePictureMenuUtil {
     companion object {
-        @JvmStatic
         @CheckResult
         fun getRecyclerViewFor(menu: RecursivePictureMenu): RecyclerView {
             val dialog = Objects.requireNonNull(menu.dialog) as MaterialDialog

@@ -2660,7 +2660,6 @@ open class CardBrowser :
         private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
         @KotlinCleanup(".edit { }")
-        @JvmStatic
         fun clearLastDeckId() {
             val context: Context = AnkiDroidApp.instance
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().remove(LAST_DECK_ID_KEY).apply()
@@ -2681,7 +2680,6 @@ open class CardBrowser :
          * @param showFileNames Whether [sound:foo.mp3] should be rendered as " foo.mp3 " or  " "
          * @return The formatted string
          */
-        @JvmStatic
         @VisibleForTesting
         @CheckResult
         fun formatQAInternal(txt: String, showFileNames: Boolean): String {

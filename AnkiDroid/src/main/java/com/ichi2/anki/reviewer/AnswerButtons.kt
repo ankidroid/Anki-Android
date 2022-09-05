@@ -101,7 +101,6 @@ enum class AnswerButtons {
         fun canAnswerHard(numberOfButtons: Int): Boolean = numberOfButtons == 4
         fun canAnswerEasy(numberOfButtons: Int): Boolean = numberOfButtons >= 3
 
-        @JvmStatic
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
             val backgroundIds: IntArray =
                 if (ctx.animationEnabled()) {
@@ -122,7 +121,6 @@ enum class AnswerButtons {
             return Themes.getResFromAttr(ctx, backgroundIds)
         }
 
-        @JvmStatic
         fun getTextColors(ctx: Context): IntArray {
             return Themes.getColorFromAttr(
                 ctx,

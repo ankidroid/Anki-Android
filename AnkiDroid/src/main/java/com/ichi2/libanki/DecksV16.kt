@@ -683,7 +683,6 @@ class DecksV16(private val col: CollectionV16) :
 
     companion object {
 
-        @JvmStatic
         fun find_deck_in_tree(
             node: anki.decks.DeckTreeNode,
             deck_id: DeckId
@@ -700,28 +699,22 @@ class DecksV16(private val col: CollectionV16) :
             return Optional.empty()
         }
 
-        @JvmStatic
         fun path(name: str): ImmutableList<str> {
             return name.split("::")
         }
 
-        @JvmStatic
         fun _path(name: str) = path(name)
 
-        @JvmStatic
         fun basename(name: str): str {
             return path(name).last()
         }
 
-        @JvmStatic
         fun _basename(str: str) = basename(str)
 
-        @JvmStatic
         fun immediate_parent_path(name: str): MutableList<str> {
             return _path(name).dropLast(1).toMutableList()
         }
 
-        @JvmStatic
         fun immediate_parent(name: str): Optional<str> {
             val pp = immediate_parent_path(name)
             if (pp.isNotNullOrEmpty()) {
@@ -730,7 +723,6 @@ class DecksV16(private val col: CollectionV16) :
             return Optional.empty()
         }
 
-        @JvmStatic
         fun key(deck: DeckV16): ImmutableList<str> {
             return path(deck.name)
         }

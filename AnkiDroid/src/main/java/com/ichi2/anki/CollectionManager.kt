@@ -235,7 +235,6 @@ object CollectionManager {
         }
     }
 
-    @JvmStatic
     fun closeCollectionBlocking(save: Boolean = true) {
         runBlocking { ensureClosed(save = save) }
     }
@@ -246,7 +245,6 @@ object CollectionManager {
      * the collection while the reference is held. [withCol]
      * is a better alternative.
      */
-    @JvmStatic
     fun getColUnsafe(): Collection {
         return logUIHangs {
             blockForQueue {
@@ -293,7 +291,6 @@ object CollectionManager {
     /**
      * True if the collection is open. Unsafe, as it has the potential to race.
      */
-    @JvmStatic
     fun isOpenUnsafe(): Boolean {
         return logUIHangs {
             blockForQueue {
@@ -310,7 +307,6 @@ object CollectionManager {
      Use [col] as collection in tests.
      This collection persists only up to the next (direct or indirect) call to `ensureClosed`
      */
-    @JvmStatic
     fun setColForTests(col: Collection?) {
         blockForQueue {
             if (col == null) {

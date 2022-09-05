@@ -714,7 +714,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          * which shows the current deck's options. Set to true when programmatically
          * opening a new filtered deck for the first time.
          */
-        @JvmStatic
         fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment {
             val f = StudyOptionsFragment()
             val args = Bundle()
@@ -723,7 +722,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             return f
         }
 
-        @JvmStatic
         @VisibleForTesting
         fun formatDescription(desc: String?): Spanned {
             // #5715: In deck description, ignore what is in style and script tag

@@ -19,7 +19,6 @@ package com.ichi2.utils
 import java.util.stream.Collectors
 
 object TagsUtil {
-    @JvmStatic
     fun getUpdatedTags(
         previous: List<String>,
         selected: List<String>,
@@ -41,7 +40,6 @@ object TagsUtil {
      * Utility method that decomposes a hierarchy tag into several parts.
      * Replace empty parts to "blank".
      */
-    @JvmStatic
     fun getTagParts(tag: String): List<String> {
         val parts = tag.split("::").asSequence()
         return parts.map {
@@ -54,7 +52,6 @@ object TagsUtil {
      * Utility that uniforms a hierarchy tag.
      * Remove trailing '::'.
      */
-    @JvmStatic
     fun getUniformedTag(tag: String): String {
         val parts = getTagParts(tag)
         return if (tag.endsWith("::") && parts.last() == blankSubstituent) {
@@ -67,7 +64,6 @@ object TagsUtil {
     /**
      * Utility method that gets the root part of a tag.
      */
-    @JvmStatic
     fun getTagRoot(tag: String): String {
         val parts = tag.split("::").asSequence()
         return parts.map {
@@ -79,7 +75,6 @@ object TagsUtil {
     /**
      * Utility method that gets the ancestors of a tag.
      */
-    @JvmStatic
     fun getTagAncestors(tag: String): List<String> {
         val parts = getTagParts(tag)
         return (0..parts.size - 2).asSequence().map {
@@ -92,7 +87,6 @@ object TagsUtil {
      * Used to sort all tags firstly in DFN order, secondly in dictionary order
      * Both lhs and rhs must be uniformed.
      */
-    @JvmStatic
     fun compareTag(lhs: String, rhs: String): Int {
         val lhsIt = lhs.split("::").asSequence().iterator()
         val rhsIt = rhs.split("::").asSequence().iterator()

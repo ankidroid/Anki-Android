@@ -29,7 +29,6 @@ class DeckRenameException
         private const val FILTERED_NOSUBDECKS = 1
 
         /** Generates a {@link com.ichi2.libanki.backend.exception.DeckRenameException} with additional information in the message */
-        @JvmStatic
         fun filteredAncestor(deckName: String?, filteredAncestorName: String?): DeckRenameException {
             val ex = DeckRenameException(FILTERED_NOSUBDECKS)
             ex.mFilteredAncestorName = filteredAncestorName

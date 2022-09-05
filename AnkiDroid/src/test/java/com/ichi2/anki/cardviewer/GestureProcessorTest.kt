@@ -56,7 +56,7 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
 
     companion object {
         @BeforeClass
-        @JvmStatic
+        @JvmStatic // required for @BeforeClass
         fun before() {
             mockkStatic(ViewConfiguration::class)
             every { ViewConfiguration.get(any()) } answers { mockk(relaxed = true) }
@@ -64,7 +64,7 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
             AnkiDroidApp.internalSetInstanceValue(mockk(relaxed = true))
         }
 
-        @JvmStatic
+        @JvmStatic // required for @AfterClass
         @AfterClass
         fun after() {
             unmockkStatic(ViewConfiguration::class)

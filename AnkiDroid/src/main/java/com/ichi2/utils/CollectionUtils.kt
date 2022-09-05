@@ -22,7 +22,6 @@ object CollectionUtils {
      * @param it An iterator returning things to add to C
      * @param <T> Type of elements to copy from iterator to collection
      */
-    @JvmStatic
     @KotlinCleanup("replace with Kotlin extension: MutableCollections.addAll")
     fun <T> addAll(c: MutableCollection<T>, it: Iterable<T>) {
         for (elt in it) {

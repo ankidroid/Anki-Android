@@ -28,7 +28,6 @@ object PreferenceExtensions {
      *
      * Defect #5828 - This is potentially not thread safe and could cause another preference commit to fail.
      */
-    @JvmStatic
     @CheckResult // Not truly an error as this has a side effect, but you should use a "set" API for perf.
     fun getOrSetString(target: SharedPreferences, key: String, supplier: Supplier<String>): String {
         if (target.contains(key)) {

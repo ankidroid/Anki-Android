@@ -1066,7 +1066,6 @@ class Decks(private val col: Collection) : DeckManager() {
                 "}"
             )
         private val pathCache = HashMap<String, Array<String>>()
-        @JvmStatic
         fun path(name: String): Array<String> {
             if (!pathCache.containsKey(name)) {
                 pathCache[name] = name.split("::".toRegex()).toTypedArray()
@@ -1098,7 +1097,6 @@ class Decks(private val col: Collection) : DeckManager() {
      * **************************************
      */
         private val normalized = HashMap<String?, String>()
-        @JvmStatic
         @KotlinCleanup("nullability")
         fun normalizeName(name: String?): String? {
             if (!normalized.containsKey(name)) {
@@ -1123,7 +1121,6 @@ class Decks(private val col: Collection) : DeckManager() {
         }
 
         private val sParentCache = HashMap<String, String?>()
-        @JvmStatic
         fun parent(deckName: String): String? {
             // method parent, from sched's method deckDueList in python
             if (!sParentCache.containsKey(deckName)) {

@@ -57,12 +57,10 @@ object LaTeX {
      * Convert HTML with embedded latex tags to image links.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
-    @JvmStatic
     fun mungeQA(html: String, col: Collection, model: Model): String {
         return mungeQA(html, col.media, model)
     }
 
-    @JvmStatic
     fun convertHTML(html: String, media: Media, model: Model): String {
         val stringBuffer = StringBuffer()
         STANDARD_PATTERN.matcher(html).run {
@@ -74,7 +72,6 @@ object LaTeX {
         return stringBuffer.toString()
     }
 
-    @JvmStatic
     fun convertExpression(input: String, media: Media, model: Model): String {
         val stringBuffer = StringBuffer()
         EXPRESSION_PATTERN.matcher(input).run {
@@ -86,7 +83,6 @@ object LaTeX {
         return stringBuffer.toString()
     }
 
-    @JvmStatic
     fun convertMath(input: String, media: Media, model: Model): String {
         val stringBuffer = StringBuffer()
         MATH_PATTERN.matcher(input).run {
@@ -103,7 +99,6 @@ object LaTeX {
 
     // It's only goal is to allow testing with a different media manager.
     @VisibleForTesting
-    @JvmStatic
     fun mungeQA(html: String, m: Media, model: Model): String =
         arrayOf(::convertHTML, ::convertExpression, ::convertMath).fold(html) { input, transformer ->
             transformer(input, m, model)
@@ -113,7 +108,6 @@ object LaTeX {
      * Return an img link for LATEX.
      */
     @VisibleForTesting
-    @JvmStatic
     internal fun imgLink(latex: String, model: Model, m: Media): String {
         val txt = latexFromHtml(latex)
         val ext = if (model.optBoolean("latexsvg", false)) "svg" else "png"
@@ -128,6 +122,5 @@ object LaTeX {
     /**
      * Convert entities and fix newlines.
      */
-    @JvmStatic
     private fun latexFromHtml(latex: String): String = Utils.stripHTML(latex.replace("<br( /)?>|<div>".toRegex(), "\n"))
 }

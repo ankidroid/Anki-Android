@@ -22,7 +22,6 @@ import java.util.*
 
 object StringUtil {
     /** Trims from the right hand side of a string  */
-    @JvmStatic
     @Contract("null -> null; !null -> !null")
     fun trimRight(s: String?): String? {
         if (s == null) return null
@@ -35,7 +34,6 @@ object StringUtil {
     }
 
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
-    @JvmStatic
     @Contract("null -> null; !null -> !null")
     fun toTitleCase(s: String?): String? {
         if (s == null) return null

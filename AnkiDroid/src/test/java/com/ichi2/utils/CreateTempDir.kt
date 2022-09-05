@@ -19,7 +19,6 @@ import java.io.File
 
 class CreateTempDir {
     companion object {
-        @JvmStatic
         fun tempDir(dirName: String): File {
             val path: String? = System.getProperty("java.io.tmpdir")
             val tempDir = path + dirName + System.nanoTime()

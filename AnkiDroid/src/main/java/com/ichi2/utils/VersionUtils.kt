@@ -31,7 +31,6 @@ object VersionUtils {
     /**
      * Get package name as defined in the manifest.
      */
-    @JvmStatic
     val appName: String
         get() {
             var pkgName = AnkiDroidApp.TAG
@@ -48,7 +47,6 @@ object VersionUtils {
     /**
      * Get the package versionName as defined in the manifest.
      */
-    @JvmStatic
     val pkgVersionName: String
         get() {
             var pkgVersion = "?"
@@ -65,7 +63,6 @@ object VersionUtils {
     /**
      * Get the package versionCode as defined in the manifest.
      */
-    @JvmStatic
     val pkgVersionCode: Long
         get() {
             val context: Context = applicationInstance ?: return 0
@@ -100,7 +97,6 @@ object VersionUtils {
      * Return whether the package version code is set to that for release version
      * @return whether build number in manifest version code is '3'
      */
-    @JvmStatic
     val isReleaseVersion: Boolean
         get() {
             val versionCode = java.lang.Long.toString(pkgVersionCode)

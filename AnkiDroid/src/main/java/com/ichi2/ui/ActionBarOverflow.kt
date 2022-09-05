@@ -35,7 +35,6 @@ object ActionBarOverflow {
     private var sNativeIsActionButton: Method? = null
     private var sAndroidXIsActionButton: Method? = null
 
-    @JvmStatic
     @VisibleForTesting
     fun setupMethods(accessor: PrivateMethodAccessor) {
         // Note: Multiple of these can succeed.
@@ -76,7 +75,6 @@ object ActionBarOverflow {
      * the MenuItem.
      * @return `true` if the MenuItem is visible on the ActionBar. `false` if not. `null if unknown`
      */
-    @JvmStatic
     fun isActionButton(item: MenuItem): Boolean? {
         return if (sNativeClassRef != null && sNativeClassRef!!.isInstance(item)) {
             tryInvokeMethod(item, sNativeIsActionButton)
@@ -103,14 +101,12 @@ object ActionBarOverflow {
         }
     }
 
-    @JvmStatic
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun hasUsableMethod(): Boolean {
         return sNativeIsActionButton != null ||
             sAndroidXIsActionButton != null
     }
 
-    @JvmStatic
     @CheckResult
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPrivateMethodOnlyHandleExceptions(className: String?, methodName: String?): Pair<Class<*>?, Method?> {

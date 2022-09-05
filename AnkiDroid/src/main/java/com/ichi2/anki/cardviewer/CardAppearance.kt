@@ -77,7 +77,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     companion object {
         private val nightModeClassRegex = Regex("\\.night(?:_m|M)ode\\b")
 
-        @JvmStatic
         fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)
@@ -85,7 +84,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             return CardAppearance(customFonts, cardZoom, imageZoom, centerVertically)
         }
 
-        @JvmStatic
         fun fixBoldStyle(content: String): String {
             // In order to display the bold style correctly, we have to change
             // font-weight to 700

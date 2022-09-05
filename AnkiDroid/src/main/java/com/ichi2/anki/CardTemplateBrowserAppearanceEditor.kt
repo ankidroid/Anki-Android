@@ -183,7 +183,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         }
 
         companion object {
-            @JvmStatic
             @Contract("null -> null")
             fun fromIntent(intent: Intent?): Result? {
                 return if (intent == null) {
@@ -206,7 +205,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         /** Specified the card browser should use the default template formatter  */
         const val VALUE_USE_DEFAULT = ""
-        @JvmStatic
         @CheckResult
         fun getIntentFromTemplate(context: Context, template: JSONObject): Intent {
             val browserQuestionTemplate = template.getString("bqfmt")

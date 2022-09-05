@@ -106,7 +106,6 @@ class BootService : BroadcastReceiver() {
          */
         private var sWasRun = false
 
-        @JvmStatic
         fun scheduleNotification(time: Time, context: Context) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = AnkiDroidApp.getSharedPrefs(context)

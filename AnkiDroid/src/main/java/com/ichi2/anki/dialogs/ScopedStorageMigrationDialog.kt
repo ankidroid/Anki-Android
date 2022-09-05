@@ -48,7 +48,6 @@ typealias OpenUri = (Uri) -> Unit
 object ScopedStorageMigrationDialog {
     @Suppress("Deprecation") // Material dialog neutral button deprecation
     @SuppressLint("CheckResult")
-    @JvmStatic
     fun showDialog(ctx: Context, openUri: OpenUri, initiateScopedStorage: Runnable): Dialog {
         return MaterialDialog(ctx).show {
             title(R.string.scoped_storage_title)

@@ -174,7 +174,6 @@ class ReminderService : BroadcastReceiver() {
         const val EXTRA_DECK_OPTION_ID = "EXTRA_DECK_OPTION_ID"
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
 
-        @JvmStatic
         fun getReviewDeckIntent(context: Context, deckId: DeckId): Intent {
             return Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
         }

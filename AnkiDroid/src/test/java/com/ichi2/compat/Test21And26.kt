@@ -38,7 +38,7 @@ import java.io.IOException
 @RunWith(Parameterized::class)
 abstract class Test21And26 {
     companion object {
-        @JvmStatic
+        @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
 
         fun data(): Iterable<Array<Any>> = sequence {
@@ -48,14 +48,14 @@ abstract class Test21And26 {
 
         lateinit var staticCompat: Compat
         @BeforeClass
-        @JvmStatic
+        @JvmStatic // required for @BeforeClass
         fun setupClass() {
             mockkObject(CompatHelper)
             every { CompatHelper.compat } answers { staticCompat }
         }
 
         @AfterClass
-        @JvmStatic
+        @JvmStatic // required for @AfterClass
         fun tearDownClass() {
             unmockkObject(CompatHelper)
         }

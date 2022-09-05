@@ -132,7 +132,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
         private val sForbiddenCharacters = arrayOf("#", "^", "/", " ", "\t")
         @ParameterizedRobolectricTestRunner.Parameters(name = "\"{0}\"")
         @Suppress("unused")
-        @JvmStatic
+        @JvmStatic // required: Parameters
         fun forbiddenCharacters(): Collection<*> {
             return listOf(*sForbiddenCharacters)
         }

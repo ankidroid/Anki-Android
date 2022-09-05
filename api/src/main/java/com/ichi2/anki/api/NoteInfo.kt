@@ -34,7 +34,7 @@ class NoteInfo {
          * @param cursor from a query to FlashCardsContract.Note.CONTENT_URI
          * @return a NoteInfo object or null if the cursor was not valid
          */
-        @JvmStatic
+        @JvmStatic // API Project
         fun buildFromCursor(cursor: Cursor): NoteInfo? {
             return try {
                 val idIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID)

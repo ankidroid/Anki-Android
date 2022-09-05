@@ -47,7 +47,7 @@ class DeckPickerTest : RobolectricTest() {
 
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
-        @JvmStatic
+        @JvmStatic // required for initParameters
         fun initParameters(): Collection<String> {
             return Arrays.asList("normal", "xlarge")
         }

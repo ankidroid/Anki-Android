@@ -57,7 +57,6 @@ object Storage {
     /**
      * Helper method for when the collection can't be opened
      */
-    @JvmStatic
     @Throws(UnknownDatabaseVersionException::class)
     fun getDatabaseVersion(context: Context, path: String): Int {
         return try {
@@ -77,7 +76,6 @@ object Storage {
     /**
      *  Open a new or existing collection. Path must be unicode
      * */
-    @JvmStatic
     fun collection(
         context: Context,
         path: String,
@@ -172,7 +170,6 @@ object Storage {
         _updateIndices(db)
     }
 
-    @JvmStatic
     fun setUseInMemory(useInMemoryDatabase: Boolean) {
         isInMemory = useInMemoryDatabase
     }

@@ -22,7 +22,6 @@ enum class CardSide {
     BOTH;
 
     companion object {
-        @JvmStatic
         fun fromAnswer(displayingAnswer: Boolean): CardSide =
             if (displayingAnswer) ANSWER else QUESTION
     }

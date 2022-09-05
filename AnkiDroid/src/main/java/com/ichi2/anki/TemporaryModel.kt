@@ -315,7 +315,6 @@ class TemporaryModel(model: Model) {
          * @param bundle a Bundle that should contain persisted JSON under INTENT_MODEL_FILENAME key
          * @return re-hydrated TemporaryModel or null if there was a problem, null means should reload from database
          */
-        @JvmStatic
         fun fromBundle(bundle: Bundle): TemporaryModel? {
             val editedModelFileName = bundle.getString(INTENT_MODEL_FILENAME)
             // Bundle.getString is @Nullable, so we have to check.
@@ -339,7 +338,6 @@ class TemporaryModel(model: Model) {
          * Save the current model to a temp file in the application internal cache directory
          * @return String representing the absolute path of the saved file, or null if there was a problem
          */
-        @JvmStatic
         fun saveTempModel(context: Context, tempModel: JSONObject): String? {
             Timber.d("saveTempModel() saving tempModel")
             var tempModelFile: File
@@ -360,7 +358,6 @@ class TemporaryModel(model: Model) {
          * @return JSONObject holding the model, or null if there was a problem
          */
         @Throws(IOException::class)
-        @JvmStatic
         fun getTempModel(tempModelFileName: String): Model {
             Timber.d("getTempModel() fetching tempModel %s", tempModelFileName)
             try {
@@ -377,7 +374,6 @@ class TemporaryModel(model: Model) {
         /** Clear any temp model files saved into internal cache directory  */
         @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         @KotlinCleanup("handle the nullability issue of listing files from cache dir")
-        @JvmStatic
         fun clearTempModelFiles(): Int {
             var deleteCount = 0
             for (c in AnkiDroidApp.instance.cacheDir.listFiles()) {
@@ -400,7 +396,6 @@ class TemporaryModel(model: Model) {
          * @param ord int representing an ordinal in the model, that might be an unsaved addition
          * @return boolean true if it is a pending addition from this editing session
          */
-        @JvmStatic
         fun isOrdinalPendingAdd(model: TemporaryModel, ord: Int): Boolean {
             for (i in model.templateChanges.indices) {
                 // commented out to make the code compile, why is this unused?

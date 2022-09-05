@@ -104,7 +104,7 @@ object AnalyticsConstantsTest {
         }
 
         companion object {
-            @JvmStatic
+            @JvmStatic // required for Parameters
             @Parameterized.Parameters
             fun addAnalyticsConstants(): List<String> {
                 return listOfConstantFields

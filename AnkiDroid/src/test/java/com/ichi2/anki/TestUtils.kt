@@ -25,7 +25,6 @@ import java.security.MessageDigest
 open class TestUtils {
     /** get the MD5 checksum (in hex) for the given filename  */
     companion object {
-        @JvmStatic
         @Throws(Exception::class)
         fun getMD5(filename: String): String {
             val md = MessageDigest.getInstance("MD5")

@@ -64,14 +64,12 @@ open class DiffEngine {
             return "<span class=\"typeGood\">" + escapeHtml(s) + "</span>"
         }
 
-        @JvmStatic
         @CheckResult
         fun wrapMissing(s: String?): String {
             return "<span class=\"typeMissed\">" + escapeHtml(s) + "</span>"
         }
 
         /** Prevents combining marks not getting highlighted properly if a span starts with them, by adding a "&nbsp;" before them (#10665) */
-        @JvmStatic
         fun escapeLoneMarks(s: String): String {
             if (s[0].category.code.startsWith("M"))
                 return "\\xa0$s"

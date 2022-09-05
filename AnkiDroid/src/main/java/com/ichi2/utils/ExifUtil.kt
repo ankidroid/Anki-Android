@@ -27,7 +27,6 @@ import java.io.File
 import java.lang.Exception
 
 object ExifUtil {
-    @JvmStatic
     fun rotateFromCamera(theFile: File, _bmp: Bitmap): Bitmap {
         var bmp = _bmp
         return try {

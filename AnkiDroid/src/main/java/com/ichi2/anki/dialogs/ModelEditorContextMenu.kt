@@ -62,7 +62,6 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val KEY_LABEL = "key_label"
 
-        @JvmStatic
         fun newInstance(label: String): ModelEditorContextMenu = ModelEditorContextMenu().apply {
             arguments = bundleOf(KEY_LABEL to label)
         }

@@ -217,7 +217,6 @@ open class RobolectricTest : CollectionGetter {
         private var mBackground = true
 
         // Robolectric needs a manual advance with the new PAUSED looper mode
-        @JvmStatic
         fun advanceRobolectricLooper() {
             if (!mBackground) {
                 return
@@ -244,7 +243,6 @@ open class RobolectricTest : CollectionGetter {
         }
 
         // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
-        @JvmStatic
         fun advanceRobolectricLooperWithSleep() {
             if (!mBackground) {
                 return
@@ -259,12 +257,12 @@ open class RobolectricTest : CollectionGetter {
         }
 
         /** This can probably be implemented in a better manner  */
-        @JvmStatic
+        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun waitForAsyncTasksToComplete() {
             advanceRobolectricLooperWithSleep()
         }
 
-        @JvmStatic
+        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(testClass: RobolectricTest, clazz: Class<T>?, i: Intent?): T {
             val controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible()

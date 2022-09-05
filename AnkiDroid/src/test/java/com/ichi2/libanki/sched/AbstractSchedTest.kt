@@ -521,7 +521,7 @@ mw.col.sched.extendLimits(1, 0)
     companion object {
         @Suppress("unused")
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
-        @JvmStatic
+        @JvmStatic // required for initParameters
         @KotlinCleanup("fix array init")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2

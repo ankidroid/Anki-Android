@@ -71,7 +71,6 @@ class OnGestureListener(
     }
 
     companion object {
-        @JvmStatic
         fun createInstance(view: View, consumer: Consumer<Gesture>): OnGestureListener {
             val gestureMapper = GestureMapper()
             gestureMapper.init(AnkiDroidApp.getSharedPrefs(view.context))

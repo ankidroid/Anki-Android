@@ -64,7 +64,6 @@ class BadgeDrawableBuilder(private val resources: Resources) {
     }
 
     companion object {
-        @JvmStatic
         fun removeBadge(menuItem: MenuItem) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 return

@@ -11,7 +11,6 @@ import com.ichi2.anki.R
 import kotlinx.parcelize.Parcelize
 
 object ActivityTransitionAnimation {
-    @JvmStatic
     fun slide(activity: Activity, direction: Direction?) {
         when (direction) {
             Direction.START -> if (isRightToLeft(activity)) {
@@ -38,7 +37,6 @@ object ActivityTransitionAnimation {
         }
     }
 
-    @JvmStatic
     fun getAnimationOptions(activity: Activity, direction: Direction?): ActivityOptionsCompat {
         return when (direction) {
             Direction.START -> if (isRightToLeft(activity)) ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_right_in, R.anim.slide_right_out) else ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_left_in, R.anim.slide_left_out)

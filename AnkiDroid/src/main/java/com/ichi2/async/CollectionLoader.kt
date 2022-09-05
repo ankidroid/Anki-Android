@@ -33,7 +33,6 @@ object CollectionLoader {
         fun execute(col: Collection?)
     }
 
-    @JvmStatic
     fun load(lifecycleOwner: LifecycleOwner, callback: Callback) {
         lifecycleOwner.lifecycleScope.launch {
             val col = withContext(Dispatchers.IO) {

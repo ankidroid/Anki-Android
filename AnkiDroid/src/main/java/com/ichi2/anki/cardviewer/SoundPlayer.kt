@@ -46,7 +46,6 @@ class SoundPlayer {
     class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean) {
 
         companion object {
-            @JvmStatic
             fun create(col: Collection, card: Card): CardSoundConfig {
                 val deckConfig = col.decks.confForDid(CardUtils.getDeckIdForCard(card))
 

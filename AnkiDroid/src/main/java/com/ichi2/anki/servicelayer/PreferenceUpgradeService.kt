@@ -40,7 +40,6 @@ private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
 
 object PreferenceUpgradeService {
-    @JvmStatic
     fun upgradePreferences(context: Context?, previousVersionCode: LegacyVersionIdentifier): Boolean =
         upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
 
@@ -60,7 +59,7 @@ object PreferenceUpgradeService {
      * Typically because the app has been run for the first time, or the preferences
      * have been deleted
      */
-    @JvmStatic
+    @JvmStatic // reqired for mockito for now
     fun setPreferencesUpToDate(preferences: SharedPreferences) {
         Timber.i("Marking preferences as up to date")
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)

@@ -110,11 +110,9 @@ class AnkiStatsTaskHandler private constructor(
         }
 
     companion object {
-        @JvmStatic
         var instance: AnkiStatsTaskHandler? = null
             private set
         private val mutex = Mutex()
-        @JvmStatic
         @Synchronized
         fun getInstance(
             collection: Collection,
@@ -127,7 +125,6 @@ class AnkiStatsTaskHandler private constructor(
             return instance!!
         }
 
-        @JvmStatic
         suspend fun createReviewSummaryStatistics(
             col: Collection,
             view: TextView,

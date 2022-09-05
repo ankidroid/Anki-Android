@@ -38,7 +38,6 @@ import java.util.*
 
 object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @get:JvmStatic
     var textToSpeech: TextToSpeech? = null
         private set
     private val availableTtsLocales = ArrayList<Locale>()
@@ -245,7 +244,6 @@ object ReadText {
             TextToSpeech.LANG_AVAILABLE
     }
 
-    @JvmStatic
     fun initializeTts(context: Context, listener: ReadTextListener) {
         // Store weak reference to Activity to prevent memory leak
         flashCardViewer = WeakReference(context)
@@ -321,7 +319,6 @@ object ReadText {
      * No-op if the current instance of TextToSpeech was initialized by another Context
      * @param context The context used during [.initializeTts]
      */
-    @JvmStatic
     fun releaseTts(context: Context) {
         if (textToSpeech != null && flashCardViewer.get() === context) {
             textToSpeech!!.stop()
@@ -329,14 +326,12 @@ object ReadText {
         }
     }
 
-    @JvmStatic
     fun stopTts() {
         if (textToSpeech != null) {
             textToSpeech!!.stop()
         }
     }
 
-    @JvmStatic
     fun closeForTests() {
         if (textToSpeech != null) {
             textToSpeech!!.shutdown()
