@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.snackbar.showSnackbar
@@ -24,14 +25,22 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
 
-suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
+/** @param anchorView The view to display the snackbar above */
+suspend fun FragmentActivity.backendUndoAndShowPopup(anchorView: View? = null): Boolean {
     return try {
         val changes = withProgress() {
             undoableOp {
                 undoNew()
             }
         }
-        showSnackbar(TR.undoActionUndone(changes.operation))
+
+        showSnackbar(TR.undoActionUndone(changes.operation)) {
+
+            // A snackbar may obscure vital elements (e.g: the answer buttons on the Reviewer)
+            // `anchorView` stops this
+            anchorView?.let { setAnchorView(anchorView) }
+        }
+
         true
     } catch (exc: BackendException) {
         @BlocksSchemaUpgrade("Backend module should export this as a separate Exception")
