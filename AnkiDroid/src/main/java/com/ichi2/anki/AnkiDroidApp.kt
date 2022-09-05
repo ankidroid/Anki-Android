@@ -282,7 +282,6 @@ open class AnkiDroidApp : Application() {
 
     companion object {
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
-        @JvmField
         var INSTRUMENTATION_TESTING = false
 
         /**
@@ -304,7 +303,6 @@ open class AnkiDroidApp : Application() {
          *
          * TODO: Should be removed once app is fully functional under Scoped Storage
          */
-        @JvmField
         var TESTING_SCOPED_STORAGE = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"

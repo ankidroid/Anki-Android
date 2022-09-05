@@ -30,7 +30,6 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
         private val implementation = Implementation(
             DirectSystemTimeInstantiation::class.java, Scope.JAVA_FILE_SCOPE
         )
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

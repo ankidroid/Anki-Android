@@ -42,7 +42,7 @@ import kotlin.test.assertNull
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class AbstractSchedTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField
+    @JvmField // required for Parameter
     var schedVersion = 0
     @Before
     override fun setUp() {

@@ -25,7 +25,6 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
         private const val EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
             "during testing. Calendar instances must be obtained through the collection's getTime() method"
         private val implementation = Implementation(DirectCalendarInstanceUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

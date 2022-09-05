@@ -26,7 +26,6 @@ class NamedJSONComparator : Comparator<JSONObject> {
     }
 
     companion object {
-        @JvmField
         val INSTANCE = NamedJSONComparator()
     }
 }

@@ -32,14 +32,12 @@ import timber.log.Timber
 import java.io.*
 
 @KotlinCleanup("lots in this file")
-open class Exporter(@JvmField protected val col: Collection, protected val did: DeckId?) {
+open class Exporter(protected val col: Collection, protected val did: DeckId?) {
 
     /**
      * If set exporter will export only this deck, otherwise will export all cards
      */
-    @JvmField
     protected var count = 0
-    @JvmField
     protected var includeHTML = false
 
     /**

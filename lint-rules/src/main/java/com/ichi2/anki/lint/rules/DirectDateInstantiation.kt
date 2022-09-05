@@ -23,7 +23,6 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
         private const val EXPLANATION = "Creating Date instances directly means dates cannot be controlled during" +
             " testing, so it is not allowed. Use the collection's getTime() method instead"
         private val implementation = Implementation(DirectDateInstantiation::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

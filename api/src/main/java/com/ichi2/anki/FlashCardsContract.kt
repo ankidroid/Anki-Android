@@ -210,14 +210,14 @@ object FlashCardsContract {
          *
          * For examples on how to use the URI for queries see class description.
          */
-        @JvmField
+        @JvmField // required for Java API
         val CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "notes")
 
         /**
          * The content:// style URI for notes, but with a direct SQL query to the notes table instead of accepting
          * a query in the libanki browser search syntax like the main URI #CONTENT_URI does.
          */
-        @JvmField
+        @JvmField // required for Java API
         val CONTENT_URI_V2 = Uri.withAppendedPath(AUTHORITY_URI, "notes_v2")
 
         /**
@@ -337,7 +337,7 @@ object FlashCardsContract {
          * The content:// style URI for model. If the it is appended by the model's ID, this
          * note can be directly accessed. See class description above for further details.
          */
-        @JvmField
+        @JvmField // required for Java API
         val CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "models")
         const val CURRENT_MODEL_ID = "current"
 
@@ -877,9 +877,9 @@ object FlashCardsContract {
      * ```
      */
     object Deck {
-        @JvmField
+        @JvmField // required for Java API
         val CONTENT_ALL_URI = Uri.withAppendedPath(AUTHORITY_URI, "decks")
-        @JvmField
+        @JvmField // required for Java API
         val CONTENT_SELECTED_URI = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck")
 
         /**
@@ -946,7 +946,7 @@ object FlashCardsContract {
         /**
          * Content Uri for the MEDIA row of the CardContentProvider
          */
-        @JvmField
+        @JvmField // required for Java API
         val CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "media")
 
         /**

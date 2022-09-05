@@ -194,7 +194,6 @@ open class DeckPicker :
     @VisibleForTesting
     var optionsMenuState: OptionsMenuState? = null
 
-    @JvmField
     @VisibleForTesting
     var dueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
 
@@ -2236,7 +2235,7 @@ open class DeckPicker :
             showCollectionErrorDialog()
             return
         }
-        mDueTree = result.map { x -> x.unsafeCastToType() }
+        dueTree = result.map { x -> x.unsafeCastToType() }
         renderPage()
         // Update the mini statistics bar as well
         launchCatchingTask {

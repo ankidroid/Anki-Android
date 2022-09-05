@@ -333,7 +333,6 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
     }
 
     companion object {
-        @JvmField
         val NULL: Any? = org.json.JSONObject.NULL
 
         /**

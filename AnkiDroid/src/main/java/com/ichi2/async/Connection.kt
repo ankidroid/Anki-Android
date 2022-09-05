@@ -489,7 +489,6 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         var taskType = 0
         var resultType: Syncer.ConnectionResultType? = null
         var result: Array<Any?> = arrayOf()
-        @JvmField
         var success = true
         var returnType = 0
         var exception: Exception? = null

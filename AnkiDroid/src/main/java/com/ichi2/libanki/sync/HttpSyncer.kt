@@ -82,7 +82,6 @@ open class HttpSyncer(
     var nextSendR: Long = 1024
     protected var checksumKey: String
     protected val con: Connection?
-    @JvmField
     protected var postVars: MutableMap<String, Any?>
 
     @Volatile

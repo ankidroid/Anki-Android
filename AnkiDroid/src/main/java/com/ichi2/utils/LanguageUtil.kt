@@ -33,7 +33,6 @@ object LanguageUtil {
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
      * Please note 'yue' is special, it is 'yu' on CrowdIn, and mapped in import specially to 'yue' */
-    @JvmField
     val APP_LANGUAGES = arrayOf(
         "af", // Afrikaans / Afrikaans
         "am", // Amharic / አማርኛ

@@ -227,7 +227,6 @@ class TypeAnswer(
     }
 
     companion object {
-        @JvmField
         /** Regular expression in card data for a 'type answer' after processing has occurred */
         val PATTERN: Pattern = Pattern.compile("\\[\\[type:(.+?)]]")
 

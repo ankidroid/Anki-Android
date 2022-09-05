@@ -254,8 +254,7 @@ class FieldEditLine : FrameLayout {
         }
 
         companion object {
-            // required field that makes Parcelables from a Parcel
-            @JvmField
+            @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<SavedState> = object : ClassLoaderCreator<SavedState> {
                 override fun createFromParcel(`in`: Parcel, loader: ClassLoader): SavedState {
                     return SavedState(`in`, loader)

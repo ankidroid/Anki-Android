@@ -35,7 +35,6 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
         val DESCRIPTION = "Preference key should not be hardcoded"
         private const val EXPLANATION = "Extract the key to a resources XML so it can be reused"
         private val implementation = Implementation(HardcodedPreferenceKey::class.java, Scope.RESOURCE_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

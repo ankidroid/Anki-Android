@@ -39,7 +39,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-@KotlinCleanup("See if we can remove JvmField from Rule")
 @KotlinCleanup("have Model constructor accent @Language('JSON')")
 @KotlinCleanup("fix typo: testimage -> test_image")
 @KotlinCleanup("Add scope functions")
@@ -54,11 +53,11 @@ class NoteServiceTest : RobolectricTest() {
 
     // temporary directory to test importMediaToDirectory function
     @Rule
-    @JvmField
+    @JvmField // required for Rule
     var directory = TemporaryFolder()
 
     @Rule
-    @JvmField
+    @JvmField // required for Rule
     var directory2 = TemporaryFolder()
 
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote

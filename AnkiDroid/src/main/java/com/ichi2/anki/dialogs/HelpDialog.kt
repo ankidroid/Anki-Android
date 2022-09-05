@@ -136,7 +136,8 @@ object HelpDialog {
         private constructor(`in`: Parcel?) : super(`in`!!)
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
                 override fun createFromParcel(`in`: Parcel): RateAppItem {
                     return RateAppItem(`in`)
                 }
@@ -179,7 +180,8 @@ object HelpDialog {
         }
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
                 override fun createFromParcel(`in`: Parcel): LinkItem {
                     return LinkItem(`in`)
                 }
@@ -222,7 +224,8 @@ object HelpDialog {
         }
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
                 override fun createFromParcel(`in`: Parcel): FunctionItem {
                     return FunctionItem(`in`)
                 }
@@ -256,8 +259,8 @@ object HelpDialog {
         override fun remove(toRemove: RecursivePictureMenu.Item?) {}
 
         companion object {
-
-            @JvmField val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
                 override fun createFromParcel(`in`: Parcel): ExceptionReportItem {
                     return ExceptionReportItem(`in`)
                 }

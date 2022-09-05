@@ -155,7 +155,6 @@ abstract class AbstractFlashcardViewer :
     private var mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
-    @JvmField
     var automaticAnswer = AutomaticAnswer.defaultInstance(this)
     protected var typeAnswer: TypeAnswer? = null
 
@@ -180,7 +179,6 @@ abstract class AbstractFlashcardViewer :
         private set
     private var mCardFrame: FrameLayout? = null
     private var mTouchLayer: FrameLayout? = null
-    @JvmField
     protected var answerField: FixedEditText? = null
     protected var flipCardLayout: LinearLayout? = null
     protected var easeButtonsLayout: LinearLayout? = null
@@ -192,7 +190,6 @@ abstract class AbstractFlashcardViewer :
     internal var easeButton3: EaseButton? = null
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton4: EaseButton? = null
-    @JvmField
     protected var topBarLayout: RelativeLayout? = null
     private val mClipboard: ClipboardManager? = null
     private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
@@ -207,7 +204,6 @@ abstract class AbstractFlashcardViewer :
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
      * of this time to ignore accidental button presses.
      */
-    @JvmField
     @VisibleForTesting
     protected var lastClickTime: Long = 0
 
@@ -255,7 +251,6 @@ abstract class AbstractFlashcardViewer :
     /** Preference: Whether the user wants press back twice to return to the main screen"  */
     private var mExitViaDoubleTapBack = false
 
-    @JvmField
     @VisibleForTesting
     val mOnRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val mTTS = TTS()
@@ -2632,7 +2627,6 @@ abstract class AbstractFlashcardViewer :
         /** to be sent to and from the card editor  */
         @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         var editorCard: Card? = null
-        @JvmField
         internal var displayAnswer = false
         const val DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval"
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200

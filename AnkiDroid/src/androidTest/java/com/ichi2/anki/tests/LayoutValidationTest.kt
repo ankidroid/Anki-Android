@@ -31,11 +31,11 @@ import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(Parameterized::class)
 class LayoutValidationTest : InstrumentedTest() {
-    @JvmField
+    @JvmField // required for Parameter
     @Parameterized.Parameter
     var resourceId = 0
 
-    @JvmField
+    @JvmField // required for Parameter
     @Parameterized.Parameter(1)
     var name: String? = null
     @Test

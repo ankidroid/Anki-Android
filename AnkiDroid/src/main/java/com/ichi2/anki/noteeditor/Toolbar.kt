@@ -367,8 +367,8 @@ class Toolbar : FrameLayout {
      * If not, at the end of the string
      */
     data class StringFormat(
-        @JvmField var result: String = "",
-        @JvmField var selectionStart: Int = 0,
-        @JvmField var selectionEnd: Int = 0
+        var result: String = "",
+        var selectionStart: Int = 0,
+        var selectionEnd: Int = 0
     )
 }

@@ -269,7 +269,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
 
         companion object {
-            @JvmField
+            @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(source: Parcel): SavedState {
                     return SavedState(source)
@@ -292,7 +292,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     companion object {
-        @JvmField
         val NEW_LINE: String = Objects.requireNonNull(System.getProperty("line.separator"))
     }
 }

@@ -135,16 +135,13 @@ open class CardBrowser :
      * When the list is changed, the position member of its elements should get changed. */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val mCards = CardCollection<CardCache>()
-    @JvmField
     var deckSpinnerSelection: DeckSpinnerSelection? = null
 
     @KotlinCleanup("move to onCreate and make lateinit")
-    @JvmField
     @VisibleForTesting
     var cardsListView: ListView? = null
     private var mSearchView: CardBrowserSearchView? = null
 
-    @JvmField
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var cardsAdapter: MultiColumnListAdapter? = null
 
@@ -2620,7 +2617,6 @@ open class CardBrowser :
     }
 
     companion object {
-        @JvmField
         var cardBrowserCard: Card? = null
 
         /**

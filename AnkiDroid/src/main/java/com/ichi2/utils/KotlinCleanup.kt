@@ -13,7 +13,6 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@file:KotlinCleanup("Remove most @JvmField annotations")
 @file:KotlinCleanup(
     "Remove all TextUtils references then see if we can remove " +
         "@RunWith(AndroidJUnit4::class) to speed up tests (if no other Android references)"

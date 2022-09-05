@@ -33,7 +33,6 @@ class DeckNameComparator : Comparator<String> {
     }
 
     companion object {
-        @JvmField
         val INSTANCE = DeckNameComparator()
     }
 }
