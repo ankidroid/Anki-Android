@@ -110,9 +110,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.mCurrentCard
+        AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.mCurrentCard!!.note()
+        val note = viewer.currentCard!!.note()
         note.setField(1, "David")
 
         viewer.saveEditedCard()
@@ -137,9 +137,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.mCurrentCard
+        AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.mCurrentCard!!.note()
+        val note = viewer.currentCard!!.note()
         note.setField(1, "David")
 
         viewer.saveEditedCard()

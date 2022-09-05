@@ -201,26 +201,26 @@ class ReviewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[0], reviewer.mCurrentCard!!)
+        equalFirstField(cards[0], reviewer.currentCard!!)
         reviewer.answerCard(Consts.BUTTON_ONE)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[1], reviewer.mCurrentCard!!)
+        equalFirstField(cards[1], reviewer.currentCard!!)
         reviewer.answerCard(Consts.BUTTON_ONE)
         waitForAsyncTasksToComplete()
 
         undo(reviewer)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[1], reviewer.mCurrentCard!!)
+        equalFirstField(cards[1], reviewer.currentCard!!)
         reviewer.answerCard(col.sched.goodNewButton)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[2], reviewer.mCurrentCard!!)
+        equalFirstField(cards[2], reviewer.currentCard!!)
         time.addM(2)
         reviewer.answerCard(col.sched.goodNewButton)
         advanceRobolectricLooperWithSleep()
-        equalFirstField(cards[0], reviewer.mCurrentCard!!) // This failed in #6898 because this card was not in the queue
+        equalFirstField(cards[0], reviewer.currentCard!!) // This failed in #6898 because this card was not in the queue
     }
 
     @Test
@@ -281,7 +281,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun assertCurrentOrdIsNot(r: Reviewer, @Suppress("SameParameterValue") i: Int) {
         waitForAsyncTasksToComplete()
-        val ord = r.mCurrentCard!!.ord
+        val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
     }
@@ -319,7 +319,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun assertCurrentOrdIs(r: Reviewer, i: Int) {
         waitForAsyncTasksToComplete()
-        val ord = r.mCurrentCard!!.ord
+        val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, equalTo(i))
     }

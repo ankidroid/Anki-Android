@@ -197,10 +197,7 @@ abstract class AbstractFlashcardViewer :
     private val mClipboard: ClipboardManager? = null
     private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
 
-    /** set via [.setCurrentCard]  */
-    @JvmField
-    var mCurrentCard: Card? = null
-    // set when mCurrentCard is
+    /** set when [currentCard] is */
     private var mCardSoundConfig: CardSoundConfig? = null
     private var mCurrentEase = 0
     private var mInitialFlipCardHeight = 0
@@ -299,7 +296,7 @@ abstract class AbstractFlashcardViewer :
         override fun onTouch(view: View, event: MotionEvent): Boolean {
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Save states when button pressed
-                mPrevCard = mCurrentCard
+                mPrevCard = currentCard
                 mHasBeenTouched = true
                 // We will need to check if a touch is followed by a click
                 // Since onTouch always come before onClick, we should check if
@@ -321,7 +318,7 @@ abstract class AbstractFlashcardViewer :
         override fun onClick(view: View) {
             // Try to perform intended action only if the button has been pressed for current card,
             // or if the button was not touched,
-            if (mPrevCard === mCurrentCard || !mHasBeenTouched) {
+            if (mPrevCard === currentCard || !mHasBeenTouched) {
                 // Only perform if the click was not an accidental double-tap
                 if (elapsedRealTime - lastClickTime >= mDoubleTapTimeInterval) {
                     // For whatever reason, performClick does not return a visual feedback anymore
@@ -410,9 +407,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun onCardUpdated(result: Card) {
-        if (mCurrentCard !== result) {
+        if (currentCard !== result) {
             /*
-             * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
+             * Before updating currentCard, we check whether it is changing or not. If the current card changes,
              * then we need to display it as a new card, without showing the answer.
              */
             displayAnswer = false
@@ -420,12 +417,12 @@ abstract class AbstractFlashcardViewer :
         currentCard = result
         TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
         // listener and not in background
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             // If the card is null means that there are no more cards scheduled for review.
             showProgressBar()
             closeReviewer(RESULT_NO_MORE_CARDS, true)
         }
-        onCardEdited(mCurrentCard)
+        onCardEdited(currentCard)
         if (displayAnswer) {
             mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
             mAnswerSoundsAdded = false // causes answer sounds to be reloaded
@@ -528,7 +525,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     open val answerButtonCount: Int
-        get() = col.sched.answerButtons(mCurrentCard!!)
+        get() = col.sched.answerButtons(currentCard!!)
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -668,9 +665,9 @@ abstract class AbstractFlashcardViewer :
 
     @KotlinCleanup("Use ?:")
     public override val currentCardId: CardId?
-        get() = if (mCurrentCard == null) {
+        get() = if (currentCard == null) {
             null
-        } else mCurrentCard!!.id
+        } else currentCard!!.id
 
     private fun processHardwareButtonScroll(keyCode: Int, card: WebView?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
@@ -857,7 +854,7 @@ abstract class AbstractFlashcardViewer :
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected open fun editCard(fromGesture: Gesture? = null) {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return
         }
@@ -865,12 +862,12 @@ abstract class AbstractFlashcardViewer :
         val animation = getAnimationTransitionFromGesture(fromGesture)
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
         editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
-        editorCard = mCurrentCard
+        editorCard = currentCard
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, animation)
     }
 
     fun generateQuestionSoundList() {
-        val tags = Sound.extractTagsFromLegacyContent(mCurrentCard!!.qSimple())
+        val tags = Sound.extractTagsFromLegacyContent(currentCard!!.qSimple())
         mSoundPlayer.addSounds(mBaseUrl!!, tags, SoundSide.QUESTION)
     }
 
@@ -883,13 +880,13 @@ abstract class AbstractFlashcardViewer :
             message(
                 text = res.getString(
                     R.string.delete_note_message,
-                    Utils.stripHTML(mCurrentCard!!.q(true))
+                    Utils.stripHTML(currentCard!!.q(true))
                 )
             )
             positiveButton(R.string.dialog_positive_delete) {
                 Timber.i(
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
-                    mCurrentCard!!.nid
+                    currentCard!!.nid
                 )
                 mSoundPlayer.stopSounds()
                 deleteNoteWithoutConfirmation()
@@ -900,7 +897,7 @@ abstract class AbstractFlashcardViewer :
 
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
-        dismiss(DeleteNote(mCurrentCard!!)) {
+        dismiss(DeleteNote(currentCard!!)) {
             showSnackbarWithUndoButton(R.string.deleted_note)
         }
     }
@@ -935,7 +932,7 @@ abstract class AbstractFlashcardViewer :
                 return@launchCatchingTask
             }
             mIsSelecting = false
-            val buttonNumber = col.sched.answerButtons(mCurrentCard!!)
+            val buttonNumber = col.sched.answerButtons(currentCard!!)
             // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
             if (buttonNumber < ease) {
                 return@launchCatchingTask
@@ -944,7 +941,7 @@ abstract class AbstractFlashcardViewer :
             mPreviousAnswerIndicator!!.displayAnswerIndicator(ease, buttonNumber)
             mSoundPlayer.stopSounds()
             mCurrentEase = ease
-            val oldCard = mCurrentCard!!
+            val oldCard = currentCard!!
             val newCard = withCol {
                 Timber.i("Answering card %d", oldCard.id)
                 col.sched.answerCard(oldCard, ease)
@@ -1287,7 +1284,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun setInterface() {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return
         }
         recreateWebView()
@@ -1320,10 +1317,10 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun updateDeckName() {
-        if (mCurrentCard == null) return
+        if (currentCard == null) return
         val actionBar = supportActionBar
         if (actionBar != null) {
-            val title = Decks.basename(col.decks.get(mCurrentCard!!.did).getString("name"))
+            val title = Decks.basename(col.decks.get(currentCard!!.did).getString("name"))
             actionBar.title = title
         }
         if (!prefShowTopbar) {
@@ -1366,15 +1363,15 @@ abstract class AbstractFlashcardViewer :
         mBackButtonPressedToReturn = false
         setInterface()
         typeAnswer!!.input = ""
-        typeAnswer!!.updateInfo(mCurrentCard!!, resources)
-        if (!mCurrentCard!!.isEmpty && typeAnswer!!.validForEditText()) {
+        typeAnswer!!.updateInfo(currentCard!!, resources)
+        if (!currentCard!!.isEmpty && typeAnswer!!.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             answerField!!.visibility = View.VISIBLE
             answerField!!.applyLanguageHint(typeAnswer!!.languageHint)
         } else {
             answerField!!.visibility = View.GONE
         }
-        val content = mHtmlGenerator!!.generateHtml(mCurrentCard!!, reload, Side.FRONT)
+        val content = mHtmlGenerator!!.generateHtml(currentCard!!, reload, Side.FRONT)
         updateCard(content)
         hideEaseButtons()
         automaticAnswer.onDisplayQuestion()
@@ -1382,7 +1379,7 @@ abstract class AbstractFlashcardViewer :
         if (!mTTS.enabled) {
             automaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS)
         }
-        Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard!!.id)
+        Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", currentCard!!.id)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -1394,13 +1391,13 @@ abstract class AbstractFlashcardViewer :
         mBackButtonPressedToReturn = false
 
         // prevent answering (by e.g. gestures) before card is loaded
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return
         }
 
         // TODO needs testing: changing a card's model without flipping it back to the front
         //  (such as editing a card, then editing the card template)
-        typeAnswer!!.updateInfo(mCurrentCard!!, resources)
+        typeAnswer!!.updateInfo(currentCard!!, resources)
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
@@ -1416,7 +1413,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         mIsSelecting = false
-        val answerContent = mHtmlGenerator!!.generateHtml(mCurrentCard!!, false, Side.BACK)
+        val answerContent = mHtmlGenerator!!.generateHtml(currentCard!!, false, Side.BACK)
         updateCard(answerContent)
         displayAnswerBottomBar()
         automaticAnswer.onDisplayAnswer()
@@ -1541,9 +1538,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun readCardTts(soundSide: SoundSide) {
-        val tags = legacyGetTtsTags(mCurrentCard!!, soundSide, this)
+        val tags = legacyGetTtsTags(currentCard!!, soundSide, this)
         if (tags != null) {
-            mTTS.readCardText(tags, mCurrentCard!!, soundSide)
+            mTTS.readCardText(tags, currentCard!!, soundSide)
         }
     }
 
@@ -1571,7 +1568,7 @@ abstract class AbstractFlashcardViewer :
      */
     protected fun showSelectTtsDialogue() {
         if (mTtsInitialized) {
-            mTTS.selectTts(this, mCurrentCard!!, if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
+            mTTS.selectTts(this, currentCard!!, if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
         }
     }
 
@@ -1654,25 +1651,25 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal fun buryCard(): Boolean {
-        return dismiss(BuryCard(mCurrentCard!!)) {
+        return dismiss(BuryCard(currentCard!!)) {
             showSnackbarWithUndoButton(R.string.buried_card)
         }
     }
 
     internal fun suspendCard(): Boolean {
-        return dismiss(SuspendCard(mCurrentCard!!)) {
+        return dismiss(SuspendCard(currentCard!!)) {
             showSnackbarWithUndoButton(R.string.suspended_card)
         }
     }
 
     internal fun suspendNote(): Boolean {
-        return dismiss(SuspendNote(mCurrentCard!!)) {
+        return dismiss(SuspendNote(currentCard!!)) {
             showSnackbarWithUndoButton(R.string.suspended_note)
         }
     }
 
     internal fun buryNote(): Boolean {
-        return dismiss(BuryNote(mCurrentCard!!)) {
+        return dismiss(BuryNote(currentCard!!)) {
             showSnackbarWithUndoButton(R.string.buried_note)
         }
     }
@@ -2127,7 +2124,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(mCurrentCard!!.note())
+        return isMarked(currentCard!!.note())
     }
 
     protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
@@ -2146,10 +2143,9 @@ abstract class AbstractFlashcardViewer :
 
     val writeLock: Lock
         get() = mCardLock.writeLock()
-    open var currentCard: Card?
-        get() = mCurrentCard
+    open var currentCard: Card? = null
         set(card) {
-            mCurrentCard = card
+            field = card
             mCardSoundConfig = if (card == null) {
                 null
             } else {
@@ -2579,15 +2575,15 @@ abstract class AbstractFlashcardViewer :
 
     internal fun showTagsDialog() {
         val tags = ArrayList(col.tags.all())
-        val selTags = ArrayList(mCurrentCard!!.note().tags)
+        val selTags = ArrayList(currentCard!!.note().tags)
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
 
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
-        if (mCurrentCard!!.note().tags != selectedTags) {
+        if (currentCard!!.note().tags != selectedTags) {
             val tagString = TextUtils.join(" ", selectedTags)
-            val note = mCurrentCard!!.note()
+            val note = currentCard!!.note()
             note.setTagsFromStr(tagString)
             note.flush()
             // Reload current card to reflect tag changes

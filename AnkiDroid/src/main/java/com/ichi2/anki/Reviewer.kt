@@ -211,7 +211,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     @NeedsTest("is not hidden if flag is on app bar and fullscreen is enabled")
     protected val flagToDisplay: Int
         get() {
-            val actualValue = mCurrentCard!!.userFlag()
+            val actualValue = currentCard!!.userFlag()
             if (actualValue == CardMarker.FLAG_NONE) {
                 return CardMarker.FLAG_NONE
             }
@@ -260,7 +260,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun onMarkChanged() {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return
         }
         mCardMarker!!.displayMark(shouldDisplayMark())
@@ -297,7 +297,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun onFlagChanged() {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return
         }
         mCardMarker!!.displayFlag(flagToDisplay)
@@ -399,7 +399,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             R.id.action_mark_card -> {
                 Timber.i("Reviewer:: Mark button pressed")
-                onMark(mCurrentCard)
+                onMark(currentCard)
             }
             R.id.action_replay -> {
                 Timber.i("Reviewer:: Replay audio button pressed (from menu)")
@@ -488,35 +488,35 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             R.id.action_flag_zero -> {
                 Timber.i("Reviewer:: No flag")
-                onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+                onFlag(currentCard, CardMarker.FLAG_NONE)
             }
             R.id.action_flag_one -> {
                 Timber.i("Reviewer:: Flag one")
-                onFlag(mCurrentCard, CardMarker.FLAG_RED)
+                onFlag(currentCard, CardMarker.FLAG_RED)
             }
             R.id.action_flag_two -> {
                 Timber.i("Reviewer:: Flag two")
-                onFlag(mCurrentCard, CardMarker.FLAG_ORANGE)
+                onFlag(currentCard, CardMarker.FLAG_ORANGE)
             }
             R.id.action_flag_three -> {
                 Timber.i("Reviewer:: Flag three")
-                onFlag(mCurrentCard, CardMarker.FLAG_GREEN)
+                onFlag(currentCard, CardMarker.FLAG_GREEN)
             }
             R.id.action_flag_four -> {
                 Timber.i("Reviewer:: Flag four")
-                onFlag(mCurrentCard, CardMarker.FLAG_BLUE)
+                onFlag(currentCard, CardMarker.FLAG_BLUE)
             }
             R.id.action_flag_five -> {
                 Timber.i("Reviewer:: Flag five")
-                onFlag(mCurrentCard, CardMarker.FLAG_PINK)
+                onFlag(currentCard, CardMarker.FLAG_PINK)
             }
             R.id.action_flag_six -> {
                 Timber.i("Reviewer:: Flag six")
-                onFlag(mCurrentCard, CardMarker.FLAG_TURQUOISE)
+                onFlag(currentCard, CardMarker.FLAG_TURQUOISE)
             }
             R.id.action_flag_seven -> {
                 Timber.i("Reviewer:: Flag seven")
-                onFlag(mCurrentCard, CardMarker.FLAG_PURPLE)
+                onFlag(currentCard, CardMarker.FLAG_PURPLE)
             }
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
@@ -660,10 +660,10 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     private fun showRescheduleCardDialog() {
         val runnable = Consumer { days: Int ->
-            val cardIds = listOf(mCurrentCard!!.id)
+            val cardIds = listOf(currentCard!!.id)
             RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
         }
-        val dialog = rescheduleSingleCard(resources, mCurrentCard!!, runnable)
+        val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
         showDialogFragment(dialog)
     }
 
@@ -677,7 +677,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         dialog.setArgs(title, message)
         val confirm = Runnable {
             Timber.i("NoteEditor:: ResetProgress button pressed")
-            val cardIds = listOf(mCurrentCard!!.id)
+            val cardIds = listOf(currentCard!!.id)
             ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
         }
         dialog.setConfirm(confirm)
@@ -695,16 +695,16 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
         val intent = if (BackendFactory.defaultLegacySchema) {
             Intent(this, CardInfo::class.java).apply {
-                putExtra("cardId", mCurrentCard!!.id)
+                putExtra("cardId", currentCard!!.id)
             }
         } else {
-            com.ichi2.anki.pages.CardInfo.getIntent(this, mCurrentCard!!.id)
+            com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
         }
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
@@ -752,7 +752,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         mActionButtons.setCustomButtonsStatus(menu)
         var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (mCurrentCard != null && isMarked(mCurrentCard!!.note())) {
+        if (currentCard != null && isMarked(currentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
@@ -762,8 +762,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         // 1643 - currently null on a TV
         val flag_icon = menu.findItem(R.id.action_flag)
         if (flag_icon != null) {
-            if (mCurrentCard != null) {
-                when (mCurrentCard!!.userFlag()) {
+            if (currentCard != null) {
+                when (currentCard!!.userFlag()) {
                     1 -> flag_icon.setIcon(R.drawable.ic_flag_red)
                     2 -> flag_icon.setIcon(R.drawable.ic_flag_orange)
                     3 -> flag_icon.setIcon(R.drawable.ic_flag_green)
@@ -1032,7 +1032,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, mCurrentCard!!, button)
+            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, currentCard!!, button)
 
             easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
             easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
@@ -1046,7 +1046,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     val buttonCount: Int
-        get() = sched!!.answerButtons(mCurrentCard!!)
+        get() = sched!!.answerButtons(currentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
@@ -1071,10 +1071,10 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     protected fun updateScreenCounts() {
-        if (mCurrentCard == null) return
+        if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = sched!!.counts(mCurrentCard!!)
+        val counts = sched!!.counts(currentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
                 mEta = sched!!.eta(counts, false)
@@ -1087,7 +1087,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mPrefHideDueCount) {
             mRevCount = SpannableString("???")
         }
-        when (sched!!.countIdx(mCurrentCard!!)) {
+        when (sched!!.countIdx(currentCard!!)) {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
@@ -1112,7 +1112,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        answerTimer.setupForCard(mCurrentCard!!)
+        answerTimer.setupForCard(currentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }
@@ -1201,11 +1201,11 @@ open class Reviewer : AbstractFlashcardViewer() {
                 return true
             }
             ViewerCommand.UNSET_FLAG -> {
-                onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+                onFlag(currentCard, CardMarker.FLAG_NONE)
                 return true
             }
             ViewerCommand.MARK -> {
-                onMark(mCurrentCard)
+                onMark(currentCard)
                 return true
             }
             ViewerCommand.ADD_NOTE -> {
@@ -1221,12 +1221,12 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun toggleFlag(@FlagDef flag: Int) {
-        if (mCurrentCard!!.userFlag() == flag) {
+        if (currentCard!!.userFlag() == flag) {
             Timber.i("Toggle flag: unsetting flag")
-            onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+            onFlag(currentCard, CardMarker.FLAG_NONE)
         } else {
             Timber.i("Toggle flag: Setting flag to %d", flag)
-            onFlag(mCurrentCard, flag)
+            onFlag(currentCard, flag)
         }
     }
 
@@ -1403,7 +1403,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override val currentCardId: CardId?
-        get() = mCurrentCard!!.id
+        get() = currentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -1421,21 +1421,21 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
-        return if (mCurrentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked()) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-            mCurrentCard!!.nid, mCurrentCard!!.id
+            currentCard!!.nid, currentCard!!.id
         ) == 1
         // whether there exists a sibling not buried.
     }
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
-        return if (mCurrentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked()) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-            mCurrentCard!!.nid, mCurrentCard!!.id
+            currentCard!!.nid, currentCard!!.id
         ) == 1
         // Whether there exists a sibling which is neither suspended nor buried
     }

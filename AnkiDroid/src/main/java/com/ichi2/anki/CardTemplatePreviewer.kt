@@ -103,7 +103,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun onResume() {
         super.onResume()
-        if (mCurrentCard == null || mOrdinal < 0) {
+        if (currentCard == null || mOrdinal < 0) {
             Timber.e("CardTemplatePreviewer started with empty card list or invalid index")
             closeCardTemplatePreviewer()
         }
@@ -250,13 +250,13 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
                 currentCard = getDummyCard(mEditedModel!!, mOrdinal)
-                if (mCurrentCard == null) {
+                if (currentCard == null) {
                     showThemedToast(applicationContext, getString(R.string.invalid_template), false)
                     closeCardTemplatePreviewer()
                 }
             }
         }
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             showThemedToast(applicationContext, getString(R.string.invalid_template), false)
             closeCardTemplatePreviewer()
             return
@@ -276,18 +276,18 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         assert(mNoteEditorBundle != null)
         currentCard = getDummyCard(mEditedModel, templateIndex, getBundleEditFields(mNoteEditorBundle))
         // example: a basic card with no fields provided
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return null
         }
         val newDid = mNoteEditorBundle!!.getLong("did")
         if (col.decks.isDyn(newDid)) {
-            mCurrentCard!!.oDid = mCurrentCard!!.did
+            currentCard!!.oDid = currentCard!!.did
         }
-        mCurrentCard!!.did = newDid
-        val currentNote = mCurrentCard!!.note()
+        currentCard!!.did = newDid
+        val currentNote = currentCard!!.note()
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
         NoteUtils.setTags(currentNote, tagsList)
-        return mCurrentCard
+        return currentCard
     }
 
     private fun getLabels(fieldValues: MutableList<String>) {
