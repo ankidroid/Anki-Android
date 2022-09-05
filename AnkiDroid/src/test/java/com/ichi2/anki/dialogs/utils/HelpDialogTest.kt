@@ -23,6 +23,7 @@ import com.ichi2.anki.dialogs.HelpDialog.createInstance
 import com.ichi2.anki.dialogs.HelpDialog.createInstanceForSupportAnkiDroid
 import com.ichi2.anki.dialogs.RecursivePictureMenu
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil.Companion.getRecyclerViewFor
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.IntentUtil
 import io.mockk.every
 import io.mockk.mockkStatic
@@ -31,8 +32,10 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
 class HelpDialogTest : RobolectricTest() {
     @Test
     fun testMenuDoesNotCrash() {
