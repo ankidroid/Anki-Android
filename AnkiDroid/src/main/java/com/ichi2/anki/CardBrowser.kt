@@ -1617,7 +1617,7 @@ open class CardBrowser :
      * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
      */
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
-        val updatedNotes: List<Note>? = withCol {
+        val updatedNotes: List<Note> = withCol {
             val selectedNotes = selectedCardIds
                 .map { cardId: CardId? -> getCard(cardId!!).note() }
                 .distinct()
@@ -1629,13 +1629,9 @@ open class CardBrowser :
             Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
             doInBackgroundUpdateMultipleNotes(this, selectedNotes)
         }
-        if (updatedNotes != null) {
-            val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
-            updateCardsInList(cardsToUpdate)
-        } else {
-            // TODO: Don't close the cardbrowser, instead show an error dialog
-            closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-        }
+        val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
+        Timber.i("CardBrowser:: editSelectedCardsTags: Note/s updated, updating UI...")
+        updateCardsInList(cardsToUpdate)
     }
 
     private fun filterByTags(selectedTags: List<String>, option: Int) {
