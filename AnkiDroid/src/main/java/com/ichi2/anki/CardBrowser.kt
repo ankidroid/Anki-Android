@@ -1616,7 +1616,7 @@ open class CardBrowser :
      * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
      * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
      */
-    private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) {
+    private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
         val selectedNotes = withCol {
             selectedCardIds
                 .map { cardId: CardId? -> getCard(cardId!!).note() }
@@ -1628,15 +1628,13 @@ open class CardBrowser :
                 }
         }
         Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
-        withProgress {
-            val updatedNotes: List<Note>? = withCol { doInBackgroundUpdateMultipleNotes(this, selectedNotes) }
-            if (updatedNotes != null) {
-                val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
-                updateCardsInList(cardsToUpdate)
-            } else {
-                // TODO: Don't close the cardbrowser, instead show an error dialog
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-            }
+        val updatedNotes: List<Note>? = withCol { doInBackgroundUpdateMultipleNotes(this, selectedNotes) }
+        if (updatedNotes != null) {
+            val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
+            updateCardsInList(cardsToUpdate)
+        } else {
+            // TODO: Don't close the cardbrowser, instead show an error dialog
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
         }
     }
 
