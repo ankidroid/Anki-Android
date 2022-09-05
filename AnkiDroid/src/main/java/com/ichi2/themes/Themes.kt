@@ -38,10 +38,7 @@ object Themes {
     private const val DAY_THEME_KEY = "dayTheme"
     private const val NIGHT_THEME_KEY = "nightTheme"
 
-    @JvmField
     var currentTheme: Theme = Theme.fallback
-
-    @JvmField
     var systemIsInNightMode: Boolean = false
 
     /**

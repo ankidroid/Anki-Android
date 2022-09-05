@@ -26,19 +26,19 @@ class TagsUtilTest {
     @RunWith(Parameterized::class)
     class GetUpdatedTagsTest {
         @Parameterized.Parameter(0)
-        @JvmField
+        @JvmField // required for Parameter
         var previous: List<String>? = null
 
         @Parameterized.Parameter(1)
-        @JvmField
+        @JvmField // required for Parameter
         var selected: List<String>? = null
 
         @Parameterized.Parameter(2)
-        @JvmField
+        @JvmField // required for Parameter
         var indeterminate: List<String>? = null
 
         @Parameterized.Parameter(3)
-        @JvmField
+        @JvmField // required for Parameter
         var updated: List<String>? = null
         @Test
         fun test() {

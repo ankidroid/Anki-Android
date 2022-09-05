@@ -48,7 +48,7 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
-    @JvmField
+    @JvmField // required for Parameter
     @ParameterizedRobolectricTestRunner.Parameter
     var schedVersion = 0
     @Before

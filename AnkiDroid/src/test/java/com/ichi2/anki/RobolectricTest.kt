@@ -83,7 +83,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @Rule
-    @JvmField
+    @JvmField // required for Rule
     val mTaskScheduler = TaskSchedulerRule()
 
     @Before

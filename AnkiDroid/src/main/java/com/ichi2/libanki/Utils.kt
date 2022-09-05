@@ -59,7 +59,6 @@ import kotlin.collections.Collection
 @KotlinCleanup("see if we can switch to standalone functions and properties and remove Utils container")
 object Utils {
     // Used to format doubles with English's decimal separator system
-    @JvmField
     val ENGLISH_LOCALE = Locale("en_US")
     const val CHUNK_SIZE = 32768
     private const val TIME_MINUTE_LONG: Long = 60 // seconds

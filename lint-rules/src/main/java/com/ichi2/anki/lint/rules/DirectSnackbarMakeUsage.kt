@@ -40,7 +40,6 @@ class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
             "you should use SnackbarsKt.showSnackbar " +
             "in place of the library Snackbar.make(...).show()"
         private val implementation = Implementation(DirectSnackbarMakeUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

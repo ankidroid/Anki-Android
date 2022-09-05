@@ -13,7 +13,6 @@ object Constants {
      * A special [Category] which groups the Lint issues related to the usage of the new SystemTime class as a
      * sub category for [Category.CORRECTNESS].
      */
-    @JvmField
     val ANKI_TIME_CATEGORY: Category = create(Category.CORRECTNESS, "AnkiTime", 10)
 
     /**
@@ -24,7 +23,6 @@ object Constants {
     /**
      * The severity for the Lint issues used by all rules related to the restrictions introduced by SystemTime.
      */
-    @JvmField
     val ANKI_TIME_SEVERITY = Severity.FATAL
 
     /**
@@ -48,7 +46,6 @@ object Constants {
      * A special [Category] which groups the Lint issues related to Code Style as a
      * sub category for [Category.COMPLIANCE].
      */
-    @JvmField
     val ANKI_CODE_STYLE_CATEGORY: Category = create(Category.COMPLIANCE, "CodeStyle", 10)
 
     /**
@@ -59,7 +56,6 @@ object Constants {
     /**
      * The severity for the Lint issues used by rules related to Code Style.
      */
-    @JvmField
     val ANKI_CODE_STYLE_SEVERITY = Severity.FATAL
 
     /**

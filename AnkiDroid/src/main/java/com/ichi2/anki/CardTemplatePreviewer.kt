@@ -65,7 +65,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         private set
     private var mAllFieldsNull = true
     private var mCardType: String? = null
-    @JvmField
     protected var previewLayout: PreviewLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {

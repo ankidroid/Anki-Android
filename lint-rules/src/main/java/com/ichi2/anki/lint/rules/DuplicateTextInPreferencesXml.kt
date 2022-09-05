@@ -21,7 +21,6 @@ class DuplicateTextInPreferencesXml : ResourceXmlDetector() {
         private const val EXPLANATION = "Use different strings for the title and summary of a preference to better " +
             "explain what that preference is for"
         private val implementation = Implementation(DuplicateTextInPreferencesXml::class.java, Scope.RESOURCE_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

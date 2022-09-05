@@ -42,7 +42,7 @@ import kotlin.test.assertNull
 @KotlinCleanup("replace `when` usages")
 class DeckPickerTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField
+    @JvmField // required for Parameter
     var mQualifiers: String? = null
 
     companion object {

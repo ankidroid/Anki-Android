@@ -23,7 +23,6 @@ class DeckComparator : Comparator<JSONObject> {
     }
 
     companion object {
-        @JvmField
         val INSTANCE = DeckComparator()
     }
 }

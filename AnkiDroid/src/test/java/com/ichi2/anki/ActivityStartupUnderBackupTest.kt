@@ -24,7 +24,6 @@ import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ExceptionUtil.getFullStackTrace
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert
@@ -39,15 +38,14 @@ import java.util.stream.Collectors
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
-@KotlinCleanup("See if we can combine Parameter and JvmField")
 class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField
+    @JvmField // required for Parameter
     var mLauncher: ActivityLaunchParam? = null
 
     // Only used for display, but needs to be defined
     @ParameterizedRobolectricTestRunner.Parameter(1)
-    @JvmField
+    @JvmField // required for Parameter
     var mActivityName: String? = null
     @Before
     fun before() {

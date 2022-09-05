@@ -22,40 +22,22 @@ import com.ichi2.libanki.stats.Stats.AxisType
  * Interface between Stats.java and AdvancedStatistics.java
  */
 class StatsMetaInfo {
-    @JvmField
     var dynamicAxis = false
-    @JvmField
     var hasColoredCumulative = false
-    @JvmField
     var type: AxisType? = null
-    @JvmField
     var title = 0
-    @JvmField
     var backwards = false
-    @JvmField
     var valueLabels: IntArray? = null
-    @JvmField
     var colors: IntArray? = null
-    @JvmField
     var axisTitles: IntArray? = null
-    @JvmField
     var maxCards = 0
-    @JvmField
     var maxElements = 0
-    @JvmField
     var firstElement = 0.0
-    @JvmField
     var lastElement = 0.0
-    @JvmField
     var zeroIndex = 0
-    @JvmField
     var cumulative: Array<DoubleArray>? = null
-    @JvmField
     var mcount = 0.0
-    @JvmField
     var seriesList: Array<DoubleArray>? = null
-    @JvmField
     var isStatsCalculated = false
-    @JvmField
     var isDataAvailable = false
 }

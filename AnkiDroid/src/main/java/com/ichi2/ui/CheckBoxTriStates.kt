@@ -200,7 +200,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
         }
 
         companion object {
-            @JvmField
+            @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(`in`: Parcel): SavedState {
                     return SavedState(`in`)

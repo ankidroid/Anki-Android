@@ -16,4 +16,4 @@
 
 package com.ichi2.utils
 
-class Triple<First, Second, Triple> constructor(@JvmField val first: First, @JvmField val second: Second, @JvmField val third: Triple)
+class Triple<First, Second, Triple> constructor(val first: First, val second: Second, val third: Triple)

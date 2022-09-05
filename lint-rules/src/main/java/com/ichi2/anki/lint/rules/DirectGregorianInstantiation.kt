@@ -25,7 +25,6 @@ class DirectGregorianInstantiation : Detector(), SourceCodeScanner {
         private const val EXPLANATION = "Creating GregorianCalendar instances directly is not allowed, as it " +
             "prevents control of time during testing. Use the collection's getTime() method instead"
         private val implementation = Implementation(DirectGregorianInstantiation::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

@@ -51,8 +51,8 @@ class Computation<out ComputedType : Any> {
     }
 
     companion object {
-        @JvmField val ERR: Computation<*> = Computation<Any>()
-        @JvmField val OK: Computation<*> = Computation(Any())
+        val ERR: Computation<*> = Computation<Any>()
+        val OK: Computation<*> = Computation(Any())
 
         /** A strongly typed error return value */
         fun <ComputedType : Any> err(): Computation<ComputedType> {

@@ -447,7 +447,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         const val INCOMPATIBLE_DB_VERSION = 10
 
         // public flag which lets us distinguish between inaccessible and corrupt database
-        @JvmField
         var databaseCorruptFlag = false
 
         /**

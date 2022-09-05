@@ -63,7 +63,6 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
             "https://softwarefreedom.org/resources/2007/gpl-non-gpl-collaboration.html#x1-40002.2 + or " +
             "\"//noinspection MissingCopyrightHeader <reason>\" may be added as the first line of the file."
         private val implementation = Implementation(CopyrightHeaderExists::class.java, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES))
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

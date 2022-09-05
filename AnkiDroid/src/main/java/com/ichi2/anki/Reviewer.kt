@@ -117,7 +117,6 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mPrefHideDueCount = false
 
     // Whiteboard
-    @JvmField
     var prefWhiteboard = false
 
     @get:CheckResult
@@ -144,7 +143,6 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mOverflowMenuIsOpen = false
     private lateinit var mToolbar: Toolbar
 
-    @JvmField
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)

@@ -23,7 +23,6 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
         private const val EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
             "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection"
         private val implementation = Implementation(DirectSystemCurrentTimeMillisUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

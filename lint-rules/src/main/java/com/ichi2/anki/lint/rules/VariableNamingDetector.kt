@@ -61,7 +61,6 @@ class VariableNamingDetector : Detector(), Detector.UastScanner {
 
     companion object {
         private val IMPLEMENTATION = Implementation(VariableNamingDetector::class.java, JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE = Issue.create(
             id = "VariableNamingDetector",
             briefDescription = "Variable name should not use field prefixes.",

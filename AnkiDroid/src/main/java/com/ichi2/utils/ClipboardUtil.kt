@@ -24,7 +24,6 @@ import androidx.annotation.CheckResult
 
 object ClipboardUtil {
     // JPEG is sent via pasted content
-    @JvmField
     val IMAGE_MIME_TYPES = arrayOf("image/gif", "image/png", "image/jpg", "image/jpeg")
 
     fun hasImage(clipboard: ClipboardManager?): Boolean {

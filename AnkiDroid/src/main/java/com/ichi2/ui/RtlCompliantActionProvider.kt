@@ -27,7 +27,6 @@ import com.ichi2.anki.R
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
 class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
-    @JvmField
     @VisibleForTesting
     val mActivity: Activity
 

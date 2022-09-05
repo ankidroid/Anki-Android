@@ -64,7 +64,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
 @KotlinCleanup("try to replace try{query database...}finally{cursor.close()} with databaseQuery.use { cursor -> ...}")
 @RunWith(Parameterized::class)
 class ContentProviderTest : InstrumentedTest() {
-    @JvmField
+    @JvmField // required for Parameter
     @Parameterized.Parameter
     @KotlinCleanup("lateinit")
     var schedVersion = 0
