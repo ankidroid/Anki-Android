@@ -66,17 +66,13 @@ import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.async.CollectionTask
+import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
 import com.ichi2.async.CollectionTask.CheckCardSelection
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
 import com.ichi2.async.CollectionTask.MarkNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
-import com.ichi2.async.CollectionTask.UpdateMultipleNotes
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
-import com.ichi2.async.updateCard
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -1632,10 +1628,16 @@ open class CardBrowser :
                 }
         }
         Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
-        TaskManager.launchCollectionTask(
-            UpdateMultipleNotes(selectedNotes),
-            UpdateMultipleNotesHandler(this)
-        )
+        withProgress {
+            val updatedNotes: List<Note>? = withCol { doInBackgroundUpdateMultipleNotes(this, selectedNotes) }
+            if (updatedNotes != null) {
+                val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
+                updateCardsInList(cardsToUpdate)
+            } else {
+                // TODO: Don't close the cardbrowser, instead show an error dialog
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            }
+        }
     }
 
     private fun filterByTags(selectedTags: List<String>, option: Int) {
@@ -1711,22 +1713,6 @@ open class CardBrowser :
             .filterNot { pos -> pos >= cardCount }
             .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
         updateList()
-    }
-
-    private class UpdateMultipleNotesHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Void, List<Note>?>(browser) {
-        override fun actualOnPreExecute(context: CardBrowser) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: List<Note>?) {
-            context.hideProgressBar()
-            if (result != null) {
-                val cardsToUpdate = result.flatMap { n: Note -> n.cards() }
-                context.updateCardsInList(cardsToUpdate)
-            } else {
-                context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-            }
-        }
     }
 
     private suspend fun saveEditedCard() {

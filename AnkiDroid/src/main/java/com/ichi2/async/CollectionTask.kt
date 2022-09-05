@@ -36,6 +36,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
@@ -157,15 +158,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     override fun onCancelled() {
         TaskManager.removeTask(this)
         listener?.onCancelled()
-    }
-
-    // Currently being used only to update tags of multiple notes simultaneously
-    class UpdateMultipleNotes constructor(
-        private val notesToUpdate: List<Note>,
-        private val shouldUpdateCards: Boolean = false
-    ) : TaskDelegate<Void, List<Note>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<Note>? =
-            doInBackgroundUpdateMultipleNotes(col, notesToUpdate, shouldUpdateCards)
     }
 
     class LoadDeckCounts : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
@@ -1167,6 +1159,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     companion object {
+        @JvmStatic
         @VisibleForTesting
         fun nonTaskUndo(col: Collection): Card? {
             val sched = col.sched
