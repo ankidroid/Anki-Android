@@ -29,7 +29,6 @@ enum class SyncStatus {
         private var sPauseCheckingDatabase = false
         private var sMarkedInMemory = false
 
-        @JvmStatic
         fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED
@@ -87,13 +86,11 @@ enum class SyncStatus {
 
         /** To be converted to Rust  */
         @KotlinCleanup("Convert these to @RustCleanup")
-        @JvmStatic
         fun markSyncCompleted() {
             sMarkedInMemory = false
             AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", false).apply()
         }
 
-        @JvmStatic
         fun ignoreDatabaseModification(runnable: Runnable) {
             sPauseCheckingDatabase = true
             try {

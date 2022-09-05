@@ -57,7 +57,6 @@ object CrashReportService {
      * Temporary method to access the CoreConfigurationBuilder until all classes that require access
      *  to the CoreConfigurationBuilder are migrated to kotlin.
      */
-    @JvmStatic
     @KotlinCleanup("once EVERY class using this method gets migrated to kotlin remove it and expose mAcraCoreConfigBuilder with a private setter")
     fun getAcraCoreConfigBuilder(): CoreConfigurationBuilder {
         return mAcraCoreConfigBuilder
@@ -68,7 +67,6 @@ object CrashReportService {
      * The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same
      * data directory. Analytics falls back to a sensible default if this is not set.
      */
-    @JvmStatic
     fun initialize(application: Application) {
         mApplication = application
         // Setup logging and crash reporting
@@ -141,7 +139,6 @@ object CrashReportService {
      * Set the reporting mode for ACRA based on the value of the FEEDBACK_REPORT_KEY preference
      * @param value value of FEEDBACK_REPORT_KEY preference
      */
-    @JvmStatic
     fun setAcraReportingMode(value: String) {
         val editor = AnkiDroidApp.getSharedPrefs(mApplication).edit()
         // Set the ACRA disable value
@@ -171,7 +168,6 @@ object CrashReportService {
      *
      * @param prefs SharedPreferences object the reporting state is persisted in
      */
-    @JvmStatic
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun setDebugACRAConfig(prefs: SharedPreferences) {
         // Disable crash reporting
@@ -187,7 +183,6 @@ object CrashReportService {
      *
      * @param prefs SharedPreferences object the reporting state is persisted in
      */
-    @JvmStatic
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun setProductionACRAConfig(prefs: SharedPreferences) {
         // Enable or disable crash reporting based on user setting
@@ -224,22 +219,18 @@ object CrashReportService {
     }
 
     /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it  */
-    @JvmStatic
     fun sendExceptionReport(message: String?, origin: String?) {
         sendExceptionReport(ManuallyReportedException(message), origin, null)
     }
 
-    @JvmStatic
     fun sendExceptionReport(e: Throwable, origin: String?) {
         sendExceptionReport(e, origin, null)
     }
 
-    @JvmStatic
     fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?) {
         sendExceptionReport(e, origin, additionalInfo, false)
     }
 
-    @JvmStatic
     fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?, onlyIfSilent: Boolean) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
@@ -255,12 +246,10 @@ object CrashReportService {
         ACRA.getErrorReporter().handleException(e)
     }
 
-    @JvmStatic
     fun isProperServiceProcess(): Boolean {
         return ACRA.isACRASenderServiceProcess()
     }
 
-    @JvmStatic
     fun isAcraEnabled(context: Context, defaultValue: Boolean): Boolean {
         if (!AnkiDroidApp.getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
@@ -275,7 +264,6 @@ object CrashReportService {
      *
      * @param context the context leading to the directory with ACRA limiter data
      */
-    @JvmStatic
     fun deleteACRALimiterData(context: Context) {
         try {
             LimiterData().store(context)
@@ -284,7 +272,6 @@ object CrashReportService {
         }
     }
 
-    @JvmStatic
     fun onPreferenceChanged(ctx: Context, newValue: String) {
         setAcraReportingMode(newValue)
         // If the user changed error reporting, make sure future reports have a chance to post
@@ -297,7 +284,6 @@ object CrashReportService {
      * @return the status of the report, true if the report was sent, false if the report is already
      *  submitted
      */
-    @JvmStatic
     fun sendReport(ankiActivity: AnkiActivity): Boolean {
         val preferences = AnkiDroidApp.getSharedPrefs(ankiActivity)
         val reportMode = preferences.getString(FEEDBACK_REPORT_KEY, "")

@@ -117,7 +117,6 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat {
         }
 
         companion object {
-            @JvmStatic
             fun newInstance(key: String?): IncrementerNumberRangeDialogFragmentCompat {
                 val fragment = IncrementerNumberRangeDialogFragmentCompat()
                 val b = Bundle(1)

@@ -19,7 +19,6 @@ package com.ichi2.utils
 import android.widget.TextView
 
 object TextViewUtil {
-    @JvmStatic
     fun getTextSizeSp(first: TextView): Float {
         return first.textSize / first.resources.displayMetrics.scaledDensity
     }

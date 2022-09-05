@@ -30,7 +30,6 @@ import java.io.FileInputStream
 import java.lang.Exception
 
 object BitmapUtil {
-    @JvmStatic
     fun decodeFile(theFile: File, IMAGE_MAX_SIZE: Int): Bitmap? {
         var bmp: Bitmap? = null
         try {
@@ -75,7 +74,6 @@ object BitmapUtil {
         return bmp
     }
 
-    @JvmStatic
     fun freeImageView(imageView: ImageView?) {
         // This code behaves differently on various OS builds. That is why put into try catch.
         try {

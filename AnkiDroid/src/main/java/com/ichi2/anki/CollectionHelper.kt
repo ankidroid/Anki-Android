@@ -282,7 +282,6 @@ open class CollectionHelper {
     }
 
     companion object {
-        @JvmStatic
         var instance: CollectionHelper = CollectionHelper()
             private set
 

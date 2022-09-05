@@ -101,7 +101,6 @@ class ImportDialog : AsyncDialogFragment() {
          * @param dialogMessageList An optional ArrayList of string(s) which can be used to show a custom message
          * or specify import path
          */
-        @JvmStatic
         fun newInstance(dialogType: Int, dialogMessageList: ArrayList<String>): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()

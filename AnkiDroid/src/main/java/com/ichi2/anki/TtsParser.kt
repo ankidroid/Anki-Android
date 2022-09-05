@@ -22,7 +22,6 @@ object TtsParser {
      * elements; in that case the function returns a single LocalisedText object containing the
      * text extracted from the whole HTML fragment, with the localeCode set to an empty string.
      */
-    @JvmStatic
     fun getTextsToRead(html: String, clozeReplacement: String): List<TTSTag> {
         val textsToRead: MutableList<TTSTag> = ArrayList()
         val elem = Jsoup.parseBodyFragment(html).body()

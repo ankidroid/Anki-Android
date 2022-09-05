@@ -455,7 +455,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          */
-        @JvmStatic
         fun newInstance(dialogType: Int): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()

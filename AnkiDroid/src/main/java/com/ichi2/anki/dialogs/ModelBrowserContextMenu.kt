@@ -31,7 +31,6 @@ class ModelBrowserContextMenu : AnalyticsDialogFragment() {
     companion object {
         private const val KEY_LABEL = "key_label"
 
-        @JvmStatic
         fun newInstance(label: String?): ModelBrowserContextMenu = ModelBrowserContextMenu().apply {
             arguments = bundleOf(KEY_LABEL to label)
         }

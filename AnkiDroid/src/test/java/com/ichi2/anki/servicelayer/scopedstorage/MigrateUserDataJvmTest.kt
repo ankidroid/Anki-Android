@@ -40,7 +40,7 @@ class MigrateUserDataJvmTest {
         private lateinit var missingDir: String
 
         @BeforeClass
-        @JvmStatic
+        @JvmStatic // required for @BeforeClass
         fun initClass() {
             sourceDir = createTransientDirectory().canonicalPath
             destDir = createTransientDirectory().canonicalPath

@@ -16,7 +16,6 @@
 package com.ichi2.anki.testutil
 
 object ThreadUtils {
-    @JvmStatic
     fun sleep(timeMs: Int) {
         try {
             Thread.sleep(timeMs.toLong())

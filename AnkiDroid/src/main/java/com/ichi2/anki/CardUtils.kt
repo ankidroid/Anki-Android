@@ -14,7 +14,6 @@ object CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    @JvmStatic
     fun getNotes(cards: Collection<Card>): Set<Note> {
         val notes: MutableSet<Note> = HashSetInit(cards.size)
         for (card in cards) {
@@ -26,7 +25,6 @@ object CardUtils {
     /**
      * @return All cards of all notes
      */
-    @JvmStatic
     fun getAllCards(notes: Set<Note>): List<Card> {
         val allCards: MutableList<Card> = ArrayList(notes.size)
         for (note in notes) {
@@ -35,7 +33,6 @@ object CardUtils {
         return allCards
     }
 
-    @JvmStatic
     fun markAll(notes: List<Note>, mark: Boolean) {
         for (note in notes) {
             if (mark) {

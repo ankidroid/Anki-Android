@@ -27,7 +27,6 @@ import timber.log.Timber
 import java.util.function.Supplier
 
 object DebugInfoService {
-    @JvmStatic
     fun getDebugInfo(info: Context, col: Supplier<Collection>): String {
         var schedName = "Not found"
         try {

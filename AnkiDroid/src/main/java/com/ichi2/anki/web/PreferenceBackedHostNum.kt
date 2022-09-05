@@ -43,7 +43,6 @@ class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPref
     }
 
     companion object {
-        @JvmStatic
         fun fromPreferences(preferences: SharedPreferences): PreferenceBackedHostNum {
             val hostNum = getHostNum(preferences)
             return PreferenceBackedHostNum(hostNum, preferences)

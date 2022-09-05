@@ -78,7 +78,6 @@ abstract class TaskManager {
             return previous
         }
 
-        @JvmStatic
         fun removeTask(task: CollectionTask<*, *>): Boolean {
             return sTaskManager.removeTaskConcrete(task)
         }
@@ -95,12 +94,10 @@ abstract class TaskManager {
          * @param task the task to execute
          * @return the newly created task
          */
-        @JvmStatic
         fun setLatestInstance(task: CollectionTask<*, *>) {
             sTaskManager.setLatestInstanceConcrete(task)
         }
 
-        @JvmStatic
         fun <Progress, Result> launchCollectionTask(task: TaskDelegateBase<Progress, Result>): Cancellable {
             return sTaskManager.launchCollectionTaskConcrete(task)
         }
@@ -128,7 +125,6 @@ abstract class TaskManager {
         /**
          * Block the current thread until the currently running CollectionTask instance (if any) has finished.
          */
-        @JvmStatic
         fun waitToFinish() {
             sTaskManager.waitToFinishConcrete()
         }
@@ -138,7 +134,6 @@ abstract class TaskManager {
          * @param timeoutSeconds timeout in seconds (or null to wait indefinitely)
          * @return whether or not the previous task was successful or not, OR if an exception occurred (for example: timeout)
          */
-        @JvmStatic
         fun waitToFinish(timeoutSeconds: Int?): Boolean {
             return sTaskManager.waitToFinishConcrete(timeoutSeconds)
         }

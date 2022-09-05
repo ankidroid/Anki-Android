@@ -192,7 +192,6 @@ object LanguageUtil {
      *
      * @return The [Locale] for the given code
      */
-    @JvmStatic
     val locale: Locale
         get() = getLocale("")
 
@@ -201,7 +200,6 @@ object LanguageUtil {
      *
      * @return The [Locale] for the given code
      */
-    @JvmStatic
     fun getLocale(localeCode: String?): Locale {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
         return getLocale(localeCode, prefs)
@@ -213,7 +211,6 @@ object LanguageUtil {
      * @param localeCode The locale code of the language
      * @return The [Locale] for the given code
      */
-    @JvmStatic
     fun getLocale(localeCode: String?, prefs: SharedPreferences): Locale {
         var tempLocaleCode = localeCode
         if (tempLocaleCode == null || TextUtils.isEmpty(tempLocaleCode)) {
@@ -239,23 +236,19 @@ object LanguageUtil {
         return locale
     }
 
-    @JvmStatic
     fun getShortDateFormatFromMs(ms: Long): String {
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(Date(ms))
     }
 
-    @JvmStatic
     fun getShortDateFormatFromS(s: Long): String {
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(Date(s * 1000L))
     }
 
-    @JvmStatic
     fun getLocaleCompat(resources: Resources): Locale? {
         return ConfigurationCompat.getLocales(resources.configuration)[0]
     }
 
     /** If locale is not provided, the current locale will be used. */
-    @JvmStatic
     fun setDefaultBackendLanguages(locale: String = "") {
         BackendFactory.defaultLanguages = listOf(localeToBackendCode(getLocale(locale)))
     }

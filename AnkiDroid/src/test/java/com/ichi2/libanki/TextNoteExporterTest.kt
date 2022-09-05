@@ -87,7 +87,7 @@ class TextNoteExporterTest(
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // required: Parameters
         @ParameterizedRobolectricTestRunner.Parameters(name = "{index} id:{0}\ttags:{1}\thtml:{2}")
         fun data(): Iterable<Array<Any>> {
             val data: MutableList<Array<Any>> = ArrayList()

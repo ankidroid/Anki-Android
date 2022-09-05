@@ -37,18 +37,15 @@ internal object Utils {
     private const val FIELD_SEPARATOR = '\u001f'.toString()
 
     // TODO: Add contract for null -> null and non-null to non-null.
-    @JvmStatic
     fun joinFields(list: Array<String>?): String? {
         return if (list != null) TextUtils.join("\u001f", list) else null
     }
 
-    @JvmStatic
     fun splitFields(fields: String): Array<String> {
         return fields.split(FIELD_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }
             .toTypedArray()
     }
 
-    @JvmStatic
     fun joinTags(tags: Set<String?>?): String {
         if (tags == null || tags.isEmpty()) {
             return ""
@@ -59,12 +56,10 @@ internal object Utils {
         return TextUtils.join(" ", tags)
     }
 
-    @JvmStatic
     fun splitTags(tags: String): Array<String> {
         return tags.trim { it <= ' ' }.split("\\s+".toRegex()).toTypedArray()
     }
 
-    @JvmStatic
     fun fieldChecksum(data: String): Long {
         val strippedData = stripHTMLMedia(data)
         return try {

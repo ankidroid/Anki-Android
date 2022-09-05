@@ -1189,7 +1189,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     companion object {
-        @JvmStatic
         @VisibleForTesting
         fun nonTaskUndo(col: Collection): Card? {
             val sched = col.sched

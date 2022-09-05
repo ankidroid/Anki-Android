@@ -48,7 +48,6 @@ object AssetHelper {
      * @param path path of the file to guess its MIME type.
      * @return MIME type guessed from file extension or "text/plain".
      */
-    @JvmStatic
     fun guessMimeType(path: String?): String {
         val mimeType = URLConnection.guessContentTypeFromName(path)
         return mimeType ?: "text/plain"

@@ -45,19 +45,16 @@ class CompatHelper private constructor() {
         private val instance by lazy { CompatHelper() }
 
         /** Get the current Android API level.  */
-        @JvmStatic
         val sdkVersion: Int
             get() = Build.VERSION.SDK_INT
 
         /** Determine if the device is running API level 23 or higher.  */
-        @JvmStatic
         val isMarshmallow: Boolean
             get() = sdkVersion >= Build.VERSION_CODES.M
 
         /**
          * Main public method to get the compatibility class
          */
-        @JvmStatic
         val compat get() = instance.compatValue
 
         val isChromebook: Boolean
@@ -65,7 +62,6 @@ class CompatHelper private constructor() {
                 "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
                     "novato_cheets".equals(Build.DEVICE, ignoreCase = true)
                 )
-        @JvmStatic
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 

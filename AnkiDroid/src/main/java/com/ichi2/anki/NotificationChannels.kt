@@ -22,7 +22,6 @@ import android.content.res.Resources
 import com.ichi2.compat.CompatHelper
 
 object NotificationChannels {
-    @JvmStatic
     fun getId(channel: Channel?): String {
         return when (channel) {
             Channel.SYNC -> "Synchronization"
@@ -49,7 +48,6 @@ object NotificationChannels {
      * TODO should be called in response to {@link android.content.Intent#ACTION_LOCALE_CHANGED}
      * @param context the context for access to localized strings for channel names
      */
-    @JvmStatic
     fun setup(context: Context) {
         val res = context.resources
         val compat = CompatHelper.compat

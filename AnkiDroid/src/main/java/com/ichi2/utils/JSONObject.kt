@@ -348,7 +348,6 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
          * @param obj A json object
          * @return Exactly the same object, with a different type.
          */
-        @JvmStatic
         fun objectToObject(obj: org.json.JSONObject?): JSONObject = obj as JSONObject
 
         @CheckResult

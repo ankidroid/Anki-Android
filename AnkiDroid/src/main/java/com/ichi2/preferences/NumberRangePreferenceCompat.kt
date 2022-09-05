@@ -191,7 +191,6 @@ constructor(
         }
 
         companion object {
-            @JvmStatic
             fun newInstance(key: String?): NumberRangeDialogFragmentCompat {
                 val fragment = NumberRangeDialogFragmentCompat()
                 val b = Bundle(1)

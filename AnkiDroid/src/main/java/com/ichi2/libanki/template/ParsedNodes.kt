@@ -80,7 +80,6 @@ class ParsedNodes : ParsedNode {
          * @param nodes A list of nodes to put in a tree
          * @return The list of node, as compactly as possible.
          */
-        @JvmStatic
         fun create(nodes: List<ParsedNode>): ParsedNode {
             @KotlinCleanup("replace with when")
             return if (nodes.isEmpty()) {

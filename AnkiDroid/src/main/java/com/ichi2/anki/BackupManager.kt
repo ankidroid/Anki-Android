@@ -197,7 +197,6 @@ open class BackupManager {
         val isActivated: Boolean
             get() = true
 
-        @JvmStatic
         fun getBackupDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
@@ -218,7 +217,6 @@ open class BackupManager {
             return directory
         }
 
-        @JvmStatic
         fun performBackupInBackground(path: String, time: Time): Boolean {
             return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
         }
@@ -232,7 +230,6 @@ open class BackupManager {
             return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
-        @JvmStatic
         fun enoughDiscSpace(path: String?): Boolean {
             return getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
         }
@@ -255,7 +252,6 @@ open class BackupManager {
          * @param col Collection
          * @return whether the repair was successful
          */
-        @JvmStatic
         fun repairCollection(col: Collection): Boolean {
             val deckPath = col.path
             val deckFile = File(deckPath)
@@ -336,7 +332,6 @@ open class BackupManager {
          * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
          * @return Its dateformat parsable string or null if it doesn't match naming pattern
          */
-        @JvmStatic
         fun getBackupTimeString(fileName: String): String? {
             return backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
         }
@@ -344,7 +339,6 @@ open class BackupManager {
         /**
          * @return date in string if it matches backup naming pattern or null if not
          */
-        @JvmStatic
         fun parseBackupTimeString(timeString: String): Date? {
             return try {
                 legacyDateFormat.parse(timeString)
@@ -360,7 +354,6 @@ open class BackupManager {
         /**
          * @return date in fileName if it matches backup naming pattern or null if not
          */
-        @JvmStatic
         fun getBackupDate(fileName: String): Date? {
             return getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
         }
@@ -368,7 +361,6 @@ open class BackupManager {
         /**
          * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
          */
-        @JvmStatic
         fun getNameForNewBackup(time: Time): String? {
             /** Changes in the file name pattern should be updated as well in
              * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
@@ -382,7 +374,6 @@ open class BackupManager {
             return backupFilename
         }
 
-        @JvmStatic
         /**
          * @return Array of files with names which matches the backup name pattern,
          * in order of creation.
@@ -405,7 +396,6 @@ open class BackupManager {
          *
          * @return the most recent backup, or null if no backups exist
          */
-        @JvmStatic
         fun getLatestBackup(colFile: File): File? = getBackups(colFile).lastOrNull()
 
         /**
@@ -413,7 +403,6 @@ open class BackupManager {
          * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep
          */
-        @JvmStatic
         fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
             return deleteDeckBackups(getBackups(File(colPath)), keepNumber)
         }
@@ -429,7 +418,6 @@ open class BackupManager {
             return true
         }
 
-        @JvmStatic
         fun removeDir(dir: File): Boolean {
             if (dir.isDirectory) {
                 val files = dir.listFiles()
@@ -440,7 +428,6 @@ open class BackupManager {
             return dir.delete()
         }
 
-        @JvmStatic
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
         fun createInstance(): BackupManager {
             return BackupManager()

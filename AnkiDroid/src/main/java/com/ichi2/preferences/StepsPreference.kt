@@ -113,7 +113,6 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
          * @param a JSONArray representation of steps.
          * @return The steps as a space-separated string.
          */
-        @JvmStatic
         fun convertFromJSON(a: JSONArray): String {
             val sb = StringBuilder()
             for (s in a.stringIterable()) {
@@ -129,7 +128,6 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
          * @param steps String representation of steps.
          * @return The steps as a JSONArray or null if the steps are not valid.
          */
-        @JvmStatic
         fun convertToJSON(steps: String): JSONArray? {
             val stepsAr = JSONArray()
             val stepsTrim = steps.trim { it <= ' ' }

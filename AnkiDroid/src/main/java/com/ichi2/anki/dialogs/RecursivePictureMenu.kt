@@ -193,7 +193,6 @@ class RecursivePictureMenu : DialogFragment() {
     }
 
     companion object {
-        @JvmStatic
         @CheckResult
         fun createInstance(itemList: ArrayList<Item?>?, @StringRes title: Int): RecursivePictureMenu {
             val helpDialog = RecursivePictureMenu()
@@ -204,7 +203,6 @@ class RecursivePictureMenu : DialogFragment() {
             return helpDialog
         }
 
-        @JvmStatic
         fun removeFrom(allItems: List<Item>, toRemove: Item?) {
             // Note: currently doesn't remove the top-level elements.
             for (i in allItems) {

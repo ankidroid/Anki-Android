@@ -83,7 +83,6 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @param second, From 0 to 59
          * @return the time stamp of this instant in GMT calendar
          */
-        @JvmStatic
         @KotlinCleanup("After Kotlin Conversion, use default argument and remove this")
         fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int): Long {
             return timeStamp(year, month, date, hourOfDay, minute, second, 0)
@@ -100,7 +99,6 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @param milliseconds, from 0 to 999
          * @return the time stamp of this instant in GMT calendar
          */
-        @JvmStatic
         @SuppressLint("DirectGregorianInstantiation")
         fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int, milliseconds: Int): Long {
             val timeZone = TimeZone.getTimeZone("GMT")

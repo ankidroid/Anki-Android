@@ -41,7 +41,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     companion object {
         @Suppress("unused")
         @Parameters(name = "attemptRename = {0}")
-        @JvmStatic
+        @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             return listOf(arrayOf(true), arrayOf(false))
         }

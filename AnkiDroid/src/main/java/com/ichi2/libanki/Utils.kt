@@ -228,7 +228,6 @@ object Utils {
      * @return The formatted, localized time string. The time is always an integer.
      * e.g. something like "3 seconds" or "1 year".
      */
-    @JvmStatic
     fun timeSpan(context: Context, time_s: Long): String {
         val time_x: Int // Time in unit x
         val res = context.resources
@@ -312,7 +311,6 @@ object Utils {
      * @param inputParam The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      </_any_tag_> */
-    @JvmStatic
     @KotlinCleanup("see if function body could be improved")
     fun stripHTML(inputParam: String): String {
         var s = inputParam
@@ -342,7 +340,6 @@ object Utils {
      * Strip HTML but keep media filenames
      */
     @KotlinCleanup("replacement: non-null")
-    @JvmStatic
     fun stripHTMLMedia(s: String, replacement: String? = " $1 "): String {
         val imgMatcher = imgPattern.matcher(s)
         return stripHTML(imgMatcher.replaceAll(replacement!!))
@@ -352,7 +349,6 @@ object Utils {
      * Strip sound but keep media filenames
      */
     @KotlinCleanup("replacement & s: non-null")
-    @JvmStatic
     fun stripSoundMedia(s: String?, replacement: String? = " $1 "): String {
         val soundMatcher = soundPattern.matcher(s!!)
         return soundMatcher.replaceAll(replacement!!)
@@ -401,7 +397,6 @@ object Utils {
     }
 
     /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    @JvmStatic
     @KotlinCleanup("Use scope function on StringBuilder")
     fun ids2str(ids: LongArray?): String {
         val sb = StringBuilder()
@@ -428,7 +423,6 @@ object Utils {
     }
 
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator.  */
-    @JvmStatic
     @KotlinCleanup("Use scope function on StringBuilder, simplify inner for loop")
     fun <T> ids2str(ids: Iterable<T>): String {
         val sb = StringBuilder(512)
@@ -471,7 +465,6 @@ object Utils {
 
     /** LIBANKI: not in libanki
      * Transform a collection of Long into an array of Long  */
-    @JvmStatic
     @KotlinCleanup("inline as .toLongArray() and remove")
     fun collection2Array(list: Collection<Long>): LongArray {
         val ar = LongArray(list.size)
@@ -508,7 +501,6 @@ object Utils {
     }
 
     /** return a base91-encoded 64bit random number  */
-    @JvmStatic
     fun guid64(): String {
         return base91(
             Random().nextInt((Math.pow(2.0, 61.0) - 1).toInt())
@@ -549,7 +541,6 @@ object Utils {
      * Fields
      * ***********************************************************************************************
      */
-    @JvmStatic
     fun joinFields(list: Array<String>): String {
         val result = StringBuilder(128)
         for (i in 0 until list.size - 1) {
@@ -561,7 +552,6 @@ object Utils {
         return result.toString()
     }
 
-    @JvmStatic
     @KotlinCleanup("ensure manual conversion is correct")
     fun splitFields(fields: String): Array<String> {
         // -1 ensures that we don't drop empty fields at the ends
@@ -578,7 +568,6 @@ object Utils {
      * @param data the string to generate hash from
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
-    @JvmStatic
     @KotlinCleanup("remove if check return empty string directly if data is null")
     fun checksum(data: String?): String {
         var result = ""
@@ -615,7 +604,6 @@ object Utils {
      * @param sortIdx An index of the field
      * @return The field at sortIdx, without html media, and the csum of the first field.
      */
-    @JvmStatic
     fun sfieldAndCsum(fields: Array<String>, sortIdx: Int): Pair<String, Long> {
         val firstStripped = stripHTMLMedia(fields[0])
         val sortStripped = if (sortIdx == 0) firstStripped else stripHTMLMedia(fields[sortIdx])
@@ -634,7 +622,6 @@ object Utils {
      * @param data the string to generate hash from. Html media should be removed
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
-    @JvmStatic
     fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
         return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
     }
@@ -644,7 +631,6 @@ object Utils {
      * @param file The file to be checked
      * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's contents.
      */
-    @JvmStatic
     fun fileChecksum(file: String?): String {
         val buffer = ByteArray(1024)
         var digest: ByteArray? = null
@@ -677,7 +663,6 @@ object Utils {
         return result
     }
 
-    @JvmStatic
     fun fileChecksum(file: File): String {
         return fileChecksum(file.absolutePath)
     }
@@ -690,7 +675,6 @@ object Utils {
      * @param is InputStream to convert
      * @return String version of the InputStream
      */
-    @JvmStatic
     fun convertStreamToString(`is`: InputStream?): String {
         var contentOfMyInputStream = ""
         try {
@@ -808,7 +792,6 @@ object Utils {
      * Does not close the provided stream
      * @throws IOException Rethrows exception after a set number of retries
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun writeToFile(source: InputStream, destination: String) {
         // sometimes this fails and works on retries (hardware issue?)
@@ -933,7 +916,6 @@ object Utils {
      * 0 - file name
      * 1 - extension
      */
-    @JvmStatic
     fun splitFilename(filename: String): Array<String> {
         var name = filename
         var ext = ""
@@ -1011,7 +993,6 @@ object Utils {
      * @param sourceFile The source file
      * @param destFile The destination file, doesn't need to exist yet.
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun copyFile(sourceFile: File?, destFile: File) {
         FileInputStream(sourceFile).use { source -> writeToFile(source, destFile.absolutePath) }
@@ -1027,7 +1008,6 @@ object Utils {
      * @return the json serialization of the object
      * @see org.json.JSONObject.toString
      */
-    @JvmStatic
     fun jsonToString(json: JSONObject): String {
         return json.toString().replace("\\\\/".toRegex(), "/")
     }
@@ -1042,7 +1022,6 @@ object Utils {
      * @return the json serialization of the object
      * @see org.json.JSONArray.toString
      */
-    @JvmStatic
     fun jsonToString(json: JSONArray): String {
         return json.toString().replace("\\\\/".toRegex(), "/")
     }
@@ -1067,7 +1046,6 @@ object Utils {
      * @param txt Text to be normalized
      * @return The input text in its NFC normalized form form.
     */
-    @JvmStatic
     fun nfcNormalized(txt: String): String {
         return if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
             Normalizer.normalize(txt, Normalizer.Form.NFC)
@@ -1090,7 +1068,6 @@ object Utils {
     /**
      * Return a random float within the range of min and max.
      */
-    @JvmStatic
     fun randomFloatInRange(min: Float, max: Float): Float {
         val rand = Random()
         return rand.nextFloat() * (max - min) + min
@@ -1107,7 +1084,6 @@ object Utils {
      * @return whether there was a non-zero usn; in this case the list
      * should be saved before the upload.
      */
-    @JvmStatic
     fun markAsUploaded(ar: List<JSONObject>): Boolean {
         var changed = false
         for (obj in ar) {
@@ -1127,7 +1103,6 @@ object Utils {
      </T> */
     // Similar as Objects.equals. So deprecated starting at API Level 19 where this methods exists.
     @KotlinCleanup("remove")
-    @JvmStatic
     fun <T> equals(left: T?, right: T?): Boolean {
         return left === right || left != null && left == right
     }
@@ -1150,7 +1125,6 @@ object Utils {
      * @param fields A map from field name to field value
      * @return The set of non empty field values.
      */
-    @JvmStatic
     @KotlinCleanup("remove TextUtils at least. Maybe .filter { }")
     fun nonEmptyFields(fields: Map<String, String>): Set<String> {
         val nonempty_fields: MutableSet<String> = HashSetInit(fields.size)

@@ -27,7 +27,6 @@ inline fun <reified T> strictMock(): T {
 
 class StrictMock {
     companion object {
-        @JvmStatic
         fun <T> strictMock(clazz: Class<T>): T {
             return Mockito.mock(clazz, ThrowingAnswer())
         }

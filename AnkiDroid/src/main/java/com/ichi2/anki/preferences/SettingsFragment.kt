@@ -80,7 +80,7 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun getSubscreenIntent(context: Context, fragmentClass: KClass<out SettingsFragment>): Intent {
             return Intent(context, Preferences::class.java)
                 .putExtra(Preferences.INITIAL_FRAGMENT_EXTRA, fragmentClass.jvmName)

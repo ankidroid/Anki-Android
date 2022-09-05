@@ -1903,7 +1903,6 @@ open class SchedV2Test : RobolectricTest() {
          * @param addRev Determines whether to count the identifier of `revCount`.
          * @return
          */
-        @JvmStatic
         @KotlinCleanup("reduce code")
         fun expectedTree(col: Collection, addRev: Boolean): List<TreeNode<DeckDueTreeNode>> {
             // deck IDs are based on the collection time. Changed to being hardcoded during Kotlin conversion.

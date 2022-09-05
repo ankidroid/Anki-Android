@@ -279,7 +279,6 @@ class DB(db: SupportSQLiteDatabase) {
         /**
          * Open a connection using the system framework.
          */
-        @JvmStatic
         fun withAndroidFramework(context: Context, path: String): DB {
             val db = AnkiSupportSQLiteDatabase.withFramework(
                 context,

@@ -37,7 +37,6 @@ object BeolingusParser {
      * @param html HTML page from beolingus, with translation of the word we search
      * @return `"no"` or the pronunciation URL
      */
-    @JvmStatic
     @KotlinCleanup("AFTER fixing @KotlinCleanup in LoadPronunciationActivity see if wordToSearchFor can be made non null")
     fun getPronunciationAddressFromTranslation(@Language("HTML") html: String, wordToSearchFor: String?): String {
         val m = PRONUNCIATION_PATTERN.matcher(html)
@@ -57,7 +56,6 @@ object BeolingusParser {
     /**
      * @return `"no"`, or the http address of the mp3 file
      */
-    @JvmStatic
     fun getMp3AddressFromPronunciation(@Language("HTML") pronunciationPageHtml: String): String {
         // Only log the page if you need to work with the regex
         // Timber.d("pronunciationPageHtml is %s", pronunciationPageHtml);

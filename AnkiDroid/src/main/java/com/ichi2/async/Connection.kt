@@ -548,7 +548,6 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             return sInstance
         }
 
-        @JvmStatic
         fun login(listener: TaskListener, data: Payload): Connection? {
             data.taskType = LOGIN
             return launchConnectionTask(listener, data)

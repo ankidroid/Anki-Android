@@ -409,7 +409,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // required for initParameters
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
@@ -420,7 +420,6 @@ class ReviewerTest : RobolectricTest() {
             return startReviewer(testClass, Reviewer::class.java)
         }
 
-        @JvmStatic
         fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T {
             val reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
             waitForAsyncTasksToComplete()

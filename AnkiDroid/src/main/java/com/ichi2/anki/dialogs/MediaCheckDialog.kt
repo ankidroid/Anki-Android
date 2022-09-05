@@ -144,7 +144,6 @@ class MediaCheckDialog : AsyncDialogFragment() {
     companion object {
         const val DIALOG_CONFIRM_MEDIA_CHECK = 0
         const val DIALOG_MEDIA_CHECK_RESULTS = 1
-        @JvmStatic
         fun newInstance(dialogType: Int): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
@@ -153,7 +152,6 @@ class MediaCheckDialog : AsyncDialogFragment() {
             return f
         }
 
-        @JvmStatic
         fun newInstance(dialogType: Int, checkList: List<List<String?>?>): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()

@@ -56,7 +56,7 @@ class CardBrowserOrderDialog : AnalyticsDialogFragment() {
 
     companion object {
         private var orderSingleChoiceDialogListener: SingleChoiceListener = null
-        @JvmStatic
+
         fun newInstance(
             order: Int,
             isOrderAsc: Boolean,

@@ -66,13 +66,13 @@ class GestureMapperTest {
 
     companion object {
         @BeforeClass
-        @JvmStatic
+        @JvmStatic // required for @BeforeClass
         fun before() {
             mockkStatic(ViewConfiguration::class)
             every { ViewConfiguration.get(any()) } answers { mock(ViewConfiguration::class.java) }
         }
 
-        @JvmStatic
+        @JvmStatic // required for @AfterClass
         @AfterClass
         fun after() {
             unmockkStatic(ViewConfiguration::class)

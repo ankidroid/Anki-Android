@@ -24,7 +24,6 @@ import android.view.WindowManager
 object DisplayUtils {
 
     @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
-    @JvmStatic
     fun getDisplayDimensions(wm: WindowManager): Point {
         val display = wm.defaultDisplay
         val point = Point()
@@ -32,7 +31,6 @@ object DisplayUtils {
         return point
     }
 
-    @JvmStatic
     fun getDisplayDimensions(context: Context): Point {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         return getDisplayDimensions(wm)
@@ -41,7 +39,6 @@ object DisplayUtils {
     /** Allow the window to be resized when an input method is shown,
      * so that its contents are not covered by the input method */
     @Suppress("DEPRECATION") // 7110: SOFT_INPUT_ADJUST_RESIZE
-    @JvmStatic
     fun resizeWhenSoftInputShown(window: Window) {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }

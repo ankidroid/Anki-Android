@@ -50,7 +50,6 @@ class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatte
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(formatter: FileSizeFormatter, collectionFile: File): DeckPickerNoSpaceToDowngradeDialog {
             return DeckPickerNoSpaceToDowngradeDialog(formatter, collectionFile)
         }

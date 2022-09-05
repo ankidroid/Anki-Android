@@ -31,7 +31,6 @@ object TimeManager {
     /**
      * Executes the provided functionality, returning [timeOverride] while in the code block
      */
-    @JvmStatic
     @VisibleForTesting
     fun <T : Time> withMockInstance(timeOverride: T, f: ((T) -> Unit)) {
         try {

@@ -268,7 +268,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         return multimediaController
     }
     companion object {
-        @JvmStatic
+        @JvmStatic // required for @MethodSource
         fun getSignalFromUrlTest_args(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of("signal:show_answer", SHOW_ANSWER),

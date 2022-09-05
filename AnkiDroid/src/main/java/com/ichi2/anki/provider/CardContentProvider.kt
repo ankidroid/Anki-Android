@@ -110,7 +110,6 @@ class CardContentProvider : ContentProvider() {
         private val sDefaultNoteProjectionDBAccess = FlashCardsContract.Note.DEFAULT_PROJECTION.clone()
         private const val COL_NULL_ERROR_MSG = "AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong."
 
-        @JvmStatic
         private fun sanitizeNoteProjection(projection: Array<String>?): Array<String> {
             if (projection == null || projection.size == 0) {
                 return sDefaultNoteProjectionDBAccess

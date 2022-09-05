@@ -191,7 +191,7 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
          * @param card A card that just became a leech
          * @param activity An activity on which a message can be shown
          */
-        @JvmStatic
+        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun leech(card: Card, activity: Activity?) {
             if (activity != null) {
                 val res = activity.resources

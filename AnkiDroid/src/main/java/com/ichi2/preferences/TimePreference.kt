@@ -52,12 +52,10 @@ class TimePreference(context: Context?, attrs: AttributeSet?) : android.preferen
 
     companion object {
         const val DEFAULT_VALUE = "00:00"
-        @JvmStatic
         fun parseHours(time: String): Int {
             return time.split(":".toRegex()).toTypedArray()[0].toInt()
         }
 
-        @JvmStatic
         fun parseMinutes(time: String): Int {
             return time.split(":".toRegex()).toTypedArray()[1].toInt()
         }

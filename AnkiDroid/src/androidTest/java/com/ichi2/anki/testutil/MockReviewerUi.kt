@@ -29,7 +29,6 @@ class MockReviewerUi : ReviewerUi {
     }
 
     companion object {
-        @JvmStatic
         fun displayingAnswer(): ReviewerUi {
             val mockReviewerUi = MockReviewerUi()
             mockReviewerUi.isDisplayingAnswer = true

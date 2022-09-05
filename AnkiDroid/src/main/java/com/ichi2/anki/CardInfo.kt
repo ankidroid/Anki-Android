@@ -292,7 +292,6 @@ class CardInfo : AnkiActivity() {
         }
 
         companion object {
-            @JvmStatic
             @CheckResult
             fun create(c: Card, collection: Collection): CardInfoModel {
                 val addedDate = c.id

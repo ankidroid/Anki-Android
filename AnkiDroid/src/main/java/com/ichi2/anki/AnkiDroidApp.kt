@@ -315,7 +315,6 @@ open class AnkiDroidApp : Application() {
         // Singleton instance of this class.
         // Note: this may not be initialized if AnkiDroid is run via BackupManager
         @KotlinCleanup("replace comment with javadoc")
-        @JvmStatic
         lateinit var instance: AnkiDroidApp
             private set
 
@@ -369,14 +368,12 @@ open class AnkiDroidApp : Application() {
          * @return A SharedPreferences object for this instance of the app.
          */
         @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-        @JvmStatic
         fun getSharedPrefs(context: Context?): SharedPreferences {
             return android.preference.PreferenceManager.getDefaultSharedPreferences(context)
         }
 
         val cacheStorageDirectory: String
             get() = instance.cacheDir.absolutePath
-        @JvmStatic
         val appResources: Resources
             get() = instance.resources
         val isSdCardMounted: Boolean
@@ -389,7 +386,6 @@ open class AnkiDroidApp : Application() {
          * @param remoteContext The base context offered by attachBase() to be passed to super.attachBase().
          * Can be modified here to set correct GUI language.
          */
-        @JvmStatic
         fun updateContextWithLanguage(remoteContext: Context): Context {
             return try {
                 val preferences: SharedPreferences

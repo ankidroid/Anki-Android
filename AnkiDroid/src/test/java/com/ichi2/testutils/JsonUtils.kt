@@ -27,14 +27,12 @@ object JsonUtils {
      * COULD_BE_BETTER: This would be much better as a Matcher for JSON
      * COULD_BE_BETTER: Only handles one level of ordering
      */
-    @JvmStatic
     fun JSONObject.toOrderedString(): String {
         val stringer = JSONStringer()
         writeTo(stringer)
         return stringer.toString()
     }
 
-    @JvmStatic
     fun JSONArray.toOrderedString(): String {
         val stringer = JSONStringer()
         writeTo(stringer)

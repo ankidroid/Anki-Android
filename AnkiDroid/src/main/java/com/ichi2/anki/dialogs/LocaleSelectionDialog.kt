@@ -176,7 +176,6 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         /**
          * @param handler Marker interface to enforce the convention the caller implementing LocaleSelectionDialogHandler
          */
-        @JvmStatic
         fun newInstance(handler: LocaleSelectionDialogHandler): LocaleSelectionDialog {
             return LocaleSelectionDialog().apply {
                 mDialogHandler = handler

@@ -27,7 +27,6 @@ import timber.log.Timber
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
     /** Returns null on success  */
-    @JvmStatic
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? {
 
@@ -59,7 +58,6 @@ object InitialActivity {
 
     /** @return Whether any preferences were upgraded
      */
-    @JvmStatic
     fun upgradePreferences(context: Context?, previousVersionCode: Long): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
@@ -76,7 +74,6 @@ object InitialActivity {
      * in practice, this doesn't occur due to CollectionHelper.getCol creating a new collection, and it's called before
      * this in the startup script
      */
-    @JvmStatic
     @CheckResult
     fun performSetupFromFreshInstallOrClearedPreferences(preferences: SharedPreferences): Boolean {
         if (!wasFreshInstall(preferences)) {
@@ -98,7 +95,6 @@ object InitialActivity {
         "" == preferences.getString("lastVersion", "")
 
     /** Sets the preference stating that the latest version has been applied  */
-    @JvmStatic
     fun setUpgradedToLatestVersion(preferences: SharedPreferences) {
         Timber.i("Marked prefs as upgraded to latest version: %s", pkgVersionName)
         preferences.edit().putString("lastVersion", pkgVersionName).apply()
@@ -109,7 +105,6 @@ object InitialActivity {
      * This is not called in the case of performSetupFromFreshInstall returning true.
      * So this should not use the default value
      */
-    @JvmStatic
     fun isLatestVersion(preferences: SharedPreferences): Boolean {
         return preferences.getString("lastVersion", "") == pkgVersionName
     }

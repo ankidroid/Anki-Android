@@ -308,7 +308,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
         /** Returns the hour that the collection rolls over to the next day  */
-        @JvmStatic
         fun getDayOffset(col: Collection): Int {
             return when (col.schedVer()) {
                 2 -> col.get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!

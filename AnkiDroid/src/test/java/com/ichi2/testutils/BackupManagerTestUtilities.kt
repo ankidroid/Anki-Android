@@ -23,7 +23,6 @@ import java.io.File
 import java.lang.IllegalStateException
 
 object BackupManagerTestUtilities {
-    @JvmStatic
     fun setupSpaceForBackup(context: Context) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
 
@@ -34,7 +33,6 @@ object BackupManagerTestUtilities {
         assertTrue(enoughDiscSpace(currentAnkiDroidDirectory))
     }
 
-    @JvmStatic
     fun reset() {
         ShadowStatFs.reset()
     }

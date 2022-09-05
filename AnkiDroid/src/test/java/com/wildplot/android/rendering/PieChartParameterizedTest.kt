@@ -94,7 +94,7 @@ class PieChartParameterizedTest {
         }
 
         @Parameterized.Parameters
-        @JvmStatic
+        @JvmStatic // required for Parameters
         fun data(): Collection<Array<Any>> {
             return createParametersCollection(
                 asList(

@@ -882,7 +882,6 @@ class Models(col: Collection) : ModelManager(col) {
         }
 
         /** "Mapping of field name -> (ord, field).  */
-        @JvmStatic
         fun fieldMap(m: Model): Map<String, Pair<Int, JSONObject>> {
             val flds = m.getJSONArray("flds")
             // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
@@ -896,7 +895,6 @@ class Models(col: Collection) : ModelManager(col) {
         /*
      * Templates ***********************************************************************************************
      */
-        @JvmStatic
         @KotlinCleanup("direct return and use scope function")
         fun newTemplate(name: String?): JSONObject {
             val t = JSONObject(defaultTemplate)

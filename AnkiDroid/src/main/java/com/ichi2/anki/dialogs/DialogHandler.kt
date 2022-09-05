@@ -149,7 +149,6 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
          * Store a persistent message to static variable
          * @param message Message to store
          */
-        @JvmStatic
         fun storeMessage(message: Message?) {
             Timber.d("Storing persistent message")
             sStoredMessage = message

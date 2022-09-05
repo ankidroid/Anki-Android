@@ -42,7 +42,6 @@ object WidgetStatus {
      *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     @Suppress("deprecation") // #7108: AsyncTask
-    @JvmStatic
     fun update(context: Context?) {
         val preferences = AnkiDroidApp.getSharedPrefs(context)
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
@@ -58,7 +57,6 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    @JvmStatic
     @KotlinCleanup("make context non-null")
     fun fetchSmall(context: Context?): IntArray {
         return MetaDB.getWidgetSmallStatus(context!!)

@@ -51,7 +51,6 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
 
     @Suppress("Deprecation") // ProgressDialog deprecation
     companion object {
-        @JvmStatic
         fun show(
             context: Context,
             title: CharSequence?,
@@ -75,7 +74,6 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
         }
 
         @Suppress("unused")
-        @JvmStatic
         private fun animationEnabled(context: Context): Boolean {
             return if (context is AnkiActivity) {
                 context.animationEnabled()

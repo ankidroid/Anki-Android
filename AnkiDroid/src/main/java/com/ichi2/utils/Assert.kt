@@ -27,7 +27,6 @@ object Assert {
         }
     }
 
-    @JvmStatic
     @Contract("false, _, _ -> fail")
     fun that(condition: Boolean, message: String?, vararg args: Any?) {
         if (!condition) {

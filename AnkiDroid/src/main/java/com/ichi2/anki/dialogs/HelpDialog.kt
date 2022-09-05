@@ -47,7 +47,6 @@ object HelpDialog {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.feedbackUrl))
     }
 
-    @JvmStatic
     fun createInstance(): DialogFragment {
         val exceptionReportItem = ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24, UsageAnalytics.Actions.EXCEPTION_REPORT)
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG)
@@ -97,7 +96,6 @@ object HelpDialog {
         return createInstance(ArrayList(listOf(*allItems)), R.string.help)
     }
 
-    @JvmStatic
     fun createInstanceForSupportAnkiDroid(context: Context?): DialogFragment {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID)
         val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)

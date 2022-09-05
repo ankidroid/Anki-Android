@@ -27,7 +27,6 @@ object ClipboardUtil {
     @JvmField
     val IMAGE_MIME_TYPES = arrayOf("image/gif", "image/png", "image/jpg", "image/jpeg")
 
-    @JvmStatic
     fun hasImage(clipboard: ClipboardManager?): Boolean {
         return clipboard
             ?.takeIf { it.hasPrimaryClip() }
@@ -36,7 +35,6 @@ object ClipboardUtil {
             ?: false
     }
 
-    @JvmStatic
     fun hasImage(description: ClipDescription?): Boolean {
         return description
             ?.run { IMAGE_MIME_TYPES.any { hasMimeType(it) } }
@@ -49,24 +47,20 @@ object ClipboardUtil {
         ?.takeIf { it.itemCount > 0 }
         ?.getItemAt(0)
 
-    @JvmStatic
     fun getImageUri(clipboard: ClipboardManager?): Uri? {
         return getFirstItem(clipboard)?.uri
     }
 
-    @JvmStatic
     @CheckResult
     fun getText(clipboard: ClipboardManager?): CharSequence? {
         return getFirstItem(clipboard)?.text
     }
 
-    @JvmStatic
     @CheckResult
     fun getPlainText(clipboard: ClipboardManager?, context: Context): CharSequence? {
         return getFirstItem(clipboard)?.coerceToText(context)
     }
 
-    @JvmStatic
     @CheckResult
     fun getDescriptionLabel(clipboard: ClipData?): CharSequence? {
         return clipboard

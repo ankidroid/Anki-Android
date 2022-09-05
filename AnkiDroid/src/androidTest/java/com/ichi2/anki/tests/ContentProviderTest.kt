@@ -1296,7 +1296,7 @@ class ContentProviderTest : InstrumentedTest() {
 
     companion object {
         @Parameterized.Parameters
-        @JvmStatic
+        @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
             return Arrays.asList(*arrayOf(arrayOf(1), arrayOf(2)))

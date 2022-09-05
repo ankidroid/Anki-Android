@@ -45,7 +45,6 @@ object NoteService {
      * @param model the model in JSOBObject format
      * @return a new note instance
      */
-    @JvmStatic
     fun createEmptyNote(model: JSONObject): MultimediaEditableNote? {
         try {
             val fieldsArray = model.getJSONArray("flds")
@@ -70,7 +69,6 @@ object NoteService {
         return null
     }
 
-    @JvmStatic
     fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
@@ -99,7 +97,6 @@ object NoteService {
      * @param noteSrc
      * @param editorNoteDst
      */
-    @JvmStatic
     fun updateJsonNoteFromMultimediaNote(noteSrc: IMultimediaEditableNote?, editorNoteDst: Note) {
         if (noteSrc is MultimediaEditableNote) {
             val mmNote = noteSrc
@@ -118,7 +115,6 @@ object NoteService {
      *
      * @param field
      */
-    @JvmStatic
     fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
@@ -157,7 +153,6 @@ object NoteService {
     /**
      * @param replaceNewlines Converts [FieldEditText.NEW_LINE] to HTML linebreaks
      */
-    @JvmStatic
     @VisibleForTesting
     @CheckResult
     fun getFieldsAsBundleForPreview(editFields: Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
@@ -177,7 +172,6 @@ object NoteService {
         return fields
     }
 
-    @JvmStatic
     fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
         return if (!replaceNewlines) {
             fieldData
@@ -200,7 +194,6 @@ object NoteService {
         }
     }
 
-    @JvmStatic
     fun isMarked(note: Note): Boolean {
         return note.hasTag("marked")
     }

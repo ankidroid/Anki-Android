@@ -29,7 +29,6 @@ object BundleUtils {
      * @param key the key to use
      * @return the long value, or null if not found
      */
-    @JvmStatic
     fun getNullableLong(bundle: Bundle?, key: String): Long? {
         return if (bundle == null || !bundle.containsKey(key)) {
             null

@@ -385,7 +385,6 @@ class TokenizerTest : RobolectricTest() {
     }
 
     companion object {
-        @JvmStatic
         fun new_to_legacy_template(template: String): String {
             return "   " + ALT_HANDLEBAR_DIRECTIVE + new_to_legacy(template)
         }

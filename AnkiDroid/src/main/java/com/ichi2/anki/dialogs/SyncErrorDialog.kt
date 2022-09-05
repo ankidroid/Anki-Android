@@ -268,7 +268,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param dialogMessage A string which can be optionally used to set the dialog message
          */
-        @JvmStatic
         fun newInstance(dialogType: Int, dialogMessage: String?): SyncErrorDialog {
             val f = SyncErrorDialog()
             val args = Bundle()

@@ -36,7 +36,6 @@ object ShadowStatFs {
      *
      * @see [markAsNonEmpty]
      */
-    @JvmStatic
     fun registerStats(path: File, blockCount: Int, freeBlocks: Int, availableBlocks: Int) {
         RobolectricStats.registerStats(path, blockCount, freeBlocks, availableBlocks)
         // call canonicalFile so this works on macOS
@@ -51,10 +50,8 @@ object ShadowStatFs {
      *
      * @param path path to the file
      */
-    @JvmStatic
     fun markAsNonEmpty(path: File) = registerStats(path, 100, 20, 10000)
 
     @Resetter
-    @JvmStatic
     fun reset() = RobolectricStats.reset()
 }

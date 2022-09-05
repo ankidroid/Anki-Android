@@ -356,7 +356,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            @JvmStatic
             fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
                 val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
@@ -384,7 +383,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         /**
          * A dialog which handles selecting a deck
          */
-        @JvmStatic
         fun newInstance(title: String, summaryMessage: String?, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()

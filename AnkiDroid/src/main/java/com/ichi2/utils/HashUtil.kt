@@ -27,13 +27,11 @@ object HashUtil {
         return Math.max((size / .75f).toInt() + 1, 16)
     }
 
-    @JvmStatic
     fun <T> HashSetInit(size: Int): HashSet<T> {
         return HashSet(capacity(size))
     }
 
     @KotlinCleanup("return mutableMap")
-    @JvmStatic
     fun <T, U> HashMapInit(size: Int): HashMap<T, U> {
         return HashMap(capacity(size))
     }

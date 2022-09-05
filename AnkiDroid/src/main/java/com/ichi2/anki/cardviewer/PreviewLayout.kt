@@ -74,7 +74,6 @@ class PreviewLayout(
     }
 
     companion object {
-        @JvmStatic
         fun createAndDisplay(activity: AnkiActivity, toggleAnswerHandler: View.OnClickListener): PreviewLayout {
             val buttonsLayout = activity.findViewById<FrameLayout>(R.id.preview_buttons_layout)
             val prevCard = activity.findViewById<ImageView>(R.id.preview_previous_flashcard)
