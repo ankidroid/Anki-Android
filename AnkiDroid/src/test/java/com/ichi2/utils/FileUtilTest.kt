@@ -32,8 +32,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class FileUtilTest {
-    @JvmField // required for Rule
-    @Rule
+    @get:Rule
     var temporaryDirectory = TemporaryFolder()
     private var testDirectorySize: Long = 0
     @Throws(Exception::class)
