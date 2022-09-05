@@ -78,7 +78,7 @@ fun updateCard(
 fun doInBackgroundUpdateMultipleNotes(
     col: Collection,
     notesToUpdate: List<Note>,
-    shouldUpdateCards: Boolean = false
+    shouldUpdateCards: Boolean = false // Do we intend to use it somewhere?
 ): List<Note>? {
     Timber.d("doInBackgroundUpdateMultipleNotes")
     return try {
