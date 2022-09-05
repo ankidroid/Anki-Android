@@ -1610,25 +1610,34 @@ open class CardBrowser :
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
         when (mTagsDialogListenerAction) {
             TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, option)
-            TagsDialogListenerAction.EDIT_TAGS -> editSelectedCardsTags(selectedTags, indeterminateTags)
+            TagsDialogListenerAction.EDIT_TAGS -> launchCatchingTask {
+                editSelectedCardsTags(selectedTags, indeterminateTags)
+            }
             else -> {}
         }
     }
 
-    // TODO: method does heavy work on the main thread, move to a background thread/coroutine
-    private fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) {
-        val selectedNotes = selectedCardIds
-            .map { cardId: CardId? -> col.getCard(cardId!!).note() }
-            .distinct()
-        for (note in selectedNotes) {
-            val previousTags: List<String> = note.tags
-            val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
-            note.setTagsFromStr(col.tags.join(updatedTags))
+    /**
+     * Updates the tags of selected/checked notes and saves them to the disk
+     * @param selectedTags list of checked tags
+     * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
+     * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
+     */
+    private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) {
+        val selectedNotes = withCol {
+            selectedCardIds
+                .map { cardId: CardId? -> getCard(cardId!!).note() }
+                .distinct()
+                .onEach { note ->
+                    val previousTags: List<String> = note.tags
+                    val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
+                    note.setTagsFromStr(tags.join(updatedTags))
+                }
         }
         Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
         TaskManager.launchCollectionTask(
             UpdateMultipleNotes(selectedNotes),
-            updateMultipleNotesHandler()
+            UpdateMultipleNotesHandler(this)
         )
     }
 
@@ -1705,10 +1714,6 @@ open class CardBrowser :
             .filterNot { pos -> pos >= cardCount }
             .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
         updateList()
-    }
-
-    private fun updateMultipleNotesHandler(): UpdateMultipleNotesHandler {
-        return UpdateMultipleNotesHandler(this)
     }
 
     private class UpdateMultipleNotesHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Void, List<Note>?>(browser) {
