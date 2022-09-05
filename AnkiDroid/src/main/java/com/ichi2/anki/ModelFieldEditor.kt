@@ -28,6 +28,7 @@ import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.snackbar.Snackbar
@@ -229,6 +230,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val confirm = Runnable {
             collection.modSchemaNoCheck()
             deleteField()
+
+            // This ensures that the context menu closes after the field has been deleted
+            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
         if (mFieldsLabels.size < 2) {
@@ -467,7 +471,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
-        supportFragmentManager.popBackStackImmediate()
         when (contextMenuAction) {
             ModelEditorContextMenuAction.Sort -> sortByField()
             ModelEditorContextMenuAction.Reposition -> repositionFieldDialog()
