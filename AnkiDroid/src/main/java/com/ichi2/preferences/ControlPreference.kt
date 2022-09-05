@@ -54,15 +54,16 @@ class ControlPreference : ListPreference {
     @Suppress("unused") constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     @Suppress("unused") constructor(context: Context) : super(context)
 
+    @SuppressLint("StringFormatInvalid")
     fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
         val entryIndices: MutableList<Int> = ArrayList()
         // negative indices are "add"
-        entryTitles.add(context.getString(R.string.binding_add_key))
+        entryTitles.add(context.getString(R.string.binding_add_key, ADD_KEY_INDEX.toString()))
         entryIndices.add(ADD_KEY_INDEX)
         // Put "Add gesture" option if gestures are enabled
         if (AnkiDroidApp.getSharedPrefs(context).getBoolean(GestureProcessor.PREF_KEY, false)) {
-            entryTitles.add(context.getString(R.string.binding_add_gesture))
+            entryTitles.add(context.getString(R.string.binding_add_gesture, ADD_GESTURE_INDEX.toString()))
             entryIndices.add(ADD_GESTURE_INDEX)
         }
         // 0 and above are "delete" actions for already mapped preferences
@@ -89,7 +90,7 @@ class ControlPreference : ListPreference {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
                 MaterialDialog(context).show {
-                    title(R.string.binding_add_gesture)
+                    title(context.getString(R.string.binding_add_gesture, ADD_GESTURE_INDEX.toString()).toInt())
 
                     val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
 
@@ -117,7 +118,7 @@ class ControlPreference : ListPreference {
                 MaterialDialog(context).show {
                     val keyPicker: KeyPicker = KeyPicker.inflate(context)
                     customView(view = keyPicker.rootLayout)
-                    title(R.string.binding_add_key)
+                    title(context.getString(R.string.binding_add_key, ADD_KEY_INDEX.toString()).toInt())
 
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->
