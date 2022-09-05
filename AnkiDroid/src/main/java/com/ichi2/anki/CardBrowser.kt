@@ -1617,8 +1617,8 @@ open class CardBrowser :
      * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
      */
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
-        val selectedNotes = withCol {
-            selectedCardIds
+        val updatedNotes: List<Note>? = withCol {
+            val selectedNotes = selectedCardIds
                 .map { cardId: CardId? -> getCard(cardId!!).note() }
                 .distinct()
                 .onEach { note ->
@@ -1626,9 +1626,9 @@ open class CardBrowser :
                     val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
                     note.setTagsFromStr(tags.join(updatedTags))
                 }
+            Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
+            doInBackgroundUpdateMultipleNotes(this, selectedNotes)
         }
-        Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
-        val updatedNotes: List<Note>? = withCol { doInBackgroundUpdateMultipleNotes(this, selectedNotes) }
         if (updatedNotes != null) {
             val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
             updateCardsInList(cardsToUpdate)
