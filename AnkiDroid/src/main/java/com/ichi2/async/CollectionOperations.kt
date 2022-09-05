@@ -15,7 +15,6 @@
  ****************************************************************************************/
 
 package com.ichi2.async
-import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
@@ -79,23 +78,17 @@ fun doInBackgroundUpdateMultipleNotes(
     col: Collection,
     notesToUpdate: List<Note>,
     shouldUpdateCards: Boolean = false // Do we intend to use it somewhere?
-): List<Note>? {
+): List<Note> {
     Timber.d("doInBackgroundUpdateMultipleNotes")
-    return try {
-        col.db.executeInTransaction {
-            for (note in notesToUpdate) {
-                note.flush()
-                if (shouldUpdateCards) {
-                    for (card in note.cards()) {
-                        card.flush()
-                    }
+    return col.db.executeInTransaction {
+        for (note in notesToUpdate) {
+            note.flush()
+            if (shouldUpdateCards) {
+                for (card in note.cards()) {
+                    card.flush()
                 }
             }
-            notesToUpdate
         }
-    } catch (e: RuntimeException) {
-        Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
-        CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
-        return null
+        notesToUpdate
     }
 }
