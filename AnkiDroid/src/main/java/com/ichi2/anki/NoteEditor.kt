@@ -2053,9 +2053,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             // Removes paste as plain text from ContextMenu in NoteEditor
-            val item: MenuItem = menu.findItem(android.R.id.pasteAsPlainText)
-            if (menu.contains(item) && menu.contains(menu.findItem(android.R.id.paste))) {
-                item.setVisible(false)
+            val item: MenuItem? = menu.findItem(android.R.id.pasteAsPlainText)
+            val platformPasteMenuItem: MenuItem? = menu.findItem(android.R.id.paste)
+            if (item != null && platformPasteMenuItem != null) {
+                item.isVisible = false
             }
 
             val initialSize = menu.size()
