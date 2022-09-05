@@ -52,12 +52,10 @@ class NoteServiceTest : RobolectricTest() {
     }
 
     // temporary directory to test importMediaToDirectory function
-    @Rule
-    @JvmField // required for Rule
+    @get:Rule
     var directory = TemporaryFolder()
 
-    @Rule
-    @JvmField // required for Rule
+    @get:Rule
     var directory2 = TemporaryFolder()
 
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
