@@ -118,7 +118,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     // Whiteboard
     @JvmField
-    var mPrefWhiteboard = false
+    var prefWhiteboard = false
 
     @get:CheckResult
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -352,8 +352,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
-        mPrefWhiteboard = MetaDB.getWhiteboardState(this, parentDid)
-        if (mPrefWhiteboard) {
+        prefWhiteboard = MetaDB.getWhiteboardState(this, parentDid)
+        if (prefWhiteboard) {
             // DEFECT: Slight inefficiency here, as we set the database using these methods
             val whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, parentDid)
             setWhiteboardEnabledState(true)
@@ -530,13 +530,13 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     public override fun toggleWhiteboard() {
-        mPrefWhiteboard = !mPrefWhiteboard
-        Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard)
+        prefWhiteboard = !prefWhiteboard
+        Timber.i("Reviewer:: Whiteboard enabled state set to %b", prefWhiteboard)
         // Even though the visibility is now stored in its own setting, we want it to be dependent
         // on the enabled status
-        setWhiteboardEnabledState(mPrefWhiteboard)
-        setWhiteboardVisibility(mPrefWhiteboard)
-        if (!mPrefWhiteboard) {
+        setWhiteboardEnabledState(prefWhiteboard)
+        setWhiteboardVisibility(prefWhiteboard)
+        if (!prefWhiteboard) {
             mColorPalette!!.visibility = View.GONE
         }
         refreshActionBar()
@@ -560,20 +560,20 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun updateForNewCard() {
         super.updateForNewCard()
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
     }
 
     override fun unblockControls() {
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.isEnabled = true
         }
         super.unblockControls()
     }
 
     public override fun blockControls(quick: Boolean) {
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.isEnabled = false
         }
         super.blockControls(quick)
@@ -805,7 +805,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard)
         val change_pen_color_icon = menu.findItem(R.id.action_change_whiteboard_pen_color)
         // White board button
-        if (mPrefWhiteboard) {
+        if (prefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             toggle_whiteboard_icon.setTitle(R.string.disable_whiteboard)
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
@@ -1132,8 +1132,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
         // can't move this into onCreate due to mTopBarLayout
-        val mark = mTopBarLayout!!.findViewById<ImageView>(R.id.mark_icon)
-        val flag = mTopBarLayout!!.findViewById<ImageView>(R.id.flag_icon)
+        val mark = topBarLayout!!.findViewById<ImageView>(R.id.mark_icon)
+        val flag = topBarLayout!!.findViewById<ImageView>(R.id.flag_icon)
         mCardMarker = CardMarker(mark, flag)
     }
 
@@ -1157,7 +1157,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun initControls() {
         super.initControls()
-        if (mPrefWhiteboard) {
+        if (prefWhiteboard) {
             setWhiteboardVisibility(mShowWhiteboard)
         }
         if (mShowRemainingCardCount) {
@@ -1251,7 +1251,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun onCardEdited(card: Card?) {
         super.onCardEdited(card)
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
         if (!isDisplayingAnswer) {
@@ -1277,7 +1277,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun setWhiteboardEnabledState(state: Boolean) {
-        mPrefWhiteboard = state
+        prefWhiteboard = state
         MetaDB.storeWhiteboardState(this, parentDid, state)
         if (state && whiteboard == null) {
             createWhiteboard()

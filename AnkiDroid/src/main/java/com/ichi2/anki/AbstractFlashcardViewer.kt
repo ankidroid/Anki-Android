@@ -156,7 +156,7 @@ abstract class AbstractFlashcardViewer :
 
     // Android WebView
     @JvmField
-    var mAutomaticAnswer = AutomaticAnswer.defaultInstance(this)
+    var automaticAnswer = AutomaticAnswer.defaultInstance(this)
     protected var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
@@ -181,7 +181,7 @@ abstract class AbstractFlashcardViewer :
     private var mCardFrame: FrameLayout? = null
     private var mTouchLayer: FrameLayout? = null
     @JvmField
-    protected var mAnswerField: FixedEditText? = null
+    protected var answerField: FixedEditText? = null
     protected var flipCardLayout: LinearLayout? = null
     protected var easeButtonsLayout: LinearLayout? = null
     @KotlinCleanup("internal for AnkiDroidJsApi")
@@ -193,7 +193,7 @@ abstract class AbstractFlashcardViewer :
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton4: EaseButton? = null
     @JvmField
-    protected var mTopBarLayout: RelativeLayout? = null
+    protected var topBarLayout: RelativeLayout? = null
     private val mClipboard: ClipboardManager? = null
     private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
 
@@ -212,7 +212,7 @@ abstract class AbstractFlashcardViewer :
      */
     @JvmField
     @VisibleForTesting
-    protected var mLastClickTime: Long = 0
+    protected var lastClickTime: Long = 0
 
     /**
      * Swipe Detection
@@ -278,11 +278,11 @@ abstract class AbstractFlashcardViewer :
     private val mFlipCardListener = View.OnClickListener {
         Timber.i("AbstractFlashcardViewer:: Show answer button pressed")
         // Ignore what is most likely an accidental double-tap.
-        if (elapsedRealTime - mLastClickTime < mDoubleTapTimeInterval) {
+        if (elapsedRealTime - lastClickTime < mDoubleTapTimeInterval) {
             return@OnClickListener
         }
-        mLastClickTime = elapsedRealTime
-        mAutomaticAnswer.onShowAnswer()
+        lastClickTime = elapsedRealTime
+        automaticAnswer.onShowAnswer()
         displayCardAnswer()
     }
 
@@ -323,13 +323,13 @@ abstract class AbstractFlashcardViewer :
             // or if the button was not touched,
             if (mPrevCard === mCurrentCard || !mHasBeenTouched) {
                 // Only perform if the click was not an accidental double-tap
-                if (elapsedRealTime - mLastClickTime >= mDoubleTapTimeInterval) {
+                if (elapsedRealTime - lastClickTime >= mDoubleTapTimeInterval) {
                     // For whatever reason, performClick does not return a visual feedback anymore
                     if (!mHasBeenTouched) {
                         view.isPressed = true
                     }
-                    mLastClickTime = elapsedRealTime
-                    mAutomaticAnswer.onSelectEase()
+                    lastClickTime = elapsedRealTime
+                    automaticAnswer.onSelectEase()
                     when (view.id) {
                         R.id.flashcard_layout_ease1 -> {
                             Timber.i("AbstractFlashcardViewer:: EASE_1 pressed")
@@ -415,7 +415,7 @@ abstract class AbstractFlashcardViewer :
              * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
              * then we need to display it as a new card, without showing the answer.
              */
-            sDisplayAnswer = false
+            displayAnswer = false
         }
         currentCard = result
         TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
@@ -426,7 +426,7 @@ abstract class AbstractFlashcardViewer :
             closeReviewer(RESULT_NO_MORE_CARDS, true)
         }
         onCardEdited(mCurrentCard)
-        if (sDisplayAnswer) {
+        if (displayAnswer) {
             mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
             mAnswerSoundsAdded = false // causes answer sounds to be reloaded
             generateQuestionSoundList() // questions must be intentionally regenerated
@@ -605,7 +605,7 @@ abstract class AbstractFlashcardViewer :
     override fun onPause() {
         super.onPause()
         Timber.d("onPause()")
-        mAutomaticAnswer.disable()
+        automaticAnswer.disable()
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         mSoundPlayer.stopSounds()
@@ -618,7 +618,7 @@ abstract class AbstractFlashcardViewer :
         super.onResume()
         // Set the context for the Sound manager
         mSoundPlayer.setContext(WeakReference(this))
-        mAutomaticAnswer.enable()
+        automaticAnswer.enable()
         // Reset the activity title
         setTitle()
         updateActionBar()
@@ -708,7 +708,7 @@ abstract class AbstractFlashcardViewer :
         if (answerFieldIsFocused()) {
             return super.onKeyUp(keyCode, event)
         }
-        if (!sDisplayAnswer) {
+        if (!displayAnswer) {
             if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
                 displayCardAnswer()
                 return true
@@ -718,7 +718,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun answerFieldIsFocused(): Boolean {
-        return mAnswerField != null && mAnswerField!!.isFocused
+        return answerField != null && answerField!!.isFocused
     }
 
     protected fun clipboardHasText(): Boolean {
@@ -962,7 +962,7 @@ abstract class AbstractFlashcardViewer :
     // Set the content view to the one provided and initialize accessors.
     @KotlinCleanup("Move a lot of these to onCreate()")
     protected open fun initLayout() {
-        mTopBarLayout = findViewById(R.id.top_bar)
+        topBarLayout = findViewById(R.id.top_bar)
         mCardFrame = findViewById(R.id.flashcard)
         mCardFrameParent = mCardFrame!!.parent as ViewGroup
         mTouchLayer = findViewById(R.id.touch_layer)
@@ -1007,7 +1007,7 @@ abstract class AbstractFlashcardViewer :
             val params = flipCardLayout!!.layoutParams
             params.height = mInitialFlipCardHeight * 2
         }
-        mAnswerField = findViewById(R.id.answer_field)
+        answerField = findViewById(R.id.answer_field)
         initControls()
 
         // Position answer buttons
@@ -1028,8 +1028,8 @@ abstract class AbstractFlashcardViewer :
                 flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
                 touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
                 answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
-                answerArea.removeView(mAnswerField)
-                answerArea.addView(mAnswerField, 1)
+                answerArea.removeView(answerField)
+                answerArea.addView(answerField, 1)
             }
             "bottom",
             "none" -> {
@@ -1088,7 +1088,7 @@ abstract class AbstractFlashcardViewer :
 
     /** If a card is displaying the question, flip it, otherwise answer it  */
     private fun flipOrAnswerCard(cardOrdinal: Int) {
-        if (!sDisplayAnswer) {
+        if (!displayAnswer) {
             displayCardAnswer()
             return
         }
@@ -1215,7 +1215,7 @@ abstract class AbstractFlashcardViewer :
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer!!.autoFocusEditText()) {
-            mAnswerField!!.focusWithKeyboard()
+            answerField!!.focusWithKeyboard()
         } else {
             flipCardLayout!!.requestFocus()
         }
@@ -1230,15 +1230,15 @@ abstract class AbstractFlashcardViewer :
         mCardFrame!!.visibility = View.VISIBLE
         mPreviousAnswerIndicator!!.setVisibility(View.VISIBLE)
         flipCardLayout!!.visibility = View.VISIBLE
-        mAnswerField!!.visibility = if (typeAnswer!!.validForEditText()) View.VISIBLE else View.GONE
-        mAnswerField!!.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
+        answerField!!.visibility = if (typeAnswer!!.validForEditText()) View.VISIBLE else View.GONE
+        answerField!!.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 displayCardAnswer()
                 return@setOnEditorActionListener true
             }
             false
         }
-        mAnswerField!!.setOnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
+        answerField!!.setOnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
             if (event.action == KeyEvent.ACTION_UP &&
                 (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)
             ) {
@@ -1279,7 +1279,7 @@ abstract class AbstractFlashcardViewer :
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes")
             val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-            mAutomaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
+            automaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
         } catch (ex: Exception) {
             Timber.w(ex)
             onCollectionLoadError()
@@ -1311,7 +1311,7 @@ abstract class AbstractFlashcardViewer :
 
         // Clean answer field
         if (typeAnswer!!.validForEditText()) {
-            mAnswerField!!.setText("")
+            answerField!!.setText("")
         }
     }
 
@@ -1327,7 +1327,7 @@ abstract class AbstractFlashcardViewer :
             actionBar.title = title
         }
         if (!prefShowTopbar) {
-            mTopBarLayout!!.visibility = View.GONE
+            topBarLayout!!.visibility = View.GONE
         }
     }
 
@@ -1346,9 +1346,9 @@ abstract class AbstractFlashcardViewer :
         override fun onDone(playedSide: SoundSide?) {
             Timber.d("done reading text")
             if (playedSide == SoundSide.QUESTION) {
-                mAutomaticAnswer.scheduleAutomaticDisplayAnswer()
+                automaticAnswer.scheduleAutomaticDisplayAnswer()
             } else if (playedSide == SoundSide.ANSWER) {
-                mAutomaticAnswer.scheduleAutomaticDisplayQuestion()
+                automaticAnswer.scheduleAutomaticDisplayQuestion()
             }
         }
     }
@@ -1362,25 +1362,25 @@ abstract class AbstractFlashcardViewer :
 
     private fun displayCardQuestion(reload: Boolean) {
         Timber.d("displayCardQuestion()")
-        sDisplayAnswer = false
+        displayAnswer = false
         mBackButtonPressedToReturn = false
         setInterface()
         typeAnswer!!.input = ""
         typeAnswer!!.updateInfo(mCurrentCard!!, resources)
         if (!mCurrentCard!!.isEmpty && typeAnswer!!.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
-            mAnswerField!!.visibility = View.VISIBLE
-            mAnswerField!!.applyLanguageHint(typeAnswer!!.languageHint)
+            answerField!!.visibility = View.VISIBLE
+            answerField!!.applyLanguageHint(typeAnswer!!.languageHint)
         } else {
-            mAnswerField!!.visibility = View.GONE
+            answerField!!.visibility = View.GONE
         }
         val content = mHtmlGenerator!!.generateHtml(mCurrentCard!!, reload, Side.FRONT)
         updateCard(content)
         hideEaseButtons()
-        mAutomaticAnswer.onDisplayQuestion()
+        automaticAnswer.onDisplayQuestion()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
         if (!mTTS.enabled) {
-            mAutomaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS)
+            automaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS)
         }
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard!!.id)
     }
@@ -1406,23 +1406,23 @@ abstract class AbstractFlashcardViewer :
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
         if (typeAnswer!!.validForEditText()) {
             val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(mAnswerField!!.windowToken, 0)
+            inputMethodManager.hideSoftInputFromWindow(answerField!!.windowToken, 0)
         }
-        sDisplayAnswer = true
+        displayAnswer = true
         mSoundPlayer.stopSounds()
-        mAnswerField!!.visibility = View.GONE
+        answerField!!.visibility = View.GONE
         // Clean up the user answer and the correct answer
         if (!typeAnswer!!.useInputTag) {
-            typeAnswer!!.input = mAnswerField!!.text.toString()
+            typeAnswer!!.input = answerField!!.text.toString()
         }
         mIsSelecting = false
         val answerContent = mHtmlGenerator!!.generateHtml(mCurrentCard!!, false, Side.BACK)
         updateCard(answerContent)
         displayAnswerBottomBar()
-        mAutomaticAnswer.onDisplayAnswer()
+        automaticAnswer.onDisplayAnswer()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
         if (!mTTS.enabled) {
-            mAutomaticAnswer.scheduleAutomaticDisplayQuestion(mUseTimerDynamicMS)
+            automaticAnswer.scheduleAutomaticDisplayQuestion(mUseTimerDynamicMS)
         }
     }
 
@@ -1465,7 +1465,7 @@ abstract class AbstractFlashcardViewer :
     private fun updateCard(content: CardHtml) {
         Timber.d("updateCard()")
         mUseTimerDynamicMS = 0
-        if (sDisplayAnswer) {
+        if (displayAnswer) {
             addAnswerSounds { content.getSoundTags(Side.BACK) }
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
@@ -1473,7 +1473,7 @@ abstract class AbstractFlashcardViewer :
             mSoundPlayer.resetSounds()
             mAnswerSoundsAdded = false
             mSoundPlayer.addSounds(mBaseUrl!!, content.getSoundTags(Side.FRONT), SoundSide.QUESTION)
-            if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig!!.autoplay) {
+            if (automaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig!!.autoplay) {
                 addAnswerSounds { content.getSoundTags(Side.BACK) }
             }
         }
@@ -1506,31 +1506,31 @@ abstract class AbstractFlashcardViewer :
         if (mCardSoundConfig!!.autoplay || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
             val useTTS = mTTS.enabled &&
-                !(sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!sDisplayAnswer && mSoundPlayer.hasQuestion())
+                !(displayAnswer && mSoundPlayer.hasAnswer()) && !(!displayAnswer && mSoundPlayer.hasQuestion())
             // We need to play the sounds from the proper side of the card
             if (!useTTS) { // Text to speech not in effect here
-                if (doAudioReplay && replayQuestion && sDisplayAnswer) {
+                if (doAudioReplay && replayQuestion && displayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
                     playSounds(SoundSide.QUESTION_AND_ANSWER)
-                } else if (sDisplayAnswer) {
+                } else if (displayAnswer) {
                     playSounds(SoundSide.ANSWER)
-                    if (mAutomaticAnswer.isEnabled()) {
+                    if (automaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER)
                     }
                 } else { // question is displayed
                     playSounds(SoundSide.QUESTION)
                     // If the user wants to show the answer automatically
-                    if (mAutomaticAnswer.isEnabled()) {
+                    if (automaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.QUESTION_AND_ANSWER)
                     }
                 }
             } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
-                    if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
+                    if (!displayAnswer || doAudioReplay && replayQuestion) {
                         readCardTts(SoundSide.QUESTION)
                     }
-                    if (sDisplayAnswer) {
+                    if (displayAnswer) {
                         readCardTts(SoundSide.ANSWER)
                     }
                 } else {
@@ -1571,7 +1571,7 @@ abstract class AbstractFlashcardViewer :
      */
     protected fun showSelectTtsDialogue() {
         if (mTtsInitialized) {
-            mTTS.selectTts(this, mCurrentCard!!, if (sDisplayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
+            mTTS.selectTts(this, mCurrentCard!!, if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
         }
     }
 
@@ -1585,7 +1585,7 @@ abstract class AbstractFlashcardViewer :
         val cardContent = cardContent!!
         processCardAction { cardWebView: WebView? -> loadContentIntoCard(cardWebView, cardContent) }
         mGestureDetectorImpl!!.onFillFlashcard()
-        if (!sDisplayAnswer) {
+        if (!displayAnswer) {
             updateForNewCard()
         }
     }
@@ -1606,7 +1606,7 @@ abstract class AbstractFlashcardViewer :
         easeButton3!!.unblockBasedOnEase(mCurrentEase)
         easeButton4!!.unblockBasedOnEase(mCurrentEase)
         if (typeAnswer!!.validForEditText()) {
-            mAnswerField!!.isEnabled = true
+            answerField!!.isEnabled = true
         }
         mTouchLayer!!.visibility = View.VISIBLE
         mInAnswer = false
@@ -1632,7 +1632,7 @@ abstract class AbstractFlashcardViewer :
         easeButton3!!.blockBasedOnEase(mCurrentEase)
         easeButton4!!.blockBasedOnEase(mCurrentEase)
         if (typeAnswer!!.validForEditText()) {
-            mAnswerField!!.isEnabled = false
+            answerField!!.isEnabled = false
         }
         invalidateOptionsMenu()
     }
@@ -1682,7 +1682,7 @@ abstract class AbstractFlashcardViewer :
             false
         } else when (which) {
             ViewerCommand.SHOW_ANSWER -> {
-                if (sDisplayAnswer) {
+                if (displayAnswer) {
                     return false
                 }
                 displayCardAnswer()
@@ -1872,7 +1872,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun closeReviewer(result: Int, saveDeck: Boolean) {
-        mAutomaticAnswer.disable()
+        automaticAnswer.disable()
         mPreviousAnswerIndicator!!.stopAutomaticHide()
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
@@ -2392,7 +2392,7 @@ abstract class AbstractFlashcardViewer :
                 }
                 WebViewSignalParserUtils.SHOW_ANSWER -> {
                     // display answer when showAnswer() called from card.js
-                    if (!Companion.sDisplayAnswer) {
+                    if (!Companion.displayAnswer) {
                         displayCardAnswer()
                     }
                     return true
@@ -2567,7 +2567,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     override val isDisplayingAnswer
-        get() = sDisplayAnswer
+        get() = displayAnswer
 
     override fun isControlBlocked(): Boolean {
         return controlBlocked !== ControlBlock.UNBLOCKED
@@ -2637,7 +2637,7 @@ abstract class AbstractFlashcardViewer :
         @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         var editorCard: Card? = null
         @JvmField
-        internal var sDisplayAnswer = false
+        internal var displayAnswer = false
         const val DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval"
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200
 

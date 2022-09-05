@@ -245,7 +245,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         }
 
         fun displayAnswerForTest() {
-            sDisplayAnswer = true
+            displayAnswer = true
         }
 
         override fun answerFieldIsFocused(): Boolean {
@@ -419,7 +419,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             @CheckResult
             fun displayingAnswer(): KeyboardInputTestReviewer {
                 val keyboardInputTestReviewer = KeyboardInputTestReviewer()
-                sDisplayAnswer = true
+                displayAnswer = true
                 keyboardInputTestReviewer.mProcessor.setup()
                 return keyboardInputTestReviewer
             }
@@ -427,7 +427,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             @CheckResult
             fun displayingQuestion(): KeyboardInputTestReviewer {
                 val keyboardInputTestReviewer = KeyboardInputTestReviewer()
-                sDisplayAnswer = false
+                displayAnswer = false
                 keyboardInputTestReviewer.mProcessor.setup()
                 return keyboardInputTestReviewer
             }

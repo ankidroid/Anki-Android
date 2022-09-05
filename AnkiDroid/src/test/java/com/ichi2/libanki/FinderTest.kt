@@ -437,7 +437,7 @@ class FinderTest : RobolectricTest() {
         val cb = super.startActivityNormallyOpenCollectionWithIntent(
             CardBrowser::class.java, Intent()
         )
-        cb.mDeckSpinnerSelection!!.updateDeckPosition(currentDid)
+        cb.deckSpinnerSelection!!.updateDeckPosition(currentDid)
         advanceRobolectricLooperWithSleep()
         assertEquals(1L, cb.cardCount.toLong())
     }

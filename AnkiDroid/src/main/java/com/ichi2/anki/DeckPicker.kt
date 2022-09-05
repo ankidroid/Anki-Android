@@ -196,7 +196,7 @@ open class DeckPicker :
 
     @JvmField
     @VisibleForTesting
-    var mDueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
+    var dueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
@@ -901,7 +901,7 @@ open class DeckPicker :
             mSyncOnResume = false
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks)
-            if (mDueTree == null) {
+            if (dueTree == null) {
                 updateDeckList(true)
             }
             updateDeckList()
@@ -1079,7 +1079,7 @@ open class DeckPicker :
             // update DB
             col.decks.collapse(did)
             // update stored state
-            findInDeckTree(mDueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
+            findInDeckTree(dueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
                 collapsed = !collapsed
             }
             renderPage()
@@ -2246,7 +2246,7 @@ open class DeckPicker :
     }
 
     fun renderPage() {
-        if (mDueTree == null) {
+        if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
             updateDeckList()
@@ -2254,7 +2254,7 @@ open class DeckPicker :
         }
 
         // Check if default deck is the only available and there are no cards
-        val isEmpty = mDueTree!!.size == 1 && mDueTree!![0].value.did == 1L && col.isEmpty
+        val isEmpty = dueTree!!.size == 1 && dueTree!![0].value.did == 1L && col.isEmpty
         if (animationDisabled()) {
             mDeckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
@@ -2293,7 +2293,7 @@ open class DeckPicker :
             // We're done here
             return
         }
-        mDeckListAdapter.buildDeckList(mDueTree!!, col, currentFilter)
+        mDeckListAdapter.buildDeckList(dueTree!!, col, currentFilter)
 
         // Set the "x due in y minutes" subtitle
         try {

@@ -38,9 +38,9 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
      * If set exporter will export only this deck, otherwise will export all cards
      */
     @JvmField
-    protected var mCount = 0
+    protected var count = 0
     @JvmField
-    protected var mIncludeHTML = false
+    protected var includeHTML = false
 
     /**
      * An exporter for the whole collection of decks
@@ -61,13 +61,13 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
         } else {
             Utils.list2ObjectArray(col.decks.cids(did, true))
         }
-        mCount = cids.size
+        count = cids.size
         return cids
     }
 
     fun processText(input: String): String {
         var text = input
-        if (!mIncludeHTML) {
+        if (!includeHTML) {
             text = stripHTML(text)
         }
         text = escapeText(text)
@@ -276,7 +276,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         Timber.d("Cleanup")
         dst.crt = col.crt
         // todo: tags?
-        mCount = dst.cardCount()
+        count = dst.cardCount()
         dst.setMod()
         postExport()
         dst.close()
@@ -370,7 +370,7 @@ class AnkiPackageExporter : AnkiExporter {
     @Throws(IOException::class)
     private fun exportVerbatim(z: ZipFile, context: Context): JSONObject {
         // close our deck & write it into the zip file, and reopen
-        mCount = col.cardCount()
+        count = col.cardCount()
         col.close()
         if (!_v2sched) {
             z.write(col.path, CollectionHelper.COLLECTION_FILENAME)
