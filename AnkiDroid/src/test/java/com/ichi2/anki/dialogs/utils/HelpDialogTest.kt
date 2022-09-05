@@ -19,7 +19,6 @@ import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.RunInBackground
 import com.ichi2.anki.dialogs.HelpDialog.createInstance
 import com.ichi2.anki.dialogs.HelpDialog.createInstanceForSupportAnkiDroid
 import com.ichi2.anki.dialogs.RecursivePictureMenu
@@ -36,7 +35,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HelpDialogTest : RobolectricTest() {
     @Test
-    @RunInBackground
     fun testMenuDoesNotCrash() {
         val dialog = createInstance() as RecursivePictureMenu
         openDialogFragment(dialog)
@@ -45,7 +43,6 @@ class HelpDialogTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun testMenuSupportAnkiDroidDoesNotCrash() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
         openDialogFragment(dialog)
@@ -61,7 +58,6 @@ class HelpDialogTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun testMenuSupportAnkiDroidShowsRateWhenPossible() {
         mockkStatic(IntentUtil::canOpenIntent)
         every { IntentUtil.canOpenIntent(targetContext, any()) } returns true

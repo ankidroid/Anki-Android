@@ -163,7 +163,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun defaultDrawerConflictIsTrueIfGesturesEnabled() {
         enableGestureSetting()
         enableGesture(SWIPE_RIGHT)
@@ -206,7 +205,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun drawerConflictsIfUp() {
         enableGestureSetting()
         disableConflictGestures()
@@ -217,7 +215,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun drawerConflictsIfDown() {
         enableGestureSetting()
         disableConflictGestures()
@@ -228,7 +225,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun drawerConflictsIfRight() {
         enableGestureSetting()
         disableConflictGestures()

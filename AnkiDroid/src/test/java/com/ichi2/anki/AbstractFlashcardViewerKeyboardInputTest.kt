@@ -35,7 +35,6 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun enterShowsAnswer() {
         val underTest = KeyboardInputTestCardViewer.create()
 
