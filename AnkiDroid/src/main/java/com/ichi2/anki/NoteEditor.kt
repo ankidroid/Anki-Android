@@ -327,7 +327,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 addNote =
                     true
             CALLER_CARDBROWSER_EDIT -> {
-                mCurrentEditedCard = CardBrowser.sCardBrowserCard
+                mCurrentEditedCard = CardBrowser.cardBrowserCard
                 if (mCurrentEditedCard == null) {
                     finishWithoutAnimation()
                     return

@@ -66,7 +66,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private var mAllFieldsNull = true
     private var mCardType: String? = null
     @JvmField
-    protected var mPreviewLayout: PreviewLayout? = null
+    protected var previewLayout: PreviewLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -139,28 +139,28 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun initLayout() {
         super.initLayout()
-        mTopBarLayout!!.visibility = View.GONE
+        topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
-        mPreviewLayout = createAndDisplay(this, mToggleAnswerHandler)
-        mPreviewLayout!!.setOnPreviousCard { onPreviousTemplate() }
-        mPreviewLayout!!.setOnNextCard { onNextTemplate() }
-        mPreviewLayout!!.hideNavigationButtons()
-        mPreviewLayout!!.setPrevButtonEnabled(false)
+        previewLayout = createAndDisplay(this, mToggleAnswerHandler)
+        previewLayout!!.setOnPreviousCard { onPreviousTemplate() }
+        previewLayout!!.setOnNextCard { onNextTemplate() }
+        previewLayout!!.hideNavigationButtons()
+        previewLayout!!.setPrevButtonEnabled(false)
     }
 
     override fun displayCardQuestion() {
         super.displayCardQuestion()
         mShowingAnswer = false
-        mPreviewLayout!!.setShowingAnswer(false)
+        previewLayout!!.setShowingAnswer(false)
     }
 
     override fun displayCardAnswer() {
         if (mAllFieldsNull && mCardType != null && mCardType == getString(R.string.basic_typing_model_name)) {
-            mAnswerField!!.setText(getString(R.string.basic_answer_sample_text_user))
+            answerField!!.setText(getString(R.string.basic_answer_sample_text_user))
         }
         super.displayCardAnswer()
         mShowingAnswer = true
-        mPreviewLayout!!.setShowingAnswer(true)
+        previewLayout!!.setShowingAnswer(true)
     }
 
     override fun hideEaseButtons() {
@@ -205,8 +205,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private fun onTemplateIndexChanged() {
         val prevBtnEnabled = isPrevBtnEnabled(templateIndex)
         val nextBtnEnabled = isNextBtnEnabled(templateIndex)
-        mPreviewLayout!!.setPrevButtonEnabled(prevBtnEnabled)
-        mPreviewLayout!!.setNextButtonEnabled(nextBtnEnabled)
+        previewLayout!!.setPrevButtonEnabled(prevBtnEnabled)
+        previewLayout!!.setNextButtonEnabled(nextBtnEnabled)
         setCurrentCardFromNoteEditorBundle(col)
         displayCardQuestion()
     }
@@ -238,7 +238,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             if (toPreview != null) {
                 mTemplateCount = col.findTemplates(toPreview.note()).size
                 if (mTemplateCount >= 2) {
-                    mPreviewLayout!!.showNavigationButtons()
+                    previewLayout!!.showNavigationButtons()
                 }
             }
         } else {
