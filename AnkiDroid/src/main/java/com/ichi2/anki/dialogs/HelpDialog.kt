@@ -21,7 +21,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -48,7 +47,7 @@ object HelpDialog {
     }
 
     @JvmStatic
-    fun createInstance(): DialogFragment {
+    fun createInstance(): RecursivePictureMenu {
         val exceptionReportItem = ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24, UsageAnalytics.Actions.EXCEPTION_REPORT)
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG)
         val allItems = arrayOf<RecursivePictureMenu.Item>(
@@ -98,7 +97,7 @@ object HelpDialog {
     }
 
     @JvmStatic
-    fun createInstanceForSupportAnkiDroid(context: Context?): DialogFragment {
+    fun createInstanceForSupportAnkiDroid(context: Context?): RecursivePictureMenu {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID)
         val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
         val allItems = arrayOf(

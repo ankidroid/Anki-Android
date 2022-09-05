@@ -19,8 +19,7 @@ import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.dialogs.HelpDialog.createInstance
-import com.ichi2.anki.dialogs.HelpDialog.createInstanceForSupportAnkiDroid
+import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.dialogs.RecursivePictureMenu
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil.Companion.getRecyclerViewFor
 import com.ichi2.testutils.EmptyApplication
@@ -39,7 +38,7 @@ import org.robolectric.annotation.Config
 class HelpDialogTest : RobolectricTest() {
     @Test
     fun testMenuDoesNotCrash() {
-        val dialog = createInstance() as RecursivePictureMenu
+        val dialog = HelpDialog.createInstance()
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(4))
@@ -47,7 +46,7 @@ class HelpDialogTest : RobolectricTest() {
 
     @Test
     fun testMenuSupportAnkiDroidDoesNotCrash() {
-        val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
+        val dialog = HelpDialog.createInstanceForSupportAnkiDroid(targetContext)
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         // to make the test more flexible, calculate the expected menu items count by actually
@@ -64,7 +63,7 @@ class HelpDialogTest : RobolectricTest() {
     fun testMenuSupportAnkiDroidShowsRateWhenPossible() {
         mockkStatic(IntentUtil::canOpenIntent)
         every { IntentUtil.canOpenIntent(targetContext, any()) } returns true
-        val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
+        val dialog = HelpDialog.createInstanceForSupportAnkiDroid(targetContext)
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         // 6 because the option to rate the app is possible on the device
