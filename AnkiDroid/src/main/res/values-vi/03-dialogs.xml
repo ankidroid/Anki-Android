@@ -59,13 +59,6 @@
     <string name="initializing_tts">Đang khởi chạy TTS&#8230;</string>
     <string name="tts_no_tts">Đừng phát âm</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Thẻ ghi nhớ cho Android</h2>AnkiDroid là ứng dụng thẻ ghi nhớ hoàn toàn tương thích với phần mềm cho máy bàn <a href=\"%2$s\">Anki</a>. Bạn có thể tạo, tải xuống và học các tài liệu trên cả AnkiDroid hoặc Anki cho máy bàn và dễ dàng đồng bộ chúng với AnkiWeb.]]></item>
-        <item><![CDATA[Để giúp chúng tôi hoàn thiện AnkiDroid, xin báo cáo lỗi đến <a href=\"%1$s\">trình theo dõi lỗi</a>; các ý tưởng tính năng mới đều được hoan nghênh. Hãy tìm câu trả lời trên <a href=\"%2$s\">wiki</a> hoặc mở đầu cuộc thảo luận trên <a href=\"%3$s\">diễn đàn</a>.]]></item>
-        <item><![CDATA[AnkiDroid là <a href=\"%1$s\">phần mềm nguồn mở<a/>, do đó mọi người đều được khuyến khích <a href=\"%2$s\">trở thành người cộng tác</a> :-)]]></item>
-        <item><![CDATA[Những người không phải là nhà phát triển cũng có thể trợ giúp. Ví dụ: bạn có thể <a href=\"%1$s\"> giúp dịch </a> AnkiDroid, cập nhật wiki, cung cấp ảnh chụp màn hình hoặc viết blog về AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid được phát hành theo <a href=\"%1$s\">Giấy phép GNU-GPL v3</a> và mã nguồn có <a href=\"%2$s\">trên GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Xem trước</string>
     <string name="reposition_card_dialog_title">Đặt lại vị trí thẻ mới</string>
     <string name="reposition_card_dialog_message">Vị trí bắt đầu:</string>
@@ -126,6 +119,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Không</string>
     <string name="dialog_continue">Tiếp tục</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
     <string name="dialog_positive_delete">Xoá</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -243,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Số thẻ mới trong bộ thẻ của ngày hôm nay</string>
     <string name="deck_picker_rev">Số thẻ đến hạn trong bộ thẻ của ngày hôm nay.</string>
     <string name="deck_picker_lrn">Số thẻ đang học trong bộ thẻ.</string>
@@ -252,4 +247,7 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

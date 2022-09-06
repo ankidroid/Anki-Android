@@ -15,18 +15,13 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-
 package com.ichi2.themes
 
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.WindowManager.BadTokenException
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.utils.cancelListenerNullable
-import com.ichi2.utils.contentNullable
-import com.ichi2.utils.titleNullable
 import timber.log.Timber
 
 class StyledProgressDialog(context: Context?) : Dialog(context!!) {
@@ -54,28 +49,29 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
         // TODO
     }
 
+    @Suppress("Deprecation") // ProgressDialog deprecation
     companion object {
         @JvmStatic
-        @JvmOverloads
         fun show(
             context: Context,
             title: CharSequence?,
             message: CharSequence?,
             cancelable: Boolean = false,
             cancelListener: DialogInterface.OnCancelListener? = null
-        ): MaterialDialog {
+        ): android.app.ProgressDialog {
             var t = title
             if ("" == t) {
                 t = null
                 Timber.d("Invalid title was provided. Using null")
             }
-            return MaterialDialog.Builder(context)
-                .titleNullable(t)
-                .contentNullable(message)
-                .progress(true, 0)
-                .cancelable(cancelable)
-                .cancelListenerNullable(cancelListener)
-                .show()
+            return android.app.ProgressDialog(context).apply {
+                setTitle(t)
+                setMessage(message)
+                progress = 0
+                setCancelable(cancelable)
+                setOnCancelListener(cancelListener)
+                show()
+            }
         }
 
         @Suppress("unused")

@@ -32,6 +32,7 @@ object HashUtil {
         return HashSet(capacity(size))
     }
 
+    @KotlinCleanup("return mutableMap")
     @JvmStatic
     fun <T, U> HashMapInit(size: Int): HashMap<T, U> {
         return HashMap(capacity(size))

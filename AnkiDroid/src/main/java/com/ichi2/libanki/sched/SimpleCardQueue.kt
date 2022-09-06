@@ -19,9 +19,8 @@ package com.ichi2.libanki.sched
 import com.ichi2.libanki.Card
 import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("Make sched non-null ")
-internal class SimpleCardQueue(sched: AbstractSched?) : CardQueue<Card.Cache?>(sched) {
+@KotlinCleanup("Make sched non-null ") class SimpleCardQueue(sched: AbstractSched?) : CardQueue<Card.Cache?>(sched) {
     fun add(id: Long) {
-        add(Card.Cache(col, id))
+        add(col?.let { Card.Cache(it, id) })
     }
 }

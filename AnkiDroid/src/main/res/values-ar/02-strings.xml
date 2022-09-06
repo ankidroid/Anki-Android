@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">إغلاق القائمة</string>
@@ -101,6 +99,9 @@
         <item>تاريخ الإنشاء</item>
         <item>تاريخ تعديل الملحوظة</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">تطبيق</string>
+    <string name="filter_by_flags">مؤشرات</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
     <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
@@ -190,14 +191,12 @@
     <string name="import_log_insufficient_space_error">لا توجد مساحة كافية لاستيراد الحزمة.\nالمتطلب - %1$s \nالمتوفر - %2$s.\n\nهل تواجه مشكلة؟ جرب تفريغ مساحة في هاتفك إن أمكن. كحل بديل، تستخدم المزامنة مساحة أقل من الاستيراد، لذلك يمكنك تجربة استيراد الحزمة في جهاز فيه مساحة أكثر (على نسخة أنكي للكمبيوتر مثلًا) ثم المزامنة لهذا الجهاز.</string>
     <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
     <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. السبب: %s</string>
-    <string name="import_error_unhandled_request">تعذرت معالجة طلب الاستيراد</string>
     <string name="import_error_corrupt_zip">ملف apkg تالف. الرجاء حذفه وتحميله مجددًا.\n\nالسبب: %s</string>
-    <string name="import_error_exception">فشل استيراد الحزمة\n\n%s</string>
+    <string name="import_error_handle_exception">فشل استيراد الملف\n\n%s</string>
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
-    <string name="import_error_copy_file_to_cache">فشلت copyFileToCache() (ربما بسبب نفاذ مساحة التخزين)</string>
-    <string name="import_error_unhandled_scheme">استيراد غير معالج من: “%s”</string>
+    <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_error_multiple_colpkg">تم تحديد العديد من ملفات colpkg.</string>
     <string name="import_error_colpkg_apkg">تم تحديد كل من ملفات apkg &amp; colpkg في وقت واحد.</string>
     <string name="import_stats_error">حدثت بعض الأخطاء أثناء استيراد الملفات التالية:\n%s</string>
@@ -311,8 +310,6 @@
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">فشل تحميل \'%s\'.</string>
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
@@ -337,40 +334,7 @@
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
     <string name="title_whiteboard_pen_color">لون قلم السبورة</string>
     <string name="title_whiteboard_editor">لون قلم السبورة</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[عُثِر على بطاقات فارغة. استخدم أدوات>بطاقات فارغة.]]></string>
-    <string name="note_importer_error_empty_first_field">حقل أول فارغ: %s</string>
-    <string name="note_importer_error_first_field_matched">الحقل الأول مطابق: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">أضيفت ملحوظة مكررة بحقل أول: %s</string>
-    <string name="note_importer_error_appeared_twice">ظهر مرتين في الملف: %s</string>
-    <string name="note_importer_error_empty_notes">لم يتم استيراد واحدة أو أكثر من الملحوظات، لأنها لا تولّد أي بطاقات. يمكن أن يحدث هذا عندما يكون لديك حقول فارغة أو عندما لا توزع المحتوى في الملف النصي إلى الحقول الصحيحة.</string>
-    <string name="csv_importer_error_invalid_field_count">\'%1$s\' له %2$d حقل، لكن توقع %3$d</string>
-    <string name="csv_importer_error_exception">تم الإلغاء: %s</string>
     <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إذا كنت بشراً، اتصل بدعم أنكيدرويد</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="zero">أضيفت %d ملحوظة</item>
-        <item quantity="one">أضيفت %d ملحوظة</item>
-        <item quantity="two">أضيفت %d ملحوظة</item>
-        <item quantity="few">أضيفت %d ملحوظات</item>
-        <item quantity="many">أضيفت %d ملحوظة</item>
-        <item quantity="other">أضيفت %d ملحوظة</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="zero">حُدِّثت %d ملحوظة</item>
-        <item quantity="one">حُدِّثت %d ملحوظة</item>
-        <item quantity="two">حُدِّثت %d ملحوظة</item>
-        <item quantity="few">حُدِّثت %d ملحوظات</item>
-        <item quantity="many">حُدِّثت %d ملحوظة</item>
-        <item quantity="other">حُدِّثت %d ملحوظة</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="zero">%d ملحوظة لم تتغير</item>
-        <item quantity="one">%d ملحوظة لم تتغير</item>
-        <item quantity="two">%d ملحوظة لم تتغير</item>
-        <item quantity="few">%d ملحوظات لم تتغير</item>
-        <item quantity="many">%d ملحوظة لم تتغير</item>
-        <item quantity="other">%d ملحوظة لم تتغير</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">تستخدم هذه البطاقة ميزات أنكيدرويد غير مدعومة. اتصل بالمطور %1$s، أو اطلع على الويكي. %2$s</string>
     <string name="invalid_json_data">وفرت البطاقة بيانات غير صالحة. %s</string>
@@ -384,7 +348,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
-    <string name="cannot_load_http_resource">تحميل موارد http لم يعد مدعومًا</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
@@ -437,10 +400,6 @@
     <string name="check_network">تحقق من اتصالك بالشبكة</string>
     <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
     <string name="home">الصفحة الرئيسية</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">مُوزع إلى %s</string>
-    <string name="import_mapped_to_tags">موزع إلى الوسوم</string>
-    <string name="import_mapped_to_nothing">تم تجاهله</string>
     <!-- Reviewer actions -->
     <string name="buried_card">دفن البطاقة</string>
     <string name="buried_note">ملحوظة مدفونة</string>
@@ -470,5 +429,16 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">إسدال الوسم \"%s\"</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">ادرس أقل</string>
+    <string name="intro_ankidroid_tagline_two">تذكر أكثر</string>
+    <string name="intro_short_ankidroid_explanation">يوفر مجدول بطاقات أنكي الوقت عن طريق تقوية أضعف الذكريات والحفاظ على الأقوى</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ابدأ</string>
+    <string name="intro_sync_from_ankiweb">مزامنة من أنكي ويب</string>
+    <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">سلام </string>
+    <string name="deck_created">كيفية </string>
+    <string name="deck_renamed">Minato </string>
 </resources>

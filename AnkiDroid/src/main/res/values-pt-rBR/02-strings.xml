@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir gaveta</string>
     <string name="drawer_close">Fechar gaveta</string>
@@ -101,6 +99,9 @@
         <item>Criado</item>
         <item>Nota modificada</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Aplicar</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novos cards para hoje</string>
     <string name="custom_study_increase_review_limit">Modificar o limite de revisões de hoje.</string>
@@ -163,28 +164,26 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Adicionar \"%s\" à coleção? Isso pode demorar</item>
+        <item quantity="other">Você quer importar os seguintes arquivos: \n%s\n? Isso pode demorar</item>
     </plurals>
     <string name="import_log_no_apkg">Este não é um arquivo válido para o Anki</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Erro</string>
     <string name="import_log_failed_unzip">Falha ao descompactar apkg: %s</string>
     <string name="import_log_failed_copy_to">Falha ao copiar apkg para %s</string>
     <string name="import_log_failed_validate">falha na validação do apkg</string>
     <string name="import_log_insufficient_space_error">Não há espaço suficiente para importar o pacote.\nNecessário - %1$s \nDisponível - %2$s.\n\nTendo problemas? Tente liberar espaço no seu telefone, se possível. Alternativamente, a sincronização usa menos espaço do que a importação. Você pode tentar importar o pacote com um dispositivo com mais espaço (por exemplo, Anki Desktop) e, em seguida, sincronizá-lo com este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Erro ao importar arquivo, provavelmente um cache foi limpo durante o processamento.\nPor favor, tente novamente</string>
     <string name="import_succeeded_but_check_database">Importação de dados bem-sucedida, mas a limpeza pós importação falhou. Execute a verificação do banco de dados mais tarde. Causa: %s</string>
-    <string name="import_error_unhandled_request">Não foi possível completar a importação</string>
     <string name="import_error_corrupt_zip">O arquivo apkg está corrompido. Por favor delete-o e baixe-o novamente.\n\nCausa raiz: %s</string>
-    <string name="import_error_exception">Erro ao importar o pacote\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
-    <string name="import_error_unhandled_scheme">Importação não tratada de: “%s”</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
+    <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
+    <string name="import_stats_error">Ocorreram alguns erros ao importar os seguintes arquivos:\n%s</string>
     <string name="import_replacing">Substituindo coleção&#8230;</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_include_schedule">Incluir agendamento</string>
@@ -267,8 +266,6 @@
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">O carregamento \'%s\' falhou.</string>
     <string name="activity_start_failed">O sistema não tem um aplicativo instalado que possa executar esta ação.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[As imagens da câmera podem ser grandes. Você pode querer comprimir e redimensionar as imagens na pasta de mídia.]]></string>
     <string name="no_browser_notification">Nenhum navegador encontrado, por favor visite a página através de um computador ou celular.</string>
@@ -293,28 +290,7 @@
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
     <string name="title_whiteboard_pen_color">Cor da caneta.</string>
     <string name="title_whiteboard_editor">Editor de quadro branco</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Cards vazios encontrados. Por favor, execute Ferramentas>Cards Vazios.]]></string>
-    <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>
-    <string name="note_importer_error_first_field_matched">Primeiro campo correspondido: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Adicionada duplicata com o primeiro campo: %s</string>
-    <string name="note_importer_error_appeared_twice">Apareceu duas vezes no arquivo: %s</string>
-    <string name="note_importer_error_empty_notes">Uma ou mais notas não foram importadas, pois não geraram nenhum card. Isso pode acontecer quando você tem campos vazios ou quando você não colocou o conteúdo do arquivo de texto nos campos corretos.</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s tinha %2$d campos, esperado %3$d</string>
-    <string name="csv_importer_error_exception">Cancelado: %s</string>
     <string name="user_is_a_robot">Teste automático detectado. Se você é humano, entre em contato com o suporte do AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d nota adicionada.</item>
-        <item quantity="other">%d notas adicionadas.</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d nota atualizada.</item>
-        <item quantity="other">%d notas atualizadas.</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nota inalterada</item>
-        <item quantity="other">%d notas inalteradas.</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Este card usa recursos não suportados pelo AnkiDroid. Entre em contato com o desenvolvedor %1$s, ou veja a wiki. %2$s</string>
     <string name="invalid_json_data">Card forneceu dados inválidos. %s</string>
@@ -328,7 +304,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
     <string name="card_viewer_media_relative_protocol">Erro de conteúdo do card: Atualização de mídia necessária</string>
-    <string name="cannot_load_http_resource">Http não está disponível no momento</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
@@ -381,10 +356,6 @@
     <string name="check_network">Por favor verifique sua conexão de rede</string>
     <string name="search_using_deck_name">Pesquisar usando o nome do baralho</string>
     <string name="home">Início</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Movido para %s</string>
-    <string name="import_mapped_to_tags">Movido para Tags</string>
-    <string name="import_mapped_to_nothing">Ignorado</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Cartão enterrado</string>
     <string name="buried_note">Nota enterrada</string>
@@ -410,11 +381,22 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s Não é um pacote de addon javascript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="malicious_archive_entry_outside">Arquivo malicioso. Contém entrada fora da pasta alvo: %s</string>
+    <string name="malicious_archive_exceeds_limit">Arquivo malicioso. O tamanho excede %1$s ou contém mais de %2$d arquivos</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expandir tag \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Não foi possível acessar a coleção. Tente novamente!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

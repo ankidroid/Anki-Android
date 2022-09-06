@@ -19,24 +19,59 @@
 package com.ichi2.anki
 
 import anki.import_export.ImportResponse
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.pages.PagesActivity
+import com.ichi2.libanki.CollectionV16
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
+import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.importer.importCsvRaw
+import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
-import timber.log.Timber
 
-fun DeckPicker.importApkg(apkgPath: String) {
-    val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
-    catchingLifecycleScope(this) {
-        val report = col.opWithProgress({
-            if (it.hasImporting()) {
-                // TODO: show progress in GUI
-                Timber.i("%s", it.importing)
+fun DeckPicker.importApkgs(apkgPaths: List<String>) {
+    launchCatchingTask {
+        for (apkgPath in apkgPaths) {
+            val report = withProgress(
+                extractProgress = {
+                    if (progress.hasImporting()) {
+                        text = progress.importing
+                    }
+                },
+            ) {
+                undoableOp {
+                    importAnkiPackage(apkgPath)
+                }
             }
-        }) {
-            importAnkiPackage(apkgPath)
+            showSimpleMessageDialog(summarizeReport(col.tr, report))
         }
-        showSimpleMessageDialog(summarizeReport(col.tr, report))
+    }
+}
+
+@Suppress("BlockingMethodInNonBlockingContext") // ImportResponse.parseFrom
+suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
+    return withContext(Dispatchers.Main) {
+        val output = withProgress(
+            extractProgress = {
+                if (progress.hasImporting()) {
+                    text = progress.importing
+                }
+            },
+            op = { withCol { (this as CollectionV16).importCsvRaw(input) } }
+        )
+        val importResponse = ImportResponse.parseFrom(output)
+        undoableOp { importResponse }
+        MaterialDialog(this@importCsvRaw).show {
+            message(text = summarizeReport(col.tr, importResponse))
+            positiveButton(R.string.dialog_ok) {
+                this@importCsvRaw.finish()
+            }
+        }
+        output
     }
 }
 
@@ -59,22 +94,38 @@ private fun summarizeReport(tr: Translations, output: ImportResponse): String {
     return msgs.joinToString("\n")
 }
 
-fun DeckPicker.exportApkg(
+suspend fun AnkiActivity.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: Long?
+    deckId: DeckId?
 ) {
-    val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
-    catchingLifecycleScope(this) {
-        runInBackgroundWithProgress(col, {
-            if (it.hasExporting()) {
-                // TODO: show progress in GUI
-                Timber.i("%s", it.exporting)
+    withProgress(
+        extractProgress = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
             }
-        }) {
-            col.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+        },
+    ) {
+        withCol {
+            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+        }
+    }
+}
+
+suspend fun AnkiActivity.exportColpkg(
+    colpkgPath: String,
+    withMedia: Boolean,
+) {
+    withProgress(
+        extractProgress = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
+            }
+        },
+    ) {
+        withCol {
+            newBackend.exportCollectionPackage(colpkgPath, withMedia, true)
         }
     }
 }

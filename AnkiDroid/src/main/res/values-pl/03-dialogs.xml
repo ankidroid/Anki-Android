@@ -62,13 +62,6 @@
     <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
     <string name="tts_no_tts">Nie mów</string>
     <string name="unused_strings">\n\nNieużywane pliki:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Fiszki dla Androida</h2>AnkiDroid to komórkowy odpowiednik pudełka z fiszkami, w pełni kompatybilny z desktopową wersją programu <a href=\"%2$s\">Anki</a>. Karty z materiałem do nauki można tworzyć lub pobierać za pomocą zarówno AnkiDroida jak i wersji desktopowej Anki, a następnie łatwo synchronizować je pomiędzy tymi programami.]]></item>
-        <item><![CDATA[Aby pomóc nam ulepszać AnkiDroid, prosimy o zgłaszanie błędów do <a href=\"%1$s\">trackera</a>; pomysły na nowe funkcje są mile widziane. Możesz też poszukać odpowiedzi na <a href=\"%2$s\">naszej wiki</a> lub rozpocząć dyskusję na <a href=\"%3$s\">forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid jest <a href=\"%1$s\">oprogramowaniem open source<a/>, więc każdy może <a href=\"%2$s\">przyłączyć się</a> do jego twórców :-)]]></item>
-        <item><![CDATA[Humaniści także mogą pomóc. Na przykład możesz <a href=\"%1$s\">pomagać w tłumaczeniu</a> AnkiDroid, aktualizować wiki, dostarczać zrzuty ekranu lub rozwijać blog o AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid udostępniany jest na <a href=\"%1$s\">licencji GNU-GPL v3</a> a kod źródłowy znaleźć można <a href=\"%2$s\">na GitHubie</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Podgląd</string>
     <string name="reposition_card_dialog_title">Przestawianie nowej karty</string>
     <string name="reposition_card_dialog_message">Pozycja początkowa:</string>
@@ -147,6 +140,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nie</string>
     <string name="dialog_continue">Kontynuuj</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>
     <string name="dialog_positive_delete">Usuń</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -270,6 +264,7 @@
         <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
         <item quantity="other">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Liczba nowych kart do zobaczenia dziś w tej talii.</string>
     <string name="deck_picker_rev">Liczba kart do powtórki na dziś w tej talii.</string>
     <string name="deck_picker_lrn">Liczba kart w uczeniu się w tej talii.</string>
@@ -279,4 +274,7 @@
     <string name="deck_picker_counts">Otwórz stronę główną talii zawierającą liczbę kart do zobaczenia dzisiaj.</string>
     <string name="import_deck_package">Pakiet talii (.apkg)</string>
     <string name="import_collection_package">Pakiet kolekcji (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

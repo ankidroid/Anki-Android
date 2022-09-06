@@ -1,7 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
 package com.wildplot.android.rendering
 
-import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
@@ -17,7 +16,6 @@ internal class PieChartTestParametersBuilder(
     val startAngles: DoubleArray = DoubleArray(mNumberOfValues)
     val arcLengths: DoubleArray = DoubleArray(mNumberOfValues)
     val colors: Array<ColorWrap?> = arrayOfNulls(mNumberOfValues)
-    @KotlinCleanup(" Use .sum()")
     private fun calcSum(values: DoubleArray): Double {
         var sum = 0.0
         for (v in values) {
@@ -53,7 +51,7 @@ internal class PieChartTestParametersBuilder(
 
     init {
         require(values.isNotEmpty()) { "Empty array of values" }
-        require(mSum != 0.0) { String.format("All %d values are zero", values.size) }
+        require(mSum != 0.0) { "All ${values.size} values are zero" }
         calcArcLengths()
         calcStartAngles()
         fillColors()

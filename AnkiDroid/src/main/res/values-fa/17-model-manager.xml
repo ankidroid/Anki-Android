@@ -51,13 +51,13 @@
     <!--Rename-->
     <string name="rename_model">تغییر نام نوع یادداشت</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">تنظیم زبان راهنمایی به %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ویرایش فیلدها</string>
     <string name="model_field_editor_add">افزودن فیلد</string>
     <string name="model_field_editor_delete">حذف فیلد</string>
     <string name="model_field_editor_rename">تغییر نام فیلد</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">راهنمایی زبان کیبورد را تنظیم کن</string>
     <string name="model_field_editor_reposition_menu">تغییر مکان فیلد</string>
     <string name="model_field_editor_reposition">مکان فیلد(مقدار %1$d-%2$d را وارد کنید)</string>
     <string name="model_field_editor_toggle_sticky">ذخیرۀ آخرین متن ورودی هنگام افزودن کارت</string>
@@ -78,10 +78,10 @@
     <string name="card_template_browser_appearance_restore_default_dialog">بازگردانی به مقادیر پیش‌فرض؟</string>
     <string name="card_template_browser_appearance_saving_note">این تغییرات پس از ذخیرۀ قالب کارت اعمال خواهند شد</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">بازنویسی دسته (روشن)</string>
+    <string name="card_template_editor_deck_override_off">بازنویسی دسته (خاموش)</string>
+    <string name="model_manager_deck_override_added_message">تنظيم ‘%1$s’ دسته ی پیش فرض به ‘%2$s’</string>
+    <string name="model_manager_deck_override_removed_message">دسته ی پیش فرض برای ‘%s’ حذف شد</string>
+    <string name="deck_override_explanation">دسته ای را برای گزاشتن کارت های جدید ‘%s’ انتخاب کنید</string>
+    <string name="deck_picker_dialog_filter_decks">فیلتر دسته</string>
 </resources>

@@ -47,26 +47,26 @@
     <!-- generic strings -->
     <string name="disabled">Wyłączone</string>
     <string name="enabled">Włączone</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">No results</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">Ustawienia ogólne</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Przegląd</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tablica</string>
     <string name="pref_cat_appearance" maxLength="41">Wygląd</string>
-    <string name="pref_cat_appearance_summ">Zmiana tematów i czcionki domyślnej</string>
     <string name="pref_cat_themes" maxLength="41">Motywy</string>
     <string name="pref_cat_fonts" maxLength="41">Czcionki</string>
     <string name="pref_cat_gestures" maxLength="41">Gesty</string>
     <string name="pref_cat_controls" maxLength="41">Sterowanie</string>
     <string name="pref_cat_advanced" maxLength="41">Zaawansowane</string>
-    <string name="pref_cat_advanced_summ">Optymalizacja i funkcje eksperymentalne</string>
-    <string name="pref_cat_performance" maxLength="41">Wydajność</string>
     <string name="pref_cat_workarounds" maxLength="41">Obejścia</string>
     <string name="pref_cat_plugins" maxLength="41">Pluginy</string>
-    <string name="about_title" maxLength="41">O programie AnkiDroid</string>
-    <string name="about_version">Wersja: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Szerokość kreski</string>
     <string name="use_input_tag" maxLength="41">Wprowadź odpowiedź do karty</string>
@@ -123,15 +123,17 @@
     <string name="swipe_sensitivity" maxLength="41">Czułość przy przewijaniu</string>
     <string name="tts" maxLength="41">Przetwarzanie tekstu na mowę</string>
     <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Pobierz media przy synchronizacji</string>
     <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Nie zalogowany</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
@@ -179,16 +181,11 @@
     <string name="new_spread" maxLength="41">Pozycja nowych kart</string>
     <string name="learn_cutoff" maxLength="41">Limit nauki z wyprzedzeniem</string>
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Obsługa nowej strefy czasowej</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
-    <string name="day_offset_summ">XXX godzin po północy</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Północ</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">Planista V2</string>
-    <string name="sched_v2_summ">Włącz nową wersję planisty. Wymusza synchronizację w jednym kierunku podczas następnej synchronizacji</string>
-    <string name="sched_ver_toggle_title">Potwierdź</string>
-    <string name="sched_ver_1to2">Eksperymentalny planista może powodować nieprawidłowe planowanie. Upewnij się, że przeczytałeś wcześniej dokumentację. Kontynuować?</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
     <string name="convert_fen_text" maxLength="41">Obsługa notacji szachowej</string>
@@ -324,8 +321,15 @@
     <string name="no_code_formatting_summ">Naprawia ‘􏿾’ pojawiające się we wpisywanych odpowiedziach</string>
     <string name="type_in_answer_focus" maxLength="41">Zaznacz pole \"podaj odpowiedź\"</string>
     <string name="type_in_answer_focus_summ">Automatycznie zaznaczaj pole \"podaj odpowiedź\" w przeglądarce</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Dodaj gest</string>
     <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Dodaj klawisz</string>
@@ -342,4 +346,17 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Usuń \'%s\'</string>
     <string name="bindings_already_bound">Już przypisane do %s</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

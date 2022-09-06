@@ -20,16 +20,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
+import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
-import androidx.annotation.NonNull
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -46,6 +47,9 @@ import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
+import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
@@ -60,6 +64,8 @@ import org.robolectric.shadows.ShadowLog
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 open class RobolectricTest : CollectionGetter {
 
@@ -85,8 +91,10 @@ open class RobolectricTest : CollectionGetter {
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
 
+        ChangeManager.clearSubscribers()
+
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.getInstance().setColForTests(null)
+        CollectionHelper.instance.setColForTests(null)
 
         if (mTaskScheduler.shouldRunInForeground()) {
             runTasksInForeground()
@@ -115,7 +123,6 @@ open class RobolectricTest : CollectionGetter {
         return false
     }
 
-    @NonNull
     protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory {
         if (useInMemoryDatabase()) {
             Timber.w("Using in-memory database for test. Collection should not be re-opened")
@@ -142,11 +149,11 @@ open class RobolectricTest : CollectionGetter {
         mControllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.getInstance().colIsOpen()) {
-                CollectionHelper.getInstance().getCol(targetContext).debugEnsureNoOpenPointers()
+            if (CollectionHelper.instance.colIsOpen()) {
+                CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End")
+            CollectionHelper.instance.closeCollection(false, "RobolectricTest: End")
         } catch (ex: BackendException) {
             if ("CollectionNotOpen".equals(ex.message)) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -163,6 +170,7 @@ open class RobolectricTest : CollectionGetter {
 
             TimeManager.reset()
         }
+        runBlocking { CollectionManager.discardBackend() }
     }
 
     /**
@@ -182,7 +190,7 @@ open class RobolectricTest : CollectionGetter {
         mBackground = true
     }
 
-    protected fun clickDialogButton(button: DialogAction?, checkDismissed: Boolean) {
+    protected fun clickDialogButton(button: WhichButton?, checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
         if (checkDismissed) {
@@ -196,15 +204,12 @@ open class RobolectricTest : CollectionGetter {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
     protected fun getDialogText(checkDismissed: Boolean): String? {
-        val dialog: MaterialDialog? = ShadowDialog.getLatestDialog() as MaterialDialog
-        if (dialog == null || dialog.contentView == null) {
-            return null
-        }
+        val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.contentView!!.text.toString()
+        return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
@@ -220,6 +225,22 @@ open class RobolectricTest : CollectionGetter {
             Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
             Shadows.shadowOf(Looper.getMainLooper()).idle()
             Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
+        }
+
+        /**
+         * * Causes all of the [Runnable]s that have been scheduled to run while advancing the clock to the start time of the last scheduled Runnable.
+         * * Executes all posted tasks scheduled before or at the current time
+         *
+         * Supersedes and will eventually replace [advanceRobolectricLooper] and [advanceRobolectricLooperWithSleep]
+         */
+        fun advanceRobolectricUiLooper() {
+            Shadows.shadowOf(Looper.getMainLooper()).apply {
+                runToEndOfTasks()
+                idle()
+                // CardBrowserTest:browserIsInMultiSelectModeWhenSelectingAll failed on Windows CI
+                // This line was added and may or may not make a difference
+                runToEndOfTasks()
+            }
         }
 
         // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
@@ -286,29 +307,30 @@ open class RobolectricTest : CollectionGetter {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override fun getCol(): Collection {
-        try {
-            return CollectionHelper.getInstance().getCol(targetContext)
+    override val col: Collection
+        get() = try {
+            CollectionHelper.instance.getCol(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
-    }
 
     protected val collectionTime: MockTime
         get() = TimeManager.time as MockTime
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
-        CollectionHelper.LazyHolder.INSTANCE = object : CollectionHelper() {
-            override fun getCol(context: Context): Collection? {
-                return null
-            }
-        }
+        CollectionManager.closeCollectionBlocking()
+        CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
+            @Synchronized
+            override fun getCol(context: Context?): Collection? = null
+        })
+        CollectionManager.emulateOpenFailure = true
     }
 
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
-        CollectionHelper.LazyHolder.INSTANCE = CollectionHelper()
+        CollectionHelper.setInstanceForTesting(CollectionHelper())
+        CollectionManager.emulateOpenFailure = false
     }
 
     @Throws(JSONException::class)
@@ -329,11 +351,11 @@ open class RobolectricTest : CollectionGetter {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
     }
 
-    protected fun addNoteUsingBasicModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
-    protected fun addRevNoteUsingBasicModelDueToday(front: String?, back: String?): Note {
+    protected fun addRevNoteUsingBasicModelDueToday(front: String, back: String): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
@@ -342,22 +364,22 @@ open class RobolectricTest : CollectionGetter {
         return note
     }
 
-    protected fun addNoteUsingBasicAndReversedModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicAndReversedModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
-    protected fun addNoteUsingBasicTypedModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicTypedModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
-    protected fun addNoteUsingModelName(name: String?, vararg fields: String?): Note {
+    protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
         val model = col.models.byName((name)!!)
             ?: throw IllegalArgumentException(String.format("Could not find model '%s'", name))
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
-        for (i in 0 until fields.size) {
-            n.setField(i, fields[i])
+        for ((i, field) in fields.withIndex()) {
+            n.setField(i, field)
         }
         check(col.addNote(n) != 0) { String.format("Could not add note: {%s}", fields.joinToString(separator = ", ")) }
         return n
@@ -421,9 +443,9 @@ open class RobolectricTest : CollectionGetter {
     @Throws(InterruptedException::class)
     protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegateBase<Progress, Result>, timeoutMs: Int) {
         val completed = booleanArrayOf(false)
-        val listener: TaskListener<Progress, Result> = object : TaskListener<Progress, Result>() {
+        val listener: TaskListener<Progress, Result?> = object : TaskListener<Progress, Result?>() {
             override fun onPreExecute() {}
-            override fun onPostExecute(result: Result) {
+            override fun onPostExecute(result: Result?) {
                 require(!(result == null || !result.succeeded())) { "Task failed" }
                 completed[0] = true
                 val RobolectricTest = ReentrantLock()
@@ -496,12 +518,12 @@ open class RobolectricTest : CollectionGetter {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.`is`(expected.note().fields[0]))
+        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
-    @NonNull
     @CheckResult
-    protected fun openDialogFragmentUsingActivity(menu: DialogFragment?): FragmentTestActivity {
+    @KotlinCleanup("scope function")
+    protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
         val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
         val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
         activity.showDialogFragment(menu)
@@ -538,21 +560,19 @@ open class RobolectricTest : CollectionGetter {
         // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
         // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
         val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
+        val localBackendVersion = System.getenv("ANKIDROID_BACKEND_VERSION")
+        val supportedBackendVersion = BuildConfig.BACKEND_VERSION
         if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
+            if (BuildConfig.BACKEND_VERSION != localBackendVersion) {
                 throw java.lang.IllegalStateException(
-                    "AnkiDroid backend testing library requires an update.\n" +
-                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        })\n" +
-                        "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
-                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        }'"
+                    """
+                        AnkiDroid backend testing library requires an update.
+                        Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v$localBackendVersion)
+                        And then set $\0ANKIDROID_BACKEND_VERSION to $supportedBackendVersion
+                        Or to update you can just run the script: sh tools/setup-anki-backend.sh
+                        For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
+                        Error: $\0ANKIDROID_BACKEND_VERSION: expected '$supportedBackendVersion', got '$localBackendVersion
+                    """.trimIndent()
                 )
             }
             // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
@@ -565,13 +585,44 @@ open class RobolectricTest : CollectionGetter {
                 if (e.message.toString().contains("arm64e")) {
                     // Giving the commands to user to add the required env variables
                     val exception =
-                        "Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
-                            "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
-                            "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}\""
+                        """
+                            Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/$supportedBackendVersion and add the following environment variables to your device by using following commands: 
+                            export ANKIDROID_BACKEND_PATH={Path to the dylib file}
+                            export ANKIDROID_BACKEND_VERSION=$supportedBackendVersion
+                            Or to do setup automatically, run the script: sh tools/setup-anki-backend.sh
+                            For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
+                        """.trimIndent()
                     throw IllegalStateException(exception, e)
                 }
                 throw e
             }
+        }
+    }
+
+    /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
+     * takes care of updating the dispatcher used by CollectionManager as well.
+     * * An argument could be made for using [StandardTestDispatcher] and
+     * explicitly advanced coroutines with advanceUntilIdle(), but there are
+     * issues with using it at the moment:
+     * * - Any usage of CollectionManager with runBlocking() will hang. tearDown()
+     * calls runBlocking() twice, which prevents tests from finishing.
+     * - The hang is not limited to the scope of runTest(). Even if the runBlocking
+     * calls in tearDown() are selectively moved into this function,
+     * when a coroutine test fails, the next regular test
+     * that executes after it will call runBlocking(), and it then hangs.
+     *
+     * A fix for this might require either wrapping all tests in runTest(),
+     * or finding some other way to isolate the coroutine and non-coroutine tests
+     * on separate threads/processes.
+     * */
+    fun runTest(
+        context: CoroutineContext = EmptyCoroutineContext,
+        dispatchTimeoutMs: Long = 60_000L,
+        testBody: suspend TestScope.() -> Unit
+    ): TestResult {
+        kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs) {
+            CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+            testBody()
         }
     }
 }

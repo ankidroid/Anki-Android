@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">查找发音</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">发音失败</string>
+    <string name="multimedia_editor_only_one_word">一次只支持一个单词</string>
     <string name="multimedia_editor_word_search_try_lower_case">尝试仅使用小写字符</string>
     <string name="multimedia_editor_poweredbeolingus">由 Beolingus 提供支持</string>
     <!-- Field editing general -->

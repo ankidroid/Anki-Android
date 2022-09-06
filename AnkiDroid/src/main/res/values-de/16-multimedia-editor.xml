@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Schlage Aussprache nach</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Aussprache fehlgeschlagen</string>
+    <string name="multimedia_editor_only_one_word">Nur ein Wort auf einmal ist unterstützt.</string>
     <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es nur mit Kleinbuchstaben</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->

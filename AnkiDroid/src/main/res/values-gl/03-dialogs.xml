@@ -60,13 +60,6 @@
     <string name="initializing_tts">Iniciando TTS&#8230;</string>
     <string name="tts_no_tts">Non fales</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Cartóns Android</h2>AnkiDroid é unha aplicación de cartóns compatible co software de escritorio <a href=\"%2$s\">Anki</a>. Podes crear, descargar e aprender materias en ámbolos dous programas, e sincronizalos dun xeito doado co AnkiWeb.]]></item>
-        <item><![CDATA[Para axudarnos a facer o AnkiDroid mellor, por favor informa dos erros no <a href=\"%1$s\">seguimento de problemas</a>; ideas sobre novas características son benvidas. Atopa respostas na <a href=\"%2$s\">wiki</a> ou comeza unha conversa no <a href=\"%3$s\">foro</a>.]]></item>
-        <item><![CDATA[AnkiDroid é <a href=\"%1$s\">software de código aberto<a/>, polo que é animado a <a href=\"%2$s\">colaborar</a> :-)]]></item>
-        <item><![CDATA[Os que non son desenvolvedores tamén poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a traducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, ou blogar sobre AnkiDroid.]]></item>
-        <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vista previa</string>
     <string name="reposition_card_dialog_title">Reposicionar novo cartón</string>
     <string name="reposition_card_dialog_message">Posición inicial:</string>
@@ -133,6 +126,7 @@
     <string name="dialog_ok">Aceptar</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Continuar</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
     <string name="dialog_positive_delete">Eliminar</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -252,6 +246,7 @@
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -261,4 +256,7 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

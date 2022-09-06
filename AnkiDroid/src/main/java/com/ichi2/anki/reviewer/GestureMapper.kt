@@ -21,7 +21,6 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.cardviewer.TapGestureMode.Companion.fromPreference
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import kotlin.math.abs
 import kotlin.math.floor
@@ -39,7 +38,7 @@ class GestureMapper {
         // Else, when Robolectric executes in the CI it accesses AnkiDroidApp.getInstance before it exists #9173
         if (VIEW_CONFIGURATION == null) {
             // Set good default values for swipe detection
-            VIEW_CONFIGURATION = ViewConfiguration.get(AnkiDroidApp.getInstance())
+            VIEW_CONFIGURATION = ViewConfiguration.get(AnkiDroidApp.instance)
             DEFAULT_SWIPE_MIN_DISTANCE = VIEW_CONFIGURATION!!.scaledPagingTouchSlop
             DEFAULT_SWIPE_THRESHOLD_VELOCITY = VIEW_CONFIGURATION!!.scaledMinimumFlingVelocity
         }
@@ -142,14 +141,23 @@ class GestureMapper {
             }
         }
 
-        @KotlinCleanup("val")
-        // clamps the value from LOW-MID-HIGH
+        /**
+         * clamps the value from LOW-MID-HIGH
+         *
+         * @param value number between 0 and 3
+         * @return
+         * [TriState.HIGH] if `>=` 2.
+         *
+         * [TriState.MID] if between 1 and 2
+         *
+         * [TriState.LOW] if `<` 1
+         */
         private fun clamp(value: Double): TriState {
-            val `val` = floor(value)
-            if (`val` >= 2) {
+            val valueFloor = floor(value)
+            if (valueFloor >= 2) {
                 return TriState.HIGH
             }
-            return if (`val` < 1) {
+            return if (valueFloor < 1) {
                 TriState.LOW
             } else TriState.MID
         }

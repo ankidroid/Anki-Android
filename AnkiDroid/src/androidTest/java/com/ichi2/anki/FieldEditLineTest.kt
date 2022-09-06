@@ -16,60 +16,50 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
 
-@KotlinCleanup("is -> equalTo")
-@KotlinCleanup("use scope function")
 @RunWith(AndroidJUnit4::class)
 class FieldEditLineTest : NoteEditorTest() {
     @Test
     fun testSetters() {
-        val line = fieldEditLine
-
-        line.setContent("Hello", true)
-        line.name = "Name"
-        line.setOrd(5)
+        val line = fieldEditLine().apply {
+            setContent("Hello", true)
+            name = "Name"
+            setOrd(5)
+        }
         val text = line.editText
-        assertThat(text!!.ord, `is`(5))
-        assertThat(text.text.toString(), `is`("Hello"))
-        assertThat(line.name, `is`("Name"))
+        assertThat(text!!.ord, equalTo(5))
+        assertThat(text.text.toString(), equalTo("Hello"))
+        assertThat(line.name, equalTo("Name"))
     }
 
     @Test
     fun testSaveRestore() {
-        val toSave = fieldEditLine
-
-        toSave.setContent("Hello", true)
-        toSave.name = "Name"
-        toSave.setOrd(5)
-
+        val toSave = fieldEditLine().apply {
+            setContent("Hello", true)
+            name = "Name"
+            setOrd(5)
+        }
         val b = toSave.onSaveInstanceState()
 
-        val restored = fieldEditLine
+        val restored = fieldEditLine()
         restored.onRestoreInstanceState(b!!)
 
         val text = restored.editText
-        assertThat(text!!.ord, `is`(5))
-        assertThat(text.text.toString(), `is`("Hello"))
-        assertThat(toSave.name, `is`("Name"))
+        assertThat(text!!.ord, equalTo(5))
+        assertThat(text.text.toString(), equalTo("Hello"))
+        assertThat(toSave.name, equalTo("Name"))
     }
 
-    @KotlinCleanup("move this back to a method")
-    protected val fieldEditLine: FieldEditLine
-        get() {
-            val l = AtomicReference<FieldEditLine>()
-            mActivityRule.scenario.onActivity { a: NoteEditor? ->
-                l.set(
-                    FieldEditLine(
-                        a!!
-                    )
-                )
-            }
-            return l.get()
+    private fun fieldEditLine(): FieldEditLine {
+        val reference = AtomicReference<FieldEditLine>()
+        activityRule!!.scenario.onActivity { noteEditor: NoteEditor? ->
+            reference.set(FieldEditLine(noteEditor!!))
         }
+        return reference.get()
+    }
 }

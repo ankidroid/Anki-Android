@@ -54,7 +54,7 @@ object AdaptionUtil {
         }
     val isRunningUnderFirebaseTestLab: Boolean
         get() = try {
-            isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance().contentResolver)
+            isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
         } catch (e: Exception) {
             Timber.w(e)
             false
@@ -80,7 +80,7 @@ object AdaptionUtil {
             }
 
             // If we aren't a restricted device, any browser will do
-            if (!isRestrictedLearningDevice) {
+            if (!isXiaomiRestrictedLearningDevice) {
                 return true
             }
             // If we are a restricted device, only a system browser will do
@@ -112,8 +112,13 @@ object AdaptionUtil {
         }
     }
 
-    @JvmStatic
-    val isRestrictedLearningDevice by lazy {
+    /**
+     * True if the device is a Xiaomi of the "Archytas" or "Archimedes" series,
+     * as known as "Xiaomi AI teacher", which hasn't some features like a browser.
+     * See [#5867](https://github.com/ankidroid/Anki-Android/pull/5867)
+     * for the original issue and implementation.
+     */
+    val isXiaomiRestrictedLearningDevice by lazy {
         "Xiaomi".equals(Build.MANUFACTURER, ignoreCase = true) &&
             ("Archytas".equals(Build.PRODUCT, ignoreCase = true) || "Archimedes".equals(Build.PRODUCT, ignoreCase = true))
     }
@@ -123,7 +128,7 @@ object AdaptionUtil {
     }
 
     private val isRunningMiui by lazy {
-        val ctx: Context = AnkiDroidApp.getInstance()
+        val ctx: Context = AnkiDroidApp.instance
         (
             isIntentResolved(ctx, Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT)) ||
                 isIntentResolved(ctx, Intent().setComponent(ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"))) ||

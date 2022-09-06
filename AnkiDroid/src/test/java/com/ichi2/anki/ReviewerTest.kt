@@ -22,6 +22,7 @@ import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.preferences.PreferenceUtils
 import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
@@ -29,7 +30,7 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.PreferenceUtils
+import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -41,9 +42,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import java.lang.Exception
 import java.util.*
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
-import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
@@ -64,7 +65,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNull("Collection should have been null", reviewer.col) } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertThrowsSubclass<Exception> { reviewer.col } } }
     }
 
     @Test
@@ -155,7 +156,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     @Synchronized
     @Throws(ConfirmModSchemaException::class)
-    fun testMultipleCards() {
+    fun testMultipleCards() = runTest {
         addNoteWithThreeCards()
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = collectionTime
@@ -184,7 +185,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun testLrnQueueAfterUndo() {
+    fun testLrnQueueAfterUndo() = runTest {
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = TimeManager.time as MockTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
@@ -228,7 +229,7 @@ class ReviewerTest : RobolectricTest() {
 
         val decks = col.decks
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
         val didA = addDeck("A")
@@ -244,7 +245,7 @@ class ReviewerTest : RobolectricTest() {
         val decks = col.decks
 
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -285,9 +286,8 @@ class ReviewerTest : RobolectricTest() {
         assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
     }
 
-    private fun undo(reviewer: Reviewer) {
+    private suspend fun undo(reviewer: Reviewer) {
         reviewer.undo()
-        waitForAsyncTasksToComplete()
     }
 
     @Suppress("SameParameterValue")

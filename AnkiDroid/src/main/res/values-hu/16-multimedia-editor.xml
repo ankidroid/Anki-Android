@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Keresés a kiejtésre</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Fordítás sikertelen</string>
+    <string name="multimedia_editor_only_one_word">Egyszerre csak egy szó támogatott</string>
     <string name="multimedia_editor_word_search_try_lower_case">Próbálj csak kisbetűs karaktereket használni</string>
     <string name="multimedia_editor_poweredbeolingus">A Beolingus által</string>
     <!-- Field editing general -->

@@ -24,6 +24,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
 
@@ -166,7 +167,6 @@ class AutomaticAnswer(
      * If enabled in preferences, call [AutomaticallyAnswered.automaticShowAnswer]
      * after a user-specified duration, plus an additional delay for media
      */
-    @JvmOverloads
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceAnswer) return
@@ -177,7 +177,6 @@ class AutomaticAnswer(
      * If enabled in preferences, call [AutomaticallyAnswered.automaticShowQuestion]
      * after a user-specified duration, plus an additional delay for media
      */
-    @JvmOverloads
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceQuestion) return
@@ -249,7 +248,7 @@ class AutomaticAnswerSettings(
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
-            selectedDid: Long
+            selectedDid: DeckId
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck

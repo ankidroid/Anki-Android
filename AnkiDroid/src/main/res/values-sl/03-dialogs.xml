@@ -62,13 +62,6 @@
     <string name="initializing_tts">Začenjanje TTS-a &#8230;</string>
     <string name="tts_no_tts">Bodite tiho</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Pomnilne kartice za Android</h2>AnkiDroid je program za pomnilne kartice, ki je v celoti združljiv z namiznim programom <a href=\"%2$s\">Anki</a>. Snov lahko ustvarjate, prejmete in se jo naučite tako v AnkiDroidu kot namiznem Ankiju in jo enostavno sinhronizirate z AnkiWebom.]]></item>
-        <item><![CDATA[Da ga nam pomagate izboljšati, prijavite hrošče v <a href=\"%1$s\">sledilniku težav</a>; nove zamisli o značilnostih so tudi dobrodošle. Odgovore poiščite v <a href=\"%2$s\">wikiju</a> ali začnite razpravo v <a href=\"%3$s\">forumu</a>.]]></item>
-        <item><![CDATA[AnkiDroid je <a href=\"%1$s\">odprtokodna programska oprema<a/>, tako da spodbujamo vsakogar, ki želi <a href=\"%2$s\">prispevati</a> :-)]]></item>
-        <item><![CDATA[Poleg razvijalcev lahko pomagajo tudi ostali. Na primer lahko ga <a href=\"%1$s\">pomagate prevesti</a>, posodobiti wiki, priskrbeti zaslonske slike ali o njem blogati.]]></item>
-        <item><![CDATA[AnkiDroid je izdan pod <a href=\"%1$s\">dovoljenjem GNU-GPL v3</a> in izvorna koda je na voljo <a href=\"%2$s\">na GitHubu</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Predogled</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
@@ -147,6 +140,7 @@
     <string name="dialog_ok">V redu</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Nadaljuj</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Ustvari</string>
     <string name="dialog_positive_delete">Izbriši</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -270,6 +264,7 @@
         <item quantity="few">An automatic sync may be triggered in %d seconds</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -279,4 +274,7 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

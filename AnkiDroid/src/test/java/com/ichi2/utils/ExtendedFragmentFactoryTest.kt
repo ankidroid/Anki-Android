@@ -25,7 +25,6 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
-import javax.annotation.Nonnull
 
 class ExtendedFragmentFactoryTest {
 
@@ -89,7 +88,6 @@ class ExtendedFragmentFactoryTest {
     }
 
     companion object {
-        @Nonnull
         private val fakeClassLoader: ClassLoader = MockFragmentClassLoader()
     }
 }

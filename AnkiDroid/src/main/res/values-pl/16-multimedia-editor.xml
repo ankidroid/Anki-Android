@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Sprawdzanie wymowy</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Wymowa nie udała się</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">Spróbuj użyć tylko małych liter</string>
     <string name="multimedia_editor_poweredbeolingus">Dostarczone przez Beolingus</string>
     <!-- Field editing general -->

@@ -59,13 +59,6 @@
     <string name="initializing_tts">TTS 초기화 중...</string>
     <string name="tts_no_tts">말하지 마십시오</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>안드로이드용 플래시카드 암기 앱</h2>AnkiDroid는 데스크탑 버전<a href=\"%2$s\">Anki</a>과 완벽하게 호환되는 플래시카드 어플리케이션입니다. AnkiDroid와 데스크탑용 Anki 모두에서 카드를 생성, 학습, 다운로드할 수 있으며 쉽게 동기화할 수 있습니다.]]></item>
-        <item><![CDATA[AnkiDroid를 향상시키기 위해, 사용 중 발생한 문제점을 <a href=\"%1$s\">이슈 트래커</a>로 알려주세요. 새로운 기능이나 아이디어도 환영합니다. <a href=\"%2$s\">위키</a>에서 해답을 찾거나 <a href=\"%3$s\">포럼</a>에서 의견을 나눠보세요.]]></item>
-        <item><![CDATA[AnkiDroid는 <a href=\"%1$s\">오픈 소스 소프트웨어<a/>입니다. 누구든지 참여해 <a href=\"%2$s\">기여자</a>가 되세요 :-)]]></item>
-        <item><![CDATA[개발자가 아니어도 AnkiDroid 향상에 기여할 수 있습니다. 예를 들어, <a href=\"%1$s\">번역을 돕거나, 위키를 업데이트하거나, 스크린샷을 제공하거나, 기부</a>를 하거나, AnkiDroid에 대한 블로그를 작성하실 수 있습니다.]]></item>
-        <item><![CDATA[AnkiDroid는 <a href=\"%1$s\">GNU GPL v3 라이센스</a> 하에 배포되고 있습니다. 소스 코드는 <a href=\"%2$s\">GitHub</a>에서 확인할 수 있습니다.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">미리보기</string>
     <string name="reposition_card_dialog_title">새 카드 위치 변경</string>
     <string name="reposition_card_dialog_message">시작 위치:</string>
@@ -126,6 +119,7 @@
     <string name="dialog_ok">확인</string>
     <string name="dialog_no">아니요</string>
     <string name="dialog_continue">계속하기</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">만들기</string>
     <string name="dialog_positive_delete">삭제</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -243,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d초 안에 자동으로 동기화될 수 있습니다.</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">이 뭉치에서 볼 수 있는 새 카드 수입니다.</string>
     <string name="deck_picker_rev">이 뭉치에서 오늘까지 예정된 카드의 수입니다.</string>
     <string name="deck_picker_lrn">이 뭉치에서 학습 중인 카드 수입니다.</string>
@@ -252,4 +247,7 @@
     <string name="deck_picker_counts">오늘 공부할 카드의 개요 페이지를 엽니다.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

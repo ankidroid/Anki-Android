@@ -25,6 +25,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
+import com.ichi2.anki.servicelayer.RemovedPreferences
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.testutils.EmptyApplication
@@ -45,7 +46,8 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     private lateinit var mPrefs: SharedPreferences
 
     @Before
-    fun before() {
+    override fun setUp() {
+        super.setUp()
         mPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
     }
 
@@ -169,5 +171,17 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         assertThat(mPrefs.getString("dayTheme", "1"), equalTo("1"))
         assertThat(mPrefs.getString("nightTheme", "1"), equalTo("3"))
         assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+    }
+
+    @Test
+    fun `Custom collection sync URL preference contains full path after upgrade`() {
+        mPrefs.edit {
+            putString(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE, "http://foo")
+        }
+
+        PreferenceUpgrade.UpgradeCustomCollectionSyncUrl().performUpgrade(mPrefs)
+
+        assertThat(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE), equalTo(false))
+        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), equalTo("http://foo/sync/"))
     }
 }

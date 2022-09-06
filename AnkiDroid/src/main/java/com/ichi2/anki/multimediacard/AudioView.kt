@@ -374,8 +374,8 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     }
 
     init {
-        mPlayer.setOnStoppingListener { status = Status.STOPPED }
-        mPlayer.setOnStoppedListener { notifyStop() }
+        mPlayer.onStoppingListener = { status = Status.STOPPED }
+        mPlayer.onStoppedListener = { notifyStop() }
         mAudioRecorder.setOnRecordingInitializedHandler { status = Status.INITIALIZED }
         mContext = context
         mResPlayImage = resPlay

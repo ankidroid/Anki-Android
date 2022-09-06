@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</string>
     <string name="override_font_always">همیشه</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">پیروی از سیستم</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">روشن</string>
     <string name="day_theme_plain">ساده و بی رنگ</string>
@@ -81,13 +81,13 @@
     <string name="night_theme_black">سیاه</string>
     <string name="night_theme_dark">تیره</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-کوچک</string>
+    <string name="html_size_code_x_small">x-کوچک</string>
+    <string name="html_size_code_small">کوچک</string>
+    <string name="html_size_code_medium">متوسط</string>
+    <string name="html_size_code_large">بزرگ</string>
+    <string name="html_size_code_x_large">x-بزرگ</string>
+    <string name="html_size_code_xx_large">xx-بزرگ</string>
     <!-- gestures_labels -->
     <string name="gesture_answer_1">دكمه پاسخ 1</string>
     <string name="gesture_answer_2">دكمه پاسخ 2</string>
@@ -101,18 +101,18 @@
     <string name="gesture_flag_orange">پرچم نارنجی</string>
     <string name="gesture_flag_green">پرچم سبز</string>
     <string name="gesture_flag_blue">پرچم آبی</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">تغییر وضعیت پرچم صورتی</string>
+    <string name="gesture_flag_turquoise">تغییر وضعیت پرچم نیلی</string>
+    <string name="gesture_flag_purple">تغییر وضعیت پرچم بنفش</string>
     <string name="gesture_flag_remove">حذف پرچم</string>
     <string name="gesture_page_up">بالا بردن صفحه</string>
     <string name="gesture_page_down">پایین بردن صفحه</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="gesture_abort_sync">یادگیری را متوقف کن و همگام شو</string>
+    <string name="gesture_toggle_whiteboard">تغییر وضعیت تخته سفید</string>
+    <string name="gesture_show_hint">نمایش راهنما</string>
+    <string name="gesture_show_all_hints">همه ی راهنما ها را نمایش بده</string>
+    <string name="record_voice">ضبط صدا</string>
+    <string name="replay_voice">صدا را دوباره پخش کن</string>
+    <string name="automatic_answer_option_2">سخت(خوب است اگر در دسترس نبود)</string>
+    <string name="automatic_answer_option_4">آسان (خوب است اگر در دسترس نبود)</string>
 </resources>

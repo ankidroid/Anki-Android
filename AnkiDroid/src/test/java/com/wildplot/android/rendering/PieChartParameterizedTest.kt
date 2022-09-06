@@ -2,7 +2,6 @@
 package com.wildplot.android.rendering
 
 import android.graphics.Color
-import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.rendering.PieChartTest.Companion.createRectangleMock
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap
@@ -41,17 +40,13 @@ class PieChartParameterizedTest {
     lateinit var colors: Array<ColorWrap>
 
     @Mock
-    @KotlinCleanup("lateinit")
     var graphics: GraphicsWrap? = null
 
     @Mock
-    @KotlinCleanup("lateinit")
     var plot: PlotSheet? = null
 
-    @KotlinCleanup("lateinit")
     var pieChart: PieChart? = null
 
-    @KotlinCleanup("lateinit")
     private var colorMockedStatic: MockedStatic<Color>? = null
 
     @Before
@@ -94,12 +89,11 @@ class PieChartParameterizedTest {
 
     companion object {
         private const val PRECISION = (2 * 1E-3f).toDouble()
-        private fun closeTo(v: Double): FloatMatcher {
+        private fun closeTo(v: Double): (argument: Float) -> Boolean {
             return FloatMatcher.closeTo(v, PRECISION)
         }
 
         @Parameterized.Parameters
-        @KotlinCleanup("listOf")
         @JvmStatic
         fun data(): Collection<Array<Any>> {
             return createParametersCollection(
@@ -155,7 +149,6 @@ class PieChartParameterizedTest {
             return d
         }
 
-        @KotlinCleanup("Arrays.fill")
         private fun equalValues(numberOfValues: Int): DoubleArray {
             val v = DoubleArray(numberOfValues)
             Arrays.fill(v, 1.0)

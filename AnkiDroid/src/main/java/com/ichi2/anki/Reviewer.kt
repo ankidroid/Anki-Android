@@ -53,6 +53,7 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
 import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
@@ -91,6 +92,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.update
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
@@ -146,11 +148,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { result: T ->
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
                 resources.getQuantityString(toastResourceId, cardCount, cardCount), true
@@ -250,9 +252,11 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (card == null) {
             return
         }
-        toggleMark(card.note())
-        refreshActionBar()
-        onMarkChanged()
+        launchCatchingTask {
+            toggleMark(card.note())
+            refreshActionBar()
+            onMarkChanged()
+        }
     }
 
     private fun onMarkChanged() {
@@ -266,21 +270,30 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (card == null) {
             return
         }
-        card.setUserFlag(flag)
-        card.flush()
-        refreshActionBar()
-        /* Following code would allow to update value of {{cardFlag}}.
-           Anki does not update this value when a flag is changed, so
-           currently this code would do something that anki itself
-           does not do. I hope in the future Anki will correct that
-           and this code may becomes useful.
+        launchCatchingTask {
+            card.setUserFlag(flag)
+            if (BackendFactory.defaultLegacySchema) {
+                card.flush()
+                /* Following code would allow to update value of {{cardFlag}}.
+               Anki does not update this value when a flag is changed, so
+               currently this code would do something that anki itself
+               does not do. I hope in the future Anki will correct that
+               and this code may becomes useful.
 
-        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
-        if (sDisplayAnswer) {
-            displayCardAnswer();
-        } else {
-            displayCardQuestion();
-            } */onFlagChanged()
+            card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
+            if (sDisplayAnswer) {
+                displayCardAnswer();
+            } else {
+                displayCardQuestion();
+                } */
+            } else {
+                withCol {
+                    newBackend.setUserFlagForCards(listOf(card.id), flag)
+                }
+            }
+            refreshActionBar()
+            onFlagChanged()
+        }
     }
 
     private fun onFlagChanged() {
@@ -566,15 +579,13 @@ open class Reviewer : AbstractFlashcardViewer() {
         super.blockControls(quick)
     }
 
-    @KotlinCleanup("tempAudioPath!!")
     override fun closeReviewer(result: Int, saveDeck: Boolean) {
         // Stop the mic recording if still pending
-        if (audioView != null) {
-            audioView!!.notifyStopRecord()
-        }
+        audioView?.notifyStopRecord()
+
         // Remove the temporary audio file
-        if (tempAudioPath != null) {
-            val tempAudioPathToDelete = File(tempAudioPath!!)
+        tempAudioPath?.let {
+            val tempAudioPathToDelete = File(it)
             if (tempAudioPathToDelete.exists()) {
                 tempAudioPathToDelete.delete()
             }
@@ -688,9 +699,14 @@ open class Reviewer : AbstractFlashcardViewer() {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
-        val intent = Intent(this, CardInfo::class.java)
+        val intent = if (BackendFactory.defaultLegacySchema) {
+            Intent(this, CardInfo::class.java).apply {
+                putExtra("cardId", mCurrentCard!!.id)
+            }
+        } else {
+            com.ichi2.anki.pages.CardInfo.getIntent(this, mCurrentCard!!.id)
+        }
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra("cardId", mCurrentCard!!.id)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
@@ -1062,7 +1078,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (actionBar != null) {
             if (mPrefShowETA) {
                 mEta = sched!!.eta(counts, false)
-                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), (mEta * 60).toLong()))
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.instance, (mEta * 60).toLong()))
             }
         }
         mNewCount = SpannableString(counts.new.toString())
@@ -1075,7 +1091,6 @@ open class Reviewer : AbstractFlashcardViewer() {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
@@ -1283,7 +1298,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Show / hide the Action bar together with the status bar
         val prefs = AnkiDroidApp.getSharedPrefs(a)
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimaryDark)
+        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimary)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)
@@ -1387,7 +1402,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override val currentCardId: Long?
+    override val currentCardId: CardId?
         get() = mCurrentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

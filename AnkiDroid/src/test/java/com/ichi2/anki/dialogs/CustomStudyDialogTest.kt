@@ -15,11 +15,13 @@
  */
 package com.ichi2.anki.dialogs
 
+import androidx.core.view.get
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -29,6 +31,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
+import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
@@ -68,7 +71,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         scenario.onFragment { f: CustomStudyDialog ->
             val dialog = f.dialog as MaterialDialog?
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            dialog!!.getActionButton(DialogAction.POSITIVE).callOnClick()
+            dialog!!.getActionButton(WhichButton.POSITIVE).callOnClick()
         }
         val customStudy = col.decks.current()
         MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isDyn)
@@ -92,7 +95,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.`is`(expected))
+        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
     }
 
     @Test

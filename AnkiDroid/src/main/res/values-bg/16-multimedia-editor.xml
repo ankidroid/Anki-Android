@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Търси произношение</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Произношение е неуспешно</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">Опитайте се да използвате само малки букви</string>
     <string name="multimedia_editor_poweredbeolingus">Осъществено чрез Beolingus</string>
     <!-- Field editing general -->

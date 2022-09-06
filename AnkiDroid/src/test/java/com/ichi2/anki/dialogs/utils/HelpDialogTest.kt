@@ -15,13 +15,19 @@
  */
 package com.ichi2.anki.dialogs.utils
 
+import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RunInBackground
 import com.ichi2.anki.dialogs.HelpDialog.createInstance
 import com.ichi2.anki.dialogs.HelpDialog.createInstanceForSupportAnkiDroid
 import com.ichi2.anki.dialogs.RecursivePictureMenu
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil.Companion.getRecyclerViewFor
+import com.ichi2.utils.IntentUtil
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -32,18 +38,43 @@ class HelpDialogTest : RobolectricTest() {
     @Test
     @RunInBackground
     fun testMenuDoesNotCrash() {
-        val dialog = createInstance(targetContext) as RecursivePictureMenu
-        super.openDialogFragmentUsingActivity(dialog)
+        val dialog = createInstance() as RecursivePictureMenu
+        openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        MatcherAssert.assertThat(v.childCount, Matchers.`is`(4))
+        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(4))
     }
 
     @Test
     @RunInBackground
     fun testMenuSupportAnkiDroidDoesNotCrash() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
-        super.openDialogFragmentUsingActivity(dialog)
+        openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        MatcherAssert.assertThat(v.childCount, Matchers.`is`(5))
+        // to make the test more flexible, calculate the expected menu items count by actually
+        // checking what intents are available on the test environment
+        val expectedCount = if (IntentUtil.canOpenIntent(targetContext, AnkiDroidApp.getMarketIntent(targetContext))) {
+            6 // +1 because the "Rate" menu item should be shown as Play Store app is available on the system
+        } else {
+            5 // the default value for support dialog menu items count
+        }
+        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedCount))
+    }
+
+    @Test
+    @RunInBackground
+    fun testMenuSupportAnkiDroidShowsRateWhenPossible() {
+        mockkStatic(IntentUtil::canOpenIntent)
+        every { IntentUtil.canOpenIntent(targetContext, any()) } returns true
+        val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
+        openDialogFragment(dialog)
+        val v = getRecyclerViewFor(dialog)
+        // 6 because the option to rate the app is possible on the device
+        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(6))
+        unmockkStatic(IntentUtil::canOpenIntent)
+    }
+
+    @SuppressLint("CheckResult") // openDialogFragmentUsingActivity
+    private fun openDialogFragment(dialog: RecursivePictureMenu) {
+        super.openDialogFragmentUsingActivity(dialog)
     }
 }

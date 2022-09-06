@@ -18,7 +18,7 @@ package com.ichi2.anki.reviewer
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.Gesture
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -39,14 +39,14 @@ class BindingTest {
     fun unicodeKeyIsLoaded() {
         val binding = unicodeCharacter('a')
 
-        assertThat(binding.unicodeCharacter, `is`('a'))
+        assertThat(binding.unicodeCharacter, equalTo('a'))
     }
 
     @Test
     fun keycodeIsLoaded() {
         val binding = keyCode(KeyEvent.KEYCODE_A)
 
-        assertThat(binding.keycode, `is`(KeyEvent.KEYCODE_A))
+        assertThat(binding.keycode, equalTo(KeyEvent.KEYCODE_A))
     }
 
     @Test
@@ -66,7 +66,7 @@ class BindingTest {
     @Test
     fun testUnknownToString() {
         // This seems sensible - serialising an unknown will mean that nothing is saved.
-        assertThat(Binding.unknown().toString(), `is`(""))
+        assertThat(Binding.unknown().toString(), equalTo(""))
     }
 
     private fun testModifierKeys(name: String, event: KFunction1<KeyEvent, Boolean>, getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>) {
@@ -78,8 +78,8 @@ class BindingTest {
             val bindings = Binding.key(mock)
 
             for (binding in bindings) {
-                assertThat("Should match when '$name:$returnedFromMock': ", getValue(binding.modifierKeys!!, true), `is`(returnedFromMock))
-                assertThat("Should match when '$name:${!returnedFromMock}': ", getValue(binding.modifierKeys!!, false), `is`(!returnedFromMock))
+                assertThat("Should match when '$name:$returnedFromMock': ", getValue(binding.modifierKeys!!, true), equalTo(returnedFromMock))
+                assertThat("Should match when '$name:${!returnedFromMock}': ", getValue(binding.modifierKeys!!, false), equalTo(!returnedFromMock))
             }
         }
 

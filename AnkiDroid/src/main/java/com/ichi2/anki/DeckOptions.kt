@@ -27,14 +27,10 @@ import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
 import android.text.TextUtils
-import android.view.KeyEvent
-import android.view.MenuItem
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask
@@ -63,16 +59,14 @@ import java.util.*
 @KotlinCleanup("IDE lint")
 @KotlinCleanup("All java.lang. methods")
 class DeckOptions :
-    AppCompatPreferenceActivity() {
+    AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
     private lateinit var mDeck: Deck
-    private var mUnmountReceiver: BroadcastReceiver? = null
     private lateinit var mPref: DeckPreferenceHack
 
-    inner class DeckPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
-        val mSummaries: MutableMap<String, String?> = HashMap()
-        lateinit var progressDialog: MaterialDialog
+    inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
+        @Suppress("Deprecation")
+        lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
         val deckOptions: DeckOptions
@@ -80,7 +74,7 @@ class DeckOptions :
 
         @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
-        fun cacheValues() {
+        override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
                 mOptions = col.decks.confForDid(mDeck.getLong("id"))
@@ -152,20 +146,12 @@ class DeckOptions :
             return DeckConfig.parseTimerOpt(options, true)
         }
 
-        inner class Editor : SharedPreferences.Editor {
-            private var mUpdate = ContentValues()
-
-            override fun clear(): SharedPreferences.Editor {
-                Timber.d("clear()")
-                mUpdate = ContentValues()
-                return this
-            }
-
+        inner class Editor : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("DeckOptions - commit() changes back to database")
 
                 try {
-                    for ((key, value) in mUpdate.valueSet()) {
+                    for ((key, value) in update.valueSet()) {
                         Timber.i("Change value for key '%s': %s", key, value)
 
                         when (key) {
@@ -263,11 +249,9 @@ class DeckOptions :
                                     e.log()
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    MaterialDialog.Builder(this@DeckOptions)
-                                        .content(R.string.full_sync_confirmation)
-                                        .positiveText(R.string.dialog_ok)
-                                        .negativeText(R.string.dialog_cancel)
-                                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                                    MaterialDialog(this@DeckOptions).show {
+                                        message(R.string.full_sync_confirmation)
+                                        positiveButton(R.string.dialog_ok) {
                                             col.modSchemaNoCheck()
                                             try {
                                                 remConf()
@@ -276,7 +260,8 @@ class DeckOptions :
                                                 throw RuntimeException(cmse)
                                             }
                                         }
-                                        .build().show()
+                                        negativeButton(R.string.dialog_cancel)
+                                    }
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
@@ -384,56 +369,6 @@ class DeckOptions :
                 return true
             }
 
-            override fun putBoolean(key: String, value: Boolean): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putFloat(key: String, value: Float): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putInt(key: String, value: Int): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putLong(key: String, value: Long): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putString(key: String, value: String?): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun remove(key: String): SharedPreferences.Editor {
-                Timber.d("Editor.remove(key=%s)", key)
-                mUpdate.remove(key)
-                return this
-            }
-
-            override fun apply() {
-                commit()
-            }
-
-            // @Override On Android 1.5 this is not Override
-            override fun putStringSet(arg0: String, arg1: Set<String>?): SharedPreferences.Editor? {
-                // TODO Auto-generated method stub
-                return null
-            }
-
-            @Suppress("unused")
-            @KotlinCleanup("maybe remove this")
-            val deckPreferenceHack: DeckPreferenceHack
-                get() = this@DeckPreferenceHack
-
-            fun confChangeHandler(): ConfChangeHandler {
-                return ConfChangeHandler(this@DeckPreferenceHack)
-            }
-
             /**
              * Remove the currently selected options group
              */
@@ -445,59 +380,14 @@ class DeckOptions :
                 TaskManager.launchCollectionTask(CollectionTask.ConfRemove(mOptions), confChangeHandler())
                 mDeck.put("conf", 1)
             }
-        }
 
-        override fun contains(key: String): Boolean {
-            return mValues.containsKey(key)
+            private fun confChangeHandler(): ConfChangeHandler {
+                return ConfChangeHandler(this@DeckPreferenceHack)
+            }
         }
 
         override fun edit(): Editor {
             return Editor()
-        }
-
-        override fun getAll(): Map<String, *> {
-            return mValues
-        }
-
-        override fun getBoolean(key: String, defValue: Boolean): Boolean {
-            return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
-        }
-
-        override fun getFloat(key: String, defValue: Float): Float {
-            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
-        }
-
-        override fun getInt(key: String, defValue: Int): Int {
-            return this.getString(key, Integer.toString(defValue))!!.toInt()
-        }
-
-        override fun getLong(key: String, defValue: Long): Long {
-            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
-        }
-
-        override fun getString(key: String, defValue: String?): String? {
-            Timber.d("getString(key=%s, defValue=%s)", key, defValue)
-            return if (!mValues.containsKey(key)) {
-                defValue
-            } else mValues[key]
-        }
-
-        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            mListeners.add(listener)
-        }
-
-        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            mListeners.remove(listener)
-        }
-
-        // @Override On Android 1.5 this is not Override
-        override fun getStringSet(arg0: String, arg1: Set<String>?): Set<String>? {
-            // TODO Auto-generated method stub
-            return null
-        }
-
-        init {
-            cacheValues()
         }
     }
 
@@ -589,15 +479,6 @@ class DeckOptions :
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    @Deprecated("Deprecated in Java") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            closeWithResult()
-            return true
-        }
-        return false
-    }
-
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
     @Deprecated("Deprecated in Java") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen, preference: Preference): Boolean {
@@ -611,16 +492,7 @@ class DeckOptions :
         return false
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("DeckOptions - onBackPressed()")
-            closeWithResult()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-    private fun closeWithResult() {
+    override fun closeWithResult() {
         if (prefChanged) {
             setResult(RESULT_OK)
         } else {
@@ -628,14 +500,6 @@ class DeckOptions :
         }
         finish()
         ActivityTransitionAnimation.slide(this, FADE)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
@@ -773,24 +637,6 @@ class DeckOptions :
             }
             return count
         }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (SdCardReceiver.MEDIA_EJECT == intent.action) {
-                    finish()
-                }
-            }
-        }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
-    }
 
     private fun restartActivity() {
         recreate()

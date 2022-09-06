@@ -35,12 +35,5 @@ data class TreeNode<T : Any>(val value: T) {
         }
     }
 
-    /** UNSAFE. Casts the tree to [U] */
-    @KotlinCleanup("should be removable after DeckPicker is converted")
-    @Suppress("UNUSED_PARAMETER")
-    fun <U : Any> unsafeCastToType(unused: Class<U>): TreeNode<U> {
-        return unsafeCastToType()
-    }
-
     override fun toString(): String = "$value, $children"
 }

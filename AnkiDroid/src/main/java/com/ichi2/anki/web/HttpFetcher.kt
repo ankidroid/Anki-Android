@@ -86,7 +86,6 @@ object HttpFetcher {
     }
 
     @JvmStatic
-    @JvmOverloads
     fun fetchThroughHttp(address: String?, encoding: String? = "utf-8"): String {
         Timber.d("fetching %s", address)
         var response: Response? = null

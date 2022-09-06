@@ -60,6 +60,11 @@
         </intent>
     </queries>
 
+    <!--
+       Attribute usesCleartextTraffic, added in API 23 and false by default if targeting API >= 28,
+       is ignored on Android 7 (API 24) and above if networkSecurityConfig is present.
+       https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic
+    -->
     <application
         android:name="com.ichi2.anki.AnkiDroidApp"
         android:label="@string/app_name"
@@ -75,12 +80,18 @@
         android:preserveLegacyExternalStorage="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
+        android:theme="@style/Theme_Light"
         >
         <activity android:name=".DrawingActivity"
             android:label="@string/drawing"
             android:exported="false"
             android:configChanges="keyboardHidden|locale|orientation|screenSize|uiMode"
             />
+        <activity
+            android:name="com.ichi2.anki.pages.PagesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
@@ -206,6 +217,13 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             android:parentActivityName=".DeckPicker"
             >
+            <intent-filter android:label="@string/card_browser">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "anki://x-callback-url/browser” -->
+                <data android:scheme="anki" android:host="x-callback-url" android:path="/browser"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ModelBrowser"
@@ -243,7 +261,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
         <activity
-            android:name="com.ichi2.anki.Preferences"
+            android:name="com.ichi2.anki.preferences.Preferences"
             android:label="@string/settings"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
@@ -269,7 +287,7 @@
             />
         <activity
             android:name="com.ichi2.anki.Info"
-            android:label="@string/about_title"
+            android:label="@string/pref_cat_about_title"
             android:exported="false"
             android:configChanges="locale|uiMode"
             />
@@ -374,6 +392,19 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name="com.ichi2.anki.LoginActivity"
+            android:label="@string/menu_my_account"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            />
+        <!-- TODO: Fix LockedOrientationActivity - introduction_layout.xml -->
+        <activity android:name=".IntroductionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="userPortrait"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            tools:ignore="LockedOrientationActivity" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />

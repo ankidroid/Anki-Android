@@ -47,26 +47,26 @@
     <!-- generic strings -->
     <string name="disabled">Вимкнено</string>
     <string name="enabled">Ввімкнено</string>
+    <string name="pref_summary_seconds">%s сек</string>
+    <string name="pref_summary_minutes">%s хв</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">Немає результатів</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Загальні</string>
-    <string name="pref_cat_general_summ">Основні налаштування</string>
+    <string name="pref_cat_studying" maxLength="41">Навчання</string>
+    <string name="pref_cat_system_wide" maxLength="41">Загальносистемні</string>
     <string name="pref_cat_reviewing" maxLength="41">Навчання</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронізація</string>
+    <string name="pref_cat_scheduling" maxLength="41">Планування</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Зовнішній вигляд</string>
-    <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
     <string name="pref_cat_themes" maxLength="41">Теми</string>
     <string name="pref_cat_fonts" maxLength="41">Шрифти</string>
     <string name="pref_cat_gestures" maxLength="41">Жести</string>
     <string name="pref_cat_controls" maxLength="41">Керування</string>
     <string name="pref_cat_advanced" maxLength="41">Розширені налаштування</string>
-    <string name="pref_cat_advanced_summ">Оптимізація та експериментальні функції</string>
-    <string name="pref_cat_performance" maxLength="41">Продуктивність</string>
     <string name="pref_cat_workarounds" maxLength="41">Спеціальні функції</string>
     <string name="pref_cat_plugins" maxLength="41">Плагіни</string>
-    <string name="about_title" maxLength="41">Про AnkiDroid</string>
-    <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Ширина штриха</string>
     <string name="use_input_tag" maxLength="41">Введіть відповідь на картці</string>
@@ -123,16 +123,18 @@
     <string name="swipe_sensitivity" maxLength="41">Чутливість проведення пальцем</string>
     <string name="tts" maxLength="41">Синтез мовлення</string>
     <string name="tts_summ">Читає питання та відповіді, якщо відсутній аудіофайл</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Завантажувати медіафайли</string>
     <string name="sync_fetch_missing_media_summ">Автоматично завантажувати відсутні медіафайли під час синхронізації</string>
     <string name="sync_account" maxLength="41">Профіль AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
+    <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
+    <string name="metered_sync_summary">Якщо вимкнено, то вас буде попереджено коли ви спробуєте синхронізувати при вимірюваному Інтернет підключенні</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
@@ -180,16 +182,11 @@
     <string name="new_spread" maxLength="41">Позиція нових карток</string>
     <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
-    <string name="time_limit_summ">XXX хв.</string>
     <string name="new_timezone" maxLength="41">Обробка нового часового поясу</string>
     <string name="day_offset_with_description" maxLength="41">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
-    <string name="day_offset_summ">XXX год.</string>
+    <string name="day_offset_summary">%s годин після опівночі</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Північ</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">Планувальник V2</string>
-    <string name="sched_v2_summ">Увімкнути новий планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>
-    <string name="sched_ver_toggle_title">Підтвердити</string>
-    <string name="sched_ver_1to2">Експериментальний планувальник може спричинити неправильне планування. Переконайтеся, що ви сперше прочитали документацію. Продовжити?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не вимикати екран</string>
     <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>
     <string name="convert_fen_text" maxLength="41">Підтримка шахової нотації</string>
@@ -207,8 +204,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
+    <string name="accessibility" maxLength="41">Доступність</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
     <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
@@ -237,7 +234,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">URL Media-даних</string>
     <string name="custom_sync_server_media_url_invalid">Непрацююче посилання для синхронізації медіа</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Клавіатура</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Прив\'язування команд</string>
     <!-- studyoptions -->
@@ -325,12 +322,19 @@
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
     <string name="type_in_answer_focus" maxLength="41">Перемкнути на «Вводити відповідь»</string>
     <string name="type_in_answer_focus_summ">Під час повторення автоматично переходити до поля «Ввести відповідь»</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Відкрити список змін</string>
+    <string name="pref_cat_about_title" maxLength="41">Про програму</string>
+    <string name="contributors_title">Учасники</string>
+    <string name="about_contributors_description"><![CDATA[Це наші дивовижні <a href=\"%1$s\">учасники</a>. Ви теж можете допомогти AnkiDroid шляхом програмування, перекладу, пожертвуванням і <a href=\"%2$s\">іншим</a>!]]></string>
+    <string name="license">Ліцензія</string>
+    <string name="license_description"><![CDATA[AnkiDroid випущений під <a href=\"%1$s\">GPL-3.0</a> і <a href=\"%2$s\">AGPL-3.0</a> ліцензією, з вихідним кодом доступним <a href=\"%3$s\">на GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Ви можете підтримати розробку AnkiDroid <a href=\"%1$s\">внеском</a>. Будь-яка сума глибоко цінується.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Додати жест</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Замінити жест</string>
     <string name="binding_add_key">Додати ключ</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Замінити клавішу</string>
     <string name="key_picker_default_press_key">Натисніть клавішу</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону карти</string>
@@ -343,4 +347,17 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Видалити \'%s\'</string>
     <string name="bindings_already_bound">Вже прив\'язано до %s</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">Експериментальні</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Ввімкнути \'%s\'</string>
+    <string name="use_rust_backend_title" maxLength="41">Використовувати новий бекенд</string>
+    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Використовувати v3 планувальник </string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>
+    <string name="disable_dev_options">Вимкнути параметри розробника</string>
+    <string name="dev_options_warning">        Будь ласка, переконайтесь, що дійсно бажаєте ввімкнути параметрів розробника. Ці параметри небезпечні й можуть зламати програму або зіпсувати вашу колекцію.\n\nЗверніть увагу, що ці опції не підходять для більшості користувачів, тому не перекладені, так що текст в них англійською мовою.
+    </string>
 </resources>

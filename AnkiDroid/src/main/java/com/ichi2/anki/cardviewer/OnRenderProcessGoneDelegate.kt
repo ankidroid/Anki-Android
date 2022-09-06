@@ -21,11 +21,11 @@ import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.libanki.CardId
 import timber.log.Timber
 
 /**
@@ -40,7 +40,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
      * Last card that the WebView Renderer crashed on.
      * If we get 2 crashes on the same card, then we likely have an infinite loop and want to exit gracefully.
      */
-    private var mLastCrashingCardId: Long? = null
+    private var mLastCrashingCardId: CardId? = null
 
     /** Fix: #5780 - WebView Renderer OOM crashes reviewer  */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -125,18 +125,19 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    protected open fun displayRenderLoopDialog(currentCardId: Long, detail: RenderProcessGoneDetail) {
+    protected open fun displayRenderLoopDialog(currentCardId: CardId, detail: RenderProcessGoneDetail) {
         val cardInformation = java.lang.Long.toString(currentCardId)
         val res = target.resources
         val errorDetails = if (detail.didCrash()) res.getString(R.string.webview_crash_unknwon_detailed) else res.getString(R.string.webview_crash_oom_details)
-        MaterialDialog.Builder(target)
-            .title(res.getString(R.string.webview_crash_loop_dialog_title))
-            .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
-            .positiveText(R.string.dialog_ok)
-            .cancelable(false)
-            .canceledOnTouchOutside(false)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> onCloseRenderLoopDialog() }
-            .show()
+        MaterialDialog(target).show {
+            title(R.string.webview_crash_loop_dialog_title)
+            message(text = res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+            positiveButton(R.string.dialog_ok) {
+                onCloseRenderLoopDialog()
+            }
+            cancelable(false)
+            cancelOnTouchOutside(false)
+        }
     }
 
     /**
@@ -153,7 +154,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
         return !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
-    private fun webViewRendererLastCrashedOnCard(cardId: Long): Boolean =
+    private fun webViewRendererLastCrashedOnCard(cardId: CardId): Boolean =
         mLastCrashingCardId != null && mLastCrashingCardId == cardId
 
     private fun canRecoverFromWebViewRendererCrash(): Boolean =

@@ -71,12 +71,12 @@
         <item quantity="other">დარჩა %d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">დარჩა %1$d საათი %2$d</item>
+        <item quantity="other">დარჩა %1$d საათი %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">დარჩა %1$d დღე %2$d</item>
+        <item quantity="other">დარჩა %1$d დღე %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
@@ -101,18 +101,18 @@
     <string name="move_all_to_deck">ყველას გადატანა დასტაში</string>
     <string name="unbury">გამოჩენა</string>
     <string name="rename_deck">დასტის სახელის შეცვლა</string>
-    <string name="create_shortcut">shortcut-ის შექმნა</string>
+    <string name="create_shortcut">სწრაფი ბმულის შექმნა</string>
     <string name="browse_cards">ბარათების ძიება</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">დამატება</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">დამატება</string>
     <string name="menu_add_note">დაამატე შენიშვნა</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">აქაუნთის სინქრონიზაცია</string>
     <string name="menu_dismiss_note">დამალვა / წაშლა</string>
     <string name="menu_bury_card">ბარათის დამალვა</string>
-    <string name="menu_bury_note">ჩანიშვნის დამალვა</string>
-    <string name="menu_suspend_card">ბარათის შეჩერება</string>
-    <string name="menu_suspend_note">ჩანიშვნის შეჩერება</string>
+    <string name="menu_bury_note">შენიშვნის დამალვა</string>
+    <string name="menu_suspend_card">ბარათის გამოტოვება</string>
+    <string name="menu_suspend_note">შენიშვნის გამოტოვება</string>
     <string name="menu_bury">დამალვა</string>
-    <string name="menu_suspend">შეჩერება</string>
+    <string name="menu_suspend">გამოტოვება</string>
     <string name="menu_delete_note">შენიშვნის წაშლა</string>
     <string name="menu_flag">დროშა</string>
     <string name="menu_flag_card">დროშის მიმაგრება</string>
@@ -127,8 +127,8 @@
     <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
     <string name="menu_search">მონახულება %1$s-ში</string>
-    <string name="menu_mark_note">ჩანიშვნა</string>
-    <string name="menu_unmark_note">ჩანიშვნის გაუქმება</string>
+    <string name="menu_mark_note">მონიშნე შენიშვნა</string>
+    <string name="menu_unmark_note">შენიშვნის გაუქმება</string>
     <string name="menu_toggle_mic_tool_bar">გამოთქმის შემოწმება</string>
     <string name="new_deck">დასტის შექმნა</string>
     <string name="new_dynamic_deck">ფილტრირებული დასტის შექმნა</string>
@@ -175,7 +175,7 @@
     <string name="studyoptions_congrats_custom">ნორმალური გეგმის გარეთ სასწავლად, დააჭირეთ \"ინდივიდუალური სწავლის\" ღილაკს</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
-    <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებები. (%1$s)</string>
+    <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებული ადგილი. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
     <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
     <string name="continue_sync">სინქრონიზაციის გაგრძელება</string>
@@ -204,7 +204,7 @@
         <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
     </plurals>
     <string name="invalid_template">ბარათი ვერ გენერირდება</string>
-    <string name="card_template_editor_would_delete_note">კარტის ტიპის გაუქმებამ შესაძლოა გამოიწვიოს ერთი ან რამდენიმე ჩანიშვნის წაშლა. გთხოვთ ჯერ შექმნათ და შეინახოთ ბარათის ახალი ტიპი.</string>
+    <string name="card_template_editor_would_delete_note">ბარათის ტიპის გაუქმებამ შესაძლოა გამოიწვიოს ერთი ან რამდენიმე შენიშვნის წაშლა. გთხოვთ ჯერ შექმნათ და შეინახოთ ბარათის ახალი ტიპი.</string>
     <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
     <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
     <!-- Card Browser Appearance -->
@@ -214,7 +214,7 @@
     <string name="card_info_title">ბარათის ინფო</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">წაკითხვა და ჩაწერა AnkiDroid-ის მონაცემთა ბაზაში</string>
-    <string name="read_write_permission_description">წვდომა არსებულ ჩანიშვნებთან, ბარათებთან, ჩანიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
+    <string name="read_write_permission_description">წვდომა არსებულ შენიშვნებთან, ბარათებთან, შენიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ბარათების საძიებო</string>
     <string name="context_menu_anki_card_label">Anki Card</string>

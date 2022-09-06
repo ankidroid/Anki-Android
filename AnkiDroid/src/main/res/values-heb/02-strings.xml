@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת מגירה</string>
     <string name="drawer_close">סגירת מגירה</string>
@@ -89,7 +87,7 @@
         <item>תשובה</item>
         <item>קלף</item>
         <item>חפיסה</item>
-        <item>הערה</item>
+        <item>פתק</item>
         <item>שאלה</item>
         <item>תגים</item>
         <item>מעידות</item>
@@ -101,6 +99,9 @@
         <item>נוצר</item>
         <item>רשומה השתנתה</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">שינוי מגבלת קלפים חדשים להיום</string>
     <string name="custom_study_increase_review_limit">שינוי מגבלת קלפים לחזרה להיום</string>
@@ -110,14 +111,14 @@
     <string name="custom_study_preview_new">מעבר מקדים על כרטסיות חדשות</string>
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ערוך הערה</string>
+    <string name="cardeditor_title_edit_card">ערוך רשומה</string>
     <string name="discard_unsaved_changes">סגור ולאבד קלט הנוכחי?</string>
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
     <string name="note_editor_no_cards_created_all_fields">לסוג הרשומה הנוכחי אין כרטיסים. \n אנא בחר סוג רשומה אחר, או הקש על \'כרטיסים\' והוסף חלופת שדה</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">השלמת החסר פועלת רק בכרטיסים מסוג \'השלם את החסר\'</string>
-    <string name="saving_facts">שמירת הערה</string>
+    <string name="saving_facts">שמירת רשומה</string>
     <string name="saving_model">שומר סוג רשומה</string>
     <string name="save">שמירה</string>
     <string name="close">סגירה</string>
@@ -169,9 +170,9 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">האם להוסיף \"%s\" לאוסף? זה עשוי להימשך זמן רב</item>
+        <item quantity="two">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
+        <item quantity="many">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
         <item quantity="other">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
     </plurals>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>
@@ -184,14 +185,12 @@
 נסו לפנות מקום בזיכרון המכשיר. לחילופין, סנכרון טופס פחות מקום מייבוא. ניתן לנסות לבצע את הייבוא במכשיר אחר, עם יותר נפח זיכרון, ולעשות סנכרון של המכשיר הנוכחי איתו.</string>
     <string name="import_log_file_cache_cleared">שגיאה בייבוא קובץ, נראה שהמטמון נוקה באמצע התהליך.\nאנא נסה שנית</string>
     <string name="import_succeeded_but_check_database">ייבוא הנתונים הצליח אבל תהליך הניקוי שלאחר הייבוא נכשל. יש להפעיל בדיקת מסד נתונים בהמשך. הגורם: %s</string>
-    <string name="import_error_unhandled_request">לא ניתן לעבד בקשת ייבוא</string>
     <string name="import_error_corrupt_zip">קובץ ה־apkg פגום. נא למחוק ולהוריד אותו מחדש.\n\nגורם: %s</string>
-    <string name="import_error_exception">ייבוא החבילה נכשל\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache()‎ נכשלה (כנראה שנגמר המקום)</string>
-    <string name="import_error_unhandled_scheme">ייבוא שלא טופל מאת: „%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">נבחרו קבצי colpkg מרובים.</string>
     <string name="import_error_colpkg_apkg">הן apkg &amp; וקבצי colpkg נבחרו בבת אחת.</string>
     <string name="import_stats_error">ארעו כמה שגיאות במהלך ייבוא הקבצים הבאים:\n%s</string>
@@ -282,17 +281,15 @@
     <string name="filtered_deck_name">חפיסה מסוננת</string>
     <string name="reminder_title">לא לשכוח ללמוד היום!</string>
     <plurals name="reminder_text">
-        <item quantity="one">קלף אחד לשינון בעוד</item>
-        <item quantity="two">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d כרטיסים לשינון ב־%1$s</item>
+        <item quantity="one">קלף אחד לשינון בעוד %1$s</item>
+        <item quantity="two">%2$d קלפים לשינון בעוד %1$s</item>
+        <item quantity="many">%2$d קלפים לשינון בעוד %1$s</item>
         <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">הטעינה של ‚%s’ נכשלה.</string>
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
     <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
@@ -317,34 +314,7 @@
     <string name="white_board_image_saved">תמונת לוח נשמרה ל %s</string>
     <string name="title_whiteboard_pen_color">צבע עט ללוח</string>
     <string name="title_whiteboard_editor">עורך לוח</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[נמצאו קלפים ריקים. נא להריץ כלים>קלפים ריקים]]></string>
-    <string name="note_importer_error_empty_first_field">שדה ראשון ריק: %s</string>
-    <string name="note_importer_error_first_field_matched">שדה ראשון תואם: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">נוספה עם כפילות בשדה הראשון: %s</string>
-    <string name="note_importer_error_appeared_twice">מופיע פעמיים בקובץ: %s</string>
-    <string name="note_importer_error_empty_notes">הערה אחת או יותר לא הובאו מאחר והן לא יצרו שום קלף. זה קורה כאשר יש שדות ריקים או כאשר לא בוצע מיפוי של התוכן בקובץ טקסט לשדות המתאימים. </string>
-    <string name="csv_importer_error_invalid_field_count">ל %1$s יש %2$d שדות, צריך %3$d</string>
-    <string name="csv_importer_error_exception">בוטל: %s</string>
     <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d הערה נוספה</item>
-        <item quantity="two">%d notes added</item>
-        <item quantity="many">%d הערות נוספו</item>
-        <item quantity="other">%d הערות נוספו</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d הערה עודכנה</item>
-        <item quantity="two">%d notes updated</item>
-        <item quantity="many">%d הערות עודכנו</item>
-        <item quantity="other">%d הערות עודכנו</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d הערה ללא שינוי</item>
-        <item quantity="two">%d notes unchanged</item>
-        <item quantity="many">%d הערות ללא שינוי</item>
-        <item quantity="other">%d הערות ללא שינוי</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">קלף זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
     <string name="invalid_json_data">הקלף מכיל תוכן לא תקין. %s</string>
@@ -358,7 +328,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
     <string name="card_viewer_media_relative_protocol">תקלה בתוכן הקלף: נדרש עדכון מדיה</string>
-    <string name="cannot_load_http_resource">טעינת משאבי http אינה נתמכת עוד</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
@@ -411,14 +380,10 @@
     <string name="check_network">נא בדוק את החיבור לרשת</string>
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="home">בית</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">מופה ל%s</string>
-    <string name="import_mapped_to_tags">מופה לתגיות</string>
-    <string name="import_mapped_to_nothing">התעלמו</string>
     <!-- Reviewer actions -->
     <string name="buried_card">קלף נקבר</string>
-    <string name="buried_note">הערה נקברה</string>
-    <string name="deleted_note">הערה נמחקה </string>
+    <string name="buried_note">רשומה נקברה</string>
+    <string name="deleted_note">רשומה נמחקה</string>
     <string name="suspended_card">קלף הוקפא</string>
     <string name="suspended_note">רשומה הוקפאה</string>
     <!--  Note Editor Toggle Sticky  -->
@@ -446,5 +411,16 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">הרחב את התג \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">הגישה לאוסף נכשלה. בבקשה נסה שוב!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

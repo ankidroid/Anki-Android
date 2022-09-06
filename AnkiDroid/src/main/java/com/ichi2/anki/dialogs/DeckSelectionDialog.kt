@@ -30,18 +30,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.CollectionGetter
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
@@ -73,6 +72,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         isCancelable = true
     }
 
+    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = LayoutInflater.from(activity)
             .inflate(R.layout.deck_picker_dialog, null, false)
@@ -94,15 +94,24 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
-        var builder = MaterialDialog.Builder(requireActivity())
-            .neutralText(R.string.dialog_cancel)
-            .customView(dialogView, false)
-        if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-            builder = builder.negativeText(R.string.restore_default).onNegative { _: MaterialDialog?, _: DialogAction? -> onDeckSelected(null) }
+        val args = requireArguments()
+        if (args.containsKey("currentDeckId")) {
+            val did = args.getLong("currentDeckId")
+            recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
-        mDialog = builder.build()
+        mDialog = MaterialDialog(requireActivity())
+            .neutralButton(R.string.dialog_cancel) // Shouldn't it be negative button?
+            .customView(view = dialogView, noVerticalPadding = true)
+        if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
+            (mDialog as MaterialDialog).negativeButton(R.string.restore_default) {
+                onDeckSelected(null)
+            }
+        }
         return mDialog!!
     }
+
+    private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
+        decks.indexOfFirst { it.deckId == did }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
         return arguments.getString(SUMMARY_MESSAGE)
@@ -227,10 +236,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
         inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
             var deckName: String = ""
+            var deckID: Long = -1L
 
             fun setDeck(deck: SelectableDeck) {
                 deckName = deck.name
                 deckTextView.text = deck.displayName
+                deckID = deck.deckId
             }
 
             init {
@@ -238,7 +249,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     selectDeckByNameAndClose(deckName)
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
-                    showSubDeckDialog(deckName)
+                    if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
+                        showThemedToast(context, R.string.cannot_create_subdeck_for_all_decks, true)
+                    } else {
+                        showSubDeckDialog(deckName)
+                    }
                     true
                 }
             }
@@ -275,6 +290,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             return DecksFilter()
         }
 
+        fun getCurrentlyDisplayedDecks(): List<SelectableDeck> {
+            return mCurrentlyDisplayedDecks
+        }
+
         private inner class DecksFilter : TypedFilter<SelectableDeck>(mAllDecksList) {
             override fun filterResults(constraint: CharSequence, items: List<SelectableDeck>): List<SelectableDeck> {
                 val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
@@ -305,7 +324,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * @param name Name of the deck, or localization of "all decks"
      */
     @Parcelize
-    class SelectableDeck(val deckId: Long, val name: String) : Comparable<SelectableDeck>, Parcelable {
+    class SelectableDeck(val deckId: DeckId, val name: String) : Comparable<SelectableDeck>, Parcelable {
         /**
          * The name to be displayed to the user. Contains
          * only the sub-deck name with proper indentation
@@ -338,7 +357,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
             @JvmStatic
-            @JvmOverloads
             fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
                 val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)

@@ -38,9 +38,9 @@ import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
 import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
-import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +50,6 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-import java.util.Locale
 
 /**
  * Activity to load pronunciation files from Beolingus.
@@ -148,7 +147,7 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
      * @param v Start of the story.
      */
     private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
-        if (!Connection.isOnline) {
+        if (!NetworkUtils.isOnline) {
             showToast(gtxt(R.string.network_no_connection))
             return
         }
@@ -204,10 +203,12 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
                 failNoPronunciation()
                 return
             }
-            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source)
+            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source.trim())
             if (mPronunciationAddress.contentEquals("no")) {
                 failNoPronunciation()
-                if (!source.lowercase(Locale.getDefault()).contentEquals(source)) {
+                if (source.contains(" ")) {
+                    showToastLong(gtxt(R.string.multimedia_editor_only_one_word))
+                } else if (source.any { it.isUpperCase() }) {
                     showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
                 }
                 return

@@ -5,7 +5,6 @@ import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
-import com.ichi2.anki.lint.rules.ConstantJavaFieldDetector
 import com.ichi2.anki.lint.rules.CopyrightHeaderExists
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
@@ -17,14 +16,12 @@ import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
 import com.ichi2.anki.lint.rules.DuplicateTextInPreferencesXml
 import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength
-import com.ichi2.anki.lint.rules.InconsistentAnnotationUsage
+import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.KotlinMigrationBrokenEmails
 import com.ichi2.anki.lint.rules.KotlinMigrationFixLineBreaks
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
-import com.ichi2.anki.lint.rules.NonPublicNonStaticJavaFieldDetector
-import com.ichi2.anki.lint.rules.PreferIsEmptyOverSizeCheck
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.VariableNamingDetector
 
@@ -44,15 +41,12 @@ class IssueRegistry : IssueRegistry() {
                 DirectToastMakeTextUsage.ISSUE,
                 DuplicateCrowdInStrings.ISSUE,
                 DuplicateTextInPreferencesXml.ISSUE,
-                InconsistentAnnotationUsage.ISSUE,
+                HardcodedPreferenceKey.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
                 KotlinMigrationBrokenEmails.ISSUE,
                 KotlinMigrationFixLineBreaks.ISSUE,
-                PreferIsEmptyOverSizeCheck.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
-                NonPublicNonStaticJavaFieldDetector.ISSUE,
-                ConstantJavaFieldDetector.ISSUE,
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,

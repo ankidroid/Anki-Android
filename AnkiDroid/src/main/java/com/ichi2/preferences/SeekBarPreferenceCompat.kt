@@ -37,14 +37,26 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.withStyledAttributes
 import androidx.preference.DialogPreference
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("fix IDE lint issues")
-class SeekBarPreferenceCompat : DialogPreference {
+@NeedsTest("removing JvmOverloads should fail")
+class SeekBarPreferenceCompat
+@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.SeekBarPreferenceCompat
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.dialogPreferenceStyle,
+    defStyleRes: Int = R.style.Preference_DialogPreference
+) : DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
+
     @KotlinCleanup("make it a lateinit var")
     private var mSuffix: String? = null
     private var mDefault = 0
@@ -59,21 +71,7 @@ class SeekBarPreferenceCompat : DialogPreference {
     @StringRes
     private var mYLabel = 0
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        setupVariables(attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        setupVariables(attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setupVariables(attrs)
-    }
-
-    constructor(context: Context) : super(context)
-
-    private fun setupVariables(attrs: AttributeSet?) {
+    init {
         mSuffix = attrs?.getAttributeValue(androidns, "text")
         mDefault = attrs?.getAttributeIntValue(androidns, "defaultValue", 0) ?: 0
         mMax = attrs?.getAttributeIntValue(androidns, "max", 100) ?: 100
@@ -81,6 +79,18 @@ class SeekBarPreferenceCompat : DialogPreference {
         mInterval = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1) ?: 1
         mXLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0) ?: 0
         mYLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0) ?: 0
+
+        context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
+            val useSimpleSummaryProvider = getBoolean(R.styleable.CustomPreference_useSimpleSummaryProvider, false)
+            if (useSimpleSummaryProvider) {
+                setSummaryProvider { value.toString() }
+            }
+
+            val summaryFormat = getString(R.styleable.CustomPreference_summaryFormat)
+            if (summaryFormat != null) {
+                setSummaryProvider { String.format(summaryFormat, value) }
+            }
+        }
     }
 
     @Suppress("DEPRECATION")
@@ -157,7 +167,7 @@ class SeekBarPreferenceCompat : DialogPreference {
             }
         }
 
-        protected fun onValueUpdated() {
+        private fun onValueUpdated() {
             mValueText!!.text = preference.valueText
         }
 
@@ -166,6 +176,7 @@ class SeekBarPreferenceCompat : DialogPreference {
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
+            preference.notifyChanged() // to reload the summary with summaryProvider
             this.dialog!!.dismiss()
         }
 

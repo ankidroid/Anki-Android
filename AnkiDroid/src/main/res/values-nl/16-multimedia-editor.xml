@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Opzoeken van uitspraak</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Uitspraak mislukt</string>
+    <string name="multimedia_editor_only_one_word">Er wordt slechts één woord per keer ondersteund</string>
     <string name="multimedia_editor_word_search_try_lower_case">Probeer alleen kleine letters te gebruiken</string>
     <string name="multimedia_editor_poweredbeolingus">Aangedreven door Beolingus</string>
     <!-- Field editing general -->
@@ -94,7 +95,7 @@
     <string name="multimedia_editor_progress_wait_title">Wachten</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVG\'s zijn niet beschikbaar voor voorbeeldweergave</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Multimedia-inhoud toevoegen aan het %1$s-veld</string>
     <string name="multimedia_editor_attach_media">Voeg media toe</string>

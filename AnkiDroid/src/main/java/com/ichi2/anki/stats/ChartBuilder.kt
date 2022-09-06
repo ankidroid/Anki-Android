@@ -18,6 +18,7 @@ package com.ichi2.anki.stats
 import android.R
 import android.graphics.Paint
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
@@ -28,7 +29,7 @@ import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
 import timber.log.Timber
 import kotlin.math.*
 
-class ChartBuilder(private val chartView: ChartView, private val collectionData: Collection, private val deckId: Long, private val chartType: ChartType) {
+class ChartBuilder(private val chartView: ChartView, private val collectionData: Collection, private val deckId: DeckId, private val chartType: ChartType) {
     private var mMaxCards = 0
     private var mBackwards = false
     private lateinit var mValueLabels: IntArray
@@ -55,7 +56,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             else -> {}
         }
         mCumulative = stats.cumulative
-        mSeriesList = stats.seriesList
+        mSeriesList = stats.seriesList!!
         val metaData = stats.metaInfo
         mBackwards = metaData[2] as Boolean
         mValueLabels = metaData[3] as IntArray
@@ -80,7 +81,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             return null
         }
         val rect = RectangleWrap(width, height)
-        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData)?.standardTextSize ?: 10f) * 0.85f
+        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData).standardTextSize) * 0.85f
         paint.textSize = textSize
         val fontHeight = paint.textSize
         val desiredPixelDistanceBetweenTicks = (paint.measureText("100000") * 2.6f).roundToInt()
@@ -93,7 +94,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
         val backgroundColor = getColorFromAttr(chartView.context, R.attr.colorBackground)
         plotSheet.setBackgroundColor(ColorWrap(backgroundColor))
         val textColor = getColorFromAttr(chartView.context, R.attr.textColor)
-        plotSheet.setTextColor(ColorWrap(textColor))
+        plotSheet.textColor = ColorWrap(textColor)
         plotSheet.setIsBackwards(mBackwards)
         if (chartType == ChartType.CARDS_TYPES) {
             return createPieChart(plotSheet)
@@ -155,9 +156,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             length-- // there is data in hourly breakdown that is never used (even in Anki-Desktop)
         }
         for (i in 1 until length) {
-            val bars = arrayOfNulls<DoubleArray>(2)
-            bars[0] = mSeriesList[0]
-            bars[1] = mSeriesList[i]
+            val bars = arrayOf(mSeriesList[0], mSeriesList[i])
             var usedPlotSheet = plotSheet
             var barThickness = STARTING_BAR_THICKNESS
             if (chartType == ChartType.HOURLY_BREAKDOWN || chartType == ChartType.WEEKLY_BREAKDOWN) {

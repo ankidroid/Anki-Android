@@ -28,7 +28,6 @@ import android.view.AbsSavedState
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
@@ -43,7 +42,6 @@ import com.ichi2.ui.AnimationUtil.expandView
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
-@KotlinCleanup("fix IDE lint issues")
 @KotlinCleanup("check which properties could be made not nullable")
 class FieldEditLine : FrameLayout {
     var editText: FieldEditText? = null
@@ -55,7 +53,7 @@ class FieldEditLine : FrameLayout {
         private set
     private var mExpandButton: ImageButton? = null
     private var mName: String? = null
-    private var mExpansionState: ExpansionState? = null
+    private var mExpansionState = ExpansionState.EXPANDED
     private var mEnableAnimation = true
 
     constructor(context: Context) : super(context) {
@@ -70,10 +68,6 @@ class FieldEditLine : FrameLayout {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init()
-    }
-
     @KotlinCleanup("move to init {}")
     private fun init() {
         LayoutInflater.from(context).inflate(R.layout.card_multimedia_editline, this, true)
@@ -85,50 +79,44 @@ class FieldEditLine : FrameLayout {
         mExpandButton = findViewById(R.id.id_expand_button)
         // 7433 -
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            editText!!.setId(ViewCompat.generateViewId())
-            toggleSticky!!.setId(ViewCompat.generateViewId())
-            mediaButton!!.setId(ViewCompat.generateViewId())
-            mExpandButton!!.setId(ViewCompat.generateViewId())
-            editText!!.setNextFocusForwardId(toggleSticky!!.getId())
-            toggleSticky!!.setNextFocusForwardId(mediaButton!!.getId())
-            mediaButton!!.setNextFocusForwardId(mExpandButton!!.getId())
-            @KotlinCleanup("use a scope function")
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(constraintLayout)
-            constraintSet.connect(toggleSticky!!.getId(), ConstraintSet.END, mediaButton!!.getId(), ConstraintSet.START)
-            constraintSet.connect(mediaButton!!.getId(), ConstraintSet.END, mExpandButton!!.getId(), ConstraintSet.START)
-            constraintSet.applyTo(constraintLayout)
+            editText!!.id = ViewCompat.generateViewId()
+            toggleSticky!!.id = ViewCompat.generateViewId()
+            mediaButton!!.id = ViewCompat.generateViewId()
+            mExpandButton!!.id = ViewCompat.generateViewId()
+            editText!!.nextFocusForwardId = toggleSticky!!.id
+            toggleSticky!!.nextFocusForwardId = mediaButton!!.id
+            mediaButton!!.nextFocusForwardId = mExpandButton!!.id
+            ConstraintSet().apply {
+                clone(constraintLayout)
+                connect(toggleSticky!!.id, ConstraintSet.END, mediaButton!!.id, ConstraintSet.START)
+                connect(mediaButton!!.id, ConstraintSet.END, mExpandButton!!.id, ConstraintSet.START)
+                applyTo(constraintLayout)
+            }
         }
-        mExpansionState = ExpansionState.EXPANDED
         setExpanderBackgroundImage()
-        @KotlinCleanup("replace listener with lambda")
-        mExpandButton!!.setOnClickListener(OnClickListener { _: View? -> toggleExpansionState() })
+        mExpandButton!!.setOnClickListener { toggleExpansionState() }
         editText!!.init()
         mLabel!!.setPadding(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
     }
 
     private fun toggleExpansionState() {
-        @KotlinCleanup("if mExpansionState can be non null remove else")
-        when (mExpansionState) {
+        mExpansionState = when (mExpansionState) {
             ExpansionState.EXPANDED -> {
                 collapseView(editText!!, mEnableAnimation)
-                mExpansionState = ExpansionState.COLLAPSED
+                ExpansionState.COLLAPSED
             }
             ExpansionState.COLLAPSED -> {
                 expandView(editText!!, mEnableAnimation)
-                mExpansionState = ExpansionState.EXPANDED
+                ExpansionState.EXPANDED
             }
-            else -> {}
         }
         setExpanderBackgroundImage()
     }
 
     private fun setExpanderBackgroundImage() {
-        @KotlinCleanup("if mExpansionState can be non null remove else")
         when (mExpansionState) {
             ExpansionState.COLLAPSED -> mExpandButton!!.background = getBackgroundImage(R.drawable.ic_expand_more_black_24dp_xml)
             ExpansionState.EXPANDED -> mExpandButton!!.background = getBackgroundImage(R.drawable.ic_expand_less_black_24dp)
-            else -> {}
         }
     }
 
@@ -212,27 +200,26 @@ class FieldEditLine : FrameLayout {
             super.onRestoreInstanceState(state)
             return
         }
-        val ss = state
         val editTextId = editText!!.id
         val toggleStickyId = toggleSticky!!.id
         val mediaButtonId = mediaButton!!.id
         val expandButtonId = mExpandButton!!.id
-        editText!!.id = ss.editTextId
-        toggleSticky!!.id = ss.toggleStickyId
-        mediaButton!!.id = ss.mediaButtonId
-        mExpandButton!!.id = ss.expandButtonId
-        super.onRestoreInstanceState(ss.superState)
+        editText!!.id = state.editTextId
+        toggleSticky!!.id = state.toggleStickyId
+        mediaButton!!.id = state.mediaButtonId
+        mExpandButton!!.id = state.expandButtonId
+        super.onRestoreInstanceState(state.superState)
         for (i in 0 until childCount) {
-            getChildAt(i).restoreHierarchyState(ss.childrenStates)
+            getChildAt(i).restoreHierarchyState(state.childrenStates)
         }
         editText!!.id = editTextId
         toggleSticky!!.id = toggleStickyId
         mediaButton!!.id = mediaButtonId
         mExpandButton!!.id = expandButtonId
-        if (mExpansionState != ss.expansionState) {
+        if (mExpansionState != state.expansionState) {
             toggleExpansionState()
         }
-        mExpansionState = ss.expansionState
+        mExpansionState = state.expansionState ?: ExpansionState.EXPANDED
     }
 
     @KotlinCleanup("fix usage of `in`")
@@ -245,7 +232,7 @@ class FieldEditLine : FrameLayout {
         var expandButtonId = 0
         var expansionState: ExpansionState? = null
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
 
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)

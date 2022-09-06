@@ -1,4 +1,4 @@
-Memorize anything with AnkiDroid!
+AnkiDroid-ით დაიმახსოვრებ ყველაფერს, რისი ცოდნაც გსურს!
 
 AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
 
@@ -8,29 +8,29 @@ Create your own flashcard decks or download free decks compiled for many languag
 
 Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+★ ძირითადი ფუნქციები:
+• ბარათი შეიძლება შეიცავდეს: ტექსტს, სურათებს, ხმებს, LaTeX
+• შუალედებიანი გამეორება (SuperMemo 2-ის ალგორითმი)
+• ხმოვანი წამკითხველის ინტეგრაცია
+• 6000-ზე მეტი მზა დასტა
+• პროგრესის ვიჯეტი
+• დეტალური სტატისტიკა
+• სინქრონიზაცია AnkiWeb-თან
+• ღია საწყისი კოდი
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+★ დამატებითი ფუნქციები:
+• პასუხების ჩაწერა (არასავალდებულო)
+• დაფა
+• ბარათების დამატება და რედაქტირება
+• ბარათების საძიებელი
+• პლანშეტის განლაგება
+• არსებული კოლექციების იმპორტირება (Anki Desktop-ის მეშვეობით)
+• ბარათების დამატება სხვა აპლიკაციებიდან (მაგ. ლექსიკონებიდან)
+• სხვა შრიფტების მხარდაჭერა
+• დახვეწილი სარეზერვო სისტემა
+• ნავიგაცია ჟესტებით
+• მორგებადი
+• დინამიკური დასტები
+• ღამის რეჟიმი
+• თარგმნილია 27 ენაზე
+• AnkiDroid-ის ყველა წინა ვერსია შეგიძლიათ საიტიდან ჩამოტვირთოთ

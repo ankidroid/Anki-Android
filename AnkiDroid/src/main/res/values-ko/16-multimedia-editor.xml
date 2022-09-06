@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">발음 찾는 중</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">발음 실패</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">소문자만 사용해서 시도하세요</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->

@@ -19,19 +19,23 @@ package com.ichi2.anki.dialogs.customstudy
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -45,6 +49,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
@@ -56,27 +61,28 @@ import java.util.*
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
-        fun showDialogFragment(newFragment: DialogFragment?)
+        fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
-        fun startActivityForResultWithoutAnimation(intent: Intent?, requestCode: Int)
+        fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int)
     }
 
-    @JvmOverloads
-    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: Long, jumpToReviewer: Boolean = false): CustomStudyDialog {
+    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()
         }
-        args.putInt("id", contextMenuAttribute.value)
-        args.putLong("did", did)
-        args.putBoolean("jumpToReviewer", jumpToReviewer)
+        args.apply {
+            putInt("id", contextMenuAttribute.value)
+            putLong("did", did)
+            putBoolean("jumpToReviewer", jumpToReviewer)
+        }
         this.arguments = args
         return this
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerFragmentResultReceiver(this)
+        registerFragmentResultReceiver()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -99,13 +105,11 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val listIds = getListIds(ContextMenuConfiguration.fromInt(id)).map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
 
-        return MaterialDialog.Builder(requireActivity())
+        return MaterialDialog(requireActivity())
             .title(R.string.custom_study)
             .cancelable(true)
-            .itemsIds(listIds)
-            .items(*getValuesFromKeys(keyValueMap, listIds))
-            .itemsCallback { _: MaterialDialog?, view: View, _: Int, _: CharSequence? ->
-                when (ContextMenuOption.fromInt(view.id)) {
+            .listItems(items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
+                when (ContextMenuOption.fromString(resources, charSequence.toString())) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
                         val i = Intent(requireContext(), DeckOptions::class.java)
@@ -142,14 +146,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                ContextMenuOption.fromInt(view.id),
+                                ContextMenuOption.fromString(resources, charSequence.toString()),
                                 requireArguments().getLong("did"),
                                 jumpToReviewer
                             )
                         customStudyListener?.showDialogFragment(d)
                     }
                 }
-            }.build()
+            }
     }
 
     @KotlinCleanup("make this use enum instead of Int")
@@ -190,19 +194,17 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val did = requireArguments().getLong("did")
         // Whether or not to jump straight to the reviewer
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
-        // Set builder parameters
-        val builder = MaterialDialog.Builder(requireActivity())
-            .customView(v, true)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_cancel)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        // Set material dialog parameters
+        val dialog = MaterialDialog(requireActivity())
+            .customView(view = v, scrollable = true, noVerticalPadding = true, horizontalPadding = true)
+            .positiveButton(R.string.dialog_ok) {
                 // Get the value selected by user
                 val n: Int = try {
                     editText.text.toString().toInt()
                 } catch (e: Exception) {
                     Timber.w(e)
                     // This should never happen because we disable positive button for non-parsable inputs
-                    return@onPositive
+                    return@positiveButton
                 }
                 when (contextMenuOption) {
                     STUDY_NEW -> {
@@ -268,18 +270,19 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     MORE_OPTIONS -> TODO("This branch has not been covered before")
                 }
             }
-            .onNegative { _: MaterialDialog?, _: DialogAction? -> customStudyListener?.dismissAllDialogFragments() }
-        val dialog = builder.build()
+            .negativeButton(R.string.dialog_cancel) {
+                customStudyListener?.dismissAllDialogFragments()
+            }
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
                 try {
                     editText.text.toString().toInt()
-                    dialog.getActionButton(DialogAction.POSITIVE).isEnabled = true
+                    dialog.getActionButton(WhichButton.POSITIVE).isEnabled = true
                 } catch (e: Exception) {
                     Timber.w(e)
-                    dialog.getActionButton(DialogAction.POSITIVE).isEnabled = false
+                    dialog.getActionButton(WhichButton.POSITIVE).isEnabled = false
                 }
             }
         })
@@ -310,16 +313,16 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
      */
-    override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
         val sb = StringBuilder()
         when (option) {
             1 -> sb.append("is:new ")
             2 -> sb.append("is:due ")
         }
-        val arr: MutableList<String?> = ArrayList(selectedTags!!.size)
+        val arr: MutableList<String?> = ArrayList(selectedTags.size)
         if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {
-                arr.add(String.format("tag:'%s'", tag))
+                arr.add("tag:'$tag'")
             }
             sb.append("(").append(TextUtils.join(" or ", arr)).append(")")
         }
@@ -342,14 +345,15 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         when (dialogId) {
             STANDARD -> {
                 // Standard context menu
-                val dialogOptions = mutableListOf<ContextMenuOption>()
-                dialogOptions.add(STUDY_NEW)
-                dialogOptions.add(STUDY_REV)
-                dialogOptions.add(STUDY_FORGOT)
-                dialogOptions.add(STUDY_AHEAD)
-                dialogOptions.add(STUDY_RANDOM)
-                dialogOptions.add(STUDY_PREVIEW)
-                dialogOptions.add(STUDY_TAGS)
+                val dialogOptions = mutableListOf<ContextMenuOption>().apply {
+                    add(STUDY_NEW)
+                    add(STUDY_REV)
+                    add(STUDY_FORGOT)
+                    add(STUDY_AHEAD)
+                    add(STUDY_RANDOM)
+                    add(STUDY_PREVIEW)
+                    add(STUDY_TAGS)
+                }
                 if (collection.sched.totalNewForCurrentDeck() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(STUDY_NEW)
@@ -357,7 +361,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 return dialogOptions.toList()
             }
             LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (collection.sched.newDue() != true && collection.sched.revDue() != true) {
+                return if (!collection.sched.newDue() && !collection.sched.revDue()) {
                     listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                 } else {
                     if (collection.sched.newDue()) {
@@ -376,7 +380,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private val text1: String
         get() {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
@@ -385,7 +389,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     private val text2: String
         get() {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
@@ -499,6 +503,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      */
     interface ContextMenuAttribute<T> where T : Enum<*> {
         val value: Int
+        @get:StringRes val stringResource: Int?
     }
 
     /**
@@ -506,7 +511,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      *
      * @see ContextMenuAttribute
      */
-    enum class ContextMenuConfiguration(override val value: Int) : ContextMenuAttribute<ContextMenuConfiguration> {
+    enum class ContextMenuConfiguration(override val value: Int, override val stringResource: Int? = null) : ContextMenuAttribute<ContextMenuConfiguration> {
         STANDARD(1),
         LIMITS(2),
         EMPTY_SCHEDULE(3);
@@ -522,19 +527,20 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * @see ContextMenuAttribute
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    enum class ContextMenuOption(override val value: Int) : ContextMenuAttribute<ContextMenuOption> {
-        STUDY_NEW(100),
-        STUDY_REV(101),
-        STUDY_FORGOT(102),
-        STUDY_AHEAD(103),
-        STUDY_RANDOM(104),
-        STUDY_PREVIEW(105),
-        STUDY_TAGS(106),
-        DECK_OPTIONS(107),
-        MORE_OPTIONS(108);
+    enum class ContextMenuOption(override val value: Int, override val stringResource: Int?) : ContextMenuAttribute<ContextMenuOption> {
+        STUDY_NEW(100, R.string.custom_study_increase_new_limit),
+        STUDY_REV(101, R.string.custom_study_increase_review_limit),
+        STUDY_FORGOT(102, R.string.custom_study_review_forgotten),
+        STUDY_AHEAD(103, R.string.custom_study_review_ahead),
+        STUDY_RANDOM(104, R.string.custom_study_random_selection),
+        STUDY_PREVIEW(105, R.string.custom_study_preview_new),
+        STUDY_TAGS(106, R.string.custom_study_limit_tags),
+        DECK_OPTIONS(107, R.string.menu__deck_options),
+        MORE_OPTIONS(108, R.string.more_options);
 
         companion object {
             fun fromInt(value: Int): ContextMenuOption = values().first { it.value == value }
+            fun fromString(resources: Resources, stringValue: String): ContextMenuOption = values().first { resources.getString(it.stringResource as Int) == stringValue }
         }
     }
 }

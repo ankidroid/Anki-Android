@@ -43,7 +43,6 @@ object LeakCanaryConfiguration {
      * leaks or leaks which have been already reported previously.
      */
     @JvmStatic
-    @JvmOverloads
     fun setInitialConfigFor(application: Application, knownMemoryLeaks: List<ReferenceMatcher> = emptyList()) {
         config = config.copy(referenceMatchers = AndroidReferenceMatchers.appDefaults + knownMemoryLeaks)
         // AppWatcher manual install if not already installed

@@ -76,7 +76,7 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d día %2$d restante</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d días %2$d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
@@ -103,7 +103,7 @@
     <string name="rename_deck">Renombrar mazo</string>
     <string name="create_shortcut">Crear acceso directo</string>
     <string name="browse_cards">Buscar cartas</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Añadir</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Añadir</string>
     <string name="menu_add_note">Añadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Cuenta de sincronización</string>
     <string name="menu_dismiss_note">Ocultar / eliminar</string>

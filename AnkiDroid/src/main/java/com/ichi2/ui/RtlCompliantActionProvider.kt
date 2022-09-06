@@ -22,12 +22,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.ActionProviderCompat
 import com.ichi2.anki.R
-import com.ichi2.utils.KotlinCleanup
 
 /**
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
-@KotlinCleanup("auto-lint class")
 class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
     @JvmField
     @VisibleForTesting

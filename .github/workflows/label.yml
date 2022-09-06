@@ -1,17 +1,18 @@
-name: Remove Labels
+name: Add/Remove Labels
 
 on:
   pull_request_target:
-    types: [ closed ]
+    types: [ opened, closed ]
 
 jobs:
   merge_job:
     if: github.event.pull_request.merged == true
     permissions:
       contents: read
-      pull-requests: write    
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - uses: actions/github-script@v6
       with:
         script: |
@@ -37,6 +38,19 @@ jobs:
             });
           }
 
+          async function addPostMergeComments() {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Maintainers: Please [Sync Translations](https://github.com/ankidroid/Anki-Android/actions/workflows/sync_translations.yml) to produce a commit with only the automated changes from this PR.
+              
+          Read more about updating strings on the wiki,
+          - [localization-administration](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#localization-administration)
+          - [download-localized-strings](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#download-localized-strings)`
+            })
+          }
+
           let result = await github.rest.issues.listLabelsOnIssue({
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -50,5 +64,89 @@ jobs:
                   console.log("Removed: ", label.name);
                   removeLabel(label.name);
                 }
+
+                // add post merge comments for 'strings' labeled PR
+                if (label.name == "strings") {
+                  addPostMergeComments();
+                }
             }
           }
+
+  add_label:
+    if: (!(github.event.action == 'closed' && github.event.pull_request.merged != true)) && github.event.pull_request.merged != true && github.event.pull_request.head.ref != 'i18n_sync'
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const I18N_FILES = [
+                "01-core",
+                "02-strings",
+                "03-dialogs",
+                "04-network",
+                "05-feedback",
+                "06-statistics",
+                "07-cardbrowser",
+                "08-widget",
+                "09-backup",
+                "10-preferences",
+                "11-arrays",
+                "16-multimedia-editor",
+                "17-model-manager",
+                "18-standard-models",
+                "marketdescription",
+                "ankidroid-titles",
+            ];
+
+            let stringsLabel = "strings";
+
+            async function addLabel(labels) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: labels
+              });
+            }
+
+            async function addComments() {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Message to maintainers, this PR contains strings changes. 
+            1. Before merging this PR, it is best to run the "Sync Translations" GitHub action, then make and merge a PR from the i18n_sync branch to get translations cleaned out.
+            2. Then merge this PR, and immediately do another translation PR so the huge change made by this PR's key changes are all by themselves.
+                
+            Read more about updating strings on the wiki,
+            - [localization-administration](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#localization-administration)
+            - [download-localized-strings](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#download-localized-strings)`
+              })
+            }
+
+            const changedFiles = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            // loop through list of files in current pr, then check if filename contains in i18n file name,
+            // set boolean to true and use the boolean in outer loop to add label
+            let fileChanged = false;
+            for (let files of changedFiles.data) {
+              for (let i18n of I18N_FILES) {
+                if (files.filename.includes(i18n)) {
+                  fileChanged = true;
+                  break;
+                }
+              }
+
+              if (fileChanged) {
+                addLabel([stringsLabel]);
+                addComments();
+                break;
+              }
+            }

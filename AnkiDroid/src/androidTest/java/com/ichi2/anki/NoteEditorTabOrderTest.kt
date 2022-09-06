@@ -24,23 +24,21 @@ import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
 
-@KotlinCleanup("is -> equalTo")
 @KotlinCleanup("Use ?.let{throw it}")
 @RunWith(AndroidJUnit4::class)
 class NoteEditorTabOrderTest : NoteEditorTest() {
-    override fun getInvalidSdks(): List<Int> {
+    override val invalidSdks: List<Int>
         /*
-        java.lang.AssertionError:
-        Expected: is "a"
+            java.lang.AssertionError:
+            Expected: is "a"
          */
-        return listOf(30)
-    }
+        get() = listOf(30)
 
     @Test
     @Ignore(
@@ -53,7 +51,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     @Throws(Throwable::class)
     fun testTabOrder() {
         ensureCollectionLoaded()
-        val scenario = mActivityRule.scenario
+        val scenario = activityRule!!.scenario
         scenario.moveToState(Lifecycle.State.RESUMED)
 
         onActivity(scenario) { editor: NoteEditor ->
@@ -65,19 +63,19 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
 
         onActivity(scenario) { editor: NoteEditor ->
             val currentFieldStrings = editor.currentFieldStrings
-            assertThat(currentFieldStrings[0], `is`("a"))
-            assertThat(currentFieldStrings[1], `is`("b"))
+            assertThat(currentFieldStrings[0], equalTo("a"))
+            assertThat(currentFieldStrings[1], equalTo("b"))
         }
     }
 
-    protected fun sendKeyDownUp(activity: Activity, keyCode: Int) {
+    private fun sendKeyDownUp(activity: Activity, keyCode: Int) {
         val inputConnection = BaseInputConnection(activity.currentFocus, true)
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
     }
 
     @Throws(Throwable::class)
-    protected fun onActivity(
+    private fun onActivity(
         scenario: ActivityScenario<NoteEditor>,
         noteEditorActivityAction: ActivityAction<NoteEditor>
     ) {
@@ -95,6 +93,6 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     }
 
     private fun ensureCollectionLoaded() {
-        CollectionHelper.getInstance().getCol(targetContext)
+        CollectionHelper.instance.getCol(targetContext)
     }
 }

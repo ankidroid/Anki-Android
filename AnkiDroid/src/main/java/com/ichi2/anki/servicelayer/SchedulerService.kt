@@ -21,7 +21,6 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
 import com.ichi2.utils.Computation
@@ -67,17 +66,6 @@ class SchedulerService {
                 newCard?.render_output(true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
-        }
-    }
-
-    class AnswerAndGetCard(
-        private val oldCard: Card,
-        @BUTTON_TYPE private val ease: Int
-    ) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            Timber.i("Answering card %d", oldCard.id)
-            col.sched.answerCard(oldCard, ease)
-            return GetCard.getCard(this)
         }
     }
 
@@ -217,13 +205,13 @@ class SchedulerService {
     companion object {
         fun <T> ActionAndNextCardV<T>.computeThenGetNextCardInTransaction(task: (AnkiCollection) -> T): Computation<NextCard<T>> {
             return try {
-                val maybeNextCard = col.db.executeInTransactionReturn {
+                val maybeNextCard = col.db.executeInTransaction {
                     col.sched.deferReset()
                     val result = task(col)
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                     val maybeNextCard = col.sched.card
 
-                    return@executeInTransactionReturn NextCard(maybeNextCard, result)
+                    return@executeInTransaction NextCard(maybeNextCard, result)
                 }
                 Computation.ok(maybeNextCard)
             } catch (e: RuntimeException) {

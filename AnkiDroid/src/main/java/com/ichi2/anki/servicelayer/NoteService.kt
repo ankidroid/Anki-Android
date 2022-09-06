@@ -22,15 +22,18 @@ package com.ichi2.anki.servicelayer
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -68,7 +71,7 @@ object NoteService {
     }
 
     @JvmStatic
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: Long, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             var field: IField?
@@ -105,7 +108,7 @@ object NoteService {
             }
             val totalFields: Int = mmNote.numberOfFields
             for (i in 0 until totalFields) {
-                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue
+                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue!!
             }
         }
     }
@@ -181,14 +184,20 @@ object NoteService {
         } else fieldData.replace(FieldEditText.NEW_LINE, "<br>")
     }
 
-    @JvmStatic
-    fun toggleMark(note: Note) {
+    suspend fun toggleMark(note: Note) {
         if (isMarked(note)) {
             note.delTag("marked")
         } else {
             note.addTag("marked")
         }
-        note.flush()
+
+        withCol {
+            if (BackendFactory.defaultLegacySchema) {
+                note.flush()
+            } else {
+                newBackend.updateNote(note)
+            }
+        }
     }
 
     @JvmStatic

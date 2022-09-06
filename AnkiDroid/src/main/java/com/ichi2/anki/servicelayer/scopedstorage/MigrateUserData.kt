@@ -344,8 +344,8 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         // region preemption (synchronized)
 
         private fun addPreempted(replacements: List<Operation>) {
-            // insert all at the end of the queue
-            synchronized(preempted) { preempted.addAll(replacements) }
+            // insert all at the start of the queue
+            synchronized(preempted) { preempted.addAll(0, replacements) }
         }
         private fun getNextPreemptedItem() = synchronized(preempted) {
             return@synchronized preempted.removeFirstOrNull()

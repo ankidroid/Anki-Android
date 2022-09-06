@@ -29,11 +29,12 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.core.Is
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,7 +43,6 @@ import timber.log.Timber
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is -> equalTo")
 class FinderTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
@@ -90,17 +90,16 @@ class FinderTest : RobolectricTest() {
     private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
-        assertThat(siblingBuried.queue, Is.`is`(Consts.QUEUE_TYPE_SIBLING_BURIED))
+        assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
 
-    @KotlinCleanup("Replace with equalTo")
     private fun buryManually(sched: SchedV2, id: Long): Card {
         sched.buryCards(longArrayOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(
             manuallyBuriedCard.queue,
-            Is.`is`(Consts.QUEUE_TYPE_MANUALLY_BURIED)
+            equalTo(Consts.QUEUE_TYPE_MANUALLY_BURIED)
         )
         return manuallyBuriedCard
     }
@@ -115,6 +114,7 @@ class FinderTest : RobolectricTest() {
 
     @Test
     fun test_findCards() {
+        TimeManager.reset()
         val col = col
         var note = col.newNote()
         note.setItem("Front", "dog")
@@ -151,8 +151,14 @@ class FinderTest : RobolectricTest() {
         // tag searches
         assertEquals(5, col.findCards("tag:*").size)
         assertEquals(1, col.findCards("tag:\\*").size)
-        assertEquals(5, col.findCards("tag:%").size)
-        assertEquals(1, col.findCards("tag:\\%").size)
+        assertEquals(
+            if (BackendFactory.defaultLegacySchema) {
+                5
+            } else {
+                1
+            },
+            col.findCards("tag:%").size
+        )
         assertEquals(2, col.findCards("tag:animal_1").size)
         assertEquals(1, col.findCards("tag:animal\\_1").size)
         assertEquals(0, col.findCards("tag:donkey").size)
@@ -165,7 +171,7 @@ class FinderTest : RobolectricTest() {
         col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo bar")
         assertEquals(5, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
-        col.tags.bulkRem(col.db.queryLongList("select id from notes"), "foo")
+        col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo", add = false)
         assertEquals(0, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
         // text searches
@@ -337,19 +343,20 @@ class FinderTest : RobolectricTest() {
             assertEquals(1, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             assertEquals(2, col.findCards("rated:1").size)
-            assertEquals(0, col.findCards("rated:0:2").size)
             assertEquals(1, col.findCards("rated:2:2").size)
             // added
-            assertEquals(0, col.findCards("added:0").size)
-            col.db.execute(
-                "update cards set id = id - " + Stats.SECONDS_PER_DAY * 1000 + " where id = ?",
-                id
-            )
-            assertEquals(
-                (col.cardCount() - 1),
-                col.findCards("added:1").size
-            )
-            assertEquals(col.cardCount(), col.findCards("added:2").size)
+            if (BackendFactory.defaultLegacySchema) {
+                assertEquals(0, col.findCards("added:0").size)
+                col.db.execute(
+                    "update cards set id = id - " + Stats.SECONDS_PER_DAY * 1000 + " where id = ?",
+                    id
+                )
+                assertEquals(
+                    (col.cardCount() - 1),
+                    col.findCards("added:1").size
+                )
+                assertEquals(col.cardCount(), col.findCards("added:2").size)
+            }
         } else {
             Timber.w("some find tests disabled near cutoff")
         }
@@ -403,7 +410,14 @@ class FinderTest : RobolectricTest() {
         assertEquals(2, col.findCards("tag:cat1::some*").size)
         assertEquals(1, col.findCards("tag:cat1::something").size)
         assertEquals(2, col.findCards("tag:cat2::some").size)
-        assertEquals(1, col.findCards("tag:cat2::some::").size)
+        assertEquals(
+            if (BackendFactory.defaultLegacySchema) {
+                1
+            } else {
+                0
+            },
+            col.findCards("tag:cat2::some::").size
+        )
     }
 
     @Test

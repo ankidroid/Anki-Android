@@ -41,7 +41,6 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
 import java.io.File
@@ -63,7 +62,7 @@ import java.util.concurrent.ExecutionException
  */
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("Lots to do")
-open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress, Result>, private val listener: TaskListener<in Progress, in Result?>?, private var previousTask: CollectionTask<*, *>?) : BaseAsyncTask<Void, Progress, Result>(), Cancellable {
+open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress, Result>, private val listener: TaskListener<in Progress, in Result>?, private var previousTask: CollectionTask<*, *>?) : BaseAsyncTask<Void, Progress, Result>(), Cancellable {
     /**
      * A reference to the application context to use to fetch the current Collection object.
      */
@@ -91,7 +90,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     private val col: Collection
-        get() = CollectionHelper.getInstance().getCol(context)
+        get() = CollectionHelper.instance.getCol(context)!!
 
     protected override fun doInBackground(vararg arg0: Void): Result? {
         return try {
@@ -125,10 +124,10 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             }
         }
         TaskManager.setLatestInstance(this)
-        context = AnkiDroidApp.getInstance().applicationContext
+        context = AnkiDroidApp.instance.applicationContext
 
         // Skip the task if the collection cannot be opened
-        if (task.requiresOpenCollection() && CollectionHelper.getInstance().getColSafe(context) == null) {
+        if (task.requiresOpenCollection() && CollectionHelper.instance.getColSafe(context) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", task.javaClass)
             return null
         }
@@ -149,7 +148,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /** Delegates to the [TaskListener] for this task.  */
-    override fun onPostExecute(result: Result?) {
+    override fun onPostExecute(result: Result) {
         super.onPostExecute(result)
         listener?.onPostExecute(result)
         Timber.d("enabling garbage collection of mPreviousTask...")
@@ -161,83 +160,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         listener?.onCancelled()
     }
 
-    @KotlinCleanup("non-null return")
-    class AddNote(private val note: Note) : TaskDelegate<Int, Boolean?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Boolean {
-            Timber.d("doInBackgroundAddNote")
-            try {
-                val db = col.db
-                db.executeInTransaction {
-                    val value = col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
-                    collectionTask.doProgress(value)
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
-                return false
-            }
-            return true
-        }
-    }
-
-    class UpdateNote(private val editCard: Card, val isFromReviewer: Boolean, private val canAccessScheduler: Boolean) : TaskDelegate<Card, Computation<*>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Card>): Computation<*> {
-            Timber.d("doInBackgroundUpdateNote")
-            // Save the note
-            val sched = col.sched
-            val editNote = editCard.note()
-            try {
-                col.db.executeInTransaction {
-                    // TODO: undo integration
-                    editNote.flush()
-                    // flush card too, in case, did has been changed
-                    editCard.flush()
-                    if (isFromReviewer) {
-                        val newCard: Card?
-                        if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
-                            newCard = editCard
-                            newCard.load()
-                            // reload qa-cache
-                            newCard.q(true)
-                        } else {
-                            newCard = sched.card
-                        }
-                        collectionTask.doProgress(newCard) // check: are there deleted too?
-                    } else {
-                        collectionTask.doProgress(editCard)
-                    }
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateNote")
-                return Computation.ERR
-            }
-            return Computation.OK
-        }
-    }
-
-    class UpdateMultipleNotes @JvmOverloads constructor(private val notesToUpdate: List<Note>, private val shouldUpdateCards: Boolean = false) : TaskDelegate<List<Note>, Computation<*>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<Note>>): Computation<*> {
-            Timber.d("doInBackgroundUpdateMultipleNotes")
-            try {
-                col.db.executeInTransaction {
-                    for (note in notesToUpdate) {
-                        note.flush()
-                        if (shouldUpdateCards) {
-                            for (card in note.cards()) {
-                                card.flush()
-                            }
-                        }
-                    }
-                    collectionTask.doProgress(notesToUpdate)
-                }
-            } catch (e: RuntimeException) {
-                Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
-                return Computation.ERR
-            }
-            return Computation.OK
-        }
+    // Currently being used only to update tags of multiple notes simultaneously
+    class UpdateMultipleNotes constructor(
+        private val notesToUpdate: List<Note>,
+        private val shouldUpdateCards: Boolean = false
+    ) : TaskDelegate<Void, List<Note>?>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<Note>? =
+            doInBackgroundUpdateMultipleNotes(col, notesToUpdate, shouldUpdateCards)
     }
 
     @KotlinCleanup("can quickDeckDueTree return null?")
@@ -259,7 +188,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             Timber.d("doInBackgroundLoadDeckCounts")
             return try {
                 // Get due tree
-                col.sched.deckDueTree(collectionTask)!!
+                col.sched.deckDueTree(collectionTask)
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundLoadDeckCounts - error")
                 null
@@ -505,7 +434,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: Long) : DismissNotes<Void?>(cardIds) {
+    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
             val deckData = col.decks.get(newDid)
@@ -551,77 +480,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /**
-     * A class allowing to send partial search result to the browser to display while the search ends
-     */
-    @KotlinCleanup("move variables to constructor")
-    @RustCleanup("This provides little value since moving to the backend for DB access. Strip out?")
-    class PartialSearch(cards: List<CardCache>, columnIndex1: Int, columnIndex2: Int, numCardsToRender: Int, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>, col: Collection) : ProgressSenderAndCancelListener<List<Long>> {
-        private val mCards: MutableList<CardCache>
-        private val mColumn1Index: Int
-        private val mColumn2Index: Int
-        private val mNumCardsToRender: Int
-        private val mCollectionTask: ProgressSenderAndCancelListener<List<CardCache>>
-        private val mCol: Collection
-        override fun isCancelled(): Boolean {
-            return mCollectionTask.isCancelled()
-        }
-
-        /**
-         * @param cards Card ids to display in the browser. It is assumed that it is as least as long as mCards, and that
-         * mCards[i].cid = cards[i].  It add the cards in cards after `mPosition` to mCards
-         */
-        fun add(cards: List<Long?>) {
-            while (mCards.size < cards.size) {
-                mCards.add(CardCache(cards[mCards.size]!!, mCol, mCards.size))
-            }
-        }
-
-        @KotlinCleanup("non-null argument to doProgress")
-        override fun doProgress(value: List<Long>?) {
-            if (value == null) {
-                return
-            }
-            // PERF: This is currently called on the background thread and blocks further execution of the search
-            // PERF: This performs an individual query to load each note
-            add(value)
-            for (card in mCards) {
-                if (isCancelled()) {
-                    Timber.d("doInBackgroundSearchCards was cancelled so return")
-                    return
-                }
-                card.load(false, mColumn1Index, mColumn2Index)
-            }
-            mCollectionTask.doProgress(mCards)
-        }
-
-        val progressSender: ProgressSender<Long>
-            get() = object : ProgressSender<Long> {
-                private val mRes: MutableList<Long> = ArrayList()
-                private var mSendProgress = true
-                override fun doProgress(value: Long?) {
-                    if (!mSendProgress || value == null) {
-                        return
-                    }
-                    mRes.add(value)
-                    if (mRes.size >= mNumCardsToRender) {
-                        this@PartialSearch.doProgress(mRes)
-                        mSendProgress = false
-                    }
-                }
-            }
-
-        init {
-            mCards = ArrayList(cards)
-            mColumn1Index = columnIndex1
-            mColumn2Index = columnIndex2
-            mNumCardsToRender = numCardsToRender
-            mCollectionTask = collectionTask
-            mCol = col
-        }
-    }
-
-    class SearchCards(private val query: String, private val order: SortOrder, private val numCardsToRender: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<List<CardCache>, SearchCardsResult>() {
+    class SearchNotes(private val query: String, private val order: SortOrder, private val numCardsToRender: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<List<CardCache>, SearchCardsResult>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>): SearchCardsResult {
             Timber.d("doInBackgroundSearchCards")
             if (collectionTask.isCancelled()) {
@@ -630,18 +489,35 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             }
             val searchResult: MutableList<CardCache> = ArrayList()
             val searchResult_: List<Long>
-            searchResult_ = try {
-                col.findCards(query, order, PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col))!!.requireNoNulls()
-            } catch (e: Exception) {
-                // exception can occur via normal operation
-                Timber.w(e)
-                return SearchCardsResult.error(e)
-            }
-            Timber.d("The search found %d cards", searchResult_.size)
-            var position = 0
-            for (cid in searchResult_) {
-                val card = CardCache(cid, col, position++)
-                searchResult.add(card)
+
+            if (BackendFactory.defaultLegacySchema) {
+                searchResult_ = try {
+                    col.findOneCardByNote(query).requireNoNulls()
+                } catch (e: Exception) {
+                    // exception can occur via normal operation
+                    Timber.w(e)
+                    return SearchCardsResult.error(e)
+                }
+                Timber.d("The search found %d cards", searchResult_.size)
+                var position = 0
+                for (cid in searchResult_) {
+                    val card = CardCache(cid, col, position++)
+                    searchResult.add(card)
+                }
+            } else {
+                searchResult_ = try {
+                    col.findNotes(query, order).requireNoNulls()
+                } catch (e: Exception) {
+                    // exception can occur via normal operation
+                    Timber.w(e)
+                    return SearchCardsResult.error(e)
+                }
+                Timber.d("The search found %d notes", searchResult_.size)
+                var position = 0
+                for (nid in searchResult_) {
+                    val card = CardCache(Note(col, nid).firstCard().id, col, position++)
+                    searchResult.add(card)
+                }
             }
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender, searchResult.size)) {
@@ -714,13 +590,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
             Timber.d("doInBackgroundCheckDatabase")
             // Don't proceed if collection closed
-            val result = col.fixIntegrity(TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()))
+            val result = col.fixIntegrity(TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.appResources))
             return if (result.failed) {
                 // we can fail due to a locked database, which requires knowledge of the failure.
                 Pair(false, result)
             } else {
                 // Close the collection and we restart the app to reload
-                CollectionHelper.getInstance().closeCollection(true, "Check Database Completed")
+                CollectionHelper.instance.closeCollection(true, "Check Database Completed")
                 Pair(true, result)
             }
         }
@@ -759,7 +635,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteDeck(private val did: Long) : TaskDelegate<Void, IntArray?>() {
+    class DeleteDeck(private val did: DeckId) : TaskDelegate<Void, IntArray?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): IntArray? {
             Timber.d("doInBackgroundDeleteDeck")
             col.decks.rem(did, true)
@@ -789,7 +665,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
             Timber.d("doInBackgroundImportAdd")
-            val res = AnkiDroidApp.getInstance().baseContext.resources
+            val res = AnkiDroidApp.instance.baseContext.resources
 
             var impList = arrayListOf<AnkiPackageImporter>()
             var errFlag = false
@@ -816,7 +692,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class ImportReplace(private val pathList: List<String>) : TaskDelegate<String, Computation<*>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Computation<*> {
             Timber.d("doInBackgroundImportReplace")
-            val res = AnkiDroidApp.getInstance().baseContext.resources
+            val res = AnkiDroidApp.instance.baseContext.resources
             val context = col.context
             val colPath = CollectionHelper.getCollectionPath(context)
             // extract the deck from the zip file
@@ -871,10 +747,10 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 collectionTask.doProgress(res.getString(R.string.importing_collection))
                 try {
-                    CollectionHelper.getInstance().getCol(context)
+                    CollectionHelper.instance.getCol(context)
                     // unload collection
-                    CollectionHelper.getInstance().closeCollection(true, "Importing new collection")
-                    CollectionHelper.getInstance().lockCollection()
+                    CollectionHelper.instance.closeCollection(true, "Importing new collection")
+                    CollectionHelper.instance.lockCollection()
                 } catch (e: Exception) {
                     Timber.w(e)
                 }
@@ -885,7 +761,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     return Computation.ERR
                 }
                 return try {
-                    CollectionHelper.getInstance().unlockCollection()
+                    CollectionHelper.instance.unlockCollection()
 
                     // because users don't have a backup of media, it's safer to import new
                     // data and rely on them running a media db check to get rid of any
@@ -940,7 +816,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ExportApkg(private val apkgPath: String, private val did: Long?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
+    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
             Timber.d("doInBackgroundExportApkg")
             try {
@@ -1258,9 +1134,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("make non-null")
-    class FindEmptyCards : TaskDelegate<Int?, List<Long?>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int?>): List<Long> {
+    class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
             return col.emptyCids(collectionTask)
         }
     }

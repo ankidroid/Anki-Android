@@ -28,11 +28,12 @@ import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
-import com.afollestad.materialdialogs.DialogAction
+import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
@@ -41,6 +42,7 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.AddField
 import com.ichi2.async.CollectionTask.ChangeSortField
 import com.ichi2.async.CollectionTask.DeleteField
@@ -51,10 +53,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.showWithKeyboard
+import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.lang.NumberFormatException
@@ -66,7 +65,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var mFieldsListView: ListView
-    private var progressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var progressDialog: android.app.ProgressDialog? = null // TODO: Check alternatives to ProgressDialog
     private var fieldNameInput: EditText? = null
     private lateinit var collection: Collection
     private lateinit var mModel: Model
@@ -174,16 +174,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     */
     private fun addFieldDialog() {
         fieldNameInput = FixedEditText(this)
-        fieldNameInput?.let {
-            it.isSingleLine = true
-            MaterialDialog.Builder(this)
-                .title(R.string.model_field_editor_add)
-                .customView(it, true)
-                .positiveText(R.string.dialog_ok)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        fieldNameInput?.let { _fieldNameInput ->
+            _fieldNameInput.isSingleLine = true
+            MaterialDialog(this).show {
+                customView(view = _fieldNameInput, horizontalPadding = true)
+                title(R.string.model_field_editor_add)
+                positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
                     val listener = changeFieldHandler()
-                    val fieldName = uniqueName(it)
+                    val fieldName = uniqueName(_fieldNameInput)
                     try {
                         addField(fieldName, listener, true)
                     } catch (e: ConfirmModSchemaException) {
@@ -206,8 +205,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     collection.models.update(mModel)
                     initialize()
                 }
-                .negativeText(R.string.dialog_cancel)
-                .showWithKeyboard()
+                negativeButton(R.string.dialog_cancel)
+            }
+                .displayKeyboard(_fieldNameInput)
         }
     }
 
@@ -230,6 +230,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val confirm = Runnable {
             collection.modSchemaNoCheck()
             deleteField()
+
+            // This ensures that the context menu closes after the field has been deleted
+            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
         if (mFieldsLabels.size < 2) {
@@ -263,17 +266,16 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun renameFieldDialog() {
         fieldNameInput = FixedEditText(this)
-        fieldNameInput?.let {
-            it.isSingleLine = true
-            it.setText(mFieldsLabels[currentPos])
-            it.setSelection(it.text!!.length)
-            MaterialDialog.Builder(this)
-                .title(R.string.model_field_editor_rename)
-                .customView(it, true)
-                .positiveText(R.string.rename)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                    if (uniqueName(it) == null) {
-                        return@onPositive
+        fieldNameInput?.let { _fieldNameInput ->
+            _fieldNameInput.isSingleLine = true
+            _fieldNameInput.setText(mFieldsLabels[currentPos])
+            _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
+            MaterialDialog(this).show {
+                customView(view = _fieldNameInput, horizontalPadding = true)
+                title(R.string.model_field_editor_rename)
+                positiveButton(R.string.rename) {
+                    if (uniqueName(_fieldNameInput) == null) {
+                        return@positiveButton
                     }
                     // Field is valid, now rename
                     try {
@@ -297,8 +299,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
                 }
-                .negativeText(R.string.dialog_cancel)
-                .showWithKeyboard()
+                negativeButton(R.string.dialog_cancel)
+                displayKeyboard(_fieldNameInput)
+            }
         }
     }
 
@@ -309,23 +312,22 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun repositionFieldDialog() {
         fieldNameInput = FixedEditText(this)
-        fieldNameInput?.let {
-            it.setRawInputType(InputType.TYPE_CLASS_NUMBER)
-            MaterialDialog.Builder(this)
-                .title(String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
-                .customView(it, true)
-                .positiveText(R.string.dialog_ok)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                    val newPosition = it.text.toString()
+        fieldNameInput?.let { _fieldNameInput ->
+            _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
+            MaterialDialog(this).show {
+                customView(view = _fieldNameInput, scrollable = true)
+                title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
+                positiveButton(R.string.dialog_ok) {
+                    val newPosition = _fieldNameInput.text.toString()
                     val pos: Int = try {
                         newPosition.toInt()
                     } catch (n: NumberFormatException) {
                         Timber.w(n)
-                        showThemedToast(this, resources.getString(R.string.toast_out_of_range), true)
-                        return@onPositive
+                        showThemedToast(this@ModelFieldEditor, resources.getString(R.string.toast_out_of_range), true)
+                        return@positiveButton
                     }
                     if (pos < 1 || pos > mFieldsLabels.size) {
-                        showThemedToast(this, resources.getString(R.string.toast_out_of_range), true)
+                        showThemedToast(this@ModelFieldEditor, resources.getString(R.string.toast_out_of_range), true)
                     } else {
                         val listener = changeFieldHandler()
                         // Input is valid, now attempt to modify
@@ -357,8 +359,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         }
                     }
                 }
-                .negativeText(R.string.dialog_cancel)
-                .showWithKeyboard()
+                negativeButton(R.string.dialog_cancel)
+            }
+                .displayKeyboard(_fieldNameInput)
         }
     }
 
@@ -468,7 +471,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
-        supportFragmentManager.popBackStackImmediate()
         when (contextMenuAction) {
             ModelEditorContextMenuAction.Sort -> sortByField()
             ModelEditorContextMenuAction.Reposition -> repositionFieldDialog()
@@ -502,7 +504,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         setLanguageHintForField(col.models, mModel, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
-        showSimpleSnackbar(this, format, true)
+        showSnackbar(format, Snackbar.LENGTH_SHORT)
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

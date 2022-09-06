@@ -17,12 +17,10 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.utils.contentNullable
-import com.ichi2.utils.titleNullable
 
 class SimpleMessageDialog : AsyncDialogFragment() {
     interface SimpleMessageDialogListener {
@@ -32,49 +30,52 @@ class SimpleMessageDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         // FIXME this should be super.onCreateDialog(Bundle), no?
         super.onCreate(savedInstanceState)
-        return MaterialDialog.Builder(requireActivity())
-            .titleNullable(notificationTitle)
-            .contentNullable(notificationMessage)
-            .positiveText(res().getString(R.string.dialog_ok))
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        return MaterialDialog(requireActivity()).show {
+            title(text = notificationTitle)
+            contentNullable(notificationMessage)
+            positiveButton(R.string.dialog_ok) {
                 (activity as SimpleMessageDialogListener?)
                     ?.dismissSimpleMessageDialog(
                         requireArguments().getBoolean(
-                            "reload"
+                            ARGS_RELOAD
                         )
                     )
             }
-            .show()
+        }
     }
 
-    override val notificationTitle: String?
+    override val notificationTitle: String
         get() {
-            val title = requireArguments().getString("title")
+            val title = requireArguments().getString(ARGS_TITLE)!!
             return if ("" != title) {
                 title
             } else {
-                AnkiDroidApp.getAppResources().getString(R.string.app_name)
+                AnkiDroidApp.appResources.getString(R.string.app_name)
             }
         }
 
     override val notificationMessage: String?
         get() {
-            return requireArguments().getString("message")
+            return requireArguments().getString(ARGS_MESSAGE)
         }
 
     companion object {
-        @JvmStatic
-        fun newInstance(message: String?, reload: Boolean): SimpleMessageDialog {
-            return newInstance("", message, reload)
-        }
+        /** The title of the notification/dialog */
+        private const val ARGS_TITLE = "title"
+        /** The content of the notification/dialog */
+        private const val ARGS_MESSAGE = "message"
+        /**
+         * If the calling activity should be reloaded when 'OK' is pressed.
+         * @see SimpleMessageDialogListener.dismissSimpleMessageDialog
+         */
+        private const val ARGS_RELOAD = "reload"
 
-        @JvmStatic
-        fun newInstance(title: String?, message: String?, reload: Boolean): SimpleMessageDialog {
+        fun newInstance(title: String, message: String?, reload: Boolean): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
-            args.putString("title", title)
-            args.putString("message", message)
-            args.putBoolean("reload", reload)
+            args.putString(ARGS_TITLE, title)
+            args.putString(ARGS_MESSAGE, message)
+            args.putBoolean(ARGS_RELOAD, reload)
             f.arguments = args
             return f
         }

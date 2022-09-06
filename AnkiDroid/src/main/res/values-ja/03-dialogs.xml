@@ -59,13 +59,6 @@
     <string name="initializing_tts">テキスト読み上げ機能（TTS）を初期化しています...</string>
     <string name="tts_no_tts">音声なし</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア<a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。AnkiDroidとAnkiのどちらでも教材を作成し、ダウンロードし、学習し、無料のオンラインサービスAnkiWebを介して簡単に双方を同期することができます。]]></item>
-        <item><![CDATA[AnkiDroidをよりよいものにするため、バグ（不具合）を見つけた場合は<a href=\"%1$s\">こちら</a>へ報告していただければ幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>
-        <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>です。誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)　]]></item>
-        <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a>したり、Wikiを更新したり、スクリーンショット画像を提供したり、AnkiDroidのことをSNSに書いたりして、このアプリの発展に貢献することができます。]]></item>
-        <item><![CDATA[AnkiDroidは、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされています。ソースコードは<a href="%2$s">こちら</a>です。]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの表示順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
@@ -113,7 +106,7 @@
     <string name="import_update_details">既存のノート%2$d件のうち%1$d件を更新しました。</string>
     <string name="import_update_ignored">ノートタイプが変更されたため、いくつかのアップデートが無視されました</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">インポートされたファイル: %1$d\nインポートされたカードの合計: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SDカード空き容量なし</string>
     <string name="sd_card_almost_full_title">SDカード空き容量わずか</string>
@@ -126,6 +119,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_continue">続行</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
     <string name="dialog_positive_delete">削除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -243,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、学習中カードの数。</string>
@@ -252,4 +247,7 @@
     <string name="deck_picker_counts">今日出題する予定のカード数などが記載されたデッキ概要ページを開きます。</string>
     <string name="import_deck_package">デッキパッケージ (.apkg)</string>
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

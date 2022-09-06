@@ -35,6 +35,6 @@ fun CollectionV16.getGraphPreferencesRaw(): ByteArray {
     return prefs.toByteArray()
 }
 
-fun CollectionV16.setGraphPreferencesRaw(input: ByteArray) {
-    backend.setGraphPreferencesRaw(input)
+fun CollectionV16.setGraphPreferencesRaw(input: ByteArray): ByteArray {
+    return backend.setGraphPreferencesRaw(input)
 }

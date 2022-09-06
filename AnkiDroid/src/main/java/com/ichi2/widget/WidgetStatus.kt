@@ -19,7 +19,7 @@ import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.MetaDB
-import com.ichi2.anki.Preferences
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.async.BaseAsyncTask
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.KotlinCleanup
@@ -75,7 +75,7 @@ object WidgetStatus {
             super.doInBackground(*arg0)
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()")
             val context = arg0[0]
-            if (!AnkiDroidApp.isSdCardMounted()) {
+            if (!AnkiDroidApp.isSdCardMounted) {
                 return context
             }
             try {
@@ -100,9 +100,7 @@ object WidgetStatus {
 
         private fun updateCounts(context: Context) {
             val total = Counts()
-            val col = CollectionHelper.getInstance().getCol(context)
-            // Ensure queues are reset if we cross over to the next day.
-            col.sched._checkDay()
+            val col = CollectionHelper.instance.getCol(context)!!
 
             // Only count the top-level decks in the total
             val nodes = col.sched.deckDueTree().map { it.value }

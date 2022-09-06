@@ -2,7 +2,6 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
@@ -101,8 +100,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    @Suppress("deprecation") // onActivityResult
-    fun testEditingCardChangesTypedAnswer() {
+    fun testEditingCardChangesTypedAnswer() = runTest {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World")
 
@@ -117,7 +115,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val note = viewer.mCurrentCard!!.note()
         note.setField(1, "David")
 
-        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, Intent())
+        viewer.saveEditedCard()
 
         waitForAsyncTasksToComplete()
 
@@ -125,8 +123,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    @Suppress("deprecation") // onActivityResult
-    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() {
+    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() = runTest {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World")
 
@@ -145,7 +142,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val note = viewer.mCurrentCard!!.note()
         note.setField(1, "David")
 
-        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, Intent())
+        viewer.saveEditedCard()
 
         waitForAsyncTasksToComplete()
 
@@ -177,7 +174,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun typedLanguageIsSet() {
+    fun typedLanguageIsSet() = runTest {
         val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
         val typedField = 1 // BACK
@@ -221,7 +218,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun shortcutShowsToastOnFinish() {
+    fun shortcutShowsToastOnFinish() = runTest {
         val viewer: NonAbstractFlashcardViewer = getViewer(true, true)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)

@@ -20,7 +20,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.LocaleList
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
@@ -28,6 +31,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.ContentInfoCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
@@ -38,22 +42,25 @@ import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.getImageUri
+import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.lang.Exception
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class FieldEditText : FixedEditText, NoteService.NoteField {
     override var ord = 0
     private var mOrigBackground: Drawable? = null
     private var mSelectionChangeListener: TextSelectionListener? = null
     private var mImageListener: ImagePasteListener? = null
-    private var mClipboard: ClipboardManager? = null
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var clipboard: ClipboardManager? = null
 
-    constructor(context: Context?) : super(context!!) {}
-    constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr) {}
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
+    constructor(context: Context?) : super(context!!)
+    constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr)
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -83,7 +90,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     fun init() {
         try {
-            mClipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         } catch (e: Exception) {
             Timber.w(e)
         }
@@ -192,35 +199,29 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return savedState
     }
 
-    @KotlinCleanup("Return instead of using _id")
     override fun onTextContextMenuItem(id: Int): Boolean {
         // This handles both CTRL+V and "Paste"
-        var _id = id
-        if (id == android.R.id.paste && hasImage(mClipboard)) {
-            return onImagePaste(getImageUri(mClipboard))
-        }
-
-        /*
-        * The following code replaces the instruction "paste with formatting" with "paste as plan text"
-        * Since AnkiDroid does not know how to use formatted text and strips the formatting when saving the note,
-        * it ensures that the user sees the exact plain text which is actually being saved, not the formatted text.
-        */
-
-        // https://stackoverflow.com/a/45319485
         if (id == android.R.id.paste) {
-            /**
-             * Modified StackOverflow answer:
-             * Pasting as plain text for VERSION_CODES < M required modifying
-             * the user's clipboard, and hence has not been used.
-             *
-             * During testing, older devices pasted text as plain text by default,
-             * so there was no need for a TO-DO
-             */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                _id = android.R.id.pasteAsPlainText
+            if (hasImage(clipboard)) {
+                return onImagePaste(getImageUri(clipboard))
             }
+            return pastePlainText()
         }
-        return super.onTextContextMenuItem(_id)
+        return super.onTextContextMenuItem(id)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun pastePlainText(): Boolean {
+        getPlainText(clipboard, context)?.let { pasted ->
+            val start = min(selectionStart, selectionEnd)
+            val end = max(selectionStart, selectionEnd)
+            setText(
+                text!!.substring(0, start) + pasted + text!!.substring(end)
+            )
+            setSelection(start + pasted.length)
+            return true
+        }
+        return false
     }
 
     @KotlinCleanup("Make param non-null")
@@ -256,7 +257,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     internal class SavedState : BaseSavedState {
         var ord = 0
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
 
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)

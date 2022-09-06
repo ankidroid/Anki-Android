@@ -16,18 +16,27 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.content.Context
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.servicelayer.DeckService.deckExists
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.displayKeyboard
 import timber.log.Timber
 import java.util.function.Consumer
 
+// TODO: Use snackbars instead of toasts: https://github.com/ankidroid/Anki-Android/pull/12139#issuecomment-1224963182
+@NeedsTest("Ensure a toast is shown on a successful action")
 class CreateDeckDialog(private val context: Context, private val title: Int, private val deckDialogType: DeckDialogType, private val parentId: Long?) {
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null
@@ -38,9 +47,12 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
     }
 
+    private val col
+        get() = CollectionHelper.instance.getCol(context)!!
+
     fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        val names = CollectionHelper.getInstance().getCol(context).decks.allNames()
+        val names = col.decks.allNames()
         var n = 1
         val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
         while (names.contains(namePrefix + n)) {
@@ -52,37 +64,68 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
 
     /** Used for rename  */
     var deckName: String
-        get() = mShownDialog!!.inputEditText!!.text.toString()
+        get() = mShownDialog!!.getInputField().text.toString()
         set(deckName) {
             mPreviousDeckName = deckName
             mInitialDeckName = deckName
         }
 
     fun showDialog(): MaterialDialog {
-        val show = MaterialDialog.Builder(context).title(title)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_cancel)
-            .input(null, mInitialDeckName) { _: MaterialDialog?, _: CharSequence? -> }
-            .inputRange(1, -1)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> onPositiveButtonClicked() }
-            .show()
-        displayKeyboard(show.inputEditText!!, show)
-        mShownDialog = show
-        return show
+        @SuppressLint("CheckResult")
+        val dialog = MaterialDialog(context).show {
+            title(title)
+            positiveButton(R.string.dialog_ok) {
+                onPositiveButtonClicked()
+            }
+            negativeButton(R.string.dialog_cancel)
+            input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
+                // we need the fully-qualified name for subdecks
+                val fullyQualifiedDeckName = fullyQualifyDeckName(dialogText = text)
+                // if the name is empty, it seems distracting to show an error
+                if (!Decks.isValidDeckName(fullyQualifiedDeckName)) {
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+                    return@input
+                }
+
+                if (deckExists(col, fullyQualifiedDeckName!!)) {
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+                    dialog.getInputField().error = context.getString(R.string.validation_deck_already_exists)
+                    return@input
+                }
+
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+            }
+            displayKeyboard(getInputField())
+        }
+        mShownDialog = dialog
+        return dialog
     }
+
+    /**
+     * Returns the fully qualified deck name for the provided input
+     * @param dialogText The user supplied text in the dialog
+     * @return [dialogText], or the deck name containing `::` in case of [DeckDialogType.SUB_DECK]
+     */
+    private fun fullyQualifyDeckName(dialogText: CharSequence) =
+        when (deckDialogType) {
+            DeckDialogType.DECK, DeckDialogType.FILTERED_DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
+            DeckDialogType.SUB_DECK -> col.decks.getSubdeckName(parentId!!, dialogText.toString())
+        }
 
     fun closeDialog() {
         mShownDialog?.dismiss()
     }
 
-    fun createSubDeck(did: Long, deckName: String?) {
-        val deckNameWithParentName = CollectionHelper.getInstance().getCol(context).decks.getSubdeckName(did, deckName)
+    fun createSubDeck(did: DeckId, deckName: String?) {
+        val deckNameWithParentName = col.decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }
 
     fun createDeck(deckName: String) {
         if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
+            // 11668: Display feedback if a deck is created
+            showThemedToast(context, R.string.deck_created, true)
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
             showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
@@ -94,7 +137,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = CollectionHelper.getInstance().getCol(context).decks.newDyn(deckName)
+            val newDeckId = col.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
         } catch (ex: DeckRenameException) {
             showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
@@ -107,7 +150,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         try {
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
-            val newDeckId = CollectionHelper.getInstance().getCol(context).decks.id(deckName)
+            val newDeckId = col.decks.id(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
         } catch (filteredAncestor: DeckRenameException) {
             Timber.w(filteredAncestor)
@@ -148,10 +191,12 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
         } else if (newName != mPreviousDeckName) {
             try {
-                val col = CollectionHelper.getInstance().getCol(context)
-                val deckId = col.decks.id(mPreviousDeckName!!)
-                col.decks.rename(col.decks.get(deckId), newName)
+                val decks = col.decks
+                val deckId = decks.id(mPreviousDeckName!!)
+                decks.rename(decks.get(deckId), newName)
                 mOnNewDeckCreated!!.accept(deckId)
+                // 11668: Display feedback if a deck is renamed
+                showThemedToast(context, R.string.deck_renamed, true)
             } catch (e: DeckRenameException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error

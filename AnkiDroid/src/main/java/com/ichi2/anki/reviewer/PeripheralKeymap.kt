@@ -31,7 +31,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     private val mKeyMap: KeyMap
     private var mHasSetup = false
     fun setup() {
-        val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         setup(preferences)
     }
 

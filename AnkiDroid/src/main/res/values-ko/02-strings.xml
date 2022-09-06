@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
@@ -102,6 +100,9 @@
         <item>작성한 날짜</item>
         <item>노트 편집일</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">적용하기</string>
+    <string name="filter_by_flags">플래그</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
     <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
@@ -161,27 +162,25 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">다음을 컬렉션에 추가합니까?\n%s\n시간이 걸릴 수도 있습니다.</item>
     </plurals>
     <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">오류</string>
     <string name="import_log_failed_unzip">apkg 압축 해제 실패: %s</string>
     <string name="import_log_failed_copy_to">%s에서 apkg 복사 실패</string>
     <string name="import_log_failed_validate">apkg 검사 실패</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">패키지를 추가할 공간이 부족합니다.\n필요 - %1$s\n여유 - %2$s.\n\n도움이 필요한가요? 필요 없는 파일들을 지워보세요. 또한, 동기화 기능은 공간을 적게 사용하기에, 다른 기기(예: Anki 컴퓨터)랑 동기화를 해 보세요.</string>
     <string name="import_log_file_cache_cleared">파일을 불러오는데 문제가 발생했습니다. 처리 중 캐시가 삭제됐을 수 있습니다.\n다시 시도하십시오.</string>
     <string name="import_succeeded_but_check_database">데이타를 가져오는 데는 성공했지만, 정리에 실패했습니다. 나중에 데이터베이스 점검하기를 실행해주십시오. 원인: %s</string>
-    <string name="import_error_unhandled_request">가져오기 요청을 처리할 수 없습니다.</string>
     <string name="import_error_corrupt_zip">apkg파일이 손상되었습니다. 삭제 후 다시 다운로드해주십시오. \n\n원인: %s</string>
-    <string name="import_error_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
+    <string name="import_error_handle_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
     <string name="import_error_not_apkg_extension">apkg, colpkg 확장자를 가진 \"%s\" 파일이 없습니다.</string>
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() 실패 (저장 공간이 부족한 것일 수 있습니다.)</string>
-    <string name="import_error_unhandled_scheme">처리되지 않은 가져오기: \"%s\"</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
+    <string name="import_error_multiple_colpkg">여러 colpkg 파일이 선택되었습니다.</string>
+    <string name="import_error_colpkg_apkg">apkg 랑 colpkg 파일이 동시에 선택되었습니다.</string>
+    <string name="import_stats_error">다음 파일을 추가하는데 오류가 있었습니다:\n%s</string>
     <string name="import_replacing">컬렉션을 대체하는 중...</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_include_schedule">일정 포함</string>
@@ -197,13 +196,15 @@
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
     <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        안녕하세요!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
-        ]]></string>
+       이것은 AnkiDroid에서 보낸 안키 플래시 카드입니다[1].
+        이 중에서 이용 가능한 것을 선택해 보시고[2] 쉽고 효율적으로 즐겁게 공부하세요!<br/><br/>
+        [1]%1$s<br/>
+        [2]%2$s
+        ]]>    
+ 
+Context | Request Context    [1]</string>
     <string name="export_unsuccessful">Apkg 파일 오류 내보내기</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>
     <string name="menu__deck_options">덱 옵션</string>
@@ -257,8 +258,6 @@
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">이 파일을 열기 위해서는 앱을 업데이트 해야 합니다.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">%s을(를) 로드 실패</string>
     <string name="activity_start_failed">시스템에 설치된 이 액션을 실행할 수 있는 앱이 없습니다.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
     <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
@@ -283,25 +282,7 @@
     <string name="white_board_image_saved">%s에 화이트보드 이미지가 저장되었습니다.</string>
     <string name="title_whiteboard_pen_color">화이트보드 펜 색상</string>
     <string name="title_whiteboard_editor">화이트보드 편집기</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[비어있는 카드를 발견했습니다. 도구>빈 카드를 실행해 주십시오.]]></string>
-    <string name="note_importer_error_empty_first_field">첫번째 필드가 비어있음: %s</string>
-    <string name="note_importer_error_first_field_matched">첫번째 필드 중복됨: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">첫 필드에 중복 값 추가: %s</string>
-    <string name="note_importer_error_appeared_twice">파일에 두개 존재: %s</string>
-    <string name="note_importer_error_empty_notes">생성된 카드가 없어 노트를 가져올 수 없었습니다. 이 문제는 빈 필드가 있거나 텍스트 파일의 내용이 올바른 필드에 매핑되지 않은 경우 발생할 수 있습니다.</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’에 %2$d개의 필드, %3$d가 필요</string>
-    <string name="csv_importer_error_exception">무시 됨: %s</string>
     <string name="user_is_a_robot">자동 테스트를 감지했습니다. 만약 당신이 로봇이 아니라면 AnkiDroid 지원부에 연락하세요.</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">노트 %d개 추가됨</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">노트 %d개 업데이트됨</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">노트 %d개 변경되지 않음</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">이 카드는 AnkiDroid에서 지원하지 않은 기능을 이용합니다. 개발자에게 문의하거나(%1$s), wiki를 확인해주십시오. %2$s</string>
     <string name="invalid_json_data">잘못된 카드 데이터입니다. %s</string>
@@ -315,7 +296,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
-    <string name="cannot_load_http_resource">http 자료 불러오기는 더 이상 지원되지 않습니다.</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' 뭉치를 가져오는데 실패했습니다.</string>
     <string name="search_decks">덱 검색</string>
@@ -368,10 +348,6 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
@@ -404,4 +380,15 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

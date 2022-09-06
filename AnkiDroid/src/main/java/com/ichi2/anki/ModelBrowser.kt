@@ -26,9 +26,8 @@ import android.widget.AdapterView.OnItemLongClickListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -48,9 +47,8 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.showWithKeyboard
+import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.lang.RuntimeException
 import java.util.ArrayList
@@ -76,7 +74,7 @@ class ModelBrowser : AnkiActivity() {
     private var mActionBar: ActionBar? = null
 
     // Dialogue used in renaming
-    private var mModelNameInput: EditText? = null
+    private var modelNameInput: EditText? = null
     private var mNewModelNames: ArrayList<String>? = null
 
     // ----------------------------------------------------------------------------
@@ -262,14 +260,13 @@ class ModelBrowser : AnkiActivity() {
         val addSelectionSpinner = Spinner(this)
         val newModelAdapter = ArrayAdapter(this, R.layout.dropdown_deck_item, mNewModelLabels!!.toList())
         addSelectionSpinner.adapter = newModelAdapter
-        MaterialDialog.Builder(this)
-            .title(R.string.model_browser_add)
-            .positiveText(R.string.dialog_ok)
-            .customView(addSelectionSpinner, true)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                mModelNameInput = FixedEditText(this@ModelBrowser)
-                mModelNameInput?.let {
-                    it.setSingleLine()
+        MaterialDialog(this).show {
+            customView(view = addSelectionSpinner, scrollable = true, horizontalPadding = true)
+            title(R.string.model_browser_add)
+            positiveButton(R.string.dialog_ok) {
+                modelNameInput = FixedEditText(this@ModelBrowser)
+                modelNameInput?.let { modelNameEditText ->
+                    modelNameEditText.setSingleLine()
                     val isStdModel = addSelectionSpinner.selectedItemPosition < mNewModelLabels!!.size
                     // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
                     var suggestedName = mNewModelNames!![addSelectionSpinner.selectedItemPosition]
@@ -279,24 +276,24 @@ class ModelBrowser : AnkiActivity() {
                     if (mExistingModelNames!!.contains(suggestedName)) {
                         suggestedName = randomizeName(suggestedName)
                     }
-                    it.setText(suggestedName)
-                    it.setSelection(it.text.length)
+                    modelNameEditText.setText(suggestedName)
+                    modelNameEditText.setSelection(modelNameEditText.text.length)
 
                     // Create textbox to name new model
-                    MaterialDialog.Builder(this@ModelBrowser)
-                        .title(R.string.model_browser_add)
-                        .customView(it, true)
-                        .positiveText(R.string.dialog_ok)
-                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                            val modelName = it.text.toString()
+                    MaterialDialog(this@ModelBrowser).show {
+                        customView(view = modelNameEditText, scrollable = true)
+                        title(R.string.model_browser_add)
+                        positiveButton(R.string.dialog_ok) {
+                            val modelName = modelNameEditText.text.toString()
                             addNewNoteType(modelName, addSelectionSpinner.selectedItemPosition)
                         }
-                        .negativeText(R.string.dialog_cancel)
-                        .showWithKeyboard()
+                        negativeButton(R.string.dialog_cancel)
+                        displayKeyboard(modelNameEditText)
+                    }
                 }
             }
-            .negativeText(R.string.dialog_cancel)
-            .show()
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     /**
@@ -387,19 +384,18 @@ class ModelBrowser : AnkiActivity() {
      */
     private fun renameModelDialog() {
         initializeNoteTypeList()
-        mModelNameInput = FixedEditText(this)
-        mModelNameInput?.let {
-            it.isSingleLine = true
-            it.setText(mModels!![mModelListPosition].getString("name"))
-            it.setSelection(it.text.length)
-            MaterialDialog.Builder(this)
-                .title(R.string.rename_model)
-                .customView(it, true)
-                .positiveText(R.string.rename)
-                .negativeText(R.string.dialog_cancel)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        modelNameInput = FixedEditText(this)
+        modelNameInput?.let { modelNameEditText ->
+            modelNameEditText.isSingleLine = true
+            modelNameEditText.setText(mModels!![mModelListPosition].getString("name"))
+            modelNameEditText.setSelection(modelNameEditText.text.length)
+
+            MaterialDialog(this).show {
+                customView(view = modelNameEditText, scrollable = true)
+                title(R.string.rename_model)
+                positiveButton(R.string.rename) {
                     val model = mModels!![mModelListPosition]
-                    var deckName = it.text.toString() // Anki desktop doesn't allow double quote characters in deck names
+                    var deckName = modelNameEditText.text.toString() // Anki desktop doesn't allow double quote characters in deck names
                         .replace("[\"\\n\\r]".toRegex(), "")
                     if (mExistingModelNames!!.contains(deckName)) {
                         deckName = randomizeName(deckName)
@@ -417,7 +413,9 @@ class ModelBrowser : AnkiActivity() {
                         showToast(resources.getString(R.string.toast_empty_name))
                     }
                 }
-                .showWithKeyboard()
+                negativeButton(R.string.dialog_cancel)
+                displayKeyboard(modelNameEditText)
+            }
         }
     }
 
@@ -426,11 +424,6 @@ class ModelBrowser : AnkiActivity() {
      * the user to edit the current note's templates.
      */
     private fun openTemplateEditor() {
-        if (!BackendFactory.defaultLegacySchema) {
-            // this screen needs rewriting for the new backend
-            AlertDialog.Builder(this).setTitle("Not yet supported on new backend").show()
-            return
-        }
         val intent = Intent(this, CardTemplateEditor::class.java)
         intent.putExtra("modelId", mCurrentID)
         launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, ActivityTransitionAnimation.Direction.START)

@@ -79,8 +79,8 @@ open class Card : Cloneable {
     // BEGIN SQL table entries
     @set:VisibleForTesting
     var id: Long
-    var nid: Long = 0
-    var did: Long = 0
+    var nid: NoteId = 0
+    var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
     var usn = 0
@@ -100,9 +100,9 @@ open class Card : Cloneable {
     var lapses = 0
     var left = 0
     var oDue: Long = 0
-    var oDid: Long = 0
+    var oDid: DeckId = 0
     private var flags = 0
-    private var data: String? = null
+    private lateinit var data: String
 
     // END SQL table entries
     @set:JvmName("setRenderOutput")
@@ -174,7 +174,6 @@ open class Card : Cloneable {
         note = null
     }
 
-    @JvmOverloads
     fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
             mod = TimeManager.time.intTime()
@@ -229,7 +228,6 @@ open class Card : Cloneable {
         col.log(this)
     }
 
-    @JvmOverloads
     fun q(reload: Boolean = false, browser: Boolean = false): String {
         return render_output(reload, browser).question_and_style()
     }
@@ -243,10 +241,17 @@ open class Card : Cloneable {
         return "<style>${render_output().css}</style>"
     }
 
+    fun questionAvTags(): List<AvTag> {
+        return render_output().question_av_tags
+    }
+
+    fun answerAvTags(): List<AvTag> {
+        return render_output().answer_av_tags
+    }
+
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
-    @JvmOverloads
     @RustCleanup("move col.render_output back to Card once the java collection is removed")
     open fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (render_output == null || reload) {
@@ -324,11 +329,13 @@ open class Card : Cloneable {
     val pureAnswer: String
         get() {
             val s = render_output(false).answer_text
-            val target = "<hr id=answer>"
-            val pos = s.indexOf(target)
-            return if (pos == -1) {
-                s
-            } else s.substring(pos + target.length).trim { it <= ' ' }
+            for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+                val pos = s.indexOf(target)
+                if (pos == -1) continue
+                return s.substring(pos + target.length).trim { it <= ' ' }
+            }
+            // neither found
+            return s
         }
 
     /**
@@ -437,7 +444,7 @@ open class Card : Cloneable {
         val date: Long
         val due = due
         date = if (isInDynamicDeck) {
-            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card)
+            return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
         } else if (queue == Consts.QUEUE_TYPE_LRN) {
             due
         } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
@@ -579,7 +586,7 @@ open class Card : Cloneable {
 
         @Throws(CancellationException::class)
         fun deepCopyCardArray(originals: Array<Card>, cancelListener: CancelListener): Array<Card> {
-            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance())
+            val col = CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!
             val copies = mutableListOf<Card>()
             for (i in originals.indices) {
                 if (cancelListener.isCancelled()) {
