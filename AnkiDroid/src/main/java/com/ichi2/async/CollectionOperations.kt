@@ -66,28 +66,21 @@ fun updateCard(
     }
 }
 
-// TODO: Rename to saveEditedNotesToDisk or something more descriptive
+// TODO: Move the operation where it is actually used, no need for a separate function since it is fairly simple
 /**
- * Takes a list of edited notes and saves them permanently to disk
+ * Takes a list of edited notes and saves the change permanently to disk
  * @param col Collection
  * @param notesToUpdate a list of edited notes that is to be saved
- * @param shouldUpdateCards whether each card inside the notes should be updated
  * @return list of updated (in disk) notes
  */
-fun doInBackgroundUpdateMultipleNotes(
+fun updateMultipleNotes(
     col: Collection,
     notesToUpdate: List<Note>,
-    shouldUpdateCards: Boolean = false // Do we intend to use it somewhere?
 ): List<Note> {
-    Timber.d("doInBackgroundUpdateMultipleNotes")
+    Timber.d("CollectionOperations: updateMultipleNotes")
     return col.db.executeInTransaction {
         for (note in notesToUpdate) {
             note.flush()
-            if (shouldUpdateCards) {
-                for (card in note.cards()) {
-                    card.flush()
-                }
-            }
         }
         notesToUpdate
     }

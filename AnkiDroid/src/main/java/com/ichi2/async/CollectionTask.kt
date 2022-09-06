@@ -36,7 +36,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification

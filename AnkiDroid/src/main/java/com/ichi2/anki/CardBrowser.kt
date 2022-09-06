@@ -1619,7 +1619,7 @@ open class CardBrowser :
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
         val updatedNotes: List<Note> = withCol {
             val selectedNotes = selectedCardIds
-                .map { cardId: CardId? -> getCard(cardId!!).note() }
+                .map { cardId -> getCard(cardId).note() }
                 .distinct()
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
@@ -1627,7 +1627,7 @@ open class CardBrowser :
                     note.setTagsFromStr(tags.join(updatedTags))
                 }
             Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
-            doInBackgroundUpdateMultipleNotes(this, selectedNotes)
+            updateMultipleNotes(this, selectedNotes)
         }
         val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
         Timber.i("CardBrowser:: editSelectedCardsTags: Note/s updated, updating UI...")
