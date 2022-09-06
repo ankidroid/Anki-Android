@@ -785,7 +785,9 @@ open class DeckPicker :
                     // a filtered deck was created
                     openStudyOptions(true)
                 }
-                createFilteredDeckDialog.showFilteredDeckDialog()
+                launchCatchingTask {
+                    createFilteredDeckDialog.showFilteredDeckDialog()
+                }
                 return true
             }
             R.id.action_check_database -> {
