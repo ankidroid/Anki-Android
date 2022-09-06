@@ -29,6 +29,10 @@
         <item name="android:maxWidth">280dp</item>
     </style>
 
+    <style name="OverflowMenuStyle" parent="Widget.MaterialComponents.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/bg_popup</item>
+    </style>
+
     <style name="TextStyleMedium">
         <item name="android:textStyle">bold</item>
     </style>
