@@ -31,4 +31,5 @@
 
     <dimen name="mtrl_snackbar_background_corner_radius">8dp</dimen>
     <dimen name="popup_corner_radius">8dp</dimen>
+    <dimen name="dialog_corner_radius">8dp</dimen>
 </resources>
