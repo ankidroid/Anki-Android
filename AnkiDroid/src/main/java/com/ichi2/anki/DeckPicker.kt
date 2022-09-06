@@ -2214,8 +2214,8 @@ open class DeckPicker :
         if (quick) {
             launchCatchingTask {
                 withProgress {
-                    val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>>? =
-                        withCol { loadDeck(this) }
+                    val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> =
+                        withCol { sched.quickDeckDueTree() }
                     onDecksLoaded(decks)
                 }
             }
