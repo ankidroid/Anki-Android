@@ -2212,7 +2212,13 @@ open class DeckPicker :
             performBackupInBackground()
         }
         if (quick) {
-            TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
+            launchCatchingTask {
+                withProgress {
+                    val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>>? =
+                        withCol { loadDeck(this) }
+                    onDecksLoaded(decks)
+                }
+            }
         } else {
             TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
         }

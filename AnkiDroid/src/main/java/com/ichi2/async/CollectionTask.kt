@@ -36,7 +36,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
@@ -167,13 +166,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     ) : TaskDelegate<Void, List<Note>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<Note>? =
             doInBackgroundUpdateMultipleNotes(col, notesToUpdate, shouldUpdateCards)
-    }
-
-    @KotlinCleanup("can quickDeckDueTree return null?")
-    class LoadDeck : TaskDelegate<Void, List<TreeNode<DeckTreeNode>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckTreeNode>>? {
-            return loadDeck(col)
-        }
     }
 
     class LoadDeckCounts : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
