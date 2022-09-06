@@ -40,9 +40,9 @@ class MediaPlayer :
     var state: MediaPlayerState = IDLE
         set(value) {
             field = value
-            mStateListener?.onChanged(value)
+            stateListener?.onChanged(value)
         }
-    var mStateListener: MediaPlayerStateListener? = null
+    var stateListener: MediaPlayerStateListener? = null
 
     init {
         state = IDLE
