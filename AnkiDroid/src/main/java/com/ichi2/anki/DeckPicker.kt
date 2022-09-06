@@ -2218,28 +2218,23 @@ open class DeckPicker :
         }
     }
 
-    // TODO: [context] and [deckPicker] has been introduced to extract onDecksLoaded function from [UpdateDeckListListener],
-    // remove it once [LoadDeck] and [LoadDeckCount] have been migrated to corotines
-    private val context = this
-    private val deckPicker = this
-    @Suppress("UNNECESSARY_SAFE_CALL")
     fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
         Timber.i("Updating deck list UI")
-        context.hideProgressBar()
+        hideProgressBar()
         // Make sure the fragment is visible
-        if (context.fragmented) {
-            context.mStudyoptionsFrame!!.visibility = View.VISIBLE
+        if (fragmented) {
+            mStudyoptionsFrame!!.visibility = View.VISIBLE
         }
         if (result == null) {
             Timber.e("null result loading deck counts")
-            context.showCollectionErrorDialog()
+            showCollectionErrorDialog()
             return
         }
-        context.mDueTree = result.map { x -> x.unsafeCastToType() }
-        context.renderPage()
+        mDueTree = result.map { x -> x.unsafeCastToType() }
+        renderPage()
         // Update the mini statistics bar as well
-        deckPicker?.launchCatchingTask {
-            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
+        launchCatchingTask {
+            AnkiStatsTaskHandler.createReviewSummaryStatistics(col, mReviewSummaryTextView)
         }
         Timber.d("Startup - Deck List UI Completed")
     }
