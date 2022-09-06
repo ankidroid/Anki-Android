@@ -23,4 +23,5 @@ jobs:
         stale-pr-message: 'Hello 👋, this PR has been opened for more than 2 months with no activity on it. If you think this is a mistake please comment and ping a maintainer to get this merged ASAP! Thanks for contributing! You have 7 days until this gets closed automatically'
         exempt-issue-labels: 'Keep Open'
         exempt-pr-labels: 'Keep Open'
+        close-issue-reason: 'not_planned'
 
