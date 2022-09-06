@@ -172,14 +172,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     @KotlinCleanup("can quickDeckDueTree return null?")
     class LoadDeck : TaskDelegate<Void, List<TreeNode<DeckTreeNode>>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckTreeNode>>? {
-            Timber.d("doInBackgroundLoadDeckCounts")
-            return try {
-                // Get due tree
-                col.sched.quickDeckDueTree()
-            } catch (e: RuntimeException) {
-                Timber.w(e, "doInBackgroundLoadDeckCounts - error")
-                null
-            }
+            return loadDeck(col)
         }
     }
 

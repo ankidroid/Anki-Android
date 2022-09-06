@@ -19,6 +19,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.sched.DeckTreeNode
+import com.ichi2.libanki.sched.TreeNode
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
@@ -97,5 +99,20 @@ fun doInBackgroundUpdateMultipleNotes(
         Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
         CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
         return null
+    }
+}
+
+/**
+ * Return the tree of decks, without numbers
+ * @see [com.ichi2.libanki.sched.BaseSched.quickDeckDueTree]
+ */
+fun loadDeck(col: Collection): List<TreeNode<DeckTreeNode>>? {
+    Timber.d("doInBackgroundLoadDeckCounts")
+    return try {
+        // Get due tree
+        col.sched.quickDeckDueTree()
+    } catch (e: RuntimeException) {
+        Timber.w(e, "doInBackgroundLoadDeckCounts - error")
+        null
     }
 }
