@@ -27,6 +27,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
@@ -47,6 +48,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     /** The selected deck for the context menu */
     val deckId get() = requireArguments().requireLong("did")
 
+    @NeedsTest("Ensure clicking an item results in correct action executed. See: #11788/#11790")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val title = collection.decks.name(deckId)
