@@ -48,7 +48,6 @@
     <!--  Material Design-style persistent footer button -->
     <style name="FooterButtonBase">
         <item name="android:layout_height">48dp</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:textSize">14sp</item>
         <item name="android:typeface">sans</item>
         <item name="android:gravity">center</item>
@@ -71,7 +70,6 @@
 
     <style name="FooterButtonEaseTextBase" parent="FooterButtonNextTime">
         <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:typeface">sans</item>
     </style>
     <style name="FooterButtonEaseText" parent="FooterButtonEaseTextBase" >
