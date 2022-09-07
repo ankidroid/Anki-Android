@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -26,7 +25,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,9 +34,9 @@ import anki.search.SearchNodeKt.group
 import anki.search.searchNode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
-import com.ichi2.libanki.bool
 import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
@@ -50,15 +48,21 @@ class FilterSheetBottomFragment :
     CollectionGetter {
     private lateinit var behavior: BottomSheetBehavior<View>
 
-    private var flagSearchItems = mutableListOf<SearchNode.Flag>()
+    private var flagSearchItems = mutableSetOf<SearchNode.Flag>()
 
     private lateinit var flagRecyclerView: RecyclerView
     private lateinit var flagListAdapter: FlagsAdapter
 
+    private lateinit var flagToggleIcon: ImageView
+    /** Heading of the Flags filter section */
+    private lateinit var filterHeaderFlags: TextView
+    /** Icon of the Flags filter section */
+    private lateinit var filterIconFlags: ImageView
+
     private var lastClickTime = 0
 
     // flagName is displayed in filter sheet as the name of the filter
-    enum class Flags(@StringRes private val flagNameRes: Int, val flagNode: SearchNode.Flag, @DrawableRes val flagIcon: Int) {
+    enum class Flags(@StringRes private val flagNameRes: Int, val flagNode: SearchNode.Flag, @DrawableRes val flagToggleIcon: Int) {
         NO_FLAG(R.string.menu_flag_card_zero, SearchNode.Flag.FLAG_NONE, R.drawable.label_icon_flags),
         RED(R.string.menu_flag_card_one, SearchNode.Flag.FLAG_RED, R.drawable.ic_flag_red),
         ORANGE(R.string.menu_flag_card_two, SearchNode.Flag.FLAG_ORANGE, R.drawable.ic_flag_orange),
@@ -76,18 +80,26 @@ class FilterSheetBottomFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.filter_bottom_sheet, container, false).apply {
+        // Create a query with currently selected filters, and close the filter sheet
         val applyButton = this.findViewById<Button>(R.id.apply_filter_button)
         applyButton.setOnClickListener {
             val filterQuery = createQuery(flagSearchItems)
-
-            if (filterQuery != "") {
-                (activity as CardBrowser).searchWithFilterQuery(filterQuery)
-            }
+            (activity as CardBrowser).searchWithFilterQuery(filterQuery)
             dismiss()
         }
 
+        // Close the filter sheet
         val cancelButton = this.findViewById<Button>(R.id.cancel_filter_button)
         cancelButton.setOnClickListener {
+            dismiss()
+        }
+
+        /* Clear the selected filters, search with no filters applied to show all the cards
+           and close the filter sheet */
+        val clearButton = this.findViewById<Button>(R.id.clear_filter_button)
+        clearButton.setOnClickListener {
+            clearQuery()
+            (activity as CardBrowser).searchWithFilterQuery("")
             dismiss()
         }
     }
@@ -115,14 +127,24 @@ class FilterSheetBottomFragment :
         /*
          * Set the filter headings to be clickable:
          * Show/Hide the filter list on clicking
+         *
+         * If a filter is selected, change color of heading
          */
 
-        val flagsButton = requireView().findViewById<LinearLayout>(R.id.filterByFlagsText)
-        val flagIcon = requireView().findViewById<ImageView>(R.id.filter_flagListToggle)
+        val flagsHeaderLayout = requireView().findViewById<LinearLayout>(R.id.filterByFlagsLayout)
+        filterHeaderFlags = flagsHeaderLayout.findViewById(R.id.filterByFlagsText)
+        filterIconFlags = flagsHeaderLayout.findViewById(R.id.filter_by_flags_icon)
+        flagToggleIcon = requireView().findViewById(R.id.filter_flagListToggle)
         val flagsRecyclerViewLayout =
             requireView().findViewById<LinearLayout>(R.id.flagsRecyclerViewLayout)
 
-        flagsButton.setOnClickListener {
+        if (flagSearchItems.isNotEmpty()) {
+            filterHeaderFlags.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
+            filterIconFlags.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
+            flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
+        }
+
+        flagsHeaderLayout.setOnClickListener {
 
             if (SystemClock.elapsedRealtime() - lastClickTime > DELAY_TIME) {
 
@@ -130,28 +152,17 @@ class FilterSheetBottomFragment :
 
                 if (flagsRecyclerViewLayout.isVisible) {
                     flagsRecyclerViewLayout.visibility = View.GONE
-                    flagIcon.setImageResource(R.drawable.filter_sheet_unopened_list_icon)
+                    flagToggleIcon.setImageResource(R.drawable.filter_sheet_unopened_list_icon)
                 } else {
                     flagsRecyclerViewLayout.visibility = View.VISIBLE
-                    flagIcon.setImageResource(R.drawable.filter_sheet_opened_list_icon)
+                    flagToggleIcon.setImageResource(R.drawable.filter_sheet_opened_list_icon)
                 }
             }
         }
     }
 
-    /**
-     * Clear the filters if Bottom Sheet is dismissed
-     * TODO: Filters should be retained on swiping down
-     * (user might swipe down accidentally)
-     */
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-
-        clearQuery()
-    }
-
     private fun createQuery(
-        flagList: MutableList<SearchNode.Flag>
+        flagList: Set<SearchNode.Flag>
     ): String {
 
         if (flagList.isEmpty()) {
@@ -186,50 +197,93 @@ class FilterSheetBottomFragment :
     /**
      * Add/remove items from list of selected filters
      * Change background color accordingly
-     * TODO: background color should be retained if selected and swiped down
      */
 
     inner class FlagsAdapter(
         /** The collection of data to be displayed*/
-        private var dataset: Array<Flags>,
-    ) :
-        RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
+        private var dataset: Array<Flags>
+    ) : RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val itemTextView: TextView = view.findViewById(R.id.filter_list_item)
             val icon: ImageView = view.findViewById(R.id.filter_list_icon)
+            /** Checks whether flagSearchItems was empty before adding new element to it */
 
-            private fun onFlagItemClicked(item: Flags, position: Int) {
-                val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
-
-                if (!isSelected(item, flagSearchItems)) {
-                    itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
-                    itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
-
-                    flagSearchItems.add(item.flagNode)
+            private fun onFlagItemClicked(item: Flags) {
+                // set default as false on every click
+                // explicitly set true if condition satisfies
+                if (isSelected(item)) {
+                    unselect(item)
                 } else {
-                    flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
-                    itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
-
-                    flagSearchItems.remove(item.flagNode)
+                    select(item)
                 }
+            }
+
+            /**
+             * Unselect current lines, corresponding to [item]
+             */
+            private fun unselect(item: Flags) {
+                flagSearchItems.remove(item.flagNode)
+                if (flagSearchItems.isNotEmpty()) {
+                    return
+                }
+                setUnselectedColor()
+                filterHeaderFlags.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
+                filterIconFlags.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
+                flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
+            }
+
+            /**
+             * Select current lines, corresponding to [item]
+             */
+            private fun select(item: Flags) {
+                val wasNotEmpty = flagSearchItems.isNotEmpty()
+                flagSearchItems.add(item.flagNode)
+                if (wasNotEmpty) {
+                    return
+                }
+                setSelectedColor()
+                filterHeaderFlags.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
+                filterIconFlags.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
+                flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
             }
 
             fun bind(
-                currFlag: Flags,
-                position: Int
+                currFlag: Flags
             ) {
                 itemTextView.text = currFlag.getFlagName(itemView.context)
-                icon.setImageResource(currFlag.flagIcon)
+                icon.setImageResource(currFlag.flagToggleIcon)
+
+                // If [currFlag] is currently selected, bind the view with the selected item background and text color
+                @NeedsTest("Test if background color is being correctly set if item is selected")
+                if (isSelected(currFlag)) {
+                    setSelectedColor()
+                } else {
+                    setUnselectedColor()
+                }
 
                 itemView.setOnClickListener {
-                    onFlagItemClicked(currFlag, position)
+                    onFlagItemClicked(currFlag)
                 }
             }
 
-            fun isSelected(flag: Flags, flagSearchItems: List<SearchNode.Flag>): bool {
-                return flagSearchItems.contains(flag.flagNode)
+            /**
+             * Update the section header to indicate some of its content is selected.
+             */
+            private fun setSelectedColor() {
+                itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
+                itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
             }
+
+            /**
+             * Update the section header to indicate none of its content is selected.
+             */
+            private fun setUnselectedColor() {
+                itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
+                itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
+            }
+
+            fun isSelected(flag: Flags) = flagSearchItems.contains(flag.flagNode)
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -241,7 +295,7 @@ class FilterSheetBottomFragment :
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             val currTag = dataset[position]
-            viewHolder.bind(currTag, position)
+            viewHolder.bind(currTag)
         }
 
         override fun getItemCount() = dataset.size
