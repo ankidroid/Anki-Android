@@ -374,7 +374,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             mNoteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            setTitle(R.string.menu_add_note)
+            setTitle(R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = intent.getStringArrayExtra(EXTRA_TAGS)
