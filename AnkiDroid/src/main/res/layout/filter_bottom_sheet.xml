@@ -3,6 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,16 +14,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/cancel_filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_cancel"
+            android:textColor="?attr/filterItemTextColor"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/cancel_filter_button"
+            android:id="@+id/clear_filter_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dialog_cancel"
+            android:text="clear"
+            tools:ignore="HardcodedText"
             android:textColor="?attr/filterItemTextColor"
             style="@style/Widget.MaterialComponents.Button.TextButton" />
 
@@ -35,7 +45,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton" />
 
     </LinearLayout>
-®
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -57,7 +67,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/filterByFlagsText"
+                    android:id="@+id/filterByFlagsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -68,13 +78,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/filter_sheet_unopened_list_icon"/>
+                        android:src="@drawable/filter_sheet_opened_list_icon"/>
 
                     <ImageView
+                        android:id="@+id/filter_by_flags_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/label_icon_flags"/>
+                        android:src="@drawable/label_icon_flags" />
 
                     <TextView
                         android:id="@+id/filterByFlagsText"
@@ -91,8 +102,7 @@
                 <LinearLayout
                     android:id="@+id/flagsRecyclerViewLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
+                    android:layout_height="match_parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/filter_bottom_flag_list"
