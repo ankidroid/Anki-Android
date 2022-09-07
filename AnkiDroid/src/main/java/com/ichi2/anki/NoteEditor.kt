@@ -47,7 +47,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
-import androidx.core.view.contains
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -132,8 +131,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     // non-null after onCollectionLoaded
     private var mEditorNote: Note? = null
-    /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */private var mCurrentEditedCard: Card? =
-        null
+    /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
+    private var mCurrentEditedCard: Card? = null
     private var mSelectedTags: ArrayList<String>? = null
 
     @get:VisibleForTesting
@@ -152,17 +151,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /* indicates which activity called Note Editor */
     private var caller = 0
     private var mEditFields: LinkedList<FieldEditText?>? = null
-    @Suppress("Deprecation")
-    private var progressDialog: android.app.ProgressDialog? = null
     private var sourceText: Array<String?>? = null
     private val mFieldState = FieldState.fromEditor(this)
     private var mToolbar: Toolbar? = null
 
     // Use the same HTML if the same image is pasted multiple times.
-    private var mPastedImageCache: HashMap<String, String>? = HashMap()
+    private var mPastedImageCache: HashMap<String, String> = HashMap()
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
-    private var mToggleStickyText: HashMap<Int, String?>? = HashMap()
+    private var mToggleStickyText: HashMap<Int, String?> = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
 
     override fun onDeckSelected(deck: SelectableDeck?) {
@@ -238,9 +235,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             mSelectedTags = savedInstanceState.getStringArrayList("tags")
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired")
             mPastedImageCache =
-                savedInstanceState.getSerializable("imageCache") as HashMap<String, String>?
+                savedInstanceState.getSerializable("imageCache") as HashMap<String, String>
             mToggleStickyText =
-                savedInstanceState.getSerializable("toggleSticky") as HashMap<Int, String?>?
+                savedInstanceState.getSerializable("toggleSticky") as HashMap<Int, String?>
             changed = savedInstanceState.getBoolean("changed")
         } else {
             caller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER)
@@ -1402,7 +1399,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
-        if (mToggleStickyText!![index] == null) {
+        if (mToggleStickyText[index] == null) {
             toggleStickyButton!!.background.alpha = 64
         } else {
             toggleStickyButton!!.background.alpha = 255
@@ -1417,24 +1414,24 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun onToggleStickyText(toggleStickyButton: ImageButton?, index: Int) {
         val text = mEditFields!![index]!!.fieldText
-        if (mToggleStickyText!![index] == null) {
-            mToggleStickyText!![index] = text
+        if (mToggleStickyText[index] == null) {
+            mToggleStickyText[index] = text
             toggleStickyButton!!.background.alpha = 255
-            Timber.d("Saved Text:: %s", mToggleStickyText!![index])
+            Timber.d("Saved Text:: %s", mToggleStickyText[index])
         } else {
-            mToggleStickyText!!.remove(index)
+            mToggleStickyText.remove(index)
             toggleStickyButton!!.background.alpha = 64
         }
     }
 
     private fun saveToggleStickyMap() {
-        for ((key) in mToggleStickyText!!) {
-            mToggleStickyText!![key] = mEditFields!![key]!!.fieldText
+        for ((key) in mToggleStickyText) {
+            mToggleStickyText[key] = mEditFields!![key]!!.fieldText
         }
     }
 
     private fun updateFieldsFromStickyText() {
-        for ((key, value) in mToggleStickyText!!) {
+        for ((key, value) in mToggleStickyText) {
             // handle fields for different note type with different size
             if (key < mEditFields!!.size) {
                 mEditFields!![key]!!.setText(value)
