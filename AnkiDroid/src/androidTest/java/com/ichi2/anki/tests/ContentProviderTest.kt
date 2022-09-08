@@ -129,7 +129,7 @@ class ContentProviderTest : InstrumentedTest() {
         mNumDecksBeforeTest = col.decks.count()
         for (fullName in TEST_DECKS) {
             val path = Decks.path(fullName)
-            var partialName: String? = ""
+            var partialName = ""
             /* Looping over all parents of full name. Adding them to
              * mTestDeckIds ensures the deck parents decks get deleted
              * too at tear-down.
@@ -138,7 +138,7 @@ class ContentProviderTest : InstrumentedTest() {
                 /* If parent already exists, don't add the deck, so
                  * that we are sure it won't get deleted at
                  * set-down, */
-                if (col.decks.byName(partialName!!) != null) {
+                if (col.decks.byName(partialName) != null) {
                     continue
                 }
                 val did = col.decks.id(partialName)
