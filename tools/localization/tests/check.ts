@@ -49,34 +49,6 @@ const pluralMultipleTwo = `<plurals name="in_minutes">
     <item quantity="other">मिनट</item>
 </plurals>`
 
-const invalidStr = `<resources>
-    <string name="testString">I am a test% String</string>
-    <string name="testString2">test%</string>
-    <string name="testString3">test% string</string>
-    <plurals name="pluralTestString1">
-        <item quantity="other">आज%  %1\${'$'}'d' मध्ये% %2\${'$'}'s' कार्डांचा अभ्यास केला</item>
-    </plurals>
-</resources>
-`;
-
-const validStr = `<resources>
-    <string name="testString">I am a test String</string>
-    <string name="testString2">test</string>
-    <string name="testString3">test string</string>
-    <string name="testString4">test string %s</string>
-    <string name="testString5">%%</string>
-    <string name="testString6">%1\$'d' is expected</string>
-    <plurals name="PluralTestString1">
-        <item quantity="one">%1$'d' card (0 due)</item>
-        <item quantity="other">%1$'d' cards (0 due)</item>
-    </plurals>
-    <plurals name="pluralTestString2">
-        <item quantity="one">आज %1\${'$'}'d' मध्ये %2\${'$'}'s' कार्डचा अभ्यास केला</item>
-    </plurals>
-    <string name="testString7">XXX%</string>
-</resources>
-`;
-
 console.assert(VerifyJavaStringFormat(valid) === true, "[valid]", valid)
 console.assert(VerifyJavaStringFormat(invalid) === false, "[invalid]", invalid)
 console.assert(VerifyJavaStringFormat(unambiguous) === true, "[unambiguous]", unambiguous)
@@ -86,5 +58,3 @@ console.assert(VerifyJavaStringFormat(pluralPartial) === false, "[pluralPartial]
 console.assert(VerifyJavaStringFormat(pluralFail) === false, "[pluralFail]", pluralFail)
 console.assert(VerifyJavaStringFormat(pluralMultiple) === true, "[pluralMultiple]", pluralMultiple)
 console.assert(VerifyJavaStringFormat(pluralMultipleTwo) === true, "[pluralMultipleTwo]", pluralMultipleTwo)
-console.assert(VerifyJavaStringFormat(invalidStr) === false, "[invalidStr]", invalidStr)
-console.assert(VerifyJavaStringFormat(validStr) === false, "[validStr]", invalidStr)
