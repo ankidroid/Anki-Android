@@ -525,13 +525,12 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         return (_groupChildren(allDecksSorted, false) as List<TreeNode<T>>)
     }
 
-    @RustCleanup("once defaultLegacySchema is removed, cancelListener can be removed")
-    override fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>? {
+    override fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
         if (!BackendFactory.defaultLegacySchema) {
-            return super.deckDueTree(null)
+            return super.deckDueTree()
         }
         _checkDay()
-        val allDecksSorted = deckDueList(cancelListener) ?: return null
+        val allDecksSorted = deckDueList()
         return _groupChildren(allDecksSorted, true)
     }
 

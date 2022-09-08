@@ -27,7 +27,6 @@ import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.decks.DeckTreeNode
 import anki.scheduler.*
 import com.ichi2.anki.R
-import com.ichi2.async.CancelListener
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -260,16 +259,10 @@ abstract class BaseSched(val col: Collection) {
     }
 
     /**
-     * @param cancelListener A task that is potentially cancelled
      * @return the due tree. null only if task is cancelled
      */
-    @RustCleanup("cancelListener ignored, and never null")
-    open fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>? {
+    open fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
         return deckTreeLegacy(true)
-    }
-
-    fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
-        return deckDueTree(cancelListener = null)!!
     }
 
     /**
