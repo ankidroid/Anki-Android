@@ -84,8 +84,7 @@ class ContentProviderTest : InstrumentedTest() {
      * Should create no problem if we forget to change it when more tests are added.
      */
     private val mTestDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
-    @KotlinCleanup("see if mCreatedNotes and mDummyFields could be made lateinit")
-    private var mCreatedNotes: ArrayList<Uri>? = null
+    private lateinit var createdNotes: ArrayList<Uri>
     private var mModelId: Long = 0
     private var mDummyFields = arrayOfNulls<String>(1)
 
@@ -101,7 +100,7 @@ class ContentProviderTest : InstrumentedTest() {
     fun setUp() {
         assumeThat(defaultLegacySchema, `is`(true))
         Timber.i("setUp()")
-        mCreatedNotes = ArrayList()
+        createdNotes = ArrayList<Uri>()
         val col = col
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
@@ -143,12 +142,12 @@ class ContentProviderTest : InstrumentedTest() {
                 }
                 val did = col.decks.id(partialName)
                 mTestDeckIds.add(did)
-                mCreatedNotes!!.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
+                createdNotes.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
                 partialName += "::"
             }
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
-        mCreatedNotes!!.add(setupNewNote(col, mModelId, 1, mDummyFields.requireNoNulls(), TEST_TAG))
+        createdNotes.add(setupNewNote(col, mModelId, 1, mDummyFields.requireNoNulls(), TEST_TAG))
     }
 
     /**
@@ -379,7 +378,7 @@ class ContentProviderTest : InstrumentedTest() {
         try {
             assertEquals(
                 "Check number of results",
-                mCreatedNotes!!.size.toLong(),
+                createdNotes.size.toLong(),
                 cursor.count.toLong()
             )
         } finally {
@@ -411,7 +410,7 @@ class ContentProviderTest : InstrumentedTest() {
         try {
             assertEquals(
                 "Check number of results",
-                mCreatedNotes!!.size.toLong(),
+                createdNotes.size.toLong(),
                 allNotesCursor.count.toLong()
             )
             while (allNotesCursor.moveToNext()) {
@@ -477,7 +476,7 @@ class ContentProviderTest : InstrumentedTest() {
             try {
                 assertEquals(
                     "Check number of results",
-                    mCreatedNotes!!.size.toLong(),
+                    createdNotes.size.toLong(),
                     allNotesCursor!!.count.toLong()
                 )
                 // Check columns
@@ -521,7 +520,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Change the fields so that the first field is now "newTestValue"
         val dummyFields2 = mDummyFields.clone()
         dummyFields2[0] = TEST_FIELD_VALUE
-        for (uri in mCreatedNotes!!) {
+        for (uri in createdNotes) {
             // Update the flds
             @Suppress("UNCHECKED_CAST")
             cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2 as Array<String>))
@@ -723,7 +722,7 @@ class ContentProviderTest : InstrumentedTest() {
         try {
             assertEquals(
                 "Check number of results",
-                mCreatedNotes!!.size.toLong(),
+                createdNotes.size.toLong(),
                 allNotesCursor.count.toLong()
             )
             while (allNotesCursor.moveToNext()) {
