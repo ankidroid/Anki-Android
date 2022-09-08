@@ -51,7 +51,7 @@ class ACRATest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    private var mApp: AnkiDroidApp? = null
+    private lateinit var mApp: AnkiDroidApp
     private val mDebugLogcatArguments = arrayOf("-t", "300", "-v", "long", "ACRA:S")
 
     // private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
@@ -60,7 +60,7 @@ class ACRATest : InstrumentedTest() {
     fun setUp() {
         mApp = testContext.applicationContext as AnkiDroidApp
         // Note: attachBaseContext can't be called twice as we're using the same instance between all tests.
-        mApp!!.onCreate()
+        mApp.onCreate()
     }
 
     @Test
@@ -261,7 +261,7 @@ class ACRATest : InstrumentedTest() {
         for (configuration in config.pluginConfigurations()) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertEquals(
-                    mApp!!.resources.getString(res),
+                    mApp.resources.getString(res),
                     (configuration as ToastConfiguration).text()
                 )
                 assertTrue("Toast should be enabled", configuration.enabled())
