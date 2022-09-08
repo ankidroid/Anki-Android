@@ -97,8 +97,8 @@ class CardHtml(
     }
 
     private fun getContent(): String {
-        var content = context.expandSounds(beforeSoundTemplateExpansion)
-        content = CardAppearance.fixBoldStyle(content)
+        val content = context.expandSounds(beforeSoundTemplateExpansion)
+        CardAppearance.fixBoldStyle(content)
         if (nightModeInversion) {
             return HtmlColors.invertColors(content)
         }
