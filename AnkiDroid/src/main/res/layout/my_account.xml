@@ -106,10 +106,9 @@
                     android:textSize="@dimen/abc_text_size_button_material"
                     android:textColor="?attr/colorAccent"
                     android:singleLine="true"
-                    android:padding="10dp"
+                    android:padding="3dp"
                     android:layout_gravity="center"
                     android:text="@string/reset_password"
-                    android:layout_margin="@dimen/content_vertical_padding"
                     />
 
                 <com.ichi2.ui.FixedTextView
