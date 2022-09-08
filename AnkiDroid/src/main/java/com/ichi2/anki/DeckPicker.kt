@@ -2190,26 +2190,7 @@ open class DeckPicker :
             Timber.d("Refreshing deck list")
         }
 
-        override fun actualOnPostExecute(context: DeckPicker, result: List<TreeNode<T>>?) {
-            Timber.i("Updating deck list UI")
-            context.hideProgressBar()
-            // Make sure the fragment is visible
-            if (context.fragmented) {
-                context.mStudyoptionsFrame!!.visibility = View.VISIBLE
-            }
-            if (result == null) {
-                Timber.e("null result loading deck counts")
-                context.showCollectionErrorDialog()
-                return
-            }
-            context.mDueTree = result.map { x -> x.unsafeCastToType() }
-            context.renderPage()
-            // Update the mini statistics bar as well
-            deckPicker?.launchCatchingTask {
-                AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
-            }
-            Timber.d("Startup - Deck List UI Completed")
-        }
+        override fun actualOnPostExecute(context: DeckPicker, result: List<TreeNode<T>>?) = context.onDecksLoaded(result)
     }
 
     /**
@@ -2231,10 +2212,37 @@ open class DeckPicker :
             performBackupInBackground()
         }
         if (quick) {
-            TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
+            launchCatchingTask {
+                withProgress {
+                    val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> =
+                        withCol { sched.quickDeckDueTree() }
+                    onDecksLoaded(decks)
+                }
+            }
         } else {
             TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
         }
+    }
+
+    fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
+        Timber.i("Updating deck list UI")
+        hideProgressBar()
+        // Make sure the fragment is visible
+        if (fragmented) {
+            mStudyoptionsFrame!!.visibility = View.VISIBLE
+        }
+        if (result == null) {
+            Timber.e("null result loading deck counts")
+            showCollectionErrorDialog()
+            return
+        }
+        mDueTree = result.map { x -> x.unsafeCastToType() }
+        renderPage()
+        // Update the mini statistics bar as well
+        launchCatchingTask {
+            AnkiStatsTaskHandler.createReviewSummaryStatistics(col, mReviewSummaryTextView)
+        }
+        Timber.d("Startup - Deck List UI Completed")
     }
 
     fun renderPage() {
