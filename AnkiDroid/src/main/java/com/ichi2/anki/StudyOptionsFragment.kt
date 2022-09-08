@@ -36,6 +36,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
+import com.ichi2.anki.servicelayer.UndoService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
@@ -49,6 +50,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -252,6 +254,21 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_undo -> {
+                Timber.i("StudyOptionsFragment:: Undo button pressed")
+                if (BackendFactory.defaultLegacySchema) {
+                    UndoService.Undo().runWithHandler(mUndoListener)
+                } else {
+                    launchCatchingTask {
+                        if (requireActivity().backendUndoAndShowPopup()) {
+                            openReviewer()
+                        } else {
+                            UndoService.Undo().runWithHandler(mUndoListener)
+                        }
+                    }
+                }
+                return true
+            }
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
                 if (col!!.decks.isDyn(col!!.decks.selected())) {
@@ -351,7 +368,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // Switch on or off unbury depending on if there are cards to unbury
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
             // Switch on or off undo depending on whether undo is available
-            menu.findItem(R.id.action_undo).isVisible = false
+            if (col == null || !col!!.undoAvailable()) {
+                menu.findItem(R.id.action_undo).isVisible = false
+            } else {
+                menu.findItem(R.id.action_undo).isVisible = true
+                val res = AnkiDroidApp.appResources
+                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
+            }
             // Set the back button listener
             if (!mFragmented) {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
