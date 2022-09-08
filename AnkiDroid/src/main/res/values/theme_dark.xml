@@ -26,6 +26,7 @@
         <!-- Menu -->
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
         <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
