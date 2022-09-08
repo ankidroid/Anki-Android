@@ -435,14 +435,14 @@ abstract class NavigationDrawerActivity :
                 .setIntent(intentReviewCards)
                 .build()
 
-            // Add Note Shortcut
+            // Add Shortcut
             val intentAddNote = Intent(context, NoteEditor::class.java)
             intentAddNote.action = Intent.ACTION_VIEW
             intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
             val NoteEditorShortcut = ShortcutInfo.Builder(context, "noteEditorShortcutId")
-                .setShortLabel(context.getString(R.string.menu_add_note))
-                .setLongLabel(context.getString(R.string.menu_add_note))
+                .setShortLabel(context.getString(R.string.menu_add))
+                .setLongLabel(context.getString(R.string.menu_add))
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
                 .setIntent(intentAddNote)
                 .build()
