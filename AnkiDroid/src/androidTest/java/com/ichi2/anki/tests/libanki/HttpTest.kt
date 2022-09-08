@@ -24,10 +24,12 @@ import androidx.test.rule.GrantPermissionRule
 import com.ichi2.async.Connection
 import com.ichi2.libanki.sync.HostNum
 import com.ichi2.utils.NetworkUtils
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class HttpTest {
@@ -55,7 +57,7 @@ class HttpTest {
             try {
                 Class.forName("com.ichi2.async.Connection")
             } catch (e: Exception) {
-                Assert.fail("Unable to load Connection class: " + e.message)
+                fail("Unable to load Connection class: " + e.message)
             }
         }
         InstrumentationRegistry.getInstrumentation().runOnMainSync(onlineRunnable)
@@ -64,13 +66,13 @@ class HttpTest {
         // TODO simulate offline programmatically - currently exercised by manually toggling an emulator offline pre-test
         if (!NetworkUtils.isOnline) {
             Connection.login(testListener, invalidPayload)
-            Assert.assertFalse(
+            assertFalse(
+                testListener.getPayload()!!.success,
                 "Successful login despite being offline",
-                testListener.getPayload()!!.success
             )
-            Assert.assertTrue(
+            assertTrue(
+                testListener.disconnectedCalled,
                 "onDisconnected not called despite being offline",
-                testListener.disconnectedCalled
             )
             return
         }
@@ -81,13 +83,13 @@ class HttpTest {
                 // This forces us to synchronously wait for the AsyncTask to do it's work
                 conn!!.get()
             } catch (e: Exception) {
-                Assert.fail("Caught exception while trying to login: " + e.message)
+                fail("Caught exception while trying to login: " + e.message)
             }
         }
         InstrumentationRegistry.getInstrumentation().runOnMainSync(r)
-        Assert.assertFalse(
+        assertFalse(
+            testListener.getPayload()!!.success,
             "Successful login despite invalid credentials",
-            testListener.getPayload()!!.success
         )
     }
 

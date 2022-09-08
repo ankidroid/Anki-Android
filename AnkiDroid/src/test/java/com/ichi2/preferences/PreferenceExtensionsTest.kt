@@ -18,7 +18,6 @@ package com.ichi2.preferences
 import android.content.SharedPreferences
 import com.ichi2.preferences.PreferenceExtensions.getOrSetString
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
@@ -28,6 +27,7 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import java.lang.RuntimeException
 import java.util.function.Supplier
+import kotlin.test.assertEquals
 
 // Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.
 class PreferenceExtensionsTest {

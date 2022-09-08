@@ -19,12 +19,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import com.ichi2.testutils.MockFragmentClassLoader
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
+import kotlin.test.assertEquals
 
 class ExtendedFragmentFactoryTest {
 

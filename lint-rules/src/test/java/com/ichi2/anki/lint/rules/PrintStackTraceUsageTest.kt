@@ -18,8 +18,8 @@ package com.ichi2.anki.lint.rules
 import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create
 import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import org.intellij.lang.annotations.Language
-import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.test.assertTrue
 
 @Suppress("UnstableApiUsage") // .issues() is unstable
 class PrintStackTraceUsageTest {

@@ -19,7 +19,6 @@ import android.view.KeyEvent
 import android.view.KeyEvent.*
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ibm.icu.impl.Assert
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_1
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_2
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
@@ -27,10 +26,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.anki.servicelayer.AnkiMethod
-import com.ichi2.anki.servicelayer.SchedulerService.BuryNote
-import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.anki.servicelayer.SchedulerService.SuspendCard
-import com.ichi2.anki.servicelayer.SchedulerService.SuspendNote
+import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.libanki.Card
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
@@ -42,7 +38,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import timber.log.Timber
-import java.lang.Exception
+import kotlin.test.fail
 
 @KotlinCleanup("change `when` to whenever(); remove `protected` modifiers")
 @RunWith(AndroidJUnit4::class)
@@ -350,7 +346,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
         fun processedAnswer(): Int {
             if (mAnswered == null) {
-                Assert.fail("No card was answered")
+                fail("No card was answered")
             }
             return mAnswered!!
         }

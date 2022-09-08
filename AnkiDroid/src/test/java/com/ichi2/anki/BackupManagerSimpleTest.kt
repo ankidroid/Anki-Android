@@ -29,9 +29,6 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
-import kotlin.test.junit5.JUnit5Asserter.assertEquals
-import kotlin.test.junit5.JUnit5Asserter.assertNotNull
-import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 /**
  * Test for [BackupManager] without [RobolectricTest]. For performance
@@ -70,7 +67,7 @@ class BackupManagerSimpleTest {
         val timestamp = date.time
         val backupName = BackupManager.getNameForNewBackup(MockTime(timestamp))
 
-        assertEquals("Backup name doesn't match naming pattern", "collection-1970-01-02-00-46.colpkg", backupName)
+        assertEquals("collection-1970-01-02-00-46.colpkg", backupName, "Backup name doesn't match naming pattern")
     }
 
     @Test
@@ -79,7 +76,7 @@ class BackupManagerSimpleTest {
         assertNotNull(backupName)
 
         val ts = BackupManager.getBackupDate(backupName)
-        assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts)
+        assertNotNull(ts, "New backup name couldn't be parsed by getBackupTimeStrings()")
     }
 
     @Test
@@ -95,7 +92,7 @@ class BackupManagerSimpleTest {
         assertNull(bm.getLastBackupDate(arrayOf()))
         assertNotNull(bm.getLastBackupDate(backups))
         assertEquals(expected, bm.getLastBackupDate(backups))
-        assertNull("getLastBackupDate() should return null when all files aren't parsable", bm.getLastBackupDate(arrayOf()))
+        assertNull(bm.getLastBackupDate(arrayOf()), "getLastBackupDate() should return null when all files aren't parsable")
     }
 
     @Test
@@ -116,7 +113,7 @@ class BackupManagerSimpleTest {
         val backups = BackupManager.getBackups(colFile)
 
         assertNotNull(backups)
-        assertEquals("Only the valid backup names should have been kept", 3, backups.size)
+        assertEquals(3, backups.size, "Only the valid backup names should have been kept")
         assertThat(backups, arrayContainingInAnyOrder(f1, f3, f4))
     }
 

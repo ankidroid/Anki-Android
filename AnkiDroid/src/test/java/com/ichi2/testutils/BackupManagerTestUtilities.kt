@@ -18,9 +18,9 @@ package com.ichi2.testutils
 import android.content.Context
 import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
 import com.ichi2.anki.CollectionHelper
-import org.junit.Assert.assertTrue
 import java.io.File
 import java.lang.IllegalStateException
+import kotlin.test.assertTrue
 
 object BackupManagerTestUtilities {
     fun setupSpaceForBackup(context: Context) {

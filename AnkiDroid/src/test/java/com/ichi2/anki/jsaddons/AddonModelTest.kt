@@ -25,7 +25,6 @@ import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
-import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before
@@ -34,7 +33,10 @@ import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import java.io.File
 import java.io.IOException
-import kotlin.collections.HashSet
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {
@@ -67,7 +69,7 @@ class AddonModelTest : RobolectricTest() {
         // test addon is valid or not, for valid addon the result string will be empty
         val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(validNpmPackageJson)
         assertTrue(result.second.isEmpty())
-        assertTrue("package.json contains required fields", result.first != null)
+        assertTrue(result.first != null, "package.json contains required fields")
 
         // needs to test these fields
         val addon = result.first!!
@@ -88,9 +90,9 @@ class AddonModelTest : RobolectricTest() {
         // test addon is valid or not, for not valid addon the result string will not be empty
         val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(notValidNpmPackageJson)
         // assert that addon model is null i.e. the package.json not mapped to addon model
-        assertTrue("package.json not contains required fields", result.first == null)
+        assertNull(result.first, "package.json not contains required fields")
         // assert that error list contains error when the package.json not mapped to AddonModel
-        assertFalse(result.second.isEmpty())
+        assertTrue(result.second.isNotEmpty())
     }
 
     @Test

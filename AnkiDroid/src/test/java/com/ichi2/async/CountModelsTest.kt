@@ -18,10 +18,10 @@ package com.ichi2.async
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.async.CollectionTask.CountModels
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class CountModelsTest : RobolectricTest() {

@@ -17,16 +17,19 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.TemporaryModel.ChangeType.*
+import com.ichi2.anki.TemporaryModel.ChangeType.ADD
+import com.ichi2.anki.TemporaryModel.ChangeType.DELETE
 import com.ichi2.libanki.Model
 import com.ichi2.utils.JSONObject
-import org.junit.Assert
+import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
 import java.io.IOException
 import java.io.Serializable
-import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class TemporaryModelTest : RobolectricTest() {
@@ -39,17 +42,17 @@ class TemporaryModelTest : RobolectricTest() {
 
         // Make sure save / retrieve works
         val tempModelPath = TemporaryModel.saveTempModel(targetContext, JSONObject("{\"foo\": \"bar\"}"))
-        assertNotNull("Saving temp model unsuccessful", tempModelPath)
-        val tempModel: JSONObject = TemporaryModel.getTempModel(tempModelPath!!)
-        assertNotNull("Temp model not read successfully", tempModel)
-        Assert.assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString())
+        assertNotNull(tempModelPath, "Saving temp model unsuccessful")
+        val tempModel: JSONObject = TemporaryModel.getTempModel(tempModelPath)
+        assertNotNull(tempModel, "Temp model not read successfully")
+        assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString())
 
         // Make sure clearing works
-        Assert.assertEquals(1, TemporaryModel.clearTempModelFiles().toLong())
+        assertEquals(1, TemporaryModel.clearTempModelFiles().toLong())
         Timber.i("The following logged NoSuchFileException is an expected part of verifying a file delete.")
         try {
             TemporaryModel.getTempModel(tempModelPath)
-            Assert.fail("Should have caught an exception here because the file is missing")
+            fail("Should have caught an exception here because the file is missing")
         } catch (e: IOException) {
             // this is expected
         }
@@ -69,7 +72,7 @@ class TemporaryModelTest : RobolectricTest() {
         // 3 templates and one change now
         assertTemplateChangesEqual(expected1, tempModel.templateChanges)
         assertTemplateChangesEqual(expected1, tempModel.adjustedTemplateChanges)
-        Assert.assertArrayEquals(intArrayOf(3), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(3), tempModel.getDeleteDbOrds(3))
 
         tempModel.addTemplateChange(DELETE, 2)
         // 2 templates and two changes now
@@ -77,11 +80,11 @@ class TemporaryModelTest : RobolectricTest() {
         val adjExpected2 = arrayOf(arrayOf<Any>(2, ADD), arrayOf<Any>(2, DELETE))
         assertTemplateChangesEqual(expected2, tempModel.templateChanges)
         assertTemplateChangesEqual(adjExpected2, tempModel.adjustedTemplateChanges)
-        Assert.assertArrayEquals(intArrayOf(2, 4), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 4), tempModel.getDeleteDbOrds(3))
 
         tempModel.addTemplateChange(DELETE, 1)
         // 1 template and three changes now
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
         val expected3 = arrayOf(arrayOf<Any>(3, ADD), arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE))
         val adjExpected3 = arrayOf(arrayOf<Any>(1, ADD), arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE))
         assertTemplateChangesEqual(expected3, tempModel.templateChanges)
@@ -89,7 +92,7 @@ class TemporaryModelTest : RobolectricTest() {
 
         tempModel.addTemplateChange(ADD, 2)
         // 2 templates and 4 changes now
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
         val expected4 = arrayOf(arrayOf<Any>(3, ADD), arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(2, ADD))
         val adjExpected4 = arrayOf(arrayOf<Any>(1, ADD), arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(2, ADD))
         assertTemplateChangesEqual(expected4, tempModel.templateChanges)
@@ -104,7 +107,7 @@ class TemporaryModelTest : RobolectricTest() {
         // So the first template add should be negated by this delete, and the second template add should slide down to 1
         tempModel.addTemplateChange(DELETE, 1)
         // 1 template and 3 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
         val expected5 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD))
         val adjExpected5 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD))
         assertTemplateChangesEqual(expected5, tempModel.templateChanges)
@@ -112,7 +115,7 @@ class TemporaryModelTest : RobolectricTest() {
 
         tempModel.addTemplateChange(ADD, 2)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
         val expected6 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD))
         val adjExpected6 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD))
         assertTemplateChangesEqual(expected6, tempModel.templateChanges)
@@ -120,7 +123,7 @@ class TemporaryModelTest : RobolectricTest() {
 
         tempModel.addTemplateChange(ADD, 3)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
         val expected7 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD), arrayOf<Any>(3, ADD))
         val adjExpected7 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD), arrayOf<Any>(3, ADD))
         assertTemplateChangesEqual(expected7, tempModel.templateChanges)
@@ -128,7 +131,7 @@ class TemporaryModelTest : RobolectricTest() {
 
         tempModel.addTemplateChange(DELETE, 3)
         // 1 template and 3 changes now (two deletes cancelled out adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
+        assertArrayEquals(intArrayOf(2, 1, 5), tempModel.getDeleteDbOrds(3))
         val expected8 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD))
         val adjExpected8 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD))
         assertTemplateChangesEqual(expected8, tempModel.templateChanges)
@@ -138,16 +141,16 @@ class TemporaryModelTest : RobolectricTest() {
     @Suppress("UNCHECKED_CAST")
     private fun assertTemplateChangesEqual(expected: Array<Array<Any>>, actual: Serializable?) {
         if (actual !is ArrayList<*>) {
-            Assert.fail("actual array null or not the correct type")
+            fail("actual array null or not the correct type")
         }
-        Assert.assertEquals("arrays didn't have the same length?", expected.size.toLong(), (actual as ArrayList<Array<Any?>?>).size.toLong())
+        assertEquals(expected.size.toLong(), (actual as ArrayList<Array<Any?>?>).size.toLong(), "arrays didn't have the same length?")
         for (i in expected.indices) {
             if (actual[i] !is Array<Any?>) {
-                Assert.fail("actual array does not contain Object[] entries")
+                fail("actual array does not contain Object[] entries")
             }
             val actualChange = (actual as ArrayList<Array<Any?>>)[i]
-            Assert.assertEquals("ordinal at $i not correct?", expected[i][0], actualChange[0])
-            Assert.assertEquals("changeType at $i not correct?", expected[i][1], actualChange[1])
+            assertEquals(expected[i][0], actualChange[0], "ordinal at $i not correct?")
+            assertEquals(expected[i][1], actualChange[1], "changeType at $i not correct?")
         }
     }
 }

@@ -15,13 +15,10 @@
  */
 package com.ichi2.testutils
 
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert
 import org.junit.Test
-import java.lang.AssertionError
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
+import kotlin.test.fail
 
 class AnkiAssertTest {
     // We're not going to use the class under test to verify that these are working.
@@ -29,7 +26,7 @@ class AnkiAssertTest {
     fun assertThrowsNoException() {
         try {
             AnkiAssert.assertThrows({}, IllegalStateException::class.java)
-            Assert.fail("No exception thrown")
+            fail("No exception thrown")
         } catch (e: AssertionError) {
             assertThat(e.message, containsString("Expected exception: IllegalStateException"))
             assertThat(e.message, containsString("No exception thrown"))
@@ -41,7 +38,7 @@ class AnkiAssertTest {
         val toThrow = IllegalArgumentException()
         try {
             AnkiAssert.assertThrows({ throw toThrow }, IllegalStateException::class.java)
-            Assert.fail("No exception thrown")
+            fail("No exception thrown")
         } catch (e: AssertionError) {
             assertThat(e.message, containsString("Expected 'IllegalStateException' got 'IllegalArgumentException'"))
             assertThat(e.cause, notNullValue())

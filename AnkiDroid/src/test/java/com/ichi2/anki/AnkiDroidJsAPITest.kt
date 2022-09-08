@@ -23,10 +23,10 @@ import com.ichi2.libanki.Consts
 import com.ichi2.utils.JSONObject
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
@@ -333,13 +333,13 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val cardId = javaScriptFunction.ankiGetCardId()
 
         // test that card rescheduled for 15 days interval and returned true
-        assertTrue("Card rescheduled, so returns true", javaScriptFunction.ankiSetCardDue(15))
+        assertTrue(javaScriptFunction.ankiSetCardDue(15), "Card rescheduled, so returns true")
         waitForAsyncTasksToComplete()
 
         // verify that it did get rescheduled
         // --------------------------------
         val cardAfterRescheduleCards = col.getCard(cardId)
-        assertEquals("Card is rescheduled", 15, cardAfterRescheduleCards.due)
+        assertEquals(15, cardAfterRescheduleCards.due, "Card is rescheduled")
     }
 
     private fun initJsApiContract(): String {
@@ -361,10 +361,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         c.ivl = 8
 
         // before reset
-        assertEquals("Card due before reset", 28L, c.due)
-        assertEquals("Card interval before reset", 8, c.ivl)
-        assertEquals("Card ease before reset", 2800, c.factor)
-        assertEquals("Card type before reset", Consts.CARD_TYPE_REV, c.type)
+        assertEquals(28L, c.due, "Card due before reset")
+        assertEquals(8, c.ivl, "Card interval before reset")
+        assertEquals(2800, c.factor, "Card ease before reset")
+        assertEquals(Consts.CARD_TYPE_REV, c.type, "Card type before reset")
 
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
@@ -376,15 +376,15 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val cardId = javaScriptFunction.ankiGetCardId()
 
         // test that card reset
-        assertTrue("Card progress reset", javaScriptFunction.ankiResetProgress())
+        assertTrue(javaScriptFunction.ankiResetProgress(), "Card progress reset")
         waitForAsyncTasksToComplete()
 
         // verify that card progress reset
         // --------------------------------
         val cardAfterReset = col.getCard(cardId)
-        assertEquals("Card due after reset", 1, cardAfterReset.due)
-        assertEquals("Card interval after reset", 0, cardAfterReset.ivl)
-        assertEquals("Card ease after reset", 2500, cardAfterReset.factor)
-        assertEquals("Card type after reset", Consts.CARD_TYPE_NEW, cardAfterReset.type)
+        assertEquals(1, cardAfterReset.due, "Card due after reset")
+        assertEquals(0, cardAfterReset.ivl, "Card interval after reset")
+        assertEquals(2500, cardAfterReset.factor, "Card ease after reset")
+        assertEquals(Consts.CARD_TYPE_NEW, cardAfterReset.type, "Card type after reset")
     }
 }

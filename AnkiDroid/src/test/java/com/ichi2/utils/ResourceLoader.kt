@@ -18,10 +18,10 @@ package com.ichi2.utils
 
 import android.content.Context
 import com.ichi2.libanki.Utils
-import org.junit.Assert.assertTrue
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
+import kotlin.test.assertTrue
 
 object ResourceLoader {
     /**

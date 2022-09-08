@@ -24,11 +24,11 @@ import com.ichi2.utils.JSONObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)

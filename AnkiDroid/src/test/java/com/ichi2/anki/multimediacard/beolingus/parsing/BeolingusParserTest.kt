@@ -3,8 +3,8 @@
 package com.ichi2.anki.multimediacard.beolingus.parsing
 
 import org.intellij.lang.annotations.Language
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class BeolingusParserTest {
     @Test

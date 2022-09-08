@@ -23,10 +23,10 @@ import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.intellij.lang.annotations.Language
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class) // dependency on TextUtils.htmlEncode
 @Config(application = EmptyApplication::class)

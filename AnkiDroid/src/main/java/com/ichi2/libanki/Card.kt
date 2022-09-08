@@ -31,7 +31,7 @@ import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOut
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.Assert
+import com.ichi2.utils.Assert.that
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
 import net.ankiweb.rsdroid.RustCleanup
@@ -579,8 +579,8 @@ open class Card : Cloneable {
         }
 
         fun setFlagInInt(flags: Int, flag: Int): Int {
-            Assert.that(0 <= flag, "flag to set is negative")
-            Assert.that(flag <= 7, "flag to set is greater than 7.")
+            that(0 <= flag, "flag to set is negative")
+            that(flag <= 7, "flag to set is greater than 7.")
             // Setting the 3 firsts bits to 0, keeping the remaining.
             val extraData = flags and 7.inv()
             // flag in 3 fist bits, same data as in mFlags everywhere else

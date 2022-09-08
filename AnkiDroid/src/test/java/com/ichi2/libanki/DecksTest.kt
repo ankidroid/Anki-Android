@@ -25,9 +25,10 @@ import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
 import org.apache.http.util.Asserts
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.*
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.*
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 

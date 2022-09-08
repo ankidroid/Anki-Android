@@ -21,10 +21,10 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.assertTrue
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
+import kotlin.test.assertTrue
 
 /**
  * Shared methods for unit tests.

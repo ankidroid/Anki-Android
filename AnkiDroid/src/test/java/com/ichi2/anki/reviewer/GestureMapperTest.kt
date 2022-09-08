@@ -21,10 +21,10 @@ import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.junit.AfterClass
-import org.junit.Assert.assertEquals
 import org.junit.BeforeClass
 import org.junit.Test
 import org.mockito.Mockito.mock
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class GestureMapperTest {

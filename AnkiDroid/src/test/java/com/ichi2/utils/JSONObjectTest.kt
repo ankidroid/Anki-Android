@@ -41,10 +41,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.assertThrowsSubclass
-import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -52,6 +50,7 @@ import org.robolectric.annotation.Config
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
+import kotlin.test.*
 
 /**
  * This black box test was written without inspecting the non-free org.json sourcecode.
@@ -117,7 +116,7 @@ class JSONObjectTest {
         val a = JSONObject()
         val b = JSONObject()
         // JSON object doesn't override either equals or hashCode (!)
-        assertFalse(a == b)
+        assertNotEquals(a, b)
         assertEquals(a.hashCode(), System.identityHashCode(a))
     }
 
@@ -247,14 +246,14 @@ class JSONObjectTest {
         testObject.put("quux", -0.0)
         assertEquals(4, testObject.length())
         val toString = testObject.toString()
-        assertTrue(toString, toString.contains("\"foo\":4.9E-324"))
-        assertTrue(toString, toString.contains("\"bar\":9223372036854775806"))
-        assertTrue(toString, toString.contains("\"baz\":1.7976931348623157E308"))
+        assertTrue(toString.contains("\"foo\":4.9E-324"), toString)
+        assertTrue(toString.contains("\"bar\":9223372036854775806"), toString)
+        assertTrue(toString.contains("\"baz\":1.7976931348623157E308"), toString)
         // toString() and getString() return different values for -0d!
         assertTrue(
-            toString,
             toString.contains("\"quux\":-0}") || // no trailing decimal point
-                toString.contains("\"quux\":-0,")
+                toString.contains("\"quux\":-0,"),
+            toString
         )
         assertEquals(Double.MIN_VALUE, testObject["foo"])
         assertEquals(9223372036854775806L, testObject["bar"])
@@ -581,7 +580,7 @@ class JSONObjectTest {
     fun testToStringWithUnsupportedNumbers() {
         // when the object contains an unsupported number, toString returns null!
         val testObject = JSONObject(Collections.singletonMap("foo", Double.NaN))
-        assertEquals(null, testObject.toString())
+        assertNull(testObject.toString())
     }
 
     @Test
@@ -770,7 +769,7 @@ class JSONObjectTest {
      ]
 }"""
         val string = testObject.toString(5)
-        assertTrue(string, foobar == string || barfoo == string)
+        assertTrue(foobar == string || barfoo == string, string)
     }
 
     @Test
@@ -904,25 +903,25 @@ class JSONObjectTest {
         JSONObject(mEmptyJson)
 
         // Incorrect formats
-        Assert.assertThrows(JSONException::class.java) { JSONObject(mNoOpeningBracket) }
-        Assert.assertThrows(JSONException::class.java) { JSONObject(mExtraOpeningBracket) }
-        Assert.assertThrows(JSONException::class.java) { JSONObject(mNoClosingBracket) }
-        Assert.assertThrows(JSONException::class.java) { JSONObject(mWrongKeyValueSeparator) }
-        Assert.assertThrows(JSONException::class.java) { JSONObject(mDuplicateKey) }
+        assertThrows<JSONException> { JSONObject(mNoOpeningBracket) }
+        assertThrows<JSONException> { JSONObject(mExtraOpeningBracket) }
+        assertThrows<JSONException> { JSONObject(mNoClosingBracket) }
+        assertThrows<JSONException> { JSONObject(mWrongKeyValueSeparator) }
+        assertThrows<JSONException> { JSONObject(mDuplicateKey) }
     }
 
     @Test
     fun copyJsonTest() {
-        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject(mCorrectJsonObjectBasic!!).toString())
-        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject(mCorrectJsonObjectNested!!).toString())
-        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), JSONObject(mCorrectJsonObjectWithArray!!).toString())
+        assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject(mCorrectJsonObjectBasic!!).toString())
+        assertEquals(mCorrectJsonObjectNested.toString(), JSONObject(mCorrectJsonObjectNested!!).toString())
+        assertEquals(mCorrectJsonObjectWithArray.toString(), JSONObject(mCorrectJsonObjectWithArray!!).toString())
     }
 
     @Test
     fun objectToObjectTest() {
-        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject.objectToObject(mCorrectJsonObjectBasic).toString())
-        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectNested).toString())
-        Assert.assertNotEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectWithArray).toString())
+        assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject.objectToObject(mCorrectJsonObjectBasic).toString())
+        assertEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectNested).toString())
+        assertNotEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectWithArray).toString())
     }
 
     fun getTest() {
@@ -934,16 +933,16 @@ class JSONObjectTest {
         correctJsonObjectBasicCopy.putOpt("boolean_key", true)
         correctJsonObjectBasicCopy.putOpt("object_key", mCorrectJsonBasic)
 
-        Assert.assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key").toLong())
-        Assert.assertEquals(2L, correctJsonObjectBasicCopy.getLong("long_key"))
-        Assert.assertEquals(2.0, correctJsonObjectBasicCopy.getDouble("double_key"), 1e-10)
-        Assert.assertTrue(correctJsonObjectBasicCopy.getBoolean("boolean_key"))
-        Assert.assertEquals(mCorrectJsonBasic, correctJsonObjectBasicCopy["object_key"])
+        assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key").toLong())
+        assertEquals(2L, correctJsonObjectBasicCopy.getLong("long_key"))
+        assertEquals(2.0, correctJsonObjectBasicCopy.getDouble("double_key"), 1e-10)
+        assertTrue(correctJsonObjectBasicCopy.getBoolean("boolean_key"))
+        assertEquals(mCorrectJsonBasic, correctJsonObjectBasicCopy["object_key"])
 
         // Check that putOpt doesn't add pair when one is null
         correctJsonObjectBasicCopy.putOpt("boolean_key_2", null)
-        Assert.assertFalse(correctJsonObjectBasicCopy.has("boolean_key_2"))
-        Assert.assertThrows(JSONException::class.java) { correctJsonObjectBasicCopy["boolean_key_2"] }
+        assertFalse(correctJsonObjectBasicCopy.has("boolean_key_2"))
+        assertThrows<JSONException> { correctJsonObjectBasicCopy["boolean_key_2"] }
     }
 
     private class JSONObjectSubType : JSONObject() {
@@ -964,7 +963,7 @@ class JSONObjectTest {
 
         // Test by passing result of base JSONObject's toString() to removeQuotes()
         // This is already done in the JSONObjectSubType object
-        Assert.assertEquals(removeQuotes(mCorrectJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString())
+        assertEquals(removeQuotes(mCorrectJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString())
     }
 
     /**
@@ -974,14 +973,14 @@ class JSONObjectTest {
     fun deepCloneReferenceTest() {
         val clone = mCorrectJsonObjectBasic!!.deepClone()
         // Both objects should point to different memory address
-        Assert.assertNotEquals(clone, mCorrectJsonObjectBasic)
+        assertNotEquals(clone, mCorrectJsonObjectBasic)
     }
 
     @Test
     fun fromMapTest() {
         val fromMapJsonObject = JSONObject.fromMap(booleanMap)
         for (i in 0..9) {
-            Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
+            assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
         }
     }
     /**

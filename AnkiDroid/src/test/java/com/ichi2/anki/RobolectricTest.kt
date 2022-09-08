@@ -49,13 +49,19 @@ import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestResult
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.junit.*
+import org.junit.After
+import org.junit.Assume
+import org.junit.Before
+import org.junit.Rule
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
@@ -66,6 +72,7 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.test.assertTrue
 
 open class RobolectricTest : CollectionGetter {
 
@@ -193,7 +200,7 @@ open class RobolectricTest : CollectionGetter {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
         if (checkDismissed) {
-            Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
+            assertTrue(Shadows.shadowOf(dialog).hasBeenDismissed(), "Dialog not dismissed?")
         }
     }
 

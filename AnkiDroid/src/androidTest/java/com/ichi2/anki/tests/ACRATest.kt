@@ -38,12 +38,15 @@ import org.acra.config.ToastConfiguration
 import org.acra.data.CrashReportDataFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.*
+import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
@@ -79,15 +82,15 @@ class ACRATest : InstrumentedTest() {
 
     private fun verifyDebugACRAPreferences() {
         assertTrue(
-            "ACRA was not disabled correctly",
             sharedPrefs
-                .getBoolean(ACRA.PREF_DISABLE_ACRA, true)
+                .getBoolean(ACRA.PREF_DISABLE_ACRA, true),
+            "ACRA was not disabled correctly",
         )
         assertEquals(
-            "ACRA feedback was not turned off correctly",
             CrashReportService.FEEDBACK_REPORT_NEVER,
             sharedPrefs
-                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined")
+                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined"),
+            "ACRA feedback was not turned off correctly",
         )
     }
 
@@ -264,15 +267,15 @@ class ACRATest : InstrumentedTest() {
                     mApp!!.resources.getString(res),
                     (configuration as ToastConfiguration).text()
                 )
-                assertTrue("Toast should be enabled", configuration.enabled())
+                assertTrue(configuration.enabled(), "Toast should be enabled")
             }
         }
     }
 
     private fun verifyACRANotDisabled() {
         assertFalse(
+            sharedPrefs.getBoolean(ACRA.PREF_DISABLE_ACRA, false),
             "ACRA was not enabled correctly",
-            sharedPrefs.getBoolean(ACRA.PREF_DISABLE_ACRA, false)
         )
     }
 

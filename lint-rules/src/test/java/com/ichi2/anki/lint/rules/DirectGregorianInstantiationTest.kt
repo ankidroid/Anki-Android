@@ -4,8 +4,8 @@ import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile
 import com.android.tools.lint.checks.infrastructure.TestLintTask
 import com.google.common.annotations.Beta
 import org.intellij.lang.annotations.Language
-import org.junit.Assert
 import org.junit.Test
+import kotlin.test.assertTrue
 
 @Suppress("UnstableApiUsage")
 @Beta
@@ -95,8 +95,8 @@ public class Time {
             .run()
             .expectErrorCount(1)
             .check({ output: String ->
-                Assert.assertTrue(output.contains(DirectGregorianInstantiation.ID))
-                Assert.assertTrue(output.contains(DirectGregorianInstantiation.DESCRIPTION))
+                assertTrue(output.contains(DirectGregorianInstantiation.ID))
+                assertTrue(output.contains(DirectGregorianInstantiation.DESCRIPTION))
             })
         TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
             .files(
@@ -108,8 +108,8 @@ public class Time {
             .run()
             .expectErrorCount(1)
             .check({ output: String ->
-                Assert.assertTrue(output.contains(DirectGregorianInstantiation.ID))
-                Assert.assertTrue(output.contains(DirectGregorianInstantiation.DESCRIPTION))
+                assertTrue(output.contains(DirectGregorianInstantiation.ID))
+                assertTrue(output.contains(DirectGregorianInstantiation.DESCRIPTION))
             })
     }
 

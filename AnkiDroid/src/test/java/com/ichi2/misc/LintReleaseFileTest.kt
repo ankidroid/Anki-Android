@@ -15,12 +15,12 @@
  ****************************************************************************************/
 package com.ichi2.misc
 
-import com.ichi2.testutils.assertFalse
 import org.junit.Test
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 import java.io.File
 import javax.xml.parsers.SAXParserFactory
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -48,8 +48,8 @@ class LintReleaseFileTest {
                         if (attributes != null) {
                             val currentIssue = attributes.getValue("id")
                             assertFalse(
+                                seenIssues.contains(currentIssue),
                                 "Duplicate $currentIssue lint rule in lint-release.xml",
-                                seenIssues.contains(currentIssue)
                             )
                             seenIssues.add(currentIssue)
                         }

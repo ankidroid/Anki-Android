@@ -33,18 +33,13 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.empty
-import org.hamcrest.Matchers.emptyString
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
-import java.lang.Exception
-import java.util.*
-import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import kotlin.test.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
@@ -71,7 +66,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     @RunInBackground
     fun verifyNormalStartup() {
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.col) } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull(reviewer.col, "Collection should be non-null") } }
     }
 
     @Test

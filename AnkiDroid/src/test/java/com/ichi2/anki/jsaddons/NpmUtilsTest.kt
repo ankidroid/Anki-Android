@@ -19,10 +19,10 @@ package com.ichi2.anki.jsaddons
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.NpmUtils.validateName
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class NpmUtilsTest : RobolectricTest() {

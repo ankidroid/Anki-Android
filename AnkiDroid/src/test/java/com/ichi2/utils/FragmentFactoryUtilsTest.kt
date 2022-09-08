@@ -19,10 +19,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
-import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
+import kotlin.test.assertEquals
 
 class FragmentFactoryUtilsTest {
     private class TestFragment : Fragment()
@@ -44,7 +44,7 @@ class FragmentFactoryUtilsTest {
             .thenReturn(testFragment)
 
         val result: Fragment = FragmentFactoryUtils.instantiate(activity, TestFragment::class.java)
-        Assert.assertEquals(testFragment, result)
+        assertEquals(testFragment, result)
         verify(factory, times(1)).instantiate(classLoader, testFragment.javaClass.name)
     }
 }

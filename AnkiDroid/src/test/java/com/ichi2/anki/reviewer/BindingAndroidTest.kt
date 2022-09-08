@@ -24,10 +24,10 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.alt
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.MappableBinding.Screen.Reviewer
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class BindingAndroidTest : RobolectricTest() {

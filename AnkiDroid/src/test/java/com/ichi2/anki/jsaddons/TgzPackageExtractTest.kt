@@ -21,7 +21,6 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
-import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingDirectory
@@ -32,6 +31,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class TgzPackageExtractTest : RobolectricTest() {

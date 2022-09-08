@@ -22,19 +22,25 @@ import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.Shared
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.importer.*
+import com.ichi2.libanki.importer.Anki2Importer
+import com.ichi2.libanki.importer.AnkiPackageImporter
+import com.ichi2.libanki.importer.Importer
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.Matchers.*
-import org.junit.*
-import org.junit.Assert.*
-import org.junit.Assume.*
+import org.hamcrest.Matchers.`is`
+import org.junit.After
+import org.junit.Assume.assumeThat
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @KotlinCleanup("is -> equalTo")
 @KotlinCleanup("IDE Lint")

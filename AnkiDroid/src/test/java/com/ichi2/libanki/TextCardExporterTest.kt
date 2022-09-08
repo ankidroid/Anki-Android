@@ -16,7 +16,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.utils.FileOperation.Companion.getFileContents
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,6 +23,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import kotlin.Throws
+import kotlin.test.assertEquals
 
 @KotlinCleanup("lateinit")
 @RunWith(AndroidJUnit4::class)

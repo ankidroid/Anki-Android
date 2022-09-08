@@ -2,11 +2,11 @@
 
 package com.ichi2.anki.api
 
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.util.HashSet
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 /**
@@ -19,7 +19,7 @@ import kotlin.test.assertNull
  * E-mail: rcbresan@gmail.com
  * Slack: bresan
  */
-// TODO: @KotlinCleanup("replace Assert.assertEquals with kotlin.test.assertEquals")
+// TODO: @KotlinCleanup("replace import kotlin.test. with kotlin.test.assertEquals")
 @RunWith(RobolectricTestRunner::class)
 class ApiUtilsTest {
     @Test

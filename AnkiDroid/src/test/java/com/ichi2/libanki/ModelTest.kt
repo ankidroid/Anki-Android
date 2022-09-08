@@ -30,11 +30,13 @@ import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.*
+import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("improve kotlin code where possible")
@@ -468,8 +470,8 @@ class ModelTest : RobolectricTest() {
         assertEquals(1, note.numberOfCards())
         val question = note.cards()[0].q()
         assertTrue(
-            "Question «$question» does not end correctly",
-            question.endsWith("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]")
+            question.endsWith("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"),
+            "Question «$question» does not end correctly"
         )
     }
 
@@ -891,15 +893,15 @@ class ModelTest : RobolectricTest() {
         basic!!.put("did", 999L)
 
         val expected = 999L
-        assertEquals("getDid() should return the model did", expected, basic.did)
+        assertEquals(expected, basic.did, "getDid() should return the model did")
 
         // Check if returns default deck id (1) when did is null
         basic.put("did", null)
         val expected2 = 1L
         assertEquals(
-            "getDid() should return 1 (default deck id) if model did is null",
             expected2,
-            basic.did
+            basic.did,
+            "getDid() should return 1 (default deck id) if model did is null"
         )
     }
 }

@@ -6,9 +6,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.*
 
 @RunWith(AndroidJUnit4::class)
 class ClozeTest : RobolectricTest() {

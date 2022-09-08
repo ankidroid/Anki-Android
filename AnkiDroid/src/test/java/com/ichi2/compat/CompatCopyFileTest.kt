@@ -18,10 +18,11 @@ package com.ichi2.compat
 
 import com.ichi2.anki.TestUtils
 import com.ichi2.utils.FileOperation.Companion.getFileResource
-import org.junit.Assert
 import org.junit.Test
 import java.io.*
 import java.net.URL
+import kotlin.test.assertEquals
+import kotlin.test.fail
 
 class CompatCopyFileTest : Test21And26() {
     @Test
@@ -33,7 +34,7 @@ class CompatCopyFileTest : Test21And26() {
         val outputStream = FileOutputStream(copy.canonicalPath)
         CompatHelper.compat.copyFile(resourcePath, outputStream)
         outputStream.close()
-        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
+        assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
     }
 
     @Test
@@ -43,7 +44,7 @@ class CompatCopyFileTest : Test21And26() {
         val copy = File.createTempFile("testCopyStreamToFile", ".zip")
         copy.deleteOnExit()
         CompatHelper.compat.copyFile(resourcePath, copy.canonicalPath)
-        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
+        assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
     }
 
     @Test
@@ -56,7 +57,7 @@ class CompatCopyFileTest : Test21And26() {
         // Try copying from a bogus file
         try {
             CompatHelper.compat.copyFile(FileInputStream(""), copy.canonicalPath)
-            Assert.fail("Should have caught an exception")
+            fail("Should have caught an exception")
         } catch (e: FileNotFoundException) {
             // This is expected
         }
@@ -66,7 +67,7 @@ class CompatCopyFileTest : Test21And26() {
             val outputStream = FileOutputStream(copy.canonicalPath)
             outputStream.close()
             CompatHelper.compat.copyFile(resourcePath, outputStream)
-            Assert.fail("Should have caught an exception")
+            fail("Should have caught an exception")
         } catch (e: IOException) {
             // this is expected
         }
@@ -76,7 +77,7 @@ class CompatCopyFileTest : Test21And26() {
             val source = URL(resourcePath).openStream()
             source.close()
             CompatHelper.compat.copyFile(source, copy.canonicalPath)
-            Assert.fail("Should have caught an exception")
+            fail("Should have caught an exception")
         } catch (e: IOException) {
             // this is expected
         }
@@ -84,7 +85,7 @@ class CompatCopyFileTest : Test21And26() {
         // Try copying to a bogus file
         try {
             CompatHelper.compat.copyFile(resourcePath, "")
-            Assert.fail("Should have caught an exception")
+            fail("Should have caught an exception")
         } catch (e: Exception) {
             // this is expected
         }

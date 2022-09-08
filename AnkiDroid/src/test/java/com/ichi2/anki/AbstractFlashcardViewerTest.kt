@@ -26,7 +26,6 @@ import com.ichi2.libanki.StdModels
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -38,6 +37,7 @@ import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowToast
 import java.util.*
 import java.util.stream.Stream
+import kotlin.test.*
 
 @RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)

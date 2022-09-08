@@ -19,13 +19,13 @@ import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.Gesture
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.reflect.KFunction1
 import kotlin.reflect.KFunction2
+import kotlin.test.assertEquals
 
 class BindingTest {
     @Test

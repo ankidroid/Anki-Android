@@ -14,17 +14,15 @@ package com.ichi2.anki.analytics
 
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
-import org.junit.Assert
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import java.lang.RuntimeException
-import java.util.*
-import kotlin.Throws
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
+import kotlin.test.assertEquals
 
 /**
  * This class contains two nested classes and is using the concept of Enclosed runner that internally works as a Suite.
@@ -86,9 +84,8 @@ object AnalyticsConstantsTest {
         @Test
         @Throws(IllegalAccessException::class)
         fun checkAnalyticsString() {
-            Assert.assertEquals(
-                "Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
-                analyticsString, getStringFromReflection(analyticsString)
+            assertEquals(
+                analyticsString, getStringFromReflection(analyticsString), "Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
             )
         }
 
@@ -116,17 +113,15 @@ object AnalyticsConstantsTest {
         @Test
         fun fieldSizeEqualsListOfConstantFields() {
             if (fieldSize > listOfConstantFields.size) {
-                Assert.assertEquals(
-                    "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
-                    listOfConstantFields.size, fieldSize
+                assertEquals(
+                    listOfConstantFields.size, fieldSize, "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
                 )
             } else if (fieldSize < listOfConstantFields.size) {
-                Assert.assertEquals(
-                    "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
-                    listOfConstantFields.size, fieldSize
+                assertEquals(
+                    listOfConstantFields.size, fieldSize, "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
                 )
             } else {
-                Assert.assertEquals(listOfConstantFields.size, fieldSize)
+                assertEquals(listOfConstantFields.size, fieldSize)
             }
         }
 

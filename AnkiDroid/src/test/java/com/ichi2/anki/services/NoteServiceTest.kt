@@ -39,6 +39,7 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import kotlin.test.*
 
 @KotlinCleanup("have Model constructor accent @Language('JSON')")
 @KotlinCleanup("fix typo: testimage -> test_image")

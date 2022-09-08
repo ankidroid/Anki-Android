@@ -21,10 +21,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.KotlinCleanup
-import junit.framework.TestCase.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("Add @Language to HTML")

@@ -23,15 +23,16 @@ import com.ichi2.utils.CreateTempDir.Companion.tempDir
 import com.ichi2.utils.FileOperation.Companion.getFileContents
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.UnzipFile.Companion.unzip
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import java.io.PrintWriter
 import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE Lint")
@@ -116,7 +117,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
             "\t\u2004" +
             "<!-- Comment \n \u1680 --> <\"tag\\n><style><s>"
         val res = exporter.stripHTML(text)
-        Assert.assertEquals("", res)
+        assertEquals("", res)
     }
 
     @Throws(IOException::class)
@@ -133,7 +134,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
             assertThat(lines, contains(s))
             return
         }
-        Assert.fail("media file not found")
+        fail("media file not found")
     }
 
     private val exporterForDeckWithMedia: AnkiPackageExporter

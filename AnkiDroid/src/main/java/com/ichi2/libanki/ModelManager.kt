@@ -18,7 +18,7 @@ package com.ichi2.libanki
 
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.utils.Assert
+import com.ichi2.utils.Assert.that
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -288,7 +288,7 @@ abstract class ModelManager(protected val col: Collection) {
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
     fun addFieldInNewModel(m: Model, field: JSONObject) {
-        Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
+        that(Models.isModelNew(m), "Model was assumed to be new, but is not")
         try {
             _addField(m, field)
         } catch (e: ConfirmModSchemaException) {
@@ -301,7 +301,7 @@ abstract class ModelManager(protected val col: Collection) {
     fun addTemplateInNewModel(m: Model, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
+        that(Models.isModelNew(m), "Model was assumed to be new, but is not")
 
         try {
             _addTemplate(m, template)
@@ -321,14 +321,14 @@ abstract class ModelManager(protected val col: Collection) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
-        Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
+        that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
         _addField(m, field)
     }
 
     fun addTemplateModChanged(m: Model, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
+        that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
         _addTemplate(m, template)
     }
 }

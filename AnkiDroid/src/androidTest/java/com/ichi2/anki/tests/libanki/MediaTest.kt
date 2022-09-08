@@ -27,12 +27,12 @@ import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.*
-import org.junit.Assert.*
+import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import kotlin.test.assertNotNull
+import kotlin.test.*
 
 /**
  * Unit tests for [Media].

@@ -17,8 +17,8 @@
 package com.ichi2.anki.cardviewer
 
 import com.google.common.base.Joiner
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class ViewerCommandTest {
 

@@ -36,14 +36,13 @@ import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.ListUtil
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsNull
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.whenever
-import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.test.*
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest {
@@ -63,7 +62,7 @@ class TagsDialogTest {
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
-            Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
+            assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
             val expectedOption = 1
             optionsGroup.getChildAt(expectedOption).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
@@ -94,12 +93,12 @@ class TagsDialogTest {
             )
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
-            Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
+            assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
             val expectedOption = 2
             optionsGroup.getChildAt(expectedOption).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
             ListUtil.assertListEquals(ArrayList(), returnedList.get())
-            Assert.assertEquals(expectedOption.toLong(), returnedOption.get().toLong())
+            assertEquals(expectedOption.toLong(), returnedOption.get().toLong())
         }
     }
 
@@ -131,11 +130,11 @@ class TagsDialogTest {
             recycler.layout(0, 0, 100, 1000)
             val lastItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
             val newTagItemItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
-            Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
-            Assert.assertEquals(tag, newTagItemItem.text)
-            Assert.assertTrue(newTagItemItem.isChecked)
-            Assert.assertNotEquals(tag, lastItem.text)
-            Assert.assertFalse(lastItem.isChecked)
+            assertEquals(5, recycler.adapter!!.itemCount.toLong())
+            assertEquals(tag, newTagItemItem.text)
+            assertTrue(newTagItemItem.isChecked)
+            assertNotEquals(tag, lastItem.text)
+            assertFalse(lastItem.isChecked)
         }
     }
 
@@ -166,11 +165,11 @@ class TagsDialogTest {
             recycler.layout(0, 0, 100, 1000)
             val lastItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
             val newTagItemItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
-            Assert.assertEquals(4, recycler.adapter!!.itemCount.toLong())
-            Assert.assertEquals(tag, newTagItemItem.text)
-            Assert.assertTrue(newTagItemItem.isChecked)
-            Assert.assertNotEquals(tag, lastItem.text)
-            Assert.assertFalse(lastItem.isChecked)
+            assertEquals(4, recycler.adapter!!.itemCount.toLong())
+            assertEquals(tag, newTagItemItem.text)
+            assertTrue(newTagItemItem.isChecked)
+            assertNotEquals(tag, lastItem.text)
+            assertFalse(lastItem.isChecked)
         }
     }
 
@@ -213,7 +212,8 @@ class TagsDialogTest {
                     CheckBoxTriStates.State.INDETERMINATE -> foundIndeterminate.add(tag)
                     CheckBoxTriStates.State.UNCHECKED -> foundUncheckedTags.add(tag)
                     CheckBoxTriStates.State.CHECKED -> foundCheckedTags.add(tag)
-                    else -> Assert.fail("Unknown CheckBoxTriStates.State? " + vh.checkboxState)
+                    else ->
+                        fail("Unknown CheckBoxTriStates.State? " + vh.checkboxState)
                 }
             }
             ListUtil.assertListEquals(expectedAllTags, foundAllTags)
@@ -262,15 +262,15 @@ class TagsDialogTest {
             //   - football    [ ]
             //   - tennis      [x]
             // - book          [ ]
-            Assert.assertEquals(8, recycler.adapter!!.itemCount.toLong())
-            Assert.assertEquals("fruit", getItem(0).text)
-            Assert.assertEquals("fruit::apple", getItem(1).text)
-            Assert.assertEquals("fruit::pear", getItem(2).text)
-            Assert.assertEquals("fruit::pear::big", getItem(3).text)
-            Assert.assertEquals("sport", getItem(4).text)
-            Assert.assertEquals("sport::football", getItem(5).text)
-            Assert.assertEquals("sport::tennis", getItem(6).text)
-            Assert.assertEquals("book", getItem(7).text)
+            assertEquals(8, recycler.adapter!!.itemCount.toLong())
+            assertEquals("fruit", getItem(0).text)
+            assertEquals("fruit::apple", getItem(1).text)
+            assertEquals("fruit::pear", getItem(2).text)
+            assertEquals("fruit::pear::big", getItem(3).text)
+            assertEquals("sport", getItem(4).text)
+            assertEquals("sport::football", getItem(5).text)
+            assertEquals("sport::tennis", getItem(6).text)
+            assertEquals("book", getItem(7).text)
         }
     }
 
@@ -303,7 +303,7 @@ class TagsDialogTest {
             //     - tennis    [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
+            assertEquals(7, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
@@ -311,20 +311,20 @@ class TagsDialogTest {
             val item4 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
             val item5 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 5)
             val item6 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 6)
-            Assert.assertEquals("common", item0.text)
-            Assert.assertEquals("common::speak", item1.text)
-            Assert.assertEquals("common::speak::daily", item2.text)
-            Assert.assertEquals("common::sport", item3.text)
-            Assert.assertEquals("common::sport::football", item4.text)
-            Assert.assertEquals("common::sport::football::small", item5.text)
-            Assert.assertEquals("common::sport::tennis", item6.text)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.mCheckBoxView.state)
-            Assert.assertTrue(item5.mCheckBoxView.isChecked)
-            Assert.assertTrue(item6.mCheckBoxView.isChecked)
+            assertEquals("common", item0.text)
+            assertEquals("common::speak", item1.text)
+            assertEquals("common::speak::daily", item2.text)
+            assertEquals("common::sport", item3.text)
+            assertEquals("common::sport::football", item4.text)
+            assertEquals("common::sport::football::small", item5.text)
+            assertEquals("common::sport::tennis", item6.text)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.mCheckBoxView.state)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.mCheckBoxView.state)
+            assertEquals(CheckBoxTriStates.State.CHECKED, item2.mCheckBoxView.state)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.mCheckBoxView.state)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.mCheckBoxView.state)
+            assertTrue(item5.mCheckBoxView.isChecked)
+            assertTrue(item6.mCheckBoxView.isChecked)
         }
     }
 
@@ -353,16 +353,16 @@ class TagsDialogTest {
             //     - careless  [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
+            assertEquals(3, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
-            Assert.assertEquals("common", item0.text)
-            Assert.assertEquals("common::blank", item1.text)
-            Assert.assertEquals("common::blank::careless", item2.text)
-            Assert.assertTrue(item0.mCheckBoxView.isChecked)
-            Assert.assertTrue(item1.mCheckBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
-            Assert.assertTrue(item2.mCheckBoxView.isChecked)
+            assertEquals("common", item0.text)
+            assertEquals("common::blank", item1.text)
+            assertEquals("common::blank::careless", item2.text)
+            assertTrue(item0.mCheckBoxView.isChecked)
+            assertEquals(item1.mCheckBoxView.state, CheckBoxTriStates.State.INDETERMINATE)
+            assertTrue(item2.mCheckBoxView.isChecked)
         }
     }
 
@@ -399,17 +399,17 @@ class TagsDialogTest {
             //     - tennis    [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
+            assertEquals(5, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
             val item3 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
             val item4 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
-            Assert.assertEquals("common", item0.text)
-            Assert.assertEquals("common::speak", item1.text)
-            Assert.assertEquals("common::speak::tennis", item2.text)
-            Assert.assertEquals("common::sport", item3.text)
-            Assert.assertEquals("common::sport::tennis", item4.text)
+            assertEquals("common", item0.text)
+            assertEquals("common::speak", item1.text)
+            assertEquals("common::speak::tennis", item2.text)
+            assertEquals("common::sport", item3.text)
+            assertEquals("common::sport::tennis", item4.text)
         }
     }
 
@@ -442,7 +442,7 @@ class TagsDialogTest {
             // v common     [ ]
             //   v sport    [ ]
             //     - tennis [ ]
-            Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
+            assertEquals(3, recycler.adapter!!.itemCount.toLong())
 
             adapter.filter.filter("")
             updateLayout()
@@ -450,7 +450,7 @@ class TagsDialogTest {
             //   - speak    [ ]
             //   v sport    [ ]
             //     - tennis [ ]
-            Assert.assertEquals(4, recycler.adapter!!.itemCount.toLong())
+            assertEquals(4, recycler.adapter!!.itemCount.toLong())
         }
     }
 
@@ -498,7 +498,7 @@ class TagsDialogTest {
             //     v football  [ ]
             //       - small   [ ]
             //     - tennis    [ ]
-            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
+            assertEquals(7, recycler.adapter!!.itemCount.toLong())
 
             getItem(2).mCheckBoxView.performClick()
             updateLayout()
@@ -511,13 +511,13 @@ class TagsDialogTest {
             //     v football  [-]
             //       - small   [x]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(1).checkboxState)
+            assertEquals(CheckBoxTriStates.State.CHECKED, getItem(2).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
+            assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
             getItem(2).mCheckBoxView.performClick()
             updateLayout()
@@ -530,13 +530,13 @@ class TagsDialogTest {
             //     v football  [ ]
             //       - small   [ ]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(0).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(3).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
             getItem(5).mCheckBoxView.performClick()
             updateLayout()
@@ -547,13 +547,13 @@ class TagsDialogTest {
             //     v football  [-]
             //       - small   [x]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
+            assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
             getItem(3).mCheckBoxView.performClick()
             updateLayout()
@@ -566,13 +566,13 @@ class TagsDialogTest {
             //     v football  [ ]
             //       - small   [ ]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
+            assertEquals(CheckBoxTriStates.State.CHECKED, getItem(3).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
+            assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
         }
     }
 
@@ -594,26 +594,25 @@ class TagsDialogTest {
             val editText = f.getSearchView()!!.findViewById<EditText>(R.id.search_src_text)!!
 
             editText.setText("hello ")
-            Assert.assertEquals(
-                "The space should be replaced by '::' without mistakenly clear everything.",
-                "hello::", editText.text.toString()
+            assertEquals(
+                "hello::", editText.text.toString(), "The space should be replaced by '::' without mistakenly clear everything."
             )
 
             editText.setText("hello")
             editText.text.insert(5, " ")
-            Assert.assertEquals("Should complete 2 colons.", "hello::", editText.text.toString())
+            assertEquals("hello::", editText.text.toString(), "Should complete 2 colons.")
 
             editText.setText("hello:")
             editText.text.insert(6, " ")
-            Assert.assertEquals("Should complete 1 colon.", "hello::", editText.text.toString())
+            assertEquals("hello::", editText.text.toString(), "Should complete 1 colon.")
 
             editText.setText("hello::")
             editText.text.insert(7, " ")
-            Assert.assertEquals("Should do nothing.", "hello::", editText.text.toString())
+            assertEquals("hello::", editText.text.toString(), "Should do nothing.")
 
             editText.setText("")
             editText.text.insert(0, " ")
-            Assert.assertEquals("Should not crash.", "::", editText.text.toString())
+            assertEquals("::", editText.text.toString(), "Should not crash.")
         }
     }
 

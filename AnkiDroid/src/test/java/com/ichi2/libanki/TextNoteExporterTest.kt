@@ -17,7 +17,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.FileOperation
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +25,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.util.*
-import kotlin.Throws
+import kotlin.test.assertEquals
 
 @KotlinCleanup("lateinit wherever possible")
 @KotlinCleanup("IDE-lint")
@@ -67,7 +66,7 @@ class TextNoteExporterTest(
         val exportedFile = File.createTempFile("export", ".txt")
         mExporter!!.doExport(exportedFile.absolutePath)
         val lines = FileOperation.getFileContents(exportedFile).split("\n".toRegex()).toTypedArray()
-        Assert.assertEquals(mNoteList!!.size.toLong(), lines.size.toLong())
+        assertEquals(mNoteList!!.size.toLong(), lines.size.toLong())
         for (i in mNoteList!!.indices) {
             val note = mNoteList!![i]
             val line = lines[i]
@@ -82,7 +81,7 @@ class TextNoteExporterTest(
                 row.add(TextUtils.join(" ", note.tags))
             }
             val expected = TextUtils.join("\t", row)
-            Assert.assertEquals(expected, line)
+            assertEquals(expected, line)
         }
     }
 

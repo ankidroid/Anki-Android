@@ -20,12 +20,12 @@ import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder
-import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.never
 import java.util.*
+import kotlin.test.*
 
 class UniqueArrayListTest {
     private val mDupData = listOf(

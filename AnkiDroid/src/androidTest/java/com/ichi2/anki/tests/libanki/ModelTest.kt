@@ -21,10 +21,10 @@ import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class ModelTest : InstrumentedTest() {

@@ -16,11 +16,11 @@
 package com.ichi2.utils
 
 import android.os.Bundle
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
 import kotlin.random.Random
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class BundleUtilsTest {

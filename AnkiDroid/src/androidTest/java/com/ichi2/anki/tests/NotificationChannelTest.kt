@@ -28,13 +28,13 @@ import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.NotificationChannels.getId
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import kotlin.test.junit.JUnitAsserter.assertNotNull
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 @RequiresApi(Build.VERSION_CODES.O) // getNotificationChannels, NotificationChannel.getId
@@ -85,14 +85,14 @@ class NotificationChannelTest : InstrumentedTest() {
             }
         }
         assertEquals(
-            "Incorrect channel count",
             expectedChannels,
-            channels.size
+            channels.size,
+            "Incorrect channel count"
         )
         for (channel in NotificationChannels.Channel.values()) {
             assertNotNull(
-                "There should be a reminder channel",
-                mManager!!.getNotificationChannel(getId(channel))
+                mManager!!.getNotificationChannel(getId(channel)),
+                "There should be a reminder channel"
             )
         }
     }

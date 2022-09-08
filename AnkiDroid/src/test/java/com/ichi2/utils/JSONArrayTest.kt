@@ -25,7 +25,6 @@ package com.ichi2.utils
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -33,7 +32,7 @@ import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
 import java.lang.Double.*
 import java.util.*
-import kotlin.test.assertNull
+import kotlin.test.*
 
 /**
  * This black box test was written without inspecting the non-free org.json sourcecode.
@@ -69,7 +68,7 @@ class JSONArrayTest {
         val a = JSONArray()
         val b = JSONArray()
         assertTrue(a == b)
-        assertEquals("equals() not consistent with hashCode()", a.hashCode(), b.hashCode())
+        assertEquals(a.hashCode(), b.hashCode(), "equals() not consistent with hashCode()")
         a.put(true)
         a.put(false)
         b.put(true)
@@ -354,7 +353,7 @@ class JSONArrayTest {
             array.put(NaN)
             array.put(NEGATIVE_INFINITY)
             array.put(POSITIVE_INFINITY)
-            assertEquals(null, array.toString())
+            assertNull(array.toString())
         }
     }
 

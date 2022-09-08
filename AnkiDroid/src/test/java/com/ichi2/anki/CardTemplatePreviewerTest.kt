@@ -25,12 +25,13 @@ import com.ichi2.libanki.Model
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 class CardTemplatePreviewerTest : RobolectricTest() {
@@ -50,10 +51,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         var previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         var testCardTemplatePreviewer = previewerController.get()
-        Assert.assertTrue(
-            "model change did not show up?",
+        assertTrue(
             testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.q().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST")
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST"),
+            "model change did not show up?"
         )
 
         // Take it through a destroy/re-create lifecycle in order to test instance state persistence
@@ -63,18 +64,18 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java).create(outBundle).start().resume().visible()
         saveControllerForCleanup(previewerController)
         testCardTemplatePreviewer = previewerController.get()
-        Assert.assertTrue(
-            "model change not preserved in lifecycle??",
+        assertTrue(
             testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.q().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST")
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST"),
+            "model change not preserved in lifecycle??"
         )
 
         // Make sure we can click
-        Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.showingAnswer)
+        assertFalse(testCardTemplatePreviewer.showingAnswer, "Showing the answer already?")
         testCardTemplatePreviewer.disableDoubleClickPrevention()
         val showAnswerButton = testCardTemplatePreviewer.findViewById<View>(R.id.preview_buttons_layout)
         showAnswerButton.performClick()
-        Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.showingAnswer)
+        assertTrue(testCardTemplatePreviewer.showingAnswer, "Not showing the answer?")
     }
 
     @Test
@@ -164,11 +165,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val testCardTemplatePreviewer = previewerController.get()
 
         // Make sure we can click
-        Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.showingAnswer)
+        assertFalse(testCardTemplatePreviewer.showingAnswer, "Showing the answer already?")
         testCardTemplatePreviewer.disableDoubleClickPrevention()
         val showAnswerButton = testCardTemplatePreviewer.findViewById<View>(R.id.preview_buttons_layout)
         showAnswerButton.performClick()
-        Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.showingAnswer)
+        assertTrue(testCardTemplatePreviewer.showingAnswer, "Not showing the answer?")
     }
 
     @Test
@@ -182,13 +183,13 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         for (name in tmpls.stringIterable()) {
             cardsList.add(name)
         }
-        Assert.assertTrue(cardsList.size == 1)
+        assertTrue(cardsList.size == 1)
         cardsList.clear()
         val tmplsBR = basicAndReverseOptionalModel.getJSONArray("tmpls")
         for (name in tmplsBR.stringIterable()) {
             cardsList.add(name)
         }
-        Assert.assertTrue(cardsList.size == 2)
+        assertTrue(cardsList.size == 2)
     }
 
     @Test

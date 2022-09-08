@@ -19,8 +19,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
-import org.junit.Assert
-import kotlin.test.junit5.JUnit5Asserter
+import kotlin.test.fail
 
 /** Assertion methods that aren't currently supported by our dependencies  */
 object AnkiAssert {
@@ -45,7 +44,7 @@ object AnkiAssert {
     fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
         try {
             r.run()
-            Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
+            fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
         } catch (t: Throwable) {
             if (t.javaClass == clazz) {
                 @Suppress("UNCHECKED_CAST")
@@ -53,14 +52,13 @@ object AnkiAssert {
             }
             if (t.message != null && t.message!!.startsWith("Expected exception: ")) {
                 // We need to add a "throws" if we rethrow t, so fail with the same code.
-                Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
+                fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
             }
             throw AssertionError(
                 "Expected '" + clazz.simpleName + "' got '" + t.javaClass.simpleName + "'",
                 t
             )
         }
-        throw IllegalStateException("unreachable")
     }
 
     fun <T> assertEqualsArrayList(expected: Array<T>, actual: List<T>?) {
@@ -114,14 +112,5 @@ inline fun <reified T : Throwable> assertThrowsSubclass(r: Runnable): T {
         throw AssertionError("Expected '" + T::class.simpleName + "' got '" + t.javaClass.simpleName + "'", t)
     }
 
-    Assert.fail("Expected exception: " + T::class.simpleName + ". No exception thrown.")
-    throw IllegalStateException("shouldn't reach here")
-}
-
-/** Asserts that the expression is `false` with an optional [message]. */
-fun assertFalse(message: String? = null, actual: Boolean) {
-    // This exists in JUnit, but we want to avoid JUnit as their `assertNotNull` does not use contracts
-    // So, we want a method in a different namespace for `assertFalse`
-    // JUnitAsserter doesn't contain it, so we add it in
-    JUnit5Asserter.assertTrue(message, !actual)
+    fail("Expected exception: " + T::class.simpleName + ". No exception thrown.")
 }

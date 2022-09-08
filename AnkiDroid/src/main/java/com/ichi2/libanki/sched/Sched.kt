@@ -34,6 +34,7 @@ import com.ichi2.libanki.sched.Counts.Queue
 import com.ichi2.libanki.sched.Counts.Queue.*
 import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
 import com.ichi2.utils.*
+import com.ichi2.utils.Assert.that
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import timber.log.Timber
 import java.util.*
@@ -168,7 +169,7 @@ class Sched(col: Collection) : SchedV2(col) {
             if (!TextUtils.isEmpty(p)) {
                 val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
-                Assert.that(
+                that(
                     parentLims != null,
                     "Deck %s is supposed to have parent %s. It has not be found.",
                     deckName,

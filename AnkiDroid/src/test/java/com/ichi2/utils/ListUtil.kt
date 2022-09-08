@@ -16,12 +16,9 @@
 package com.ichi2.utils
 
 import com.ichi2.testutils.assertThrows
-import org.junit.Assert
-import org.junit.Assert.assertThrows
+import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import org.junit.internal.ArrayComparisonFailure
-import java.lang.AssertionError
-import kotlin.Throws
 
 class ListUtil {
     @Test
@@ -58,7 +55,7 @@ class ListUtil {
         ) {
             val expectedArray: Array<Any?>? = expected?.toTypedArray()
             val actualArray: Array<Any?>? = actuals?.toTypedArray()
-            Assert.assertArrayEquals(message, expectedArray, actualArray)
+            assertArrayEquals(message, expectedArray, actualArray)
         }
 
         /**

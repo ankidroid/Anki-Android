@@ -33,11 +33,11 @@ import com.ichi2.utils.HashUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.lessThan
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
@@ -140,11 +140,11 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         val set = mPrefs.getStringSet("note_editor_custom_buttons", HashUtil.HashSetInit<String>(0)) as Set<String?>
         val toolbarButtons = CustomToolbarButton.fromStringSet(set)
 
-        assertEquals("Set size", 2, set.size)
-        assertEquals("Toolbar buttons size", 2, toolbarButtons.size)
+        assertEquals(2, set.size, "Set size")
+        assertEquals(2, toolbarButtons.size, "Toolbar buttons size")
 
-        assertEquals("Button text prefs", "1", toolbarButtons[0].buttonText)
-        assertEquals("Button text prefs", "2", toolbarButtons[1].buttonText)
+        assertEquals("1", toolbarButtons[0].buttonText, "Button text prefs")
+        assertEquals("2", toolbarButtons[1].buttonText, "Button text prefs")
     }
 
     @Test

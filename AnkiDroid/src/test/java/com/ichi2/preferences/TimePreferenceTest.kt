@@ -17,11 +17,11 @@
 
 package com.ichi2.preferences
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.util.*
+import kotlin.test.assertEquals
 
 @RunWith(Parameterized::class)
 class TimePreferenceTest(private val parsableHour: String, private val expectedHour: Int) {

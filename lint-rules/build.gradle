@@ -16,4 +16,5 @@ dependencies {
     testImplementation "com.android.tools.lint:lint:$lint_version"
     testImplementation "com.android.tools.lint:lint-api:$lint_version"
     testImplementation "com.android.tools.lint:lint-tests:$lint_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }

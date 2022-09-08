@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_FOUR
 import com.ichi2.libanki.Consts.BUTTON_ONE
@@ -37,6 +37,8 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.Consts.STARTING_FACTOR
 import com.ichi2.libanki.DecksTest.Companion.TEST_DECKS
+import com.ichi2.libanki.Models
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert.checkRevIvl
@@ -47,13 +49,12 @@ import com.ichi2.utils.JSONArray
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.*
-import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 @RustCleanup("Remove, or add KotlinCleanup")
 @KotlinCleanup("is -> equalTo")
@@ -146,7 +147,7 @@ class SchedTest : RobolectricTest() {
         col.sched.deckDueTree()
         val sched = col.sched
         val tree = sched.deckDueTree()
-        assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(col, false), tree)
+        assertEquals(SchedV2Test.expectedTree(col, false), tree, "Tree has not the expected structure")
     }
 
     @Test
@@ -246,7 +247,7 @@ class SchedTest : RobolectricTest() {
         col.decks.setConf(col.decks.get(deck2), c2)
         col.reset()
         // both confs have defaulted to a limit of 20
-        assertEquals("both confs have defaulted to a limit of 20", 20, col.sched.counts().new)
+        assertEquals(20, col.sched.counts().new, "both confs have defaulted to a limit of 20")
         // first card we get comes from parent
         val c = card!!
         assertEquals(1, c.did)

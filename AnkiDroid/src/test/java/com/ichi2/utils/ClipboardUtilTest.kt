@@ -5,8 +5,8 @@ package com.ichi2.utils
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import com.ichi2.utils.ClipboardUtil.hasImage
-import org.junit.Assert.assertFalse
 import org.junit.Test
+import kotlin.test.assertFalse
 
 class ClipboardUtilTest {
     @Test

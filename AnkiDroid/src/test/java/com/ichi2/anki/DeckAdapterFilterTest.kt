@@ -20,11 +20,12 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class DeckAdapterFilterTest {
 
@@ -46,7 +47,7 @@ class DeckAdapterFilterTest {
         val actual = filter.filterResults(pattern, deckList)
         val expected = deckList.getByDids(0, 4, 5, 6, 8)
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -56,7 +57,7 @@ class DeckAdapterFilterTest {
 
         val actual = filter.filterResults(pattern, deckList)
 
-        Assert.assertTrue(actual.isEmpty())
+        assertTrue(actual.isEmpty())
     }
 
     private val deckList: MutableList<TreeNode<AbstractDeckTreeNode>>

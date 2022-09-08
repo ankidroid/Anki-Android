@@ -26,7 +26,6 @@ import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ExceptionUtil.getFullStackTrace
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,6 +34,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
 import java.util.stream.Collectors
+import kotlin.test.fail
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
@@ -77,7 +77,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
             mLauncher!!.build(targetContext).create()
         } catch (npe: Exception) {
             val stackTrace = getFullStackTrace(npe)
-            Assert.fail(
+            fail(
                 """If you ran this test and it failed, please check to make sure that any new onCreate methods
 have the following code snippet at the start:
 if (showedActivityFailedScreen(savedInstanceState)) {
@@ -85,7 +85,6 @@ if (showedActivityFailedScreen(savedInstanceState)) {
 }
 $stackTrace"""
             )
-            throw npe
         }
         shadowOf(getMainLooper()).idle()
 

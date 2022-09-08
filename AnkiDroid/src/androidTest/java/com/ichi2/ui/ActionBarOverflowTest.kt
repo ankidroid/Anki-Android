@@ -23,10 +23,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
-import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.reflect.InvocationTargetException
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class ActionBarOverflowTest {

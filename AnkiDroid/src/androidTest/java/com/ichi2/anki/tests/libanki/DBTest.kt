@@ -26,13 +26,15 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.libanki.DB
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class DBTest : InstrumentedTest() {
@@ -48,7 +50,7 @@ class DBTest : InstrumentedTest() {
 
         // Make sure we have clean state to start with
         SQLiteDatabase.deleteDatabase(illFatedDBFile)
-        Assert.assertFalse("database exists already", illFatedDBFile.exists())
+        assertFalse(illFatedDBFile.exists(), "database exists already")
         val callback = TestCallback(1)
         val illFatedDB = DB(
             AnkiSupportSQLiteDatabase.withFramework(
@@ -57,7 +59,7 @@ class DBTest : InstrumentedTest() {
                 callback
             )
         )
-        Assert.assertFalse("database should not be corrupt yet", callback.databaseIsCorrupt)
+        assertFalse(callback.databaseIsCorrupt, "database should not be corrupt yet")
 
         // Scribble in it
         val b = ByteArray(1024)
@@ -70,14 +72,14 @@ class DBTest : InstrumentedTest() {
         // Try to do something
         try {
             illFatedDB.execute("CREATE TABLE test_table (test_column INTEGER NOT NULL);")
-            Assert.fail("There should have been a corruption exception")
+            fail("There should have been a corruption exception")
         } catch (e: SQLiteDatabaseCorruptException) {
             // do nothing, it is expected
         }
-        Assert.assertTrue("database corruption not detected", callback.databaseIsCorrupt)
+        assertTrue(callback.databaseIsCorrupt, "database corruption not detected")
 
         // our handler avoids deleting databases, in contrast with default handler
-        Assert.assertTrue("database incorrectly deleted on corruption", illFatedDBFile.exists())
+        assertTrue(illFatedDBFile.exists(), "database incorrectly deleted on corruption")
         illFatedDB.close()
         SQLiteDatabase.deleteDatabase(illFatedDBFile)
     }

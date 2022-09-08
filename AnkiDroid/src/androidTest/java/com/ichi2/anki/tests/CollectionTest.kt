@@ -21,10 +21,10 @@ import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 
 /**
  * This test case verifies that the directory initialization works even if the app is not yet fully initialized.
@@ -40,6 +40,6 @@ class CollectionTest : InstrumentedTest() {
     @Test
     @KotlinCleanup("use the recommended assertion to remove the @SuppressLint")
     fun testOpenCollection() {
-        assertNotNull("Collection could not be opened", col)
+        assertNotNull(col, "Collection could not be opened")
     }
 }

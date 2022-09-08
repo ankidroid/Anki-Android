@@ -13,13 +13,12 @@
 package com.ichi2.utils
 
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(Enclosed::class)
 class TagsUtilTest {
@@ -109,11 +108,11 @@ class TagsUtilTest {
         @Test
         fun test_getUniformedTag() {
             assertEquals("abc", TagsUtil.getUniformedTag("abc"))
-            assertEquals("Should remove trailing '::'", "abc", TagsUtil.getUniformedTag("abc::"))
+            assertEquals("abc", TagsUtil.getUniformedTag("abc::"), "Should remove trailing '::'")
             assertEquals(
-                "Should replace empty immediate parts to 'blank'",
                 "abc::def::blank",
-                TagsUtil.getUniformedTag("abc::def::::")
+                TagsUtil.getUniformedTag("abc::def::::"), "Should replace empty immediate parts to 'blank'",
+
             )
         }
 

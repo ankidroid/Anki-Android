@@ -15,8 +15,8 @@
  */
 package com.ichi2.testutils
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class MockTimeTest {
     @Test

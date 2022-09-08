@@ -22,7 +22,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,6 +32,7 @@ import org.robolectric.RuntimeEnvironment
 import java.io.File
 import java.lang.Exception
 import java.util.*
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 

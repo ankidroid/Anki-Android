@@ -34,7 +34,6 @@ import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,10 +41,11 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
-import java.util.Locale
-import java.util.Random
+import java.util.*
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserTest : RobolectricTest() {
@@ -570,7 +570,7 @@ class CardBrowserTest : RobolectricTest() {
         // Find the current (after database has been changed) Mod time
         val finalMod = col.mod
         assertThat("Card Browser has the new sortType field", col.get_config_string("sortType"), equalTo("cardEase"))
-        assertNotEquals("Modification time must change", initialMod, finalMod)
+        assertNotEquals(initialMod, finalMod, "Modification time must change")
     }
 
     @Test

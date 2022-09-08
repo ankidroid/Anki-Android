@@ -21,9 +21,9 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
-import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerImportTest : RobolectricTest() {

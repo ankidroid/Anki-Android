@@ -25,6 +25,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
 import com.ichi2.utils.*
+import com.ichi2.utils.Assert.that
 import com.ichi2.utils.HashUtil.HashMapInit
 import timber.log.Timber
 import java.io.*
@@ -463,7 +464,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             fname.length // ideally, name should be normalized. Without access to nio.Paths library, it's hard to do it really correctly. This is still a better approximation than nothing.
         val remaining = pathMax - dirLen
         nameMax = min(remaining, nameMax)
-        Assert.that(
+        that(
             nameMax > 0,
             "The media directory is maximally long. There is no more length available for file name."
         )
@@ -479,7 +480,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                 val headMax = nameMax - ext.length
                 head = head.substring(0, headMax)
                 fname = head + ext
-                Assert.that(
+                that(
                     fname.length <= nameMax,
                     "The length of the file is greater than the maximal name value."
                 )

@@ -22,14 +22,12 @@ import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockedStatic
 import org.mockito.Mockito.*
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.RuntimeException
+import kotlin.test.fail
 
 @SuppressLint("LogNotTimber", "LogConditional")
 @KotlinCleanup("fix 'when'")
@@ -68,7 +66,7 @@ class ProductionCrashReportingTreeTest {
             AnkiAssert.assertDoesNotThrow { Timber.d("debug") }
             try {
                 Timber.i("info")
-                Assert.fail("we should have gone to Log.i and thrown but did not? Testing mechanism failure.")
+                fail("we should have gone to Log.i and thrown but did not? Testing mechanism failure.")
             } catch (e: Exception) {
                 // this means everything worked, we were counting on an exception
             }

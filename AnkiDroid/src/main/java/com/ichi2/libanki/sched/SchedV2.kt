@@ -39,10 +39,13 @@ import com.ichi2.libanki.Consts.NEW_CARD_ORDER
 import com.ichi2.libanki.Consts.REVLOG_TYPE
 import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.libanki.sched.Counts.Queue.*
+import com.ichi2.libanki.sched.SchedV2.CountMethod
+import com.ichi2.libanki.sched.SchedV2.LimitMethod
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
+import com.ichi2.utils.Assert.that
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -455,7 +458,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             if (!TextUtils.isEmpty(p)) {
                 val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
-                Assert.that(
+                that(
                     parentLims != null,
                     "Deck %s is supposed to have parent %s. It has not be found.",
                     deckName,
