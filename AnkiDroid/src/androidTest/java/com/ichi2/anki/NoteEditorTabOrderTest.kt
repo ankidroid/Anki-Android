@@ -16,13 +16,13 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.os.Build
 import android.view.KeyEvent
 import android.view.inputmethod.BaseInputConnection
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -30,15 +30,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
 
-@KotlinCleanup("Use ?.let{throw it}")
 @RunWith(AndroidJUnit4::class)
 class NoteEditorTabOrderTest : NoteEditorTest() {
-    override val invalidSdks: List<Int>
+    override val invalidSdks =
         /*
             java.lang.AssertionError:
             Expected: is "a"
          */
-        get() = listOf(30)
+        listOf(Build.VERSION_CODES.R)
 
     @Test
     @Ignore(
@@ -87,8 +86,8 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
                 wrapped.set(t)
             }
         }
-        if (wrapped.get() != null) {
-            throw wrapped.get()!!
+        wrapped.get()?.let {
+            throw it
         }
     }
 
