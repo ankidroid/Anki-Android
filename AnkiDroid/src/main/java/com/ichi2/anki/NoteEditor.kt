@@ -74,7 +74,7 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.NoteTypeSpinnerUtils
+import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.Compat
@@ -140,7 +140,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @get:VisibleForTesting
     var deckId: DeckId = 0
         private set
-    private var mAllModelIds: ArrayList<Long>? = null
+    private var mAllModelIds: List<Long>? = null
     @KotlinCleanup("this ideally should be Int, Int?")
     private var mModelChangeFieldMap: MutableMap<Int, Int>? = null
     private var mModelChangeCardMap: HashMap<Int, Int?>? = null
@@ -356,7 +356,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner)
-        mAllModelIds = NoteTypeSpinnerUtils.setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
+        mAllModelIds = setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
 
         // Deck Selector
         val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)
