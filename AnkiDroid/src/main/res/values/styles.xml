@@ -33,6 +33,10 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
+    <style name="PopupMenuStyle" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_popup</item>
+    </style>
+
     <style name="TextStyleMedium">
         <item name="android:textStyle">bold</item>
     </style>
