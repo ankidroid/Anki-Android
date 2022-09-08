@@ -107,7 +107,7 @@ class ContentProviderTest : InstrumentedTest() {
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
         mTearDown = false
-        if (InstrumentedTest.isEmulator()) {
+        if (isEmulator()) {
             col.changeSchedulerVer(schedVersion)
         } else {
             if (schedVersion == 1) {
@@ -1299,7 +1299,7 @@ class ContentProviderTest : InstrumentedTest() {
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
-            return Arrays.asList(*arrayOf(arrayOf(1), arrayOf(2)))
+            return listOf(arrayOf(1), arrayOf(2))
         }
 
         private const val BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F"
