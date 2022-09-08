@@ -37,6 +37,10 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
+    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/bg_popup</item>
+    </style>
+
     <style name="TextStyleMedium">
         <item name="android:textStyle">bold</item>
     </style>
@@ -153,11 +157,6 @@
     <style name="card_browser_spinner_layout">
         <item name="android:layout_height">48dp</item>
     </style>
-
-    <style name="card_browser_spinner_child_height">
-        <item name="android:layout_height">36dp</item>
-    </style>
-
 
     <style name="reviewer_whiteboard_editor_button_style">
         <item name="android:layout_height">40dp</item>
