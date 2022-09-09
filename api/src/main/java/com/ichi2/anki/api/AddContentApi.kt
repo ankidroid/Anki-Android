@@ -584,16 +584,26 @@ class AddContentApi(context: Context) {
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
     // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
+    @Suppress("deprecation") // API33 symbol required until minSdkVersion >= 33
     val apiHostSpecVersion: Int
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
-            val info = mContext.packageManager.resolveContentProvider(
-                FlashCardsContract.AUTHORITY,
-                PackageManager.GET_META_DATA
-            )
-                ?: return -1
-            return if (info.metaData != null && info.metaData.containsKey(
+            val info =
+                if (Build.VERSION.SDK_INT >= 33)
+                    mContext.packageManager.resolveContentProvider(
+                        FlashCardsContract.AUTHORITY,
+                        PackageManager.ComponentInfoFlags.of(
+                            PackageManager.GET_META_DATA.toLong()
+                        )
+                    )
+                else
+                    mContext.packageManager.resolveContentProvider(
+                        FlashCardsContract.AUTHORITY,
+                        PackageManager.GET_META_DATA
+                    )
+
+            return if (info?.metaData != null && info.metaData.containsKey(
                     PROVIDER_SPEC_META_DATA_KEY
                 )
             ) {
@@ -816,10 +826,16 @@ class AddContentApi(context: Context) {
          * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
          */
         // TODO: Kotlin Cleanup: simplify into one line fun
+        @Suppress("deprecation") // deprecated symbol until minSdkVersion >= 33
         fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager
-            val pi = manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)
-            return pi?.packageName
+            return if (Build.VERSION.SDK_INT >= 33)
+                manager.resolveContentProvider(
+                    FlashCardsContract.AUTHORITY,
+                    PackageManager.ComponentInfoFlags.of(0L)
+                )?.packageName
+            else
+                manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)?.packageName
         }
     }
 
