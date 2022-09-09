@@ -91,6 +91,7 @@ import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
+import com.ichi2.utils.iconAlpha
 import com.ichi2.widget.WidgetStatus.update
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -755,7 +756,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
         }
-        markCardIcon.icon.mutate().alpha = alpha
+        markCardIcon.iconAlpha = alpha
 
         // 1643 - currently null on a TV
         val flag_icon = menu.findItem(R.id.action_flag)
@@ -772,7 +773,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                     else -> flag_icon.setIcon(R.drawable.ic_flag_transparent)
                 }
             }
-            flag_icon.icon.mutate().alpha = alpha
+            flag_icon.iconAlpha = alpha
         }
 
         // Undo button
@@ -791,7 +792,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val alpha_undo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
-        undoIcon.setEnabled(undoEnabled).icon.mutate().alpha = alpha_undo
+        undoIcon.setEnabled(undoEnabled).iconAlpha = alpha_undo
         undoIcon.actionView.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
@@ -866,8 +867,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             bury_icon.setTitle(R.string.menu_bury_card)
         }
         alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
-        bury_icon.icon.mutate().alpha = alpha
-        suspend_icon.icon.mutate().alpha = alpha
+        bury_icon.iconAlpha = alpha
+        suspend_icon.iconAlpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
         mOnboarding.onCreate()
         if (mOverflowMenuIsOpen)
