@@ -1138,18 +1138,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class PreloadNextCard : TaskDelegate<Void, Void?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
-            try {
-                col.sched.counts() // Ensure counts are recomputed if necessary, to know queue to look for
-                col.sched.preloadNextCard()
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card")
-            }
-            return null
-        }
-    }
-
     class Reset : TaskDelegate<Void, Void?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
             col.sched.reset()
