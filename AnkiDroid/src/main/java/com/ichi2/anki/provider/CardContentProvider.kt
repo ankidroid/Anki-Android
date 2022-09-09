@@ -1269,6 +1269,7 @@ class CardContentProvider : ContentProvider() {
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted  */
+    @Suppress("deprecation") // getPackageInfo
     private fun knownRogueClient(): Boolean {
         val pm = context!!.packageManager
         return try {

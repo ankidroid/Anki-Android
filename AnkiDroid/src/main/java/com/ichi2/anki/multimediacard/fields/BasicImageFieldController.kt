@@ -100,6 +100,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 
+    @Suppress("deprecation") // getParcelable
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             Timber.i("loadInstanceState but null so nothing to load")
@@ -350,6 +351,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
+    @Suppress("deprecation") // get
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // All image modification methods come through here - this ensures that the state is consistent
 
@@ -814,6 +816,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
 
         companion object {
+            @Suppress("deprecation") // getParcelable
             fun fromBundle(savedInstanceState: Bundle): ImageViewModel {
                 val imagePath = savedInstanceState.getString("mImagePath")
                 val imageUri = savedInstanceState.getParcelable<Uri>("mImageUri")

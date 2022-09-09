@@ -101,6 +101,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return editor.fieldsFromSelectedNote
     }
 
+    @Suppress("deprecation") // get
     fun setInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             return

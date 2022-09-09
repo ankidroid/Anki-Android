@@ -39,6 +39,7 @@ import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
 class RecursivePictureMenu : DialogFragment() {
+    @Suppress("deprecation") // getParcelableArrayList
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val items: List<Item> = requireArguments().getParcelableArrayList("bundle")!!
         val title = requireContext().getString(requireArguments().getInt("titleRes"))
@@ -160,6 +161,7 @@ class RecursivePictureMenu : DialogFragment() {
             }
         }
 
+        @Suppress("deprecation") // readList
         protected constructor(parcel: Parcel) : super(parcel) {
             if (parcel.readByte().toInt() == 0x01) {
                 mChildren = ArrayList()

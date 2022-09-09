@@ -215,7 +215,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "deprecation") // deprecation: getSerializable
     @KotlinCleanup("fix suppress")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -1065,6 +1065,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         closeNoteEditor(result, intent)
     }
 
+    @Suppress("deprecation") // getParcelableExtra
     private fun closeNoteEditor(result: Int, intent: Intent?) {
         if (intent != null) {
             setResult(result, intent)

@@ -23,6 +23,7 @@ import java.lang.Exception
 import java.util.*
 
 object CheckCameraPermission {
+    @Suppress("deprecation") // getPackageInfo
     fun manifestContainsPermission(context: Context): Boolean {
         try {
             val requestedPermissions = context.packageManager

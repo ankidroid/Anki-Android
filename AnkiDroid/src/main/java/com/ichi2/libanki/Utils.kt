@@ -863,6 +863,7 @@ object Utils {
     }
     @KotlinCleanup("Use @JmOverloads, remove fun passing null for ComponentName")
     @KotlinCleanup("Simplify function body")
+    @Suppress("deprecation") // queryIntentActivities
     fun isIntentAvailable(
         context: Context,
         action: String?,

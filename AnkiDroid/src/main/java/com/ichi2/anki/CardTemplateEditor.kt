@@ -90,7 +90,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
     @KotlinCleanup("Unchecked cast")
-    @Suppress("UNCHECKED_CAST") // as HashMap<Int, Int?>?
+    @Suppress("UNCHECKED_CAST", "deprecation") // as HashMap<Int, Int?>?. Deprecation: getSerializable
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -141,6 +141,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
+    @Suppress("deprecation") // onBackPressed
     override fun onBackPressed() {
         if (modelHasChanged()) {
             showDiscardChangesDialog()

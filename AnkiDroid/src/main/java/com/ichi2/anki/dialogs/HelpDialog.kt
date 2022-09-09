@@ -206,6 +206,7 @@ object HelpDialog {
             mFunc.consume(activity)
         }
 
+        @Suppress("deprecation") // readSerializable
         private constructor(`in`: Parcel) : super(`in`) {
             mFunc = `in`.readSerializable() as ActivityConsumer
         }

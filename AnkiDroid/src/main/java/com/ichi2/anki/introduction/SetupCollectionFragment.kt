@@ -90,6 +90,7 @@ class SetupCollectionFragment : Fragment() {
         const val RESULT_KEY = "result"
 
         /** Handles a result from a [SetupCollectionFragment] */
+        @Suppress("deprecation") // get
         fun FragmentActivity.handleCollectionSetupOption(handleResult: (CollectionSetupOption) -> Unit) {
             supportFragmentManager.setFragmentResultListener(FRAGMENT_KEY, this) { _, b ->
                 val item = b[RESULT_KEY] as CollectionSetupOption

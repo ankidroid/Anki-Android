@@ -64,6 +64,7 @@ object AdaptionUtil {
         return "true" == testLabSetting
     }
 
+    @Suppress("deprecation") // queryIntentActivities
     private fun checkHasWebBrowser(context: Context): Boolean {
         // The test monkey often gets stuck on the Shared Decks WebView, ignore it as it shouldn't crash.
         if (isUserATestClient) {
@@ -95,6 +96,7 @@ object AdaptionUtil {
         return ri != null && ri.activityInfo != null && ri.activityInfo.exported
     }
 
+    @Suppress("deprecation") // getPackageInfo
     private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
         return if (packageName != null) {
             try {
@@ -136,6 +138,7 @@ object AdaptionUtil {
     }
 
     // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
+    @Suppress("deprecation") // resolveActivity
     private fun isIntentResolved(ctx: Context, intent: Intent): Boolean {
         return ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
     }

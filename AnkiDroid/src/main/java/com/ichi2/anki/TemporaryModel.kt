@@ -54,6 +54,7 @@ class TemporaryModel(model: Model) {
         return outState
     }
 
+    @Suppress("deprecation") // getSerializable
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
             @Suppress("UNCHECKED_CAST")

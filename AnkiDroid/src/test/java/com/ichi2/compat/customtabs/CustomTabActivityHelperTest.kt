@@ -53,6 +53,7 @@ class CustomTabActivityHelperTest {
     }
 
     @Test
+    @Suppress("deprecation") // queryIntentActivities
     fun invalidClientMeansFallbackIsCalled() {
         getValidTabHandler().onServiceConnected(getClientThrowingSecurityException())
 

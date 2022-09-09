@@ -173,6 +173,7 @@ class ModelBrowser : AnkiActivity() {
     }
 
     @KotlinCleanup("Replace with when")
+    @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val itemId = item.itemId
         if (itemId == android.R.id.home) {

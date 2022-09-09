@@ -107,6 +107,7 @@ class CardInfo : AnkiActivity() {
         this.model = model
     }
 
+    @Suppress("deprecation") // getParcelableExtra
     override fun finish() {
         val animation: Parcelable? = intent.getParcelableExtra(FINISH_ANIMATION_EXTRA)
         if (animation is ActivityTransitionAnimation.Direction) {

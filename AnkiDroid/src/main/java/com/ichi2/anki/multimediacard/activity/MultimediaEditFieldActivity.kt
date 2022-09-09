@@ -57,6 +57,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
      * Used to access past state from OnRequestPermissionsResultCallback
      */
     private var mCurrentChangeRequest: ChangeUIRequest? = null
+    @Suppress("deprecation") // getSerializable
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -456,6 +457,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
         @KotlinCleanup("see if we can make this non-null")
         @VisibleForTesting
+        @Suppress("deprecation") // getSerializable
         fun getFieldFromIntent(intent: Intent): IField? {
             return intent.extras!!.getSerializable(EXTRA_FIELD) as IField?
         }
