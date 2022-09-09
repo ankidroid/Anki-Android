@@ -77,27 +77,27 @@ abstract class DoubleTapListener(context: Context) : View.OnTouchListener {
     private val detector = object : GestureDetector(
         context,
         object : SimpleOnGestureListener() {
-            override fun onDoubleTap(e: MotionEvent?): Boolean {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
                 this@DoubleTapListener.onDoubleTap(e)
                 return super.onDoubleTap(e)
             }
 
-            override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
                 this@DoubleTapListener.onUnconfirmedSingleTap(e)
                 return super.onSingleTapUp(e)
             }
 
-            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                 this@DoubleTapListener.onConfirmedSingleTap(e)
                 return super.onSingleTapConfirmed(e)
             }
 
-            override fun onDown(e: MotionEvent?): Boolean {
+            override fun onDown(e: MotionEvent): Boolean {
                 super.onDown(e)
                 return true
             }
         }
     ) {}
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean = detector.onTouchEvent(event)
+    override fun onTouch(v: View?, event: MotionEvent): Boolean = detector.onTouchEvent(event)
 }

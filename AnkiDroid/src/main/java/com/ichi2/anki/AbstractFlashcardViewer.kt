@@ -538,6 +538,7 @@ abstract class AbstractFlashcardViewer :
         initNavigationDrawer(mainView)
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+        mGestureDetectorImpl = LinkDetectingGestureDetector()
     }
 
     @KotlinCleanup("non-null")
@@ -962,7 +963,6 @@ abstract class AbstractFlashcardViewer :
         mCardFrame!!.removeAllViews()
 
         // Initialize swipe
-        mGestureDetectorImpl = LinkDetectingGestureDetector()
         gestureDetector = GestureDetector(this, mGestureDetectorImpl)
         easeButtonsLayout = findViewById(R.id.ease_buttons)
         easeButton1 = EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1))

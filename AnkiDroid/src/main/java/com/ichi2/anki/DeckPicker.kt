@@ -641,7 +641,7 @@ open class DeckPicker :
     private fun setupSearchIcon(menuItem: MenuItem) {
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 Timber.i("DeckPicker:: SearchItem opened")
                 // Hide the floating action button if it is visible
                 mFloatingActionMenu.hideFloatingActionButton()
@@ -649,7 +649,7 @@ open class DeckPicker :
             }
 
             // When SearchItem is collapsed
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 Timber.i("DeckPicker:: SearchItem closed")
                 // Show the floating action button if it is hidden
                 mFloatingActionMenu.showFloatingActionButton()
