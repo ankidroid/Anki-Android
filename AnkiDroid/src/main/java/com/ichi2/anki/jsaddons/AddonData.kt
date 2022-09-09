@@ -77,60 +77,62 @@ fun getAddonModelFromJson(packageJsonPath: String): Pair<AddonModel?, List<Strin
  * @return pair of valid addon model and errors list
  */
 fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<String>> {
-    var errorStr: String
-    val errorList: MutableList<String> = ArrayList()
+    val errors: MutableList<String> = ArrayList()
 
-    // either fields not present in package.json or failed to parse the fields
-    if (addonData.name.isNullOrBlank() || addonData.addonTitle.isNullOrBlank() || addonData.main.isNullOrBlank() ||
-        addonData.ankidroidJsApi.isNullOrBlank() || addonData.addonType.isNullOrBlank() || addonData.homepage.isNullOrBlank() ||
-        addonData.keywords.isNullOrEmpty()
-    ) {
-        errorStr = "Invalid addon package: fields in package.json are empty or null"
-        errorList.add(errorStr)
+    if (addonData.addonTitle.isNullOrBlank()) {
+        errors.add("Title should not be empty")
+    }
+    if (addonData.main.isNullOrBlank()) {
+        errors.add("Main should not be empty")
+    }
+    if (addonData.ankidroidJsApi.isNullOrBlank()) {
+        errors.add("JsApi should not be empty")
+    }
+    if (addonData.homepage.isNullOrBlank()) {
+        errors.add("Homepage should not be empty")
     }
 
-    // check if name is safe and valid
-    if (!validateName(addonData.name!!)) {
-        errorStr = "Invalid addon package: package name failed validation"
-        errorList.add(errorStr)
-    }
+    validateName(addonData.name)?.let { errors.addAll(it) }
 
     if (addonData.addonType != REVIEWER_ADDON && addonData.addonType != NOTE_EDITOR_ADDON) {
-        errorStr = "Invalid addon package: ${addonData.addonType} is not valid addon type, package.json must have 'addonType' fields of 'reviewer' or 'note-editor'"
-        errorList.add(errorStr)
+        errors.add("'${addonData.addonType}' is not valid addon type, package.json must have 'addonType' fields of 'reviewer' or 'note-editor'")
     }
 
-    // if addon type is note editor then it must have icon
-    if (addonData.addonType == NOTE_EDITOR_ADDON && addonData.icon.isNullOrBlank()) {
-        errorStr = "Invalid addon package: note editor addon must have 'icon' fields in package.json"
-        errorList.add(errorStr)
+    // if addon type is not editor then it must have icon
+    val icon = if (addonData.addonType == NOTE_EDITOR_ADDON) {
+        if (addonData.icon.isNullOrBlank()) {
+            errors.add("An addon for note editor must have 'icon' fields in package.json")
+            ""
+        } else {
+            addonData.icon
+        }
+    } else {
+        ""
     }
 
     // check if ankidroid-js-addon present or not in mapped addonData
-    val jsAddonKeywordsPresent = addonData.keywords?.any { it == ANKIDROID_JS_ADDON_KEYWORDS }
-    if (!jsAddonKeywordsPresent!!) {
-        errorStr = "Invalid addon package: package.json does not have 'ankidroid-js-addon' in ${addonData.keywords} keywords"
-        errorList.add(errorStr)
+    if (addonData.keywords.isNullOrEmpty()) {
+        errors.add("An addon must have keywords.")
+    } else {
+        val jsAddonKeywordsPresent = addonData.keywords.any { it == ANKIDROID_JS_ADDON_KEYWORDS }
+        if (!jsAddonKeywordsPresent) {
+            errors.add("package.json does not have 'ankidroid-js-addon' in ${addonData.keywords} keywords")
+        }
     }
 
     // Check supplied api and current api
     if (addonData.ankidroidJsApi != sCurrentJsApiVersion) {
-        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must be equal to current js api version $sCurrentJsApiVersion"
-        errorList.add(errorStr)
+        errors.add("supplied js api version ${addonData.ankidroidJsApi} must be equal to current js api version $sCurrentJsApiVersion")
     }
-
-    val immutableList: List<String> = ArrayList(errorList)
 
     // there are errors in package.json so return null and errors list
-    if (errorList.isNotEmpty()) {
-        return Pair(null, immutableList)
+    if (errors.isNotEmpty()) {
+        return Pair(null, errors)
     }
-
-    val icon = if (addonData.addonType == NOTE_EDITOR_ADDON) addonData.icon!! else ""
 
     // return addon model, because it is validated
     val addonModel = AddonModel(
-        name = addonData.name,
+        name = addonData.name!!,
         addonTitle = addonData.addonTitle!!,
         icon = icon,
         version = addonData.version!!,
@@ -138,14 +140,14 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
         main = addonData.main!!,
         ankidroidJsApi = addonData.ankidroidJsApi!!,
         addonType = addonData.addonType!!,
-        keywords = addonData.keywords,
+        keywords = addonData.keywords!!,
         author = ImmutableMap<String, String>(addonData.author!!),
         license = addonData.license!!,
         homepage = addonData.homepage!!,
         dist = ImmutableMap<String, String>(addonData.dist!!)
     )
 
-    return Pair(addonModel, immutableList)
+    return Pair(addonModel, errors)
 }
 
 /**
@@ -164,13 +166,13 @@ fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<
     val addonsModelList = mutableListOf<AddonModel>()
     for (addon in addonsData) {
         val result = getAddonModelFromAddonData(addon)
-
-        if (result.first == null) {
+        val addonModel = result.first
+        if (addonModel == null) {
             Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.second)
             errorList.addAll(result.second)
             continue
         }
-        addonsModelList.add(result.first!!)
+        addonsModelList.add(addonModel)
     }
 
     return Pair(addonsModelList, errorList.toList())

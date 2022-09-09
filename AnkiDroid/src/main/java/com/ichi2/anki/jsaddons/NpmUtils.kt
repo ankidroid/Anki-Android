@@ -16,10 +16,9 @@
 
 package com.ichi2.anki.jsaddons
 
-import timber.log.Timber
+import androidx.annotation.CheckResult
 import java.net.URLEncoder
 import java.util.*
-import java.util.regex.Pattern
 
 object NpmUtils {
     /**
@@ -28,83 +27,56 @@ object NpmUtils {
      * https://github.com/npm/validate-npm-package-name/blob/main/index.js
      * https://github.com/lassjs/is-valid-npm-name/blob/master/index.js
      */
-    fun validateName(name: String): Boolean {
-        if (name.isBlank()) {
-            Timber.i("Invalid package name: non-empty characters allowed")
-            return false
+    @CheckResult
+    // @OptIn(ExperimentalContracts::class)
+    fun validateName(name: String?): List<String>? {
+        // Compiler fails on this contract.
+        //        contract {
+        //            returnsNotNull() implies (name != null)
+        //        }
+        if (name == null) {
+            return listOf("Name is not set.")
         }
-
-        // first trim it
-        if (name.trim() != name) {
-            Timber.i("Invalid package name: non-empty characters allowed")
-            return false
+        val errors = mutableListOf<String>()
+        for (invalidChar in "~'!()*@") {
+            if (name.contains(invalidChar)) errors.add("Name should not contains $invalidChar.")
         }
+        if (name.lowercase(Locale.getDefault()) != name) errors.add("Name should be all lowercase.")
+        if (URLEncoder.encode(name, "UTF-8") != name) errors.add("Name should be UTF-8 to be url-safe.")
+        if (name.length > 214) errors.add("Name's should be at most 214 character long.")
 
-        // name can no longer contain more than 214 characters
-        if (name.length > 214) {
-            Timber.i("Invalid package name: name string length less than 214 allowed")
-            return false
-        }
-
-        // name cannot start with a period or an underscore
-        if (name.startsWith(".") || name.startsWith("_")) {
-            Timber.i("Invalid package name: name cannot start with a period or an underscore")
-            return false
-        }
-
-        // name can no longer contain capital letters
-        if (name.lowercase(Locale.getDefault()) != name) {
-            Timber.i("Invalid package name: only small letters allowed")
-            return false
-        }
-
-        // must have @
-        // must have @ at beginning of string
-        if (name.startsWith("@")) {
-            // must have only one @
-            if (name.indexOf('@') != name.lastIndexOf('@')) {
-                Timber.i("Invalid scoped package name: only one '@' allowed")
-                return false
+        val trimmedName = name.trim()
+        val nameParts = trimmedName.split("/")
+        // The names to check and the way to describe them in error message.
+        val nameToChecks =
+            when (nameParts.size) {
+                1 -> {
+                    listOf(Pair(trimmedName, "Name"))
+                }
+                2 -> {
+                    val firstPart =
+                        if (nameParts[0][0] != '@') {
+                            errors.add("A scoped name should start with a @.")
+                            nameParts[0]
+                        } else {
+                            nameParts[0].substring(1)
+                        }
+                    val secondPart = nameParts[1]
+                    listOf(Pair(firstPart, "Name prefix"), Pair(secondPart, "Name suffix"))
+                }
+                else -> {
+                    errors.add("Name should contains at most one /")
+                    listOf(Pair(trimmedName, "Name"))
+                }
             }
-
-            // must have /
-            if (!name.contains('/')) {
-                Timber.i("Invalid scoped package name: must have '/'")
-                return false
-            }
-
-            // must have only one /
-            if (name.indexOf('/') != name.lastIndexOf('/')) {
-                Timber.i("Invalid scoped package name: only one '/' allowed")
-                return false
-            }
-
-            // validate scope
-            val arr = name.split('/')
-            val scope = arr[0].removePrefix("@")
-            val isValidScopeName = validateName(scope)
-
-            if (!isValidScopeName) {
-                return isValidScopeName
-            }
-
-            // validate name again
-            return validateName(arr[1])
+        for ((checkedNamePart, nameDescription) in nameToChecks) {
+            val trimmedCheckedNamePart = checkedNamePart.trim()
+            if (trimmedCheckedNamePart == "") errors.add("$nameDescription should contains non-whitespace symbols.")
+            if (trimmedCheckedNamePart != checkedNamePart) errors.add("$nameDescription should not start nor ends with whitespace.")
+            if (trimmedCheckedNamePart.startsWith(".")) errors.add("$nameDescription should not start with a dot.")
+            if (trimmedCheckedNamePart.startsWith("_")) errors.add("$nameDescription should not start with an underscore.")
         }
 
-        // no non-URL-safe characters
-        if (URLEncoder.encode(name, "UTF-8") != name) {
-            Timber.i("Invalid package name: only URL safe characters allowed")
-            return false
-        }
-
-        // name can no longer contain special characters ("~\'!()*")'
-        val special = Pattern.compile("[~\'!()*]")
-        if (special.matcher(name).find()) {
-            Timber.i("Invalid package name: no special characters allowed")
-            return false
-        }
-
-        return true
+        return if (errors.isEmpty()) null else errors
     }
 }
