@@ -95,7 +95,7 @@ class Models(col: Collection) : ModelManager(col) {
             ensureNotEmpty()
             val array = JSONObject()
             for ((key, value) in mModels!!) {
-                array.put(java.lang.Long.toString(key), value)
+                array.put(key.toString(), value)
             }
             val `val` = ContentValues()
             `val`.put("models", Utils.jsonToString(array))

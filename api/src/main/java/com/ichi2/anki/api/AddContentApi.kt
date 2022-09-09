@@ -267,7 +267,7 @@ class AddContentApi(context: Context) {
     fun getNote(noteId: Long): NoteInfo? {
         val noteUri = Uri.withAppendedPath(
             Note.CONTENT_URI,
-            java.lang.Long.toString(noteId)
+            noteId.toString()
         )
         val cursor = mResolver.query(noteUri, PROJECTION, null, null, null) ?: return null
         return try {
@@ -282,7 +282,7 @@ class AddContentApi(context: Context) {
     // TODO: Kotlin Cleanup simplify fun, use apply {}
     private fun updateNote(noteId: Long, fields: Array<String>?, tags: Set<String?>?): Boolean {
         val builder = Note.CONTENT_URI.buildUpon()
-        val contentUri = builder.appendPath(java.lang.Long.toString(noteId)).build()
+        val contentUri = builder.appendPath(noteId.toString()).build()
         val values = ContentValues()
         if (fields != null) {
             values.put(Note.FLDS, Utils.joinFields(fields))
@@ -395,7 +395,7 @@ class AddContentApi(context: Context) {
         // Set the remaining template parameters
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         for (i in cards.indices) {
-            val uri = Uri.withAppendedPath(templatesUri, Integer.toString(i))
+            val uri = Uri.withAppendedPath(templatesUri, i.toString())
             // TODO: Kotlin Cleanup: use .apply { }
             values = ContentValues()
             values.put(CardTemplate.NAME, cards[i])
@@ -434,7 +434,7 @@ class AddContentApi(context: Context) {
      */
     fun getFieldList(modelId: Long): Array<String>? {
         // Get the current model
-        val uri = Uri.withAppendedPath(Model.CONTENT_URI, java.lang.Long.toString(modelId))
+        val uri = Uri.withAppendedPath(Model.CONTENT_URI, modelId.toString())
         val modelCursor = mResolver.query(uri, null, null, null, null) ?: return null
         var splitFlds: Array<String>? = null
         try {

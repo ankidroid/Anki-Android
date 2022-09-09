@@ -259,9 +259,9 @@ object MetaDB {
             mMetaDb!!.rawQuery(
                 query,
                 arrayOf(
-                    java.lang.Long.toString(did),
-                    Integer.toString(ord),
-                    Integer.toString(qa.int)
+                    did.toString(),
+                    ord.toString(),
+                    qa.int.toString()
                 )
             ).use { cur ->
                 Timber.v("getLanguage: %s", query)
@@ -302,7 +302,7 @@ object MetaDB {
         try {
             mMetaDb!!.rawQuery(
                 "SELECT state FROM whiteboardState  WHERE did = ?",
-                arrayOf(java.lang.Long.toString(did))
+                arrayOf(did.toString())
             ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving whiteboard state from MetaDB ")
@@ -323,7 +323,7 @@ object MetaDB {
             val metaDb = mMetaDb!!
             metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did = ?",
-                arrayOf(java.lang.Long.toString(did))
+                arrayOf(did.toString())
             ).use { cur ->
                 if (cur.moveToNext()) {
                     metaDb.execSQL(
@@ -354,7 +354,7 @@ object MetaDB {
         try {
             mMetaDb!!.rawQuery(
                 "SELECT visible FROM whiteboardState WHERE did = ?",
-                arrayOf(java.lang.Long.toString(did))
+                arrayOf(did.toString())
             ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving whiteboard state from MetaDB ")
@@ -375,7 +375,7 @@ object MetaDB {
             val metaDb = mMetaDb!!
             metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did  = ?",
-                arrayOf(java.lang.Long.toString(did))
+                arrayOf(did.toString())
             ).use { cur ->
                 if (cur.moveToNext()) {
                     metaDb.execSQL(
@@ -404,7 +404,7 @@ object MetaDB {
         try {
             mMetaDb!!.rawQuery(
                 "SELECT lightpencolor, darkpencolor FROM whiteboardState WHERE did = ?",
-                arrayOf(java.lang.Long.toString(did))
+                arrayOf(did.toString())
             ).use { cur ->
                 cur.moveToFirst()
                 val light = DatabaseUtil.getInteger(cur, 0)
@@ -431,7 +431,7 @@ object MetaDB {
             val metaDb = mMetaDb!!
             metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did  = ?",
-                arrayOf(java.lang.Long.toString(did))
+                arrayOf(did.toString())
             ).use { cur ->
                 if (cur.moveToNext()) {
                     metaDb.execSQL(

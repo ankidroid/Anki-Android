@@ -41,7 +41,7 @@ class NotificationService : BroadcastReceiver() {
             Timber.i("NotificationService: OnStartCommand")
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val preferences = AnkiDroidApp.getSharedPrefs(context)
-            val minCardsDue = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt()
+            val minCardsDue = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Preferences.PENDING_NOTIFICATIONS_ONLY.toString())!!.toInt()
             val dueCardsCount = WidgetStatus.fetchDue(context)
             if (dueCardsCount >= minCardsDue) {
                 // Build basic notification

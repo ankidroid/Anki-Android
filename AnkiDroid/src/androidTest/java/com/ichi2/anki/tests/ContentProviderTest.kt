@@ -610,7 +610,7 @@ class ContentProviderTest : InstrumentedTest() {
                 cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i])
                 val tmplUri = Uri.withAppendedPath(
                     Uri.withAppendedPath(modelUri, "templates"),
-                    Integer.toString(i)
+                    i.toString()
                 )
                 assertThat(
                     "Update rows", cr.update(tmplUri, cv, null, null),
@@ -664,7 +664,7 @@ class ContentProviderTest : InstrumentedTest() {
                     allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID))
                 val modelUri = Uri.withAppendedPath(
                     FlashCardsContract.Model.CONTENT_URI,
-                    java.lang.Long.toString(modelId)
+                    modelId.toString()
                 )
                 val singleModel = cr.query(modelUri, null, null, null, null)
                 assertNotNull(singleModel)
@@ -942,7 +942,7 @@ class ContentProviderTest : InstrumentedTest() {
         val deckId = mTestDeckIds[0]
         val deckUri = Uri.withAppendedPath(
             FlashCardsContract.Deck.CONTENT_ALL_URI,
-            java.lang.Long.toString(deckId)
+            deckId.toString()
         )
         contentResolver.query(deckUri, null, null, null, null).use { decksCursor ->
             if (decksCursor == null || !decksCursor.moveToFirst()) {
@@ -1013,7 +1013,7 @@ class ContentProviderTest : InstrumentedTest() {
     fun testQueryCardFromCertainDeck() {
         val deckToTest = mTestDeckIds[0]
         val deckSelector = "deckID=?"
-        val deckArguments = arrayOf(java.lang.Long.toString(deckToTest))
+        val deckArguments = arrayOf(deckToTest.toString())
         val col = col
         val sched = col.sched
         val selectedDeckBeforeTest = col.decks.selected()
@@ -1254,7 +1254,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         val updateNoteUri = Uri.withAppendedPath(
             FlashCardsContract.Note.CONTENT_URI,
-            java.lang.Long.toString(noteId)
+            noteId.toString()
         )
         val values = ContentValues()
         values.put(FlashCardsContract.Note.TAGS, TEST_TAG + " " + tag2)
@@ -1347,7 +1347,7 @@ class ContentProviderTest : InstrumentedTest() {
             }
             return Uri.withAppendedPath(
                 FlashCardsContract.Note.CONTENT_URI,
-                java.lang.Long.toString(newNote.id)
+                newNote.id.toString()
             )
         }
     }

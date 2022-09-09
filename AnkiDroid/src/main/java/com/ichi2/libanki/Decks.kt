@@ -199,12 +199,12 @@ class Decks(private val col: Collection) : DeckManager() {
         if (mChanged) {
             val decksarray = JSONObject()
             for ((key, value) in decks!!) {
-                decksarray.put(java.lang.Long.toString(key), value)
+                decksarray.put(key.toString(), value)
             }
             values.put("decks", Utils.jsonToString(decksarray))
             val confarray = JSONObject()
             for ((key, value) in mDconf!!) {
-                confarray.put(java.lang.Long.toString(key), value)
+                confarray.put(key.toString(), value)
             }
             values.put("dconf", Utils.jsonToString(confarray))
             col.db.update("col", values)
@@ -672,7 +672,7 @@ class Decks(private val col: Collection) : DeckManager() {
             if (!g.has("conf")) {
                 continue
             }
-            if (g.getString("conf") == java.lang.Long.toString(id)) {
+            if (g.getString("conf") == id.toString()) {
                 g.put("conf", 1)
                 save(g)
             }

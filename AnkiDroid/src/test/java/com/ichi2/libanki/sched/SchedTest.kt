@@ -235,7 +235,7 @@ class SchedTest : RobolectricTest() {
         var note: Note
         for (i in 0..29) {
             note = col.newNote()
-            note.setItem("Front", Integer.toString(i))
+            note.setItem("Front", i.toString())
             if (i > 4) {
                 note.model().put("did", deck2)
             }

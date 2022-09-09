@@ -398,7 +398,7 @@ open class SchedV2Test : RobolectricTest() {
         val deck2 = addDeck("Default::foo")
         for (i in 0..29) {
             val note = col.newNote()
-            note.setItem("Front", Integer.toString(i))
+            note.setItem("Front", i.toString())
             if (i > 4) {
                 note.model().put("did", deck2)
             }

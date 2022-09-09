@@ -224,7 +224,7 @@ open class Card : Cloneable {
         values.put("odid", oDid)
         values.put("did", did)
         // TODO: The update DB call sets mod=true. Verify if this is intended.
-        col.db.update("cards", values, "id = ?", arrayOf(java.lang.Long.toString(this.id)))
+        col.db.update("cards", values, "id = ?", arrayOf(this.id.toString()))
         col.log(this)
     }
 

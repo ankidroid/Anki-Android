@@ -214,7 +214,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
             }
             if (d.isStd && d.getLong("conf") != 1L) {
                 if (includeSched) {
-                    dconfs.put(java.lang.Long.toString(d.getLong("conf")), true)
+                    dconfs.put(d.getLong("conf").toString(), true)
                 }
             }
             val destinationDeck = d.deepClone()
@@ -414,9 +414,9 @@ class AnkiPackageExporter : AnkiExporter {
                 Timber.d("Skipping missing file %s", file)
                 continue
             }
-            z.write(file!!.path, Integer.toString(c))
+            z.write(file!!.path, c.toString())
             try {
-                media.put(Integer.toString(c), file.name)
+                media.put(c.toString(), file.name)
                 c++
             } catch (e: JSONException) {
                 Timber.w(e)

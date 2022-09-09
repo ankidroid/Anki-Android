@@ -325,7 +325,7 @@ open class HttpSyncer(
 
     init {
         @KotlinCleanup("combined declaration and initialization")
-        checksumKey = Utils.checksum(java.lang.Float.toString(Random().nextFloat())).substring(0, 8)
+        checksumKey = Utils.checksum(Random().nextFloat().toString()).substring(0, 8)
         @KotlinCleanup("move to constructor")
         this.con = con
         @KotlinCleanup("combined declaration and initialization")

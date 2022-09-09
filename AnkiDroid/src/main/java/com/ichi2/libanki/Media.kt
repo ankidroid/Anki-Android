@@ -750,7 +750,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                                 col.log("+media zip $fname")
                                 val file = File(dir(), fname)
                                 val bis = BufferedInputStream(FileInputStream(file), 2048)
-                                z.putNextEntry(ZipEntry(Integer.toString(c)))
+                                z.putNextEntry(ZipEntry(c.toString()))
                                 @KotlinCleanup("improve")
                                 var count: Int
                                 while (bis.read(buffer, 0, 2048).also { count = it } != -1) {
@@ -758,7 +758,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                                 }
                                 z.closeEntry()
                                 bis.close()
-                                meta.put(JSONArray().put(normName).put(Integer.toString(c)))
+                                meta.put(JSONArray().put(normName).put(c.toString()))
                                 sz += file.length().toInt()
                             } catch (e: FileNotFoundException) {
                                 Timber.w(e)

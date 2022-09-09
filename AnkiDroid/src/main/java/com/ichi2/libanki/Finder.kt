@@ -713,7 +713,7 @@ class Finder(private val col: Collection) {
         }
         val mid = split[0]
         `val` = split[1]
-        val csum = java.lang.Long.toString(Utils.fieldChecksumWithoutHtmlMedia(`val`))
+        val csum = Utils.fieldChecksumWithoutHtmlMedia(`val`).toString()
         val nids: MutableList<Long> = ArrayList()
         col.db.query(
             "select id, flds from notes where mid=? and csum=?",

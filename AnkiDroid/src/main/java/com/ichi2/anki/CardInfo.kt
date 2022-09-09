@@ -252,7 +252,7 @@ class CardInfo : AnkiActivity() {
                     Consts.REVLOG_REV -> makeColored(context.getString(R.string.card_info_revlog_review), reviewCountColor)
                     Consts.REVLOG_RELRN -> makeColored(context.getString(R.string.card_info_revlog_relearn), learnCountColor)
                     Consts.REVLOG_CRAM -> makeColored(context.getString(R.string.card_info_revlog_filtered), filteredColor)
-                    else -> SpannableString(Integer.toString(type))
+                    else -> SpannableString(type.toString())
                 }
             }
 
@@ -260,7 +260,7 @@ class CardInfo : AnkiActivity() {
                 return if (factor == 0L) {
                     SpannableString(context.getString(R.string.card_info_ease_not_applicable))
                 } else {
-                    SpannableString(java.lang.Long.toString(factor / 10))
+                    SpannableString((factor / 10).toString())
                 }
             }
 
@@ -275,10 +275,10 @@ class CardInfo : AnkiActivity() {
             val timeTaken: String
                 get() = // saves space if we just use seconds rather than a "s" suffix
                     // return Utils.timeQuantityNextIvl(context, timeTakenMs / 1000);
-                    java.lang.Long.toString(timeTakenMs / 1000)
+                    (timeTakenMs / 1000).toString()
 
             fun getRating(context: Context): Spannable {
-                val source = java.lang.Long.toString(rating.toLong())
+                val source = rating.toLong().toString()
                 return if (rating == 1) {
                     val attrs = intArrayOf(R.attr.learnCountColor)
                     val ta = context.obtainStyledAttributes(attrs)

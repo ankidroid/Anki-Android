@@ -110,7 +110,7 @@ class BootService : BroadcastReceiver() {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = AnkiDroidApp.getSharedPrefs(context)
             // Don't schedule a notification if the due reminders setting is not enabled
-            if (sp.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+            if (sp.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Preferences.PENDING_NOTIFICATIONS_ONLY.toString())!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
                 return
             }
             val calendar = time.calendar()

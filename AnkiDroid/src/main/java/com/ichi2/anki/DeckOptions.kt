@@ -92,7 +92,7 @@ class DeckOptions :
                 mValues["newSteps"] = StepsPreference.convertFromJSON(newOptions.getJSONArray("delays"))
                 mValues["newGradIvl"] = newOptions.getJSONArray("ints").getString(0)
                 mValues["newEasy"] = newOptions.getJSONArray("ints").getString(1)
-                mValues["newFactor"] = Integer.toString(newOptions.getInt("initialFactor") / 10)
+                mValues["newFactor"] = (newOptions.getInt("initialFactor") / 10).toString()
                 mValues["newOrder"] = newOptions.getString("order")
                 mValues["newPerDay"] = newOptions.getString("perDay")
                 mValues["newBury"] = java.lang.Boolean.toString(newOptions.optBoolean("bury", true))
@@ -107,8 +107,8 @@ class DeckOptions :
 
                 mValues["revUseGeneralTimeoutSettings"] = java.lang.Boolean.toString(revOptions.optBoolean("useGeneralTimeoutSettings", true))
                 mValues["revTimeoutAnswer"] = java.lang.Boolean.toString(revOptions.optBoolean("timeoutAnswer", false))
-                mValues["revTimeoutAnswerSeconds"] = Integer.toString(revOptions.optInt("timeoutAnswerSeconds", 6))
-                mValues["revTimeoutQuestionSeconds"] = Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60))
+                mValues["revTimeoutAnswerSeconds"] = revOptions.optInt("timeoutAnswerSeconds", 6).toString()
+                mValues["revTimeoutQuestionSeconds"] = revOptions.optInt("timeoutQuestionSeconds", 60).toString()
 
                 // lapse
                 val lapOptions = mOptions.getJSONObject("lapse")
@@ -575,7 +575,7 @@ class DeckOptions :
         leechActPref.setEntryValues(R.array.leech_action_values)
         leechActPref.value = mPref.getString(
             "lapLeechAct",
-            Integer.toString(Consts.LEECH_SUSPEND)
+            Consts.LEECH_SUSPEND.toString()
         )
     }
 

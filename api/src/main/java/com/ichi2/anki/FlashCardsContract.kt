@@ -122,7 +122,7 @@ object FlashCardsContract {
      * Example for querying notes with a certain note id with direct URI:
      *
      * ```
-     *          Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+     *          Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
      *          final Cursor cursor = cr.query(noteUri,
      *              null,  // projection
      *              null,  // selection is ignored for this URI
@@ -147,7 +147,7 @@ object FlashCardsContract {
      * Updating tags for a note can be done this way:
      *
      * ```
-     *          Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+     *          Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
      *          ContentValues values = new ContentValues();
      *          values.put(FlashCardsContract.Note.TAGS, tag1 + " " + tag2);
      *          int updateCount = cr.update(updateNoteUri, values, null, null);
@@ -195,7 +195,7 @@ object FlashCardsContract {
          * note can be directly accessed, e.g.
          *
          * ```
-         *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+         *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
          * ```
          *
          * If the URI is appended by the note ID and then the keyword "data", it is possible to
@@ -203,7 +203,7 @@ object FlashCardsContract {
          *
          *
          * ```
-         *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+         *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
          *      Uri dataUri = Uri.withAppendedPath(noteUri, "data");
          * ```
          *
@@ -300,7 +300,7 @@ object FlashCardsContract {
      * It's possible to query all models at once like this
      *
      * ```
-     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
      *      final Cursor cursor = cr.query(FlashCardsContract.Model.CONTENT_URI,
      *          null,  // projection
      *          null,  // selection is ignored for this URI
@@ -315,7 +315,7 @@ object FlashCardsContract {
      *
      * ```
      *      long modelId = ...// Use the correct model ID
-     *      Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
+     *      Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, modelId).toString();
      *      final Cursor cur = cr.query(modelUri,
      *          null,  // projection
      *          null,  // selection is ignored for this URI
@@ -468,7 +468,7 @@ object FlashCardsContract {
      *
      *
      * ```
-     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
      *      Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
      *      final Cursor cur = cr.query(cardsUri,
      *          null,  // projection
@@ -483,9 +483,9 @@ object FlashCardsContract {
      *
      *
      * ```
-     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
      *      Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
-     *      Uri specificCardUri = Uri.withAppendedPath(noteUri, Integer.toString(cardOrd));
+     *      Uri specificCardUri = Uri.withAppendedPath(noteUri, cardOrd.toString());
      *      final Cursor cur = cr.query(specificCardUri,
      *          null,  // projection
      *          null,  // selection is ignored for this URI
@@ -527,7 +527,7 @@ object FlashCardsContract {
      * done as shown in this example
      *
      * ```
-     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+     *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId).toString();
      *      Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
      *      final Cursor cur = cr.query(cardsUri,
      *          null,  // selection is ignored for this URI
@@ -837,7 +837,7 @@ object FlashCardsContract {
      *
      * ```
      *      long deckId = 123456 //<-- insert real deck ID here
-     *      Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
+     *      Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, deckId).toString();
      *      Cursor decksCursor = getContentResolver().query(deckUri, null, null, null, null);
      *
      *      if (decksCursor == null || !decksCursor.moveToFirst()) {

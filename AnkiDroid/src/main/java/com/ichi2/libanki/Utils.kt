@@ -584,7 +584,7 @@ object Utils {
                 Timber.e(e, "Utils.checksum :: UnsupportedEncodingException")
             }
             val biginteger = BigInteger(1, digest)
-            result = biginteger.toString(16)
+            result = big16.toString()
 
             // pad with zeros to length of 40 This method used to pad
             // to the length of 32. As it turns out, sha1 has a digest
@@ -654,7 +654,7 @@ object Utils {
             Timber.e(e, "Utils.fileChecksum: IO exception.")
         }
         val biginteger = BigInteger(1, digest)
-        var result = biginteger.toString(16)
+        var result = big16.toString()
         // pad with zeros to length of 40 - SHA1 is 160bit long
         if (result.length < 40) {
             result =

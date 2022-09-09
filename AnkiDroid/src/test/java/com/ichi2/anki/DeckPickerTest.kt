@@ -193,7 +193,7 @@ class DeckPickerTest : RobolectricTest() {
         dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)
         for (i in 0..10) {
-            addNoteUsingBasicModel("Which card is this ?", Integer.toString(i))
+            addNoteUsingBasicModel("Which card is this ?", i.toString())
         }
         // This set a card as current card
         sched.card
