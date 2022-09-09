@@ -909,7 +909,7 @@ open class DeckPicker :
         /* Complete task and enqueue fetching nonessential data for
           startup. */
         if (colIsOpen()) {
-            TaskManager.launchCollectionTask(LoadCollectionComplete())
+            launchCatchingTask { withCol { CollectionHelper.loadCollectionComplete(col) } }
         }
         // Update sync status (if we've come back from a screen)
         invalidateOptionsMenu()
