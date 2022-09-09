@@ -121,6 +121,7 @@
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_color_button_text">@color/white</item>
         <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
         <item name="md_corner_radius">@dimen/dialog_corner_radius</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
