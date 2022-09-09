@@ -793,7 +793,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
         undoIcon.setEnabled(undoEnabled).iconAlpha = alpha_undo
-        undoIcon.actionView.isEnabled = undoEnabled
+        undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
         }
@@ -1363,6 +1363,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
         })
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
+            if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
             if (!whiteboard!!.isCurrentlyDrawing && (
                 !mShowWhiteboard || (
@@ -1375,7 +1376,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 v.performClick()
                 return@setOnTouchListener gestureDetector!!.onTouchEvent(event)
             }
-            whiteboard!!.handleTouchEvent(event!!)
+            whiteboard!!.handleTouchEvent(event)
         }
     }
 
@@ -1526,7 +1527,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         showsSubMenu: () -> Boolean
     ): View = ImageButton(context, null, R.attr.actionButtonStyle).apply {
         TooltipCompat.setTooltipText(this, menuItem.title)
-        menuItem.icon.isAutoMirrored = true
+        menuItem.icon?.isAutoMirrored = true
         setImageDrawable(menuItem.icon)
         id = menuItem.itemId
         setOnClickListener {

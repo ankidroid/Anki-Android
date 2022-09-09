@@ -33,9 +33,10 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
     override fun onCreateActionView(forItem: MenuItem): View {
         val actionView = ImageButton(context, null, R.attr.actionButtonStyle)
         TooltipCompat.setTooltipText(actionView, forItem.title)
-        val iconDrawable = forItem.icon
-        iconDrawable.isAutoMirrored = true
-        actionView.setImageDrawable(iconDrawable)
+        forItem.icon?.let {
+            it.isAutoMirrored = true
+            actionView.setImageDrawable(it)
+        }
         actionView.id = R.id.action_undo
         actionView.setOnClickListener {
             if (!forItem.isEnabled) {
