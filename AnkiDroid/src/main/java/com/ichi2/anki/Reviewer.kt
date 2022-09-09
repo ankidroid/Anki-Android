@@ -43,7 +43,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
@@ -86,11 +85,12 @@ import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
-import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.iconAlpha
+import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.update
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -140,7 +140,6 @@ open class Reviewer : AbstractFlashcardViewer() {
     // Preferences from the collection
     private var mShowRemainingCardCount = false
     private val mActionButtons = ActionButtons(this)
-    private var mOverflowMenuIsOpen = false
     private lateinit var mToolbar: Toolbar
 
     @VisibleForTesting
@@ -180,18 +179,6 @@ open class Reviewer : AbstractFlashcardViewer() {
         mTextBarReview = findViewById(R.id.review_number)
         mToolbar = findViewById(R.id.toolbar)
         startLoadingCollection()
-    }
-
-    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-
-        savedInstanceState.putBoolean("mOverflowMenuIsOpen", mOverflowMenuIsOpen)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        mOverflowMenuIsOpen = savedInstanceState.getBoolean("mOverflowMenuIsOpen", false)
     }
 
     override fun onPause() {
@@ -709,36 +696,6 @@ open class Reviewer : AbstractFlashcardViewer() {
         startActivityWithAnimation(intent, animation)
     }
 
-    override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
-        Timber.d("onMenuOpened()")
-        mOverflowMenuIsOpen = true
-        for (i in 0 until menu.size()) {
-            val menuItem = menu.getItem(i)
-            shouldUseDefaultColor(menuItem)
-        }
-        return super.onMenuOpened(featureId, menu)
-    }
-
-    /**
-     * This Method changes the color of icon if user taps in overflow button.
-     */
-    private fun shouldUseDefaultColor(menuItem: MenuItem) {
-        val drawable = menuItem.icon
-        if (drawable != null && !isFlagResource(menuItem.itemId)) {
-            val itemIsOverflowing = mToolbar.findViewById<View>(menuItem.itemId) == null
-            if (itemIsOverflowing) {
-                drawable.mutate()
-                drawable.setTint(ResourcesCompat.getColor(resources, R.color.material_blue_600, null))
-            }
-        }
-    }
-
-    override fun onPanelClosed(featureId: Int, menu: Menu) {
-        Timber.d("onPanelClosed()")
-        mOverflowMenuIsOpen = false
-        postDelayedOnNewHandler({ refreshActionBar() }, 100)
-    }
-
     // Related to https://github.com/ankidroid/Anki-Android/pull/11061#issuecomment-1107868455
     @NeedsTest("Order of operations needs Testing around Menu (Overflow) Icons and their colors.")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -870,9 +827,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         suspend_icon.iconAlpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
         mOnboarding.onCreate()
-        if (mOverflowMenuIsOpen)
-            for (i in 0 until menu.size())
-                shouldUseDefaultColor(menu.getItem(i))
+
+        increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+        tintOverflowMenuIcons(menu, skipIf = { isFlagResource(it.itemId) })
+
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -154,6 +154,7 @@
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="reference"/>
     <attr name="iconColor" format="color"/>
+    <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
 

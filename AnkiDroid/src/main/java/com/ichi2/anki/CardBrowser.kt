@@ -967,6 +967,7 @@ open class CardBrowser :
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
+            increaseHorizontalPaddingOfOverflowMenuIcons(menu)
 
             menu.findItem(R.id.action_export_selected).apply {
                 if (BackendFactory.defaultLegacySchema) {

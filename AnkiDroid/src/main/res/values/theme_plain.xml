@@ -48,6 +48,7 @@
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_500</item>
+        <item name="overflowAndPopupMenuIconColor">?attr/colorPrimary</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_plain_primary</item>
         <!-- Navbar -->
