@@ -1367,7 +1367,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val popup = PopupMenu(this@NoteEditor, v)
                 val inflater = popup.menuInflater
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.menu)
-                (popup.menu as? MenuBuilder)?.setOptionalIconsVisible(true)
+
+                (popup.menu as? MenuBuilder)?.let { menu ->
+                    menu.setOptionalIconsVisible(true)
+                    increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+                    tintOverflowMenuIcons(menu)
+                }
+
                 popup.setOnMenuItemClickListener { item: MenuItem ->
                     when (item.itemId) {
                         R.id.menu_multimedia_audio -> {

@@ -124,6 +124,7 @@
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
+        <item name="overflowAndPopupMenuIconColor">#9effffff</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
