@@ -85,6 +85,7 @@ class SharedDecksDownloadFragment : Fragment() {
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
     }
 
+    @Suppress("deprecation") // getSerializable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,6 +94,7 @@ class SharedDecksDownloadFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shared_decks_download, container, false)
     }
 
+    @Suppress("deprecation") // getSerializable
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -400,6 +402,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * If there are any pending downloads, continue with them.
      * Else, set mIsPreviousDownloadOngoing as false and unregister mOnComplete broadcast receiver.
      */
+    @Suppress("deprecation") // onBackPressed
     private fun checkDownloadStatusAndUnregisterReceiver(isSuccessful: Boolean, isInvalidDeckFile: Boolean = false) {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
@@ -425,6 +428,7 @@ class SharedDecksDownloadFragment : Fragment() {
         removeCancelConfirmationDialog()
     }
 
+    @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
             MaterialDialog(it).show {

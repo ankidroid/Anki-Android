@@ -244,6 +244,7 @@ class FieldEditLine : FrameLayout {
             out.writeSerializable(expansionState)
         }
 
+        @Suppress("deprecation") // readSparseArray readSerializable
         private constructor(`in`: Parcel, loader: ClassLoader) : super(`in`) {
             childrenStates = `in`.readSparseArray(loader)
             editTextId = `in`.readInt()

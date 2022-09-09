@@ -117,6 +117,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return arguments.getString(SUMMARY_MESSAGE)
     }
 
+    @Suppress("deprecation") // getParcelableArrayList
     private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> {
         return requireNonNull(arguments.getParcelableArrayList<SelectableDeck>(DECK_NAMES)) as ArrayList<SelectableDeck>
     }

@@ -51,6 +51,7 @@ object CustomTabsHelper {
      * @param context [Context] to use for accessing [PackageManager].
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
+    @Suppress("deprecation") // resolveActivity queryIntentActivities resolveService
     fun getPackageNameToUse(context: Context): String? {
         if (sPackageNameToUse != null) return sPackageNameToUse
         val pm = context.packageManager
@@ -102,6 +103,7 @@ object CustomTabsHelper {
      * @param intent The intent to check with.
      * @return Whether there is a specialized handler for the given intent.
      */
+    @Suppress("deprecation") // queryIntentActivities
     private fun hasSpecializedHandlerIntents(context: Context, intent: Intent): Boolean {
         try {
             val pm = context.packageManager

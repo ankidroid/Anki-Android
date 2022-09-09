@@ -31,6 +31,7 @@ object VersionUtils {
     /**
      * Get package name as defined in the manifest.
      */
+    @Suppress("deprecation") // getPackageInfo
     val appName: String
         get() {
             var pkgName = AnkiDroidApp.TAG
@@ -47,6 +48,7 @@ object VersionUtils {
     /**
      * Get the package versionName as defined in the manifest.
      */
+    @Suppress("deprecation") // getPackageInfo
     val pkgVersionName: String
         get() {
             var pkgVersion = "?"
@@ -63,6 +65,7 @@ object VersionUtils {
     /**
      * Get the package versionCode as defined in the manifest.
      */
+    @Suppress("deprecation") // getPackageInfo
     val pkgVersionCode: Long
         get() {
             val context: Context = applicationInstance ?: return 0

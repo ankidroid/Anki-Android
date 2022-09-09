@@ -34,6 +34,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
     @Test
     @Throws(PackageManager.NameNotFoundException::class)
     @KotlinCleanup("remove throws; remove stream(), remove : String")
+    @Suppress("deprecation") // getPackageInfo
     fun ensureAllActivitiesAreTested() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
 

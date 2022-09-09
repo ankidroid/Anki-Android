@@ -205,6 +205,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         }
     }
 
+    @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onBackPressed()

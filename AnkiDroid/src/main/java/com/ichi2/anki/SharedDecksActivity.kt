@@ -116,6 +116,7 @@ class SharedDecksActivity : AnkiActivity() {
      * If user can go back in WebView, navigate to previous webpage.
      * Otherwise, close the WebView.
      */
+    @Suppress("deprecation") // onBackPressed
     override fun onBackPressed() {
         when {
             sharedDecksDownloadFragmentExists() -> {

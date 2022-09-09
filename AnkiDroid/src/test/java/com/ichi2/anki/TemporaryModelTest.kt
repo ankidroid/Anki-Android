@@ -56,6 +56,7 @@ class TemporaryModelTest : RobolectricTest() {
     }
 
     @Test
+    @Suppress("deprecation") // getSerializable
     fun testAddDeleteTracking() {
 
         // Assume you start with a 2 template model (like "Basic (and reversed)")

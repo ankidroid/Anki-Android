@@ -134,6 +134,7 @@ class Info : AnkiActivity() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.START)
     }
 
+    @Suppress("deprecation") // onBackPressed
     override fun onBackPressed() {
         if (mWebView!!.canGoBack()) {
             mWebView!!.goBack()
