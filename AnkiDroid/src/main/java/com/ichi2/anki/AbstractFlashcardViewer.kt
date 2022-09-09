@@ -212,7 +212,7 @@ abstract class AbstractFlashcardViewer :
      */
     var gestureDetector: GestureDetector? = null
         private set
-    private var mGestureDetectorImpl: MyGestureDetector? = null
+    private lateinit var mGestureDetectorImpl: MyGestureDetector
     private var mIsXScrolling = false
     private var mIsYScrolling = false
 
@@ -361,7 +361,7 @@ abstract class AbstractFlashcardViewer :
         if (gestureDetector!!.onTouchEvent(event)) {
             return@OnTouchListener true
         }
-        if (!mGestureDetectorImpl!!.eventCanBeSentToWebView(event)) {
+        if (!mGestureDetectorImpl.eventCanBeSentToWebView(event)) {
             return@OnTouchListener false
         }
         // Gesture listener is added before mCard is set
@@ -1290,7 +1290,7 @@ abstract class AbstractFlashcardViewer :
             webView = createWebView()
             initializeDebugging(AnkiDroidApp.getSharedPrefs(this))
             mCardFrame!!.addView(webView)
-            mGestureDetectorImpl!!.onWebViewCreated(webView!!)
+            mGestureDetectorImpl.onWebViewCreated(webView!!)
         }
         if (webView!!.visibility != View.VISIBLE) {
             webView!!.visibility = View.VISIBLE
@@ -1576,7 +1576,7 @@ abstract class AbstractFlashcardViewer :
         }
         val cardContent = cardContent!!
         processCardAction { cardWebView: WebView? -> loadContentIntoCard(cardWebView, cardContent) }
-        mGestureDetectorImpl!!.onFillFlashcard()
+        mGestureDetectorImpl.onFillFlashcard()
         if (!displayAnswer) {
             updateForNewCard()
         }
