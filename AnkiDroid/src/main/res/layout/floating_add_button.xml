@@ -100,43 +100,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/add_note_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:clipToPadding="false"
-            android:gravity="center_vertical"
-            android:layout_gravity="bottom|end"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:alpha="0"
-            android:translationY="200px"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:background="@color/material_grey_600"
-                android:id="@+id/add_note_label"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:textColor="@color/white"
-                android:layout_marginEnd="5dp"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_add"
-                />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/add_note_action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:backgroundTint="?attr/fab_normal"
-                android:src="@drawable/ic_add_note"
-                app:fabSize="mini"
-                />
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

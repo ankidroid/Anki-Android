@@ -32,7 +32,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     private val mFabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
     private val mAddSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
     private val mAddDeckLayout: LinearLayout = view.findViewById(R.id.add_deck_layout)
-    private val mAddNoteLayout: LinearLayout = view.findViewById(R.id.add_note_layout)
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
@@ -54,7 +53,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         isFABOpen = true
         if (deckPicker.animationEnabled()) {
             // Show with animation
-            mAddNoteLayout.visibility = View.VISIBLE
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
@@ -76,22 +74,17 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 }.start()
             }
 
-            mAddNoteLayout.animate().translationY(0f).duration = 30
             mAddSharedLayout.animate().translationY(0f).duration = 50
             mAddDeckLayout.animate().translationY(0f).duration = 100
             mAddDeckLayout.animate().alpha(1f).duration = 100
             mAddSharedLayout.animate().alpha(1f).duration = 50
-            mAddNoteLayout.animate().alpha(1f).duration = 30
         } else {
             // Show without animation
-            mAddNoteLayout.visibility = View.VISIBLE
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
-            mAddNoteLayout.alpha = 1f
             mAddSharedLayout.alpha = 1f
             mAddDeckLayout.alpha = 1f
-            mAddNoteLayout.translationY = 0f
             mAddSharedLayout.translationY = 0f
             mAddDeckLayout.translationY = 0f
         }
@@ -122,16 +115,13 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 }.start()
             }
 
-            mAddNoteLayout.animate().translationY(200f).duration = 30
             mAddSharedLayout.animate().translationY(400f).duration = 50
             mAddDeckLayout.animate().alpha(0f).duration = 100
             mAddSharedLayout.animate().alpha(0f).duration = 50
-            mAddNoteLayout.animate().alpha(0f).duration = 30
             mAddDeckLayout.animate().translationY(600f).setDuration(100).setListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animator: Animator) {}
                 override fun onAnimationEnd(animator: Animator) {
                     if (!isFABOpen) {
-                        mAddNoteLayout.visibility = View.GONE
                         mAddSharedLayout.visibility = View.GONE
                         mAddDeckLayout.visibility = View.GONE
                     }
@@ -142,7 +132,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             })
         } else {
             // Close without animation
-            mAddNoteLayout.visibility = View.GONE
             mAddSharedLayout.visibility = View.GONE
             mAddDeckLayout.visibility = View.GONE
         }
@@ -163,10 +152,8 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     }
 
     init {
-        val addNoteButton: FloatingActionButton = view.findViewById(R.id.add_note_action)
         val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_action)
         val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_action)
-        val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
         mFabMain.setOnTouchListener(object : DoubleTapListener(context) {
@@ -202,12 +189,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         }
         addSharedButton.setOnClickListener(addSharedListener)
         addSharedLabel.setOnClickListener(addSharedListener)
-        val addNoteListener = View.OnClickListener {
-            Timber.d("configureFloatingActionsMenu::addNoteButton::onClickListener - Adding Note")
-            addNote()
-        }
-        addNoteButton.setOnClickListener(addNoteListener)
-        addNoteLabel.setOnClickListener(addNoteListener)
     }
 
     /**
