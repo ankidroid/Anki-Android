@@ -115,10 +115,6 @@ class ModelBrowser : AnkiActivity() {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private fun deleteModelHandler(): DeleteModelHandler {
-        return DeleteModelHandler(this)
-    }
-
     private class DeleteModelHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Boolean?>(browser) {
         override fun actualOnPreExecute(context: ModelBrowser) {
             context.showProgressBar()
@@ -452,7 +448,7 @@ class ModelBrowser : AnkiActivity() {
      * Deletes the currently selected model
      */
     private fun deleteModel() {
-        TaskManager.launchCollectionTask(DeleteModel(mCurrentID), deleteModelHandler())
+        TaskManager.launchCollectionTask(DeleteModel(mCurrentID), DeleteModelHandler(this))
         mModels!!.removeAt(mModelListPosition)
         mModelIds!!.removeAt(mModelListPosition)
         mModelDisplayList!!.removeAt(mModelListPosition)
