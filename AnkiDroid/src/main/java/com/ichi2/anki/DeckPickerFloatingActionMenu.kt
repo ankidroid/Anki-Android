@@ -74,10 +74,10 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 }.start()
             }
 
-            mAddSharedLayout.animate().translationY(0f).duration = 50
-            mAddDeckLayout.animate().translationY(0f).duration = 100
-            mAddDeckLayout.animate().alpha(1f).duration = 100
-            mAddSharedLayout.animate().alpha(1f).duration = 50
+            mAddSharedLayout.animate().translationY(0f).duration = 30
+            mAddDeckLayout.animate().translationY(0f).duration = 50
+            mAddDeckLayout.animate().alpha(1f).duration = 50
+            mAddSharedLayout.animate().alpha(1f).duration = 30
         } else {
             // Show without animation
             mAddSharedLayout.visibility = View.VISIBLE
@@ -115,10 +115,10 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 }.start()
             }
 
-            mAddSharedLayout.animate().translationY(400f).duration = 50
-            mAddDeckLayout.animate().alpha(0f).duration = 100
-            mAddSharedLayout.animate().alpha(0f).duration = 50
-            mAddDeckLayout.animate().translationY(600f).setDuration(100).setListener(object : Animator.AnimatorListener {
+            mAddSharedLayout.animate().translationY(200f).duration = 30
+            mAddDeckLayout.animate().alpha(0f).duration = 50
+            mAddSharedLayout.animate().alpha(0f).duration = 30
+            mAddDeckLayout.animate().translationY(400f).setDuration(100).setListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animator: Animator) {}
                 override fun onAnimationEnd(animator: Animator) {
                     if (!isFABOpen) {
