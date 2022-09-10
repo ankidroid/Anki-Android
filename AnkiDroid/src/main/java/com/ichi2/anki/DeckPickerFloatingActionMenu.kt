@@ -137,6 +137,47 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         }
     }
 
+    private fun closeFloatingActionMenuWhenChoosingCreateDeck() {
+        mLinearLayout.alpha = 1f
+        mStudyOptionsFrame?.let { it.alpha = 1f }
+        isFABOpen = false
+        mFabBGLayout.visibility = View.GONE
+        if (animationEnabled()) {
+            // Changes the background color of FAB to default
+            mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
+            // Close with animation
+            mFabMain.animate().apply {
+                // Rotates FAB to 180 degrees
+                rotation(90f)
+                duration = 50
+                withEndAction {
+                    // At the end the image is changed to Add White Icon
+                    mFabMain.setImageResource(addWhiteIcon)
+                }.start()
+            }
+
+            mAddSharedLayout.animate().translationY(200f).duration = 30
+            mAddDeckLayout.animate().alpha(0f).duration = 50
+            mAddSharedLayout.animate().alpha(0f).duration = 30
+            mAddDeckLayout.animate().translationY(400f).setDuration(100).setListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animator: Animator) {}
+                override fun onAnimationEnd(animator: Animator) {
+                    if (!isFABOpen) {
+                        mAddSharedLayout.visibility = View.GONE
+                        mAddDeckLayout.visibility = View.GONE
+                    }
+                }
+
+                override fun onAnimationCancel(animator: Animator) {}
+                override fun onAnimationRepeat(animator: Animator) {}
+            })
+        } else {
+            // Close without animation
+            mAddSharedLayout.visibility = View.GONE
+            mAddDeckLayout.visibility = View.GONE
+        }
+    }
+
     fun showFloatingActionButton() {
         if (!mFabMain.isShown) {
             Timber.i("DeckPicker:: showFloatingActionButton()")
@@ -177,7 +218,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
-                closeFloatingActionMenu()
+                closeFloatingActionMenuWhenChoosingCreateDeck()
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
