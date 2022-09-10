@@ -16,6 +16,7 @@
 
 package com.ichi2.async
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
@@ -98,4 +99,17 @@ fun doInBackgroundUpdateMultipleNotes(
         CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
         return null
     }
+}
+
+fun deleteModel(col: Collection, modID: Long): Boolean {
+    Timber.d("doInBackGroundDeleteModel")
+    try {
+        col.models.rem(col.models.get(modID)!!)
+        col.save()
+    } catch (e: ConfirmModSchemaException) {
+        e.log()
+        Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException")
+        return false
+    }
+    return true
 }
