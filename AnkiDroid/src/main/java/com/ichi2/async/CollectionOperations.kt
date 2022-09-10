@@ -103,13 +103,13 @@ fun doInBackgroundUpdateMultipleNotes(
 
 fun deleteModel(col: Collection, modID: Long): Boolean {
     Timber.d("doInBackGroundDeleteModel")
-    try {
+    return try {
         col.models.rem(col.models.get(modID)!!)
         col.save()
+        true
     } catch (e: ConfirmModSchemaException) {
         e.log()
         Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException")
-        return false
+        false
     }
-    return true
 }
