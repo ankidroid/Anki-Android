@@ -1036,16 +1036,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * Deletes the given model
-     * and all notes associated with it
-     */
-    class DeleteModel(private val modID: Long) : TaskDelegate<Void, Boolean?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            return deleteModel(col, modID)
-        }
-    }
-
-    /**
      * Deletes the given field in the given model
      */
     class DeleteField(private val model: Model, private val field: JSONObject) : TaskDelegate<Void, Boolean>() {
