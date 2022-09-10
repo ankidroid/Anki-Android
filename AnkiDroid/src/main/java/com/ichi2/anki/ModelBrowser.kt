@@ -433,22 +433,12 @@ class ModelBrowser : AnkiActivity() {
      */
     private fun deleteModel() {
         launchCatchingTask {
-            val result = withProgress {
+            withProgress {
                 withCol {
                     Timber.d("doInBackGroundDeleteModel")
-                    try {
-                        col.models.rem(col.models.get(mCurrentID)!!)
-                        col.save()
-                        true
-                    } catch (e: ConfirmModSchemaException) {
-                        e.log()
-                        Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException")
-                        false
-                    }
+                    col.models.rem(col.models.get(mCurrentID)!!)
+                    col.save()
                 }
-            }
-            if (result == false) {
-                throw RuntimeException()
             }
             refreshList()
         }
