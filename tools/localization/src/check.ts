@@ -15,13 +15,58 @@
  * 
  * @param line string from xml file
  */
-export const checkI18nFile = (line: string) => {
-    // TODO - implement VerifyJavaStringFormat to check broken strings
+
+import fs from "fs";
+import readline from "readline";
+import { I18N_FILES, I18N_FILES_DIR } from "../src/constants";
+
+export const checkI18nFile = () => {
+    for (const file of I18N_FILES) {
+        if (file == "15-markettitle") {
+            continue;
+        }
+
+        if (file == "14-marketdescription") {
+            continue;
+        }
+
+        let I18N_FILE_TARGET_NAME = `${file}.xml`;
+        let I18N_FILE_SOURCE_NAME = `${I18N_FILES_DIR}${I18N_FILE_TARGET_NAME}`;
+
+        checkStringFormatInFile(I18N_FILE_SOURCE_NAME);
+    }
+}
+
+export const checkStringFormatInFile = async (filePath: string) => {
+    try {
+        const fileStream = fs.createReadStream(filePath);
+
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity,
+        });
+
+        for await (let line of rl) {
+            if (line.includes("%")) {
+                if (!VerifyJavaStringFormat(line)) {
+                    console.log(`Errors in file ${filePath} at line ${line}`);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
 }
 
 export const VerifyJavaStringFormat = (line: string) => {
     let argCount = 0;
     let nonpositional = false;
+    let noerror = true;
 
     let index = 0;
     const c = (index: number) => {
@@ -37,6 +82,12 @@ export const VerifyJavaStringFormat = (line: string) => {
                 continue;
             }
 
+            // ignore line if %.1f
+            if (c(index) === '.') {
+                index++;
+                continue;
+            }
+
             argCount++;
 
             const numDigits = consumeDigits(line, index);
@@ -48,6 +99,12 @@ export const VerifyJavaStringFormat = (line: string) => {
                     // The digits were a size, but not a positional argument.
                     nonpositional = true;
                 }
+
+                // catch %1$ d, space between positional
+                if (index < line.length && c(index) === '$' && (c(index + 1) === ' ')) {
+                    noerror = false;
+                }
+
             } else if (c(index) === '<') {
                 // Reusing last argument, bad idea since positions can be moved around
                 // during translation.
@@ -115,7 +172,7 @@ export const VerifyJavaStringFormat = (line: string) => {
         return false;
     }
 
-    return true;
+    return noerror;
 }
 
 const consumeDigits = (s: string, index: number) => {
