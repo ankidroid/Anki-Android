@@ -435,7 +435,16 @@ class ModelBrowser : AnkiActivity() {
         launchCatchingTask {
             val result = withProgress {
                 withCol {
-                    com.ichi2.async.deleteModel(this, mCurrentID)
+                    Timber.d("doInBackGroundDeleteModel")
+                    try {
+                        col.models.rem(col.models.get(mCurrentID)!!)
+                        col.save()
+                        true
+                    } catch (e: ConfirmModSchemaException) {
+                        e.log()
+                        Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException")
+                        false
+                    }
                 }
             }
             if (result == false) {
