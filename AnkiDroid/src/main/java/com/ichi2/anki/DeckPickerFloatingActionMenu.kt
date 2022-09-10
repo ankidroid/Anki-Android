@@ -59,7 +59,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mFabMain.animate().apply {
                 // Changes the background color of FAB
                 mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_indigo_700))
-                // Rotates FAB to 180 degrees
+                // Rotates FAB to 90 degrees
                 rotationBy(90f)
                 duration = 50
                 // Rise FAB animation
@@ -147,7 +147,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
             // Close with animation
             mFabMain.animate().apply {
-                // Rotates FAB to 180 degrees
+                // Rotates FAB to 90 degrees
                 rotation(90f)
                 duration = 50
                 withEndAction {
@@ -226,6 +226,8 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         val addSharedListener = View.OnClickListener {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck")
             deckPicker.openAnkiWebSharedDecks()
+            mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
+            mFabMain.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add_white))
         }
         addSharedButton.setOnClickListener(addSharedListener)
         addSharedLabel.setOnClickListener(addSharedListener)
