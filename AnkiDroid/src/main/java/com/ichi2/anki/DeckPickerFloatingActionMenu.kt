@@ -17,10 +17,12 @@ package com.ichi2.anki
 
 import android.animation.Animator
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.ui.DoubleTapListener
@@ -34,6 +36,12 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
+
+    // Add Note Drawable Icon
+    private val addNoteIcon: Int = R.drawable.ic_add_note
+    // Add White Icon
+    private val addWhiteIcon: Int = R.drawable.ic_add_white
+
     var isFABOpen = false
 
     @Suppress("unused")
@@ -50,7 +58,24 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
-            mFabMain.animate().rotationBy(135f) // 135 = 90 + 45
+            mFabMain.animate().apply {
+                // Changes the background color of FAB
+                mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_indigo_700))
+                // Rotates FAB to 180 degrees
+                rotationBy(90f)
+                duration = 50
+                // Rise FAB animation
+                scaleX(1.2f)
+                scaleY(1.2f)
+                withEndAction {
+                    // At the end the Image is changed to Add Note Icon
+                    mFabMain.setImageResource(addNoteIcon)
+                    // Shrink back FAB
+                    mFabMain.animate().rotation(180f).setDuration(50).scaleX(1f).scaleY(1f)
+                        .start()
+                }.start()
+            }
+
             mAddNoteLayout.animate().translationY(0f).duration = 30
             mAddSharedLayout.animate().translationY(0f).duration = 50
             mAddDeckLayout.animate().translationY(0f).duration = 100
@@ -78,8 +103,25 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
         if (deckPicker.animationEnabled()) {
+            // Changes the background color of FAB to default
+            mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
             // Close with animation
-            mFabMain.animate().rotation(0f)
+            mFabMain.animate().apply {
+                // Rotates FAB to 180 degrees
+                rotation(90f)
+                duration = 50
+                // Rise FAB animation
+                scaleX(1.2f)
+                scaleY(1.2f)
+                withEndAction {
+                    // At the end the image is changed to Add White Icon
+                    mFabMain.setImageResource(addWhiteIcon)
+                    // Shrink back FAB
+                    mFabMain.animate().rotation(90f).setDuration(50).scaleX(1f).scaleY(1f)
+                        .start()
+                }.start()
+            }
+
             mAddNoteLayout.animate().translationY(200f).duration = 30
             mAddSharedLayout.animate().translationY(400f).duration = 50
             mAddDeckLayout.animate().alpha(0f).duration = 100
