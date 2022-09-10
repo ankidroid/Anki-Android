@@ -36,7 +36,7 @@
             android:layout_gravity="bottom|end"
             android:visibility="gone"
             android:alpha="0"
-            android:translationY="600px"
+            android:translationY="400px"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
             android:layout_gravity="bottom|end"
             android:visibility="gone"
             android:alpha="0"
-            android:translationY="400px"
+            android:translationY="200px"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -117,6 +117,7 @@
                 app:srcCompat="@drawable/ic_add_white"
                 app:backgroundTint="?attr/fab_normal"
                 app:fabSize="normal"
+                android:layout_marginTop="8dp"
                 />
         </LinearLayout>
 
