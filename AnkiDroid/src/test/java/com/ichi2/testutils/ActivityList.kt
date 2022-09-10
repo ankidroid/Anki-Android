@@ -75,6 +75,7 @@ object ActivityList {
             get(PagesActivity::class.java),
             get(LoginActivity::class.java),
             get(IntroductionActivity::class.java),
+            get(ManageSpaceActivity::class.java)
         )
     }
 
