@@ -167,24 +167,23 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 if (!isFABOpen) {
                     showFloatingActionMenu()
                 } else {
-                    closeFloatingActionMenu()
+                    addNote()
                 }
             }
         })
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu() }
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
-                closeFloatingActionMenu()
                 val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
+                closeFloatingActionMenu()
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
         addDeckLabel.setOnClickListener(addDeckListener)
         val addSharedListener = View.OnClickListener {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck")
-            closeFloatingActionMenu()
             deckPicker.openAnkiWebSharedDecks()
         }
         addSharedButton.setOnClickListener(addSharedListener)
@@ -196,7 +195,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
      * @see DeckPicker.addNote
      */
     private fun addNote() {
-        closeFloatingActionMenu()
         deckPicker.addNote()
     }
 }
