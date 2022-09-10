@@ -410,12 +410,8 @@ abstract class AbstractFlashcardViewer :
         currentCard = result
         launchCatchingTask {
             withCol {
-                try {
-                    sched.counts() // Ensure counts are recomputed if necessary, to know queue to look for
-                    sched.preloadNextCard()
-                } catch (e: RuntimeException) {
-                    Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card")
-                }
+                sched.counts() // Ensure counts are recomputed if necessary, to know queue to look for
+                sched.preloadNextCard()
             }
         }
         if (currentCard == null) {
