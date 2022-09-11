@@ -16,11 +16,9 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.RunInBackground
-import com.ichi2.async.CollectionTask
-import com.ichi2.async.CollectionTask.CheckMedia
-import com.ichi2.async.TaskManager
+import com.ichi2.async.checkMedia
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -34,14 +32,12 @@ class CheckMediaTest : RobolectricTest() {
         return false
     }
 
-    @Test // #7108: AsyncTask
-    @RunInBackground
-    @Suppress("deprecation")
+    @Test
     @Throws(ExecutionException::class, InterruptedException::class)
-    fun checkMediaWorksAfterMissingMetaTable() {
+    fun checkMediaWorksAfterMissingMetaTable() = runTest {
         if (!BackendFactory.defaultLegacySchema) {
             // this should not happen on the backend, as it creates the tables in a transaction
-            return
+            return@runTest
         }
         // 7421
         col.media.db!!.database.execSQL("drop table meta")
@@ -49,9 +45,7 @@ class CheckMediaTest : RobolectricTest() {
             col.media.db!!.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
             equalTo(0)
         )
-        val task =
-            TaskManager.launchCollectionTask(CheckMedia()) as CollectionTask<*, *>
-        task.get()
+        withCol { checkMedia(this) }
         assertThat(
             col.media.db!!.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
             equalTo(1)

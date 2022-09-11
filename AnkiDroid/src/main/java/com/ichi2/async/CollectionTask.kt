@@ -882,15 +882,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * @return The results list from the check, or false if any errors.
-     */
-    class CheckMedia : TaskDelegate<Void, Computation<List<List<String>>>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<List<List<String>>> {
-            return checkMedia(col)
-        }
-    }
-
-    /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */
     class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {

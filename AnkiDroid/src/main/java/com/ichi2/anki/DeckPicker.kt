@@ -1479,16 +1479,6 @@ open class DeckPicker :
         }
     }
 
-    private fun mediaCheckListener(): MediaCheckListener {
-        return MediaCheckListener(this)
-    }
-
-    private class MediaCheckListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Computation<List<List<String>>>?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) = context.preMediaCheck()
-
-        override fun actualOnPostExecute(context: DeckPicker, result: Computation<List<List<String>>>?) = context.postMediaCheck(result)
-    }
-
     override fun mediaCheck() {
         if (hasStorageAccessPermission(this)) {
             if (!BackendFactory.defaultLegacySchema) {
@@ -1497,7 +1487,11 @@ open class DeckPicker :
                     showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
                 }
             } else {
-                TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+                launchCatchingTask {
+                    preMediaCheck()
+                    val result = withCol { checkMedia(this) }
+                    postMediaCheck(result)
+                }
             }
         } else {
             requestStoragePermission()
