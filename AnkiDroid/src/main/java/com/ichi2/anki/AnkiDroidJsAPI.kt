@@ -463,7 +463,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     fun ankiSearchCardWithCallback(query: String) {
         val cards = try {
             runBlocking {
-                searchForCards(query, SortOrder.UseCollectionOrdering())
+                searchForCards(query, SortOrder.UseCollectionOrdering(), true)
             }
         } catch (exc: Exception) {
             activity.webView!!.evaluateJavascript(
