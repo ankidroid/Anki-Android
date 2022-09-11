@@ -1524,23 +1524,12 @@ open class DeckPicker :
     }
 
     private class MediaDeleteListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Int?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.delete_media_message), false
-            )
-        }
+        override fun actualOnPreExecute(context: DeckPicker) = context.preDeleteUnused()
 
         /**
          * @param result Number of deleted files
          */
-        override fun actualOnPostExecute(context: DeckPicker, result: Int?) {
-            context.mProgressDialog?.dismiss()
-            context.showSimpleMessageDialog(
-                title = context.resources.getString(R.string.delete_media_result_title),
-                message = context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
-            )
-        }
+        override fun actualOnPostExecute(context: DeckPicker, result: Int?) = context.postDeleteUnused(result)
     }
 
     override fun deleteUnused(unused: List<String>) {
@@ -1560,6 +1549,22 @@ open class DeckPicker :
     open fun handleDbLocked() {
         Timber.i("Displaying Database Locked")
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+    }
+
+    private val context = this // TODO: Remove [context], was introduced to extract out MediaDeleteListener
+    private fun preDeleteUnused() {
+        context.mProgressDialog = StyledProgressDialog.show(
+            context, null,
+            context.resources.getString(R.string.delete_media_message), false
+        )
+    }
+
+    private fun postDeleteUnused(result: Int?) {
+        context.mProgressDialog?.dismiss()
+        context.showSimpleMessageDialog(
+            title = context.resources.getString(R.string.delete_media_result_title),
+            message = context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
+        )
     }
 
     fun restoreFromBackup(path: String) {
