@@ -21,7 +21,6 @@ import com.ichi2.libanki.Note
 import com.ichi2.utils.Computation
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.io.IOException
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
@@ -94,12 +93,7 @@ fun updateMultipleNotes(
 fun checkMedia(col: Collection): Computation<List<List<String>>> {
     Timber.d("doInBackgroundCheckMedia")
     // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-    try {
-        col.media.rebuildIfInvalid()
-    } catch (e: IOException) {
-        Timber.w(e)
-        return Computation.err()
-    }
+    col.media.rebuildIfInvalid()
     // A media check on AnkiDroid will also update the media db
     col.media.findChanges(true)
     // Then do the actual check
