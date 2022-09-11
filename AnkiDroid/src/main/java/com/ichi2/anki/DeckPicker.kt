@@ -786,7 +786,9 @@ open class DeckPicker :
                     openStudyOptions(true)
                 }
                 launchCatchingTask {
-                    createFilteredDeckDialog.showFilteredDeckDialog()
+                    withProgress {
+                        createFilteredDeckDialog.showFilteredDeckDialog()
+                    }
                 }
                 return true
             }
