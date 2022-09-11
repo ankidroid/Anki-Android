@@ -1535,9 +1535,7 @@ open class DeckPicker :
          * @param result Number of deleted files
          */
         override fun actualOnPostExecute(context: DeckPicker, result: Int?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog?.dismiss()
             context.showSimpleMessageDialog(
                 title = context.resources.getString(R.string.delete_media_result_title),
                 message = context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
