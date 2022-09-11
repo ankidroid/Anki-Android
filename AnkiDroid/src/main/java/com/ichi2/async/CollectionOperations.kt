@@ -18,8 +18,10 @@ package com.ichi2.async
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
+import com.ichi2.utils.Computation
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
+import java.io.IOException
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
@@ -84,6 +86,24 @@ fun updateMultipleNotes(
         }
         notesToUpdate
     }
+}
+
+/**
+ * @return The results list from the check, or false if any errors.
+ */
+fun checkMedia(col: Collection): Computation<List<List<String>>> {
+    Timber.d("doInBackgroundCheckMedia")
+    // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+    try {
+        col.media.rebuildIfInvalid()
+    } catch (e: IOException) {
+        Timber.w(e)
+        return Computation.err()
+    }
+    // A media check on AnkiDroid will also update the media db
+    col.media.findChanges(true)
+    // Then do the actual check
+    return Computation.ok(col.media.check())
 }
 
 /**
