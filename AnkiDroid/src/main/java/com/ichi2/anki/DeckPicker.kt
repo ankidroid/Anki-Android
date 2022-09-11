@@ -1484,24 +1484,9 @@ open class DeckPicker :
     }
 
     private class MediaCheckListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Computation<List<List<String>>>?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.check_media_message), false
-            )
-        }
+        override fun actualOnPreExecute(context: DeckPicker) = context.preMediaCheck()
 
-        override fun actualOnPostExecute(context: DeckPicker, result: Computation<List<List<String>>>?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            if (result!!.succeeded()) {
-                val checkList = result.value
-                context.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
-            } else {
-                context.showSimpleMessageDialog(context.resources.getString(R.string.check_media_failed))
-            }
-        }
+        override fun actualOnPostExecute(context: DeckPicker, result: Computation<List<List<String>>>?) = context.postMediaCheck(result)
     }
 
     override fun mediaCheck() {
@@ -1516,6 +1501,26 @@ open class DeckPicker :
             }
         } else {
             requestStoragePermission()
+        }
+    }
+
+    private val context = this // TODO: Remove [context], was instroduced to copy MediaCheckListener
+    private fun preMediaCheck() {
+        context.mProgressDialog = StyledProgressDialog.show(
+            context, null,
+            context.resources.getString(R.string.check_media_message), false
+        )
+    }
+
+    private fun postMediaCheck(result: Computation<List<List<String>>>?) {
+        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
+            context.mProgressDialog!!.dismiss()
+        }
+        if (result!!.succeeded()) {
+            val checkList = result.value
+            context.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
+        } else {
+            context.showSimpleMessageDialog(context.resources.getString(R.string.check_media_failed))
         }
     }
 
