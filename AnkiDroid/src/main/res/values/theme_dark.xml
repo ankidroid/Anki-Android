@@ -43,6 +43,8 @@
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">@color/theme_dark_primary</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>

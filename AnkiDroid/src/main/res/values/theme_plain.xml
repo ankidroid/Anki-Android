@@ -23,6 +23,8 @@
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
         <item name="actionModeBackground">@color/theme_plain_primary</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
         <!-- Reviewer button drawables -->
