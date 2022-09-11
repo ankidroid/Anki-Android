@@ -1521,9 +1521,16 @@ open class DeckPicker :
 
     override fun deleteUnused(unused: List<String>) {
         launchCatchingTask {
-            preDeleteUnused()
-            val noOfDeletedFiles = withCol { deleteMedia(this, unused) }
-            postDeleteUnused(noOfDeletedFiles)
+            mProgressDialog = StyledProgressDialog.show(
+                this@DeckPicker, null,
+                resources.getString(R.string.delete_media_message), false
+            )
+            val noOfDeletedFiles = withCol { deleteMedia(this, unused) } // Number of deleted files
+            mProgressDialog?.dismiss()
+            showSimpleMessageDialog(
+                title = resources.getString(R.string.delete_media_result_title),
+                message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles)
+            )
         }
     }
 
@@ -1540,24 +1547,6 @@ open class DeckPicker :
     open fun handleDbLocked() {
         Timber.i("Displaying Database Locked")
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
-    }
-
-    private fun preDeleteUnused() {
-        mProgressDialog = StyledProgressDialog.show(
-            this, null,
-            resources.getString(R.string.delete_media_message), false
-        )
-    }
-
-    /**
-     * @param noOfDeletedFiles Number of deleted files
-     */
-    private fun postDeleteUnused(noOfDeletedFiles: Int) {
-        mProgressDialog?.dismiss()
-        showSimpleMessageDialog(
-            title = resources.getString(R.string.delete_media_result_title),
-            message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles)
-        )
     }
 
     fun restoreFromBackup(path: String) {
