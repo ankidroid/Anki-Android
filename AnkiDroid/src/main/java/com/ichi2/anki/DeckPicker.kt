@@ -1551,19 +1551,18 @@ open class DeckPicker :
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
     }
 
-    private val context = this // TODO: Remove [context], was introduced to extract out MediaDeleteListener
     private fun preDeleteUnused() {
-        context.mProgressDialog = StyledProgressDialog.show(
-            context, null,
-            context.resources.getString(R.string.delete_media_message), false
+        mProgressDialog = StyledProgressDialog.show(
+            this, null,
+            resources.getString(R.string.delete_media_message), false
         )
     }
 
     private fun postDeleteUnused(result: Int?) {
-        context.mProgressDialog?.dismiss()
-        context.showSimpleMessageDialog(
-            title = context.resources.getString(R.string.delete_media_result_title),
-            message = context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
+        mProgressDialog?.dismiss()
+        showSimpleMessageDialog(
+            title = resources.getString(R.string.delete_media_result_title),
+            message = resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
         )
     }
 
