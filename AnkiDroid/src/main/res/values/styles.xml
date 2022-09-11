@@ -129,6 +129,18 @@
         <item name="android:colorBackground">?attr/popupBackgroundColor</item>
     </style>
 
+    <style name="TabLayoutStyle" parent="Widget.Material3.TabLayout">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TabLayout</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="tabIndicator">@drawable/tab_layout_indicator_floating_pill</item>
+        <item name="tabIndicatorHeight">14dp</item>
+    </style>
+    <style name="ThemeOverlay.App.TabLayout" parent="">
+        <item name="colorSurface">?attr/tabLayoutBackgroundColor</item> <!-- Background -->
+        <item name="colorPrimary">@color/white</item> <!-- Selected text color -->
+        <item name="colorOnSurfaceVariant">#cfff</item> <!-- Not selected text color -->
+    </style>
+
     <style name="LargeFilledButtonStyle" parent="@style/Widget.Material3.Button">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:padding">12dp</item>
