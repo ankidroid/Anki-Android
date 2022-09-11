@@ -886,18 +886,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
      */
     class CheckMedia : TaskDelegate<Void, Computation<List<List<String>>>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<List<List<String>>> {
-            Timber.d("doInBackgroundCheckMedia")
-            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-            try {
-                col.media.rebuildIfInvalid()
-            } catch (e: IOException) {
-                Timber.w(e)
-                return Computation.err()
-            }
-            // A media check on AnkiDroid will also update the media db
-            col.media.findChanges(true)
-            // Then do the actual check
-            return Computation.ok(col.media.check())
+            return checkMedia(col)
         }
     }
 
