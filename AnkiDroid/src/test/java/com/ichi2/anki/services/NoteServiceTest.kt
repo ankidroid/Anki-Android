@@ -22,6 +22,7 @@ import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.createTransientFile
@@ -236,5 +237,35 @@ class NoteServiceTest : RobolectricTest() {
         NoteService.importMediaToDirectory(testCol!!, field)
 
         assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()))
+    }
+
+    @Test
+    fun testAvgEase() {
+        // basic case: no cards are new
+        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        // factor for cards: 3000, 1500, 1000, 750
+        for ((i, card) in note.cards().withIndex()) {
+            card.type = Consts.CARD_TYPE_REV
+            card.factor = 3000 / (i + 1)
+            card.flush()
+        }
+        // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
+        assertEquals(156, NoteService.avgEase(note))
+
+        // test case: one card is new
+        note.cards()[2].apply {
+            type = Consts.CARD_TYPE_NEW
+            flush()
+        }
+        // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
+        assertEquals(175, NoteService.avgEase(note))
+
+        // test case: all cards are new
+        for (card in note.cards()) {
+            card.type = Consts.CARD_TYPE_NEW
+            card.flush()
+        }
+        // no cards are rev, so avg ease cannot be calculated
+        assertEquals(null, NoteService.avgEase(note))
     }
 }
