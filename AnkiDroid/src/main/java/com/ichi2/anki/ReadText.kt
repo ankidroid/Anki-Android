@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
@@ -88,6 +89,7 @@ object ReadText {
      * @param qa   The card question or card answer
      */
     @SuppressLint("CheckResult")
+    @NeedsTest("ensure languages are sorted alphabetically in the dialog")
     fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
@@ -106,20 +108,18 @@ object ReadText {
                 .iconAttr(R.attr.dialogErrorIcon)
                 .positiveButton(R.string.dialog_ok)
         } else {
-            val dialogItems = ArrayList<CharSequence>(availableTtsLocales.size)
-            val dialogIds = ArrayList<String>(availableTtsLocales.size)
-            // Add option: "no tts"
-            dialogItems.add(res.getString(R.string.tts_no_tts))
-            dialogIds.add(NO_TTS)
-            for (i in availableTtsLocales.indices) {
-                dialogItems.add(availableTtsLocales[i].displayName)
-                dialogIds.add(availableTtsLocales[i].isO3Language)
-            }
-            val items = arrayOfNulls<String>(dialogItems.size)
-            dialogItems.toArray(items)
+            val localeMappings: List<Pair<String, CharSequence>> =
+                mutableListOf<Pair<String, String>>().apply {
+                    add(Pair(NO_TTS, res.getString(R.string.tts_no_tts))) // add option: "no tts"
+                    addAll(
+                        availableTtsLocales
+                            .sortedWith(compareBy { it.displayName })
+                            .map { Pair(it.isO3Language, it.displayName) }
+                    )
+                }
             dialog.title(R.string.select_locale_title)
-                .listItems(items = items.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
-                    val locale = dialogIds[index]
+                .listItems(items = localeMappings.map { it.second }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    val locale = localeMappings[index].first
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
                     MetaDB.storeLanguage(flashCardViewer.get()!!, mDid, mOrd, questionAnswer!!, locale)
                     if (locale != NO_TTS) {
