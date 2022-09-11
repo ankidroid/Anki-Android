@@ -38,9 +38,6 @@ import kotlin.coroutines.suspendCoroutine
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  *
- * TODO: This seems to be similar to [com.ichi2.async.catchingLifecycleScope],
- *   perhaps put the two methods together?
- *
  * TODO: The try/except block here catches CancellationException, is this right?
  *   If it is, add a comment explaining why.
  *

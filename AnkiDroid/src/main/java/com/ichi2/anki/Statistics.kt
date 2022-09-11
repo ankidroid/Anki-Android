@@ -44,7 +44,6 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -378,7 +377,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsJob = catchingLifecycleScope {
+            statisticsJob = launchCatchingTask {
                 taskHandler.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
             }
         }
@@ -453,7 +452,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsJob = catchingLifecycleScope("createStatisticOverview failed with error") {
+            statisticsJob = launchCatchingTask("createStatisticOverview failed with error") {
                 handler.createStatisticsOverview(mWebView, mProgressBar)
             }
         }
