@@ -1480,6 +1480,9 @@ open class DeckPicker :
     }
 
     override fun mediaCheck() {
+        // TODO show to the user this message when failing
+        @Suppress("UNUSED_VARIABLE")
+        val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
             if (!BackendFactory.defaultLegacySchema) {
                 launchCatchingTask {
@@ -1488,26 +1491,15 @@ open class DeckPicker :
                 }
             } else {
                 launchCatchingTask {
-                    preMediaCheck()
-                    val result = withCol { checkMedia(this) }
-                    postMediaCheck(result)
+                    val result = withProgress(resources.getString(R.string.check_media_message)) {
+                        withCol { checkMedia(this) }
+                    }
+                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
                 }
             }
         } else {
             requestStoragePermission()
         }
-    }
-
-    private fun preMediaCheck() {
-        mProgressDialog = StyledProgressDialog.show(
-            this, null,
-            resources.getString(R.string.check_media_message), false
-        )
-    }
-
-    private fun postMediaCheck(result: List<List<String>>) {
-        mProgressDialog?.dismiss()
-        showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
     }
 
     override fun deleteUnused(unused: List<String>) {
