@@ -1484,18 +1484,11 @@ open class DeckPicker :
         @Suppress("UNUSED_VARIABLE")
         val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
-            if (!BackendFactory.defaultLegacySchema) {
-                launchCatchingTask {
-                    val result = withProgress { withCol { media.check() } }
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
+            launchCatchingTask {
+                val result = withProgress(resources.getString(R.string.check_media_message)) {
+                    withCol { if (!BackendFactory.defaultLegacySchema) media.check() else checkMedia(this) }
                 }
-            } else {
-                launchCatchingTask {
-                    val result = withProgress(resources.getString(R.string.check_media_message)) {
-                        withCol { checkMedia(this) }
-                    }
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
-                }
+                showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
             }
         } else {
             requestStoragePermission()
