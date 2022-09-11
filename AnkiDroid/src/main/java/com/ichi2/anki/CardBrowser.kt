@@ -2266,14 +2266,17 @@ open class CardBrowser :
         private var mQa: Pair<String, String>? = null
         override var position: Int
 
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int) : super(col, id) {
+        private val inCardMode: Boolean
+        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, inCardMode: Boolean) : super(col, id) {
             this.position = position
+            this.inCardMode = inCardMode
         }
 
         constructor(cache: CardCache, position: Int) : super(cache) {
             isLoaded = cache.isLoaded
             mQa = cache.mQa
             this.position = position
+            this.inCardMode = cache.inCardMode
         }
 
         /** clear all values except ID. */
@@ -2319,13 +2322,7 @@ open class CardBrowser :
                 Column.TAGS -> card.note().stringTags()
                 Column.CARD -> card.template().optString("name")
                 Column.DUE -> card.dueString
-                Column.EASE -> {
-                    if (card.type == Consts.CARD_TYPE_NEW) {
-                        AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                    } else {
-                        "${card.factor / 10}%"
-                    }
-                }
+                Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(card.mod)
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
@@ -2346,6 +2343,24 @@ open class CardBrowser :
                     mQa!!.second
                 }
                 else -> null
+            }
+        }
+
+        private fun getEaseForCards(): String {
+            return if (card.type == Consts.CARD_TYPE_NEW) {
+                AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
+            } else {
+                "${card.factor / 10}%"
+            }
+        }
+
+        private fun getAvgEaseForNotes(): String {
+            val avgEase = card.avgEaseOfNote()
+
+            return if (avgEase == null) {
+                AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
+            } else {
+                "$avgEase%"
             }
         }
 
@@ -2678,12 +2693,15 @@ open class CardBrowser :
 suspend fun searchForCards(
     query: String,
     order: SortOrder,
-    inCardsMode: Boolean = true
+    inCardsMode: Boolean
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
-            .mapIndexed { idx, cid ->
-                CardBrowser.CardCache(cid, col, idx)
-            }.toMutableList()
+            .toCardCache(col, inCardsMode)
+            .toMutableList()
     }
+}
+
+private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 }

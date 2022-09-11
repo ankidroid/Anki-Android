@@ -477,7 +477,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Timber.d("The search found %d cards", searchResult_.size)
                 var position = 0
                 for (cid in searchResult_) {
-                    val card = CardCache(cid, col, position++)
+                    val card = CardCache(cid, col, position++, true)
                     searchResult.add(card)
                 }
             } else {
@@ -491,7 +491,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Timber.d("The search found %d notes", searchResult_.size)
                 var position = 0
                 for (nid in searchResult_) {
-                    val card = CardCache(Note(col, nid).firstCard().id, col, position++)
+                    val card = CardCache(Note(col, nid).firstCard().id, col, position++, false)
                     searchResult.add(card)
                 }
             }
