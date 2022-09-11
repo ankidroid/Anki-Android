@@ -28,9 +28,11 @@ import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.utils.CollectionUtils.average
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
@@ -196,6 +198,17 @@ object NoteService {
 
     fun isMarked(note: Note): Boolean {
         return note.hasTag("marked")
+    }
+
+    //  TODO: should make a direct SQL query to do this
+    /**
+     * returns the average ease of all the non-new cards in the note,
+     * or if all the cards in the note are new, returns null
+     */
+    fun avgEase(note: Note): Int? {
+        val nonNewCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW }
+
+        return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
     interface NoteField {

@@ -23,6 +23,7 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
+import com.ichi2.anki.servicelayer.NoteService.avgEase
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
@@ -458,6 +459,8 @@ open class Card : Cloneable {
         }
         return LanguageUtil.getShortDateFormatFromS(date)
     } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
+
+    fun avgEaseOfNote() = avgEase(note())
 
     /** Non libAnki  */
     val isInDynamicDeck: Boolean
