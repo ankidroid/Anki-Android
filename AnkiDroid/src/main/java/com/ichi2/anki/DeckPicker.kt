@@ -1519,21 +1519,12 @@ open class DeckPicker :
         }
     }
 
-    private fun mediaDeleteListener(): MediaDeleteListener {
-        return MediaDeleteListener(this)
-    }
-
-    private class MediaDeleteListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Int?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) = context.preDeleteUnused()
-
-        /**
-         * @param result Number of deleted files
-         */
-        override fun actualOnPostExecute(context: DeckPicker, result: Int?) = context.postDeleteUnused(result)
-    }
-
     override fun deleteUnused(unused: List<String>) {
-        TaskManager.launchCollectionTask(DeleteMedia(unused), mediaDeleteListener())
+        launchCatchingTask {
+            preDeleteUnused()
+            val noOfDeletedFiles = withCol { deleteMedia(this, unused) }
+            postDeleteUnused(noOfDeletedFiles)
+        }
     }
 
     fun exit() {
@@ -1558,11 +1549,14 @@ open class DeckPicker :
         )
     }
 
-    private fun postDeleteUnused(result: Int?) {
+    /**
+     * @param noOfDeletedFiles Number of deleted files
+     */
+    private fun postDeleteUnused(noOfDeletedFiles: Int) {
         mProgressDialog?.dismiss()
         showSimpleMessageDialog(
             title = resources.getString(R.string.delete_media_result_title),
-            message = resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
+            message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles)
         )
     }
 
