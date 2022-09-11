@@ -232,6 +232,12 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
         <activity
+            android:name=".notetype.ManageNotetypes"
+            android:label="@string/model_browser_label"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            />
+        <activity
             android:name=".ModelFieldEditor"
             android:label="@string/model_editor_label"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
