@@ -80,6 +80,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -810,7 +811,12 @@ open class DeckPicker :
             }
             R.id.action_model_browser_open -> {
                 Timber.i("DeckPicker:: Model browser button pressed")
-                val noteTypeBrowser = Intent(this, ModelBrowser::class.java)
+                val manageNoteTypesTarget = if (!BackendFactory.defaultLegacySchema) {
+                    ManageNotetypes::class.java
+                } else {
+                    ModelBrowser::class.java
+                }
+                val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
                 startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
                 return true
             }
