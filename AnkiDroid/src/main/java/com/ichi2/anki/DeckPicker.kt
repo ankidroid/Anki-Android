@@ -1504,23 +1504,22 @@ open class DeckPicker :
         }
     }
 
-    private val context = this // TODO: Remove [context], was instroduced to copy MediaCheckListener
     private fun preMediaCheck() {
-        context.mProgressDialog = StyledProgressDialog.show(
-            context, null,
-            context.resources.getString(R.string.check_media_message), false
+        mProgressDialog = StyledProgressDialog.show(
+            this, null,
+            resources.getString(R.string.check_media_message), false
         )
     }
 
     private fun postMediaCheck(result: Computation<List<List<String>>>?) {
-        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog!!.dismiss()
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog!!.dismiss()
         }
         if (result!!.succeeded()) {
             val checkList = result.value
-            context.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
+            showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
         } else {
-            context.showSimpleMessageDialog(context.resources.getString(R.string.check_media_failed))
+            showSimpleMessageDialog(resources.getString(R.string.check_media_failed))
         }
     }
 
