@@ -1512,9 +1512,7 @@ open class DeckPicker :
     }
 
     private fun postMediaCheck(result: Computation<List<List<String>>>?) {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
-        }
+        mProgressDialog?.dismiss()
         if (result!!.succeeded()) {
             val checkList = result.value
             showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
