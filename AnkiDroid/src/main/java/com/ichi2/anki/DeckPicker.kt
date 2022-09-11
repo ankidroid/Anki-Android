@@ -1505,14 +1505,9 @@ open class DeckPicker :
         )
     }
 
-    private fun postMediaCheck(result: Computation<List<List<String>>>?) {
+    private fun postMediaCheck(result: List<List<String>>) {
         mProgressDialog?.dismiss()
-        if (result!!.succeeded()) {
-            val checkList = result.value
-            showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
-        } else {
-            showSimpleMessageDialog(resources.getString(R.string.check_media_failed))
-        }
+        showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
     }
 
     override fun deleteUnused(unused: List<String>) {
