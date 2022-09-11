@@ -49,15 +49,13 @@
                 android:textStyle="bold"
                 android:layout_margin="@dimen/content_vertical_padding"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                style="@style/LargeFilledButtonStyle"
                 android:id="@+id/logout_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:theme="@style/LargeButtonStyle"
-                android:singleLine="true"
-                android:textSize="@dimen/md_title_textsize"
+                android:minWidth="200dp"
                 android:layout_gravity="center"
-                android:padding="10dp"
                 android:text="@string/log_out"
                 android:layout_margin="@dimen/content_vertical_padding"
                 />

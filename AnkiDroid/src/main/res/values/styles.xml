@@ -131,9 +131,11 @@
         <item name="android:colorBackground">?attr/popupBackgroundColor</item>
     </style>
 
-    <style name="LargeButtonStyle">
-        <item name="colorButtonNormal">?attr/largeButtonBackgroundColor</item>
+    <style name="LargeFilledButtonStyle" parent="@style/Widget.Material3.Button">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:padding">12dp</item>
         <item name="android:textColor">?attr/largeButtonTextColor</item>
+        <item name="backgroundTint">?attr/largeButtonBackgroundColor</item>
     </style>
 
     <style name="card_info_data">

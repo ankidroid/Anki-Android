@@ -82,21 +82,15 @@
                         android:paddingEnd="40dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
+                    style="@style/LargeFilledButtonStyle"
                     android:id="@+id/login_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/LargeButtonStyle"
-                    android:singleLine="true"
-                    android:background="@drawable/footer_button_round_blue"
-                    android:textSize="@dimen/md_title_textsize"
+                    android:minWidth="200dp"
                     android:layout_gravity="center"
-                    android:padding="10dp"
                     android:text="@string/log_in"
-                    android:paddingTop="30dp"
                     android:layout_margin="@dimen/content_vertical_padding"/>
-                <!-- TODO better text size ^^ -->
-
 
                 <Button
                     android:id="@+id/reset_password_button"
