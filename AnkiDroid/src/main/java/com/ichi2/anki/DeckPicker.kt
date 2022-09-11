@@ -1521,12 +1521,10 @@ open class DeckPicker :
 
     override fun deleteUnused(unused: List<String>) {
         launchCatchingTask {
-            mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker, null,
-                resources.getString(R.string.delete_media_message), false
-            )
-            val noOfDeletedFiles = withCol { deleteMedia(this, unused) } // Number of deleted files
-            mProgressDialog?.dismiss()
+            // Number of deleted files
+            val noOfDeletedFiles = withProgress(resources.getString(R.string.delete_media_message)) {
+                withCol { deleteMedia(this, unused) }
+            }
             showSimpleMessageDialog(
                 title = resources.getString(R.string.delete_media_result_title),
                 message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles)
