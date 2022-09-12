@@ -928,21 +928,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteMedia(private val unused: List<String>) : TaskDelegate<Void, Int>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Int {
-            val m = col.media
-            if (!BackendFactory.defaultLegacySchema) {
-                // FIXME: this provides progress info that is not currently used
-                col.newMedia.removeFiles(unused)
-            } else {
-                for (fname in unused) {
-                    m.removeFile(fname)
-                }
-            }
-            return unused.size
-        }
-    }
-
     /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */

@@ -85,3 +85,24 @@ fun updateMultipleNotes(
         notesToUpdate
     }
 }
+
+/**
+ * Takes a list of media file names and removes them from the Collection
+ * @param col Collection from which media is to be deleted
+ * @param unused List of media names to be deleted
+ */
+fun deleteMedia(
+    col: Collection,
+    unused: List<String>
+): Int {
+    val m = col.media
+    if (!BackendFactory.defaultLegacySchema) {
+        // FIXME: this provides progress info that is not currently used
+        col.newMedia.removeFiles(unused)
+    } else {
+        for (fname in unused) {
+            m.removeFile(fname)
+        }
+    }
+    return unused.size
+}
