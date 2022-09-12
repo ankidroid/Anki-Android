@@ -89,11 +89,7 @@ open class AnkiDroidApp : Application() {
         // executed by the backend. The log may be delayed by 100ms, so you should not
         // assume than a given SQL statement has run after a Timber.* line just
         // because the SQL statement appeared later.
-        //        try {
-        //            Os.setenv("TRACESQL", "1", false);
-        //        } catch (Exception exc) {
-        //
-        //        }
+        //   Os.setenv("TRACESQL", "1", false);
         super.onCreate()
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
