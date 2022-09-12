@@ -35,6 +35,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
+    private val addNoteLabel: View = view.findViewById(R.id.add_note_label)
 
     // Add Note Drawable Icon
     private val addNoteIcon: Int = R.drawable.ic_add_note
@@ -56,6 +57,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
+            addNoteLabel.visibility = View.VISIBLE
             mFabMain.animate().apply {
                 // Changes the background color of FAB
                 mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_indigo_700))
@@ -95,6 +97,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
+        addNoteLabel.visibility = View.GONE
         if (deckPicker.animationEnabled()) {
             // Changes the background color of FAB to default
             mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
