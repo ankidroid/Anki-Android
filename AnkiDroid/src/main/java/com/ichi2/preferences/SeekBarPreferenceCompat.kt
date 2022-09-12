@@ -27,7 +27,6 @@
 package com.ichi2.preferences
 
 import android.content.Context
-import android.os.Bundle
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -38,6 +37,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.withStyledAttributes
+import androidx.core.os.bundleOf
 import androidx.preference.DialogPreference
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
@@ -266,13 +266,10 @@ constructor(
         }
 
         companion object {
-            @KotlinCleanup("simplify function by using a scope function and the bundleOf() method")
             fun newInstance(key: String): SeekBarDialogFragmentCompat {
-                val fragment = SeekBarDialogFragmentCompat()
-                val b = Bundle(1)
-                b.putString(ARG_KEY, key)
-                fragment.arguments = b
-                return fragment
+                return SeekBarDialogFragmentCompat().apply {
+                    arguments = bundleOf(ARG_KEY to key)
+                }
             }
         }
     }
