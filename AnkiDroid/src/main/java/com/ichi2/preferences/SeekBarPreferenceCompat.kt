@@ -143,8 +143,7 @@ constructor(
     }
 
     class SeekBarDialogFragmentCompat : PreferenceDialogFragmentCompat(), OnSeekBarChangeListener {
-        @KotlinCleanup("make it lateinit as it is initialized in onCreateDialogView")
-        private var mSeekLine: LinearLayout? = null
+        private lateinit var mSeekLine: LinearLayout
         @KotlinCleanup("make it lateinit as it is initialized in onCreateDialogView")
         private var mSeekBar: SeekBar? = null
         @KotlinCleanup("see if it can be made non nullable")
@@ -224,8 +223,8 @@ constructor(
                 paramsSeekbar.setMargins(0, 12, 0, 0)
                 @KotlinCleanup("use scope function")
                 mSeekLine = LinearLayout(context)
-                mSeekLine!!.orientation = LinearLayout.HORIZONTAL
-                mSeekLine!!.setPadding(6, 6, 6, 6)
+                mSeekLine.orientation = LinearLayout.HORIZONTAL
+                mSeekLine.setPadding(6, 6, 6, 6)
                 addLabelsBelowSeekBar(context)
                 layout.addView(mSeekLine, paramsSeekbar)
             }
@@ -244,7 +243,7 @@ constructor(
                 @KotlinCleanup("could use a scope function")
                 textView.text = context.getString(labels[count])
                 textView.gravity = Gravity.START
-                mSeekLine!!.addView(textView)
+                mSeekLine.addView(textView)
                 @KotlinCleanup("properly indent this, try to use an if expression")
                 if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) textView.layoutParams = if (count == 1) getLayoutParams(0.0f) else getLayoutParams(1.0f) else textView.layoutParams = if (count == 0) getLayoutParams(0.0f) else getLayoutParams(1.0f)
             }
