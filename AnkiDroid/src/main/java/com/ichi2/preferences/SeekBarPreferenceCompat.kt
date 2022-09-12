@@ -70,9 +70,9 @@ constructor(
     private var mYLabel = 0
 
     init {
-        mSuffix = attrs?.getAttributeValue(androidns, "text") ?: ""
-        mDefault = attrs?.getAttributeIntValue(androidns, "defaultValue", 0) ?: 0
-        mMax = attrs?.getAttributeIntValue(androidns, "max", 100) ?: 100
+        mSuffix = attrs?.getAttributeValue(AnkiDroidApp.ANDROID_NAMESPACE, "text") ?: ""
+        mDefault = attrs?.getAttributeIntValue(AnkiDroidApp.ANDROID_NAMESPACE, "defaultValue", 0) ?: 0
+        mMax = attrs?.getAttributeIntValue(AnkiDroidApp.ANDROID_NAMESPACE, "max", 100) ?: 100
         mMin = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
         mInterval = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1) ?: 1
         mXLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0) ?: 0
@@ -272,12 +272,5 @@ constructor(
                 }
             }
         }
-    }
-
-    companion object {
-        @KotlinCleanup(
-            "this string should be extracted to a constant class and made public for the entire app"
-        )
-        private const val androidns = "http://schemas.android.com/apk/res/android"
     }
 }
