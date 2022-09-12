@@ -45,7 +45,7 @@ import com.ichi2.anki.R
 import com.ichi2.ui.FixedTextView
 
 class SeekBarPreferenceCompat
-@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.SeekBarPreferenceCompat
+@JvmOverloads // required to inflate the preference from a XML
 constructor(
     context: Context,
     attrs: AttributeSet? = null,
