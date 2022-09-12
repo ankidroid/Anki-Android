@@ -79,6 +79,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
     }
 
+    @NeedsTest("")
     private fun initializeLanguageDialog() {
         val languageSelection = requirePreference<ListPreference>(R.string.pref_language_key)
 
