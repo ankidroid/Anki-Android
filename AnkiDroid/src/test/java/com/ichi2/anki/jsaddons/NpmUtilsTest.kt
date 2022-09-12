@@ -19,8 +19,8 @@ package com.ichi2.anki.jsaddons
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.NpmUtils.validateName
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
+import junit.framework.TestCase.assertNotNull
+import junit.framework.TestCase.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 

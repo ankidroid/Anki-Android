@@ -38,11 +38,10 @@ object NpmUtils {
             return listOf("Name is not set.")
         }
         val errors = mutableListOf<String>()
-        for (invalidChar in "~'!()*@") {
+        for (invalidChar in "~'![{()}]* ") {
             if (name.contains(invalidChar)) errors.add("Name should not contains $invalidChar.")
         }
         if (name.lowercase(Locale.getDefault()) != name) errors.add("Name should be all lowercase.")
-        if (URLEncoder.encode(name, "UTF-8") != name) errors.add("Name should be UTF-8 to be url-safe.")
         if (name.length > 214) errors.add("Name's should be at most 214 character long.")
 
         val trimmedName = name.trim()
@@ -75,6 +74,7 @@ object NpmUtils {
             if (trimmedCheckedNamePart != checkedNamePart) errors.add("$nameDescription should not start nor ends with whitespace.")
             if (trimmedCheckedNamePart.startsWith(".")) errors.add("$nameDescription should not start with a dot.")
             if (trimmedCheckedNamePart.startsWith("_")) errors.add("$nameDescription should not start with an underscore.")
+            if (URLEncoder.encode(trimmedCheckedNamePart, "UTF-8") != trimmedCheckedNamePart) errors.add("Name should be UTF-8 to be url-safe.")
         }
 
         return if (errors.isEmpty()) null else errors
