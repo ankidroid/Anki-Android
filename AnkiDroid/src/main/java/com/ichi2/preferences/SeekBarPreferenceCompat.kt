@@ -53,27 +53,27 @@ constructor(
     defStyleRes: Int = R.style.Preference_DialogPreference
 ) : DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var mSuffix: String
-    private var mDefault: Int
-    private var mMax: Int
-    private var mMin: Int
-    private var mInterval: Int
+    private var suffix: String
+    private var default: Int
+    private var max: Int
+    private var min: Int
+    private var interval: Int
     private var mValue = 0
 
     @StringRes
-    private var mXLabel: Int
+    private var xLabel: Int
 
     @StringRes
-    private var mYLabel: Int
+    private var yLabel: Int
 
     init {
-        mSuffix = attrs?.getAttributeValue(AnkiDroidApp.ANDROID_NAMESPACE, "text") ?: ""
-        mDefault = attrs?.getAttributeIntValue(AnkiDroidApp.ANDROID_NAMESPACE, "defaultValue", 0) ?: 0
-        mMax = attrs?.getAttributeIntValue(AnkiDroidApp.ANDROID_NAMESPACE, "max", 100) ?: 100
-        mMin = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
-        mInterval = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1) ?: 1
-        mXLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0) ?: 0
-        mYLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0) ?: 0
+        suffix = attrs?.getAttributeValue(AnkiDroidApp.ANDROID_NAMESPACE, "text") ?: ""
+        default = attrs?.getAttributeIntValue(AnkiDroidApp.ANDROID_NAMESPACE, "defaultValue", 0) ?: 0
+        max = attrs?.getAttributeIntValue(AnkiDroidApp.ANDROID_NAMESPACE, "max", 100) ?: 100
+        min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
+        interval = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1) ?: 1
+        xLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0) ?: 0
+        yLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0) ?: 0
 
         context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
             val useSimpleSummaryProvider = getBoolean(R.styleable.CustomPreference_useSimpleSummaryProvider, false)
@@ -92,9 +92,9 @@ constructor(
     @Deprecated("Deprecated in Java")
     override fun onSetInitialValue(restore: Boolean, defaultValue: Any?) {
         super.onSetInitialValue(restore, defaultValue)
-        mValue = getPersistedInt(mDefault)
+        mValue = getPersistedInt(default)
         mValue = if (restore) {
-            if (shouldPersist()) getPersistedInt(mDefault) else 0
+            if (shouldPersist()) getPersistedInt(default) else 0
         } else {
             defaultValue as Int
         }
@@ -102,7 +102,7 @@ constructor(
 
     var value: Int
         get() = if (mValue == 0) {
-            getPersistedInt(mDefault)
+            getPersistedInt(default)
         } else {
             mValue
         }
@@ -119,30 +119,30 @@ constructor(
     }
 
     private val valueText: String
-        get() = mValue.toString() + mSuffix
+        get() = mValue.toString() + suffix
 
     // TODO: These could do with some thought as to either documentation, or defining the coupling between here and
     // SeekBarDialogFragmentCompat
     private fun setRelativeValue(value: Int) {
-        mValue = value * mInterval + mMin
+        mValue = value * interval + min
     }
 
     private val relativeMax: Int
-        get() = (mMax - mMin) / mInterval
+        get() = (max - min) / interval
     private val relativeProgress: Int
-        get() = (mValue - mMin) / mInterval
+        get() = (mValue - min) / interval
 
     private fun setupTempValue() {
         if (!shouldPersist()) {
             return
         }
-        mValue = getPersistedInt(mDefault)
+        mValue = getPersistedInt(default)
     }
 
     class SeekBarDialogFragmentCompat : PreferenceDialogFragmentCompat(), OnSeekBarChangeListener {
-        private lateinit var mSeekLine: LinearLayout
-        private lateinit var mSeekBar: SeekBar
-        private lateinit var mValueText: TextView
+        private lateinit var seekLine: LinearLayout
+        private lateinit var seekBar: SeekBar
+        private lateinit var valueText: TextView
 
         override fun getPreference(): SeekBarPreferenceCompat {
             return super.getPreference() as SeekBarPreferenceCompat
@@ -157,7 +157,7 @@ constructor(
         }
 
         private fun onValueUpdated() {
-            mValueText.text = preference.valueText
+            valueText.text = preference.valueText
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -175,8 +175,8 @@ constructor(
 
         override fun onBindDialogView(v: View) {
             super.onBindDialogView(v)
-            mSeekBar.max = preference.relativeMax
-            mSeekBar.progress = preference.relativeProgress
+            seekBar.max = preference.relativeMax
+            seekBar.progress = preference.relativeProgress
         }
 
         override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
@@ -190,7 +190,7 @@ constructor(
             val layout = LinearLayout(context)
             layout.orientation = LinearLayout.VERTICAL
             layout.setPadding(6, 6, 6, 6)
-            mValueText = FixedTextView(context).apply {
+            valueText = FixedTextView(context).apply {
                 gravity = Gravity.CENTER_HORIZONTAL
                 textSize = 32f
             }
@@ -198,30 +198,30 @@ constructor(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            layout.addView(mValueText, params)
+            layout.addView(valueText, params)
 
-            if (preference.mXLabel != 0 && preference.mYLabel != 0) {
+            if (preference.xLabel != 0 && preference.yLabel != 0) {
                 val paramsSeekbar = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 paramsSeekbar.setMargins(0, 12, 0, 0)
-                mSeekLine = LinearLayout(context).apply {
+                seekLine = LinearLayout(context).apply {
                     orientation = LinearLayout.HORIZONTAL
                     setPadding(6, 6, 6, 6)
                 }
                 addLabelsBelowSeekBar(context)
-                layout.addView(mSeekLine, paramsSeekbar)
+                layout.addView(seekLine, paramsSeekbar)
             }
             preference.setupTempValue()
 
-            mSeekBar = SeekBar(context).apply {
+            seekBar = SeekBar(context).apply {
                 setOnSeekBarChangeListener(this@SeekBarDialogFragmentCompat)
                 max = preference.relativeMax
                 progress = preference.relativeProgress
             }
             layout.addView(
-                mSeekBar,
+                seekBar,
                 LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -232,13 +232,13 @@ constructor(
         }
 
         private fun addLabelsBelowSeekBar(context: Context) {
-            val labels = intArrayOf(preference.mXLabel, preference.mYLabel)
+            val labels = intArrayOf(preference.xLabel, preference.yLabel)
             for (count in 0..1) {
                 val textView = FixedTextView(context).apply {
                     text = context.getString(labels[count])
                     gravity = Gravity.START
                 }
-                mSeekLine.addView(textView)
+                seekLine.addView(textView)
 
                 textView.layoutParams = if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
                     if (count == 1) {
