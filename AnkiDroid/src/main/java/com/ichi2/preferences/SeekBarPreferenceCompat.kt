@@ -144,8 +144,7 @@ constructor(
 
     class SeekBarDialogFragmentCompat : PreferenceDialogFragmentCompat(), OnSeekBarChangeListener {
         private lateinit var mSeekLine: LinearLayout
-        @KotlinCleanup("make it lateinit as it is initialized in onCreateDialogView")
-        private var mSeekBar: SeekBar? = null
+        private lateinit var mSeekBar: SeekBar
         @KotlinCleanup("see if it can be made non nullable")
         private var mValueText: TextView? = null
 
@@ -180,8 +179,8 @@ constructor(
 
         override fun onBindDialogView(v: View) {
             super.onBindDialogView(v)
-            mSeekBar!!.max = preference.relativeMax
-            mSeekBar!!.progress = preference.relativeProgress
+            mSeekBar.max = preference.relativeMax
+            mSeekBar.progress = preference.relativeProgress
         }
 
         override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
@@ -206,7 +205,7 @@ constructor(
             layout.addView(mValueText, params)
             @KotlinCleanup("maybe use scope function to make mSeekBar available to code below?")
             mSeekBar = SeekBar(context)
-            mSeekBar!!.setOnSeekBarChangeListener(this)
+            mSeekBar.setOnSeekBarChangeListener(this)
             layout.addView(
                 mSeekBar,
                 LinearLayout.LayoutParams(
@@ -229,8 +228,8 @@ constructor(
                 layout.addView(mSeekLine, paramsSeekbar)
             }
             preference.setupTempValue()
-            mSeekBar!!.max = preference.relativeMax
-            mSeekBar!!.progress = preference.relativeProgress
+            mSeekBar.max = preference.relativeMax
+            mSeekBar.progress = preference.relativeProgress
             onValueUpdated()
             return layout
         }
