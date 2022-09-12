@@ -66,7 +66,7 @@ class DeckOptions :
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptionsActivity: DeckOptions
+        val deckOptionsActivity: DeckOptions // TODO: rename the class to DeckOptionsActivity
             get() = this@DeckOptions
 
         @KotlinCleanup("Use kotlin's methods instead of java's")
