@@ -237,10 +237,10 @@ constructor(
             val labels = intArrayOf(preference.mXLabel, preference.mYLabel)
             @KotlinCleanup("maybe this could be improved as we only have two iterations?")
             for (count in 0..1) {
-                val textView: TextView = FixedTextView(context)
-                @KotlinCleanup("could use a scope function")
-                textView.text = context.getString(labels[count])
-                textView.gravity = Gravity.START
+                val textView = FixedTextView(context).apply {
+                    text = context.getString(labels[count])
+                    gravity = Gravity.START
+                }
                 mSeekLine.addView(textView)
                 @KotlinCleanup("properly indent this, try to use an if expression")
                 if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) textView.layoutParams = if (count == 1) getLayoutParams(0.0f) else getLayoutParams(1.0f) else textView.layoutParams = if (count == 0) getLayoutParams(0.0f) else getLayoutParams(1.0f)
