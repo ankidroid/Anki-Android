@@ -46,7 +46,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("fix IDE lint issues")
 @NeedsTest("removing JvmOverloads should fail")
 class SeekBarPreferenceCompat
 @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.SeekBarPreferenceCompat
@@ -203,8 +202,8 @@ constructor(
             layout.setPadding(6, 6, 6, 6)
             @KotlinCleanup("use scope function")
             mValueText = FixedTextView(context)
-            mValueText!!.setGravity(Gravity.CENTER_HORIZONTAL)
-            mValueText!!.setTextSize(32f)
+            mValueText!!.gravity = Gravity.CENTER_HORIZONTAL
+            mValueText!!.textSize = 32f
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -222,17 +221,17 @@ constructor(
             )
             val preference = preference
             if (preference.mXLabel != 0 && preference.mYLabel != 0) {
-                val params_seekbar = LinearLayout.LayoutParams(
+                val paramsSeekbar = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                params_seekbar.setMargins(0, 12, 0, 0)
+                paramsSeekbar.setMargins(0, 12, 0, 0)
                 @KotlinCleanup("use scope function")
                 mSeekLine = LinearLayout(context)
                 mSeekLine!!.orientation = LinearLayout.HORIZONTAL
                 mSeekLine!!.setPadding(6, 6, 6, 6)
                 addLabelsBelowSeekBar(context)
-                layout.addView(mSeekLine, params_seekbar)
+                layout.addView(mSeekLine, paramsSeekbar)
             }
             preference.setupTempValue()
             mSeekBar!!.max = preference.relativeMax
