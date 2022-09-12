@@ -193,10 +193,10 @@ constructor(
             val layout = LinearLayout(context)
             layout.orientation = LinearLayout.VERTICAL
             layout.setPadding(6, 6, 6, 6)
-            @KotlinCleanup("use scope function")
-            mValueText = FixedTextView(context)
-            mValueText.gravity = Gravity.CENTER_HORIZONTAL
-            mValueText.textSize = 32f
+            mValueText = FixedTextView(context).apply {
+                gravity = Gravity.CENTER_HORIZONTAL
+                textSize = 32f
+            }
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
