@@ -17,6 +17,7 @@ package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
+import com.ichi2.annotations.Needstest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
