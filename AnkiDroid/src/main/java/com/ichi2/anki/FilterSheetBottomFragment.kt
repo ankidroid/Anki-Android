@@ -224,10 +224,10 @@ class FilterSheetBottomFragment :
              */
             private fun unselect(item: Flags) {
                 flagSearchItems.remove(item.flagNode)
+                setUnselectedColor()
                 if (flagSearchItems.isNotEmpty()) {
                     return
                 }
-                setUnselectedColor()
                 filterHeaderFlags.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
                 filterIconFlags.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
                 flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColor))
@@ -239,10 +239,10 @@ class FilterSheetBottomFragment :
             private fun select(item: Flags) {
                 val wasNotEmpty = flagSearchItems.isNotEmpty()
                 flagSearchItems.add(item.flagNode)
+                setSelectedColor()
                 if (wasNotEmpty) {
                     return
                 }
-                setSelectedColor()
                 filterHeaderFlags.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
                 filterIconFlags.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
                 flagToggleIcon.setColorFilter(getColorFromAttr(R.attr.filterItemTextColorSelected))
@@ -268,7 +268,7 @@ class FilterSheetBottomFragment :
             }
 
             /**
-             * Update the section header to indicate some of its content is selected.
+             * Update the filter item to indicate it is selected.
              */
             private fun setSelectedColor() {
                 itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
@@ -276,7 +276,7 @@ class FilterSheetBottomFragment :
             }
 
             /**
-             * Update the section header to indicate none of its content is selected.
+             * Update the filter item to indicate it is not selected anymore.
              */
             private fun setUnselectedColor() {
                 itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
