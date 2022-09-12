@@ -1012,25 +1012,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * Deletes the given model
-     * and all notes associated with it
-     */
-    class DeleteModel(private val modID: Long) : TaskDelegate<Void, Boolean?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackGroundDeleteModel")
-            try {
-                col.models.rem(col.models.get(modID)!!)
-                col.save()
-            } catch (e: ConfirmModSchemaException) {
-                e.log()
-                Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException")
-                return false
-            }
-            return true
-        }
-    }
-
-    /**
      * Deletes the given field in the given model
      */
     class DeleteField(private val model: Model, private val field: JSONObject) : TaskDelegate<Void, Boolean>() {

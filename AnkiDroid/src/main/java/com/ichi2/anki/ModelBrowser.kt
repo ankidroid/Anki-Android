@@ -29,6 +29,7 @@ import androidx.appcompat.app.ActionBar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -37,7 +38,6 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.CountModels
-import com.ichi2.async.CollectionTask.DeleteModel
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
@@ -50,7 +50,6 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
 import timber.log.Timber
-import java.lang.RuntimeException
 import java.util.ArrayList
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
@@ -108,28 +107,6 @@ class ModelBrowser : AnkiActivity() {
                 it.mCardCounts = result.second
                 it.fillModelList()
             }
-        }
-    }
-
-    /*
-     * Displays loading bar when deleting a model loading bar is needed
-     * because deleting a model also deletes all of the associated cards/notes *
-     */
-    private fun deleteModelHandler(): DeleteModelHandler {
-        return DeleteModelHandler(this)
-    }
-
-    private class DeleteModelHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Boolean?>(browser) {
-        override fun actualOnPreExecute(context: ModelBrowser) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: ModelBrowser, result: Boolean?) {
-            if (result == false) {
-                throw RuntimeException()
-            }
-            context.hideProgressBar()
-            context.refreshList()
         }
     }
 
@@ -449,11 +426,23 @@ class ModelBrowser : AnkiActivity() {
         TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
     }
 
-    /*
-     * Deletes the currently selected model
+    /**
+     * Deletes the currently selected model and all notes associated with it
+     *
+     * Displays loading bar when deleting a model loading bar is needed
+     * because deleting a model also deletes all of the associated cards/notes
      */
     private fun deleteModel() {
-        TaskManager.launchCollectionTask(DeleteModel(mCurrentID), deleteModelHandler())
+        launchCatchingTask {
+            withProgress {
+                withCol {
+                    Timber.d("doInBackGroundDeleteModel")
+                    col.models.rem(col.models.get(mCurrentID)!!)
+                    col.save()
+                }
+            }
+            refreshList()
+        }
         mModels!!.removeAt(mModelListPosition)
         mModelIds!!.removeAt(mModelListPosition)
         mModelDisplayList!!.removeAt(mModelListPosition)
