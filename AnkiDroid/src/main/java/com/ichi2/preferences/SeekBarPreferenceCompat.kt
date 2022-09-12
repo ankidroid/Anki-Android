@@ -57,17 +57,17 @@ constructor(
 ) : DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     private var mSuffix: String
-    private var mDefault = 0
-    private var mMax = 0
-    private var mMin = 0
-    private var mInterval = 0
+    private var mDefault: Int
+    private var mMax: Int
+    private var mMin: Int
+    private var mInterval: Int
     private var mValue = 0
 
     @StringRes
-    private var mXLabel = 0
+    private var mXLabel: Int
 
     @StringRes
-    private var mYLabel = 0
+    private var mYLabel: Int
 
     init {
         mSuffix = attrs?.getAttributeValue(AnkiDroidApp.ANDROID_NAMESPACE, "text") ?: ""
