@@ -56,8 +56,7 @@ constructor(
     defStyleRes: Int = R.style.Preference_DialogPreference
 ) : DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
 
-    @KotlinCleanup("make it a lateinit var")
-    private var mSuffix: String? = null
+    private var mSuffix: String
     private var mDefault = 0
     private var mMax = 0
     private var mMin = 0
@@ -71,7 +70,7 @@ constructor(
     private var mYLabel = 0
 
     init {
-        mSuffix = attrs?.getAttributeValue(androidns, "text")
+        mSuffix = attrs?.getAttributeValue(androidns, "text") ?: ""
         mDefault = attrs?.getAttributeIntValue(androidns, "defaultValue", 0) ?: 0
         mMax = attrs?.getAttributeIntValue(androidns, "max", 100) ?: 100
         mMin = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
@@ -123,10 +122,7 @@ constructor(
     }
 
     private val valueText: String
-        get() {
-            val t = mValue.toString()
-            return if (mSuffix == null) t else t + mSuffix
-        }
+        get() = mValue.toString() + mSuffix
 
     // TODO: These could do with some thought as to either documentation, or defining the coupling between here and
     // SeekBarDialogFragmentCompat
