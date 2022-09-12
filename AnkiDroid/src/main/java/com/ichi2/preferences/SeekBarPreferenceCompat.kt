@@ -219,10 +219,10 @@ constructor(
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 paramsSeekbar.setMargins(0, 12, 0, 0)
-                @KotlinCleanup("use scope function")
-                mSeekLine = LinearLayout(context)
-                mSeekLine.orientation = LinearLayout.HORIZONTAL
-                mSeekLine.setPadding(6, 6, 6, 6)
+                mSeekLine = LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    setPadding(6, 6, 6, 6)
+                }
                 addLabelsBelowSeekBar(context)
                 layout.addView(mSeekLine, paramsSeekbar)
             }
