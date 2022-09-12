@@ -242,8 +242,20 @@ constructor(
                     gravity = Gravity.START
                 }
                 mSeekLine.addView(textView)
-                @KotlinCleanup("properly indent this, try to use an if expression")
-                if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) textView.layoutParams = if (count == 1) getLayoutParams(0.0f) else getLayoutParams(1.0f) else textView.layoutParams = if (count == 0) getLayoutParams(0.0f) else getLayoutParams(1.0f)
+
+                textView.layoutParams = if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
+                    if (count == 1) {
+                        getLayoutParams(0.0f)
+                    } else {
+                        getLayoutParams(1.0f)
+                    }
+                } else {
+                    if (count == 0) {
+                        getLayoutParams(0.0f)
+                    } else {
+                        getLayoutParams(1.0f)
+                    }
+                }
             }
         }
 
