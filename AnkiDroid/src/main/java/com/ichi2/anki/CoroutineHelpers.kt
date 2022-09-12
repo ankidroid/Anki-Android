@@ -38,9 +38,6 @@ import kotlin.coroutines.suspendCoroutine
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  *
- * TODO: The try/except block here catches CancellationException, is this right?
- *   If it is, add a comment explaining why.
- *
  * TODO: `Throwable.getLocalizedMessage()` might be null, and `BackendException` constructor
  *   accepts a null message, so `exc.localizedMessage!!` is probably dangerous.
  *   If not, add a comment explaining why, or refactor to have a method that returns
@@ -53,8 +50,8 @@ suspend fun <T> FragmentActivity.runCatchingTask(
     val extraInfo = errorMessage ?: ""
     try {
         return block()
-    } catch (exc: CancellationException) {
-        // do nothing
+    } catch (cancellationException: CancellationException) {
+        throw cancellationException // CancellationException should be re-thrown to propagate it to the parent coroutine
     } catch (exc: BackendInterruptedException) {
         Timber.e(exc, extraInfo)
         exc.localizedMessage?.let { showSnackbar(it) }
