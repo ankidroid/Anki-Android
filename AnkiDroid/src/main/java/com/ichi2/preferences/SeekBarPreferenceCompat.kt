@@ -44,7 +44,6 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.KotlinCleanup
 
 @NeedsTest("removing JvmOverloads should fail")
 class SeekBarPreferenceCompat
@@ -202,17 +201,7 @@ constructor(
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             layout.addView(mValueText, params)
-            @KotlinCleanup("maybe use scope function to make mSeekBar available to code below?")
-            mSeekBar = SeekBar(context)
-            mSeekBar.setOnSeekBarChangeListener(this)
-            layout.addView(
-                mSeekBar,
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            )
-            val preference = preference
+
             if (preference.mXLabel != 0 && preference.mYLabel != 0) {
                 val paramsSeekbar = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -227,8 +216,19 @@ constructor(
                 layout.addView(mSeekLine, paramsSeekbar)
             }
             preference.setupTempValue()
-            mSeekBar.max = preference.relativeMax
-            mSeekBar.progress = preference.relativeProgress
+
+            mSeekBar = SeekBar(context).apply {
+                setOnSeekBarChangeListener(this@SeekBarDialogFragmentCompat)
+                max = preference.relativeMax
+                progress = preference.relativeProgress
+            }
+            layout.addView(
+                mSeekBar,
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            )
             onValueUpdated()
             return layout
         }
