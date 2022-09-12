@@ -145,8 +145,7 @@ constructor(
     class SeekBarDialogFragmentCompat : PreferenceDialogFragmentCompat(), OnSeekBarChangeListener {
         private lateinit var mSeekLine: LinearLayout
         private lateinit var mSeekBar: SeekBar
-        @KotlinCleanup("see if it can be made non nullable")
-        private var mValueText: TextView? = null
+        private lateinit var mValueText: TextView
 
         override fun getPreference(): SeekBarPreferenceCompat {
             return super.getPreference() as SeekBarPreferenceCompat
@@ -161,7 +160,7 @@ constructor(
         }
 
         private fun onValueUpdated() {
-            mValueText!!.text = preference.valueText
+            mValueText.text = preference.valueText
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -196,8 +195,8 @@ constructor(
             layout.setPadding(6, 6, 6, 6)
             @KotlinCleanup("use scope function")
             mValueText = FixedTextView(context)
-            mValueText!!.gravity = Gravity.CENTER_HORIZONTAL
-            mValueText!!.textSize = 32f
+            mValueText.gravity = Gravity.CENTER_HORIZONTAL
+            mValueText.textSize = 32f
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
