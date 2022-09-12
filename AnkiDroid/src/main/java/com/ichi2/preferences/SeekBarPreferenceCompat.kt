@@ -235,7 +235,6 @@ constructor(
 
         private fun addLabelsBelowSeekBar(context: Context) {
             val labels = intArrayOf(preference.mXLabel, preference.mYLabel)
-            @KotlinCleanup("maybe this could be improved as we only have two iterations?")
             for (count in 0..1) {
                 val textView = FixedTextView(context).apply {
                     text = context.getString(labels[count])
