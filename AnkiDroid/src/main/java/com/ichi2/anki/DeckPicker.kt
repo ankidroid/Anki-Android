@@ -2121,7 +2121,7 @@ open class DeckPicker :
             // If the deck is empty and has no children then show a message saying it's empty
             showSnackbar(R.string.empty_deck) {
                 addCallback(mSnackbarShowHideCallback)
-                setAction(R.string.empty_deck_add_note) { addNote() }
+                setAction(R.string.menu_add) { addNote() }
             }
 
             if (fragmented) {
