@@ -22,15 +22,13 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
-import org.apache.http.util.Asserts
+import org.apache.http.util.Args.notNull
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.*
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class DecksTest : RobolectricTest() {
@@ -42,7 +40,7 @@ class DecksTest : RobolectricTest() {
             addDeck(deckName)
         }
         val brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS")
-        Asserts.notNull(brokenDeck, "We should get deck with given name")
+        notNull(brokenDeck, "We should get deck with given name")
         // Changing the case. That could exists in an old collection or during sync.
         brokenDeck!!.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS")
         decks.save(brokenDeck)
@@ -51,7 +49,7 @@ class DecksTest : RobolectricTest() {
         for (deck in decks.all()) {
             val did = deck.getLong("id")
             for (parent in decks.parents(did)) {
-                Asserts.notNull(parent, "Parent should not be null")
+                notNull(parent, "Parent should not be null")
             }
         }
     }
