@@ -24,6 +24,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class TemplateTest : RobolectricTest() {
@@ -46,7 +47,7 @@ class TemplateTest : RobolectricTest() {
         val context = HashMap<String, String>()
         val rendered = render("{{!Front}}", context)
 
-        assertThat(rendered, notNullValue())
+        assertNotNull(rendered)
         assertThat(
             rendered, containsString("there is no field called '!Front'")
         )

@@ -18,12 +18,10 @@ package com.ichi2.anki.model
 
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.CoreMatchers.nullValue
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -34,10 +32,9 @@ class DiskFileTest {
     @Test
     fun passes_if_existing_file() {
         val filePath = createTransientFile()
-        assertThat(
-            "DiskFile should work with valid file",
+        assertNotNull(
             DiskFile.createInstance(filePath),
-            not(nullValue())
+            "DiskFile should work with valid file",
         )
     }
 

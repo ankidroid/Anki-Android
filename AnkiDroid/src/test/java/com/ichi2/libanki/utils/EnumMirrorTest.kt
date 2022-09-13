@@ -40,7 +40,7 @@ package com.ichi2.libanki.utils
 //        fun getClass(clazz: KClass<*>): TestData {
 //            assertTrue(clazz.java.isEnum, "target class should be an enum")
 //            val annotation = clazz.findAnnotation<EnumMirror>()
-//            assertThat("target class should have @EnumMirror", annotation, notNullValue())
+//            assertNotNull(annotation, "target class should have @EnumMirror")
 //            val annotatedClass = annotation!!.value
 //            assertTrue(annotatedClass.java.isEnum, "mirror target should be an enum")
 //

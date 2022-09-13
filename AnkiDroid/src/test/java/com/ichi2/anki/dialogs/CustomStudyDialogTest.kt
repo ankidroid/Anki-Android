@@ -45,6 +45,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
@@ -76,7 +77,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
         val customStudy = col.decks.current()
         assertThat("Custom Study should be dynamic", customStudy.isDyn)
-        assertThat("could not find deck: Custom study session", customStudy, notNullValue())
+        assertNotNull(customStudy, "could not find deck: Custom study session")
         customStudy.remove("id")
         customStudy.remove("mod")
         customStudy.remove("name")

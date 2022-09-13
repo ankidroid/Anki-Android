@@ -24,7 +24,7 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
@@ -88,8 +88,8 @@ class AbstractSchedTest : RobolectricTest() {
         val col = col
         val sched = col.sched
         val dconf = col.decks.getConf(1)
-        assertThat(dconf, notNullValue())
-        dconf!!.getJSONObject("new").put("perDay", 10)
+        assertNotNull(dconf)
+        dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)
         for (i in 0..19) {
             val note = col.newNote()
@@ -144,8 +144,8 @@ class AbstractSchedTest : RobolectricTest() {
         val col = col
         val sched = col.sched
         val dconf = col.decks.getConf(1)
-        assertThat(dconf, notNullValue())
-        dconf!!.getJSONObject("new").put("bury", true)
+        assertNotNull(dconf)
+        dconf.getJSONObject("new").put("bury", true)
         col.decks.save(dconf)
         val nbNote = 2
         val notes = arrayOfNulls<Note>(nbNote)
@@ -234,8 +234,8 @@ class AbstractSchedTest : RobolectricTest() {
             val models = col.models
 
             val dconf = mDecks.getConf(1)
-            assertThat(dconf, notNullValue())
-            dconf!!.getJSONObject("new").put("perDay", 0)
+            assertNotNull(dconf)
+            dconf.getJSONObject("new").put("perDay", 0)
             mDecks.save(dconf)
 
             val model = models.byName("Basic")

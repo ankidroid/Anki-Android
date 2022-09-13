@@ -75,7 +75,7 @@ class SchedTest : RobolectricTest() {
         selectNewDeck()
         sched.unburyCardsForDeck(DEFAULT_DECK_ID)
 
-        assertThat("Card should no longer be buried", getCardInDefaultDeck(sched), notNullValue())
+        assertNotNull(getCardInDefaultDeck(sched), "Card should no longer be buried")
     }
 
     @Test
@@ -98,8 +98,8 @@ class SchedTest : RobolectricTest() {
 
     private fun markNextCardAsGood(sched: Sched) {
         val toAnswer: Card? = sched.card
-        assertThat(toAnswer, notNullValue())
-        sched.answerCard(toAnswer!!, BUTTON_TWO) // Good
+        assertNotNull(toAnswer)
+        sched.answerCard(toAnswer, BUTTON_TWO) // Good
     }
 
     @KotlinCleanup("simplify fun with firstOrNull and ?: ")

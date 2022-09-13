@@ -21,17 +21,13 @@ import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
-import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 /**
  * Tests for [Directory]
@@ -40,10 +36,9 @@ class DirectoryTest : Test21And26() {
     @Test
     fun passes_if_existing_directory() {
         val path = createTempDirectory().pathString
-        assertThat(
-            "Directory should work with valid directory",
+        assertNotNull(
             Directory.createInstance(path),
-            not(nullValue())
+            "Directory should work with valid directory",
         )
     }
 

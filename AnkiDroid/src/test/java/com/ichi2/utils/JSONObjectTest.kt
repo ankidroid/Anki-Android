@@ -41,8 +41,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.assertThrowsSubclass
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsNull.notNullValue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -891,7 +889,7 @@ class JSONObjectTest {
     @Test
     fun objectNullIsNotNull() {
         // #6289
-        assertThat(JSONObject.NULL, notNullValue())
+        assertNotNull(JSONObject.NULL)
     }
 
     @Test

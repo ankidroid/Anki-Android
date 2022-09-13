@@ -22,14 +22,13 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirector
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceType.*
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.BeforeClass
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 /**
@@ -56,9 +55,9 @@ class MigrateUserDataJvmTest {
         val preferences = getScopedStorageMigrationPreferences(source = VALID_DIR, destination = VALID_DIR)
         val data = MigrateUserData.createInstance(preferences)
 
-        assertThat("a valid task instance should be created", data, notNullValue())
+        assertNotNull(data, "a valid task instance should be created")
 
-        assertEquals(data!!.source.directory.canonicalPath, sourceDir)
+        assertEquals(data.source.directory.canonicalPath, sourceDir)
         assertEquals(data.destination.directory.canonicalPath, destDir)
     }
 

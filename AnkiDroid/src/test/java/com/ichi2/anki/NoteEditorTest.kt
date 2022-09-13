@@ -38,7 +38,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.not
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,8 +69,8 @@ class NoteEditorTest : RobolectricTest() {
         val noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle")
         assertTrue(noteEditorBundle!!.getBoolean("addNote"), "Bundle set to add note style")
         val fieldsBundle = noteEditorBundle.getBundle("editFields")
-        assertThat("Bundle has fields", fieldsBundle, notNullValue())
-        assertEquals(fieldsBundle!!.getString("0"), "Preview Test", "Bundle has fields edited value")
+        assertNotNull(fieldsBundle, "Bundle has fields")
+        assertEquals(fieldsBundle.getString("0"), "Preview Test", "Bundle has fields edited value")
         assertEquals(noteEditorBundle.getStringArrayList("tags"), ArrayList<String>(), "Bundle has empty tag list")
         assertFalse(intent.intent.hasExtra("ordinal"), "Bundle has no ordinal for ephemeral preview")
         assertTrue(intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), "Bundle has a temporary model saved")

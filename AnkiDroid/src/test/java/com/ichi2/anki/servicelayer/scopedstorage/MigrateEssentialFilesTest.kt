@@ -51,6 +51,7 @@ import kotlin.io.path.Path
 import kotlin.io.path.pathString
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 const val DECK_PATH = "deckPath"
@@ -141,7 +142,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         val invalidSourcePath = createTransientDirectory().absolutePath
         // preliminary check, not part of the test assertion.
         assertThat("source path should be invalid", invalidSourcePath, not(equalTo(col.path)))
-        assertThat(Directory.createInstance(invalidSourcePath), notNullValue())
+        assertNotNull(Directory.createInstance(invalidSourcePath))
         val algo = getAlgorithm(invalidSourcePath, getMigrationDestinationPath())
         val exception = assertThrows<IllegalStateException> { algo.execute() }
         assertThat(exception.message, containsString("paths did not match"))

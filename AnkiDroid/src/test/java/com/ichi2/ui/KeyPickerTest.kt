@@ -20,10 +20,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
 import com.ichi2.testutils.KeyEventUtils
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.sameInstance
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
@@ -37,7 +38,7 @@ class KeyPickerTest : RobolectricTest() {
 
         mKeyPicker.dispatchKeyEvent(getVKey())
 
-        assertThat(mKeyPicker.getBinding(), not(nullValue()))
+        assertNotNull(mKeyPicker.getBinding())
     }
 
     @Test
@@ -54,7 +55,7 @@ class KeyPickerTest : RobolectricTest() {
         mKeyPicker.dispatchKeyEvent(getVKey())
 
         val binding = mKeyPicker.getBinding()
-        assertThat(binding, not(nullValue()))
+        assertNotNull(binding)
 
         mKeyPicker.dispatchKeyEvent(getInvalidEvent())
 
@@ -73,7 +74,7 @@ class KeyPickerTest : RobolectricTest() {
         // now turn it off and ensure it wasn't a fluke
         mKeyPicker.setKeycodeValidation { true }
         mKeyPicker.dispatchKeyEvent(leftShiftPress)
-        assertThat(mKeyPicker.getBinding(), notNullValue())
+        assertNotNull(mKeyPicker.getBinding())
     }
 
     private fun getVKey() = KeyEventUtils.getVKey()

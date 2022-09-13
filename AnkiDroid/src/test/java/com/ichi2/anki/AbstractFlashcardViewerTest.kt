@@ -165,7 +165,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
-        assertThat(viewer.answered, notNullValue())
+        assertNotNull(viewer.answered)
     }
 
     @Test
