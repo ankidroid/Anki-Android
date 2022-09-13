@@ -134,7 +134,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Card Mark
         assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
         reviewer.currentCard!!.note().addTag("marked")
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(true))
+        assertTrue(javaScriptFunction.ankiGetCardMark())
     }
 
     @Test

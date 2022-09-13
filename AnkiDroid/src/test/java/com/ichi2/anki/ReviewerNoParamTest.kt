@@ -21,9 +21,7 @@ import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.cardviewer.Gesture.SWIPE_DOWN
-import com.ichi2.anki.cardviewer.Gesture.SWIPE_RIGHT
-import com.ichi2.anki.cardviewer.Gesture.SWIPE_UP
+import com.ichi2.anki.cardviewer.Gesture.*
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.WhiteboardPenColor
@@ -35,11 +33,13 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import kotlin.test.assertTrue
 
 /** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future  */
 @RunWith(AndroidJUnit4::class)
@@ -169,7 +169,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         enableGesture(SWIPE_RIGHT)
         val reviewer = startReviewerFullScreen()
 
-        assertThat(reviewer.hasDrawerSwipeConflicts(), equalTo(true))
+        assertTrue(reviewer.hasDrawerSwipeConflicts())
     }
 
     @Test
@@ -201,7 +201,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         enableGestureSetting()
         disableConflictGestures()
         val reviewer = startReviewerFullScreen()
-        assertThat("gestures should be enabled", gestureProcessor.isEnabled, equalTo(true))
+        assertTrue(gestureProcessor.isEnabled, "gestures should be enabled")
         assertThat("no conflicts, so no conflicts detected", reviewer.hasDrawerSwipeConflicts(), equalTo(false))
     }
 
@@ -212,8 +212,8 @@ class ReviewerNoParamTest : RobolectricTest() {
         disableConflictGestures()
         enableGesture(SWIPE_UP)
         val reviewer = startReviewerFullScreen()
-        assertThat("gestures should be enabled", gestureProcessor.isEnabled, equalTo(true))
-        assertThat(reviewer.hasDrawerSwipeConflicts(), equalTo(true))
+        assertTrue(gestureProcessor.isEnabled, "gestures should be enabled")
+        assertTrue(reviewer.hasDrawerSwipeConflicts())
     }
 
     @Test
@@ -223,8 +223,8 @@ class ReviewerNoParamTest : RobolectricTest() {
         disableConflictGestures()
         enableGesture(SWIPE_DOWN)
         val reviewer = startReviewerFullScreen()
-        assertThat("gestures should be enabled", gestureProcessor.isEnabled, equalTo(true))
-        assertThat(reviewer.hasDrawerSwipeConflicts(), equalTo(true))
+        assertTrue(gestureProcessor.isEnabled, "gestures should be enabled")
+        assertTrue(reviewer.hasDrawerSwipeConflicts())
     }
 
     @Test
@@ -234,14 +234,14 @@ class ReviewerNoParamTest : RobolectricTest() {
         disableConflictGestures()
         enableGesture(SWIPE_RIGHT)
         val reviewer = startReviewerFullScreen()
-        assertThat("gestures should be enabled", gestureProcessor.isEnabled, equalTo(true))
-        assertThat(reviewer.hasDrawerSwipeConflicts(), equalTo(true))
+        assertTrue(gestureProcessor.isEnabled, "gestures should be enabled")
+        assertTrue(reviewer.hasDrawerSwipeConflicts())
     }
 
     @Test
     fun normalReviewerFitsSystemWindows() {
         val reviewer = startReviewer()
-        assertThat(reviewer.fitsSystemWindows(), equalTo(true))
+        assertTrue(reviewer.fitsSystemWindows())
     }
 
     @Test

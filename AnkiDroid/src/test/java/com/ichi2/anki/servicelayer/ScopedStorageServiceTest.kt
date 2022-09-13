@@ -26,6 +26,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class ScopedStorageServiceTest {
     @Test
@@ -69,7 +71,7 @@ class ScopedStorageServiceTest {
     fun migration_if_both_set() {
         val preferences = getScopedStorageMigrationPreferences(setSource = true, setDestination = true)
 
-        assertThat("migration is in progress if both preferences set", userMigrationIsInProgress(preferences), equalTo(true))
+        assertTrue(userMigrationIsInProgress(preferences), "migration is in progress if both preferences set")
     }
 
     private fun getScopedStorageMigrationPreferences(setSource: Boolean, setDestination: Boolean): SharedPreferences {

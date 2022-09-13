@@ -41,8 +41,7 @@ class BackendEmulatingOpenConflictTest : RobolectricTest() {
 
     @Test
     fun assumeMocksAreValid() {
-        assertThrows(
-            BackendDbLockedException::class.java,
+        assertThrows(BackendDbLockedException::class.java,
             { CollectionHelper.instance.getCol(super.targetContext) }
         )
     }

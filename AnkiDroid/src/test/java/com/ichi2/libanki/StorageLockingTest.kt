@@ -28,6 +28,8 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class StorageLockingTest : RobolectricTest() {
@@ -53,7 +55,7 @@ class StorageLockingTest : RobolectricTest() {
     @Test
     fun lock_sets_value() {
         Storage.lockCollection()
-        assertThat("locking the collection sets isLocked", Storage.isLocked, equalTo(true))
+        assertTrue(Storage.isLocked, "locking the collection sets isLocked")
         Storage.unlockCollection()
         assertThat("unlocking the collection sets isLocked", Storage.isLocked, equalTo(false))
     }

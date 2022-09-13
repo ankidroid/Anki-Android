@@ -32,7 +32,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -42,6 +42,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
@@ -117,9 +118,9 @@ class CreateDeckDialogTest : RobolectricTest() {
         testDialog(DeckDialogType.DECK) {
             assertThat("Ok is disabled if zero length input", positiveButton.isEnabled, equalTo(false))
             input = "NotEmpty"
-            assertThat("Ok is enabled if not zero length input", positiveButton.isEnabled, equalTo(true))
+            assertTrue(positiveButton.isEnabled, "Ok is enabled if not zero length input")
             input = "A::B"
-            assertThat("OK is enabled if fully qualified input provided ('A::B')", positiveButton.isEnabled, equalTo(true))
+            assertTrue(positiveButton.isEnabled, "OK is enabled if fully qualified input provided ('A::B')")
         }
     }
 
@@ -200,7 +201,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             input = "Deck"
             assertThat("Cannot create duplicate deck: (case insensitive: 'Deck')", positiveButton.isEnabled, equalTo(false))
             input = "Deck2"
-            assertThat("Can create deck with new name: 'Deck2'", positiveButton.isEnabled, equalTo(true))
+            assertTrue(positiveButton.isEnabled, "Can create deck with new name: 'Deck2'")
             input = "parent::child"
             assertThat("Can't create fully qualified duplicate deck: 'parent::child'", positiveButton.isEnabled, equalTo(false))
         }
@@ -213,7 +214,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         val parentDeckId = col.decks.byName("parent")!!.getLong("id")
         testDialog(DeckDialogType.SUB_DECK, parentDeckId) {
             input = "parent"
-            assertThat("'parent::parent' should be valid", positiveButton.isEnabled, equalTo(true))
+            assertTrue(positiveButton.isEnabled, "'parent::parent' should be valid")
             input = "child"
             assertThat("'parent::child' already exists so should be invalid", positiveButton.isEnabled, equalTo(false))
             input = "Child"
@@ -245,7 +246,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             callback(CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)) {
                 assertionCalled.set(true)
             }
-            assertThat("no call to assertionCalled()", assertionCalled.get(), equalTo(true))
+            assertTrue(assertionCalled.get(), "no call to assertionCalled()")
         }
     }
 

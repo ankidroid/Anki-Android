@@ -21,12 +21,13 @@ import com.ichi2.async.CollectionTask.ImportReplace
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.BackupManagerTestUtilities
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class BackupManagerIntegrationTest : RobolectricTest() {
@@ -50,13 +51,12 @@ class BackupManagerIntegrationTest : RobolectricTest() {
     private fun createBackup(): String {
         return try {
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
-            assertThat(
-                "Backup should work",
+            assertTrue(
                 BackupManager.performBackupInBackground(
                     col.path,
                     TimeManager.time
                 ),
-                equalTo(true)
+                "Backup should work",
             )
             spinUntilBackupExists(1000)
         } finally {

@@ -26,6 +26,7 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -38,13 +39,13 @@ class AutomaticAnswerTest {
         answer.delayedShowQuestion(0)
         answer.delayedShowAnswer(0)
 
-        assertThat("it should have messages", answer.timeoutHandler.hasMessages(0), equalTo(true))
+        assertTrue(answer.timeoutHandler.hasMessages(0), "it should have messages")
         assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
 
         answer.disable()
 
         assertThat("it should not have messages", answer.timeoutHandler.hasMessages(0), equalTo(false))
-        assertThat("answer should be disabled", answer.isDisabled, equalTo(true))
+        assertTrue(answer.isDisabled, "answer should be disabled")
     }
 
     @Test
@@ -72,7 +73,7 @@ class AutomaticAnswerTest {
         val answer = validAnswer(automaticallyAnsweredMock())
         assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
         answer.disable()
-        assertThat("answer should be disabled", answer.isDisabled, equalTo(true))
+        assertTrue(answer.isDisabled, "answer should be disabled")
         answer.enable()
         assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
     }
@@ -85,11 +86,11 @@ class AutomaticAnswerTest {
 
         answer.scheduleAutomaticDisplayAnswer()
         waitForTaskCompletion()
-        assertThat("answer should be shown", answerValue.answerShown, equalTo(true))
+        assertTrue(answerValue.answerShown, "answer should be shown")
 
         answer.scheduleAutomaticDisplayQuestion()
         waitForTaskCompletion()
-        assertThat("question should be shown", answerValue.questionShown, equalTo(true))
+        assertTrue(answerValue.questionShown, "question should be shown")
     }
 
     @Test

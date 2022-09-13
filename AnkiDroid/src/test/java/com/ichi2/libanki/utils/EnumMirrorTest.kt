@@ -38,11 +38,11 @@ package com.ichi2.libanki.utils
 //
 //        @Suppress("unchecked_cast")
 //        fun getClass(clazz: KClass<*>): TestData {
-//            assertThat("target class should be an enum", clazz.java.isEnum, equalTo(true))
+//            assertTrue(clazz.java.isEnum, "target class should be an enum")
 //            val annotation = clazz.findAnnotation<EnumMirror>()
 //            assertThat("target class should have @EnumMirror", annotation, notNullValue())
 //            val annotatedClass = annotation!!.value
-//            assertThat("mirror target should be an enum", annotatedClass.java.isEnum, equalTo(true))
+//            assertTrue(annotatedClass.java.isEnum, "mirror target should be an enum")
 //
 //            return TestData(clazz as KClass<out Enum<*>>, annotatedClass as KClass<out Enum<*>>)
 //        }

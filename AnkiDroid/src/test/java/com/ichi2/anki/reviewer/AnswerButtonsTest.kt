@@ -23,6 +23,7 @@ import com.ichi2.anki.reviewer.AnswerButtons.Companion.canAnswerHard
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertTrue
 
 class AnswerButtonsTest {
 
@@ -44,7 +45,7 @@ class AnswerButtonsTest {
         assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
         assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
 
-        assertThat("easy", canAnswerEasy(numberOfButtons), equalTo(true))
+        assertTrue(canAnswerEasy(numberOfButtons), "easy")
     }
 
     @Test
@@ -56,7 +57,7 @@ class AnswerButtonsTest {
         assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
         assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE4))
 
-        assertThat("easy", canAnswerEasy(numberOfButtons), equalTo(true))
-        assertThat("hard", canAnswerHard(numberOfButtons), equalTo(true))
+        assertTrue(canAnswerEasy(numberOfButtons), "easy")
+        assertTrue(canAnswerHard(numberOfButtons), "hard")
     }
 }

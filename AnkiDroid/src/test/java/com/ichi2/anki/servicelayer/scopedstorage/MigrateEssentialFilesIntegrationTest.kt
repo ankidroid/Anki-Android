@@ -40,6 +40,8 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 /**
  * Test for [MigrateEssentialFiles.migrateEssentialFiles]
@@ -82,7 +84,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
         migrateEssentialFiles()
 
         // assert the collection is open, working, and has been moved to the outPath
-        assertThat(col.basicCheck(), equalTo(true))
+        assertTrue(col.basicCheck())
         assertThat(col.path, equalTo(File(destinationPath, "collection.anki2").canonicalPath))
 
         assertMigrationInProgress()
@@ -129,7 +131,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     @Test
     fun fails_if_destination_is_not_empty() {
         destinationPath.mkdirs()
-        assertThat("destination should exist ($destinationPath)", destinationPath.exists(), equalTo(true))
+        assertTrue(destinationPath.exists(), "destination should exist ($destinationPath)")
 
         FileOutputStream(File(destinationPath, "hello.txt")).use {
             it.write(1)

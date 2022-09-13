@@ -66,13 +66,13 @@ class NoteEditorTest : RobolectricTest() {
         n.performPreview()
         val intent = shadowOf(n).nextStartedActivityForResult
         val noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle")
-        assertThat("Bundle set to add note style", noteEditorBundle!!.getBoolean("addNote"), equalTo(true))
+        assertTrue(noteEditorBundle!!.getBoolean("addNote"), "Bundle set to add note style")
         val fieldsBundle = noteEditorBundle.getBundle("editFields")
         assertThat("Bundle has fields", fieldsBundle, notNullValue())
         assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
         assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), equalTo(true))
+        assertTrue(intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), "Bundle has a temporary model saved")
     }
 
     @Test
@@ -307,7 +307,7 @@ class NoteEditorTest : RobolectricTest() {
     fun defaultsToCapitalized() {
         // Requested in #3758, this seems like a sensible default
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        assertThat("Fields should have their first word capitalized by default", editor.getFieldForTest(0).isCapitalized, equalTo(true))
+        assertTrue(editor.getFieldForTest(0).isCapitalized, "Fields should have their first word capitalized by default")
     }
 
     @Test

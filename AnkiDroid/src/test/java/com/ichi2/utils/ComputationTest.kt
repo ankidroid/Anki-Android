@@ -20,12 +20,14 @@ import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class ComputationTest {
     @Test
     fun valueIsSuccess() {
         val asNull = Computation.ok(1)
-        assertThat(asNull.succeeded(), equalTo(true))
+        assertTrue(asNull.succeeded())
         assertThat(asNull.value, equalTo(1))
     }
 

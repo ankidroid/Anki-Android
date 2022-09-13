@@ -35,6 +35,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Ignore("flaky in ci")
@@ -58,7 +59,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         val command = ViewerCommand.SHOW_ANSWER
         prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
-        assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
+        assertTrue(prefs.contains(testData.affectedPreferenceKey))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
         assertThat("example command should have no defaults", MappableBinding.fromPreference(prefs, command), empty())
 
@@ -67,13 +68,13 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertThat(changedKeys, containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
-        assertThat("new preference added", prefs.contains(command.preferenceKey), equalTo(true))
+        assertTrue(prefs.contains(command.preferenceKey), "new preference added")
 
         val fromPreference = MappableBinding.fromPreference(prefs, command)
         assertThat(fromPreference, hasSize(1))
         val binding = fromPreference.first()
 
-        assertThat("should be a key binding", binding.isKey, equalTo(true))
+        assertTrue(binding.isKey, "should be a key binding")
         assertThat("binding should match", binding, equalTo(MappableBinding(keyCode(testData.keyCode), Reviewer(CardSide.BOTH))))
     }
 
@@ -85,7 +86,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         val command = ViewerCommand.EDIT
         prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
-        assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
+        assertTrue(prefs.contains(testData.affectedPreferenceKey))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
         assertThat("new preference does not exist", prefs.contains(command.preferenceKey), equalTo(false))
         val previousCommands = MappableBinding.fromPreference(prefs, command)
@@ -96,7 +97,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertThat(changedKeys, containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
-        assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
+        assertTrue(prefs.contains(command.preferenceKey), "new preference exists")
 
         val currentCommands = MappableBinding.fromPreference(prefs, command)
         assertThat("a binding was added to '${command.preferenceKey}'", currentCommands, hasSize(previousCommands.size + 1))
@@ -108,7 +109,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         val addedBinding = currentCommands.last()
 
-        assertThat("last should be a key binding", addedBinding.isKey, equalTo(true))
+        assertTrue(addedBinding.isKey, "last should be a key binding")
         assertThat("last binding should match", addedBinding, equalTo(testData.binding))
     }
 
@@ -122,9 +123,9 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
-        assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
+        assertTrue(prefs.contains(testData.affectedPreferenceKey))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
-        assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
+        assertTrue(prefs.contains(command.preferenceKey), "new preference exists")
         val previousCommands = MappableBinding.fromPreference(prefs, command)
         assertThat("example command should have defaults", previousCommands, hasSize(2))
         assertThat(previousCommands.first(), equalTo(testData.binding))
@@ -134,7 +135,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertThat("Binding gestures should not be changed", changedKeys, contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
-        assertThat("new preference still exists", prefs.contains(command.preferenceKey), equalTo(true))
+        assertTrue(prefs.contains(command.preferenceKey), "new preference still exists")
     }
 
     @Test

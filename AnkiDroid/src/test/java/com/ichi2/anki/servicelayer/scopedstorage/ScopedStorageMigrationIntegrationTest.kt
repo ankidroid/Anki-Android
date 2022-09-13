@@ -35,6 +35,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 // PERF: Some of these do not need a collection
@@ -72,7 +73,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
         val result = underTest.execTask()
 
-        assertThat("execution of user data should succeed", result, equalTo(true))
+        assertTrue(result, "execution of user data should succeed")
 
         // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
         underTest.integrationAssertOnlyIntendedFilesRemain()
@@ -124,7 +125,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         val result = underTest.execTask()
 
-        assertThat("migrating empty folder should succeed", result, equalTo(true))
+        assertTrue(result, "migrating empty folder should succeed")
     }
 
     /**
@@ -144,7 +145,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         assertThat("expect to have conflict/maybeConflicted.log in source (file & folder)", underTest.sourceFilesCount, equalTo(2))
         assertThat(underTest.conflictedFilePaths.single(), anyOf(endsWith("/conflict/maybeConflicted.log"), endsWith("\\conflict\\maybeConflicted.log")))
 
-        assertThat("even with a conflict, the operation should succeed", result, equalTo(true))
+        assertTrue(result, "even with a conflict, the operation should succeed")
     }
 
     @Test
@@ -172,7 +173,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         underTest.execTask()
 
-        assertThat("test exception should be raised", executorWithNonEmpty.called, equalTo(true))
+        assertTrue(executorWithNonEmpty.called, "test exception should be raised")
 
         assertThat(
             "collection media should be deleted on retry if empty",
@@ -200,7 +201,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         val result = underTest.execTask()
 
-        assertThat("operation should succeed", result, equalTo(true))
+        assertTrue(result, "operation should succeed")
         assertThat("an external retry occurred", underTest.externalRetries, equalTo(1))
     }
 

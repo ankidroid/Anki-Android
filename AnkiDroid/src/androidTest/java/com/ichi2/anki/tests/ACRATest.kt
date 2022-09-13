@@ -253,7 +253,7 @@ class ACRATest : InstrumentedTest() {
         val config = CrashReportService.getAcraCoreConfigBuilder().build()
         for (configuration in config.pluginConfigurations()) {
             if (configuration.javaClass.toString().contains("Toast")) {
-                assertThat("Toast should be enabled", configuration.enabled(), equalTo(true))
+                assertTrue(configuration.enabled(), "Toast should be enabled")
             }
         }
     }

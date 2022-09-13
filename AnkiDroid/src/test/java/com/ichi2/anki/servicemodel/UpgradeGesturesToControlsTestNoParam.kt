@@ -29,6 +29,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
@@ -66,8 +67,8 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         prefs.edit { putString(PREF_KEY_VOLUME_UP, "0") }
         prefs.edit { putString(PREF_KEY_VOLUME_DOWN, "0") }
 
-        assertThat(prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(true))
-        assertThat(prefs.contains(PREF_KEY_VOLUME_UP), equalTo(true))
+        assertTrue(prefs.contains(PREF_KEY_VOLUME_DOWN))
+        assertTrue(prefs.contains(PREF_KEY_VOLUME_UP))
 
         upgradeAllGestures()
 

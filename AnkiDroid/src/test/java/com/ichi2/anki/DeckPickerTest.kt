@@ -20,7 +20,7 @@ import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
@@ -30,11 +30,11 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import java.io.File
-import java.lang.Exception
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -309,10 +309,9 @@ class DeckPickerTest : RobolectricTest() {
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
-            assertThat(
-                "Analytics opt-in should be displayed",
+            assertTrue(
                 d.displayedAnalyticsOptIn,
-                equalTo(true)
+                "Analytics opt-in should be displayed",
             )
         } finally {
             revokeWritePermissions()
@@ -415,11 +414,10 @@ class DeckPickerTest : RobolectricTest() {
                 "Collection should now be open",
                 CollectionHelper.instance.colIsOpen()
             )
-            assertThat(
+            assertTrue(
                 CollectionType.SCHEMA_V_16.isCollection(
                     col
-                ),
-                equalTo(true)
+                )
             )
             assertThat(
                 "Decks should be visible",
@@ -480,7 +478,7 @@ class DeckPickerTest : RobolectricTest() {
                 equalTo(250)
             )
         } catch (e: UnknownDatabaseVersionException) {
-            assertThat("no exception should be thrown", false, equalTo(true))
+            assertTrue(false, "no exception should be thrown")
         } finally {
             InitialActivityWithConflictTest.setupForDefault()
         }
@@ -509,10 +507,9 @@ class DeckPickerTest : RobolectricTest() {
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
-        assertThat(
-            "Deck is being displayed",
+        assertTrue(
             deckPicker.hasAtLeastOneDeckBeingDisplayed(),
-            equalTo(true)
+            "Deck is being displayed",
         )
     }
 
@@ -535,7 +532,7 @@ class DeckPickerTest : RobolectricTest() {
         // load asset into temp
         val path = ResourceLoader.getTempCollection(targetContext, collectionType.assetFile)
         val p = File(path)
-        assertThat(p.isFile, equalTo(true))
+        assertTrue(p.isFile)
         val collectionDirectory = p.parent
 
         // set collection path

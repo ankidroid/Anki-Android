@@ -28,6 +28,8 @@ import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 /**
  * Tests for [Directory]
@@ -100,10 +102,9 @@ class DirectoryTest : Test21And26() {
     fun has_files_is_true_if_file() {
         val dir = createValidTempDir()
         IOUtils.writeStringToFile(File(dir.directory, "aa.txt"), "aa")
-        assertThat(
-            "non-empty directory should have files",
+        assertTrue(
             dir.hasFiles(),
-            equalTo(true)
+            "non-empty directory should have files",
         )
     }
 

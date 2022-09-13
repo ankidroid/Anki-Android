@@ -24,7 +24,6 @@ import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ExceptionUtil.getFullStackTrace
-import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +33,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
 import java.util.stream.Collectors
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -91,9 +91,9 @@ $stackTrace"""
         // Note: Robolectric differs from actual Android (process is not killed).
         // But we get the main idea: onCreate() doesn't throw an exception and is handled.
         // and onDestroy() is also called in the real implementation on my phone.
-        assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, equalTo(true))
+        assertTrue(controller.get()!!.isFinishing, "If a backup was taking place, the activity should be finishing")
         controller.destroy()
-        assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get()!!.isDestroyed, equalTo(true))
+        assertTrue(controller.get()!!.isDestroyed, "If a backup was taking place, the activity should be destroyed successfully")
     }
 
     private fun notYetHandled(activityName: String, reason: String) {

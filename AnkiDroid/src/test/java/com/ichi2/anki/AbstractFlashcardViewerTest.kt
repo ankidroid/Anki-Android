@@ -161,7 +161,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         assertThat("Displaying question", viewer.isDisplayingAnswer, equalTo(false))
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
-        assertThat("Displaying answer", viewer.isDisplayingAnswer, equalTo(true))
+        assertTrue(viewer.isDisplayingAnswer, "Displaying answer")
 
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
@@ -198,7 +198,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val viewer = controller.get()
         assertThat("not disabled initially", viewer.automaticAnswer.isDisabled, equalTo(false))
         controller.pause()
-        assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
+        assertTrue(viewer.automaticAnswer.isDisabled, "disabled after pause")
         controller.resume()
         assertThat("enabled after resume", viewer.automaticAnswer.isDisabled, equalTo(false))
     }
@@ -209,9 +209,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val viewer = controller.get()
         viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
-        assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
+        assertTrue(viewer.hasAutomaticAnswerQueued(), "messages after flipping card")
         controller.pause()
-        assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
+        assertTrue(viewer.automaticAnswer.isDisabled, "disabled after pause")
         assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
         viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
         assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))

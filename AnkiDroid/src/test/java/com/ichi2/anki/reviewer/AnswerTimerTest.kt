@@ -31,6 +31,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.*
 import org.robolectric.annotation.Config
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -77,7 +78,7 @@ class AnswerTimerTest {
             timer.setupForCard(card)
         }
 
-        assertThat("timer should be enabled", timer.showTimer, equalTo(true))
+        assertTrue(timer.showTimer, "timer should be enabled")
         assertThat("Time limit should be 12 minutes", timer.limit, equalTo(12))
 
         verify(chronometer).start()
@@ -101,7 +102,7 @@ class AnswerTimerTest {
         }
 
         timer.setupForCard(timerCard)
-        assertThat("timer should be enabled", timer.showTimer, equalTo(true))
+        assertTrue(timer.showTimer, "timer should be enabled")
         assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
 
         timer.setupForCard(nonTimerCard)
@@ -110,7 +111,7 @@ class AnswerTimerTest {
         assertThat("chronometer should not be visible", chronometer.visibility, equalTo(View.INVISIBLE))
 
         timer.setupForCard(timerCard)
-        assertThat("timer should be enabled", timer.showTimer, equalTo(true))
+        assertTrue(timer.showTimer, "timer should be enabled")
         assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
     }
 

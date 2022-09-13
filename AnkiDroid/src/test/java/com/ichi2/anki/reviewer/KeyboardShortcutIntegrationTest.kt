@@ -38,6 +38,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import java.io.IOException
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class KeyboardShortcutIntegrationTest : RobolectricTest() {
@@ -150,14 +151,14 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
     }
 
     private fun setupPlayerMock(): AudioPlayer {
-        assertThat(mReviewer.openMicToolbar(), equalTo(true))
+        assertTrue(mReviewer.openMicToolbar())
         return mock(AudioPlayer::class.java).also {
             mReviewer.audioView!!.setPlayer(it)
         }
     }
 
     private fun setupRecorderMock(): AudioRecorder {
-        assertThat(mReviewer.openMicToolbar(), equalTo(true))
+        assertTrue(mReviewer.openMicToolbar())
         return mock(AudioRecorder::class.java).also {
             mReviewer.audioView!!.setRecorder(it)
         }

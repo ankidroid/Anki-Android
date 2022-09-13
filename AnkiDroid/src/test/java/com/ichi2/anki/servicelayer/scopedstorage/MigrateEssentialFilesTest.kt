@@ -42,10 +42,15 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.kotlin.*
+import org.mockito.kotlin.KStubbing
+import org.mockito.kotlin.any
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 const val DECK_PATH = "deckPath"
 
@@ -90,7 +95,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         val outPath = executeAlgorithmSuccessfully(collectionSourcePath)
 
         // assert the collection is open, working, and has been moved to the outPath
-        assertThat(col.basicCheck(), equalTo(true))
+        assertTrue(col.basicCheck())
         assertThat(col.path, equalTo(File(outPath, "collection.anki2").canonicalPath))
 
         assertMigrationInProgress()
@@ -162,7 +167,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
                 Mockito
                     .doAnswer {
                         called = true
-                        assertThat("collection should be locked", Storage.isLocked, equalTo(true))
+                        assertTrue(Storage.isLocked, "collection should be locked")
                         throw TestException("")
                     }
                     .whenever(it)
@@ -170,7 +175,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
             }
         }
 
-        assertThat("mock was unused", called, equalTo(true))
+        assertTrue(called, "mock was unused")
         assertThat("the collection is no longer locked", Storage.isLocked, equalTo(false))
     }
 

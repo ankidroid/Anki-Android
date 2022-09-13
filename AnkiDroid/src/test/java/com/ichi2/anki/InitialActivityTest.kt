@@ -31,6 +31,7 @@ import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.times
 import org.mockito.kotlin.never
 import org.robolectric.annotation.Config
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
@@ -46,7 +47,7 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun perform_setup_returns_true_after_first_launch_or_data_wipe() {
         val result = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(mSharedPreferences)
-        assertThat(result, equalTo(true))
+        assertTrue(result)
     }
 
     @Test
@@ -71,7 +72,7 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun latest_version_upgrade_is_now_latest_version() {
         InitialActivity.setUpgradedToLatestVersion(mSharedPreferences)
-        assertThat(InitialActivity.isLatestVersion(mSharedPreferences), equalTo(true))
+        assertTrue(InitialActivity.isLatestVersion(mSharedPreferences))
     }
 
     @Test
@@ -96,7 +97,7 @@ class InitialActivityTest : RobolectricTest() {
     fun perform_setup_integration_test() {
         val sharedPrefs = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext())
         val initialSetupResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext()))
-        assertThat(initialSetupResult, equalTo(true))
+        assertTrue(initialSetupResult)
         val secondResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(sharedPrefs)
         assertThat("should not perform initial setup if setup has already occurred", secondResult, equalTo(false))
     }

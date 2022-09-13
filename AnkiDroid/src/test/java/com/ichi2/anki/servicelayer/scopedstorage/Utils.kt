@@ -22,9 +22,10 @@ import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.libanki.Media
 import org.acra.util.IOUtils
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
 import java.io.File
+import kotlin.test.assertTrue
 
 /** Adds a media file to collection.media which [Media] is not aware of */
 @CheckResult
@@ -53,7 +54,7 @@ internal fun RobolectricTest.addUntrackedMediaFile(content: String, path: List<S
     addUntrackedMediaFile(col.media, content, path)
 
 fun RobolectricTest.assertMigrationInProgress() {
-    assertThat("the migration should be in progress", ScopedStorageService.userMigrationIsInProgress(this.targetContext), equalTo(true))
+    assertTrue(ScopedStorageService.userMigrationIsInProgress(this.targetContext), "the migration should be in progress")
 }
 
 fun RobolectricTest.assertMigrationNotInProgress() {

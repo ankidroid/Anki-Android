@@ -38,6 +38,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
@@ -61,7 +62,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun preference_upgrade_leads_to_max_version_in_preferences() {
         val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
-        assertThat("preferences were upgraded", result, equalTo(true))
+        assertTrue(result, "preferences were upgraded")
         val version = PreferenceUpgrade.getPreferenceVersion(mPrefs)
         PreferenceUpgradeService.setPreferencesUpToDate(mPrefs)
         val secondVersion = PreferenceUpgrade.getPreferenceVersion(mPrefs)
@@ -71,7 +72,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun two_upgrades_does_nothing() {
         val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
-        assertThat("preferences were upgraded", result, equalTo(true))
+        assertTrue(result, "preferences were upgraded")
         val secondResult = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
         assertThat("a second preference upgrade does nothing", secondResult, equalTo(false))
     }

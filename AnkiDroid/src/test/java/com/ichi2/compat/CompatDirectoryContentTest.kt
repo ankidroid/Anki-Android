@@ -24,6 +24,8 @@ import org.junit.Test
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class CompatDirectoryContentTest : Test21And26() {
 
@@ -54,7 +56,7 @@ class CompatDirectoryContentTest : Test21And26() {
         val iterator = compat.contentOfDirectory(directory)
         val found = Array(3) { false }
         for (i in 1..3) {
-            assertThat("Iterator should have a $i-th element", iterator.hasNext(), equalTo(true))
+            assertTrue(iterator.hasNext(), "Iterator should have a $i-th element")
             val file = iterator.next()
             val fileNumber = when (file.name) {
                 "zero" -> 0

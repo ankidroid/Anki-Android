@@ -23,6 +23,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class ParserTest : RobolectricTest() {
@@ -66,9 +68,8 @@ class ParserTest : RobolectricTest() {
     }
 
     private fun testParsingIsEmpty(template: String, vararg nonempty_fields: String) {
-        assertThat(
+        assertTrue(
             ParsedNode.parse_inner(template).template_is_empty(*nonempty_fields),
-            equalTo(true)
         )
     }
 
@@ -81,7 +82,7 @@ class ParserTest : RobolectricTest() {
 
     @Test
     fun test_emptiness() {
-        /* In the comment below, I assume Testi is the field FOOi in position i*/
+        /* In the comment below, I assume Testi is the field FOOi in position i*/
 
         // No field. Req was `("none", [], [])`
         testParsingIsEmpty("")

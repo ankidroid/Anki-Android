@@ -32,6 +32,7 @@ import org.junit.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
 import java.util.concurrent.locks.Lock
+import kotlin.test.assertTrue
 
 @RequiresApi(api = Build.VERSION_CODES.O) // onRenderProcessGone & RenderProcessGoneDetail
 class OnRenderProcessGoneDelegateTest {
@@ -43,7 +44,7 @@ class OnRenderProcessGoneDelegateTest {
         callOnRenderProcessGone(delegate)
 
         verify(mock, times(1)).displayCardQuestion()
-        assertThat(delegate.displayedToast, equalTo(true))
+        assertTrue(delegate.displayedToast)
     }
 
     @Test
@@ -63,7 +64,7 @@ class OnRenderProcessGoneDelegateTest {
                 .description("displayCardQuestion should not be called again as the screen should close")
         )
             .displayCardQuestion()
-        assertThat(delegate.displayedDialog, equalTo(true))
+        assertTrue(delegate.displayedDialog)
         verify(mock, times(1).description("After the dialog, the screen should be closed")).finishWithoutAnimation()
     }
 
@@ -108,7 +109,7 @@ class OnRenderProcessGoneDelegateTest {
         verify(mock, times(1)).destroyWebViewFrame()
         verify(mock, never()).recreateWebViewFrame()
 
-        assertThat("A toast should be displayed", delegate.displayedToast, equalTo(true))
+        assertTrue(delegate.displayedToast, "A toast should be displayed")
         verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
     }
 
@@ -134,7 +135,7 @@ class OnRenderProcessGoneDelegateTest {
     @KotlinCleanup("webview nullability")
     private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl, webView: WebView?) {
         val result = delegate.onRenderProcessGone(webView!!, crashDetail)
-        assertThat("onRenderProcessGone should only return false if we want the app killed", result, equalTo(true))
+        assertTrue(result, "onRenderProcessGone should only return false if we want the app killed")
     }
 
     private val minimisedViewer: AbstractFlashcardViewer

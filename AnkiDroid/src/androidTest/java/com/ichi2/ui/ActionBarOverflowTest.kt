@@ -21,20 +21,19 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.reflect.InvocationTargetException
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class ActionBarOverflowTest {
     @Test
     fun hasValidActionBarReflectionMethod() {
-        assertThat(
-            "Ensures that there is a valid way to obtain a listener",
-            ActionBarOverflow.hasUsableMethod(), equalTo(true)
+        assertTrue(
+            ActionBarOverflow.hasUsableMethod(), "Ensures that there is a valid way to obtain a listener",
         )
     }
 

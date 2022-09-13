@@ -26,6 +26,8 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 /** Tests for [Compat.hasFiles] */
 class CompatHasFilesTest : Test21And26() {
@@ -33,7 +35,7 @@ class CompatHasFilesTest : Test21And26() {
     @Test
     fun has_files_with_file() {
         val dir = createTransientDirectory().withTempFile("aa.txt")
-        assertThat("empty directory has no files", hasFiles(dir), equalTo(true))
+        assertTrue(hasFiles(dir), "empty directory has no files")
     }
 
     @Test

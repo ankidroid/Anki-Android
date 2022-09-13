@@ -19,14 +19,13 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockedStatic
 import org.mockito.Mockito.*
 import timber.log.Timber
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @SuppressLint("LogNotTimber", "LogConditional")
@@ -118,6 +117,6 @@ class ProductionCrashReportingTreeTest {
             testWithProperClassName(it)
         }
 
-        assertThat(testWithProperClassNameCalled, equalTo(true))
+        assertTrue(testWithProperClassNameCalled)
     }
 }

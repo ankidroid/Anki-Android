@@ -35,6 +35,8 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import timber.log.Timber
 import java.io.File
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), OperationTest {
@@ -59,7 +61,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
             .execute()
 
         assertThat("source file should no longer exist", source.file.exists(), equalTo(false))
-        assertThat("destination file should exist", destinationFile.exists(), equalTo(true))
+        assertTrue(destinationFile.exists(), "destination file should exist")
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
         assertProgressReported(size)
@@ -76,7 +78,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         MoveFile(source, destinationFile).execute()
 
         assertThat("source file should no longer exist", source.file.exists(), equalTo(false))
-        assertThat("destination file should exist", destinationFile.exists(), equalTo(true))
+        assertTrue(destinationFile.exists(), "destination file should exist")
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
         assertProgressReported(size)
@@ -96,7 +98,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
             .execute()
 
         assertThat("copy should have failed, destination should not exist", destinationFile.exists(), equalTo(false))
-        assertThat("source file should still exist", source.file.exists(), equalTo(true))
+        assertTrue(source.file.exists(), "source file should still exist")
 
         val exception = getSingleThrownException()
         assertThat(exception.message, containsString("Failed to copy file to"))
@@ -118,7 +120,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
                 .execute()
         }
         assertThat("copy should have failed, destination should not exist", destinationFile.exists(), equalTo(false))
-        assertThat("source file should still exist", source.file.exists(), equalTo(true))
+        assertTrue(source.file.exists(), "source file should still exist")
         assertThat("source content is unchanged", getContent(source.file), equalTo("hello-world"))
         assertThat(exception.message, containsString("test-copyFile()"))
     }
@@ -149,14 +151,14 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         val size = source.length()
 
-        assertThat("destination should exist", destinationFile.exists(), equalTo(true))
-        assertThat("source file should exist", source.file.exists(), equalTo(true))
+        assertTrue(destinationFile.exists(), "destination should exist")
+        assertTrue(source.file.exists(), "source file should exist")
 
         MoveFile(source, destinationFile)
             .execute()
 
         assertThat("source file should be deleted", source.file.exists(), equalTo(false))
-        assertThat("destination file should not be deleted", destinationFile.exists(), equalTo(true))
+        assertTrue(destinationFile.exists(), "destination file should not be deleted")
         assertThat("progress was reported", executionContext.progress.single(), equalTo(size))
     }
 
@@ -172,8 +174,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
             .execute()
 
-        assertThat("source should still exist", source.file.exists(), equalTo(true))
-        assertThat("destination should still exist", destinationFile.exists(), equalTo(true))
+        assertTrue(source.file.exists(), "source should still exist")
+        assertTrue(destinationFile.exists(), "destination should still exist")
 
         val ex = executionContext.exceptions.single()
         assertThat(ex.message, containsString("test-deleteFile()"))
@@ -219,10 +221,9 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val destinationDirectoryToDelete = createTransientDirectory("toDelete")
         val sourceNotExist = DiskFile.createInstanceUnsafe(File(sourceDirectoryToDelete, "deletedDirectory-in.txt"))
         val destinationFileNotExist = File(destinationDirectoryToDelete, "deletedDirectory-out.txt")
-        assertThat(
-            "deletion should work",
+        assertTrue(
             sourceDirectoryToDelete.delete() && destinationDirectoryToDelete.delete(),
-            equalTo(true)
+            "deletion should work",
         )
 
         val exception = assertThrows<MissingDirectoryException> {
@@ -252,8 +253,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
 
         Timber.d("delete should have failed")
-        assertThat("source exists", source.file.exists(), equalTo(true))
-        assertThat("destination exists", destinationFile.exists(), equalTo(true))
+        assertTrue(source.file.exists(), "source exists")
+        assertTrue(destinationFile.exists(), "destination exists")
 
         MoveFile(source, destinationFile)
             .execute()
@@ -261,7 +262,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         // delete now works, BUT the file was already copied
 
         assertThat("source file should no longer exist", source.file.exists(), equalTo(false))
-        assertThat("destination file should exist", destinationFile.exists(), equalTo(true))
+        assertTrue(destinationFile.exists(), "destination file should exist")
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
         assertProgressReported(size)
@@ -278,8 +279,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val exception = executionContext.exceptions[0]
         assertThat("An exception should be of the correct type", exception, instanceOf(FileDirectoryConflictException::class.java))
 
-        assertThat("source file should still exist", source.file.exists(), equalTo(true))
-        assertThat("destination file should exist", destination.exists(), equalTo(true))
+        assertTrue(source.file.exists(), "source file should still exist")
+        assertTrue(destination.exists(), "destination file should exist")
         assertThat("content should not have changed", getContent(source.file), equalTo("hello"))
     }
 

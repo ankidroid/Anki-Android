@@ -42,10 +42,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.*
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
-import kotlin.test.fail
+import kotlin.test.*
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserTest : RobolectricTest() {
@@ -71,7 +68,7 @@ class CardBrowserTest : RobolectricTest() {
     fun selectAllIsVisibleWhenCardsInDeck() {
         val browser = browserWithMultipleNotes
         assertThat(browser.cardCount(), greaterThan(0L))
-        assertThat(browser.isShowingSelectAll, equalTo(true))
+        assertTrue(browser.isShowingSelectAll)
     }
 
     @Test
@@ -85,35 +82,35 @@ class CardBrowserTest : RobolectricTest() {
     fun selectNoneIsVisibleOnceSelectAllCalled() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
-        assertThat(browser.isShowingSelectNone, equalTo(true))
+        assertTrue(browser.isShowingSelectNone)
     }
 
     @Test
     fun selectNoneIsVisibleWhenSelectingOne() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
-        assertThat(browser.isShowingSelectNone, equalTo(true))
+        assertTrue(browser.isShowingSelectNone)
     }
 
     @Test
     fun selectAllIsVisibleWhenSelectingOne() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
-        assertThat(browser.isShowingSelectAll, equalTo(true))
+        assertTrue(browser.isShowingSelectAll)
     }
 
     @Test
     fun browserIsInMultiSelectModeWhenSelectingOne() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
-        assertThat(browser.isInMultiSelectMode, equalTo(true))
+        assertTrue(browser.isInMultiSelectMode)
     }
 
     @Test
     fun browserIsInMultiSelectModeWhenSelectingAll() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
-        assertThat(browser.isInMultiSelectMode, equalTo(true))
+        assertTrue(browser.isInMultiSelectMode)
     }
 
     @Test
@@ -147,9 +144,9 @@ class CardBrowserTest : RobolectricTest() {
         // ASSERT
         assertThat(browser.cardCount(), equalTo(6L))
         assertThat("A checked card should have been removed", browser.checkedCardCount(), equalTo(3))
-        assertThat("Checked card before should not have changed", browser.hasCheckedCardAtPosition(1), equalTo(true))
-        assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(3), equalTo(true))
-        assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(4), equalTo(true))
+        assertTrue(browser.hasCheckedCardAtPosition(1), "Checked card before should not have changed")
+        assertTrue(browser.hasCheckedCardAtPosition(3), "Checked card after should have changed by 2 places")
+        assertTrue(browser.hasCheckedCardAtPosition(4), "Checked card after should have changed by 2 places")
     }
 
     @Test
@@ -381,7 +378,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.selectAllDecks()
 
-        assertThat("All decks should be selected", b.hasSelectedAllDecks(), equalTo(true))
+        assertTrue(b.hasSelectedAllDecks(), "All decks should be selected")
 
         val addIntent = b.addNoteIntent
 

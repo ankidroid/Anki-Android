@@ -22,11 +22,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.HandlerUtils
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.closeTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -37,7 +38,7 @@ class HandlerUtilsTest {
         var value = false
         HandlerUtils.executeFunctionUsingHandler { value = true }
         runUiThreadTasksIncludingDelayedTasks()
-        assertThat("Function was executed", value, equalTo(true))
+        assertTrue(value, "Function was executed")
     }
 
     @Test
@@ -48,7 +49,7 @@ class HandlerUtilsTest {
         HandlerUtils.executeFunctionWithDelay(1000) { value = true }
 
         runUiThreadTasksIncludingDelayedTasks()
-        assertThat("Function was executed", value, equalTo(true))
+        assertTrue(value, "Function was executed")
 
         val duration = SystemClock.uptimeMillis() - initialTime
 

@@ -507,7 +507,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         editor.onDeckSelected(SelectableDeck(1, "hello"))
         assertThat("Deck ID element should be changed", template?.get("did"), equalTo(1L))
         editor.onDeckSelected(null)
-        assertThat("Deck ID element should exist", template!!.has("did"), equalTo(true))
+        assertTrue(template!!.has("did"), "Deck ID element should exist")
         assertThat("Deck ID element should be null", template["did"], equalTo(JSONObject.NULL))
     }
 

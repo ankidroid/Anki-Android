@@ -22,6 +22,7 @@ import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
+import kotlin.test.assertTrue
 
 /**
  * Tests for [DiskFile]
@@ -62,7 +63,7 @@ class DiskFileTest {
         val left = createTransientDiskFile("hello")
         val right = createTransientFile("hello")
 
-        assertThat("files should be equal", left.contentEquals(right), equalTo(true))
+        assertTrue(left.contentEquals(right), "files should be equal")
     }
 
     @Test

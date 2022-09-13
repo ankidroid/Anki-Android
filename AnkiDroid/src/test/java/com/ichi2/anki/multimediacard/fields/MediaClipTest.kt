@@ -19,13 +19,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.assertTrue
 
 class MediaClipTest {
 
     @Test
     fun formattedValue_returns_an_empty_string_if_path_is_null() {
         val mediaClipField = MediaClipField()
-        assertThat(mediaClipField.formattedValue.isEmpty(), equalTo(true))
+        assertTrue(mediaClipField.formattedValue.isEmpty())
     }
 
     @Test

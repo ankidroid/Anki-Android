@@ -32,6 +32,8 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 /**
  * Test for [MoveDirectoryContent]
@@ -66,16 +68,16 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
         executeAll(moveDirectoryContent(source, destinationDirectory))
 
-        assertThat("source directory should exist", source.exists(), equalTo(true))
-        assertThat("destination directory should exist", destinationDirectory.exists(), equalTo(true))
+        assertTrue(source.exists(), "source directory should exist")
+        assertTrue(destinationDirectory.exists(), "destination directory should exist")
         assertThat("tmp.txt should be deleted at source", File(source, "tmp.txt").exists(), equalTo(false))
-        assertThat("tmp.txt should be copied", File(destinationDirectory, "tmp.txt").exists(), equalTo(true))
+        assertTrue(File(destinationDirectory, "tmp.txt").exists(), "tmp.txt should be copied")
 
         val subdirectory = File(destinationDirectory, "more files")
         assertThat("'more file' should be deleted at source", moreFiles.exists(), equalTo(false))
-        assertThat("subdir was copied", subdirectory.exists(), equalTo(true))
+        assertTrue(subdirectory.exists(), "subdir was copied")
         assertThat("tmp-2.txt file was deleted at source", File(moreFiles, "tmp-2.txt").exists(), equalTo(false))
-        assertThat("tmp-2.txt file was copied", File(subdirectory, "tmp-2.txt").exists(), equalTo(true))
+        assertTrue(File(subdirectory, "tmp-2.txt").exists(), "tmp-2.txt file was copied")
     }
 
     @Test
@@ -85,7 +87,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
             .withTempFile("bar.txt")
             .withTempFile("baz.txt")
 
-        assertThat("foo should exists", File(source, "foo.txt").exists(), equalTo(true))
+        assertTrue(File(source, "foo.txt").exists(), "foo should exists")
         val destinationDirectory = createTransientDirectory()
 
         // Use variables as we don't know which file will be returned in the middle from listFiles()
@@ -100,8 +102,8 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
             assertThat(this, instanceOf(TestException::class.java))
         }
 
-        assertThat("source directory should not be deleted", source.exists(), equalTo(true))
-        assertThat("fail (${spyMoveDirectoryContent.failedFile!!.absolutePath}) was not copied", spyMoveDirectoryContent.failedFile!!.exists(), equalTo(true))
+        assertTrue(source.exists(), "source directory should not be deleted")
+        assertTrue(spyMoveDirectoryContent.failedFile!!.exists(), "fail (${spyMoveDirectoryContent.failedFile!!.absolutePath}) was not copied")
         assertThat("file before failure was copied", spyMoveDirectoryContent.beforeFile!!.exists(), equalTo(false))
         assertThat("file after failure was copied", spyMoveDirectoryContent.afterFile!!.exists(), equalTo(false))
     }
@@ -174,7 +176,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
         executeAll(moveDirectoryContent(source, destinationDirectory))
 
-        assertThat("source directory should not be deleted", source.exists(), equalTo(true))
+        assertTrue(source.exists(), "source directory should not be deleted")
     }
 
     @Test
