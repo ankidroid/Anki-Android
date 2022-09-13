@@ -49,19 +49,19 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun browserIsNotInitiallyInMultiSelectModeWithNoCards() {
         val browser = browserWithNoNewCards
-        assertThat(browser.isInMultiSelectMode, equalTo(false))
+        assertFalse(browser.isInMultiSelectMode)
     }
 
     @Test
     fun browserIsNotInitiallyInMultiSelectModeWithCards() {
         val browser = browserWithMultipleNotes
-        assertThat(browser.isInMultiSelectMode, equalTo(false))
+        assertFalse(browser.isInMultiSelectMode)
     }
 
     @Test
     fun selectAllIsNotVisibleWhenNoCardsInDeck() {
         val browser = browserWithNoNewCards
-        assertThat(browser.isShowingSelectAll, equalTo(false))
+        assertFalse(browser.isShowingSelectAll)
     }
 
     @Test
@@ -75,7 +75,7 @@ class CardBrowserTest : RobolectricTest() {
     fun selectAllIsNotVisibleOnceCalled() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
-        assertThat(browser.isShowingSelectAll, equalTo(false))
+        assertFalse(browser.isShowingSelectAll)
     }
 
     @Test
@@ -118,7 +118,7 @@ class CardBrowserTest : RobolectricTest() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
         selectMenuItem(browser, R.id.action_select_none)
-        assertThat(browser.isInMultiSelectMode, equalTo(false))
+        assertFalse(browser.isInMultiSelectMode)
     }
 
     @Test
@@ -374,7 +374,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val b = browserWithNoNewCards
 
-        assertThat("All decks should not be selected", b.hasSelectedAllDecks(), equalTo(false))
+        assertFalse(b.hasSelectedAllDecks(), "All decks should not be selected")
 
         b.selectAllDecks()
 

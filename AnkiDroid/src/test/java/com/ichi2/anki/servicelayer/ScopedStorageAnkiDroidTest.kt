@@ -26,7 +26,9 @@ import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.slot
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
@@ -34,6 +36,7 @@ import org.hamcrest.io.FileMatchers
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
 class ScopedStorageAnkiDroidTest : RobolectricTest() {
@@ -51,7 +54,7 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
         val to = migratedTo.listFiles()!!.associateBy { it.name }.toMutableMap()
 
         assertThat("target folder name should be set", migratedTo.name, equalTo("AnkiDroid1"))
-        assertThat("target should be under scoped storage", ScopedStorageService.isLegacyStorage(migratedTo.absolutePath, targetContext), equalTo(false))
+        assertFalse(ScopedStorageService.isLegacyStorage(migratedTo.absolutePath, targetContext), "target should be under scoped storage")
         assertThat("bare files should be moved", to.keys, equalTo(from.keys))
     }
 

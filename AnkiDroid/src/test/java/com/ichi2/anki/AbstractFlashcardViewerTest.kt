@@ -158,7 +158,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat("Displaying question", viewer.isDisplayingAnswer, equalTo(false))
+        assertFalse(viewer.isDisplayingAnswer, "Displaying question")
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
         assertTrue(viewer.isDisplayingAnswer, "Displaying answer")
@@ -196,11 +196,11 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun automaticAnswerDisabledProperty() {
         val controller = getViewerController(true, false)
         val viewer = controller.get()
-        assertThat("not disabled initially", viewer.automaticAnswer.isDisabled, equalTo(false))
+        assertFalse(viewer.automaticAnswer.isDisabled, "not disabled initially")
         controller.pause()
         assertTrue(viewer.automaticAnswer.isDisabled, "disabled after pause")
         controller.resume()
-        assertThat("enabled after resume", viewer.automaticAnswer.isDisabled, equalTo(false))
+        assertFalse(viewer.automaticAnswer.isDisabled, "enabled after resume")
     }
 
     @Test
@@ -212,9 +212,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         assertTrue(viewer.hasAutomaticAnswerQueued(), "messages after flipping card")
         controller.pause()
         assertTrue(viewer.automaticAnswer.isDisabled, "disabled after pause")
-        assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
+        assertFalse(viewer.hasAutomaticAnswerQueued(), "no auto answer after pause")
         viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
-        assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
+        assertFalse(viewer.hasAutomaticAnswerQueued(), "no auto answer after onRenderProcessGone when paused")
     }
 
     @Test

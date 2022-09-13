@@ -22,8 +22,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.testutils.EmptyApplication
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,6 +29,7 @@ import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.times
 import org.mockito.kotlin.never
 import org.robolectric.annotation.Config
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -55,18 +54,18 @@ class InitialActivityTest : RobolectricTest() {
         InitialActivity.setUpgradedToLatestVersion(mSharedPreferences)
 
         val resultAfterUpgrade = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(mSharedPreferences)
-        assertThat("should not perform initial setup if setup has already occurred", resultAfterUpgrade, equalTo(false))
+        assertFalse(resultAfterUpgrade, "should not perform initial setup if setup has already occurred")
     }
 
     @Test
     fun initially_not_latest_version() {
-        assertThat(InitialActivity.isLatestVersion(mSharedPreferences), equalTo(false))
+        assertFalse(InitialActivity.isLatestVersion(mSharedPreferences))
     }
 
     @Test
     fun not_latest_version_with_valid_value() {
         mSharedPreferences.edit().putString("lastVersion", "0.1").apply()
-        assertThat(InitialActivity.isLatestVersion(mSharedPreferences), equalTo(false))
+        assertFalse(InitialActivity.isLatestVersion(mSharedPreferences))
     }
 
     @Test
@@ -88,7 +87,7 @@ class InitialActivityTest : RobolectricTest() {
     fun prefs_may_not_be_up_to_date_if_upgraded() {
         mockStatic(PreferenceUpgradeService::class.java).use { mocked ->
             InitialActivity.setUpgradedToLatestVersion(mSharedPreferences)
-            assertThat(InitialActivity.performSetupFromFreshInstallOrClearedPreferences(mSharedPreferences), equalTo(false))
+            assertFalse(InitialActivity.performSetupFromFreshInstallOrClearedPreferences(mSharedPreferences))
             mocked.verify({ PreferenceUpgradeService.setPreferencesUpToDate(mSharedPreferences) }, never())
         }
     }
@@ -99,6 +98,6 @@ class InitialActivityTest : RobolectricTest() {
         val initialSetupResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext()))
         assertTrue(initialSetupResult)
         val secondResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(sharedPrefs)
-        assertThat("should not perform initial setup if setup has already occurred", secondResult, equalTo(false))
+        assertFalse(secondResult, "should not perform initial setup if setup has already occurred")
     }
 }

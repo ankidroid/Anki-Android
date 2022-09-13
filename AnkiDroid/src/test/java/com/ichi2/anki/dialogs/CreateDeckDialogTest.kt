@@ -116,7 +116,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     @Test
     fun nameMayNotBeZeroLength() {
         testDialog(DeckDialogType.DECK) {
-            assertThat("Ok is disabled if zero length input", positiveButton.isEnabled, equalTo(false))
+            assertFalse(positiveButton.isEnabled, "Ok is disabled if zero length input")
             input = "NotEmpty"
             assertTrue(positiveButton.isEnabled, "Ok is enabled if not zero length input")
             input = "A::B"
@@ -197,13 +197,13 @@ class CreateDeckDialogTest : RobolectricTest() {
         createDeck("parent::child")
         testDialog(DeckDialogType.DECK) {
             input = "deck"
-            assertThat("Cannot create duplicate deck: 'deck'", positiveButton.isEnabled, equalTo(false))
+            assertFalse(positiveButton.isEnabled, "Cannot create duplicate deck: 'deck'")
             input = "Deck"
-            assertThat("Cannot create duplicate deck: (case insensitive: 'Deck')", positiveButton.isEnabled, equalTo(false))
+            assertFalse(positiveButton.isEnabled, "Cannot create duplicate deck: (case insensitive: 'Deck')")
             input = "Deck2"
             assertTrue(positiveButton.isEnabled, "Can create deck with new name: 'Deck2'")
             input = "parent::child"
-            assertThat("Can't create fully qualified duplicate deck: 'parent::child'", positiveButton.isEnabled, equalTo(false))
+            assertFalse(positiveButton.isEnabled, "Can't create fully qualified duplicate deck: 'parent::child'")
         }
     }
 
@@ -216,9 +216,9 @@ class CreateDeckDialogTest : RobolectricTest() {
             input = "parent"
             assertTrue(positiveButton.isEnabled, "'parent::parent' should be valid")
             input = "child"
-            assertThat("'parent::child' already exists so should be invalid", positiveButton.isEnabled, equalTo(false))
+            assertFalse(positiveButton.isEnabled, "'parent::child' already exists so should be invalid")
             input = "Child"
-            assertThat("'parent::child' already exists so should be invalid (case insensitive)", positiveButton.isEnabled, equalTo(false))
+            assertFalse(positiveButton.isEnabled, "'parent::child' already exists so should be invalid (case insensitive)")
         }
     }
 

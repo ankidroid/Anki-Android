@@ -29,6 +29,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.robolectric.Shadows.shadowOf
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -86,7 +87,7 @@ class ReadTextTest : RobolectricTest() {
     fun testIsTextToSpeechReleased_differentContext() {
         initializeTextToSpeech(targetContext)
         releaseTts(mock(Context::class.java))
-        assertThat(isTextToSpeechShutdown, equalTo(false))
+        assertFalse(isTextToSpeechShutdown)
     }
 
     private val isTextToSpeechShutdown: Boolean

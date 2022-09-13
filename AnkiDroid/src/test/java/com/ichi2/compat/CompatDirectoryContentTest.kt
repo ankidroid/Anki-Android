@@ -24,7 +24,7 @@ import org.junit.Test
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CompatDirectoryContentTest : Test21And26() {
@@ -33,7 +33,7 @@ class CompatDirectoryContentTest : Test21And26() {
     fun empty_dir_test() {
         val directory = createTransientDirectory()
         compat.contentOfDirectory(directory).use {
-            assertThat("Iterator should not have next", it.hasNext(), equalTo(false))
+            assertFalse(it.hasNext(), "Iterator should not have next")
         }
     }
 
@@ -65,10 +65,10 @@ class CompatDirectoryContentTest : Test21And26() {
                 else -> -1
             }
             assertThat("File ${file.name} should not be in ${directory.path}", fileNumber, not(equalTo(-1)))
-            assertThat("File ${file.name} should not be listed twice", found[fileNumber], equalTo(false))
+            assertFalse(found[fileNumber], "File ${file.name} should not be listed twice")
             found[fileNumber] = true
         }
-        assertThat("Iterator should not have next anymore", iterator.hasNext(), equalTo(false))
+        assertFalse(iterator.hasNext(), "Iterator should not have next anymore")
         iterator.close()
     }
 

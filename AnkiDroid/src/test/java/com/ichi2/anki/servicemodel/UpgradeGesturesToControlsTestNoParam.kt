@@ -21,7 +21,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.upgradeVersionPrefKey
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.junit.Before
@@ -29,6 +28,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -50,8 +50,8 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
     @Ignore("flaky in CI")
     fun test_preferences_not_opened_happy_path() {
         // if the user has not opened the gestures, then nothing should be mapped
-        assertThat(prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
-        assertThat(prefs.contains(PREF_KEY_VOLUME_UP), equalTo(false))
+        assertFalse(prefs.contains(PREF_KEY_VOLUME_DOWN))
+        assertFalse(prefs.contains(PREF_KEY_VOLUME_UP))
 
         upgradeAllGestures()
 
@@ -75,8 +75,8 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         // ensure that no settings were added to the preferences
         assertThat(changedKeys, contains(upgradeVersionPrefKey, PREF_KEY_VOLUME_DOWN, PREF_KEY_VOLUME_UP))
 
-        assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
-        assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_UP), equalTo(false))
+        assertFalse(prefs.contains(PREF_KEY_VOLUME_DOWN), "Volume gestures are removed")
+        assertFalse(prefs.contains(PREF_KEY_VOLUME_UP), "Volume gestures are removed")
     }
 
     private fun upgradeAllGestures() {

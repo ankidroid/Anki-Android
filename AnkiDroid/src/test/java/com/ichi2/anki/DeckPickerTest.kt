@@ -31,10 +31,7 @@ import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import java.io.File
 import java.util.*
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -261,10 +258,9 @@ class DeckPickerTest : RobolectricTest() {
                 d.databaseErrorDialog,
                 equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             )
-            assertThat(
-                "No exception reports should be thrown",
+            assertFalse(
                 AnkiDroidApp.sentExceptionReportHack,
-                equalTo(false)
+                "No exception reports should be thrown",
             )
         } finally {
             BackendEmulatingOpenConflict.disable()
@@ -521,10 +517,9 @@ class DeckPickerTest : RobolectricTest() {
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
-        assertThat(
-            "No deck is being displayed",
+        assertFalse(
             deckPicker.hasAtLeastOneDeckBeingDisplayed(),
-            equalTo(false)
+            "No deck is being displayed",
         )
     }
 
@@ -542,10 +537,9 @@ class DeckPickerTest : RobolectricTest() {
             .apply()
 
         // ensure collection not loaded yet
-        assertThat(
-            "collection should not be loaded",
+        assertFalse(
             CollectionHelper.instance.colIsOpen(),
-            equalTo(false)
+            "collection should not be loaded",
         )
     }
 

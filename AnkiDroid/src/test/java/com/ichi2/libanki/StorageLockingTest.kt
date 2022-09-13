@@ -23,12 +23,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientFile
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -57,7 +55,7 @@ class StorageLockingTest : RobolectricTest() {
         Storage.lockCollection()
         assertTrue(Storage.isLocked, "locking the collection sets isLocked")
         Storage.unlockCollection()
-        assertThat("unlocking the collection sets isLocked", Storage.isLocked, equalTo(false))
+        assertFalse(Storage.isLocked, "unlocking the collection sets isLocked")
     }
 
     @Test
@@ -77,7 +75,7 @@ class StorageLockingTest : RobolectricTest() {
 
     @Test
     fun collection_unlocked_by_default() {
-        assertThat("by default, collection should be unlocked", Storage.isLocked, equalTo(false))
+        assertFalse(Storage.isLocked, "by default, collection should be unlocked")
     }
 
     /** Opens a valid collection */

@@ -20,6 +20,7 @@ import com.ichi2.utils.ExceptionUtil.getExceptionMessage
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ExceptionUtilTest {
@@ -75,12 +76,12 @@ class ExceptionUtilTest {
     @Test
     fun containsCauseMissing() {
         val ex = Exception()
-        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(false))
+        assertFalse(containsCause(ex, IllegalStateException::class.java))
     }
 
     @Test
     fun containsCauseMissingNested() {
         val ex = Exception(Exception())
-        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(false))
+        assertFalse(containsCause(ex, IllegalStateException::class.java))
     }
 }

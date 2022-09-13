@@ -23,7 +23,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -74,9 +74,8 @@ class ParserTest : RobolectricTest() {
     }
 
     private fun testParsingIsNonEmpty(template: String, vararg nonempty_fields: String) {
-        assertThat(
+        assertFalse(
             ParsedNode.parse_inner(template).template_is_empty(*nonempty_fields),
-            equalTo(false)
         )
     }
 

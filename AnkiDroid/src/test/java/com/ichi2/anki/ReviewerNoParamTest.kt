@@ -39,6 +39,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future  */
@@ -177,7 +178,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         enableGestureSetting()
         val controller = Robolectric.buildActivity(Reviewer::class.java, Intent())
         try {
-            assertThat("no conflicts before onCreate", controller.get().hasDrawerSwipeConflicts(), equalTo(false))
+            assertFalse(controller.get().hasDrawerSwipeConflicts(), "no conflicts before onCreate")
         } finally {
             try {
                 enableGesture(SWIPE_UP)
@@ -192,8 +193,8 @@ class ReviewerNoParamTest : RobolectricTest() {
         disableGestureSetting()
         enableGesture(SWIPE_UP)
         val reviewer = startReviewerFullScreen()
-        assertThat("gestures should be disabled", gestureProcessor.isEnabled, equalTo(false))
-        assertThat(reviewer.hasDrawerSwipeConflicts(), equalTo(false))
+        assertFalse(gestureProcessor.isEnabled, "gestures should be disabled")
+        assertFalse(reviewer.hasDrawerSwipeConflicts())
     }
 
     @Test
@@ -202,7 +203,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         disableConflictGestures()
         val reviewer = startReviewerFullScreen()
         assertTrue(gestureProcessor.isEnabled, "gestures should be enabled")
-        assertThat("no conflicts, so no conflicts detected", reviewer.hasDrawerSwipeConflicts(), equalTo(false))
+        assertFalse(reviewer.hasDrawerSwipeConflicts(), "no conflicts, so no conflicts detected")
     }
 
     @Test
@@ -247,7 +248,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     @Test
     fun fullscreenDoesNotFitSystemWindow() {
         val reviewer = startReviewerFullScreen()
-        assertThat(reviewer.fitsSystemWindows(), equalTo(false))
+        assertFalse(reviewer.fitsSystemWindows())
     }
 
     private val gestureProcessor: GestureProcessor

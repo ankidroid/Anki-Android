@@ -26,7 +26,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ScopedStorageServiceTest {
@@ -34,7 +34,7 @@ class ScopedStorageServiceTest {
     fun no_migration_by_default() {
         val preferences = getScopedStorageMigrationPreferences(setSource = false, setDestination = false)
 
-        assertThat("migration is not in progress if neither preference set", userMigrationIsInProgress(preferences), equalTo(false))
+        assertFalse(userMigrationIsInProgress(preferences), "migration is not in progress if neither preference set")
     }
 
     @Test

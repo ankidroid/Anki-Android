@@ -18,10 +18,12 @@ package com.ichi2.anki.model
 
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -55,7 +57,7 @@ class DiskFileTest {
         val left = createTransientDiskFile("hello")
         val right = createTransientFile("world")
 
-        assertThat("files should not be equal", left.contentEquals(right), equalTo(false))
+        assertFalse(left.contentEquals(right), "files should not be equal")
     }
 
     @Test
@@ -72,7 +74,7 @@ class DiskFileTest {
         val left = createTransientDiskFile("hello")
         val right = File(createTransientDirectory(), "not_exist.txt")
 
-        assertThat("files should not be equal: right doesn't exist", left.contentEquals(right), equalTo(false))
+        assertFalse(left.contentEquals(right), "files should not be equal: right doesn't exist")
     }
 
     private fun createTransientDiskFile(@Suppress("SameParameterValue") content: String): DiskFile {

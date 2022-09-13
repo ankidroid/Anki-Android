@@ -20,13 +20,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.libanki.Sound
 import net.ankiweb.rsdroid.RustCleanup
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
+import kotlin.test.assertFalse
 
 /** Tests Sound Rendering - should be extracted from the GUI at some point */
 @RustCleanup("doesn't work with V16")
@@ -36,7 +36,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
     /** Call this after a valid card has been added */
     private val sounds by lazy {
         val ret = super.startRegularActivity<ReviewerSoundAccessor>()
-        assertThat("activity was started before it had cards", ret.isDestroyed, equalTo(false))
+        assertFalse(ret.isDestroyed, "activity was started before it had cards")
         ret
     }
 

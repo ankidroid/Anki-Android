@@ -18,14 +18,17 @@ package com.ichi2.compat
 
 import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
+import com.ichi2.testutils.assertThrowsSubclass
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import com.ichi2.testutils.withTempFile
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
+import kotlin.test.assertFalse
 
 /** Tests for [Compat.deleteFile] */
 @RunWith(Parameterized::class)
@@ -47,14 +50,14 @@ class CompatDeleteFileTest(
     fun delete_file_which_exists() {
         val file = createTransientFile()
         assertDoesNotThrow { deleteFile(file) }
-        assertThat("file should no longer exist", file.exists(), equalTo(false))
+        assertFalse(file.exists(), "file should no longer exist")
     }
 
     @Test
     fun delete_directory_which_exists() {
         val dir = createTransientDirectory()
         assertDoesNotThrow { deleteFile(dir) }
-        assertThat("directory should no longer exist", dir.exists(), equalTo(false))
+        assertFalse(dir.exists(), "directory should no longer exist")
     }
 
     @Test

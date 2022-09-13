@@ -26,7 +26,8 @@ import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBas
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.MockContentResolver
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -34,6 +35,7 @@ import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 import java.io.File
+import kotlin.test.assertFalse
 import kotlin.test.fail
 
 @RunWith(RobolectricTestRunner::class)
@@ -54,28 +56,26 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     @Test
     fun nonExistingFileDoesNotDisplayPreview() {
         val controller = validControllerNoImage
-        assertThat(controller.isShowingPreview, equalTo(false))
+        assertFalse(controller.isShowingPreview)
         val f = mock(File::class.java)
         whenever(f.exists()).thenReturn(false)
         controller.setImagePreview(f, 100)
-        assertThat(
-            "A non existing file should not display a preview",
+        assertFalse(
             controller.isShowingPreview,
-            equalTo(false)
+            "A non existing file should not display a preview",
         )
     }
 
     @Test
     fun erroringFileDoesNotDisplayPreview() {
         val controller = validControllerNoImage
-        assertThat(controller.isShowingPreview, equalTo(false))
+        assertFalse(controller.isShowingPreview)
         val f = mock(File::class.java)
         whenever(f.exists()).thenReturn(true) // true, but it'll throw due to being a mock.
         controller.setImagePreview(f, 100)
-        assertThat(
-            "A broken existing file should not display a preview",
+        assertFalse(
             controller.isShowingPreview,
-            equalTo(false)
+            "A broken existing file should not display a preview",
         )
     }
 
@@ -88,7 +88,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
             "A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
             equalTo(getResourceString(R.string.multimedia_editor_svg_preview))
         )
-        assertThat("A SVG image file can't be previewed", controller.isShowingPreview, equalTo(false))
+        assertFalse(controller.isShowingPreview, "A SVG image file can't be previewed")
     }
 
     @Test

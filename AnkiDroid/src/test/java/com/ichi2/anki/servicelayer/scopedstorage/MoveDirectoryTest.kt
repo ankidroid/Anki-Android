@@ -31,6 +31,7 @@ import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
 import java.io.File
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -54,7 +55,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         executeAll(moveDirectory(source, destinationFile))
 
-        assertThat("source directory should not exist", source.exists(), equalTo(false))
+        assertFalse(source.exists(), "source directory should not exist")
         assertTrue(destinationFile.exists(), "destination directory should exist")
         assertTrue(File(destinationFile, "tmp.txt").exists(), "file should be copied")
 
@@ -72,7 +73,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         val ret = moveDirectory(source, destinationFile).execute()
 
         assertThat("fast rename returns no operations", ret, empty())
-        assertThat("source directory should not exist", source.exists(), equalTo(false))
+        assertFalse(source.exists(), "source directory should not exist")
         assertTrue(destinationFile.exists(), "destination directory should exist")
         assertTrue(File(destinationFile, "tmp.txt").exists(), "file should be copied")
     }
@@ -94,7 +95,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         moveDirectory.execute()
 
-        assertThat("rename is now false", executionContext.attemptRename, equalTo(false))
+        assertFalse(executionContext.attemptRename, "rename is now false")
         assertThat("rename was called", renameCalled, equalTo(1))
 
         moveDirectory.execute()
@@ -134,8 +135,8 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         assertTrue(source.exists(), "source directory should not be deleted")
         assertTrue(spyMoveDirectoryContent.failedFile!!.exists(), "fail was not copied")
-        assertThat("file before failure was copied", spyMoveDirectoryContent.beforeFile!!.exists(), equalTo(false))
-        assertThat("file after failure was copied", spyMoveDirectoryContent.afterFile!!.exists(), equalTo(false))
+        assertFalse(spyMoveDirectoryContent.beforeFile!!.exists(), "file before failure was copied")
+        assertFalse(spyMoveDirectoryContent.afterFile!!.exists(), "file after failure was copied")
     }
 
     @Test
@@ -145,7 +146,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         }
 
         assertTrue(operation.source.exists(), "source should not be deleted on retry")
-        assertThat("additional file was not moved", File(operation.destination, "new_file.txt").exists(), equalTo(false))
+        assertFalse(File(operation.destination, "new_file.txt").exists(), "additional file was not moved")
     }
 
     @Test
@@ -158,7 +159,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         }
 
         assertTrue(operation.source.exists(), "source should not be deleted on retry")
-        assertThat("additional directory was not moved", File(operation.destination, "subdirectory").exists(), equalTo(false))
+        assertFalse(File(operation.destination, "subdirectory").exists(), "additional directory was not moved")
     }
 
     @Test
@@ -169,7 +170,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
             return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
         }
 
-        assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
+        assertFalse(operation.source.exists(), "source should be deleted on retry")
         assertTrue(File(operation.destination, "new_file.txt").exists(), "additional file was moved")
     }
 
@@ -184,7 +185,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
             return@adding_during_move_helper newDirectory
         }
 
-        assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
+        assertFalse(operation.source.exists(), "source should be deleted on retry")
         assertTrue(File(operation.destination, "subdirectory").exists(), "additional directory was moved")
     }
 
@@ -244,7 +245,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         executeAll(moveDirectory(source, destinationFile))
 
-        assertThat("source was deleted", source.exists(), equalTo(false))
+        assertFalse(source.exists(), "source was deleted")
     }
 
     @Test
@@ -256,7 +257,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         executeAll(moveDirectory(source, destinationFile))
 
-        assertThat("source was deleted", source.exists(), equalTo(false))
+        assertFalse(source.exists(), "source was deleted")
     }
 
     /**

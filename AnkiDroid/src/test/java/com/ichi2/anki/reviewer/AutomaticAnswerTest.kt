@@ -19,13 +19,12 @@ package com.ichi2.anki.reviewer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.testutils.EmptyApplication
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -40,11 +39,11 @@ class AutomaticAnswerTest {
         answer.delayedShowAnswer(0)
 
         assertTrue(answer.timeoutHandler.hasMessages(0), "it should have messages")
-        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
+        assertFalse(answer.isDisabled, "answer should be enabled")
 
         answer.disable()
 
-        assertThat("it should not have messages", answer.timeoutHandler.hasMessages(0), equalTo(false))
+        assertFalse(answer.timeoutHandler.hasMessages(0), "it should not have messages")
         assertTrue(answer.isDisabled, "answer should be disabled")
     }
 
@@ -61,21 +60,21 @@ class AutomaticAnswerTest {
 
         answer.scheduleAutomaticDisplayQuestion(10)
 
-        assertThat("no messages even if delay provided", answer.timeoutHandler.hasMessages(0), equalTo(false))
+        assertFalse(answer.timeoutHandler.hasMessages(0), "no messages even if delay provided")
 
         answer.scheduleAutomaticDisplayAnswer(10)
 
-        assertThat("no messages even if delay provided", answer.timeoutHandler.hasMessages(0), equalTo(false))
+        assertFalse(answer.timeoutHandler.hasMessages(0), "no messages even if delay provided")
     }
 
     @Test
     fun testEnableDisable() {
         val answer = validAnswer(automaticallyAnsweredMock())
-        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
+        assertFalse(answer.isDisabled, "answer should be enabled")
         answer.disable()
         assertTrue(answer.isDisabled, "answer should be disabled")
         answer.enable()
-        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
+        assertFalse(answer.isDisabled, "answer should be enabled")
     }
 
     /** Ensures [disableStopsImmediateCallAnswer] can fail */
@@ -99,9 +98,9 @@ class AutomaticAnswerTest {
         val answer = validAnswer(answerValue)
         answer.scheduleAutomaticDisplayAnswer()
         answer.disable()
-        assertThat("call did not complete early", answerValue.answerShown, equalTo(false))
+        assertFalse(answerValue.answerShown, "call did not complete early")
         waitForTaskCompletion()
-        assertThat("call not executed due to disable", answerValue.answerShown, equalTo(false))
+        assertFalse(answerValue.answerShown, "call not executed due to disable")
     }
 
     @Test
@@ -110,9 +109,9 @@ class AutomaticAnswerTest {
         val answer = validAnswer(answerValue)
         answer.scheduleAutomaticDisplayQuestion()
         answer.disable()
-        assertThat("call did not complete early", answerValue.questionShown, equalTo(false))
+        assertFalse(answerValue.questionShown, "call did not complete early")
         waitForTaskCompletion()
-        assertThat("call not executed due to disable", answerValue.questionShown, equalTo(false))
+        assertFalse(answerValue.questionShown, "call not executed due to disable")
     }
 
     private fun waitForTaskCompletion() {

@@ -40,7 +40,7 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -123,7 +123,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
 
     @Test
     fun no_exception_if_directory_is_empty_directory_migrate_essential_files() {
-        assertThat("destination should not exist ($destinationPath)", destinationPath.exists(), equalTo(false))
+        assertFalse(destinationPath.exists(), "destination should not exist ($destinationPath)")
 
         assertDoesNotThrow { migrateEssentialFiles() }
     }

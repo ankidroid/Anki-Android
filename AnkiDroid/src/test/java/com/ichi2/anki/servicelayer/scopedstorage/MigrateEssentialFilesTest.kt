@@ -49,7 +49,7 @@ import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 const val DECK_PATH = "deckPath"
@@ -176,7 +176,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
 
         assertTrue(called, "mock was unused")
-        assertThat("the collection is no longer locked", Storage.isLocked, equalTo(false))
+        assertFalse(Storage.isLocked, "the collection is no longer locked")
     }
 
     @Test

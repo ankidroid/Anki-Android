@@ -21,10 +21,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Card
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerTest : RobolectricTest() {
@@ -70,7 +72,7 @@ class PreviewerTest : RobolectricTest() {
         val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
         val previewer = getPreviewerPreviewing(cardToPreview)
 
-        assertThat("Previewer is not a reviewer", previewer.canAccessScheduler(), equalTo(false))
+        assertFalse(previewer.canAccessScheduler(), "Previewer is not a reviewer")
     }
 
     @Test

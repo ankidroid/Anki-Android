@@ -23,6 +23,7 @@ import com.ichi2.anki.reviewer.AnswerButtons.Companion.canAnswerHard
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AnswerButtonsTest {
@@ -31,9 +32,9 @@ class AnswerButtonsTest {
     fun checkTwoButtons() {
         val numberOfButtons = 2
         assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
-        assertThat("hard", canAnswerHard(numberOfButtons), equalTo(false))
+        assertFalse(canAnswerHard(numberOfButtons), "hard")
         assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
-        assertThat("easy", canAnswerEasy(numberOfButtons), equalTo(false))
+        assertFalse(canAnswerEasy(numberOfButtons), "easy")
     }
 
     @Test
@@ -41,7 +42,7 @@ class AnswerButtonsTest {
         val numberOfButtons = 3
 
         assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
-        assertThat("hard", canAnswerHard(numberOfButtons), equalTo(false))
+        assertFalse(canAnswerHard(numberOfButtons), "hard")
         assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
         assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
 

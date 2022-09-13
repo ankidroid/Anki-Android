@@ -20,10 +20,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.async.CollectionTask.CheckDatabase
 import com.ichi2.testutils.CollectionUtils
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
 class CheckDatabaseTest : RobolectricTest() {
@@ -31,7 +31,7 @@ class CheckDatabaseTest : RobolectricTest() {
     fun checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase()
         val result = CheckDatabase().execTask(col, mock())
-        assertThat("The result should specify a failure", result.first, equalTo(false))
+        assertFalse(result.first, "The result should specify a failure")
         val checkDbResult = result.second!!
         assertThat("The result should specify the database was locked", checkDbResult.databaseLocked)
     }

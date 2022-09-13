@@ -23,6 +23,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -42,16 +43,16 @@ class ConfigTest : RobolectricTest() {
     @Test
     fun has_config_not_null() {
         // empty
-        assertThat("no key - false", col.has_config_not_null("aa"), equalTo(false))
+        assertFalse(col.has_config_not_null("aa"), "no key - false")
 
         col.set_config("aa", JSONObject.NULL)
-        assertThat("has key but null - false", col.has_config_not_null("aa"), equalTo(false))
+        assertFalse(col.has_config_not_null("aa"), "has key but null - false")
 
         col.set_config("aa", "bb")
         assertTrue(col.has_config_not_null("aa"), "has key with value - true")
         col.remove_config("aa")
 
-        assertThat("key removed", col.has_config_not_null("aa"), equalTo(false))
+        assertFalse(col.has_config_not_null("aa"), "key removed")
     }
 
     @Test

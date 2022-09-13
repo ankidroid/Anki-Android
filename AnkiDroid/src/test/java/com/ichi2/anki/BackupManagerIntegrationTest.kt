@@ -21,12 +21,11 @@ import com.ichi2.async.CollectionTask.ImportReplace
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.BackupManagerTestUtilities
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -44,7 +43,7 @@ class BackupManagerIntegrationTest : RobolectricTest() {
 
         waitForTask(ImportReplace(path), 1000)
 
-        assertThat("database should be read-write", this.col.db.database.isReadOnly, equalTo(false))
+        assertFalse(this.col.db.database.isReadOnly, "database should be read-write")
         AnkiAssert.assertDoesNotThrow { addNoteUsingBasicModel("Hello", "World") }
     }
 

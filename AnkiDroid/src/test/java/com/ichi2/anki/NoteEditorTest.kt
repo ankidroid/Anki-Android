@@ -35,7 +35,6 @@ import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
@@ -46,6 +45,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -71,7 +71,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat("Bundle has fields", fieldsBundle, notNullValue())
         assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
-        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
+        assertFalse(intent.intent.hasExtra("ordinal"), "Bundle has no ordinal for ephemeral preview")
         assertTrue(intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), "Bundle has a temporary model saved")
     }
 

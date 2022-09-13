@@ -250,8 +250,8 @@ class DecksTest : RobolectricTest() {
         val deckId = addDeck("deck")
         val deck = decks.get(deckId)
         assertTrue(deck.isStd)
-        assertThat(deck.isDyn, equalTo(false))
-        assertThat(filtered.isStd, equalTo(false))
+        assertFalse(deck.isDyn)
+        assertFalse(filtered.isStd)
         assertTrue(filtered.isDyn)
 
         val filteredConfig = decks.confForDid(filteredId)

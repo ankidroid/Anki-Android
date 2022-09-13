@@ -52,6 +52,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.junit.Assume.assumeFalse
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.platform.commons.util.CollectionUtils
@@ -307,10 +308,9 @@ open class SchedV2Test : RobolectricTest() {
         // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
         sched._current_timezone_offset()
         sched.clear_creation_offset()
-        assertThat(
-            "new timezone should be disabled after clear",
+        assertFalse(
             sched._new_timezone_enabled(),
-            equalTo(false)
+            "new timezone should be disabled after clear",
         )
     }
 
@@ -320,7 +320,7 @@ open class SchedV2Test : RobolectricTest() {
             val col = col
             col.changeSchedulerVer(2)
             ifV3 {
-                assumeThat(defaultLegacySchema, equalTo(false))
+                assumeFalse(defaultLegacySchema)
                 col.newBackend.v3Enabled = true
             }
             return col
@@ -446,7 +446,7 @@ open class SchedV2Test : RobolectricTest() {
         if (v3 && Instant.now().atZone(ZoneOffset.UTC).getHour().let { it >= 2 && it < 4 }) {
             // The backend shifts the current time around rollover, and expects the frontend to
             // do so as well. This could potentially be done with TimeManager in the future.
-            assumeThat(v3, equalTo(false))
+            assumeFalse(v3)
         }
         TimeManager.reset()
         val col = colV2

@@ -35,7 +35,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import timber.log.Timber
 import java.io.File
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -60,7 +60,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         MoveFile(source, destinationFile)
             .execute()
 
-        assertThat("source file should no longer exist", source.file.exists(), equalTo(false))
+        assertFalse(source.file.exists(), "source file should no longer exist")
         assertTrue(destinationFile.exists(), "destination file should exist")
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
@@ -77,7 +77,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         MoveFile(source, destinationFile).execute()
         MoveFile(source, destinationFile).execute()
 
-        assertThat("source file should no longer exist", source.file.exists(), equalTo(false))
+        assertFalse(source.file.exists(), "source file should no longer exist")
         assertTrue(destinationFile.exists(), "destination file should exist")
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
@@ -97,7 +97,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
             .execute()
 
-        assertThat("copy should have failed, destination should not exist", destinationFile.exists(), equalTo(false))
+        assertFalse(destinationFile.exists(), "copy should have failed, destination should not exist")
         assertTrue(source.file.exists(), "source file should still exist")
 
         val exception = getSingleThrownException()
@@ -119,7 +119,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
             }
                 .execute()
         }
-        assertThat("copy should have failed, destination should not exist", destinationFile.exists(), equalTo(false))
+        assertFalse(destinationFile.exists(), "copy should have failed, destination should not exist")
         assertTrue(source.file.exists(), "source file should still exist")
         assertThat("source content is unchanged", getContent(source.file), equalTo("hello-world"))
         assertThat(exception.message, containsString("test-copyFile()"))
@@ -132,8 +132,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         // we make a `DiskFile` which doesn't exist - class is in a bad state
         source.file.delete()
-        assertThat("destination should not exist", destinationFile.exists(), equalTo(false))
-        assertThat("source file should not exist", source.file.exists(), equalTo(false))
+        assertFalse(destinationFile.exists(), "destination should not exist")
+        assertFalse(source.file.exists(), "source file should not exist")
 
         MoveFile(source, destinationFile)
             .execute()
@@ -157,7 +157,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         MoveFile(source, destinationFile)
             .execute()
 
-        assertThat("source file should be deleted", source.file.exists(), equalTo(false))
+        assertFalse(source.file.exists(), "source file should be deleted")
         assertTrue(destinationFile.exists(), "destination file should not be deleted")
         assertThat("progress was reported", executionContext.progress.single(), equalTo(size))
     }
@@ -261,7 +261,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         // delete now works, BUT the file was already copied
 
-        assertThat("source file should no longer exist", source.file.exists(), equalTo(false))
+        assertFalse(source.file.exists(), "source file should no longer exist")
         assertTrue(destinationFile.exists(), "destination file should exist")
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))

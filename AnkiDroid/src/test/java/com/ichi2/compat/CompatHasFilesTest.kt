@@ -18,7 +18,6 @@ package com.ichi2.compat
 
 import android.os.Build
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -26,7 +25,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /** Tests for [Compat.hasFiles] */
@@ -41,7 +40,7 @@ class CompatHasFilesTest : Test21And26() {
     @Test
     fun has_files_exists() {
         val dir = createTransientDirectory()
-        assertThat("empty directory has no files", hasFiles(dir), equalTo(false))
+        assertFalse(hasFiles(dir), "empty directory has no files")
     }
 
     @Test

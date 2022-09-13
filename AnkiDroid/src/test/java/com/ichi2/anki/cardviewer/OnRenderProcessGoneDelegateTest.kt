@@ -26,12 +26,11 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.StrictMock.Companion.strictMock
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
 import java.util.concurrent.locks.Lock
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RequiresApi(api = Build.VERSION_CODES.O) // onRenderProcessGone & RenderProcessGoneDetail
@@ -85,7 +84,7 @@ class OnRenderProcessGoneDelegateTest {
                 .description("displayCardQuestion should be called again as the app was minimised")
         )
             .displayCardQuestion()
-        assertThat(delegate.displayedDialog, equalTo(false))
+        assertFalse(delegate.displayedDialog)
     }
 
     @Test
@@ -124,7 +123,7 @@ class OnRenderProcessGoneDelegateTest {
         verify(mock, times(1)).destroyWebViewFrame()
         verify(mock, never()).recreateWebViewFrame()
 
-        assertThat("A toast should not be displayed as the screen is minimised", delegate.displayedToast, equalTo(false))
+        assertFalse(delegate.displayedToast, "A toast should not be displayed as the screen is minimised")
         verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
     }
 

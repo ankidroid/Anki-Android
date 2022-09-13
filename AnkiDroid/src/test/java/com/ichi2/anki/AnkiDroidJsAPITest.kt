@@ -26,6 +26,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -132,7 +133,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(1))
 
         // Card Mark
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
+        assertFalse(javaScriptFunction.ankiGetCardMark())
         reviewer.currentCard!!.note().addTag("marked")
         assertTrue(javaScriptFunction.ankiGetCardMark())
     }
@@ -185,7 +186,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Card mark test
         // ---------------
         // Before marking card
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
+        assertFalse(javaScriptFunction.ankiGetCardMark())
 
         // call javascript function defined in card.js to mark card
         var markCardJs = "javascript:(function () {\n"

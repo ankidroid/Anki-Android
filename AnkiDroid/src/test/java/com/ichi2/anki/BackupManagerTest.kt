@@ -27,6 +27,7 @@ import org.mockito.Mockito.*
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import java.io.File
+import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
 open class BackupManagerTest {
@@ -40,7 +41,7 @@ open class BackupManagerTest {
         val performBackupResult = performBackup(bm)
 
         // assert
-        assertThat("should fail if backups are disabled", performBackupResult, equalTo(false))
+        assertFalse(performBackupResult, "should fail if backups are disabled")
         verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), any())
         verify(bm, times(1)).hasDisabledBackups(any())
         verifyNoMoreInteractions(bm)
@@ -65,7 +66,7 @@ open class BackupManagerTest {
 
         val result = performBackup(bm)
 
-        assertThat("should fail if backups not necessary", result, equalTo(false))
+        assertFalse(result, "should fail if backups not necessary")
 
         verify(bm, times(1)).isBackupUnnecessary(any(), any())
     }
@@ -79,7 +80,7 @@ open class BackupManagerTest {
 
         val result = performBackup(bm)
 
-        assertThat("should fail if backups exists", result, equalTo(false))
+        assertFalse(result, "should fail if backups exists")
     }
 
     @Test
@@ -90,7 +91,7 @@ open class BackupManagerTest {
 
         val result = performBackup(bm)
 
-        assertThat("should fail if collection too small", result, equalTo(false))
+        assertFalse(result, "should fail if collection too small")
     }
 
     private fun performBackup(bm: BackupManager, time: Time = MockTime(100000000)): Boolean {

@@ -38,6 +38,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -56,7 +57,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     fun first_app_load_performs_no_upgrades() {
         PreferenceUpgradeService.setPreferencesUpToDate(mPrefs)
         val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
-        assertThat("no upgrade should have taken place", result, equalTo(false))
+        assertFalse(result, "no upgrade should have taken place")
     }
 
     @Test
@@ -74,7 +75,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
         assertTrue(result, "preferences were upgraded")
         val secondResult = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
-        assertThat("a second preference upgrade does nothing", secondResult, equalTo(false))
+        assertFalse(secondResult, "a second preference upgrade does nothing")
     }
 
     @Test
@@ -160,7 +161,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
         assertThat(mPrefs.getString("dayTheme", "0"), equalTo("2"))
         assertThat(mPrefs.getString("nightTheme", "0"), equalTo("4"))
-        assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+        assertFalse(mPrefs.contains("invertedColors"))
 
         // Light and Black
         mPrefs.edit {
@@ -171,7 +172,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
         assertThat(mPrefs.getString("dayTheme", "1"), equalTo("1"))
         assertThat(mPrefs.getString("nightTheme", "1"), equalTo("3"))
-        assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+        assertFalse(mPrefs.contains("invertedColors"))
     }
 
     @Test
@@ -182,7 +183,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
         PreferenceUpgrade.UpgradeCustomCollectionSyncUrl().performUpgrade(mPrefs)
 
-        assertThat(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE), equalTo(false))
+        assertFalse(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE))
         assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), equalTo("http://foo/sync/"))
     }
 }

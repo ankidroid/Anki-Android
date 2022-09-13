@@ -55,7 +55,7 @@ class CollectionTest : RobolectricTest() {
         val col = col
         assertTrue(CollectionHelper.instance.colIsOpen(), "db should be open")
         col.beforeUpload()
-        assertThat("db should be closed", CollectionHelper.instance.colIsOpen(), equalTo(false))
+        assertFalse(CollectionHelper.instance.colIsOpen(), "db should be closed")
     }
 
     /*******************

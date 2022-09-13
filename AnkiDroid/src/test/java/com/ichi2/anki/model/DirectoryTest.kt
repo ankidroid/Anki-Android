@@ -28,7 +28,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
-import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -84,10 +84,9 @@ class DirectoryTest : Test21And26() {
     @Test
     fun has_files_is_false_if_empty() {
         val dir = createValidTempDir()
-        assertThat(
-            "empty directory should not have files",
+        assertFalse(
             dir.hasFiles(),
-            equalTo(false)
+            "empty directory should not have files",
         )
     }
 

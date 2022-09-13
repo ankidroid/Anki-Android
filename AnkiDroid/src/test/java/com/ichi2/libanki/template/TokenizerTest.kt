@@ -36,6 +36,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
 class TokenizerTest : RobolectricTest() {
@@ -381,7 +382,7 @@ class TokenizerTest : RobolectricTest() {
         }.let { exc ->
             assertThat(exc.remaining, equalTo("<%!ien nnr"))
         }
-        assertThat(tokenizer.hasNext(), equalTo(false))
+        assertFalse(tokenizer.hasNext())
     }
 
     companion object {
