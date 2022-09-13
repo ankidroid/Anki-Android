@@ -2414,15 +2414,14 @@ open class DeckPicker :
         return null
     }
 
-    private val context = this // TODO: remove [context], has been introduces to extract out [DeleteDeckListener]
     // Flag to indicate if the deck being deleted is the current deck.
-    private var mRemovingCurrent = false
+    private var mRemovingCurrent = false // TODO: Make it a parameter to functions
     private fun preDeleteDeck(did: DeckId) {
-        context.mProgressDialog = StyledProgressDialog.show(
-            context, null,
-            context.resources.getString(R.string.delete_deck), false
+        mProgressDialog = StyledProgressDialog.show(
+            this, null,
+            resources.getString(R.string.delete_deck), false
         )
-        if (did == context.col.decks.current().optLong("id")) {
+        if (did == col.decks.current().optLong("id")) {
             mRemovingCurrent = true
         }
     }
@@ -2430,20 +2429,20 @@ open class DeckPicker :
     private fun postDeleteDeck() {
         // After deleting a deck there is no more undo stack
         // Rebuild options menu with side effect of resetting undo button state
-        context.invalidateOptionsMenu()
+        invalidateOptionsMenu()
 
         // In fragmented mode, if the deleted deck was the current deck, we need to reload
         // the study options fragment with a valid deck and re-center the deck list to the
         // new current deck. Otherwise we just update the list normally.
-        if (context.fragmented && mRemovingCurrent) {
-            context.updateDeckList()
-            context.openStudyOptions(false)
+        if (fragmented && mRemovingCurrent) {
+            updateDeckList()
+            openStudyOptions(false)
         } else {
-            context.updateDeckList()
+            updateDeckList()
         }
-        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
             try {
-                context.mProgressDialog!!.dismiss()
+                mProgressDialog!!.dismiss()
             } catch (e: Exception) {
                 Timber.e(e, "onPostExecute - Exception dismissing dialog")
             }
