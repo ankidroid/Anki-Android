@@ -17,11 +17,11 @@ package com.ichi2.anki
 
 import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.MatcherAssert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.lang.Exception
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
@@ -31,7 +31,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_SPACE)
 
-        assertThat("Space should display answer on any card viewer", underTest.didDisplayAnswer())
+        assertTrue(underTest.didDisplayAnswer(), "Space should display answer on any card viewer")
     }
 
     @Test
@@ -41,7 +41,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_ENTER)
 
-        assertThat("Enter should display answer on any card viewer", underTest.didDisplayAnswer())
+        assertTrue(underTest.didDisplayAnswer(), "Enter should display answer on any card viewer")
     }
 
     @Test
@@ -50,7 +50,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_NUMPAD_ENTER)
 
-        assertThat("NumPad Enter should display answer on any card viewer", underTest.didDisplayAnswer())
+        assertTrue(underTest.didDisplayAnswer(), "NumPad Enter should display answer on any card viewer")
     }
 
     @Test
@@ -60,9 +60,9 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_SPACE)
 
-        assertThat(
+        assertFalse(
+            underTest.didDisplayAnswer(),
             "When text field is focused, space should not display answer",
-            !underTest.didDisplayAnswer()
         )
     }
 

@@ -406,9 +406,9 @@ class DeckPickerTest : RobolectricTest() {
                 DeckPickerEx::class.java, Intent()
             )
             waitForAsyncTasksToComplete()
-            assertThat(
+            assertTrue(
+                CollectionHelper.instance.colIsOpen(),
                 "Collection should now be open",
-                CollectionHelper.instance.colIsOpen()
             )
             assertTrue(
                 CollectionType.SCHEMA_V_16.isCollection(
@@ -437,9 +437,9 @@ class DeckPickerTest : RobolectricTest() {
                 DeckPickerEx::class.java, Intent()
             )
             waitForAsyncTasksToComplete()
-            assertThat(
+            assertTrue(
+                !CollectionHelper.instance.colIsOpen(),
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -460,9 +460,9 @@ class DeckPickerTest : RobolectricTest() {
                 DeckPickerEx::class.java, Intent()
             )
             waitForAsyncTasksToComplete()
-            assertThat(
-                "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+            assertTrue(
+                !CollectionHelper.instance.colIsOpen(),
+                "Collection should not be open"
             )
             assertThat(
                 "An error dialog should be displayed",

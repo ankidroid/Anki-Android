@@ -213,7 +213,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
                 .execute()
         }
 
-        assertThat("source still exists", source.file.exists())
+        assertTrue(source.file.exists(), "source still exists")
         assertThat(ex.message, containsString("Source and destination path are the same"))
     }
 

@@ -195,7 +195,7 @@ class NoteEditorTest : RobolectricTest() {
         ActivityScenario.launch(NoteEditor::class.java).use { scenario ->
             scenario.onActivity { noteEditor: NoteEditor ->
                 noteEditor.onBackPressed()
-                assertThat("Pressing back should finish the activity", noteEditor.isFinishing)
+                assertTrue(noteEditor.isFinishing, "Pressing back should finish the activity")
             }
             val result = scenario.result
             assertEquals(result.resultCode, Activity.RESULT_CANCELED, "Activity should be cancelled as no changes were made")

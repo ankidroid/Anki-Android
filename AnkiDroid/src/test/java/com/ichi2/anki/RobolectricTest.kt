@@ -439,7 +439,7 @@ open class RobolectricTest : CollectionGetter {
         col.changeSchedulerVer(2)
         val sched = col.sched
         // Sched inherits from schedv2...
-        assertThat("sched should be v2", sched !is Sched)
+        assertTrue(sched !is Sched, "sched should be v2")
         return sched as SchedV2
     }
 

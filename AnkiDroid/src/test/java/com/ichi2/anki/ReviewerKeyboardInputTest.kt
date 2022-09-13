@@ -31,13 +31,14 @@ import com.ichi2.libanki.Card
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Job
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import timber.log.Timber
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @KotlinCleanup("change `when` to whenever(); remove `protected` modifiers")
@@ -47,8 +48,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun whenDisplayingQuestionTyping1DoesNothing() {
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
         underTest.handleAndroidKeyPress(KEYCODE_1)
-        assertThat("Answer should not be displayed", !underTest.didDisplayAnswer())
-        assertThat("Answer should not be performed", !underTest.hasBeenAnswered())
+        assertFalse(underTest.didDisplayAnswer(), "Answer should not be displayed")
+        assertFalse(underTest.hasBeenAnswered(), "Answer should not be performed")
     }
 
     @Test
@@ -126,7 +127,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingEWillEditCard() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_E)
-        assertThat("Edit Card was called", underTest.editCardCalled)
+        assertTrue(underTest.editCardCalled, "Edit Card was called")
     }
 
     @Test
@@ -134,7 +135,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
         underTest.handleUnicodeKeyPress('*')
-        assertThat("Mark Card was called", underTest.markCardCalled)
+        assertTrue(underTest.markCardCalled, "Mark Card was called")
     }
 
     @Test
@@ -142,7 +143,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
         underTest.handleUnicodeKeyPress('=')
-        assertThat("Bury Note should be called", underTest.buryNoteCalled)
+        assertTrue(underTest.buryNoteCalled, "Bury Note should be called")
     }
 
     @Test
@@ -150,7 +151,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
         underTest.handleUnicodeKeyPress('@')
-        assertThat("Suspend Card should be called", underTest.suspendCardCalled)
+        assertTrue(underTest.suspendCardCalled, "Suspend Card should be called")
     }
 
     @Test
@@ -158,44 +159,44 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
         underTest.handleUnicodeKeyPress('!')
-        assertThat("Suspend Note should be called", underTest.suspendNoteCalled)
+        assertTrue(underTest.suspendNoteCalled, "Suspend Note should be called")
     }
 
     @Test
     fun pressingRShouldReplayAudio() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_R)
-        assertThat("Replay Audio should be called", underTest.replayAudioCalled)
+        assertTrue(underTest.replayAudioCalled, "Replay Audio should be called")
     }
 
     @Test
     fun pressingF5ShouldReplayAudio() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleKeyPress(KEYCODE_F5, '\u0000')
-        assertThat("Replay Audio should be called", underTest.replayAudioCalled)
+        assertTrue(underTest.replayAudioCalled, "Replay Audio should be called")
     }
 
     @Test
     fun pressingZShouldUndoIfAvailable() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
-        assertThat("Undo should be called", underTest.undoCalled)
+        assertTrue(underTest.undoCalled, "Undo should be called")
     }
 
     @Test
     fun pressingZShouldNotUndoIfNotAvailable() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')
-        assertThat("Undo is not available so should not be called", !underTest.undoCalled)
+        assertFalse(underTest.undoCalled, "Undo is not available so should not be called")
     }
 
     @Test
     fun pressingSpaceShouldDoNothingIfFocused() {
         val underTest = KeyboardInputTestReviewer.displayingQuestion().focusTextField()
         underTest.handleSpacebar()
-        assertThat(
+        assertFalse(
+            underTest.didDisplayAnswer(),
             "When text field is focused, space should not display answer",
-            !underTest.didDisplayAnswer()
         )
     }
 
@@ -206,14 +207,14 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             .withUndoAvailable(true)
             .withControlsBlocked(ControlBlock.SLOW)
         underTest.handleUnicodeKeyPress('z')
-        assertThat("Undo should not be called as control are blocked", !underTest.undoCalled)
+        assertFalse(underTest.undoCalled, "Undo should not be called as control are blocked")
     }
 
     private fun assertGamepadButtonAnswers(keycodeButton: Int, ease: Int) {
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
-        assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer())
+        assertFalse(underTest.didDisplayAnswer(), "Assume: Initially should not display answer")
         underTest.handleGamepadPress(keycodeButton)
-        assertThat("Initial button should display answer", underTest.didDisplayAnswer())
+        assertTrue(underTest.didDisplayAnswer(), "Initial button should display answer")
         underTest.displayAnswerForTest()
         underTest.handleGamepadPress(keycodeButton)
         assertEquals(underTest.processedAnswer(), ease)

@@ -80,7 +80,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     override fun tearDown() {
         super.tearDown()
         if (checkCollectionAfter) {
-            assertThat("col is still valid", col.basicCheck())
+            assertTrue(col.basicCheck(), "col is still valid")
         }
     }
 

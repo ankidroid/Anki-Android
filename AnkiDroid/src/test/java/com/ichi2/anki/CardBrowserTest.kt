@@ -265,11 +265,11 @@ class CardBrowserTest : RobolectricTest() {
         val flagForAll = 3
         cardBrowser.flagTask(flagForAll)
         // check if all card flags turned to flag = 3
-        assertThat(
-            "All cards should be flagged",
+        assertTrue(
             cardBrowser.cardIds
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
-                .all { flag1 -> flag1 == flagForAll }
+                .all { flag1 -> flag1 == flagForAll },
+            "All cards should be flagged",
         )
     }
 
@@ -305,7 +305,7 @@ class CardBrowserTest : RobolectricTest() {
             val component = assertNotNull(outputIntent.component)
 
             assertEquals(component.className, "com.ichi2.anki.DeckPicker", "Deck Picker currently handles permissions, so should be called")
-            assertThat("Activity should be finishing", cardBrowser.isFinishing)
+            assertTrue(cardBrowser.isFinishing, "Activity should be finishing")
             assertEquals(shadowActivity.resultCode, Activity.RESULT_CANCELED, "Activity should be cancelled as it did nothing")
         }
     }

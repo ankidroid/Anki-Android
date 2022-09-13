@@ -24,9 +24,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
@@ -34,6 +32,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
 import org.robolectric.RobolectricTestRunner
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 class CustomTabActivityHelperTest {
@@ -49,7 +48,7 @@ class CustomTabActivityHelperTest {
 
         customTabActivityHelper.onServiceConnected(badClient)
 
-        assertThat("Should be failed after call", customTabActivityHelper.isFailed)
+        assertTrue(customTabActivityHelper.isFailed, "Should be failed after call")
     }
 
     @Test

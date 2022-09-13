@@ -153,7 +153,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
     fun adding_directory_during_move_is_not_fatal() {
         val operation = adding_during_move_helper {
             val new_directory = File(it, "subdirectory")
-            assertThat("Subdirectory is created", new_directory.mkdir())
+            assertTrue(new_directory.mkdir(), "Subdirectory is created")
             new_directory.deleteOnExit()
             return@adding_during_move_helper new_directory
         }
@@ -180,7 +180,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         val operation = adding_during_move_helper {
             val newDirectory = File(it, "subdirectory")
-            assertThat("Subdirectory is created", newDirectory.mkdir())
+            assertTrue(newDirectory.mkdir(), "Subdirectory is created")
             newDirectory.deleteOnExit()
             return@adding_during_move_helper newDirectory
         }
@@ -229,9 +229,9 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         executor.execute(moveDirectoryContentSpied, deleteDirectory)
 
-        assertThat(
+        assertTrue(
+            File(source, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists(),
             "new_file should be present in source or directory",
-            File(source, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
         )
         return moveDirectory
     }

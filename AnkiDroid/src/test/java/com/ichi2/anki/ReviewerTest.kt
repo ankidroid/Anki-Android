@@ -41,6 +41,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
@@ -92,7 +93,7 @@ class ReviewerTest : RobolectricTest() {
         reviewer.generateQuestionSoundList()
         reviewer.displayCardQuestion()
 
-        assertThat("If the sound file with given name is not present, then no error occurs", true)
+        assertTrue(true, "If the sound file with given name is not present, then no error occurs")
     }
 
     @Test
