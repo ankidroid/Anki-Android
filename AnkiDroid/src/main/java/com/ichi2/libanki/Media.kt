@@ -223,7 +223,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             var s = s
             // handle latex
             @KotlinCleanup("change to .map { }")
-            s = LaTeX.mungeQA(s!!, col, model)
+            val svg = model.optBoolean("latexsvg", false)
+            s = LaTeX.mungeQA(s!!, col, svg)
             // extract filenames
             var m: Matcher
             for (p in REGEXPS) {

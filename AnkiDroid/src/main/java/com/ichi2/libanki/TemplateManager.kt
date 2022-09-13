@@ -219,21 +219,25 @@ class TemplateManager {
 
             val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
             val qout = col().backend.extractAVTags(text = qtext, questionSide = true)
+            var qoutText = qout.text
 
             val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
             val aout = col().backend.extractAVTags(text = atext, questionSide = false)
+            var aoutText = aout.text
+
+            if (!_browser) {
+                val svg = _note_type.optBoolean("latexsvg", false)
+                qoutText = LaTeX.mungeQA(qout.text, _col, svg)
+                aoutText = LaTeX.mungeQA(aout.text, _col, svg)
+            }
 
             val output = TemplateRenderOutput(
-                question_text = qout.text,
-                answer_text = aout.text,
+                question_text = qoutText,
+                answer_text = aoutText,
                 question_av_tags = av_tags_to_native(qout.avTagsList),
                 answer_av_tags = av_tags_to_native(aout.avTagsList),
                 css = note_type().getString("css"),
             )
-
-            if (!_browser) {
-                // hooks.card_did_render(output, self)
-            }
 
             return output
         }
