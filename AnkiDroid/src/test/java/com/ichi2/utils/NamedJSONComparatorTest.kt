@@ -18,7 +18,7 @@
 package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -32,7 +32,7 @@ class NamedJSONComparatorTest {
         firstObject.put("name", "TestName")
         val secondObject = JSONObject()
         secondObject.put("name", "TestName")
-        MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), CoreMatchers.equalTo(0))
+        MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), equalTo(0))
     }
 
     @Test

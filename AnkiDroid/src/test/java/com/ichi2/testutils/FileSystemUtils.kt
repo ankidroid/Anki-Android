@@ -18,7 +18,7 @@ package com.ichi2.testutils
 
 import androidx.annotation.CheckResult
 import org.acra.util.IOUtils
-import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import timber.log.Timber
 import java.io.File
@@ -124,7 +124,7 @@ fun File.createTransientDirectory(name: String): File {
     File(this, name).also { directory ->
         directory.deleteOnExit()
         Timber.d("test: creating $directory")
-        MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), CoreMatchers.equalTo(true))
+        MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), equalTo(true))
         return directory
     }
 }

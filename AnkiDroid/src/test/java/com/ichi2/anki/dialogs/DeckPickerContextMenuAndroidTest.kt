@@ -25,7 +25,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.items
-import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,7 +41,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
                 lastItem,
-                CoreMatchers.equalTo(getResourceString(R.string.contextmenu_deckpicker_delete_deck))
+                equalTo(getResourceString(R.string.contextmenu_deckpicker_delete_deck))
             )
         }
     }
