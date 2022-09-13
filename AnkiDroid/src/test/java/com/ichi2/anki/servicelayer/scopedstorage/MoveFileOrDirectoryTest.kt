@@ -18,12 +18,12 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
-import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 /** Tests for [MoveFileOrDirectory] */
 class MoveFileOrDirectoryTest : OperationTest {
@@ -37,10 +37,13 @@ class MoveFileOrDirectoryTest : OperationTest {
         val nextOperations = moveFromAndExecute(file)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
         val nextOperation = nextOperations[0]
-        assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveFile::class.java))
-        val moveFile = nextOperation as MoveFile
-        assertEquals(moveFile.sourceFile.file, file, "Move file source should be file")
-        assertEquals(moveFile.destinationFile, File(destinationDir, file.name), "Destination file source should be file")
+        assertIs<MoveFile>(nextOperation, "A file as input should return a file operation")
+        assertEquals(nextOperation.sourceFile.file, file, "Move file source should be file")
+        assertEquals(
+            nextOperation.destinationFile,
+            File(destinationDir, file.name),
+            "Destination file source should be file"
+        )
     }
 
     @Test
@@ -49,10 +52,13 @@ class MoveFileOrDirectoryTest : OperationTest {
         val nextOperations = moveFromAndExecute(directory)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
         val nextOperation = nextOperations[0]
-        assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveDirectory::class.java))
-        val moveDirectory = nextOperation as MoveDirectory
-        assertEquals(moveDirectory.source.directory, directory, "Move file source should be file")
-        assertEquals(moveDirectory.destination, File(destinationDir, directory.name), "Destination file source should be file")
+        assertIs<MoveDirectory>(nextOperation, "A file as input should return a file operation")
+        assertEquals(nextOperation.source.directory, directory, "Move file source should be file")
+        assertEquals(
+            nextOperation.destination,
+            File(destinationDir, directory.name),
+            "Destination file source should be file"
+        )
     }
 
     @Test

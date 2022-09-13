@@ -20,7 +20,6 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
@@ -32,6 +31,7 @@ import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /**
@@ -127,7 +127,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
         assertThat(executionContext.exceptions, hasSize(2))
         executionContext.exceptions[0].run {
-            assertThat(this, instanceOf(TestException::class.java))
+            assertIs<TestException>(this)
         }
         executionContext.exceptions[1].run {
             assertThat(this.message, containsString("directory was not empty"))

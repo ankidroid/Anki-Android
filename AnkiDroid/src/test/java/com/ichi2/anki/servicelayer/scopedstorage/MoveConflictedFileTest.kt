@@ -33,6 +33,7 @@ import java.io.File
 import java.io.IOException
 import java.lang.IllegalStateException
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 class MoveConflictedFileTest : Test21And26(), OperationTest {
 
@@ -183,8 +184,8 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         assertThat("an error should be logged", executionContext.errors, hasSize(1))
         val error = executionContext.errors.single()
 
-        assertThat("operation should be the wrapping operation", error.operation, instanceOf(MoveConflictedFile::class.java))
-        assertThat("Exception should be thrown", error.exception, instanceOf(TestException::class.java))
+        assertIs<MoveConflictedFile>(error.operation, "operation should be the wrapping operation")
+        assertIs<TestException>(error.exception, "Exception should be thrown")
 
         assertThat("should be no progress", executionContext.progress, hasSize(0))
     }
@@ -209,8 +210,8 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         assertThat("an error should be logged", executionContext.errors, hasSize(1))
         val error = executionContext.errors.single()
 
-        assertThat("operation should be the wrapping operation", error.operation, instanceOf(MoveConflictedFile::class.java))
-        assertThat("Exception should be thrown", error.exception, instanceOf(TestException::class.java))
+        assertIs<MoveConflictedFile>(error.operation, "operation should be the wrapping operation")
+        assertIs<TestException>(error.exception, "Exception should be thrown")
 
         assertThat("should be no progress", executionContext.progress, hasSize(0))
     }

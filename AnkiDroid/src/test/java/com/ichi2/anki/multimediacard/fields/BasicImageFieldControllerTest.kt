@@ -27,7 +27,6 @@ import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.MockContentResolver
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -36,6 +35,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 import java.io.File
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.fail
 
 @RunWith(RobolectricTestRunner::class)
@@ -43,14 +43,14 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     @Test
     fun constructionWithoutDataGivesNoError() {
         val controller: IFieldController = validControllerNoImage
-        assertThat("construction of image field without data should not give an error", controller, instanceOf(BasicImageFieldController::class.java))
+        assertIs<BasicImageFieldController>(controller, "construction of image field without data should not give an error")
     }
 
     @Test
     fun constructionWithDataSucceeds() {
         grantCameraPermission()
         val controller = getControllerForField(imageFieldWithData(), emptyNote, 0)
-        assertThat("construction of image field with data should succeed", controller, instanceOf(BasicImageFieldController::class.java))
+        assertIs<BasicImageFieldController>(controller, "construction of image field with data should succeed")
     }
 
     @Test

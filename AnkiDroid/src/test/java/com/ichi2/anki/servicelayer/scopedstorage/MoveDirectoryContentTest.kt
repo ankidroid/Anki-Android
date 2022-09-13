@@ -23,7 +23,6 @@ import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
@@ -35,6 +34,7 @@ import java.io.IOException
 import java.nio.file.NotDirectoryException
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /**
@@ -53,7 +53,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val moveOperation = moveDirectoryContent(source, destinationDirectory)
         val result1 = moveOperation.execute()
         assertThat("First result should have two operations", result1, hasSize(2))
-        assertThat("First result's first operation should be MoveFileOrDirectory", result1[0], instanceOf(MoveFileOrDirectory::class.java))
+        assertIs<MoveFileOrDirectory>(result1[0], "First result's first operation should be MoveFileOrDirectory")
         val moveFoo = result1[0] as MoveFileOrDirectory
         assertEquals(moveFoo.sourceFile.name, "foo.txt", "First result's second operation should have source foo.txt")
         assertEquals(result1[1], moveOperation, "First result's second operation should be move_operation")
@@ -101,7 +101,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
         assertThat(executionContext.exceptions, hasSize(1))
         executionContext.exceptions[0].run {
-            assertThat(this, instanceOf(TestException::class.java))
+            assertIs<TestException>(this)
         }
 
         assertTrue(source.exists(), "source directory should not be deleted")
@@ -198,7 +198,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val destinationDirectory = generateDestinationDirectoryRef()
         val ex = assertThrowsSubclass<IOException> { moveDirectoryContent(dir, destinationDirectory) }
         if (isV26) {
-            assertThat("Starting at API 26, this should be a NotDirectoryException", ex, instanceOf(NotDirectoryException::class.java))
+            assertIs<NotDirectoryException>(ex, "Starting at API 26, this should be a NotDirectoryException")
         }
     }
 

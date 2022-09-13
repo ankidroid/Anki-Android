@@ -18,14 +18,13 @@ package com.ichi2.compat
 
 import android.os.Build
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.instanceOf
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /** Tests for [Compat.hasFiles] */
@@ -57,7 +56,7 @@ class CompatHasFilesTest : Test21And26() {
 
         val exception = assertThrowsSubclass<IOException> { hasFiles(file) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))
+            assertIs<NotDirectoryException>(exception, "Starting at API 26, this should be a NotDirectoryException")
         }
     }
 

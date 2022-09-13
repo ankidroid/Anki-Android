@@ -20,11 +20,11 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.compat.Test21And26
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertIs
 
 /**
  * Tests for [DeleteEmptyDirectory]
@@ -52,7 +52,7 @@ class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
         val next = DeleteEmptyDirectory(toDelete).execute(executionContext)
 
         assertThat("exception expected", executionContext.exceptions, hasSize(1))
-        assertThat(executionContext.exceptions.single(), instanceOf(MigrateUserData.DirectoryNotEmptyException::class.java))
+        assertIs<MigrateUserData.DirectoryNotEmptyException>(executionContext.exceptions.single())
         assertThat("no more operations", next, hasSize(0))
     }
 

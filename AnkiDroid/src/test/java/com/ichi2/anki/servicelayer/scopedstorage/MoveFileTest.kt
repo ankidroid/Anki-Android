@@ -21,7 +21,7 @@ import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException.MissingFile
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.emptyCollectionOf
 import org.hamcrest.Matchers.hasSize
@@ -37,6 +37,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -278,7 +279,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         assertThat("An exception should be logged", executionContext.exceptions, hasSize(1))
         val exception = executionContext.exceptions[0]
-        assertThat("An exception should be of the correct type", exception, instanceOf(FileDirectoryConflictException::class.java))
+        assertIs<FileDirectoryConflictException>(exception, "An exception should be of the correct type")
 
         assertTrue(source.file.exists(), "source file should still exist")
         assertTrue(destination.exists(), "destination file should exist")
@@ -308,7 +309,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
     private inline fun <reified T : Exception> getSingleExceptionOfType(): T {
         val exception = getSingleThrownException()
-        assertThat(exception, instanceOf(FileConflictException::class.java))
+        assertIs<FileConflictException>(exception)
         return exception as T
     }
 }

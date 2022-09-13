@@ -18,7 +18,8 @@ package com.ichi2.compat
 
 import android.annotation.SuppressLint
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.FileNotFoundException
@@ -26,6 +27,7 @@ import java.io.IOException
 import java.nio.file.NotDirectoryException
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class CompatDirectoryContentTest : Test21And26() {
@@ -92,7 +94,7 @@ class CompatDirectoryContentTest : Test21And26() {
         }
         )
         if (isV26) {
-            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))
+            assertIs<NotDirectoryException>(exception, "Starting at API 26, this should be a NotDirectoryException")
         }
     }
 

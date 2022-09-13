@@ -16,7 +16,6 @@
 package com.ichi2.utils
 
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
-import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder
@@ -544,6 +543,6 @@ class UniqueArrayListTest {
 
         assertListEquals(arr, uniqueList)
 
-        assertThat(uniqueList[0], instanceOf(Long::class.java))
+        assertIs<Long>(uniqueList[0])
     }
 }

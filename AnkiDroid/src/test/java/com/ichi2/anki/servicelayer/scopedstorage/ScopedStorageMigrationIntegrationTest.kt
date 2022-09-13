@@ -36,6 +36,7 @@ import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -116,8 +117,8 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         assertEquals(testExceptions.size, 2, "two failed files means two exceptions")
 
-        assertThat(testExceptions[0], instanceOf(TestException::class.java))
-        assertThat(testExceptions[1], instanceOf(TestException::class.java))
+        assertIs<TestException>(testExceptions[0])
+        assertIs<TestException>(testExceptions[1])
     }
 
     @Test
