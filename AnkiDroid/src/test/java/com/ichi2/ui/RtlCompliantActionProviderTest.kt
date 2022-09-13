@@ -18,10 +18,10 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.ContextThemeWrapper
 import org.junit.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 @RunWith(RobolectricTestRunner::class)
 class RtlCompliantActionProviderTest {
@@ -51,6 +51,6 @@ class RtlCompliantActionProviderTest {
                 0
             )
         )
-        assertThrows<ClassCastException> { RtlCompliantActionProvider(c) }
+        assertFailsWith<ClassCastException> { RtlCompliantActionProvider(c) }
     }
 }

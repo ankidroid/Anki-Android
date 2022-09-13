@@ -20,7 +20,6 @@ import android.content.SharedPreferences
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceType.*
-import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
 import org.junit.BeforeClass
 import org.junit.Test
@@ -71,7 +70,7 @@ class MigrateUserDataJvmTest {
     @Test
     fun error_if_settings_are_bad() {
         val preferences = getScopedStorageMigrationPreferences(source = NOT_SET, destination = VALID_DIR)
-        val exception = assertThrows<IllegalStateException> { MigrateUserData.createInstance(preferences) }
+        val exception = assertFailsWith<IllegalStateException> { MigrateUserData.createInstance(preferences) }
 
         assertEquals(exception.message, "Expected either all or no migration directories set. 'migrationSourcePath': ''; 'migrationDestinationPath': '$destDir'")
     }

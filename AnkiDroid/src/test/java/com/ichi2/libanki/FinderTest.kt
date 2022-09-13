@@ -299,7 +299,7 @@ class FinderTest : RobolectricTest() {
         // assertEquals(, col.findCards("back:helloworld", full=true).size()G)2
         // searching for an invalid special tag should not error
         // TODO: ensure the search fail
-        //  assertThrows(Exception.class, () -> col.findCards("is:invalid").size());
+        //  assertFailsWith(Exception.class, () -> col.findCards("is:invalid").size());
         // should be able to limit to parent col, no children
         var id = col.db.queryLongScalar("select id from cards limit 1")
         col.db.execute(
@@ -375,7 +375,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(1, col.findCards("tag:monkey or (tag:sheep octopus)").size)
         // flag
         // Todo: ensure it fails
-        // assertThrows(Exception.class, () -> col.findCards("flag:12"));
+        // assertFailsWith(Exception.class, () -> col.findCards("flag:12"));
     }
 
     @Test

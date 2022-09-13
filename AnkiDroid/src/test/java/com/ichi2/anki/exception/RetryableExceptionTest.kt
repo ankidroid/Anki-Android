@@ -17,9 +17,9 @@
 package com.ichi2.anki.exception
 
 import com.ichi2.testutils.TestException
-import com.ichi2.testutils.assertThrows
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 /** Tests [RetryableException] */
 class RetryableExceptionTest {
@@ -39,7 +39,7 @@ class RetryableExceptionTest {
 
     @Test
     fun throwing_function_fails_with_inner() {
-        val exception = assertThrows<TestException> {
+        val exception = assertFailsWith<TestException> {
             RetryableException.retryOnce { called++; throw RetryableException(TestException("throwing_function_retries")) }
         }
         assertEquals(exception.message, "throwing_function_retries", "exception message is retained")

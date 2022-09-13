@@ -17,7 +17,10 @@
 package com.ichi2.compat
 
 import android.annotation.SuppressLint
-import com.ichi2.testutils.*
+import com.ichi2.testutils.assertThrowsSubclass
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import com.ichi2.testutils.withTempFile
 import org.junit.Test
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -73,20 +76,18 @@ class CompatDirectoryContentTest : Test21And26() {
     fun non_existent_dir_test() {
         val directory = createTransientDirectory()
         directory.delete()
-        assertThrows<FileNotFoundException>({
+        assertFailsWith<FileNotFoundException> {
             compat.contentOfDirectory(directory)
         }
-        )
     }
 
     @SuppressLint("NewApi")
     @Test
     fun file_test() {
         val file = createTransientFile("foo")
-        val exception = assertThrowsSubclass<IOException>({
+        val exception = assertThrowsSubclass<IOException> {
             compat.contentOfDirectory(file)
         }
-        )
         if (isV26) {
             assertIs<NotDirectoryException>(exception, "Starting at API 26, this should be a NotDirectoryException")
         }

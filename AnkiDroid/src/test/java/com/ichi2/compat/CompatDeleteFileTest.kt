@@ -28,6 +28,7 @@ import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 
 /** Tests for [Compat.deleteFile] */
@@ -64,7 +65,7 @@ class CompatDeleteFileTest(
     fun delete_fails_if_exists_is_false() {
         val dir = createTransientDirectory()
         dir.delete()
-        assertThrows<FileNotFoundException> { deleteFile(dir) }
+        assertFailsWith<FileNotFoundException> { deleteFile(dir) }
     }
 
     @Test

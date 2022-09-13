@@ -17,12 +17,12 @@
 package com.ichi2.anki.dialogs
 
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.testutils.assertThrows
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun ensure_cannot_be_instantiated_without_arguments() {
-        assertThrows<IllegalStateException> { DeckPickerContextMenu(col).deckId }
+        assertFailsWith<IllegalStateException> { DeckPickerContextMenu(col).deckId }
     }
 }

@@ -25,7 +25,6 @@ import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
 import org.apache.http.util.Args.notNull
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.*
@@ -163,13 +162,13 @@ class DecksTest : RobolectricTest() {
         col.decks.get(filteredId)
         val childId = addDeck("child")
         val child = col.decks.get(childId)
-        assertThrows(DeckRenameException::class.java) {
+        assertFailsWith<DeckRenameException> {
             col.decks.rename(
                 child,
                 "filtered::child"
             )
         }
-        assertThrows(DeckRenameException::class.java) {
+        assertFailsWith<DeckRenameException> {
             col.decks.rename(
                 child,
                 "FILTERED::child"

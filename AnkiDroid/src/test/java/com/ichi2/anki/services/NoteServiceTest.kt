@@ -87,7 +87,7 @@ class NoteServiceTest : RobolectricTest() {
         // model with ID 45
         testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
         val noteWithID45 = Note(testCol!!, testModel)
-        val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
+        val expectedException: Throwable = assertFailsWith<RuntimeException> { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
 

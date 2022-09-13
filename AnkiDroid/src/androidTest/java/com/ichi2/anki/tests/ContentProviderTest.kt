@@ -229,7 +229,7 @@ class ContentProviderTest : InstrumentedTest() {
      * Check that inserting and removing a note into default deck works as expected
      */
     @Test
-    @KotlinCleanup("assertThrows")
+    @KotlinCleanup("assertFailsWith")
     @KotlinCleanup("scope function: values")
     fun testInsertAndRemoveNote() {
         // Get required objects for test
@@ -811,7 +811,7 @@ class ContentProviderTest : InstrumentedTest() {
     /**
      * Check that an Exception is thrown when unsupported operations are performed
      */
-    @KotlinCleanup("use assertThrows")
+    @KotlinCleanup("use assertFailsWith")
     @Test
     fun testUnsupportedOperations() {
         val cr = contentResolver

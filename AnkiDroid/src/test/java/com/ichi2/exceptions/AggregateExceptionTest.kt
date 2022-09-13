@@ -17,9 +17,9 @@
 package com.ichi2.exceptions
 
 import com.ichi2.testutils.TestException
-import com.ichi2.testutils.assertThrows
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
 /**
@@ -28,7 +28,7 @@ import kotlin.test.assertIs
 class AggregateExceptionTest {
     @Test
     fun exceptionIfNoElementsProvided() {
-        assertThrows<IllegalStateException> { AggregateException.raise("", emptyList()) }
+        assertFailsWith<IllegalStateException> { AggregateException.raise("", emptyList()) }
     }
 
     @Test

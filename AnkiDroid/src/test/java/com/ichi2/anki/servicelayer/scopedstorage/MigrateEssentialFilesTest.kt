@@ -32,7 +32,6 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Storage
 import com.ichi2.testutils.CollectionDBCorruption
 import com.ichi2.testutils.TestException
-import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.startsWith
@@ -119,7 +118,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
         assertMigrationInProgress()
 
-        val ex = assertThrows<IllegalStateException> { executeAlgorithmSuccessfully(defaultCollectionSourcePath) }
+        val ex = assertFailsWith<IllegalStateException> { executeAlgorithmSuccessfully(defaultCollectionSourcePath) }
 
         assertThat(ex.message, containsString("Migration is already in progress"))
     }
@@ -131,7 +130,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
             File(it, "tmp.txt").createNewFile()
         }
 
-        val exception = assertThrows<IllegalStateException> { executeAlgorithmSuccessfully(getMigrationSourcePath(), optionalDestinationPath = nonEmptyDestination) }
+        val exception = assertFailsWith<IllegalStateException> { executeAlgorithmSuccessfully(getMigrationSourcePath(), optionalDestinationPath = nonEmptyDestination) }
         assertThat(exception.message, startsWith("destination was non-empty"))
     }
 
@@ -142,7 +141,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         assertNotEquals(col.path, invalidSourcePath, "source path should be invalid")
         assertNotNull(Directory.createInstance(invalidSourcePath))
         val algo = getAlgorithm(invalidSourcePath, getMigrationDestinationPath())
-        val exception = assertThrows<IllegalStateException> { algo.execute() }
+        val exception = assertFailsWith<IllegalStateException> { algo.execute() }
         assertThat(exception.message, containsString("paths did not match"))
     }
 
@@ -153,7 +152,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         val collectionSourcePath = File(collectionAnki2Path).parent!!
 
-        assertThrows<SQLiteDatabaseCorruptException> { executeAlgorithmSuccessfully(collectionSourcePath) }
+        assertFailsWith<SQLiteDatabaseCorruptException> { executeAlgorithmSuccessfully(collectionSourcePath) }
 
         assertMigrationNotInProgress()
     }
@@ -162,7 +161,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     fun collection_is_not_locked_if_copy_fails() {
         var called = false
 
-        assertThrows<TestException> {
+        assertFailsWith<TestException> {
             executeAlgorithmSuccessfully(defaultCollectionSourcePath) {
                 Mockito
                     .doAnswer {
@@ -181,7 +180,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
     @Test
     fun fails_if_collection_can_still_be_opened() {
-        val ex = assertThrows<RetryableException> {
+        val ex = assertFailsWith<RetryableException> {
             executeAlgorithmSuccessfully(defaultCollectionSourcePath) {
                 Mockito.doReturn(Mockito.mock(LockedCollection::class.java)).whenever(it).createLockedCollection()
             }
@@ -200,7 +199,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         val oldPrefValues = prefKeys
             .associateWith { getPreferences().getString(it, null) }
 
-        assertThrows<TestException> {
+        assertFailsWith<TestException> {
             executeAlgorithmSuccessfully(collectionSourcePath) {
                 Mockito.doThrow(TestException("simulating final collection open failure")).whenever(it).throwIfCollectionCannotBeOpened()
             }
@@ -222,7 +221,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.anki2"))
 
-        val ex = assertThrows<MissingEssentialFileException> {
+        val ex = assertFailsWith<MissingEssentialFileException> {
             executeAlgorithmSuccessfully(defaultCollectionSourcePath) {
                 Mockito.doReturn(Mockito.mock(LockedCollection::class.java)).whenever(it).createLockedCollection()
             }

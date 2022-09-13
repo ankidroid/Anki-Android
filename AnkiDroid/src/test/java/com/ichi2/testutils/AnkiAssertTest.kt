@@ -25,7 +25,7 @@ class AnkiAssertTest {
     @Test
     fun assertThrowsNoException() {
         try {
-            AnkiAssert.assertThrows({}, IllegalStateException::class.java)
+            AnkiAssert.assertFailsWith({}, IllegalStateException::class.java)
             fail("No exception thrown")
         } catch (e: AssertionError) {
             assertThat(e.message, containsString("Expected exception: IllegalStateException"))
@@ -37,7 +37,7 @@ class AnkiAssertTest {
     fun assertThrowsWrongException() {
         val toThrow = IllegalArgumentException()
         try {
-            AnkiAssert.assertThrows({ throw toThrow }, IllegalStateException::class.java)
+            AnkiAssert.assertFailsWith({ throw toThrow }, IllegalStateException::class.java)
             fail("No exception thrown")
         } catch (e: AssertionError) {
             assertThat(e.message, containsString("Expected 'IllegalStateException' got 'IllegalArgumentException'"))
@@ -50,7 +50,7 @@ class AnkiAssertTest {
     fun assertThrowsSameException() {
         val ex = IllegalStateException()
 
-        val exception = AnkiAssert.assertThrows({ throw ex }, IllegalStateException::class.java)
+        val exception = AnkiAssert.assertFailsWith({ throw ex }, IllegalStateException::class.java)
 
         assertThat(exception, sameInstance(ex))
     }

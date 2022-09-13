@@ -20,7 +20,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException.MissingFile
-import com.ichi2.testutils.*
+import com.ichi2.testutils.FileUtil
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.length
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.emptyCollectionOf
@@ -35,10 +38,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import timber.log.Timber
 import java.io.File
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), OperationTest {
@@ -115,7 +115,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         // this is correct - exception is not in a logged context
         executionContext.logExceptions = true
-        val exception = assertThrows<TestException> {
+        val exception = assertFailsWith<TestException> {
             spy(MoveFile(source, destinationFile)) {
                 Mockito.doThrow(TestException("test-copyFile()")).whenever(it).copyFile(any(), any())
             }
@@ -208,7 +208,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val source = addUntrackedMediaFile("hello-oo", listOf("hello.txt"))
         val destinationFile = source.file
 
-        val ex = assertThrows<EquivalentFileException> {
+        val ex = assertFailsWith<EquivalentFileException> {
             MoveFile(source, destinationFile)
                 .execute()
         }
@@ -228,7 +228,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
             "deletion should work",
         )
 
-        val exception = assertThrows<MissingDirectoryException> {
+        val exception = assertFailsWith<MissingDirectoryException> {
             MoveFile(sourceNotExist, destinationFileNotExist)
                 .execute()
         }
@@ -247,7 +247,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val size = source.length()
 
         executionContext.logExceptions = true
-        assertThrows<TestException> {
+        assertFailsWith<TestException> {
             spy(MoveFile(source, destinationFile)) {
                 Mockito.doThrow(TestException("test-deleteFile()")).whenever(it).deleteFile(any())
             }

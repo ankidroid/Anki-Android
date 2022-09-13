@@ -19,13 +19,13 @@ package com.ichi2.utils
 
 import androidx.core.os.bundleOf
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.assertThrows
 import com.ichi2.utils.BundleUtils.getSerializableWithCast
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 @RunWith(RobolectricTestRunner::class)
 @Config(application = EmptyApplication::class)
@@ -40,7 +40,7 @@ class BundleUtilsRobolectricTest {
     @Test
     fun shouldThrowExceptionIfCastIsUnsuccessful() {
         val bundle = bundleOf("Example" to "Value")
-        assertThrows<ClassCastException> {
+        assertFailsWith<ClassCastException> {
             bundle.getSerializableWithCast<Int>("Example")
         }
     }

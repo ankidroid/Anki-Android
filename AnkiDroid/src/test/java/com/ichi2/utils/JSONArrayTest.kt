@@ -24,7 +24,6 @@ package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -33,6 +32,7 @@ import java.lang.Boolean.TRUE
 import java.lang.Double.*
 import java.util.*
 import kotlin.test.*
+import kotlin.test.assertFailsWith
 
 /**
  * This black box test was written without inspecting the non-free org.json sourcecode.
@@ -46,10 +46,10 @@ class JSONArrayTest {
         val array = JSONArray()
         assertEquals(0, array.length())
         assertEquals("", array.join(" AND "))
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array[0]
         }
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.getBoolean(0)
         }
         assertEquals("[]", array.toString())
@@ -138,12 +138,12 @@ class JSONArrayTest {
         array.put(null)
         assertEquals("null", array[0])
         assertEquals(JSONObject.NULL, array[1])
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array[2]
         }
         assertEquals("null", array.getString(0))
         assertEquals("null", array.getString(1))
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.getString(2)
         }
     }
@@ -235,7 +235,7 @@ class JSONArrayTest {
         assertEquals(9.223372036854776E18, array.getDouble(2), 0.0)
         assertEquals(Int.MAX_VALUE, array.getInt(2))
         assertFalse(array.isNull(3))
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.getDouble(3)
         }
         assertEquals(NaN, array.optDouble(3), 0.0)
@@ -334,13 +334,13 @@ class JSONArrayTest {
     @Test
     fun testPutUnsupportedNumbers() {
         val array = JSONArray()
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.put(Double.NaN)
         }
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.put(0, Double.NEGATIVE_INFINITY)
         }
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.put(0, Double.POSITIVE_INFINITY)
         }
     }
@@ -349,7 +349,7 @@ class JSONArrayTest {
     fun testPutUnsupportedNumbersAsObject() {
         val array = JSONArray()
 
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.put(NaN)
             array.put(NEGATIVE_INFINITY)
             array.put(POSITIVE_INFINITY)
@@ -393,7 +393,7 @@ class JSONArrayTest {
 
     @Test
     fun testTokenerConstructorWrongType() {
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             JSONArray(JSONTokener("{\"foo\": false}"))
         }
     }
@@ -401,7 +401,7 @@ class JSONArrayTest {
     @Test
     fun testTokenerConstructorParseFail() {
         try {
-            assertThrows<JSONException> {
+            assertFailsWith<JSONException> {
                 JSONArray(JSONTokener("["))
             }
         } catch (e: StackOverflowError) {
@@ -418,7 +418,7 @@ class JSONArrayTest {
 
     @Test
     fun testStringConstructorWrongType() {
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             JSONArray("{\"foo\": false}")
         }
     }
@@ -426,7 +426,7 @@ class JSONArrayTest {
     @Test
     fun testStringConstructorParseFail() {
         try {
-            assertThrows<JSONException> {
+            assertFailsWith<JSONException> {
                 JSONArray("[")
             }
         } catch (e: StackOverflowError) {
@@ -451,16 +451,16 @@ class JSONArrayTest {
         assertEquals(null, array.opt(-3))
         assertEquals("", array.optString(3))
         assertEquals("", array.optString(-3))
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array[3]
         }
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array[-3]
         }
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.getString(3)
         }
-        assertThrows<JSONException> {
+        assertFailsWith<JSONException> {
             array.getString(-3)
         }
     }

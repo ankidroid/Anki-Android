@@ -16,13 +16,13 @@
 package com.ichi2.utils
 
 import org.acra.util.IOUtils.writeStringToFile
-import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -66,7 +66,7 @@ class FileUtilTest {
         assertEquals(FileUtil.getDirectorySize(dir), testDirectorySize)
 
         // Test for failure scenario by passing a file as an argument instead of a directory
-        assertThrows(IOException::class.java) { FileUtil.getDirectorySize(File(dir, "file1.txt")) }
+        assertFailsWith<IOException> { FileUtil.getDirectorySize(File(dir, "file1.txt")) }
     }
 
     @Test
@@ -79,7 +79,7 @@ class FileUtilTest {
         val testDir = createSrcFilesForTest(temporaryRootDir, "testDir")
 
         // Test for file which exists but isn't a directory
-        assertThrows(IOException::class.java) { FileUtil.ensureFileIsDirectory(File(testDir, "file1.txt")) }
+        assertFailsWith<IOException> { FileUtil.ensureFileIsDirectory(File(testDir, "file1.txt")) }
 
         // Test for file which exists and is a directory
         FileUtil.ensureFileIsDirectory(File(testDir, "parent"))
@@ -88,7 +88,7 @@ class FileUtilTest {
         FileUtil.ensureFileIsDirectory(File(testDir, "parent2"))
 
         // Test for directory which doesn't exist, and cannot be created
-        assertThrows(IOException::class.java) {
+        assertFailsWith<IOException> {
             FileUtil.ensureFileIsDirectory(
                 File(
                     testDir.absolutePath + File.separator + "file1.txt" +
@@ -119,7 +119,7 @@ class FileUtilTest {
         assertEquals(expectedChildren.size.toLong(), testDirChildren.size.toLong())
 
         // Create invalid input
-        assertThrows(IOException::class.java) { FileUtil.listFiles(File(testDir, "file1.txt")) }
+        assertFailsWith<IOException> { FileUtil.listFiles(File(testDir, "file1.txt")) }
     }
 
     @Test

@@ -23,6 +23,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
@@ -47,7 +48,7 @@ class CompatHasFilesTest : Test21And26() {
         val dir = createTransientDirectory()
         dir.delete()
 
-        assertThrows<FileNotFoundException> { hasFiles(dir) }
+        assertFailsWith<FileNotFoundException> { hasFiles(dir) }
     }
 
     @Test

@@ -41,7 +41,7 @@ object AnkiAssert {
         }
     }
 
-    fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
+    fun <T : Throwable?> assertFailsWith(r: Runnable, clazz: Class<T>): T {
         try {
             r.run()
             fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
@@ -76,24 +76,11 @@ object AnkiAssert {
     }
 }
 
-/** assertThrows, allowing for lambda shorthand
- *
- * ```kotlin
- * val exception = assertThrows<IllegalStateException> {
- *     foo()
- * }
- * ```
- *
- * @see TestException if a test-only exception is needed
- * */
-inline fun <reified T : Throwable> assertThrows(r: Runnable): T =
-    AnkiAssert.assertThrows(r, T::class.java)
-
 /**
- * [assertThrows], accepting subclasses of the exception type
+ * [kotlin.test.assertFailsWith], accepting subclasses of the exception type
  *
  * ```kotlin
- * val exception = assertThrows<IllegalStateException> {
+ * val exception = assertFailsWith<IllegalStateException> {
  *     foo()
  * }
  * ```

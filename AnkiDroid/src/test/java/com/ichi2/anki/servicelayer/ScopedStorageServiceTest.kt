@@ -20,12 +20,12 @@ import android.content.SharedPreferences
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -41,7 +41,7 @@ class ScopedStorageServiceTest {
     fun error_if_only_source_set() {
         val preferences = getScopedStorageMigrationPreferences(setSource = true, setDestination = false)
 
-        val exception = assertThrows<IllegalStateException> { userMigrationIsInProgress(preferences) }
+        val exception = assertFailsWith<IllegalStateException> { userMigrationIsInProgress(preferences) }
         assertThat(
             exception.message,
             equalTo(
@@ -56,7 +56,7 @@ class ScopedStorageServiceTest {
     fun error_if_only_destination_set() {
         val preferences = getScopedStorageMigrationPreferences(setSource = false, setDestination = true)
 
-        val exception = assertThrows<IllegalStateException> { userMigrationIsInProgress(preferences) }
+        val exception = assertFailsWith<IllegalStateException> { userMigrationIsInProgress(preferences) }
         assertThat(
             exception.message,
             equalTo(

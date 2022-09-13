@@ -21,11 +21,11 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientFile
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -47,7 +47,7 @@ class StorageLockingTest : RobolectricTest() {
     @Test
     fun open_fails_if_locked() {
         Storage.lockCollection()
-        assertThrows<SQLiteDatabaseLockedException> { successfulOpen() }
+        assertFailsWith<SQLiteDatabaseLockedException> { successfulOpen() }
     }
 
     @Test

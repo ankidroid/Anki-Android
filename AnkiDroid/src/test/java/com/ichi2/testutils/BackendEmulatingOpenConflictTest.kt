@@ -18,12 +18,12 @@ package com.ichi2.testutils
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
-import net.ankiweb.rsdroid.BackendException.BackendDbException.*
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.junit.After
-import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class BackendEmulatingOpenConflictTest : RobolectricTest() {
@@ -41,8 +41,6 @@ class BackendEmulatingOpenConflictTest : RobolectricTest() {
 
     @Test
     fun assumeMocksAreValid() {
-        assertThrows(BackendDbLockedException::class.java,
-            { CollectionHelper.instance.getCol(super.targetContext) }
-        )
+        assertFailsWith<BackendDbLockedException> { CollectionHelper.instance.getCol(super.targetContext) }
     }
 }
