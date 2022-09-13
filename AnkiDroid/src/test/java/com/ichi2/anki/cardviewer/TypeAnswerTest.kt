@@ -21,7 +21,7 @@ import com.ichi2.anki.cardviewer.TypeAnswer.Companion.cleanCorrectAnswer
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.contentForCloze
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
 import org.intellij.lang.annotations.Language
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -250,7 +250,7 @@ $!"""
         val input = "ya[sound:36_ya.mp3]<div><img src=\"paste-efbfdfbff329f818e3b5568e578234d0d0054067.png\" /><br /></div>"
         val expected = "ya"
         val actual: String = cleanCorrectAnswer(input)
-        assertThat(actual, Matchers.equalTo(expected))
+        assertThat(actual, equalTo(expected))
     }
 
     private fun typeAnsAnswerFilter(answer: String, correctAnswer: String, userAnswer: String): String =

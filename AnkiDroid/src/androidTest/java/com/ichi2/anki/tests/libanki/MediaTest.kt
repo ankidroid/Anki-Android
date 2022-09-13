@@ -25,7 +25,8 @@ import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.`is`
 import org.junit.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -220,7 +221,7 @@ class MediaTest : InstrumentedTest() {
     @Throws(IOException::class, EmptyMediaException::class)
     fun testChanges() {
         // legacy code, not used by backend
-        Assume.assumeThat(defaultLegacySchema, Matchers.`is`(true))
+        Assume.assumeThat(defaultLegacySchema, `is`(true))
         assertNotNull(mTestCol!!.media._changed())
         assertEquals(0, added(mTestCol).size)
         assertEquals(0, removed(mTestCol).size)
@@ -233,7 +234,7 @@ class MediaTest : InstrumentedTest() {
         path = File(mTestCol!!.media.dir(), mTestCol!!.media.addFile(path))
         // should have been logged
         mTestCol!!.media.findChanges()
-        assertThat(added(mTestCol).size, Matchers.`is`(Matchers.greaterThan(0)))
+        assertThat(added(mTestCol).size, `is`(greaterThan(0)))
         assertEquals(0, removed(mTestCol).size)
         // if we modify it, the cache won't notice
         os = FileOutputStream(path, true)

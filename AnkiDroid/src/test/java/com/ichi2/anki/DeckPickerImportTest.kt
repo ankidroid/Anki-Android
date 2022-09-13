@@ -20,7 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.typeCompatibleWith
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.fail
@@ -33,7 +33,7 @@ class DeckPickerImportTest : RobolectricTest() {
 
         deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, arrayListOf(""))
 
-        assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
+        assertThat(deckPicker.getAsyncDialogFragmentClass(), typeCompatibleWith(ImportDialog::class.java))
     }
 
     @Test
@@ -42,7 +42,7 @@ class DeckPickerImportTest : RobolectricTest() {
 
         deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, arrayListOf(""))
 
-        assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
+        assertThat(deckPicker.getAsyncDialogFragmentClass(), typeCompatibleWith(ImportDialog::class.java))
     }
 
     private class DeckPickerImport : DeckPicker() {

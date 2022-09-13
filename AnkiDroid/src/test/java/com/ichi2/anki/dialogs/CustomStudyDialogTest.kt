@@ -32,9 +32,11 @@ import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.not
 import org.hamcrest.core.IsNull
 import org.junit.After
 import org.junit.Test
@@ -94,7 +96,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
+        assertThat(customStudy.toOrderedString(), equalTo(expected))
     }
 
     @Test
@@ -120,7 +122,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         scenario.onFragment { f: CustomStudyDialog ->
             val dialog = f.dialog as MaterialDialog?
             assertThat(dialog, IsNull.notNullValue())
-            assertThat(dialog!!.items, Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))))
+            assertThat(dialog!!.items, not(hasItem(getResourceString(R.string.custom_study_increase_new_limit))))
         }
     }
 }

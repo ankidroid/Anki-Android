@@ -23,7 +23,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirector
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.emptyCollectionOf
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -136,7 +136,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         MoveFile(source, destinationFile)
             .execute()
 
-        assertThat("no exceptions should have been reported", executionContext.exceptions, Matchers.emptyCollectionOf(Exception::class.java))
+        assertThat("no exceptions should have been reported", executionContext.exceptions, emptyCollectionOf(Exception::class.java))
         assertThat("empty progress should have been reported", executionContext.progress.single(), equalTo(0L))
     }
 

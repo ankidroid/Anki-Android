@@ -21,7 +21,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RunInBackground
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,7 +34,7 @@ class RecursivePictureMenuAndroidTest : RecursivePictureMenuUtilTest() {
         val linkedItem = getItemLinkingTo(R.string.link_manual)
         val v = getRecyclerViewFor(linkedItem)
         clickChildAtIndex(v, 0)
-        assertThat(activity!!.lastUrlOpened, Matchers.equalTo(getResourceString(R.string.link_manual)))
+        assertThat(activity!!.lastUrlOpened, equalTo(getResourceString(R.string.link_manual)))
     }
 
     @Test
@@ -46,7 +46,7 @@ class RecursivePictureMenuAndroidTest : RecursivePictureMenuUtilTest() {
         clickChildAtIndex(v, 0)
         val currentMenu = activity!!.lastShownDialogFragment as RecursivePictureMenu
         val rv = RecursivePictureMenuUtil.getRecyclerViewFor(currentMenu)
-        assertThat("Unexpected number of items - check the adapter", rv.childCount, Matchers.equalTo(numberOfChildItems))
+        assertThat("Unexpected number of items - check the adapter", rv.childCount, equalTo(numberOfChildItems))
     }
 
     @Test

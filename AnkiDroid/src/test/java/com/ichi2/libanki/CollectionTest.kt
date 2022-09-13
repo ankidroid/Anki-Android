@@ -19,13 +19,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
-import kotlin.test.*
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CollectionTest : RobolectricTest() {
@@ -119,7 +121,7 @@ class CollectionTest : RobolectricTest() {
         assertEquals(4, col.cardCount())
         // check q/a generation
         val c0 = note.cards()[0]
-        assertThat(c0.q(), Matchers.containsString("three"))
+        assertThat(c0.q(), containsString("three"))
         // it should not be a duplicate
         assertEquals(note.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
         // now let's make a duplicate
@@ -198,7 +200,7 @@ class CollectionTest : RobolectricTest() {
         n.setItem("Front", "foo[sound:abc.mp3]")
         n.flush()
         val question = c.q(true)
-        assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
+        assertThat("Question «$question» does not contains «anki:play».", question, containsString("anki:play"))
         // it shouldn't throw an error while people are editing
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}")
         mm.save(m)

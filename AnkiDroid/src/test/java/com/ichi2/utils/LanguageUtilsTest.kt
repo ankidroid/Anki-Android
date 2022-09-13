@@ -22,9 +22,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.LanguageUtil.getLocale
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.oneOf
+import org.hamcrest.Matchers.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -40,7 +38,7 @@ class LanguageUtilsTest {
         val previousLanguages = PREVIOUS_LANGUAGES.toMutableList()
         previousLanguages.removeAll(previousLanguageExclusions)
         for (language in previousLanguages) {
-            assertThat(languages, Matchers.hasItem(language))
+            assertThat(languages, hasItem(language))
         }
     }
 
@@ -50,7 +48,7 @@ class LanguageUtilsTest {
         assertThat(
             "Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES",
-            actual, Matchers.contains(*CURRENT_LANGUAGES)
+            actual, contains(*CURRENT_LANGUAGES)
         )
     }
 

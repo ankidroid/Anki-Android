@@ -18,7 +18,7 @@ package com.ichi2.anki.dialogs
 import com.ichi2.anki.R
 import com.ichi2.testutils.AnkiAssert
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 
 class RecursivePictureMenuTest : RecursivePictureMenuUtilTest() {
@@ -28,7 +28,7 @@ class RecursivePictureMenuTest : RecursivePictureMenuUtilTest() {
         val child = header.children[0]
         val allItems = arrayListOf(header)
         RecursivePictureMenu.removeFrom(allItems, child)
-        assertThat("child should be removed", header.children, Matchers.hasSize(0))
+        assertThat("child should be removed", header.children, hasSize(0))
     }
 
     @Test

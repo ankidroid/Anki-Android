@@ -24,11 +24,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
-import java.util.ArrayList
 
 @KotlinCleanup("fix ide lint issues")
 abstract class NoteEditorTest protected constructor() {
@@ -56,8 +56,8 @@ abstract class NoteEditorTest protected constructor() {
             Assume.assumeThat(
                 String.format("Test fails on Travis API %d", invalid),
                 Build.VERSION.SDK_INT,
-                Matchers.not(
-                    Matchers.`is`(invalid)
+                not(
+                    `is`(invalid)
                 )
             )
         }

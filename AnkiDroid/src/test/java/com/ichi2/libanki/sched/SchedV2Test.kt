@@ -51,7 +51,7 @@ import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.platform.commons.util.CollectionUtils
@@ -121,15 +121,15 @@ open class SchedV2Test : RobolectricTest() {
         c.flush()
         val v2 = SchedV2(col)
         val schedCard = v2.card!!
-        assertThat(schedCard, Matchers.notNullValue())
+        assertThat(schedCard, notNullValue())
         v2.answerCard(schedCard, BUTTON_ONE)
         assertThat(
             "The lapsed card should now be counted as lrn",
             v2.mLrnCount,
-            Matchers.equalTo(1)
+            equalTo(1)
         )
         val after = v2.card!!
-        assertThat("A card should be returned ", after, Matchers.notNullValue())
+        assertThat("A card should be returned ", after, notNullValue())
 
         /* Data from Anki - pp(self.reviewer.card)
         {'data': '', 'did': 1587939535230, 'due': 1587941137, 'factor': 1300,
@@ -137,12 +137,12 @@ open class SchedV2Test : RobolectricTest() {
         'mod': 1587939720, 'nid': 1510928805161, 'odid': 1587920944107, 'odue': 0,
         'ord': 0, 'queue': 1, 'reps': 23, 'type': 3, 'usn': -1}
          */
-        assertThat(after.type, Matchers.equalTo(Consts.CARD_TYPE_RELEARNING))
-        assertThat(after.queue, Matchers.equalTo(Consts.QUEUE_TYPE_LRN))
-        assertThat(after.left, Matchers.equalTo(1001))
-        assertThat("ivl is reduced by 70%", after.ivl, Matchers.equalTo(17))
-        assertThat("One lapse is added", after.lapses, Matchers.equalTo(6))
-        assertThat(v2.answerButtons(after), Matchers.equalTo(4))
+        assertThat(after.type, equalTo(Consts.CARD_TYPE_RELEARNING))
+        assertThat(after.queue, equalTo(Consts.QUEUE_TYPE_LRN))
+        assertThat(after.left, equalTo(1001))
+        assertThat("ivl is reduced by 70%", after.ivl, equalTo(17))
+        assertThat("One lapse is added", after.lapses, equalTo(6))
+        assertThat(v2.answerButtons(after), equalTo(4))
         val one = v2.nextIvl(after, BUTTON_ONE)
         val two = v2.nextIvl(after, BUTTON_TWO)
         val three = v2.nextIvl(after, BUTTON_THREE)
@@ -150,30 +150,30 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "Again should pick the current step",
             one,
-            Matchers.equalTo(1200L)
+            equalTo(1200L)
         ) // 20 mins
         assertThat(
             "Repeating single step - 20 minutes * 1.5",
             two,
-            Matchers.equalTo(1800L)
+            equalTo(1800L)
         ) // 30 mins
         assertThat(
             "Good should take the reduced interval (25 * 0.7)",
             three,
-            Matchers.equalTo(1468800L)
+            equalTo(1468800L)
         ) // 17 days
         assertThat(
             "Easy should have a bonus day over good",
             four,
-            Matchers.equalTo(1555200L)
+            equalTo(1555200L)
         ) // 18 days
     }
 
     private fun ensureLapseMatchesSppliedAnkiDesktopConfig(lapse: JSONObject) {
-        assertThat(lapse.getInt("minInt"), Matchers.equalTo(2))
-        assertThat(lapse.getDouble("mult"), Matchers.equalTo(0.7))
-        assertThat(lapse.getJSONArray("delays").length(), Matchers.equalTo(1))
-        assertThat(lapse.getJSONArray("delays").getDouble(0), Matchers.equalTo(20.0))
+        assertThat(lapse.getInt("minInt"), equalTo(2))
+        assertThat(lapse.getDouble("mult"), equalTo(0.7))
+        assertThat(lapse.getJSONArray("delays").length(), equalTo(1))
+        assertThat(lapse.getJSONArray("delays").getDouble(0), equalTo(20.0))
     }
 
     @Test
@@ -208,13 +208,13 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "No cards in filtered deck before rebuild",
             col.cardCount(filteredDid),
-            Matchers.equalTo(0)
+            equalTo(0)
         )
         col.sched.rebuildDyn(filteredDid)
         assertThat(
             "Card is in filtered deck after rebuild",
             col.cardCount(filteredDid),
-            Matchers.equalTo(1)
+            equalTo(1)
         )
         col.sched.suspendCards(longArrayOf(cardId))
         CollectionAssert.assertSuspended(col, cardId)
@@ -223,12 +223,12 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "Card should be moved to the home deck",
             col.getCard(cardId).did,
-            Matchers.equalTo(1L)
+            equalTo(1L)
         )
         assertThat(
             "Card should not be in a filtered deck",
             col.getCard(cardId).oDid,
-            Matchers.equalTo(0L)
+            equalTo(0L)
         )
     }
 
@@ -241,13 +241,13 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "No cards in filtered deck before rebuild",
             col.cardCount(filteredDid),
-            Matchers.equalTo(0)
+            equalTo(0)
         )
         col.sched.rebuildDyn(filteredDid)
         assertThat(
             "Card is in filtered deck after rebuild",
             col.cardCount(filteredDid),
-            Matchers.equalTo(1)
+            equalTo(1)
         )
         col.sched.suspendCards(longArrayOf(cardId))
         CollectionAssert.assertSuspended(col, cardId)
@@ -256,12 +256,12 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "Card should be moved to the home deck",
             col.getCard(cardId).did,
-            Matchers.equalTo(1L)
+            equalTo(1L)
         )
         assertThat(
             "Card should not be in a filtered deck",
             col.getCard(cardId).oDid,
-            Matchers.equalTo(0L)
+            equalTo(0L)
         )
     }
 
@@ -274,7 +274,7 @@ open class SchedV2Test : RobolectricTest() {
         col.decks.allConf()[0].getJSONObject("new")
             .put("delays", JSONArray(Arrays.asList(0.01, 10)))
         val c = col.sched.card
-        assertThat(c, Matchers.notNullValue())
+        assertThat(c, notNullValue())
         col.sched.answerCard(c!!, BUTTON_ONE)
     }
 
@@ -286,18 +286,18 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "Sync ver should be updated if we have a valid Rust collection",
             SYNC_VER,
-            Matchers.equalTo(10)
+            equalTo(10)
         )
         assertThat(
             "localOffset should be set if using V2 Scheduler",
             col.has_config("localOffset"),
-            Matchers.equalTo(true)
+            equalTo(true)
         )
         val sched = col.sched
         assertThat(
             "new timezone should be enabled by default",
             sched._new_timezone_enabled(),
-            Matchers.equalTo(true)
+            equalTo(true)
         )
 
         // a second call should be fine
@@ -305,7 +305,7 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "new timezone should still be enabled",
             sched._new_timezone_enabled(),
-            Matchers.equalTo(true)
+            equalTo(true)
         )
         // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
         sched._current_timezone_offset()
@@ -313,7 +313,7 @@ open class SchedV2Test : RobolectricTest() {
         assertThat(
             "new timezone should be disabled after clear",
             sched._new_timezone_enabled(),
-            Matchers.equalTo(false)
+            equalTo(false)
         )
     }
 
@@ -360,7 +360,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_LRN, c.type)
-        assertThat(c.due, Matchers.greaterThanOrEqualTo(t))
+        assertThat(c.due, greaterThanOrEqualTo(t))
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -474,16 +474,16 @@ open class SchedV2Test : RobolectricTest() {
         ifV2 { assertEquals(3, (c.left / 1000).toLong()) }
         // it should be due in 30 seconds
         val t = Math.round((c.due - time.intTime()).toFloat()).toLong()
-        assertThat(t, Matchers.greaterThanOrEqualTo(25L))
-        assertThat(t, Matchers.lessThanOrEqualTo(40L))
+        assertThat(t, greaterThanOrEqualTo(25L))
+        assertThat(t, lessThanOrEqualTo(40L))
         // pass it once
         col.sched.answerCard(c, BUTTON_THREE)
         // it should be due in 3 minutes
         var dueIn = c.due - time.intTime()
-        assertThat(dueIn, Matchers.greaterThanOrEqualTo(178L))
+        assertThat(dueIn, greaterThanOrEqualTo(178L))
         assertThat(
             dueIn,
-            Matchers.lessThanOrEqualTo((180 * 1.25).toLong())
+            lessThanOrEqualTo((180 * 1.25).toLong())
         )
         assertEquals(2, (c.left % 1000).toLong())
         ifV2 { assertEquals(2, (c.left / 1000).toLong()) }
@@ -497,10 +497,10 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_THREE)
         // it should be due in 10 minutes
         dueIn = c.due - time.intTime()
-        assertThat(dueIn, Matchers.greaterThanOrEqualTo(599L))
+        assertThat(dueIn, greaterThanOrEqualTo(599L))
         assertThat(
             dueIn,
-            Matchers.lessThanOrEqualTo((600 * 1.25).toLong())
+            lessThanOrEqualTo((600 * 1.25).toLong())
         )
         assertEquals(1, (c.left % 1000).toLong())
         ifV2 { assertEquals(1, (c.left / 1000).toLong()) }
@@ -915,12 +915,12 @@ open class SchedV2Test : RobolectricTest() {
         // nothing due
         assertThat(
             col.sched.finishedMsg(targetContext).toString(),
-            Matchers.containsString("Congratulations")
+            containsString("Congratulations")
         )
         assertThat(
             col.sched.finishedMsg(targetContext).toString(),
-            Matchers.not(
-                Matchers.containsString("limit")
+            not(
+                containsString("limit")
             )
         )
         val note = col.newNote()
@@ -930,7 +930,7 @@ open class SchedV2Test : RobolectricTest() {
         // have a new card
         assertThat(
             col.sched.finishedMsg(targetContext).toString(),
-            Matchers.containsString("new cards available")
+            containsString("new cards available")
         )
         // turn it into a review
         col.reset()
@@ -940,12 +940,12 @@ open class SchedV2Test : RobolectricTest() {
         // nothing should be due tomorrow, as it's due in a week
         assertThat(
             col.sched.finishedMsg(targetContext).toString(),
-            Matchers.containsString("Congratulations")
+            containsString("Congratulations")
         )
         assertThat(
             col.sched.finishedMsg(targetContext).toString(),
-            Matchers.not(
-                Matchers.containsString("limit")
+            not(
+                containsString("limit")
             )
         )
     }
@@ -1023,7 +1023,7 @@ open class SchedV2Test : RobolectricTest() {
                     BUTTON_FOUR
                 )
             ),
-            Matchers.equalTo("10.8 mo")
+            equalTo("10.8 mo")
         )
     }
 
@@ -1091,7 +1091,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         assertThat(
             c.due,
-            Matchers.greaterThanOrEqualTo(time.intTime())
+            greaterThanOrEqualTo(time.intTime())
         )
         val due = c.due
         assertEquals(QUEUE_TYPE_LRN, c.queue)
@@ -1230,7 +1230,7 @@ open class SchedV2Test : RobolectricTest() {
         // should be due at least an hour in the future
         assertThat(
             c.due - time.intTime(),
-            Matchers.greaterThan(60 * 60L)
+            greaterThan(60 * 60L)
         )
 
         // emptying the deck preserves learning state
@@ -1241,7 +1241,7 @@ open class SchedV2Test : RobolectricTest() {
         assertEquals(1, c.left % 1000)
         assertThat(
             c.due - time.intTime(),
-            Matchers.greaterThan(60 * 60L)
+            greaterThan(60 * 60L)
         )
     }
 
@@ -1854,10 +1854,10 @@ open class SchedV2Test : RobolectricTest() {
         // should be due in ~ 5.5 mins
         val expected = time.intTime() + (5.5 * 60).toInt()
         val due = c.due
-        assertThat(expected - 10, Matchers.lessThan(due))
+        assertThat(expected - 10, lessThan(due))
         assertThat(
             due,
-            Matchers.lessThanOrEqualTo((expected * 1.25).toLong())
+            lessThanOrEqualTo((expected * 1.25).toLong())
         )
         val ivl = col.db.queryLongScalar("select ivl from revlog")
         assertEquals((-5.5 * 60).toLong(), ivl)

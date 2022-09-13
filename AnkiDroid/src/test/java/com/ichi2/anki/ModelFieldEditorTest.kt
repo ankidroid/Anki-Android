@@ -24,7 +24,8 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Model
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
@@ -57,7 +58,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
     private fun testForIllegalCharacters(forbiddenFieldName: String) {
         val modelFields = getCurrentDatabaseModelCopy("Basic").fieldsNames
         val fieldName = modelFields[modelFields.size - 1]
-        assertThat("forbidden character detected!", fieldName, Matchers.not(Matchers.equalTo(forbiddenFieldName)))
+        assertThat("forbidden character detected!", fieldName, not(equalTo(forbiddenFieldName)))
     }
 
     /**

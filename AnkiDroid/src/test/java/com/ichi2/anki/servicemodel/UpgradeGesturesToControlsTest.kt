@@ -28,9 +28,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Up
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
-import org.hamcrest.Matchers.empty
-import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -66,7 +64,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat(changedKeys, Matchers.containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
+        assertThat(changedKeys, containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference added", prefs.contains(command.preferenceKey), equalTo(true))
@@ -95,7 +93,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat(changedKeys, Matchers.containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
+        assertThat(changedKeys, containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
@@ -133,7 +131,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
+        assertThat("Binding gestures should not be changed", changedKeys, contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference still exists", prefs.contains(command.preferenceKey), equalTo(true))
@@ -145,7 +143,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
+        assertThat("Binding gestures should not be changed", changedKeys, contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
     }
@@ -157,7 +155,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey))
+        assertThat("Binding gestures should not be changed", changedKeys, containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
     }

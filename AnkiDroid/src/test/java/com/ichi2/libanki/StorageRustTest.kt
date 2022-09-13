@@ -19,7 +19,7 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -33,7 +33,7 @@ class StorageRustTest : RobolectricTest() {
         val modelNames = col.models.all().map { x -> x.getString("name") }
         assertThat(
             modelNames,
-            Matchers.containsInAnyOrder(
+            containsInAnyOrder(
                 "Basic",
                 "Basic (and reversed card)",
                 "Cloze",

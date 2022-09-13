@@ -23,7 +23,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Co
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.contains
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -55,7 +55,7 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         upgradeAllGestures()
 
         // ensure that no settings were added to the preferences
-        assertThat(changedKeys, Matchers.contains(upgradeVersionPrefKey))
+        assertThat(changedKeys, contains(upgradeVersionPrefKey))
     }
 
     @Test
@@ -72,7 +72,7 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         upgradeAllGestures()
 
         // ensure that no settings were added to the preferences
-        assertThat(changedKeys, Matchers.contains(upgradeVersionPrefKey, PREF_KEY_VOLUME_DOWN, PREF_KEY_VOLUME_UP))
+        assertThat(changedKeys, contains(upgradeVersionPrefKey, PREF_KEY_VOLUME_DOWN, PREF_KEY_VOLUME_UP))
 
         assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
         assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_UP), equalTo(false))
