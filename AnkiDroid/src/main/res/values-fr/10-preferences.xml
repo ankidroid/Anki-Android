@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Synchroniser automatiquement à la sortie de l\'application si la dernière synchronisation était il y a plus de 10 minutes.</string>
     <string name="sync_status_badge" maxLength="41">Afficher l\'état de la synchronisation</string>
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Autoriser la synchronisation sur les connexions limitées</string>
+    <string name="metered_sync_summary">Si ceci est désactivé, vous serez averti(e) si vous essayez de synchroniser sur une connexion limitée</string>
     <string name="app_theme" maxLength="41">Thème</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
@@ -324,7 +324,7 @@
     <string name="about_contributors_description"><![CDATA[Ce sont nos <a href=\"%1$s\">contributeurs</a> géniaux. Vous pouvez aussi aider AnkiDroid en programmant, traduisant, donnant et <a href=\"%2$s\">plus</a> !]]></string>
     <string name="license">Licence</string>
     <string name="license_description"><![CDATA[AnkiDroid est publié sous les licences <a href=\"%1$s\">GPL-3.0</a> et <a href=\"%2$s\">AGPL-3.0</a>, avec le code source disponible <a href=\"%3$s\">sur GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[Vous pouvez supporter le développement de AnkiDroid en <a href=\"%1$s\">faisant une donation</a>. N\'importe quel montant est très fortement apprécié.]]></string>
+    <string name="donate_description"><![CDATA[Vous pouvez supporter le développement de AnkiDroid en <a href=\"%1$s\">faisant un don</a>. N\'importe quel montant est très fortement apprécié.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Ajouter un geste</string>
     <string name="binding_replace_gesture">Remplacer le geste</string>
@@ -344,14 +344,14 @@
     <string name="bindings_already_bound">Déjà lié à %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Expérimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Activer ‘%s’</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Activer « %s »</string>
     <string name="use_rust_backend_title" maxLength="41">Utiliser le nouveau backend</string>
     <string name="use_rust_backend_summary">Active les nouvelles fonctionnalités Anki, telles que le planificateur v3\nINSTABLE. N\'utilisez pas sur une collection qui vous intéresse. PAS de retour à la fermeture de l\'application</string>
     <string name="use_rust_backend_warning">Il y a une chance que cela puisse corrompre votre installation complètement, exiger la désinstallation et la suppression de l\'application du dossier AnkiDroid, et a une chance de propager la corruption via la synchronisation à AnkiWeb.\n\nNous nous réjouissons du test, mais veuillez vous assurer que vous avez une sauvegarde non-AnkiWeb valide.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Utiliser le planificateur v3</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Options développeur</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Activer les options développeur</string>
-    <string name="disable_dev_options">Activer les options développeur</string>
-    <string name="dev_options_warning">        S\'il vous plaît soyez sûr avant d\'activer les options développeur. Ces options sont dangereuses et peuvent casser l\'application ou corrompre votre collection.\n\nNotez que ces options ne sont pas adaptées à la majorité des utilisateurs et par conséquent, elles ne sont pas traduites, elles sont donc en anglais.</string>
+    <string name="pref_cat_dev_options" maxLength="41">Options de développement</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Activer les options de développement</string>
+    <string name="disable_dev_options">Désactiver les options de développement</string>
+    <string name="dev_options_warning">        S\'il vous plaît soyez sûr avant d\'activer les options de développement. Ces options sont dangereuses et peuvent casser l\'application ou corrompre votre collection.\n\nNotez que ces options ne sont pas adaptées à la majorité des utilisateurs et par conséquent, elles ne sont pas traduites, elles sont donc en anglais.</string>
 </resources>

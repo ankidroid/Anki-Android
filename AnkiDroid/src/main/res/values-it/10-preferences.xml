@@ -233,7 +233,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Url di sincronizzazione del contenuto multimediale</string>
     <string name="custom_sync_server_media_url_invalid">URL sincronizzazione media non valido</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Tastiera</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mappatura dei comandi</string>
     <!-- studyoptions -->
@@ -329,7 +329,7 @@
     <string name="binding_add_gesture">Aggiungi un gesto</string>
     <string name="binding_replace_gesture">Sostituisci gesto</string>
     <string name="binding_add_key">Aggiungi un tasto</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Sostituisci chiave</string>
     <string name="key_picker_default_press_key">Premi un tasto</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seleziona il lato della carta</string>

@@ -55,24 +55,24 @@
     <string name="not_logged_in_title">Log in to AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
-    <string name="username">ელ-ფოსტა</string>
+    <string name="username">ელფოსტის მისამართი</string>
     <string name="password">პაროლი</string>
     <string name="log_in">ავტორიზაცია</string>
     <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+    <string name="sign_up_not_affiliated">შენიშვნა: AnkiWeb არ თანამშრომლობს AnkiDroid-თან</string>
     <string name="sign_up">რეგისტრაცია</string>
     <string name="logged_as">შესული ხართ როგორც</string>
     <string name="log_out">გასვლა</string>
     <string name="alert_logging_message">შესვლა...</string>
-    <string name="invalid_username_password">Invalid email address or password</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">ელ-ფოსტა დაგავიწყდათ?</string>
+    <string name="invalid_username_password">არასწორი ელფოსტის მისამართი ან პაროლი</string>
+    <string name="reset_password">პაროლის აღდგენა</string>
+    <string name="lost_mail_instructions">დაგავიწყდათ ელფოსტა?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_prepare_syncing">Preparing syncing&#8230;</string>
     <string name="sync_preparing_full_sync_message">Preparing full sync&#8230;</string>
-    <string name="sync_uploading_message">Uploading&#8230;</string>
-    <string name="sync_downloading_message">Downloading&#8230;</string>
+    <string name="sync_uploading_message">მიმდინარეობს ატვირთვა...</string>
+    <string name="sync_downloading_message">მიმდინარეობს ჩამოტვირთვა&#8230;</string>
     <string name="sync_title">სინქრონიზაცია</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
     <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
@@ -93,8 +93,8 @@
     <string name="sync_finish_message">Finishing syncing&#8230;</string>
     <string name="sync_log_finish_error">Error while sending finish direction to server</string>
     <string name="sync_writing_db">Writing changes into database&#8230;</string>
-    <string name="sync_download_chunk">Downloading changes&#8230;</string>
-    <string name="sync_upload_chunk">Uploading changes&#8230;</string>
+    <string name="sync_download_chunk">ცვლილებების ჩამოტვირთვა&#8230;</string>
+    <string name="sync_upload_chunk">ცვლილებების ატვირთვა&#8230;</string>
     <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">An error has occurred. Try again later.</string>
     <string name="sync_check_upload_file">Checking file before upload&#8230;</string>
