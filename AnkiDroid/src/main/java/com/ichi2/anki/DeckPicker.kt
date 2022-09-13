@@ -2414,6 +2414,42 @@ open class DeckPicker :
         return null
     }
 
+    private val context = this // TODO: remove [context], has been introduces to extract out [DeleteDeckListener]
+    // Flag to indicate if the deck being deleted is the current deck.
+    private var mRemovingCurrent = false
+    private fun preDeleteDeck(did: DeckId) {
+        context.mProgressDialog = StyledProgressDialog.show(
+            context, null,
+            context.resources.getString(R.string.delete_deck), false
+        )
+        if (did == context.col.decks.current().optLong("id")) {
+            mRemovingCurrent = true
+        }
+    }
+
+    private fun postDeleteDeck() {
+        // After deleting a deck there is no more undo stack
+        // Rebuild options menu with side effect of resetting undo button state
+        context.invalidateOptionsMenu()
+
+        // In fragmented mode, if the deleted deck was the current deck, we need to reload
+        // the study options fragment with a valid deck and re-center the deck list to the
+        // new current deck. Otherwise we just update the list normally.
+        if (context.fragmented && mRemovingCurrent) {
+            context.updateDeckList()
+            context.openStudyOptions(false)
+        } else {
+            context.updateDeckList()
+        }
+        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
+            try {
+                context.mProgressDialog!!.dismiss()
+            } catch (e: Exception) {
+                Timber.e(e, "onPostExecute - Exception dismissing dialog")
+            }
+        }
+    }
+
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      * Use [.confirmDeckDeletion] for a confirmation dialog
@@ -2428,40 +2464,10 @@ open class DeckPicker :
     }
 
     private class DeleteDeckListener(private val did: DeckId, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, IntArray?>(deckPicker) {
-        // Flag to indicate if the deck being deleted is the current deck.
-        private var mRemovingCurrent = false
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.delete_deck), false
-            )
-            if (did == context.col.decks.current().optLong("id")) {
-                mRemovingCurrent = true
-            }
-        }
 
-        override fun actualOnPostExecute(context: DeckPicker, result: IntArray?) {
-            // After deleting a deck there is no more undo stack
-            // Rebuild options menu with side effect of resetting undo button state
-            context.invalidateOptionsMenu()
+        override fun actualOnPreExecute(context: DeckPicker) = context.preDeleteDeck(did)
 
-            // In fragmented mode, if the deleted deck was the current deck, we need to reload
-            // the study options fragment with a valid deck and re-center the deck list to the
-            // new current deck. Otherwise we just update the list normally.
-            if (context.fragmented && mRemovingCurrent) {
-                context.updateDeckList()
-                context.openStudyOptions(false)
-            } else {
-                context.updateDeckList()
-            }
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                try {
-                    context.mProgressDialog!!.dismiss()
-                } catch (e: Exception) {
-                    Timber.e(e, "onPostExecute - Exception dismissing dialog")
-                }
-            }
-        }
+        override fun actualOnPostExecute(context: DeckPicker, result: IntArray?) = context.postDeleteDeck()
     }
 
     /**
