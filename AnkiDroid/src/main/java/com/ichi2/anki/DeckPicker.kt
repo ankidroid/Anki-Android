@@ -2414,9 +2414,6 @@ open class DeckPicker :
         return null
     }
 
-    // Flag to indicate if the deck being deleted is the current deck.
-    private var mRemovingCurrent = false // TODO: Make it a parameter to functions
-
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      * Use [.confirmDeckDeletion] for a confirmation dialog
@@ -2424,12 +2421,14 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) {
         launchCatchingTask {
+            // Flag to indicate if the deck being deleted is the current deck.
+            var isRemovingCurrent = false
             mProgressDialog = StyledProgressDialog.show(
                 this@DeckPicker, null,
                 resources.getString(R.string.delete_deck), false
             )
             if (did == col.decks.current().optLong("id")) {
-                mRemovingCurrent = true
+                isRemovingCurrent = true
             }
             withCol {
                 Timber.d("doInBackgroundDeleteDeck")
@@ -2444,7 +2443,7 @@ open class DeckPicker :
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
-            if (fragmented && mRemovingCurrent) {
+            if (fragmented && isRemovingCurrent) {
                 updateDeckList()
                 openStudyOptions(false)
             } else {
