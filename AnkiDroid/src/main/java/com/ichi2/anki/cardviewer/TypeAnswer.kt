@@ -30,6 +30,7 @@ import com.ichi2.utils.JSONArray
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.regex.Matcher
+import java.util.regex.Matcher.quoteReplacement
 import java.util.regex.Pattern
 
 class TypeAnswer(
@@ -198,12 +199,12 @@ class TypeAnswer(
         fun append(@Language("HTML") html: String) = sb.append(html)
         append(if (doNotUseCodeFormatting) "<div><span id=\"typeans\">" else "<div><code id=\"typeans\">")
 
-        // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
+        // We have to use quoteReplacement because the inputs here might have $ or \.
         if (userAnswer.isNotEmpty()) {
             // The user did type something.
             if (userAnswer == correctAnswer) {
                 // and it was right.
-                append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)))
+                append(quoteReplacement(DiffEngine.wrapGood(correctAnswer)))
                 append("<span id=\"typecheckmark\">\u2714</span>") // Heavy check mark
             } else {
                 // Answer not correct.
@@ -211,15 +212,15 @@ class TypeAnswer(
                 // exactly the same as the correct text.
                 val diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer)
                 // We know we get back two strings.
-                append(Matcher.quoteReplacement(diffedStrings[0]))
+                append(quoteReplacement(diffedStrings[0]))
                 append("<br><span id=\"typearrow\">&darr;</span><br>")
-                append(Matcher.quoteReplacement(diffedStrings[1]))
+                append(quoteReplacement(diffedStrings[1]))
             }
         } else {
             if (!useInputTag) {
-                append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)))
+                append(quoteReplacement(DiffEngine.wrapMissing(correctAnswer)))
             } else {
-                append(Matcher.quoteReplacement(correctAnswer))
+                append(quoteReplacement(correctAnswer))
             }
         }
         append(if (doNotUseCodeFormatting) "</span></div>" else "</code></div>")

@@ -25,9 +25,8 @@ import com.ichi2.libanki.template.FuriganaFilters.kanaFilter
 import com.ichi2.libanki.template.FuriganaFilters.kanjiFilter
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.lang.Exception
 import java.util.*
-import java.util.regex.Matcher
+import java.util.regex.Matcher.quoteReplacement
 import java.util.regex.Pattern
 
 /**
@@ -149,7 +148,7 @@ object TemplateFilters {
             if ("c" == m.group(1)) {
                 buf = String.format("<span class=cloze>%s</span>", buf)
             }
-            m.appendReplacement(repl, Matcher.quoteReplacement(buf!!))
+            m.appendReplacement(repl, quoteReplacement(buf!!))
         }
         txt = m.appendTail(repl).toString()
         // and display other clozes normally
@@ -203,7 +202,7 @@ object TemplateFilters {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
                         replacement,
-                        Matcher.quoteReplacement(
+                        quoteReplacement(
                             m.group(0)!!.replace(
                                 "{{c$ord::", "{{C$ord::"
                             )
@@ -215,7 +214,7 @@ object TemplateFilters {
                 Timber.d("Unexpected: no expected capture group is present")
             }
             // appendReplacement has an issue with backslashes, so...
-            m.appendReplacement(replacement, Matcher.quoteReplacement(m.group(0)!!))
+            m.appendReplacement(replacement, quoteReplacement(m.group(0)!!))
         }
         return m.appendTail(replacement).toString()
     }

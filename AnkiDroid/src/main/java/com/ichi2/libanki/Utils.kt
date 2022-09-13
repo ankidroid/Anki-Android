@@ -50,7 +50,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.Normalizer
 import java.util.*
-import java.util.regex.Matcher
+import java.util.regex.Matcher.quoteReplacement
 import java.util.regex.Pattern
 import kotlin.collections.Collection
 
@@ -372,7 +372,7 @@ object Utils {
         while (htmlEntities.find()) {
             val spanned =
                 HtmlCompat.fromHtml(htmlEntities.group(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-            val replacement = Matcher.quoteReplacement(spanned.toString())
+            val replacement = quoteReplacement(spanned.toString())
             htmlEntities.appendReplacement(sb, replacement)
         }
         htmlEntities.appendTail(sb)

@@ -19,7 +19,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.HtmlUtils.escape
-import java.util.regex.Matcher
+import java.util.regex.Matcher.quoteReplacement
 import java.util.regex.Pattern
 
 /**
@@ -113,9 +113,9 @@ object LaTeX {
         val ext = if (model.optBoolean("latexsvg", false)) "svg" else "png"
         val fname = "latex-" + Utils.checksum(txt) + "." + ext
         return if (m.have(fname)) {
-            Matcher.quoteReplacement("<img class=latex alt=\"" + escape(latex) + "\" src=\"" + fname + "\">")
+            quoteReplacement("<img class=latex alt=\"" + escape(latex) + "\" src=\"" + fname + "\">")
         } else {
-            Matcher.quoteReplacement(latex)
+            quoteReplacement(latex)
         }
     }
 

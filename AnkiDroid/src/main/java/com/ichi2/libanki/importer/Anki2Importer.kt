@@ -37,14 +37,9 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.io.BufferedInputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
-import java.util.Arrays
-import java.util.Locale
-import java.util.regex.Matcher
+import java.io.*
+import java.util.*
+import java.util.regex.Matcher.quoteReplacement
 
 @KotlinCleanup("IDE-lint")
 @KotlinCleanup("remove !!")
@@ -753,7 +748,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     val dstData = _dstMediaData(fname)
                     if (srcData == null) {
                         // file was not in source, ignore
-                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)!!))
+                        m.appendReplacement(sb, quoteReplacement(m.group(0)!!))
                     }
                     // if model-local file exists from a previous import, use that
                     val split = Utils.splitFilename(fname)
@@ -763,7 +758,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     if (dst.media.have(lname)) {
                         m.appendReplacement(
                             sb,
-                            Matcher.quoteReplacement(m.group(0)!!.replace(fname, lname))
+                            quoteReplacement(m.group(0)!!.replace(fname, lname))
                         )
                         continue
                     } else if (dstData == null || compareMedia(
@@ -775,14 +770,14 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                         if (dstData == null) {
                             _writeDstMedia(fname, srcData!!)
                         }
-                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)!!))
+                        m.appendReplacement(sb, quoteReplacement(m.group(0)!!))
                         continue
                     }
                     // exists but does not match, so we need to dedupe
                     _writeDstMedia(lname, srcData)
                     m.appendReplacement(
                         sb,
-                        Matcher.quoteReplacement(m.group(0)!!.replace(fname, lname))
+                        quoteReplacement(m.group(0)!!.replace(fname, lname))
                     )
                 } catch (e: IOException) {
                     Timber.w(e, "Failed to close stream")
