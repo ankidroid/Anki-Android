@@ -2422,20 +2422,16 @@ open class DeckPicker :
     fun deleteDeck(did: DeckId) {
         launchCatchingTask {
             // Flag to indicate if the deck being deleted is the current deck.
-            var isRemovingCurrent = false
-            mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker, null,
-                resources.getString(R.string.delete_deck), false
-            )
-            if (did == col.decks.current().optLong("id")) {
-                isRemovingCurrent = true
+            val isRemovingCurrent = (did == col.decks.current().optLong("id"))
+            withProgress(resources.getString(R.string.delete_deck)) {
+                withCol {
+                    Timber.d("doInBackgroundDeleteDeck")
+                    col.decks.rem(did, true)
+                    // TODO: if we had "undo delete note" like desktop client then we won't need this.
+                    col.clearUndo()
+                }
             }
-            withCol {
-                Timber.d("doInBackgroundDeleteDeck")
-                col.decks.rem(did, true)
-                // TODO: if we had "undo delete note" like desktop client then we won't need this.
-                col.clearUndo()
-            }
+
             // After deleting a deck there is no more undo stack
             // Rebuild options menu with side effect of resetting undo button state
             invalidateOptionsMenu()
@@ -2448,13 +2444,6 @@ open class DeckPicker :
                 openStudyOptions(false)
             } else {
                 updateDeckList()
-            }
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                try {
-                    mProgressDialog!!.dismiss()
-                } catch (e: Exception) {
-                    Timber.e(e, "onPostExecute - Exception dismissing dialog")
-                }
             }
         }
     }
