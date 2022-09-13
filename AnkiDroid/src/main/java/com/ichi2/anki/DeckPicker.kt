@@ -2455,18 +2455,16 @@ open class DeckPicker :
      * @param did the deck to delete
      */
     fun deleteDeck(did: DeckId) {
-        TaskManager.launchCollectionTask(DeleteDeck(did), deleteDeckListener(did))
-    }
-
-    private fun deleteDeckListener(did: DeckId): DeleteDeckListener {
-        return DeleteDeckListener(did, this)
-    }
-
-    private class DeleteDeckListener(private val did: DeckId, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, IntArray?>(deckPicker) {
-
-        override fun actualOnPreExecute(context: DeckPicker) = context.preDeleteDeck(did)
-
-        override fun actualOnPostExecute(context: DeckPicker, result: IntArray?) = context.postDeleteDeck()
+        launchCatchingTask {
+            preDeleteDeck(did)
+            withCol {
+                Timber.d("doInBackgroundDeleteDeck")
+                col.decks.rem(did, true)
+                // TODO: if we had "undo delete note" like desktop client then we won't need this.
+                col.clearUndo()
+            }
+            postDeleteDeck()
+        }
     }
 
     /**
