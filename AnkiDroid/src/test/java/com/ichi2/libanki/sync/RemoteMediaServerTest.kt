@@ -19,11 +19,10 @@ package com.ichi2.libanki.sync
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class RemoteMediaServerTest {
@@ -31,14 +30,14 @@ class RemoteMediaServerTest {
     fun defaultMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(null)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
+        assertEquals(syncUrl, sDefaultUrlNoHostNum)
     }
 
     @Test
     fun defaultMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(1)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
+        assertEquals(syncUrl, sDefaultUrlWithHostNum)
     }
 
     @Ignore("Not yet supported")
@@ -47,7 +46,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(null)
         setCustomMediaServer(sCustomServerWithFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertEquals(syncUrl, "https://sync.example.com/msync")
     }
 
     @Ignore("Not yet supported")
@@ -56,7 +55,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(1)
         setCustomMediaServer(sCustomServerWithFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync1.example.com/msync"))
+        assertEquals(syncUrl, "https://sync1.example.com/msync")
     }
 
     @Test
@@ -64,7 +63,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(null)
         setCustomMediaServer(sCustomServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertEquals(syncUrl, "https://sync.example.com/msync")
     }
 
     @Test
@@ -72,7 +71,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(1)
         setCustomMediaServer(sCustomServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertEquals(syncUrl, "https://sync.example.com/msync")
     }
 
     @Test
@@ -80,7 +79,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(null)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
+        assertEquals(syncUrl, sDefaultUrlNoHostNum)
     }
 
     @Test
@@ -88,7 +87,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(1)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
+        assertEquals(syncUrl, sDefaultUrlWithHostNum)
     }
 
     @KotlinCleanup("use edit{} extension function")

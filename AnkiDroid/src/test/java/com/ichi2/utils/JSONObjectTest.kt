@@ -107,7 +107,7 @@ class JSONObjectTest {
         assertEquals(0, testObject.optLong("foo"))
         assertEquals(Long.MAX_VALUE - 1, testObject.optLong("foo", Long.MAX_VALUE - 1))
         assertEquals("", testObject.optString("foo")) // empty string is default!
-        assertEquals("bar", testObject.optString("foo", "bar"))
+        assertEquals(testObject.optString("foo", "bar"), "bar")
         assertNull(testObject.remove("foo"))
     }
 
@@ -365,7 +365,7 @@ class JSONObjectTest {
         assertEquals("5\"8' tall", testObject.getString("height"))
         assertEquals("true", testObject.opt("foo"))
         assertEquals("5.5", testObject.optString("bar"))
-        assertEquals("true", testObject.optString("foo", "x"))
+        assertEquals(testObject.optString("foo", "x"), "true")
         assertFalse(testObject.isNull("foo"))
         assertEquals(true, testObject.getBoolean("foo"))
         assertEquals(true, testObject.optBoolean("foo"))
@@ -746,7 +746,7 @@ class JSONObjectTest {
         assertEquals(0.0, testObject.optDouble(null, 0.0), 0.0)
         assertEquals(1, testObject.optInt(null, 1))
         assertEquals(1L, testObject.optLong(null, 1L))
-        assertEquals("baz", testObject.optString(null, "baz"))
+        assertEquals(testObject.optString(null, "baz"), "baz")
     }
 
     @Test

@@ -20,9 +20,8 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.canAnswerEasy
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.canAnswerHard
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -31,9 +30,9 @@ class AnswerButtonsTest {
     @Test
     fun checkTwoButtons() {
         val numberOfButtons = 2
-        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
+        assertEquals(AGAIN.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE1)
         assertFalse(canAnswerHard(numberOfButtons), "hard")
-        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
+        assertEquals(GOOD.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE2)
         assertFalse(canAnswerEasy(numberOfButtons), "easy")
     }
 
@@ -41,10 +40,10 @@ class AnswerButtonsTest {
     fun checkThreeButtons() {
         val numberOfButtons = 3
 
-        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
+        assertEquals(AGAIN.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE1)
         assertFalse(canAnswerHard(numberOfButtons), "hard")
-        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
-        assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
+        assertEquals(GOOD.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertEquals(EASY.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE3)
 
         assertTrue(canAnswerEasy(numberOfButtons), "easy")
     }
@@ -53,10 +52,10 @@ class AnswerButtonsTest {
     fun checkFourButtons() {
         val numberOfButtons = 4
 
-        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
-        assertThat(HARD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
-        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
-        assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE4))
+        assertEquals(AGAIN.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE1)
+        assertEquals(HARD.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertEquals(GOOD.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE3)
+        assertEquals(EASY.toViewerCommand(numberOfButtons), ViewerCommand.FLIP_OR_ANSWER_EASE4)
 
         assertTrue(canAnswerEasy(numberOfButtons), "easy")
         assertTrue(canAnswerHard(numberOfButtons), "hard")

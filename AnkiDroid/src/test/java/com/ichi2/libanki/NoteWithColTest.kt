@@ -18,11 +18,10 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class NoteWithColTest : RobolectricTest() {
@@ -31,6 +30,6 @@ class NoteWithColTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun newNoteTest() {
         val note = col.newNote()
-        assertThat(note.model()["name"], equalTo("Basic"))
+        assertEquals(note.model()["name"], "Basic")
     }
 }

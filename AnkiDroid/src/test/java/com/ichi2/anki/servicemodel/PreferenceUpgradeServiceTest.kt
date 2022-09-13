@@ -67,7 +67,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         val version = PreferenceUpgrade.getPreferenceVersion(mPrefs)
         PreferenceUpgradeService.setPreferencesUpToDate(mPrefs)
         val secondVersion = PreferenceUpgrade.getPreferenceVersion(mPrefs)
-        assertThat("setPreferencesUpToDate should not change the version", secondVersion, equalTo(version))
+        assertEquals(secondVersion, version, "setPreferencesUpToDate should not change the version")
     }
 
     @Test
@@ -81,7 +81,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun each_version_code_is_distinct() {
         val codes = PreferenceUpgrade.getAllVersionIdentifiers().toList()
-        assertThat("all version IDs should be distinct", codes.size, equalTo(codes.distinct().size))
+        assertEquals(codes.size, codes.distinct().size, "all version IDs should be distinct")
     }
 
     @Test
@@ -159,8 +159,8 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         }
         PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(mPrefs)
 
-        assertThat(mPrefs.getString("dayTheme", "0"), equalTo("2"))
-        assertThat(mPrefs.getString("nightTheme", "0"), equalTo("4"))
+        assertEquals(mPrefs.getString("dayTheme", "0"), "2")
+        assertEquals(mPrefs.getString("nightTheme", "0"), "4")
         assertFalse(mPrefs.contains("invertedColors"))
 
         // Light and Black
@@ -170,8 +170,8 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         }
         PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(mPrefs)
 
-        assertThat(mPrefs.getString("dayTheme", "1"), equalTo("1"))
-        assertThat(mPrefs.getString("nightTheme", "1"), equalTo("3"))
+        assertEquals(mPrefs.getString("dayTheme", "1"), "1")
+        assertEquals(mPrefs.getString("nightTheme", "1"), "3")
         assertFalse(mPrefs.contains("invertedColors"))
     }
 
@@ -184,6 +184,6 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         PreferenceUpgrade.UpgradeCustomCollectionSyncUrl().performUpgrade(mPrefs)
 
         assertFalse(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE))
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), equalTo("http://foo/sync/"))
+        assertEquals(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), "http://foo/sync/")
     }
 }

@@ -28,6 +28,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -114,7 +115,7 @@ class DirectoryTest : Test21And26() {
         val fromPath = Directory.createInstance(path.path)!!
         val fromFile = Directory.createInstance(path)!!
 
-        assertThat("Equal result constructing from file or path", fromFile.directory, equalTo(fromPath.directory))
+        assertEquals(fromFile.directory, fromPath.directory, "Equal result constructing from file or path")
     }
 
     /**

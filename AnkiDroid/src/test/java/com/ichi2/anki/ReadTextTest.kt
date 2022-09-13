@@ -22,13 +22,12 @@ import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
 import com.ichi2.libanki.Sound.SoundSide.QUESTION
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.robolectric.Shadows.shadowOf
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -66,13 +65,13 @@ class ReadTextTest : RobolectricTest() {
 
     @Test
     fun saveValue() {
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo(""))
+        assertEquals(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), "")
         storeLanguage(1, "French")
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo("French"))
+        assertEquals(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), "French")
         storeLanguage(1, "German")
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo("German"))
+        assertEquals(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), "German")
         storeLanguage(2, "English")
-        assertThat(MetaDB.getLanguage(targetContext, 2, 1, QUESTION), equalTo("English"))
+        assertEquals(MetaDB.getLanguage(targetContext, 2, 1, QUESTION), "English")
     }
 
     @Test

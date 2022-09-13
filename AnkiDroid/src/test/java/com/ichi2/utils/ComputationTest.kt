@@ -16,9 +16,8 @@
 
 package com.ichi2.utils
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -28,7 +27,7 @@ class ComputationTest {
     fun valueIsSuccess() {
         val asNull = Computation.ok(1)
         assertTrue(asNull.succeeded())
-        assertThat(asNull.value, equalTo(1))
+        assertEquals(asNull.value, 1)
     }
 
     @Test

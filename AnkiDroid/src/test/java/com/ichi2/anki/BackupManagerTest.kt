@@ -19,8 +19,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.utils.Time
 import com.ichi2.testutils.MockTime
 import com.ichi2.utils.StrictMock.Companion.strictMock
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -28,6 +26,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 open class BackupManagerTest {
@@ -55,7 +54,7 @@ open class BackupManagerTest {
         val result = performBackup(bm)
 
         verify(bm, times(1)).performBackupInNewThread(any(), any())
-        assertThat("PerformBackup should pass", result, equalTo(true))
+        assertTrue(result, "PerformBackup should pass")
     }
 
     @Test

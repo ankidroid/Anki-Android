@@ -35,6 +35,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import timber.log.Timber
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -63,7 +64,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         assertFalse(source.file.exists(), "source file should no longer exist")
         assertTrue(destinationFile.exists(), "destination file should exist")
 
-        assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
+        assertEquals(getContent(destinationFile), "hello-world", "content should be copied")
         assertProgressReported(size)
     }
 
@@ -80,7 +81,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         assertFalse(source.file.exists(), "source file should no longer exist")
         assertTrue(destinationFile.exists(), "destination file should exist")
 
-        assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
+        assertEquals(getContent(destinationFile), "hello-world", "content should be copied")
         assertProgressReported(size)
     }
 
@@ -121,7 +122,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
         assertFalse(destinationFile.exists(), "copy should have failed, destination should not exist")
         assertTrue(source.file.exists(), "source file should still exist")
-        assertThat("source content is unchanged", getContent(source.file), equalTo("hello-world"))
+        assertEquals(getContent(source.file), "hello-world", "source content is unchanged")
         assertThat(exception.message, containsString("test-copyFile()"))
     }
 
@@ -139,7 +140,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
             .execute()
 
         assertThat("no exceptions should have been reported", executionContext.exceptions, emptyCollectionOf(Exception::class.java))
-        assertThat("empty progress should have been reported", executionContext.progress.single(), equalTo(0L))
+        assertEquals(executionContext.progress.single(), 0L, "empty progress should have been reported")
     }
 
     @Test
@@ -159,7 +160,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         assertFalse(source.file.exists(), "source file should be deleted")
         assertTrue(destinationFile.exists(), "destination file should not be deleted")
-        assertThat("progress was reported", executionContext.progress.single(), equalTo(size))
+        assertEquals(executionContext.progress.single(), size, "progress was reported")
     }
 
     @Test
@@ -194,11 +195,11 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
             .execute()
 
         val conflictException = getSingleExceptionOfType<FileConflictException>()
-        assertThat("source is correct", conflictException.source.file.canonicalPath, equalTo(source.file.canonicalPath))
-        assertThat("destination is correct", conflictException.destination.file.canonicalPath, equalTo(destinationFile.canonicalPath))
+        assertEquals(conflictException.source.file.canonicalPath, source.file.canonicalPath, "source is correct")
+        assertEquals(conflictException.destination.file.canonicalPath, destinationFile.canonicalPath, "destination is correct")
 
-        assertThat("source content is unchanged", getContent(source.file), equalTo("hello-oo"))
-        assertThat("destination content is unchanged", getContent(destinationFile), equalTo("world"))
+        assertEquals(getContent(source.file), "hello-oo", "source content is unchanged")
+        assertEquals(getContent(destinationFile), "world", "destination content is unchanged")
     }
 
     @Test
@@ -232,8 +233,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
 
         assertThat("2 missing directories expected", exception.directories, hasSize(2))
-        assertThat("source was logged", exception.directories[0], equalTo(MissingFile("source - parent dir", sourceDirectoryToDelete)))
-        assertThat("destination was logged", exception.directories[1], equalTo(MissingFile("destination - parent dir", destinationDirectoryToDelete)))
+        assertEquals(exception.directories[0], MissingFile("source - parent dir", sourceDirectoryToDelete), "source was logged")
+        assertEquals(exception.directories[1], MissingFile("destination - parent dir", destinationDirectoryToDelete), "destination was logged")
     }
 
     @Test
@@ -264,7 +265,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         assertFalse(source.file.exists(), "source file should no longer exist")
         assertTrue(destinationFile.exists(), "destination file should exist")
 
-        assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
+        assertEquals(getContent(destinationFile), "hello-world", "content should be copied")
         assertProgressReported(size)
     }
 
@@ -281,14 +282,14 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         assertTrue(source.file.exists(), "source file should still exist")
         assertTrue(destination.exists(), "destination file should exist")
-        assertThat("content should not have changed", getContent(source.file), equalTo("hello"))
+        assertEquals(getContent(source.file), "hello", "content should not have changed")
     }
 
     /** Asserts that 1 element of progress of the provided size was reported */
     private fun assertProgressReported(expectedSize: Long) {
         val progress = executionContext.progress
-        assertThat("only one progress report expected", progress.size, equalTo(1))
-        assertThat("unexpected progress", progress.single(), equalTo(expectedSize))
+        assertEquals(progress.size, 1, "only one progress report expected")
+        assertEquals(progress.single(), expectedSize, "unexpected progress")
     }
 
     private fun MoveFile.execute() {

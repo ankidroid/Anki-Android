@@ -25,11 +25,11 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class GestureProcessorTest : ViewerCommand.CommandProcessor {
     private val mSut = GestureProcessor(this)
@@ -51,7 +51,7 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
         every { prefs.getBoolean("gestureCornerTouch", any()) } returns true
         mSut.init(prefs)
         mSut.onTap(100, 100, 50f, 50f)
-        assertThat(singleResult(), equalTo(ViewerCommand.SHOW_ANSWER))
+        assertEquals(singleResult(), ViewerCommand.SHOW_ANSWER)
     }
 
     companion object {

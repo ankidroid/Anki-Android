@@ -20,22 +20,21 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.*
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.fromPreferenceValue
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertEquals
 
 class AutomaticAnswerActionTest {
 
     @Test
     fun fromPreferenceValue() {
-        assertThat(fromPreferenceValue(0), equalTo(BURY_CARD))
-        assertThat(fromPreferenceValue(1), equalTo(ANSWER_AGAIN))
-        assertThat(fromPreferenceValue(2), equalTo(ANSWER_HARD))
-        assertThat(fromPreferenceValue(3), equalTo(ANSWER_GOOD))
-        assertThat(fromPreferenceValue(4), equalTo(ANSWER_EASY))
+        assertEquals(fromPreferenceValue(0), BURY_CARD)
+        assertEquals(fromPreferenceValue(1), ANSWER_AGAIN)
+        assertEquals(fromPreferenceValue(2), ANSWER_HARD)
+        assertEquals(fromPreferenceValue(3), ANSWER_GOOD)
+        assertEquals(fromPreferenceValue(4), ANSWER_EASY)
     }
 
     @Test
@@ -68,6 +67,6 @@ class AutomaticAnswerActionTest {
 
         action.execute(mock)
 
-        assertThat(captor.firstValue, equalTo(expectedCommand))
+        assertEquals(captor.firstValue, expectedCommand)
     }
 }

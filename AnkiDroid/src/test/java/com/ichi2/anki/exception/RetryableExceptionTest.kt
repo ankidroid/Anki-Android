@@ -18,9 +18,8 @@ package com.ichi2.anki.exception
 
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertEquals
 
 /** Tests [RetryableException] */
 class RetryableExceptionTest {
@@ -29,13 +28,13 @@ class RetryableExceptionTest {
     @Test
     fun non_throwing_function_works() {
         RetryableException.retryOnce { called++ }
-        assertThat("function should only be called once", called, equalTo(1))
+        assertEquals(called, 1, "function should only be called once")
     }
 
     @Test
     fun conditionally_throwing_function_retries() {
         RetryableException.retryOnce { called++; if (called == 1) { throw RetryableException(TestException("throwing_function_retries")) } }
-        assertThat("function should be called twice", called, equalTo(2))
+        assertEquals(called, 2, "function should be called twice")
     }
 
     @Test
@@ -43,7 +42,7 @@ class RetryableExceptionTest {
         val exception = assertThrows<TestException> {
             RetryableException.retryOnce { called++; throw RetryableException(TestException("throwing_function_retries")) }
         }
-        assertThat("exception message is retained", exception.message, equalTo("throwing_function_retries"))
-        assertThat("function should be called twice", called, equalTo(2))
+        assertEquals(exception.message, "throwing_function_retries", "exception message is retained")
+        assertEquals(called, 2, "function should be called twice")
     }
 }

@@ -17,13 +17,12 @@ package com.ichi2.anim
 
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
+import kotlin.test.assertEquals
 
 class ActivityTransitionAnimationTest {
 
@@ -34,14 +33,14 @@ class ActivityTransitionAnimationTest {
         names = ["START", "END", "UP", "DOWN", "RIGHT", "LEFT"]
     )
     fun getInverseTransition_returns_same_input_for_not_directional_params(direction: Direction) {
-        assertThat(getInverseTransition(direction), equalTo(direction))
+        assertEquals(getInverseTransition(direction), direction)
     }
 
     @ParameterizedTest
     @MethodSource("getInverseTransition_returns_inverse_direction_args")
     fun getInverseTransition_returns_inverse_direction(first: Direction, second: Direction) {
-        assertThat(getInverseTransition(first), equalTo(second))
-        assertThat(getInverseTransition(second), equalTo(first))
+        assertEquals(getInverseTransition(first), second)
+        assertEquals(getInverseTransition(second), first)
     }
 
     companion object {

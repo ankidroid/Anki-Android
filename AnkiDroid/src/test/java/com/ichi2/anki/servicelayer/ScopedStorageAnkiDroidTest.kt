@@ -30,12 +30,12 @@ import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.slot
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.hamcrest.io.FileMatchers
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
@@ -53,9 +53,9 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
         val from = migratedFrom.listFiles()!!.associateBy { it.name }.toMutableMap()
         val to = migratedTo.listFiles()!!.associateBy { it.name }.toMutableMap()
 
-        assertThat("target folder name should be set", migratedTo.name, equalTo("AnkiDroid1"))
+        assertEquals(migratedTo.name, "AnkiDroid1", "target folder name should be set")
         assertFalse(ScopedStorageService.isLegacyStorage(migratedTo.absolutePath, targetContext), "target should be under scoped storage")
-        assertThat("bare files should be moved", to.keys, equalTo(from.keys))
+        assertEquals(to.keys, from.keys, "bare files should be moved")
     }
 
     @Test
@@ -68,7 +68,7 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
 
             ScopedStorageService.migrateEssentialFiles(targetContext)
 
-            assertThat(destinationFile.captured.name, equalTo("AnkiDroid2"))
+            assertEquals(destinationFile.captured.name, "AnkiDroid2")
         }
     }
 

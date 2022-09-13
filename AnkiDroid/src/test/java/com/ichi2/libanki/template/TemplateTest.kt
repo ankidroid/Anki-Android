@@ -23,6 +23,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class TemplateTest : RobolectricTest() {
@@ -35,7 +36,7 @@ class TemplateTest : RobolectricTest() {
         // Ankidroid used not to display fields whose name start with !
         val context = HashMap<String, String>()
         context["!Front"] = "Test"
-        assertThat(render("{{!Front}}", context), equalTo("Test"))
+        assertEquals(render("{{!Front}}", context), "Test")
     }
 
     @Test
@@ -56,7 +57,7 @@ class TemplateTest : RobolectricTest() {
         val context = HashMap<String, String>()
         context["Front"] = "AA{{type:Back}}"
 
-        assertThat(render("{{Front}}", context), equalTo("AA{{type:Back}}"))
+        assertEquals(render("{{Front}}", context), "AA{{type:Back}}")
     }
 
     @Test
@@ -88,7 +89,7 @@ class TemplateTest : RobolectricTest() {
         // most important - that it does render
         assertThat(result, not("{{Invalid template}}"))
         // Actual value (may be subject to change).
-        assertThat(result, equalTo("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"))
+        assertEquals(result, "\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n")
     }
 
     @Test
@@ -104,9 +105,9 @@ class TemplateTest : RobolectricTest() {
     }
 
     private fun test_render(template: String, m: Map<String, String>, expected: String) {
-        assertThat(render(template, m), equalTo(expected))
+        assertEquals(render(template, m), expected)
         val legacyTemplate = TokenizerTest.new_to_legacy_template(template)
-        assertThat(render(legacyTemplate, m), equalTo(expected))
+        assertEquals(render(legacyTemplate, m), expected)
     }
 
     private fun test_render_contains(template: String, m: Map<String, String>, contained: String) {

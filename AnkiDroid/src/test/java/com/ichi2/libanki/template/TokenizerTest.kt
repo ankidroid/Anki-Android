@@ -36,6 +36,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
@@ -58,8 +59,8 @@ class TokenizerTest : RobolectricTest() {
     }
 
     private fun test_text_token(template: String, expected: Tokenizer.IResult) {
-        assertThat(text_token(template, false), equalTo(expected))
-        assertThat(text_token(template, true), equalTo(expected))
+        assertEquals(text_token(template, false), expected)
+        assertEquals(text_token(template, true), expected)
         val legacy_template = new_to_legacy(template)
         val legacy_expected = expected.new_to_legacy()
         assertThat(
@@ -162,8 +163,8 @@ class TokenizerTest : RobolectricTest() {
             Tokenizer.Token(token, field_name),
             remaining
         )
-        assertThat(new_handlebar_token(template), equalTo(expected))
-        assertThat(handlebar_token(template, true), equalTo(expected))
+        assertEquals(new_handlebar_token(template), expected)
+        assertEquals(handlebar_token(template, true), expected)
         assertThat(
             handlebar_token(template, false),
             equalTo(expected)
@@ -375,12 +376,12 @@ class TokenizerTest : RobolectricTest() {
         assertThrows<NoClosingBrackets> {
             tokenizer.next()
         }.let { exc ->
-            assertThat(exc.remaining, equalTo("{{!ien nnr"))
+            assertEquals(exc.remaining, "{{!ien nnr")
         }
         assertThrows<NoClosingBrackets> {
             legacy_tokenizer.next()
         }.let { exc ->
-            assertThat(exc.remaining, equalTo("<%!ien nnr"))
+            assertEquals(exc.remaining, "<%!ien nnr")
         }
         assertFalse(tokenizer.hasNext())
     }

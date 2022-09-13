@@ -15,15 +15,14 @@
  */
 package com.ichi2.utils
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class AssetHelperTest {
     @Test
     fun guessMimeTypeTest() {
-        assertThat(AssetHelper.guessMimeType("test.txt"), equalTo("text/plain"))
-        assertThat(AssetHelper.guessMimeType("test.png"), equalTo("image/png"))
-        assertThat(AssetHelper.guessMimeType("test.zip"), equalTo("application/zip"))
+        assertEquals(AssetHelper.guessMimeType("test.txt"), "text/plain")
+        assertEquals(AssetHelper.guessMimeType("test.png"), "image/png")
+        assertEquals(AssetHelper.guessMimeType("test.zip"), "application/zip")
     }
 }

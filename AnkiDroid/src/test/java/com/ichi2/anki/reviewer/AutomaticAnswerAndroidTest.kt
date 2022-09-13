@@ -24,16 +24,17 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class AutomaticAnswerAndroidTest : RobolectricTest() {
 
     @Test
     fun default_is_bury() {
-        assertThat("no value", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
+        assertEquals(createInstance().settings.answerAction, AutomaticAnswerAction.BURY_CARD, "no value")
         setPreference(-1) // invalid
-        assertThat("bad pref", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
-        assertThat("default", AutomaticAnswer.defaultInstance(mock()).settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
+        assertEquals(createInstance().settings.answerAction, AutomaticAnswerAction.BURY_CARD, "bad pref")
+        assertEquals(AutomaticAnswer.defaultInstance(mock()).settings.answerAction, AutomaticAnswerAction.BURY_CARD, "default")
 
         // ensure "bad pref" isn't picked up as a good value
         setPreference(1)
@@ -41,13 +42,13 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
 
         // reset the value
         resetPrefs()
-        assertThat("xml pref", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
+        assertEquals(createInstance().settings.answerAction, AutomaticAnswerAction.BURY_CARD, "xml pref")
     }
 
     @Test
     fun preference_sets_action() {
         setPreference(1)
-        assertThat(createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.ANSWER_AGAIN))
+        assertEquals(createInstance().settings.answerAction, AutomaticAnswerAction.ANSWER_AGAIN)
     }
 
     private fun resetPrefs() {

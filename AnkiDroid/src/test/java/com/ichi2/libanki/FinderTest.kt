@@ -90,7 +90,7 @@ class FinderTest : RobolectricTest() {
     private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
-        assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
+        assertEquals(siblingBuried.queue, Consts.QUEUE_TYPE_SIBLING_BURIED)
         return siblingBuried
     }
 

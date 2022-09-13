@@ -22,7 +22,8 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
@@ -32,6 +33,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -53,8 +55,8 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         assertThat("First result should have two operations", result1, hasSize(2))
         assertThat("First result's first operation should be MoveFileOrDirectory", result1[0], instanceOf(MoveFileOrDirectory::class.java))
         val moveFoo = result1[0] as MoveFileOrDirectory
-        assertThat("First result's second operation should have source foo.txt", moveFoo.sourceFile.name, equalTo("foo.txt"))
-        assertThat("First result's second operation should be move_operation", result1[1], equalTo(moveOperation))
+        assertEquals(moveFoo.sourceFile.name, "foo.txt", "First result's second operation should have source foo.txt")
+        assertEquals(result1[1], moveOperation, "First result's second operation should be move_operation")
 
         val result2 = moveOperation.execute()
         assertThat("Second result should have no operation", result2, hasSize(0))
@@ -95,7 +97,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val spyMoveDirectoryContent = OperationTest.SpyMoveDirectoryContent(moveDirectoryContent(source, destinationDirectory))
         val moveDirectoryContent = spyMoveDirectoryContent.spy
         executeAll(moveDirectoryContent)
-        assertThat("Should have done three moves", spyMoveDirectoryContent.movesProcessed, equalTo(3))
+        assertEquals(spyMoveDirectoryContent.movesProcessed, 3, "Should have done three moves")
 
         assertThat(executionContext.exceptions, hasSize(1))
         executionContext.exceptions[0].run {

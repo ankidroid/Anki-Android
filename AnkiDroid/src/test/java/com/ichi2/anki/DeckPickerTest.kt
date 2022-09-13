@@ -204,13 +204,13 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun confirmDeckDeletionDeletesEmptyDeck() = runTest {
         val did = addDeck("Hello World")
-        assertThat("Deck was added", col.decks.count(), equalTo(2))
+        assertEquals(col.decks.count(), 2, "Deck was added")
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
         deckPicker.confirmDeckDeletion(did)
         advanceRobolectricLooperWithSleep()
-        assertThat("deck was deleted", col.decks.count(), equalTo(1))
+        assertEquals(col.decks.count(), 1, "deck was deleted")
     }
 
     @Test
@@ -499,7 +499,7 @@ class DeckPickerTest : RobolectricTest() {
     fun checkIfReturnsTrueWhenAtLeastOneDeckIsDisplayed() {
         addDeck("Hello World")
         // Reason for using 2 as the number of decks -> This deck + Default deck
-        assertThat("Deck added", col.decks.count(), equalTo(2))
+        assertEquals(col.decks.count(), 2, "Deck added")
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
@@ -513,7 +513,7 @@ class DeckPickerTest : RobolectricTest() {
     fun checkIfReturnsFalseWhenNoDeckIsDisplayed() {
         // Only default deck would be there in the count, hence using the value as 1.
         // Default deck does not get displayed in the DeckPicker if the default deck is empty.
-        assertThat("Contains only default deck", col.decks.count(), equalTo(1))
+        assertEquals(col.decks.count(), 1, "Contains only default deck")
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )

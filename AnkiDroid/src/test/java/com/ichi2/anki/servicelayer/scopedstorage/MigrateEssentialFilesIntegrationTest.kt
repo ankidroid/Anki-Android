@@ -25,7 +25,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.containsString
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -40,6 +39,7 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -85,15 +85,15 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
 
         // assert the collection is open, working, and has been moved to the outPath
         assertTrue(col.basicCheck())
-        assertThat(col.path, equalTo(File(destinationPath, "collection.anki2").canonicalPath))
+        assertEquals(col.path, File(destinationPath, "collection.anki2").canonicalPath)
 
         assertMigrationInProgress()
 
         // assert that the preferences are updated
         val prefs = getPreferences()
-        assertThat("The deck path is updated", prefs.getString("deckPath", ""), equalTo(destinationPath.canonicalPath))
-        assertThat("The migration source is the original deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), equalTo(oldDeckPath))
-        assertThat("The migration destination is the deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), equalTo(destinationPath.canonicalPath))
+        assertEquals(prefs.getString("deckPath", ""), destinationPath.canonicalPath, "The deck path is updated")
+        assertEquals(prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), oldDeckPath, "The migration source is the original deck path")
+        assertEquals(prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), destinationPath.canonicalPath, "The migration destination is the deck path")
     }
 
     @Test
@@ -164,7 +164,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
             }.`when`(it).throwIfCollectionIsCorrupted(ArgumentMatchers.anyString())
         }
 
-        assertThat(timesCalled, equalTo(3))
+        assertEquals(timesCalled, 3)
     }
 
     private fun migrateEssentialFiles(stubbing: (KStubbing<MigrateEssentialFiles>.(MigrateEssentialFiles) -> Unit)? = null) {

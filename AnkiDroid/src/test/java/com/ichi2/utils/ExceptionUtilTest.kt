@@ -17,9 +17,8 @@ package com.ichi2.utils
 
 import com.ichi2.utils.ExceptionUtil.containsCause
 import com.ichi2.utils.ExceptionUtil.getExceptionMessage
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -30,7 +29,7 @@ class ExceptionUtilTest {
 
         val message = getExceptionMessage(e)
 
-        assertThat(message, equalTo("Hello"))
+        assertEquals(message, "Hello")
     }
 
     @Test
@@ -40,14 +39,14 @@ class ExceptionUtilTest {
 
         val message = getExceptionMessage(e)
 
-        assertThat(message, equalTo("Hello\nInner"))
+        assertEquals(message, "Hello\nInner")
     }
 
     @Test
     fun exceptionMessageNull() {
         val message = getExceptionMessage(null)
 
-        assertThat(message, equalTo(""))
+        assertEquals(message, "")
     }
 
     @Test
@@ -58,7 +57,7 @@ class ExceptionUtilTest {
 
         val message = getExceptionMessage(e)
 
-        assertThat(message, equalTo("Hello"))
+        assertEquals(message, "Hello")
     }
 
     @Test

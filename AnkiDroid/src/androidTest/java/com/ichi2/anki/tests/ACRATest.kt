@@ -36,8 +36,6 @@ import org.acra.config.ACRAConfigurationException
 import org.acra.config.LimitingReportAdministrator
 import org.acra.config.ToastConfiguration
 import org.acra.data.CrashReportDataFactory
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Rule
@@ -243,7 +241,7 @@ class ACRATest : InstrumentedTest() {
         for (configuration in config.pluginConfigurations()) {
             // Make sure the dialog is set to pop up
             if (configuration.javaClass.toString().contains("Dialog")) {
-                assertThat(message, configuration.enabled(), equalTo(isEnabled))
+                assertEquals(configuration.enabled(), isEnabled, message)
             }
         }
     }

@@ -22,10 +22,10 @@ import com.ichi2.libanki.Card
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
@@ -41,11 +41,11 @@ class PreviewerTest : RobolectricTest() {
 
         val previewer = getPreviewerPreviewing(cardToPreview)
 
-        assertThat("Initially should be previewing selected card", previewer.currentCardId, equalTo(cardToPreview.id))
+        assertEquals(previewer.currentCardId, cardToPreview.id, "Initially should be previewing selected card")
 
         previewer.saveEditedCard()
 
-        assertThat("Should be previewing selected card after edit", previewer.currentCardId, equalTo(cardToPreview.id))
+        assertEquals(previewer.currentCardId, cardToPreview.id, "Should be previewing selected card after edit")
     }
 
     @Test
@@ -81,8 +81,8 @@ class PreviewerTest : RobolectricTest() {
         val previewer = seekBarHelper()
         val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
         val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
-        assertThat("Progress is 0 at the beginning.", s.progress, equalTo(0))
-        assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
+        assertEquals(s.progress, 0, "Progress is 0 at the beginning.")
+        assertEquals(t.text, previewer.getString(R.string.preview_progress_bar_text, 1, 6), "Progress text at the beginning.")
     }
 
     @Test
@@ -91,8 +91,8 @@ class PreviewerTest : RobolectricTest() {
         val previewer = seekBarHelper()
         val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
         val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
-        assertThat("Max value of seekbar", s.max, equalTo(5))
-        assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
+        assertEquals(s.max, 5, "Max value of seekbar")
+        assertEquals(t.text, previewer.getString(R.string.preview_progress_bar_text, 1, 6), "Progress text at the beginning.")
     }
 
     @Test
@@ -104,8 +104,8 @@ class PreviewerTest : RobolectricTest() {
         val y = s.progress
         previewer.changePreviewedCard(true)
         previewer.changePreviewedCard(true)
-        assertThat("Seekbar value when you preview two cards", y, equalTo(s.progress - 2))
-        assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 3, 6)))
+        assertEquals(y, s.progress - 2, "Seekbar value when you preview two cards")
+        assertEquals(t.text, previewer.getString(R.string.preview_progress_bar_text, 3, 6), "Progress text at the beginning.")
     }
 
     @Test
@@ -118,10 +118,10 @@ class PreviewerTest : RobolectricTest() {
         previewer.changePreviewedCard(true)
         val y = s.progress
         previewer.changePreviewedCard(false)
-        assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 2, 6)))
+        assertEquals(t.text, previewer.getString(R.string.preview_progress_bar_text, 2, 6), "Progress text at the beginning.")
         previewer.changePreviewedCard(false)
-        assertThat("Seekbar value when you go back two cards", s.progress, equalTo(y - 2))
-        assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
+        assertEquals(s.progress, y - 2, "Seekbar value when you go back two cards")
+        assertEquals(t.text, previewer.getString(R.string.preview_progress_bar_text, 1, 6), "Progress text at the beginning.")
     }
 
     private fun seekBarHelper(): Previewer {

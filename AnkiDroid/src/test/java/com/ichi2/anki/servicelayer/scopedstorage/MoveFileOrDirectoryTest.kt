@@ -18,12 +18,12 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import java.io.File
+import kotlin.test.assertEquals
 
 /** Tests for [MoveFileOrDirectory] */
 class MoveFileOrDirectoryTest : OperationTest {
@@ -39,8 +39,8 @@ class MoveFileOrDirectoryTest : OperationTest {
         val nextOperation = nextOperations[0]
         assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveFile::class.java))
         val moveFile = nextOperation as MoveFile
-        assertThat("Move file source should be file", moveFile.sourceFile.file, equalTo(file))
-        assertThat("Destination file source should be file", moveFile.destinationFile, equalTo(File(destinationDir, file.name)))
+        assertEquals(moveFile.sourceFile.file, file, "Move file source should be file")
+        assertEquals(moveFile.destinationFile, File(destinationDir, file.name), "Destination file source should be file")
     }
 
     @Test
@@ -51,8 +51,8 @@ class MoveFileOrDirectoryTest : OperationTest {
         val nextOperation = nextOperations[0]
         assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveDirectory::class.java))
         val moveDirectory = nextOperation as MoveDirectory
-        assertThat("Move file source should be file", moveDirectory.source.directory, equalTo(directory))
-        assertThat("Destination file source should be file", moveDirectory.destination, equalTo(File(destinationDir, directory.name)))
+        assertEquals(moveDirectory.source.directory, directory, "Move file source should be file")
+        assertEquals(moveDirectory.destination, File(destinationDir, directory.name), "Destination file source should be file")
     }
 
     @Test

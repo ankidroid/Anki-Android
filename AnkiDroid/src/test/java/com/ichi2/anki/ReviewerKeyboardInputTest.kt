@@ -32,12 +32,12 @@ import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import timber.log.Timber
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 @KotlinCleanup("change `when` to whenever(); remove `protected` modifiers")
@@ -55,28 +55,28 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun whenDisplayingAnswerTyping1AnswersFarLeftButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_1)
-        assertThat(underTest.processedAnswer(), equalTo(EASE_1))
+        assertEquals(underTest.processedAnswer(), EASE_1)
     }
 
     @Test
     fun whenDisplayingAnswerTyping2AnswersSecondButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_2)
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2))
+        assertEquals(underTest.processedAnswer(), EASE_2)
     }
 
     @Test
     fun whenDisplayingAnswerTyping3AnswersThirdButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_3)
-        assertThat(underTest.processedAnswer(), equalTo(EASE_3))
+        assertEquals(underTest.processedAnswer(), EASE_3)
     }
 
     @Test
     fun whenDisplayingAnswerTyping4AnswersFarRightButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_4)
-        assertThat(underTest.processedAnswer(), equalTo(EASE_4))
+        assertEquals(underTest.processedAnswer(), EASE_4)
     }
 
     /** START: DEFAULT IS "GOOD"  */
@@ -84,21 +84,21 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun spaceAnswersThirdButtonWhenFourButtonsShowing() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(4)
         underTest.handleSpacebar()
-        assertThat(underTest.processedAnswer(), equalTo(EASE_3))
+        assertEquals(underTest.processedAnswer(), EASE_3)
     }
 
     @Test
     fun spaceAnswersSecondButtonWhenThreeButtonsShowing() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(3)
         underTest.handleSpacebar()
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2))
+        assertEquals(underTest.processedAnswer(), EASE_2)
     }
 
     @Test
     fun spaceAnswersSecondButtonWhenTwoButtonsShowing() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(2)
         underTest.handleSpacebar()
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2))
+        assertEquals(underTest.processedAnswer(), EASE_2)
     }
 
     /** END: DEFAULT IS "GOOD"  */
@@ -216,7 +216,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         assertThat("Initial button should display answer", underTest.didDisplayAnswer())
         underTest.displayAnswerForTest()
         underTest.handleGamepadPress(keycodeButton)
-        assertThat(underTest.processedAnswer(), equalTo(ease))
+        assertEquals(underTest.processedAnswer(), ease)
     }
 
     internal class KeyboardInputTestReviewer : Reviewer() {

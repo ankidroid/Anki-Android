@@ -17,16 +17,15 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class MetaTest : RobolectricTest() {
     @Test
     fun ensureDatabaseIsInMemory() {
         val path = col.db.queryString("select file from pragma_database_list")
-        assertThat("Default test database should be in-memory.", path, equalTo(""))
+        assertEquals(path, "", "Default test database should be in-memory.")
     }
 }

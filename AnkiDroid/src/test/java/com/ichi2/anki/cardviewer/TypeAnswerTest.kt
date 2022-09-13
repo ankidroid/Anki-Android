@@ -238,9 +238,9 @@ $!"""
     fun testClozeWithRepeatedWords() {
         // 8229
         val cloze1 = "This is {{c1::test}} which is containing {{c1::test}} word twice"
-        assertEquals("test", contentForCloze(cloze1, 1))
+        assertEquals(contentForCloze(cloze1, 1), "test")
         val cloze2 = "This is {{c1::test}} which is containing {{c1::test}} word twice {{c1::test2}}"
-        assertEquals("test, test, test2", contentForCloze(cloze2, 1))
+        assertEquals(contentForCloze(cloze2, 1), "test, test, test2")
     }
 
     @Test

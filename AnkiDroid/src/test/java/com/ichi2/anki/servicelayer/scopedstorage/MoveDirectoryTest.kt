@@ -20,7 +20,6 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -31,6 +30,7 @@ import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -96,11 +96,11 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         moveDirectory.execute()
 
         assertFalse(executionContext.attemptRename, "rename is now false")
-        assertThat("rename was called", renameCalled, equalTo(1))
+        assertEquals(renameCalled, 1, "rename was called")
 
         moveDirectory.execute()
 
-        assertThat("rename was not called again", renameCalled, equalTo(1))
+        assertEquals(renameCalled, 1, "rename was not called again")
 
         assertThat(executionContext.exceptions, hasSize(0))
         assertTrue(File(source, "tmp.txt").exists(), "source was not copied")

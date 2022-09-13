@@ -564,9 +564,9 @@ class SchedTest : RobolectricTest() {
         c.flush()
         col.reset()
         // Upstream, there is no space in 2d
-        assertEquals("2 d", without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_TWO)))
-        assertEquals("3 d", without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_THREE)))
-        assertEquals("4 d", without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_FOUR)))
+        assertEquals(without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_TWO)), "2 d")
+        assertEquals(without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_THREE)), "3 d")
+        assertEquals(without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_FOUR)), "4 d")
     }
 
     @Test
@@ -935,7 +935,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
         assertEquals(600, col.sched.nextIvl(c, BUTTON_TWO))
         assertEquals(0, col.sched.nextIvl(c, BUTTON_THREE))
-        assertEquals("(end)", col.sched.nextIvlStr(targetContext, c, BUTTON_THREE))
+        assertEquals(col.sched.nextIvlStr(targetContext, c, BUTTON_THREE), "(end)")
         col.sched.answerCard(c, BUTTON_THREE)
         assertEquals(CARD_TYPE_NEW, c.type)
         assertEquals(QUEUE_TYPE_NEW, c.queue)

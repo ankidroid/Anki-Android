@@ -22,11 +22,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler.Companion.getLaunchType
 import com.ichi2.anki.IntentHandler.LaunchType
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class IntentHandlerTest {
@@ -38,7 +37,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, equalTo(LaunchType.FILE_IMPORT))
+        assertEquals(expected, LaunchType.FILE_IMPORT)
     }
 
     @Test
@@ -47,7 +46,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, equalTo(LaunchType.SYNC))
+        assertEquals(expected, LaunchType.SYNC)
     }
 
     @Test
@@ -56,7 +55,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, equalTo(LaunchType.REVIEW))
+        assertEquals(expected, LaunchType.REVIEW)
     }
 
     @Test
@@ -65,7 +64,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, equalTo(LaunchType.DEFAULT_START_APP_IF_NEW))
+        assertEquals(expected, LaunchType.DEFAULT_START_APP_IF_NEW)
     }
 
     @Test
@@ -76,6 +75,6 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, equalTo(LaunchType.DEFAULT_START_APP_IF_NEW))
+        assertEquals(expected, LaunchType.DEFAULT_START_APP_IF_NEW)
     }
 }

@@ -15,10 +15,9 @@
  */
 package com.ichi2.anki.multimediacard.fields
 
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class MediaClipTest {
@@ -38,6 +37,6 @@ class MediaClipTest {
         }
         mediaClipField.audioPath = mediaFile.path
 
-        assertThat(mediaClipField.formattedValue, equalTo("[sound:foo]"))
+        assertEquals(mediaClipField.formattedValue, "[sound:foo]")
     }
 }

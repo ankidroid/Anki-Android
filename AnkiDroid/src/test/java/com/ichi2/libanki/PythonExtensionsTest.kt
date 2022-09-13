@@ -20,11 +20,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.utils.insert
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder.contains
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class PythonExtensionsTest {
@@ -37,9 +37,9 @@ class PythonExtensionsTest {
         val arr = JSONArray(listOf(initial))
         arr.insert(1, added)
 
-        assertThat(arr.length(), equalTo(2))
-        assertThat(arr.getJSONObject(0), equalTo(initial))
-        assertThat(arr.getJSONObject(1), equalTo(added))
+        assertEquals(arr.length(), 2)
+        assertEquals(arr.getJSONObject(0), initial)
+        assertEquals(arr.getJSONObject(1), added)
     }
 
     @Test
@@ -50,9 +50,9 @@ class PythonExtensionsTest {
         val arr = JSONArray(listOf(initial))
         arr.insert(0, added)
 
-        assertThat(arr.length(), equalTo(2))
-        assertThat(arr.getJSONObject(0), equalTo(added))
-        assertThat(arr.getJSONObject(1), equalTo(initial))
+        assertEquals(arr.length(), 2)
+        assertEquals(arr.getJSONObject(0), added)
+        assertEquals(arr.getJSONObject(1), initial)
     }
 
     @Test
@@ -64,9 +64,9 @@ class PythonExtensionsTest {
         val arr = JSONArray(listOf(initial))
         arr.insert(2, added)
 
-        assertThat(arr.length(), equalTo(2))
-        assertThat(arr.getJSONObject(0), equalTo(initial))
-        assertThat(arr.getJSONObject(1), equalTo(added))
+        assertEquals(arr.length(), 2)
+        assertEquals(arr.getJSONObject(0), initial)
+        assertEquals(arr.getJSONObject(1), added)
     }
 
     @Test

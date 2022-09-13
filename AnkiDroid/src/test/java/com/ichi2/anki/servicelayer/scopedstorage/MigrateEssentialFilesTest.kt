@@ -49,6 +49,7 @@ import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -96,19 +97,19 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         // assert the collection is open, working, and has been moved to the outPath
         assertTrue(col.basicCheck())
-        assertThat(col.path, equalTo(File(outPath, "collection.anki2").canonicalPath))
+        assertEquals(col.path, File(outPath, "collection.anki2").canonicalPath)
 
         assertMigrationInProgress()
 
         // assert that the preferences are updated
         val prefs = getPreferences()
-        assertThat("The deck path should be updated", prefs.getString(DECK_PATH, ""), equalTo(outPath.canonicalPath))
-        assertThat("The migration source should be the original deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), equalTo(oldDeckPath))
-        assertThat("The migration destination should be the deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), equalTo(outPath.canonicalPath))
+        assertEquals(prefs.getString(DECK_PATH, ""), outPath.canonicalPath, "The deck path should be updated")
+        assertEquals(prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), oldDeckPath, "The migration source should be the original deck path")
+        assertEquals(prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), outPath.canonicalPath, "The migration destination should be the deck path")
 
         assertThat(".nomedia should be copied", File(outPath.canonicalPath, ".nomedia"), FileMatchers.anExistingFile())
 
-        assertThat("The added card should still exists", col.cardCount(), equalTo(1))
+        assertEquals(col.cardCount(), 1, "The added card should still exists")
     }
 
     @Test
@@ -207,7 +208,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
 
         oldPrefValues.forEach {
-            assertThat("Pref ${it.key} should be unchanged", getPreferences().getString(it.key, null), equalTo(it.value))
+            assertEquals(getPreferences().getString(it.key, null), it.value, "Pref ${it.key} should be unchanged")
         }
 
         assertMigrationNotInProgress()
@@ -228,7 +229,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
             }
         }
 
-        assertThat(ex.file.name, equalTo("collection.anki2"))
+        assertEquals(ex.file.name, "collection.anki2")
     }
 
     /**

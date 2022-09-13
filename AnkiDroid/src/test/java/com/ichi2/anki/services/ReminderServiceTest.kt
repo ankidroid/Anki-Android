@@ -21,39 +21,38 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowNotificationManager
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class ReminderServiceTest : RobolectricTest() {
     @Test
     fun testReminderServiceNothingDue() {
         buildDefaultDeckReminders()
-        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
+        assertEquals(notificationManagerShadow.size(), 0, "No notifications exist")
     }
 
     @Test
     fun testReminderServiceReviewsDue() {
         addNoteUsingBasicModel("test front", "test back")
-        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
+        assertEquals(notificationManagerShadow.size(), 0, "No notifications exist")
         buildDefaultDeckReminders()
-        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(1))
+        assertEquals(notificationManagerShadow.size(), 1, "No notifications exist")
     }
 
     @Test
     fun testReminderServiceNullCollection() {
         addNoteUsingBasicModel("test front", "test back")
         enableNullCollection()
-        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
+        assertEquals(notificationManagerShadow.size(), 0, "No notifications exist")
         buildDefaultDeckReminders()
         // The collection was null so no reminders, but we should get here without exception
-        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
+        assertEquals(notificationManagerShadow.size(), 0, "No notifications exist")
     }
 
     /**

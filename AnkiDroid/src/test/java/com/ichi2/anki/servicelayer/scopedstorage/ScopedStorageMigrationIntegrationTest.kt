@@ -35,6 +35,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -77,7 +78,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
         underTest.integrationAssertOnlyIntendedFilesRemain()
-        assertThat(underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
+        assertEquals(underTest.migratedFilesCount, underTest.filesToMigrateCount)
 
         assertThat(
             "a number of files should remain to allow the user to restore their collection",
@@ -113,7 +114,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         val testExceptions = aggregatedException.exceptions.filter { it !is DirectoryNotEmptyException }
 
-        assertThat("two failed files means two exceptions", testExceptions.size, equalTo(2))
+        assertEquals(testExceptions.size, 2, "two failed files means two exceptions")
 
         assertThat(testExceptions[0], instanceOf(TestException::class.java))
         assertThat(testExceptions[1], instanceOf(TestException::class.java))
@@ -140,9 +141,9 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         val result = underTest.execTask()
 
-        assertThat("all files should be in the destination", underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
-        assertThat("one file is conflicted", underTest.conflictedFilesCount, equalTo(1))
-        assertThat("expect to have conflict/maybeConflicted.log in source (file & folder)", underTest.sourceFilesCount, equalTo(2))
+        assertEquals(underTest.migratedFilesCount, underTest.filesToMigrateCount, "all files should be in the destination")
+        assertEquals(underTest.conflictedFilesCount, 1, "one file is conflicted")
+        assertEquals(underTest.sourceFilesCount, 2, "expect to have conflict/maybeConflicted.log in source (file & folder)")
         assertThat(underTest.conflictedFilePaths.single(), anyOf(endsWith("/conflict/maybeConflicted.log"), endsWith("\\conflict\\maybeConflicted.log")))
 
         assertTrue(result, "even with a conflict, the operation should succeed")
@@ -180,7 +181,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
             File(underTest.source.directory, "collection.media"), not(anExistingDirectory())
         )
 
-        assertThat("no external retries should be made", underTest.externalRetries, equalTo(0))
+        assertEquals(underTest.externalRetries, 0, "no external retries should be made")
     }
 
     @Test
@@ -202,7 +203,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         val result = underTest.execTask()
 
         assertTrue(result, "operation should succeed")
-        assertThat("an external retry occurred", underTest.externalRetries, equalTo(1))
+        assertEquals(underTest.externalRetries, 1, "an external retry occurred")
     }
 
     private fun MigrateUserDataTester.execTask(): Boolean {
@@ -284,7 +285,7 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
                 destination = Directory.createInstance(destination)!!,
                 filesToMigrateCount = fileCount(source)
             ).also {
-                assertThat("Conflict directory should not exist before the migration starts", it.conflictedFilesCount, equalTo(0))
+                assertEquals(it.conflictedFilesCount, 0, "Conflict directory should not exist before the migration starts")
             }
         }
     }

@@ -19,13 +19,12 @@ import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import java.io.File
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class ImageFieldTest {
@@ -45,14 +44,14 @@ class ImageFieldTest {
         // 2.0:  "<img src=\"paste-abc.jpg\" />";
         // 2.1: (note: no trailing slash or space)
         val expected = "<img src=\"paste-abc.jpg\">"
-        assertThat(actual, equalTo(expected))
+        assertEquals(actual, expected)
     }
 
     @Test
     fun validImageParses() {
         val goodImage = "<img src='img_202003291657428441724378214970132.png'/>"
         val imageSrc = ImageField.parseImageSrcFromHtml(goodImage)
-        assertThat(imageSrc, equalTo("img_202003291657428441724378214970132.png"))
+        assertEquals(imageSrc, "img_202003291657428441724378214970132.png")
     }
 
     @Test
@@ -60,28 +59,28 @@ class ImageFieldTest {
         // 5874 - previously failed
         val previouslyBadImage = "<img src='img_202003291657428441724378214970132.png'/>aaaa'/>"
         val imageSrc = ImageField.parseImageSrcFromHtml(previouslyBadImage)
-        assertThat(imageSrc, equalTo("img_202003291657428441724378214970132.png"))
+        assertEquals(imageSrc, "img_202003291657428441724378214970132.png")
     }
 
     @Test
     fun firstImageIsSelected() {
         val goodImage = "<img src='1.png'/>aa<img src='2.png'/>"
         val imageSrc = ImageField.parseImageSrcFromHtml(goodImage)
-        assertThat(imageSrc, equalTo("1.png"))
+        assertEquals(imageSrc, "1.png")
     }
 
     @Test
     fun testNoImage() {
         val knownBadImage = "<br />"
         val imageSrc = ImageField.parseImageSrcFromHtml(knownBadImage)
-        assertThat(imageSrc, equalTo(""))
+        assertEquals(imageSrc, "")
     }
 
     @Test
     fun testEmptyImage() {
         val knownBadImage = "<img />"
         val imageSrc = ImageField.parseImageSrcFromHtml(knownBadImage)
-        assertThat(imageSrc, equalTo(""))
+        assertEquals(imageSrc, "")
     }
 
     @Test
@@ -89,7 +88,7 @@ class ImageFieldTest {
         val knownBadImage = "<br />"
         val col = collectionWithMediaDirectory("media")
         val imageSrc = ImageField.getImageFullPath(col, knownBadImage)
-        assertThat("no media should return no paths", imageSrc, equalTo(""))
+        assertEquals(imageSrc, "", "no media should return no paths")
     }
 
     @Test
@@ -97,7 +96,7 @@ class ImageFieldTest {
         val goodImage = "<img src='1.png'/>"
         val col = collectionWithMediaDirectory("media")
         val imageSrc = ImageField.getImageFullPath(col, goodImage)
-        assertThat("Valid media should have path", imageSrc, equalTo("media/1.png"))
+        assertEquals(imageSrc, "media/1.png", "Valid media should have path")
     }
 
     @CheckResult

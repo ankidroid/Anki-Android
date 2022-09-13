@@ -33,12 +33,12 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -56,7 +56,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     fun defaultWhiteboardColorIsUsedOnFirstRun() {
         val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Pen color defaults to black", whiteboard.penColor, equalTo(DEFAULT_LIGHT_PEN_COLOR))
+        assertEquals(whiteboard.penColor, DEFAULT_LIGHT_PEN_COLOR, "Pen color defaults to black")
     }
 
     @Test
@@ -65,7 +65,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Pen color defaults to black", whiteboard.penColor, equalTo(555))
+        assertEquals(whiteboard.penColor, 555, "Pen color defaults to black")
     }
 
     @Test
@@ -74,7 +74,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val whiteboard = startReviewerForWhiteboardInDarkMode()
 
-        assertThat("Pen color defaults to black", whiteboard.penColor, equalTo(555))
+        assertEquals(whiteboard.penColor, 555, "Pen color defaults to black")
     }
 
     @Test
@@ -84,7 +84,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         whiteboard.penColor = ARBITRARY_PEN_COLOR_VALUE
 
         val penColor = penColor
-        assertThat("Light pen color is changed", penColor.lightPenColor, equalTo(ARBITRARY_PEN_COLOR_VALUE))
+        assertEquals(penColor.lightPenColor, ARBITRARY_PEN_COLOR_VALUE, "Light pen color is changed")
     }
 
     @Test
@@ -94,7 +94,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         whiteboard.penColor = ARBITRARY_PEN_COLOR_VALUE
 
         val penColor = penColor
-        assertThat("Dark pen color is changed", penColor.darkPenColor, equalTo(ARBITRARY_PEN_COLOR_VALUE))
+        assertEquals(penColor.darkPenColor, ARBITRARY_PEN_COLOR_VALUE, "Dark pen color is changed")
     }
 
     @Test
@@ -103,7 +103,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Pen color defaults to black, even if dark mode color is changed", whiteboard.penColor, equalTo(DEFAULT_LIGHT_PEN_COLOR))
+        assertEquals(whiteboard.penColor, DEFAULT_LIGHT_PEN_COLOR, "Pen color defaults to black, even if dark mode color is changed")
     }
 
     @Test
@@ -113,7 +113,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Pen color defaults to black", whiteboard.penColor, equalTo(DEFAULT_LIGHT_PEN_COLOR))
+        assertEquals(whiteboard.penColor, DEFAULT_LIGHT_PEN_COLOR, "Pen color defaults to black")
     }
 
     @Test

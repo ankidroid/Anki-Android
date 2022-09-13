@@ -23,12 +23,11 @@ import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.every
 import io.mockk.mockkObject
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -40,7 +39,7 @@ class ScopedStorageAndroidTest {
         runTestWithTwoExternalDirectories { externalDirectories ->
             val templatePath = externalDirectories[0].createTransientDirectory("AD")
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), templatePath)
-            assertThat("should return parent directory", best.canonicalPath, equalTo(externalDirectories[0].canonicalPath))
+            assertEquals(best.canonicalPath, externalDirectories[0].canonicalPath, "should return parent directory")
         }
     }
 
@@ -49,7 +48,7 @@ class ScopedStorageAndroidTest {
         runTestWithTwoExternalDirectories { externalDirectories ->
             val templatePath = externalDirectories[1].createTransientDirectory("AD")
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), templatePath)
-            assertThat("should return parent directory", best.canonicalPath, equalTo(externalDirectories[1].canonicalPath))
+            assertEquals(best.canonicalPath, externalDirectories[1].canonicalPath, "should return parent directory")
         }
     }
 
@@ -58,7 +57,7 @@ class ScopedStorageAndroidTest {
         runTestWithTwoExternalDirectories { externalDirectories ->
             val templatePath = createTransientDirectory("unrelated")
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), templatePath)
-            assertThat("should return first path", best.canonicalPath, equalTo(externalDirectories[0].canonicalPath))
+            assertEquals(best.canonicalPath, externalDirectories[0].canonicalPath, "should return first path")
         }
     }
 
@@ -73,11 +72,11 @@ class ScopedStorageAndroidTest {
 
         runTestWithTwoExternalDirectories(sharedDirectories) {
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), templatePath)
-            assertThat("should return second path as closest to the root", best.canonicalPath, equalTo(secondRootDirectory.canonicalPath))
+            assertEquals(best.canonicalPath, secondRootDirectory.canonicalPath, "should return second path as closest to the root")
         }
         runTestWithTwoExternalDirectories(sharedDirectories.reversedArray()) {
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), templatePath)
-            assertThat("should return second path as closest to the root", best.canonicalPath, equalTo(secondRootDirectory.canonicalPath))
+            assertEquals(best.canonicalPath, secondRootDirectory.canonicalPath, "should return second path as closest to the root")
         }
     }
 
@@ -90,7 +89,7 @@ class ScopedStorageAndroidTest {
         val sdAnkiDroid = sdRootDirectory.createTransientDirectory("ankidroid")
         runTestWithTwoExternalDirectories(arrayOf(phoneExternal, sdExternal)) {
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), sdAnkiDroid)
-            assertThat("ambiguous, so should return first path", best.canonicalPath, equalTo(sdExternal.canonicalPath))
+            assertEquals(best.canonicalPath, sdExternal.canonicalPath, "ambiguous, so should return first path")
         }
     }
 
@@ -104,7 +103,7 @@ class ScopedStorageAndroidTest {
 
         runTestWithTwoExternalDirectories(arrayOf(depthTwoRootDirectory, depthThreeRootDirectory, depthOneRootDirectory,)) {
             val best = ScopedStorageService.getBestDefaultRootDirectory(ApplicationProvider.getApplicationContext(), templatePath)
-            assertThat("ambiguous, so should return first path", best.canonicalPath, equalTo(depthTwoRootDirectory.canonicalPath))
+            assertEquals(best.canonicalPath, depthTwoRootDirectory.canonicalPath, "ambiguous, so should return first path")
         }
     }
 

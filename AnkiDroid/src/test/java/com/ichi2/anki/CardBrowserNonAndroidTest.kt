@@ -16,33 +16,32 @@
 package com.ichi2.anki
 
 import androidx.annotation.CheckResult
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class CardBrowserNonAndroidTest {
     @Test
     fun soundIsStrippedCorrectly() {
         val output = formatWithFilenamesStripped("aou[sound:foo.mp3]aou")
-        assertThat(output, equalTo("aou aou"))
+        assertEquals(output, "aou aou")
     }
 
     @Test
     fun soundIsRetainedWithoutTag() {
         val output = formatWithFilenamesRetained("aou[sound:foo.mp3]aou")
-        assertThat(output, equalTo("aou foo.mp3 aou"))
+        assertEquals(output, "aou foo.mp3 aou")
     }
 
     @Test
     fun imageIsStrippedCorrectly() {
         val output = formatWithFilenamesStripped("aou<img src=\"test.jpg\">aou")
-        assertThat(output, equalTo("aou aou"))
+        assertEquals(output, "aou aou")
     }
 
     @Test
     fun imageIsRetainedWithNoHtml() {
         val output = formatWithFilenamesRetained("aou<img src=\"test.jpg\">aou")
-        assertThat(output, equalTo("aou test.jpg aou"))
+        assertEquals(output, "aou test.jpg aou")
     }
 
     @CheckResult

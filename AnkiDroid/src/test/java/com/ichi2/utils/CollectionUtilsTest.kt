@@ -17,9 +17,8 @@ package com.ichi2.utils
 
 import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
 import com.ichi2.utils.CollectionUtils.combinations
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class CollectionUtilsTest {
     var testList = arrayListOf(1, 2, 3)
@@ -34,14 +33,14 @@ class CollectionUtilsTest {
     @Test
     fun testCombinations() {
         val seq = testList.combinations().toList()
-        assertThat(seq[0], equalTo(Pair(1, 2)))
-        assertThat(seq[1], equalTo(Pair(1, 3)))
-        assertThat(seq[2], equalTo(Pair(2, 3)))
+        assertEquals(seq[0], Pair(1, 2))
+        assertEquals(seq[1], Pair(1, 3))
+        assertEquals(seq[2], Pair(2, 3))
 
         val seq2 = listOf<Int>().combinations().toList()
-        assertThat("empty list returns nothing", seq2.size, equalTo(0))
+        assertEquals(seq2.size, 0, "empty list returns nothing")
 
         val seq3 = listOf(1).combinations().toList()
-        assertThat("singleton list returns nothing", seq3.size, equalTo(0))
+        assertEquals(seq3.size, 0, "singleton list returns nothing")
     }
 }

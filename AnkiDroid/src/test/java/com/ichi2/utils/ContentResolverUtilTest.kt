@@ -23,8 +23,6 @@ import android.webkit.MimeTypeMap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ContentResolverUtil.getFileName
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
@@ -32,6 +30,7 @@ import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class) // needs a URI instance
 @Config(application = EmptyApplication::class)
@@ -46,7 +45,7 @@ class ContentResolverUtilTest {
 
         val filename = getFileName(mock, uri)
 
-        assertThat(filename, equalTo("filename_from_cursor.jpg"))
+        assertEquals(filename, "filename_from_cursor.jpg")
     }
 
     @Test
@@ -72,7 +71,7 @@ class ContentResolverUtilTest {
         val filename = getFileName(mock, uri)
 
         // maybe we could do better here, but general guidance is to not parse the uri string
-        assertThat(filename, equalTo("image.gif"))
+        assertEquals(filename, "image.gif")
     }
 
     private fun cursorReturning(@Suppress("SameParameterValue") value: String): Cursor {

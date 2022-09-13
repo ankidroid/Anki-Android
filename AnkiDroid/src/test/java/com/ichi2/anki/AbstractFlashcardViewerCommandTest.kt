@@ -30,13 +30,12 @@ import com.ichi2.anki.reviewer.CardMarker.FlagDef
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.libanki.Card
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.*
 import org.mockito.invocation.InvocationOnMock
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup(
@@ -50,7 +49,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
+        assertEquals(viewer.lastFlag, FLAG_NONE)
     }
 
     @Test
@@ -59,7 +58,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
+        assertEquals(viewer.lastFlag, FLAG_NONE)
     }
 
     @Test
@@ -69,7 +68,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(UNSET_FLAG)
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
+        assertEquals(viewer.lastFlag, FLAG_NONE)
     }
 
     @Test
@@ -79,7 +78,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_BLUE))
+        assertEquals(viewer.lastFlag, FLAG_BLUE)
     }
 
     @Test
@@ -89,7 +88,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
+        assertEquals(viewer.lastFlag, FLAG_NONE)
     }
 
     @Test
@@ -98,7 +97,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_RED))
+        assertEquals(viewer.lastFlag, FLAG_RED)
     }
 
     @Test
@@ -107,7 +106,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_ORANGE)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_ORANGE))
+        assertEquals(viewer.lastFlag, FLAG_ORANGE)
     }
 
     @Test
@@ -116,7 +115,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_GREEN)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_GREEN))
+        assertEquals(viewer.lastFlag, FLAG_GREEN)
     }
 
     @Test
@@ -125,7 +124,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_BLUE))
+        assertEquals(viewer.lastFlag, FLAG_BLUE)
     }
 
     @Test
@@ -134,7 +133,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_PINK)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_PINK))
+        assertEquals(viewer.lastFlag, FLAG_PINK)
     }
 
     @Test
@@ -143,7 +142,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_TURQUOISE)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_TURQUOISE))
+        assertEquals(viewer.lastFlag, FLAG_TURQUOISE)
     }
 
     @Test
@@ -152,7 +151,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_PURPLE)
 
-        assertThat(viewer.lastFlag, equalTo(FLAG_PURPLE))
+        assertEquals(viewer.lastFlag, FLAG_PURPLE)
     }
 
     @Test
@@ -172,7 +171,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(command)
         viewer.executeCommand(command)
 
-        assertThat(command.toString(), viewer.lastFlag, equalTo(FLAG_NONE))
+        assertEquals(viewer.lastFlag, FLAG_NONE, command.toString())
     }
 
     @KotlinCleanup("rename the getter method to createViewer(), remove val")

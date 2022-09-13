@@ -19,12 +19,12 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Executor
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.mockito.kotlin.mock
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import kotlin.test.assertEquals
 
 // TODO: Remove [MockExecutor] and now use a 'real' executor in tests
 
@@ -48,8 +48,8 @@ class ExecutorTest {
 
         underTest.execute(executionContext)
 
-        assertThat("first operation should be executed first", executionContext.executed[0], equalTo(opOne))
-        assertThat("second operation should be executed second", executionContext.executed[1], equalTo(opTwo))
+        assertEquals(executionContext.executed[0], opOne, "first operation should be executed first")
+        assertEquals(executionContext.executed[1], opTwo, "second operation should be executed second")
     }
 
     @Test
@@ -62,8 +62,8 @@ class ExecutorTest {
 
         underTest.execute(executionContext)
 
-        assertThat("first operation should be executed first", executionContext.executed[0], equalTo(opOne))
-        assertThat("second operation should be executed second", executionContext.executed[1], equalTo(opTwo))
+        assertEquals(executionContext.executed[0], opOne, "first operation should be executed first")
+        assertEquals(executionContext.executed[1], opTwo, "second operation should be executed second")
     }
 
     /**
@@ -79,8 +79,8 @@ class ExecutorTest {
 
         underTest.execute(executionContext)
 
-        assertThat("prepended operation should be executed first", executionContext.executed[0], equalTo(opTwo))
-        assertThat("regular operation should be executed after prepended operation", executionContext.executed[1], equalTo(opOne))
+        assertEquals(executionContext.executed[0], opTwo, "prepended operation should be executed first")
+        assertEquals(executionContext.executed[1], opOne, "regular operation should be executed after prepended operation")
     }
 
     /**
@@ -103,9 +103,9 @@ class ExecutorTest {
             opOne.isBlocked.release()
         }
 
-        assertThat("Initial operation should be executed first", executionContext.executed[0], equalTo(opOne))
-        assertThat("Preemption should take priority over next over normal operation", executionContext.executed[1], equalTo(preemptedOp))
-        assertThat("All operations should be executed", executionContext.executed[2], equalTo(opTwo))
+        assertEquals(executionContext.executed[0], opOne, "Initial operation should be executed first")
+        assertEquals(executionContext.executed[1], preemptedOp, "Preemption should take priority over next over normal operation")
+        assertEquals(executionContext.executed[2], opTwo, "All operations should be executed")
     }
 
     /** add two preempted operations: terminate after the first and ensure that only one is executed */
@@ -123,7 +123,7 @@ class ExecutorTest {
             blockingOp.isBlocked.release()
         }
 
-        assertThat(executionContext.executed[0], equalTo(blockingOp))
+        assertEquals(executionContext.executed[0], blockingOp)
         assertThat(
             "a preempted operation is not run if terminate() is called",
             executionContext.executed, hasSize(1)
@@ -144,7 +144,7 @@ class ExecutorTest {
             blockingOp.isBlocked.release()
         }
 
-        assertThat(executionContext.executed[0], equalTo(blockingOp))
+        assertEquals(executionContext.executed[0], blockingOp)
         assertThat(
             "a regular operation is not run if terminate() is called",
             executionContext.executed, hasSize(1)

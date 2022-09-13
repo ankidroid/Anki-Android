@@ -19,10 +19,9 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.utils.JSONObject
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -31,13 +30,13 @@ class ConfigTest : RobolectricTest() {
 
     @Test
     fun string_serialization() {
-        assertThat(col.get_config_string("sortType"), equalTo("noteFld"))
+        assertEquals(col.get_config_string("sortType"), "noteFld")
 
-        assertThat(col.conf.getString("sortType"), equalTo("noteFld"))
+        assertEquals(col.conf.getString("sortType"), "noteFld")
 
         col.set_config("sortType", "noteFld2")
 
-        assertThat(col.get_config_string("sortType"), equalTo("noteFld2"))
+        assertEquals(col.get_config_string("sortType"), "noteFld2")
     }
 
     @Test
@@ -57,10 +56,10 @@ class ConfigTest : RobolectricTest() {
 
     @Test
     fun get_config_uses_default() {
-        assertThat(col.get_config("hello", 1L), equalTo(1L))
+        assertEquals(col.get_config("hello", 1L), 1L)
 
         col.set_config("hello", JSONObject.NULL)
 
-        assertThat(col.get_config("hello", 1L), equalTo(1L))
+        assertEquals(col.get_config("hello", 1L), 1L)
     }
 }

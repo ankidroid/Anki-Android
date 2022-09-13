@@ -32,6 +32,7 @@ import org.mockito.kotlin.*
 import java.io.File
 import java.io.IOException
 import java.lang.IllegalStateException
+import kotlin.test.assertEquals
 
 class MoveConflictedFileTest : Test21And26(), OperationTest {
 
@@ -50,18 +51,18 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
 
         val sequence = MoveConflictedFile.queryCandidateFilenames(testFile).toList()
 
-        assertThat("5 attempts should be made to find a valid file", sequence.size, equalTo(EXPECTED_ATTEMPTS))
+        assertEquals(sequence.size, EXPECTED_ATTEMPTS, "5 attempts should be made to find a valid file")
 
         // Test and production uses different method to extract the base name for extra test safety
         val filename = testFile.name.substringBefore(".")
 
         assertThat("first element has no brackets", sequence.first().name, not(containsString("(")))
         assertThat("second element has brackets", sequence[1].name, endsWith(" (1).tmp"))
-        assertThat("last element has brackets", sequence.last().name, equalTo("$filename (${EXPECTED_ATTEMPTS - 1}).tmp"))
+        assertEquals(sequence.last().name, "$filename (${EXPECTED_ATTEMPTS - 1}).tmp", "last element has brackets")
 
         val final = sequence.last()
 
-        assertThat("final file is in same directory as original file", final.parent!!, equalTo(testFile.parent))
+        assertEquals(final.parent!!, testFile.parent, "final file is in same directory as original file")
     }
 
     @Test
@@ -80,10 +81,10 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
 
         val operation = params.createOperation()
 
-        assertThat("provided 'sourceFile' parameter is unchanged", operation.sourceFile.file, equalTo(params.sourceFile))
+        assertEquals(operation.sourceFile.file, params.sourceFile, "provided 'sourceFile' parameter is unchanged")
 
         // this is "path", but with a "conflict" subfolder.
-        assertThat("'conflict' is prepended to the path", operation.proposedDestinationFile, equalTo(params.intendedDestinationFilePath))
+        assertEquals(operation.proposedDestinationFile, params.intendedDestinationFilePath, "'conflict' is prepended to the path")
     }
 
     @Test
@@ -112,7 +113,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         assertThat("destination should exist", moveConflictedFile.proposedDestinationFile, FileMatchers.anExistingFile())
 
         assertThat("1 instance of progress", executionContext.progress, hasSize(1))
-        assertThat("1 instance of progress: 0 bytes", executionContext.progress.single(), equalTo(params.contentLength))
+        assertEquals(executionContext.progress.single(), params.contentLength, "1 instance of progress: 0 bytes")
     }
 
     @Test
@@ -134,10 +135,10 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         assertThat("destination should exist with (1) in the name", expectedFile, FileMatchers.anExistingFile())
 
         assertThat("1 instance of progress", executionContext.progress, hasSize(1))
-        assertThat("1 instance of progress: 0 bytes", executionContext.progress.single(), equalTo(params.contentLength))
+        assertEquals(executionContext.progress.single(), params.contentLength, "1 instance of progress: 0 bytes")
 
         assertThat("1 instance of progress", executionContext.progress, hasSize(1))
-        assertThat("1 instance of progress: 0 bytes", executionContext.progress.single(), equalTo(params.contentLength))
+        assertEquals(executionContext.progress.single(), params.contentLength, "1 instance of progress: 0 bytes")
     }
 
     @Test

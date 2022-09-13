@@ -31,8 +31,6 @@ import com.ichi2.anki.dialogs.utils.positiveButton
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -63,7 +61,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
-                assertThat(id, equalTo(col.decks.id(deckName)))
+                assertEquals(id, col.decks.id(deckName))
                 assertionCalled()
             }
             createDeckDialog.createFilteredDeck(deckName)
@@ -78,7 +76,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.SUB_DECK, deckParentId) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 val deckNameWithParentName = col.decks.getSubdeckName(deckParentId, deckName)
-                assertThat(id, equalTo(col.decks.id(deckNameWithParentName!!)))
+                assertEquals(id, col.decks.id(deckNameWithParentName!!))
                 assertionCalled()
             }
             createDeckDialog.createSubDeck(deckParentId, deckName)
@@ -91,7 +89,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
-                assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
+                assertEquals(id, col.decks.byName(deckName)!!.getLong("id"))
                 assertionCalled()
             }
             createDeckDialog.createDeck(deckName)
@@ -106,7 +104,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.deckName = deckName
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a deck name was renamed
-                assertThat(deckNewName, equalTo(col.decks.name(id!!)))
+                assertEquals(deckNewName, col.decks.name(id!!))
                 assertionCalled()
             }
             createDeckDialog.renameDeck(deckNewName)
@@ -182,13 +180,13 @@ class CreateDeckDialogTest : RobolectricTest() {
         val deckPicker =
             suspendCoroutine { coro -> activityScenario.onActivity { coro.resume(it) } }
         deckPicker.updateMenuState()
-        assertEquals(deckPicker.optionsMenuState!!.searchIcon, false)
+        assertFalse(deckPicker.optionsMenuState!!.searchIcon)
         // a single top-level deck with lots of subdecks should turn the icon on
         withCol {
             decks.id(deckTreeName(0, 10, "Deck"))
         }
         deckPicker.updateMenuState()
-        assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
+        assertTrue(deckPicker.optionsMenuState!!.searchIcon)
     }
 
     @Test

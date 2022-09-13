@@ -96,7 +96,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         viewer.handleUrlFromJavascript(url)
 
-        assertThat(viewer.typedInput, equalTo("你好%"))
+        assertEquals(viewer.typedInput, "你好%")
     }
 
     @Test
@@ -106,7 +106,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, equalTo("World"))
+        assertEquals(viewer.correctTypedAnswer, "World")
 
         waitForAsyncTasksToComplete()
 
@@ -119,7 +119,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, equalTo("David"))
+        assertEquals(viewer.correctTypedAnswer, "David")
     }
 
     @Test
@@ -129,7 +129,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, equalTo("World"))
+        assertEquals(viewer.correctTypedAnswer, "World")
 
         viewer.displayCardAnswer()
 
@@ -146,7 +146,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, equalTo("David"))
+        assertEquals(viewer.correctTypedAnswer, "David")
         assertThat(viewer.cardContent, not(containsString("World")))
         assertThat(viewer.cardContent, containsString("David"))
     }
@@ -185,7 +185,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         addNoteUsingModelName(normal.getString("name"), "one", "two")
         val viewer = getViewer(false)
 
-        assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
+        assertEquals(viewer.hintLocale, "ja", "A model with a language hint (japanese) should use it")
 
         showNextCard(viewer)
 

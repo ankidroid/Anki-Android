@@ -30,6 +30,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -94,8 +95,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
-        assertThat(arr[0], equalTo("(" + fields[0] + ")"))
-        assertThat(arr[1], equalTo("(" + fields[1] + ")"))
+        assertEquals(arr[0], "(" + fields[0] + ")")
+        assertEquals(arr[1], "(" + fields[1] + ")")
     }
 
     @Test
@@ -115,8 +116,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
-        assertThat(arr[0], equalTo(testCardTemplatePreviewer.getString(R.string.cloze_sample_text, "c1")))
-        assertThat(arr[1], equalTo("(" + fields[1] + ")"))
+        assertEquals(arr[0], testCardTemplatePreviewer.getString(R.string.cloze_sample_text, "c1"))
+        assertEquals(arr[1], "(" + fields[1] + ")")
     }
 
     @Test
@@ -136,8 +137,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
-        assertThat(arr[0], equalTo("(" + fields[0] + ")"))
-        assertThat(arr[1], equalTo(testCardTemplatePreviewer.getString(R.string.basic_answer_sample_text)))
+        assertEquals(arr[0], "(" + fields[0] + ")")
+        assertEquals(arr[1], testCardTemplatePreviewer.getString(R.string.basic_answer_sample_text))
     }
 
     @Test
@@ -317,21 +318,21 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         testCardTemplatePreviewer.onNextTemplate()
 
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertEquals(testCardTemplatePreviewer.templateIndex, 1, "index is changed")
         assertTrue(testCardTemplatePreviewer.previousButtonEnabled(), "prev should be enabled")
         assertFalse(testCardTemplatePreviewer.nextButtonEnabled(), "next should not be enabled")
 
         testCardTemplatePreviewer.onNextTemplate()
 
         // no effect
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertEquals(testCardTemplatePreviewer.templateIndex, 1, "index is changed")
         assertTrue(testCardTemplatePreviewer.previousButtonEnabled(), "prev should be enabled")
         assertFalse(testCardTemplatePreviewer.nextButtonEnabled(), "next should not be enabled")
 
         testCardTemplatePreviewer.onPreviousTemplate()
 
         // previous
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(0))
+        assertEquals(testCardTemplatePreviewer.templateIndex, 0, "index is changed")
         assertFalse(testCardTemplatePreviewer.previousButtonEnabled(), "prev should be enabled")
         assertTrue(testCardTemplatePreviewer.nextButtonEnabled(), "next should not be enabled")
     }

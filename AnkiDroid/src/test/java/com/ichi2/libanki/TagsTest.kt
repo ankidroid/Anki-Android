@@ -70,8 +70,8 @@ class TagsTest : RobolectricTest() {
         val col = col
         val tags = Tags(col)
 
-        assertEquals(" Needs Revision Todo ", tags.addToStr("todo", "Todo todo Needs Revision"))
-        assertEquals(" Todo ", tags.addToStr("Todo", ""))
-        assertEquals(" Needs Revision Todo ", tags.addToStr("", "Todo todo Needs Revision"))
+        assertEquals(tags.addToStr("todo", "Todo todo Needs Revision"), " Needs Revision Todo ")
+        assertEquals(tags.addToStr("Todo", ""), " Todo ")
+        assertEquals(tags.addToStr("", "Todo todo Needs Revision"), " Needs Revision Todo ")
     }
 }

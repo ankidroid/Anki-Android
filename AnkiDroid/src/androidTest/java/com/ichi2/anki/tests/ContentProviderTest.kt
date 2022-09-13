@@ -619,9 +619,9 @@ class ContentProviderTest : InstrumentedTest() {
                     TEST_MODEL_CARDS[i],
                     template.getString("name"),
                     "Check template name"
-                    )
+                )
                 assertEquals(TEST_MODEL_QFMT[i], template.getString("qfmt"), "Check qfmt")
-                assertEquals(TEST_MODEL_AFMT[i], template.getString("afmt"),"Check afmt")
+                assertEquals(TEST_MODEL_AFMT[i], template.getString("afmt"), "Check afmt")
                 assertEquals(TEST_MODEL_QFMT[i], template.getString("bqfmt"), "Check bqfmt")
                 assertEquals(TEST_MODEL_AFMT[i], template.getString("bafmt"), "Check bafmt")
             }

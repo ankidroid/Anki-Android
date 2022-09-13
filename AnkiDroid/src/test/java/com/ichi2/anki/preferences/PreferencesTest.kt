@@ -23,12 +23,11 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.preferences.HeaderPreference
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesTest : RobolectricTest() {
@@ -45,7 +44,7 @@ class PreferencesTest : RobolectricTest() {
     fun testDayOffsetExhaustive() {
         for (i in 0..23) {
             preferences.setDayOffset(i)
-            assertThat(getDayOffset(col), equalTo(i))
+            assertEquals(getDayOffset(col), i)
         }
     }
 
@@ -55,7 +54,7 @@ class PreferencesTest : RobolectricTest() {
         col.changeSchedulerVer(2)
         for (i in 0..23) {
             preferences.setDayOffset(i)
-            assertThat(getDayOffset(col), equalTo(i))
+            assertEquals(getDayOffset(col), i)
         }
     }
 
@@ -76,7 +75,7 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "ar")
     fun buildHeaderSummary_RTL_Test() {
-        assertThat(HeaderPreference.buildHeaderSummary("حساب أنكي ويب", "مزامنة تلقائية"), equalTo("مزامنة تلقائية • حساب أنكي ويب"))
+        assertEquals(HeaderPreference.buildHeaderSummary("حساب أنكي ويب", "مزامنة تلقائية"), "مزامنة تلقائية • حساب أنكي ويب")
     }
 
     @Test
@@ -84,8 +83,8 @@ class PreferencesTest : RobolectricTest() {
     fun setDayOffsetSetsConfig() {
         col.changeSchedulerVer(2)
         val offset = getDayOffset(col)
-        assertThat("Default offset should be 4", offset, equalTo(4))
+        assertEquals(offset, 4, "Default offset should be 4")
         preferences.setDayOffset(2)
-        assertThat("rollover config should be set to new value", col.get_config("rollover", 4.toInt()), equalTo(2))
+        assertEquals(col.get_config("rollover", 4.toInt()), 2, "rollover config should be set to new value")
     }
 }

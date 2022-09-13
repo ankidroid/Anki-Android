@@ -22,7 +22,7 @@ package com.ichi2.libanki.utils
 //
 //    @Test
 //    fun ensureEnumsHaveSameConstants() {
-//        assertThat("A class marked with @EnumMirror should have all the enum constants of the class that it mirrors", clazz.targetNames, equalTo(clazz.mirrorNames))
+//        assertEquals(clazz.targetNames, clazz.mirrorNames, "A class marked with @EnumMirror should have all the enum constants of the class that it mirrors")
 //    }
 //
 //    companion object {

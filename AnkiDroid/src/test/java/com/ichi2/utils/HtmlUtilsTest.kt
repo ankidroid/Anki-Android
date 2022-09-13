@@ -18,37 +18,36 @@ package com.ichi2.utils
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.HtmlUtils.escape
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class HtmlUtilsTest {
     @Test
     fun japaneseIsNotEscaped() {
-        assertThat(escape("飲む"), equalTo("飲む"))
+        assertEquals(escape("飲む"), "飲む")
     }
 
     @Test
     fun angleBraceIsEscaped() {
-        assertThat(escape("<"), equalTo("&lt;"))
+        assertEquals(escape("<"), "&lt;")
     }
 
     @Test
     fun ampersandIsEscaped() {
-        assertThat(escape("&"), equalTo("&amp;"))
+        assertEquals(escape("&"), "&amp;")
     }
 
     @Test
     fun newLineIsNotEscaped() {
-        assertThat(escape("\n"), equalTo("\n"))
+        assertEquals(escape("\n"), "\n")
     }
 
     @Test
     fun returnIsNotEscaped() {
-        assertThat(escape("\r"), equalTo("\r"))
+        assertEquals(escape("\r"), "\r")
     }
 }

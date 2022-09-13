@@ -15,21 +15,20 @@
  */
 package com.ichi2.themes
 
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import kotlin.test.assertEquals
 
 class ThemeTest {
     @ParameterizedTest
     @EnumSource(value = Theme::class)
     fun test_ofId_returns_theme(theme: Theme) {
-        assertThat(Theme.ofId(theme.id), equalTo(theme))
+        assertEquals(Theme.ofId(theme.id), theme)
     }
 
     @Test
     fun test_ofId_returns_fallback_if_id_is_invalid() {
-        assertThat(Theme.ofId("999"), equalTo(Theme.fallback))
+        assertEquals(Theme.ofId("999"), Theme.fallback)
     }
 }

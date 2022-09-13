@@ -19,19 +19,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.template.TokenizerTest.Companion.new_to_legacy_template
 import com.ichi2.testutils.assertThrows
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class ParserTest : RobolectricTest() {
     private fun testParsing(template: String, node: ParsedNode) {
-        assertThat(ParsedNode.parse_inner(template), equalTo(node))
+        assertEquals(ParsedNode.parse_inner(template), node)
         val legacyTemplate = new_to_legacy_template(template)
-        assertThat(ParsedNode.parse_inner(legacyTemplate), equalTo(node))
+        assertEquals(ParsedNode.parse_inner(legacyTemplate), node)
     }
 
     @Test

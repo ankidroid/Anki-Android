@@ -18,9 +18,11 @@ package com.ichi2.libanki.sched
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 /** Issue 8926  */
 @RunWith(AndroidJUnit4::class)
@@ -40,7 +42,7 @@ class SchedUpgradeTest : RobolectricTest() {
                 )
             )
         )
-        assertThat(col.schedVer(), equalTo(2))
+        assertEquals(col.schedVer(), 2)
     }
 
     @Test
@@ -55,6 +57,6 @@ class SchedUpgradeTest : RobolectricTest() {
                 Sched::class.java
             )
         )
-        assertThat(col.schedVer(), equalTo(1))
+        assertEquals(col.schedVer(), 1)
     }
 }

@@ -23,14 +23,13 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Card
 import com.ichi2.testutils.EmptyApplication
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.*
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -80,7 +79,7 @@ class AnswerTimerTest {
         }
 
         assertTrue(timer.showTimer, "timer should be enabled")
-        assertThat("Time limit should be 12 minutes", timer.limit, equalTo(12))
+        assertEquals(timer.limit, 12, "Time limit should be 12 minutes")
 
         verify(chronometer).start()
         verify(chronometer, atLeast(1)).visibility // we call twice due to the else branch
@@ -104,16 +103,17 @@ class AnswerTimerTest {
 
         timer.setupForCard(timerCard)
         assertTrue(timer.showTimer, "timer should be enabled")
-        assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
+        assertEquals(chronometer.visibility, View.VISIBLE, "chronometer should be visible")
 
         timer.setupForCard(nonTimerCard)
 
         assertFalse(timer.showTimer, "timer should not be enabled")
-        assertThat("chronometer should not be visible", chronometer.visibility, equalTo(View.INVISIBLE))
+
+        assertEquals(chronometer.visibility, View.INVISIBLE, "chronometer should not be visible")
 
         timer.setupForCard(timerCard)
         assertTrue(timer.showTimer, "timer should be enabled")
-        assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
+        assertEquals(chronometer.visibility, View.VISIBLE, "chronometer should be visible")
     }
 
     @Test

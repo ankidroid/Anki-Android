@@ -16,11 +16,10 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class FieldEditLineTest : NoteEditorTest() {
@@ -32,9 +31,9 @@ class FieldEditLineTest : NoteEditorTest() {
             setOrd(5)
         }
         val text = line.editText
-        assertThat(text!!.ord, equalTo(5))
-        assertThat(text.text.toString(), equalTo("Hello"))
-        assertThat(line.name, equalTo("Name"))
+        assertEquals(text!!.ord, 5)
+        assertEquals(text.text.toString(), "Hello")
+        assertEquals(line.name, "Name")
     }
 
     @Test
@@ -50,9 +49,9 @@ class FieldEditLineTest : NoteEditorTest() {
         restored.onRestoreInstanceState(b!!)
 
         val text = restored.editText
-        assertThat(text!!.ord, equalTo(5))
-        assertThat(text.text.toString(), equalTo("Hello"))
-        assertThat(toSave.name, equalTo("Name"))
+        assertEquals(text!!.ord, 5)
+        assertEquals(text.text.toString(), "Hello")
+        assertEquals(toSave.name, "Name")
     }
 
     private fun fieldEditLine(): FieldEditLine {

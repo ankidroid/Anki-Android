@@ -56,9 +56,9 @@ class DecksTest : RobolectricTest() {
 
     @Test
     fun trim() {
-        assertThat(Decks.strip("A\nB C\t D"), equalTo("A\nB C\t D"))
-        assertThat(Decks.strip("\n A\n\t"), equalTo("A"))
-        assertThat(Decks.strip("Z::\n A\n\t::Y"), equalTo("Z::A::Y"))
+        assertEquals(Decks.strip("A\nB C\t D"), "A\nB C\t D")
+        assertEquals(Decks.strip("\n A\n\t"), "A")
+        assertEquals(Decks.strip("Z::\n A\n\t::Y"), "Z::A::Y")
     }
 
     /******************
@@ -256,10 +256,10 @@ class DecksTest : RobolectricTest() {
 
         val filteredConfig = decks.confForDid(filteredId)
         val deckConfig = decks.confForDid(deckId)
-        assertThat(deckConfig.isStd, equalTo((true)))
-        assertThat(deckConfig.isDyn, equalTo((false)))
-        assertThat(filteredConfig.isStd, equalTo((false)))
-        assertThat(filteredConfig.isDyn, equalTo((true)))
+        assertEquals(deckConfig.isStd, (true))
+        assertEquals(deckConfig.isDyn, (false))
+        assertEquals(filteredConfig.isStd, (false))
+        assertEquals(filteredConfig.isDyn, (true))
     }
 
     @Test

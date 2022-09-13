@@ -21,7 +21,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.JSONObject
-import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
 import org.junit.Test
@@ -44,7 +43,7 @@ class CardTest : RobolectricTest() {
         col.addNote(note)
         val card = note.cards()[0]
 
-        assertThat(card.pureAnswer, equalTo("2"))
+        assertEquals(card.pureAnswer, "2")
     }
 
     /******************

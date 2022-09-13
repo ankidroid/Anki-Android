@@ -18,10 +18,10 @@ package com.ichi2.utils
 import com.ichi2.utils.StringUtil.toTitleCase
 import com.ichi2.utils.StringUtil.trimRight
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class StringUtilTest {
     @Test
@@ -31,12 +31,12 @@ class StringUtilTest {
 
     @Test
     fun trimRightWhiteSpaceIsBlankString() {
-        assertThat(trimRight(" "), equalTo(""))
+        assertEquals(trimRight(" "), "")
     }
 
     @Test
     fun trimRightOnlyTrimsRight() {
-        assertThat(trimRight(" a "), equalTo(" a"))
+        assertEquals(trimRight(" a "), " a")
     }
 
     @Test
@@ -52,16 +52,16 @@ class StringUtilTest {
 
     @Test
     fun toTitleCase_single_letter() {
-        assertThat(toTitleCase("a"), equalTo("A"))
+        assertEquals(toTitleCase("a"), "A")
     }
 
     @Test
     fun toTitleCase_single_upper_letter() {
-        assertThat(toTitleCase("A"), equalTo("A"))
+        assertEquals(toTitleCase("A"), "A")
     }
 
     @Test
     fun toTitleCase_string() {
-        assertThat(toTitleCase("aB"), equalTo("Ab"))
+        assertEquals(toTitleCase("aB"), "Ab")
     }
 }

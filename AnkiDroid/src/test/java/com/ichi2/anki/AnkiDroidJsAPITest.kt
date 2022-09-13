@@ -21,8 +21,6 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.JSONObject
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -54,7 +52,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val expected = "{\"setCardDue\":true,\"suspendNote\":true,\"markCard\":true,\"suspendCard\":true,\"buryCard\":true,\"toggleFlag\":true,\"buryNote\":true}"
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.init(data.toString()), equalTo(expected))
+        assertEquals(javaScriptFunction.init(data.toString()), expected)
     }
 
     @Test
@@ -74,10 +72,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(javaScriptFunction.ankiGetNextTime1(), equalTo("< 1 min"))
-        assertThat(javaScriptFunction.ankiGetNextTime2(), equalTo("< 6 min"))
-        assertThat(javaScriptFunction.ankiGetNextTime3(), equalTo("< 10 min"))
-        assertThat(javaScriptFunction.ankiGetNextTime4(), equalTo("4 d"))
+        assertEquals(javaScriptFunction.ankiGetNextTime1(), "< 1 min")
+        assertEquals(javaScriptFunction.ankiGetNextTime2(), "< 6 min")
+        assertEquals(javaScriptFunction.ankiGetNextTime3(), "< 10 min")
+        assertEquals(javaScriptFunction.ankiGetNextTime4(), "4 d")
     }
 
     @Test
@@ -99,38 +97,38 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val currentCard = reviewer.currentCard!!
 
         // Card Did
-        assertThat(javaScriptFunction.ankiGetCardDid(), equalTo(currentCard.did))
+        assertEquals(javaScriptFunction.ankiGetCardDid(), currentCard.did)
         // Card Id
-        assertThat(javaScriptFunction.ankiGetCardId(), equalTo(currentCard.id))
+        assertEquals(javaScriptFunction.ankiGetCardId(), currentCard.id)
         // Card Nid
-        assertThat(javaScriptFunction.ankiGetCardNid(), equalTo(currentCard.nid))
+        assertEquals(javaScriptFunction.ankiGetCardNid(), currentCard.nid)
         // Card ODid
-        assertThat(javaScriptFunction.ankiGetCardODid(), equalTo(currentCard.oDid))
+        assertEquals(javaScriptFunction.ankiGetCardODid(), currentCard.oDid)
         // Card Type
-        assertThat(javaScriptFunction.ankiGetCardType(), equalTo(currentCard.type))
+        assertEquals(javaScriptFunction.ankiGetCardType(), currentCard.type)
         // Card ODue
-        assertThat(javaScriptFunction.ankiGetCardODue(), equalTo(currentCard.oDue))
+        assertEquals(javaScriptFunction.ankiGetCardODue(), currentCard.oDue)
         // Card Due
-        assertThat(javaScriptFunction.ankiGetCardDue(), equalTo(currentCard.due))
+        assertEquals(javaScriptFunction.ankiGetCardDue(), currentCard.due)
         // Card Factor
-        assertThat(javaScriptFunction.ankiGetCardFactor(), equalTo(currentCard.factor))
+        assertEquals(javaScriptFunction.ankiGetCardFactor(), currentCard.factor)
         // Card Lapses
-        assertThat(javaScriptFunction.ankiGetCardLapses(), equalTo(currentCard.lapses))
+        assertEquals(javaScriptFunction.ankiGetCardLapses(), currentCard.lapses)
         // Card Ivl
-        assertThat(javaScriptFunction.ankiGetCardInterval(), equalTo(currentCard.ivl))
+        assertEquals(javaScriptFunction.ankiGetCardInterval(), currentCard.ivl)
         // Card mod
-        assertThat(javaScriptFunction.ankiGetCardMod(), equalTo(currentCard.mod))
+        assertEquals(javaScriptFunction.ankiGetCardMod(), currentCard.mod)
         // Card Queue
-        assertThat(javaScriptFunction.ankiGetCardQueue(), equalTo(currentCard.queue))
+        assertEquals(javaScriptFunction.ankiGetCardQueue(), currentCard.queue)
         // Card Reps
-        assertThat(javaScriptFunction.ankiGetCardReps(), equalTo(currentCard.reps))
+        assertEquals(javaScriptFunction.ankiGetCardReps(), currentCard.reps)
         // Card left
-        assertThat(javaScriptFunction.ankiGetCardLeft(), equalTo(currentCard.left))
+        assertEquals(javaScriptFunction.ankiGetCardLeft(), currentCard.left)
 
         // Card Flag
-        assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(0))
+        assertEquals(javaScriptFunction.ankiGetCardFlag(), 0)
         reviewer.currentCard!!.setFlag(1)
-        assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(1))
+        assertEquals(javaScriptFunction.ankiGetCardFlag(), 1)
 
         // Card Mark
         assertFalse(javaScriptFunction.ankiGetCardMark())
@@ -154,16 +152,16 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         // Displaying question
-        assertThat(javaScriptFunction.ankiIsDisplayingAnswer(), equalTo(reviewer.isDisplayingAnswer))
+        assertEquals(javaScriptFunction.ankiIsDisplayingAnswer(), reviewer.isDisplayingAnswer)
         reviewer.displayCardAnswer()
-        assertThat(javaScriptFunction.ankiIsDisplayingAnswer(), equalTo(reviewer.isDisplayingAnswer))
+        assertEquals(javaScriptFunction.ankiIsDisplayingAnswer(), reviewer.isDisplayingAnswer)
 
         // Full Screen
-        assertThat(javaScriptFunction.ankiIsInFullscreen(), equalTo(reviewer.isFullscreen))
+        assertEquals(javaScriptFunction.ankiIsInFullscreen(), reviewer.isFullscreen)
         // Top bar
-        assertThat(javaScriptFunction.ankiIsTopbarShown(), equalTo(reviewer.prefShowTopbar))
+        assertEquals(javaScriptFunction.ankiIsTopbarShown(), reviewer.prefShowTopbar)
         // Night Mode
-        assertThat(javaScriptFunction.ankiIsInNightMode(), equalTo(reviewer.isInNightMode))
+        assertEquals(javaScriptFunction.ankiIsInNightMode(), reviewer.isInNightMode)
     }
 
     @Test
@@ -204,13 +202,13 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         markCardJs += "AnkiDroidJS.ankiGetCardMark();\n" +
             "})();"
 
-        reviewer.webView!!.evaluateJavascript(markCardJs) { s -> assertThat(s, equalTo(true)) }
+        reviewer.webView!!.evaluateJavascript(markCardJs) { s -> assertEquals(s, "true") }
 
         // ---------------
         // Card flag test
         // ---------------
         // before toggling flag
-        assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(0))
+        assertEquals(javaScriptFunction.ankiGetCardFlag(), 0)
 
         // call javascript function defined in card.js to toggle flag
         var flagCardJs = "javascript:(function () {\n"
@@ -228,7 +226,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         flagCardJs += "AnkiDroidJS.ankiGetCardFlag();\n" +
             "})();"
 
-        reviewer.webView!!.evaluateJavascript(flagCardJs) { s -> assertThat(s, equalTo(1)) }
+        reviewer.webView!!.evaluateJavascript(flagCardJs) { s -> assertEquals(s, "1") }
     }
 
     fun ankiBurySuspendTest() {
@@ -257,40 +255,40 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // ----------
         var jsScript = createTestScript("AnkiDroidJS.ankiBuryCard();")
         // call script to bury current card
-        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertEquals(s, "true") }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(4))
+        assertEquals(reviewer.sched!!.cardCount(), 4)
 
         // ----------
         // Bury Note
         // ----------
         jsScript = createTestScript("AnkiDroidJS.ankiBuryNote();")
         // call script to bury current note
-        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertEquals(s, "true") }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(3))
+        assertEquals(reviewer.sched!!.cardCount(), 3)
 
         // -------------
         // Suspend Card
         // -------------
         jsScript = createTestScript("AnkiDroidJS.ankiSuspendCard();")
         // call script to suspend current card
-        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertEquals(s, "true") }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(2))
+        assertEquals(reviewer.sched!!.cardCount(), 2)
 
         // -------------
         // Suspend Note
         // -------------
         jsScript = createTestScript("AnkiDroidJS.ankiSuspendNote();")
         // call script to suspend current note
-        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+        reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertEquals(s, "true") }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(1))
+        assertEquals(reviewer.sched!!.cardCount(), 1)
     }
 
     private fun createTestScript(apiName: String): String {

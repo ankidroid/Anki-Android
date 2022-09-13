@@ -23,13 +23,12 @@ import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowEnvironment
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class InitialActivityWithConflictTest : RobolectricTest() {
@@ -52,7 +51,7 @@ class InitialActivityWithConflictTest : RobolectricTest() {
 
             val f = getStartupFailureType(targetContext)
 
-            assertThat("A conflict should be returned", f, equalTo(StartupFailure.DATABASE_LOCKED))
+            assertEquals(f, StartupFailure.DATABASE_LOCKED, "A conflict should be returned")
         } finally {
             setupForDefault()
         }

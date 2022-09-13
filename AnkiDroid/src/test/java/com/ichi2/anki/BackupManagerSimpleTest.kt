@@ -18,7 +18,8 @@ package com.ichi2.anki
 
 import com.ichi2.anki.BackupManager.Companion.getLatestBackup
 import com.ichi2.testutils.MockTime
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.ArrayMatching.arrayContainingInAnyOrder
 import org.hamcrest.io.FileMatchers.anExistingFile
@@ -161,6 +162,6 @@ class BackupManagerSimpleTest {
         File(backupDir, "blah.colpkg").createNewFile()
         val latestBackup = getLatestBackup(colFile)
         assertNotNull(latestBackup)
-        assertThat(latestBackup.name, equalTo("collection-2010-12-06-13-04.colpkg"))
+        assertEquals(latestBackup.name, "collection-2010-12-06-13-04.colpkg")
     }
 }

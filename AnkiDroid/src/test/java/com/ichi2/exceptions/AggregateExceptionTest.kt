@@ -19,9 +19,9 @@ package com.ichi2.exceptions
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
+import kotlin.test.assertEquals
 
 /**
  * Test for [AggregateException]
@@ -37,7 +37,7 @@ class AggregateExceptionTest {
         val expectedResult = TestException("a")
         val result = AggregateException.raise("", listOf(expectedResult))
 
-        assertThat(result, equalTo(expectedResult))
+        assertEquals(result, expectedResult)
     }
 
     @Test
@@ -50,8 +50,8 @@ class AggregateExceptionTest {
 
         val asAggregateException = result as AggregateException
 
-        assertThat(asAggregateException.message, equalTo("message"))
-        assertThat(asAggregateException.exceptions[0], equalTo(first))
-        assertThat(asAggregateException.exceptions[1], equalTo(second))
+        assertEquals(asAggregateException.message, "message")
+        assertEquals(asAggregateException.exceptions[0], first)
+        assertEquals(asAggregateException.exceptions[1], second)
     }
 }

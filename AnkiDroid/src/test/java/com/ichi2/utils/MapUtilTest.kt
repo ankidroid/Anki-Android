@@ -15,9 +15,9 @@ package com.ichi2.utils
 
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class MapUtilTest {
     private var mMap = hashMapOf(
@@ -29,7 +29,7 @@ class MapUtilTest {
 
     @Test
     fun getKeyByValueIsEqualTest() {
-        assertThat(getKeyByValue(mMap, "AnkiDroid"), equalTo(20))
+        assertEquals(getKeyByValue(mMap, "AnkiDroid"), 20)
     }
 
     @Test

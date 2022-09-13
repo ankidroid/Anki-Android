@@ -19,9 +19,11 @@ package com.ichi2.anki.model
 import com.ichi2.testutils.addTempFile
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import java.io.File
+import kotlin.test.assertEquals
 
 class RelativeFilePathTest {
     @Test
@@ -37,9 +39,9 @@ class RelativeFilePathTest {
         val subDir = base.createTransientDirectory("sub")
         val file = subDir.addTempFile("fileName")
         val relative = RelativeFilePath.fromPaths(base, file)!!
-        assertThat(relative.fileName, equalTo("fileName"))
+        assertEquals(relative.fileName, "fileName")
         assertThat(relative.path, hasSize(1))
-        assertThat(relative.path[0], equalTo("sub"))
+        assertEquals(relative.path[0], "sub")
         checkBasePlusRelativeEqualsExpected(base, relative, file)
     }
 
@@ -50,9 +52,9 @@ class RelativeFilePathTest {
         val subDir = source.createTransientDirectory("sub")
         val file = subDir.addTempFile("fileName")
         val relative = RelativeFilePath.fromPaths(source, file)!!
-        assertThat(relative.fileName, equalTo("fileName"))
+        assertEquals(relative.fileName, "fileName")
         assertThat(relative.path, hasSize(1))
-        assertThat(relative.path[0], equalTo("sub"))
+        assertEquals(relative.path[0], "sub")
         checkBasePlusRelativeEqualsExpected(destination, relative, File(File(destination, "sub"), "fileName"))
     }
 
@@ -64,16 +66,16 @@ class RelativeFilePathTest {
         val file = subDir.addTempFile("fileName")
         val relative = RelativeFilePath.fromPaths(source, file)!!
         val prepended = relative.unsafePrependDirectory("testing")
-        assertThat(prepended.fileName, equalTo("fileName"))
+        assertEquals(prepended.fileName, "fileName")
         assertThat(prepended.path, hasSize(2))
-        assertThat(prepended.path[0], equalTo("testing"))
-        assertThat(prepended.path[1], equalTo("sub"))
+        assertEquals(prepended.path[0], "testing")
+        assertEquals(prepended.path[1], "sub")
         checkBasePlusRelativeEqualsExpected(destination, prepended, File(File(File(destination, "testing"), "sub"), "fileName"))
     }
 
     companion object {
         fun checkBasePlusRelativeEqualsExpected(baseDir: File, relative: RelativeFilePath, expected: File) {
-            assertThat(relative.toFile(Directory.createInstance(baseDir)!!), equalTo(expected))
+            assertEquals(relative.toFile(Directory.createInstance(baseDir)!!), expected)
         }
     }
 }

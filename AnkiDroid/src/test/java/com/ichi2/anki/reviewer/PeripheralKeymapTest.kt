@@ -20,11 +20,11 @@ import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
+import kotlin.test.assertEquals
 
 class PeripheralKeymapTest {
     @Test
@@ -39,12 +39,12 @@ class PeripheralKeymapTest {
         whenever(event.getUnicodeChar(0)).thenReturn(49)
         whenever(event.keyCode).thenReturn(KeyEvent.KEYCODE_1)
 
-        assertThat(event.unicodeChar.toChar(), equalTo('\u0000'))
-        assertThat(event.getUnicodeChar(0).toChar(), equalTo('1'))
+        assertEquals(event.unicodeChar.toChar(), '\u0000')
+        assertEquals(event.getUnicodeChar(0).toChar(), '1')
         peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event)
 
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
-        assertThat(processed[0], equalTo(ViewerCommand.TOGGLE_FLAG_RED))
+        assertEquals(processed[0], ViewerCommand.TOGGLE_FLAG_RED)
     }
 
     private class MockReviewerUi : ReviewerUi {

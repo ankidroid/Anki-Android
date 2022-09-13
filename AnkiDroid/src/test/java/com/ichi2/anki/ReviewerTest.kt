@@ -39,6 +39,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -78,7 +79,7 @@ class ReviewerTest : RobolectricTest() {
                 reviewer.blockControls(true)
                 reviewer.executeCommand(ViewerCommand.EXIT)
             }
-            assertThat(scenario.result.resultCode, equalTo(RESULT_DEFAULT))
+            assertEquals(scenario.result.resultCode, RESULT_DEFAULT)
         }
     }
 
@@ -107,7 +108,7 @@ class ReviewerTest : RobolectricTest() {
 
         // The answer needs to be displayed to be able to get the time.
         displayAnswer(reviewer)
-        assertThat("4 buttons should be displayed", reviewer.answerButtonCount, equalTo(4))
+        assertEquals(reviewer.answerButtonCount, 4, "4 buttons should be displayed")
 
         val nextTime = javaScriptFunction.ankiGetNextTime4()
         assertThat(nextTime, not(emptyString()))
@@ -118,7 +119,7 @@ class ReviewerTest : RobolectricTest() {
         displayAnswer(reviewer)
 
         if (schedVersion == 1) {
-            assertThat("The 4th button should not be visible", reviewer.answerButtonCount, equalTo(3))
+            assertEquals(reviewer.answerButtonCount, 3, "The 4th button should not be visible")
             val learnTime = javaScriptFunction.ankiGetNextTime4()
             assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, emptyString())
         }
@@ -231,7 +232,7 @@ class ReviewerTest : RobolectricTest() {
         decks.select(didA)
         val reviewer = startReviewer()
         waitForAsyncTasksToComplete()
-        assertThat(reviewer.supportActionBar!!.title, equalTo("B"))
+        assertEquals(reviewer.supportActionBar!!.title, "B")
     }
 
     @Test
@@ -251,7 +252,7 @@ class ReviewerTest : RobolectricTest() {
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
+        assertEquals(javaScriptFunction.ankiGetDeckName(), "B")
     }
 
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
@@ -301,7 +302,7 @@ class ReviewerTest : RobolectricTest() {
             revCount
         )
 
-        assertThat(countList.toString(), equalTo(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
+        assertEquals(countList.toString(), expected.toString()) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
@@ -316,7 +317,7 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
         val ord = r.currentCard!!.ord
 
-        assertThat("Unexpected card ord", ord + 1, equalTo(i))
+        assertEquals(ord + 1, i, "Unexpected card ord")
     }
 
     @Throws(ConfirmModSchemaException::class)
@@ -332,9 +333,9 @@ class ReviewerTest : RobolectricTest() {
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
-        assertThat(newNote.model()["name"], equalTo("Three"))
+        assertEquals(newNote.model()["name"], "Three")
 
-        assertThat(col.addNote(newNote), equalTo(3))
+        assertEquals(col.addNote(newNote), 3)
     }
 
     @Throws(ConfirmModSchemaException::class)

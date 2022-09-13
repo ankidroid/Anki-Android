@@ -17,11 +17,10 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.graphics.Color
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
+import kotlin.test.assertEquals
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
@@ -34,7 +33,7 @@ class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
     var mExpectedResult = 0
     @Test
     fun testDefaultForegroundColor() {
-        assertThat(foregroundColor, equalTo(mExpectedResult))
+        assertEquals(foregroundColor, mExpectedResult)
     }
 
     private val foregroundColor: Int

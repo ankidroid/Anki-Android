@@ -25,7 +25,6 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Screen.Reviewer
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.upgradeVersionPrefKey
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -35,6 +34,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -76,7 +76,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         val binding = fromPreference.first()
 
         assertTrue(binding.isKey, "should be a key binding")
-        assertThat("binding should match", binding, equalTo(MappableBinding(keyCode(testData.keyCode), Reviewer(CardSide.BOTH))))
+        assertEquals(binding, MappableBinding(keyCode(testData.keyCode), Reviewer(CardSide.BOTH)), "binding should match")
     }
 
     @Test
@@ -105,13 +105,13 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         // ensure that the order was not changed - the last element is not included in the zip
         previousCommands.zip(currentCommands).forEach {
-            assertThat("bindings should not change order", it.first, equalTo(it.second))
+            assertEquals(it.first, it.second, "bindings should not change order")
         }
 
         val addedBinding = currentCommands.last()
 
         assertTrue(addedBinding.isKey, "last should be a key binding")
-        assertThat("last binding should match", addedBinding, equalTo(testData.binding))
+        assertEquals(addedBinding, testData.binding, "last binding should match")
     }
 
     @Test
@@ -129,7 +129,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertTrue(prefs.contains(command.preferenceKey), "new preference exists")
         val previousCommands = MappableBinding.fromPreference(prefs, command)
         assertThat("example command should have defaults", previousCommands, hasSize(2))
-        assertThat(previousCommands.first(), equalTo(testData.binding))
+        assertEquals(previousCommands.first(), testData.binding)
 
         upgradeAllGestures()
 

@@ -19,8 +19,8 @@ package com.ichi2.utils
 import com.ichi2.utils.SequenceUtil.takeWhileIncludingFirstNonMatch
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class SequenceUtilTest {
 
@@ -35,10 +35,10 @@ class SequenceUtilTest {
         val none = listOf("a", "b").asSequence().takeWhileIncludingFirstNonMatch { false }.toList()
 
         // this is unintuitive
-        assertThat(none, equalTo(listOf("a")))
+        assertEquals(none, listOf("a"))
 
         val second = listOf("a", "b").asSequence().takeWhileIncludingFirstNonMatch { it != "b" }.toList()
 
-        assertThat(second, equalTo(listOf("a", "b")))
+        assertEquals(second, listOf("a", "b"))
     }
 }

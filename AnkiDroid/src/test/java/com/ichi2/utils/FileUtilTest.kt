@@ -18,7 +18,6 @@ package com.ichi2.utils
 import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
@@ -142,32 +141,32 @@ class FileUtilTest {
     @Test
     fun testFileNameNormal() {
         val fileNameAndExtension = FileUtil.getFileNameAndExtension("abc.jpg")
-        assertThat(fileNameAndExtension!!.key, equalTo("abc"))
-        assertThat(fileNameAndExtension.value, equalTo(".jpg"))
+        assertEquals(fileNameAndExtension!!.key, "abc")
+        assertEquals(fileNameAndExtension.value, ".jpg")
     }
 
     @Test
     fun testFileNameTwoDot() {
         val fileNameAndExtension = FileUtil.getFileNameAndExtension("a.b.c")
-        assertThat(fileNameAndExtension!!.key, equalTo("a.b"))
-        assertThat(fileNameAndExtension.value, equalTo(".c"))
+        assertEquals(fileNameAndExtension!!.key, "a.b")
+        assertEquals(fileNameAndExtension.value, ".c")
     }
 
     @Test
     @Throws(IOException::class)
     fun fileSizeTest() {
-        assertThat("deleted file should have 0 size", FileUtil.getSize(File("test.txt")), equalTo(0L))
+        assertEquals(FileUtil.getSize(File("test.txt")), 0L, "deleted file should have 0 size")
 
         val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
 
-        assertThat("empty directory should have 0 size", FileUtil.getSize(temporaryRootDir), equalTo(0L))
+        assertEquals(FileUtil.getSize(temporaryRootDir), 0L, "empty directory should have 0 size")
 
         val textFile = File(temporaryRootDir, "tmp.txt")
         writeStringToFile(textFile, "Hello World")
 
         val expectedLength = "Hello World".length.toLong()
-        assertThat("File size should return text length", FileUtil.getSize(textFile), equalTo(expectedLength))
+        assertEquals(FileUtil.getSize(textFile), expectedLength, "File size should return text length")
 
-        assertThat("Should return file lengths", FileUtil.getSize(temporaryRootDir), equalTo(expectedLength))
+        assertEquals(FileUtil.getSize(temporaryRootDir), expectedLength, "Should return file lengths")
     }
 }

@@ -28,8 +28,6 @@ import com.ichi2.anki.multimediacard.AudioPlayer
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.testutils.KeyEventUtils.Companion.getVKey
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,6 +36,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import java.io.IOException
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -147,7 +146,10 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
     }
 
     private fun assertStatus(recording: AudioView.Status) {
-        assertThat(mReviewer.audioView!!.status, equalTo(recording))
+        assertEquals(
+            mReviewer.audioView!!.status,
+            recording
+        )
     }
 
     private fun setupPlayerMock(): AudioPlayer {

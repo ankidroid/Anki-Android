@@ -20,7 +20,6 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
-import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,13 +40,13 @@ class CollectionTest : RobolectricTest() {
             c.did = did
             c.flush()
         }
-        assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
+        assertEquals(n.numberOfCards(), 2, "two cloze notes should be generated")
 
         // create card 3
-        n.setField(0, n.fields[0].toString() + "{{c3::third}}")
+        n.setField(0, "${n.fields[0]}{{c3::third}}")
         n.flush()
-        assertThat("A new card should be generated", n.numberOfCards(), equalTo(3))
-        assertThat("The new card should have the same did as the previous cards", n.cards()[2].did, equalTo(did))
+        assertEquals(n.numberOfCards(), 3, "A new card should be generated")
+        assertEquals(n.cards()[2].did, did, "The new card should have the same did as the previous cards")
     }
 
     @Test

@@ -24,6 +24,7 @@ import org.junit.Test
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -44,7 +45,7 @@ class CompatDirectoryContentTest : Test21And26() {
             .withTempFile("zero")
         val iterator = compat.contentOfDirectory(directory)
         val file = iterator.next()
-        assertThat("Paths should be absolute", file.path, equalTo(file.absolutePath))
+        assertEquals(file.path, file.absolutePath, "Paths should be absolute")
     }
 
     @Test
