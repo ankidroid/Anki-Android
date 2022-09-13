@@ -594,7 +594,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
             noteIds = listOf(nid),
             newFields = fieldMap,
             newTemplates = templateMap,
-            oldNotetypeId = newModel.id,
+            oldNotetypeId = m.id,
             newNotetypeId = newModel.id,
             currentSchema = col.scm,
             oldNotetypeName = m.name,
