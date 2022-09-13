@@ -741,8 +741,8 @@ class CardBrowserTest : RobolectricTest() {
             assertEquals(column2.maxLines, Integer.MAX_VALUE)
 
             // Testing not ellipsized
-            assertThat(column1.ellipsize, nullValue())
-            assertThat(column2.ellipsize, nullValue())
+            assertNull(column1.ellipsize)
+            assertNull(column2.ellipsize)
         }
     }
 

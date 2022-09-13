@@ -69,7 +69,7 @@ class SchedTest : RobolectricTest() {
         val buriedCard = createBuriedCardInDefaultDeck()
         assertThat(buriedCard.did, `is`(DEFAULT_DECK_ID))
 
-        assertThat("Card should be buried", getCardInDefaultDeck(sched), nullValue())
+        assertNull(getCardInDefaultDeck(sched), "Card should be buried")
 
         // We want to assert that we can unbury, even if the deck we're unburying from isn't selected
         selectNewDeck()

@@ -19,7 +19,6 @@ package com.ichi2.anki
 import com.ichi2.anki.BackupManager.Companion.getLatestBackup
 import com.ichi2.testutils.MockTime
 import org.hamcrest.CoreMatchers.not
-import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.ArrayMatching.arrayContainingInAnyOrder
 import org.hamcrest.io.FileMatchers.anExistingFile
@@ -142,7 +141,7 @@ class BackupManagerSimpleTest {
     @Test
     fun latest_backup_returns_null_on_no_backups() {
         val colFile = tempDirectory.newFile()
-        assertThat(getLatestBackup(colFile), nullValue())
+        assertNull(getLatestBackup(colFile))
     }
 
     @Test
@@ -150,7 +149,7 @@ class BackupManagerSimpleTest {
         val colFile = tempDirectory.newFile()
         val backupDir = BackupManager.getBackupDirectory(tempDirectory.root)
         File(backupDir, "blah.colpkg").createNewFile()
-        assertThat(getLatestBackup(colFile), nullValue())
+        assertNull(getLatestBackup(colFile))
     }
 
     @Test

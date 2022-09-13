@@ -22,11 +22,11 @@ import com.ichi2.libanki.Sound
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 /** Tests Sound Rendering - should be extracted from the GUI at some point */
 @RustCleanup("doesn't work with V16")
@@ -49,7 +49,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
         sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(1))
-        assertThat(sounds.a(), nullValue())
+        assertNull(sounds.a())
         assertThat("despite being included in the answer by {{FrontSide}}, play once", sounds.qa(), hasSize(1))
     }
 
@@ -57,11 +57,11 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
     fun sound_on_back() {
         addNoteUsingBasicModel("front", "[sound:a.mp3]")
 
-        assertThat(sounds.q(), nullValue())
+        assertNull(sounds.q())
 
         sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
-        assertThat(sounds.q(), nullValue())
+        assertNull(sounds.q())
         assertThat(sounds.a(), hasSize(1))
         assertThat(sounds.qa(), hasSize(1))
     }
@@ -135,11 +135,11 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
     fun sound_on_back_no_frontSide() {
         addNoteWithNoFrontSide("aa", "[sound:a.mp3]")
 
-        assertThat(sounds.q(), nullValue())
+        assertNull(sounds.q())
 
         sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
-        assertThat(sounds.q(), nullValue())
+        assertNull(sounds.q())
         assertThat(sounds.a(), hasSize(1))
         assertThat(sounds.qa(), hasSize(1))
     }

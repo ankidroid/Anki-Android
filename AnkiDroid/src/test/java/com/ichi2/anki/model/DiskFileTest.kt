@@ -24,6 +24,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -43,13 +44,13 @@ class DiskFileTest {
     @Test
     fun fails_if_does_not_exist() {
         val dir = createTransientDirectory()
-        assertThat("DiskFile requires an existing file", DiskFile.createInstance(File(dir, "aa.txt")), nullValue())
+        assertNull(DiskFile.createInstance(File(dir, "aa.txt")), "DiskFile requires an existing file")
     }
 
     @Test
     fun fails_if_directory() {
         val dir = createTransientDirectory()
-        assertThat("directory should not be a DiskFile", DiskFile.createInstance(dir), nullValue())
+        assertNull(DiskFile.createInstance(dir), "directory should not be a DiskFile")
     }
 
     @Test

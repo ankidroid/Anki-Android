@@ -38,6 +38,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class TokenizerTest : RobolectricTest() {
@@ -186,7 +187,7 @@ class TokenizerTest : RobolectricTest() {
     }
 
     private fun test_handlebar_token_is_null(template: String) {
-        assertThat(new_handlebar_token(template), nullValue())
+        assertNull(new_handlebar_token(template))
         val legacy_template = new_to_legacy(template)
         assertThat(
             legacy_handlebar_token(legacy_template),
@@ -288,10 +289,10 @@ class TokenizerTest : RobolectricTest() {
 
     @Suppress("SameParameterValue")
     private fun test_next_token_is_null(template: String) {
-        assertThat(next_token(template, false), nullValue())
-        assertThat(next_token(template, true), nullValue())
+        assertNull(next_token(template, false))
+        assertNull(next_token(template, true))
         val legacy_template = new_to_legacy(template)
-        assertThat(next_token(legacy_template, true), nullValue())
+        assertNull(next_token(legacy_template, true))
     }
 
     @Test

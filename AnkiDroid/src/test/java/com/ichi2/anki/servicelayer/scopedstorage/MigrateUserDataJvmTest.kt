@@ -23,7 +23,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceTy
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.BeforeClass
 import org.junit.Test
@@ -31,6 +30,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 /**
  * A test for [MigrateUserData] which does not require Robolectric
@@ -66,7 +66,7 @@ class MigrateUserDataJvmTest {
     fun no_instance_if_not_migrating() {
         val preferences = getScopedStorageMigrationPreferences(source = NOT_SET, destination = NOT_SET)
         val data = MigrateUserData.createInstance(preferences)
-        assertThat("a valid task instance should not be created as we are not migrating", data, nullValue())
+        assertNull(data, "a valid task instance should not be created as we are not migrating")
     }
 
     @Test

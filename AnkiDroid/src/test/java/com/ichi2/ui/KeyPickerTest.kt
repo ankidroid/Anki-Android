@@ -24,6 +24,7 @@ import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class KeyPickerTest : RobolectricTest() {
@@ -32,7 +33,7 @@ class KeyPickerTest : RobolectricTest() {
 
     @Test
     fun test_normal_binding() {
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertNull(mKeyPicker.getBinding())
 
         mKeyPicker.dispatchKeyEvent(getVKey())
 
@@ -41,11 +42,11 @@ class KeyPickerTest : RobolectricTest() {
 
     @Test
     fun invalid_binding_keeps_null_value() {
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertNull(mKeyPicker.getBinding())
 
         mKeyPicker.dispatchKeyEvent(getInvalidEvent())
 
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertNull(mKeyPicker.getBinding())
     }
 
     @Test
@@ -67,7 +68,7 @@ class KeyPickerTest : RobolectricTest() {
 
         mKeyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
         mKeyPicker.dispatchKeyEvent(leftShiftPress)
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertNull(mKeyPicker.getBinding())
 
         // now turn it off and ensure it wasn't a fluke
         mKeyPicker.setKeycodeValidation { true }

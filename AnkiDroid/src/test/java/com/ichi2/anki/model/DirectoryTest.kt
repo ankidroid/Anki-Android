@@ -30,6 +30,7 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -49,20 +50,18 @@ class DirectoryTest : Test21And26() {
     @Test
     fun fails_if_does_not_exist() {
         val subdirectory = File(createTempDirectory().pathString, "aa")
-        assertThat(
-            "Directory requires an existing directory",
+        assertNull(
             Directory.createInstance(subdirectory),
-            nullValue()
+            "Directory requires an existing directory",
         )
     }
 
     @Test
     fun fails_if_file() {
         val dir = kotlin.io.path.createTempFile().pathString
-        assertThat(
-            "file should not become a Directory",
+        assertNull(
             Directory.createInstance(dir),
-            nullValue()
+            "file should not become a Directory",
         )
     }
 

@@ -18,16 +18,15 @@ package com.ichi2.anki.web
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class HostNumFactoryTest : RobolectricTest() {
     @Test
     fun ensureDefaultNoCrash() {
         val hostNum = HostNumFactory.getInstance(targetContext).hostNum
-        assertThat(hostNum, nullValue())
+        assertNull(hostNum)
     }
 }

@@ -20,17 +20,17 @@ import com.ichi2.testutils.addTempFile
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class RelativeFilePathTest {
     @Test
     fun test_distinct_base() {
         val file = DiskFile.createInstance(createTransientDirectory().addTempFile("fileName"))!!
         val dir = Directory.createInstance(createTransientDirectory())!!
-        assertThat("If file is not in dir, fromPaths should return null.", RelativeFilePath.fromPaths(dir, file), nullValue())
+        assertNull(RelativeFilePath.fromPaths(dir, file), "If file is not in dir, fromPaths should return null.")
     }
 
     @Test

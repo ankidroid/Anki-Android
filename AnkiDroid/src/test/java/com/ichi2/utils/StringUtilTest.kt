@@ -18,15 +18,15 @@ package com.ichi2.utils
 import com.ichi2.utils.StringUtil.toTitleCase
 import com.ichi2.utils.StringUtil.trimRight
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class StringUtilTest {
     @Test
     fun trimRightNullIsSetToNull() {
-        assertThat(trimRight(null), nullValue())
+        assertNull(trimRight(null))
     }
 
     @Test
@@ -47,7 +47,7 @@ class StringUtilTest {
 
     @Test
     fun toTitleCase_null_is_null() {
-        assertThat(toTitleCase(null), nullValue())
+        assertNull(toTitleCase(null))
     }
 
     @Test

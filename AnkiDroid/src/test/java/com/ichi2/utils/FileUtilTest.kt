@@ -16,8 +16,6 @@
 package com.ichi2.utils
 
 import org.acra.util.IOUtils.writeStringToFile
-import org.hamcrest.CoreMatchers.nullValue
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
@@ -25,6 +23,7 @@ import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class FileUtilTest {
@@ -125,17 +124,17 @@ class FileUtilTest {
 
     @Test
     fun testFileNameNull() {
-        assertThat(FileUtil.getFileNameAndExtension(null), nullValue())
+        assertNull(FileUtil.getFileNameAndExtension(null))
     }
 
     @Test
     fun testFileNameEmpty() {
-        assertThat(FileUtil.getFileNameAndExtension(""), nullValue())
+        assertNull(FileUtil.getFileNameAndExtension(""))
     }
 
     @Test
     fun testFileNameNoDot() {
-        assertThat(FileUtil.getFileNameAndExtension("abc"), nullValue())
+        assertNull(FileUtil.getFileNameAndExtension("abc"))
     }
 
     @Test

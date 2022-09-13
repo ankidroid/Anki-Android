@@ -170,7 +170,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun defaultLanguageIsNull() {
-        assertThat(viewer.hintLocale, nullValue())
+        assertNull(viewer.hintLocale)
     }
 
     @Test
@@ -189,7 +189,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         showNextCard(viewer)
 
-        assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
+        assertNull(viewer.hintLocale, "A default model should have no preference")
     }
 
     @Test
