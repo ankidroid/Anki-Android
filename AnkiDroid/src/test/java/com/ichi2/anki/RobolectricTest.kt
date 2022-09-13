@@ -56,7 +56,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Assume
@@ -439,7 +439,7 @@ open class RobolectricTest : CollectionGetter {
         col.changeSchedulerVer(2)
         val sched = col.sched
         // Sched inherits from schedv2...
-        MatcherAssert.assertThat("sched should be v2", sched !is Sched)
+        assertThat("sched should be v2", sched !is Sched)
         return sched as SchedV2
     }
 
@@ -522,7 +522,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
+        assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
     @CheckResult

@@ -23,7 +23,7 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_LRN
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Ignore
 import org.junit.Test
@@ -136,7 +136,7 @@ class UndoTest : RobolectricTest() {
         // performing a normal op will clear the review queue
         c = col.sched.card
         col.sched.answerCard(c!!, Consts.BUTTON_THREE)
-        MatcherAssert.assertThat(col.undoType(), Matchers.instanceOf(UndoReview::class.java))
+        assertThat(col.undoType(), Matchers.instanceOf(UndoReview::class.java))
         col.save("foo")
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
         assumeThat(col.undoName(targetContext.resources), Matchers.equalTo("foo"))

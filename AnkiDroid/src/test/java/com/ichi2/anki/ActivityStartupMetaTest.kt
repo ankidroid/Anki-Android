@@ -21,13 +21,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 import java.util.stream.Collectors
-import kotlin.Throws
 
 @RunWith(AndroidJUnit4::class)
 class ActivityStartupMetaTest : RobolectricTest() {
@@ -52,6 +51,6 @@ class ActivityStartupMetaTest : RobolectricTest() {
             .filter { x: String -> !x.startsWith("org.acra") }
             .filter { x: String -> !x.startsWith("leakcanary.internal") }
             .toArray()
-        MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
+        assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }
 }

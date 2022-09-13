@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.WhichButton
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Model
 import com.ichi2.utils.JSONObject
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -502,13 +502,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         intent.putExtra("modelId", model.getLong("id"))
         val editor = super.startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
         val template = editor.tempModel?.getTemplate(0)
-        MatcherAssert.assertThat("Deck ID element should exist", template?.has("did"), Matchers.equalTo(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template?.get("did"), Matchers.equalTo(JSONObject.NULL))
+        assertThat("Deck ID element should exist", template?.has("did"), Matchers.equalTo(true))
+        assertThat("Deck ID element should be null", template?.get("did"), Matchers.equalTo(JSONObject.NULL))
         editor.onDeckSelected(SelectableDeck(1, "hello"))
-        MatcherAssert.assertThat("Deck ID element should be changed", template?.get("did"), Matchers.equalTo(1L))
+        assertThat("Deck ID element should be changed", template?.get("did"), Matchers.equalTo(1L))
         editor.onDeckSelected(null)
-        MatcherAssert.assertThat("Deck ID element should exist", template!!.has("did"), Matchers.equalTo(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template["did"], Matchers.equalTo(JSONObject.NULL))
+        assertThat("Deck ID element should exist", template!!.has("did"), Matchers.equalTo(true))
+        assertThat("Deck ID element should be null", template["did"], Matchers.equalTo(JSONObject.NULL))
     }
 
     @Test

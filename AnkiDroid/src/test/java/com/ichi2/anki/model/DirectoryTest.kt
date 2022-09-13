@@ -22,7 +22,7 @@ import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
@@ -36,7 +36,7 @@ class DirectoryTest : Test21And26() {
     @Test
     fun passes_if_existing_directory() {
         val path = createTempDirectory().pathString
-        MatcherAssert.assertThat(
+        assertThat(
             "Directory should work with valid directory",
             Directory.createInstance(path),
             not(nullValue())
@@ -46,7 +46,7 @@ class DirectoryTest : Test21And26() {
     @Test
     fun fails_if_does_not_exist() {
         val subdirectory = File(createTempDirectory().pathString, "aa")
-        MatcherAssert.assertThat(
+        assertThat(
             "Directory requires an existing directory",
             Directory.createInstance(subdirectory),
             nullValue()
@@ -56,7 +56,7 @@ class DirectoryTest : Test21And26() {
     @Test
     fun fails_if_file() {
         val dir = kotlin.io.path.createTempFile().pathString
-        MatcherAssert.assertThat(
+        assertThat(
             "file should not become a Directory",
             Directory.createInstance(dir),
             nullValue()
@@ -72,7 +72,7 @@ class DirectoryTest : Test21And26() {
 
         val files = dir.listFiles()
 
-        MatcherAssert.assertThat(
+        assertThat(
             "Directory should contain only three files",
             files.toList(),
             containsInAnyOrder(listOf("foo.txt", "bar.xtx", "baz.xtx").map { File(dir.directory, it) })
@@ -82,7 +82,7 @@ class DirectoryTest : Test21And26() {
     @Test
     fun has_files_is_false_if_empty() {
         val dir = createValidTempDir()
-        MatcherAssert.assertThat(
+        assertThat(
             "empty directory should not have files",
             dir.hasFiles(),
             equalTo(false)
@@ -100,7 +100,7 @@ class DirectoryTest : Test21And26() {
     fun has_files_is_true_if_file() {
         val dir = createValidTempDir()
         IOUtils.writeStringToFile(File(dir.directory, "aa.txt"), "aa")
-        MatcherAssert.assertThat(
+        assertThat(
             "non-empty directory should have files",
             dir.hasFiles(),
             equalTo(true)
@@ -114,7 +114,7 @@ class DirectoryTest : Test21And26() {
         val fromPath = Directory.createInstance(path.path)!!
         val fromFile = Directory.createInstance(path)!!
 
-        MatcherAssert.assertThat("Equal result constructing from file or path", fromFile.directory, equalTo(fromPath.directory))
+        assertThat("Equal result constructing from file or path", fromFile.directory, equalTo(fromPath.directory))
     }
 
     /**

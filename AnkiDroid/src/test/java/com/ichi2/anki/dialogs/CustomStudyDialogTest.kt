@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.dialogs
 
-import androidx.core.view.get
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -34,7 +33,7 @@ import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.core.IsNull
 import org.junit.After
@@ -70,12 +69,12 @@ class CustomStudyDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             dialog!!.getActionButton(WhichButton.POSITIVE).callOnClick()
         }
         val customStudy = col.decks.current()
-        MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isDyn)
-        MatcherAssert.assertThat("could not find deck: Custom study session", customStudy, notNullValue())
+        assertThat("Custom Study should be dynamic", customStudy.isDyn)
+        assertThat("could not find deck: Custom study session", customStudy, notNullValue())
         customStudy.remove("id")
         customStudy.remove("mod")
         customStudy.remove("name")
@@ -95,7 +94,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
+        assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
     }
 
     @Test
@@ -120,8 +119,8 @@ class CustomStudyDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            MatcherAssert.assertThat(dialog!!.items, Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))))
+            assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog!!.items, Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))))
         }
     }
 }

@@ -34,7 +34,7 @@ import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.ListUtil
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -59,7 +59,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
             assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
@@ -81,7 +81,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val returnedList = AtomicReference<List<String>?>()
             val returnedOption = AtomicInteger()
             f.parentFragmentManager.setFragmentResultListener(
@@ -118,7 +118,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
             val tag = "zzzz"
@@ -153,7 +153,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
             val tag = "e"
@@ -191,7 +191,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
 
@@ -241,7 +241,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
 
@@ -288,7 +288,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
             val tag = "common::sport::football::small"
@@ -342,7 +342,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
             val tag = "common::::careless"
@@ -386,7 +386,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
             val adapter = recycler.adapter!! as TagsArrayAdapter
@@ -427,7 +427,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
 
@@ -471,7 +471,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val recycler: RecyclerView = body.findViewById(R.id.tags_dialog_tags_list)
 
@@ -590,7 +590,7 @@ class TagsDialogTest {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val editText = f.getSearchView()!!.findViewById<EditText>(R.id.search_src_text)!!
 
             editText.setText("hello ")

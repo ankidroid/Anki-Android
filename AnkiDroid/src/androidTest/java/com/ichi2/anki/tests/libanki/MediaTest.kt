@@ -24,7 +24,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.*
 import org.junit.Test
@@ -233,7 +233,7 @@ class MediaTest : InstrumentedTest() {
         path = File(mTestCol!!.media.dir(), mTestCol!!.media.addFile(path))
         // should have been logged
         mTestCol!!.media.findChanges()
-        MatcherAssert.assertThat(added(mTestCol).size, Matchers.`is`(Matchers.greaterThan(0)))
+        assertThat(added(mTestCol).size, Matchers.`is`(Matchers.greaterThan(0)))
         assertEquals(0, removed(mTestCol).size)
         // if we modify it, the cache won't notice
         os = FileOutputStream(path, true)

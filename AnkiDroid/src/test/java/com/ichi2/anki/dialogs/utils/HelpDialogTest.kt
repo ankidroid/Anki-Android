@@ -28,7 +28,7 @@ import com.ichi2.utils.IntentUtil
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,7 +41,7 @@ class HelpDialogTest : RobolectricTest() {
         val dialog = createInstance() as RecursivePictureMenu
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(4))
+        assertThat(v.adapter!!.itemCount, Matchers.equalTo(4))
     }
 
     @Test
@@ -57,7 +57,7 @@ class HelpDialogTest : RobolectricTest() {
         } else {
             5 // the default value for support dialog menu items count
         }
-        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedCount))
+        assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedCount))
     }
 
     @Test
@@ -69,7 +69,7 @@ class HelpDialogTest : RobolectricTest() {
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         // 6 because the option to rate the app is possible on the device
-        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(6))
+        assertThat(v.adapter!!.itemCount, Matchers.equalTo(6))
         unmockkStatic(IntentUtil::canOpenIntent)
     }
 

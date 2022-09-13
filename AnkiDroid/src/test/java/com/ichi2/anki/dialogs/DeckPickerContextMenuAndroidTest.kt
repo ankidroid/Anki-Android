@@ -26,7 +26,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.items
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -38,7 +38,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
         // This is less likely at the bottom of the list
         testDialog(Consts.DEFAULT_DECK_ID) { dialog ->
             val lastItem = dialog.items.last()
-            MatcherAssert.assertThat(
+            assertThat(
                 "'Delete deck' should be last item in the menu",
                 lastItem,
                 equalTo(getResourceString(R.string.contextmenu_deckpicker_delete_deck))
