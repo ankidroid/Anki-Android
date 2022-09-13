@@ -19,9 +19,6 @@ package com.ichi2.anki
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.LintTests
 import com.ichi2.utils.LanguageUtil
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category
@@ -32,6 +29,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.*
+import kotlin.test.assertNotEquals
 
 /**
  * Linting to ensure that all locales have valid strings
@@ -77,21 +75,22 @@ class LocaleLinting(private val locale: Locale) : RobolectricTest() {
         val sample = targetContext.getString(R.string.basic_answer_sample_text)
         val sampleUser = targetContext.getString(R.string.basic_answer_sample_text_user)
 
-        assertThat(
+        assertNotEquals(
+            sampleUser,
+            sample,
             "'$sample' should differ from '$sampleUser'. " +
                 "These strings are used in the type the answer diffs, and the user should see all examples of problems. " +
                 "see: basic_answer_sample_text and basic_answer_sample_text_user",
-            sample,
-            not(equalTo(sampleUser))
+
         )
 
         val lastWord = sample.split(" ").last()
-        assertThat(
+        assertNotEquals(
+            sampleUser,
+            lastWord,
             "the last word of '$sample' should differ from '$sampleUser'. " +
                 "These are used in the type the answer diffs, and the user should see all examples of problems " +
                 "see: basic_answer_sample_text and basic_answer_sample_text_user",
-            lastWord,
-            not(equalTo(sampleUser))
         )
     }
 }

@@ -13,9 +13,6 @@
 package com.ichi2.anki.analytics
 
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
@@ -23,6 +20,7 @@ import org.junit.runners.Parameterized
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 /**
  * This class contains two nested classes and is using the concept of Enclosed runner that internally works as a Suite.
@@ -72,7 +70,7 @@ object AnalyticsConstantsTest {
         get() =
             UsageAnalytics.Actions::class.memberProperties
                 .filter { x -> x.javaField!!.getAnnotation(AnalyticsConstant::class.java) != null }
-                .also { list -> assertThat(list.size, not(equalTo(0))) }
+                .also { list -> assertNotEquals(0, list.size) }
 
     @RunWith(Parameterized::class)
     class AnalyticsConstantsFieldValuesTest(private val analyticsString: String) {
@@ -140,7 +138,7 @@ object AnalyticsConstantsTest {
 
         private fun getProperties() = UsageAnalytics.Actions::class.memberProperties
             .mapNotNull { it.javaField }
-            .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
+            .also { list -> assertNotEquals(0, list.size, "fields should not be empty") }
 
         companion object {
             /**

@@ -40,6 +40,7 @@ import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -280,7 +281,7 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
         val ord = r.currentCard!!.ord
 
-        assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
+        assertNotEquals(i, ord + 1, "Unexpected card ord")
     }
 
     private suspend fun undo(reviewer: Reviewer) {

@@ -18,17 +18,11 @@ package com.ichi2.compat
 
 import android.annotation.SuppressLint
 import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class CompatDirectoryContentTest : Test21And26() {
 
@@ -67,7 +61,7 @@ class CompatDirectoryContentTest : Test21And26() {
                 "two" -> 2
                 else -> -1
             }
-            assertThat("File ${file.name} should not be in ${directory.path}", fileNumber, not(equalTo(-1)))
+            assertNotEquals(-1, fileNumber, "File ${file.name} should not be in ${directory.path}")
             assertFalse(found[fileNumber], "File ${file.name} should not be listed twice")
             found[fileNumber] = true
         }

@@ -34,7 +34,8 @@ import com.ichi2.testutils.CollectionDBCorruption
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers
 import org.junit.After
@@ -49,10 +50,7 @@ import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 const val DECK_PATH = "deckPath"
 
@@ -141,7 +139,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     fun fails_if_source_path_is_not_current_ankiDroid_collection() {
         val invalidSourcePath = createTransientDirectory().absolutePath
         // preliminary check, not part of the test assertion.
-        assertThat("source path should be invalid", invalidSourcePath, not(equalTo(col.path)))
+        assertNotEquals(col.path, invalidSourcePath, "source path should be invalid")
         assertNotNull(Directory.createInstance(invalidSourcePath))
         val algo = getAlgorithm(invalidSourcePath, getMigrationDestinationPath())
         val exception = assertThrows<IllegalStateException> { algo.execute() }

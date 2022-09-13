@@ -18,13 +18,11 @@ package com.ichi2.anki.reviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 @RunWith(AndroidJUnit4::class)
 class AutomaticAnswerAndroidTest : RobolectricTest() {
@@ -38,7 +36,7 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
 
         // ensure "bad pref" isn't picked up as a good value
         setPreference(1)
-        assertThat("good pref", createInstance().settings.answerAction, not(equalTo(AutomaticAnswerAction.BURY_CARD)))
+        assertNotEquals(AutomaticAnswerAction.BURY_CARD, createInstance().settings.answerAction, "good pref")
 
         // reset the value
         resetPrefs()

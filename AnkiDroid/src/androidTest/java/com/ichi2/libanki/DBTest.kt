@@ -18,12 +18,12 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
 import net.ankiweb.rsdroid.BackendFactory
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assume.assumeThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
+import kotlin.test.assertNotEquals
 
 @RunWith(AndroidJUnit4::class)
 class DBTest : InstrumentedTest() {
@@ -39,6 +39,6 @@ class DBTest : InstrumentedTest() {
         // https://github.com/ankidroid/Anki-Android/pull/7977#issuecomment-751780273
         // https://www.sqlite.org/pragma.html#pragma_journal_mode
         val journalMode = col.db.queryString("PRAGMA journal_mode")
-        assertThat(journalMode.lowercase(Locale.ROOT), not(equalTo("wal")))
+        assertNotEquals("wal", journalMode.lowercase(Locale.ROOT))
     }
 }

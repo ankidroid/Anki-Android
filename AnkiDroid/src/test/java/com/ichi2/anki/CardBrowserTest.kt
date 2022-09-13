@@ -392,7 +392,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val b = browserWithNoNewCards
 
-        assertThat("The target deck should not yet be selected", b.lastDeckId, not(equalTo(targetDid)))
+        assertNotEquals(targetDid, b.lastDeckId, "The target deck should not yet be selected")
 
         b.selectDeckAndSave(targetDid)
 
