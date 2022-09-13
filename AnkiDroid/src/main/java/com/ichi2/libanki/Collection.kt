@@ -1152,7 +1152,8 @@ open class Collection(
             html = ChessFilter.fenToChessboard(html, context)
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
-                html = LaTeX.mungeQA(html, this, model)
+                val svg = model.optBoolean("latexsvg", false)
+                html = LaTeX.mungeQA(html, this, svg)
             }
             d[type] = html
             // empty cloze?
