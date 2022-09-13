@@ -16,36 +16,35 @@
 package com.ichi2.libanki
 
 import com.ichi2.libanki.Note.ClozeUtils
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class NoteTest {
     @Test
     fun noFieldDataReturnsFirstClozeIndex() {
         val expected = ClozeUtils.getNextClozeIndex(emptyList())
-        assertThat("No data should return a cloze index of 1 the next.", expected, equalTo(1))
+        assertEquals(1, expected, "No data should return a cloze index of 1 the next.")
     }
 
     @Test
     fun negativeFieldIsIgnored() {
         val fieldValue = "{{c-1::foo}}"
         val actual = ClozeUtils.getNextClozeIndex(listOf(fieldValue))
-        assertThat("The next consecutive value should be returned.", actual, equalTo(1))
+        assertEquals(1, actual, "The next consecutive value should be returned.")
     }
 
     @Test
     fun singleFieldReturnsNextValue() {
         val fieldValue = "{{c2::bar}}{{c1::foo}}"
         val actual = ClozeUtils.getNextClozeIndex(listOf(fieldValue))
-        assertThat("The next consecutive value should be returned.", actual, equalTo(3))
+        assertEquals(3, actual, "The next consecutive value should be returned.")
     }
 
     @Test
     fun multiFieldIsHandled() {
         val fields = listOf("{{c1::foo}}", "{{c2::bar}}")
         val actual = ClozeUtils.getNextClozeIndex(fields)
-        assertThat("The highest of all fields should be used.", actual, equalTo(3))
+        assertEquals(3, actual, "The highest of all fields should be used.")
     }
 
     @Test
@@ -53,6 +52,6 @@ class NoteTest {
         // this mimics Anki Desktop
         val fields = listOf("{{c1::foo}}", "{{c3::bar}}{{c4::baz}}")
         val actual = ClozeUtils.getNextClozeIndex(fields)
-        assertThat("A missing cloze index should not be selected if there are higher values.", actual, equalTo(5))
+        assertEquals(5, actual, "A missing cloze index should not be selected if there are higher values.")
     }
 }

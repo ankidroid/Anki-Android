@@ -32,8 +32,6 @@ import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
@@ -45,6 +43,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -98,7 +97,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        assertThat(customStudy.toOrderedString(), equalTo(expected))
+        assertEquals(expected, customStudy.toOrderedString())
     }
 
     @Test

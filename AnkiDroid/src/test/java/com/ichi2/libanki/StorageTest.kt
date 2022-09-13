@@ -24,12 +24,12 @@ import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.emptyOrNullString
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.math.min
+import kotlin.test.assertEquals
 
 /** Regression test for Rust  */
 @RunWith(AndroidJUnit4::class)
@@ -179,19 +179,19 @@ open class StorageTest : RobolectricTest() {
         }
 
         fun assertEqualTo(expected: CollectionData) {
-            assertThat(id, equalTo(expected.id))
+            assertEquals(expected.id, id)
             // ignore due to timestamp: mCrt
             // ignore due to timestamp: mMod
             // ignore due to timestamp: mScm
-            assertThat(ver, equalTo(expected.ver))
-            assertThat(dty, equalTo(expected.dty))
-            assertThat(usn, equalTo(expected.usn))
-            assertThat(ls, equalTo(expected.ls))
+            assertEquals(expected.ver, ver)
+            assertEquals(expected.dty, dty)
+            assertEquals(expected.usn, usn)
+            assertEquals(expected.ls, ls)
             assertConfEqual(expected)
             assertModelsEqual(expected)
             assertJsonEqual(decks, expected.decks, "mod")
             assertDConfEqual(dConf, expected.dConf)
-            assertThat(tags, equalTo(expected.tags))
+            assertEquals(expected.tags, tags)
         }
 
         private fun assertDConfEqual(actualConf: String, expectedConf: String) {
@@ -221,7 +221,7 @@ open class StorageTest : RobolectricTest() {
             }
             val expectedJson = expectedRawJson.toOrderedString()
             val actualJson = actualRawJson.toOrderedString()
-            assertThat(actualJson, equalTo(expectedJson))
+            assertEquals(expectedJson, actualJson)
         }
 
         /** Removes a given key from all sub-objects, example: for all deck ids, remove the "name"  */
@@ -253,7 +253,7 @@ open class StorageTest : RobolectricTest() {
             }
             val actual = actualJson.toOrderedString()
             val expected = expectedJson.toOrderedString()
-            assertThat(actual, equalTo(expected))
+            assertEquals(expected, actual)
         }
 
         /** A req over a singleton can either be "any" or "all". Remove singletons which match  */
@@ -297,7 +297,7 @@ open class StorageTest : RobolectricTest() {
             remove(actualJson, expectedJson, "localOffset")
             val actual = actualJson.toOrderedString()
             val expected = expectedJson.toOrderedString()
-            assertThat(actual, equalTo(expected))
+            assertEquals(expected, actual)
 
             // regression: curModel
         }
@@ -305,7 +305,7 @@ open class StorageTest : RobolectricTest() {
         private fun assertModelIdsEqual(actualMid: Long, expectedMid: Long, expectedData: CollectionData) {
             val actual = JSONObject(models).getJSONObject(actualMid.toString()).getString("name")
             val expected = JSONObject(expectedData.models).getJSONObject(expectedMid.toString()).getString("name")
-            assertThat("current model", actual, equalTo(expected))
+            assertEquals(expected, actual, "current model")
         }
     }
 

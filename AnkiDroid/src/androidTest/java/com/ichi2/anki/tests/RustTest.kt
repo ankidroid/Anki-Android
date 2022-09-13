@@ -18,7 +18,6 @@ package com.ichi2.anki.tests
 import com.ichi2.libanki.Storage
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendFactory
-import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assume.assumeThat
 import org.junit.Rule
@@ -26,6 +25,7 @@ import org.junit.Test
 import org.junit.rules.Timeout
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import kotlin.test.assertEquals
 
 class RustTest : InstrumentedTest() {
     /** Ensure that the database isn't be locked
@@ -42,6 +42,6 @@ class RustTest : InstrumentedTest() {
         val path = Shared.getTestFilePath(testContext, "initial_version_2_12_1.anki2")
         val collection = Storage.collection(testContext, path)
         val ver = collection.db.queryScalar("select ver from col")
-        assertThat(ver, equalTo(11))
+        assertEquals(11, ver)
     }
 }

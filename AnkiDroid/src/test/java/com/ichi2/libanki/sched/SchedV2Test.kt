@@ -138,12 +138,12 @@ open class SchedV2Test : RobolectricTest() {
         'mod': 1587939720, 'nid': 1510928805161, 'odid': 1587920944107, 'odue': 0,
         'ord': 0, 'queue': 1, 'reps': 23, 'type': 3, 'usn': -1}
          */
-        assertThat(after.type, equalTo(Consts.CARD_TYPE_RELEARNING))
-        assertThat(after.queue, equalTo(Consts.QUEUE_TYPE_LRN))
-        assertThat(after.left, equalTo(1001))
-        assertThat("ivl is reduced by 70%", after.ivl, equalTo(17))
-        assertThat("One lapse is added", after.lapses, equalTo(6))
-        assertThat(v2.answerButtons(after), equalTo(4))
+        assertEquals(Consts.CARD_TYPE_RELEARNING, after.type)
+        assertEquals(Consts.QUEUE_TYPE_LRN, after.queue)
+        assertEquals(1001, after.left)
+        assertEquals(17, after.ivl, "ivl is reduced by 70%")
+        assertEquals(6, after.lapses, "One lapse is added")
+        assertEquals(4, v2.answerButtons(after))
         val one = v2.nextIvl(after, BUTTON_ONE)
         val two = v2.nextIvl(after, BUTTON_TWO)
         val three = v2.nextIvl(after, BUTTON_THREE)
@@ -171,10 +171,10 @@ open class SchedV2Test : RobolectricTest() {
     }
 
     private fun ensureLapseMatchesSppliedAnkiDesktopConfig(lapse: JSONObject) {
-        assertThat(lapse.getInt("minInt"), equalTo(2))
-        assertThat(lapse.getDouble("mult"), equalTo(0.7))
-        assertThat(lapse.getJSONArray("delays").length(), equalTo(1))
-        assertThat(lapse.getJSONArray("delays").getDouble(0), equalTo(20.0))
+        assertEquals(2, lapse.getInt("minInt"))
+        assertEquals(0.7, lapse.getDouble("mult"))
+        assertEquals(1, lapse.getJSONArray("delays").length())
+        assertEquals(20.0, lapse.getJSONArray("delays").getDouble(0))
     }
 
     @Test

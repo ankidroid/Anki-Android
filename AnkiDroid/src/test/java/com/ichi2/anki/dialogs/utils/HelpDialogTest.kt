@@ -28,10 +28,9 @@ import com.ichi2.utils.IntentUtil
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class HelpDialogTest : RobolectricTest() {
@@ -41,7 +40,7 @@ class HelpDialogTest : RobolectricTest() {
         val dialog = createInstance() as RecursivePictureMenu
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        assertThat(v.adapter!!.itemCount, equalTo(4))
+        assertEquals(4, v.adapter!!.itemCount)
     }
 
     @Test
@@ -57,7 +56,7 @@ class HelpDialogTest : RobolectricTest() {
         } else {
             5 // the default value for support dialog menu items count
         }
-        assertThat(v.adapter!!.itemCount, equalTo(expectedCount))
+        assertEquals(expectedCount, v.adapter!!.itemCount)
     }
 
     @Test
@@ -69,7 +68,7 @@ class HelpDialogTest : RobolectricTest() {
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         // 6 because the option to rate the app is possible on the device
-        assertThat(v.adapter!!.itemCount, equalTo(6))
+        assertEquals(6, v.adapter!!.itemCount)
         unmockkStatic(IntentUtil::canOpenIntent)
     }
 

@@ -21,8 +21,6 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -77,7 +75,7 @@ class LegacyDecksTest : RobolectricTest() {
         decks.checkIntegrity()
         val deckA: JSONObject? = decks.byName("A")
         assertNotNull(deckA, "A deck with name \"A\" should still exists")
-        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), equalTo("A"))
+        assertEquals("A", deckA.getString("name"), "A deck with name \"A\" should have name \"A\"")
         val deckAPlus: JSONObject? = decks.byName("A+")
         assertNotNull(deckAPlus, "A deck with name \"A+\" should still exists")
     }

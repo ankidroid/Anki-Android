@@ -19,11 +19,10 @@ import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.EmptyApplication
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class, qualifiers = "en")
@@ -32,35 +31,35 @@ class UtilsIntegrationTest : RobolectricTest() {
     fun deckPickerTimeOneAndHalfHours() {
         val oneAndAHalfHours = 60 * 90
         val actual = deckPickerTime(oneAndAHalfHours.toLong())
-        assertThat(actual, equalTo("1 h 30 m"))
+        assertEquals("1 h 30 m", actual)
     }
 
     @Test
     fun deckPickerTimeOneHour() {
         val oneAndAHalfHours = 60 * 60
         val actual = deckPickerTime(oneAndAHalfHours.toLong())
-        assertThat(actual, equalTo("1 h 0 m"))
+        assertEquals("1 h 0 m", actual)
     }
 
     @Test
     fun deckPickerTime60Seconds() {
         val oneAndAHalfHours = 60
         val actual = deckPickerTime(oneAndAHalfHours.toLong())
-        assertThat(actual, equalTo("1 min"))
+        assertEquals("1 min", actual)
     }
 
     @Test
     fun deckPickerTimeOneAndAHalfDays() {
         val oneAndAHalfHours = 60 * 60 * 36
         val actual = deckPickerTime(oneAndAHalfHours.toLong())
-        assertThat(actual, equalTo("1 d 12 h"))
+        assertEquals("1 d 12 h", actual)
     }
 
     @Test
     @Config(qualifiers = "en")
     fun timeQuantityMonths() {
         // Anki Desktop 2.1.30: '\u206810.8\u2069 months'
-        assertThat(timeQuantityNextInterval(28080000), equalTo("10.8 mo"))
+        assertEquals("10.8 mo", timeQuantityNextInterval(28080000))
     }
 
     private fun timeQuantityNextInterval(time_s: Int): String {

@@ -25,7 +25,6 @@ import com.afollestad.materialdialogs.WhichButton
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Model
 import com.ichi2.utils.JSONObject
-import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -502,13 +501,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         intent.putExtra("modelId", model.getLong("id"))
         val editor = super.startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
         val template = editor.tempModel?.getTemplate(0)
-        assertThat("Deck ID element should exist", template?.has("did"), equalTo(true))
-        assertThat("Deck ID element should be null", template?.get("did"), equalTo(JSONObject.NULL))
+        assertEquals(true, template?.has("did"), "Deck ID element should exist")
+        assertEquals(JSONObject.NULL, template?.get("did"), "Deck ID element should be null")
         editor.onDeckSelected(SelectableDeck(1, "hello"))
-        assertThat("Deck ID element should be changed", template?.get("did"), equalTo(1L))
+        assertEquals(1L, template?.get("did"), "Deck ID element should be changed")
         editor.onDeckSelected(null)
         assertTrue(template!!.has("did"), "Deck ID element should exist")
-        assertThat("Deck ID element should be null", template["did"], equalTo(JSONObject.NULL))
+        assertEquals(JSONObject.NULL, template["did"], "Deck ID element should be null")
     }
 
     @Test

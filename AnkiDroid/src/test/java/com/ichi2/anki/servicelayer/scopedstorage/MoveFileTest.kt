@@ -26,8 +26,7 @@ import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.length
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.emptyCollectionOf
-import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito

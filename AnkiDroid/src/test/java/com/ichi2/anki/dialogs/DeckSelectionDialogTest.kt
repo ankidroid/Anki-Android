@@ -17,9 +17,8 @@
 package com.ichi2.anki.dialogs
 
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class DeckSelectionDialogTest {
 
@@ -31,6 +30,6 @@ class DeckSelectionDialogTest {
         val deck = SelectableDeck(1234, input)
         val actual: String = deck.displayName
 
-        assertThat(actual, equalTo(expected))
+        assertEquals(expected, actual)
     }
 }

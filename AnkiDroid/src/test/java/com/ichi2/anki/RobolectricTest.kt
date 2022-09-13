@@ -56,8 +56,6 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Assume
 import org.junit.Before
@@ -72,6 +70,7 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 open class RobolectricTest : CollectionGetter {
@@ -522,7 +521,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        assertThat(obtained.note().fields[0], equalTo(expected.note().fields[0]))
+        assertEquals(expected.note().fields[0], obtained.note().fields[0])
     }
 
     @CheckResult
