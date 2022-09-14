@@ -352,7 +352,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">Уключыць ‘%s’</string>
     <string name="use_rust_backend_title" maxLength="41">Выкарыстоўваць новую серверную частку</string>
     <string name="use_rust_backend_summary">Уключыце новыя функцыі Anki. Напрыклад, планіроўшчык трэцяй версіі\nНЕСТАБІЛЬНА. Не выкарыстоўвайце з калекцыяй, якая прадстаўляе для вас каштоўнасць. НЕ вяртаецца пры закрыцці праграмы.</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_warning">Верагодна, што гэта можа цалкам пашкодзіць вашу ўстаноўку і будзе неабходна выдаліць прыладу, і папку AnkiDroid. Таксама можа быць зломана сінхранізацыя з AnkiWeb.\n\nМы вітаем тэставанне, але будзьце ўпэўнены, што ў вас ёсць прыгодны не-AnkiWeb бэкап.</string>
     <string name="enable_v3_sched_title" maxLength="41">Выкарыстоўваць планіроўшчык v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметры распрацоўшчыка</string>

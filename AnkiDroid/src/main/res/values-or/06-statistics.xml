@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">ଅଦେଖା</string>
     <string name="statistics_suspended">ନିଲମ୍ବିତ ଅଛି</string>
     <string name="statistics_buried">ସ୍ଥଗିତ ଅଛି</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ପୁନଃ ଶିକ୍ଷାଧିନ</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ପୁନଃ ଶିକ୍ଷାଧିନ</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">ଶିଖୁଛନ୍ତି</string>
     <string name="statistics_cram">ମୁଖସ୍ଥ</string>
-    <string name="stats_cards">ପତ୍ର</string>
+    <string name="stats_cards" comment="Title to use in stats pages">ପତ୍ର</string>
     <string name="stats_cards_intervals">ପ୍ରଦତ୍ତ ଅନ୍ତରାଳ ସହିତ ପତ୍ର</string>
     <string name="stats_cumulative_cards">ସମ୍ମିଳିତ ପତ୍ର </string>
     <string name="stats_cumulative_answers">ସମ୍ମିଳିତ ଉତ୍ତରଗୁଡ଼ିକ</string>

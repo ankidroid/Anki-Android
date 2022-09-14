@@ -54,7 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">発音を検索しています...</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">発音に失敗しました</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">１度に１単語のみ読み込み可能です。単語２語以上は読み込めません。</string>
     <string name="multimedia_editor_word_search_try_lower_case">小文字のみ使用してください</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->

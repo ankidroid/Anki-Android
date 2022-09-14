@@ -48,6 +48,9 @@
     <plurals name="card_browser_subtitle">
         <item quantity="other">已顯示 %d 張卡片</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">所有牌組</string>
     <string name="card_browser_delete_card">刪除筆記</string>
     <string name="card_browser_suspend_card">擱置卡片</string>

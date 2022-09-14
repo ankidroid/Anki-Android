@@ -209,7 +209,7 @@
     <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
     <string name="paste_as_png_summary">Anki plakt standaard afbeeldingen op het klembord als JPG-bestanden om schijfruimte te besparen. U kunt deze optie gebruiken om in plaats daarvan als PNG-afbeeldingen te plakken.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Druk twee keer op terug om terug te gaan</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">Om te voorkomen dat je per ongeluk de reviewer of de app verlaat.</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
     <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>

@@ -51,6 +51,12 @@
         <item quantity="many">%d zobrazených kartičiek</item>
         <item quantity="other">%d zobrazených kartičiek</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">%d note shown</item>
+        <item quantity="few">%d notes shown</item>
+        <item quantity="many">%d notes shown</item>
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">Všetky balíčky</string>
     <string name="card_browser_delete_card">Odstrániť poznámky</string>
     <string name="card_browser_suspend_card">Pozastaviť kartičku</string>

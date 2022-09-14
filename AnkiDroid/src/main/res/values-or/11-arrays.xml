@@ -48,7 +48,7 @@
     <string name="error_reporting_choice_ask_user">ମୋତେ ପଚାରନ୍ତୁ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">କେବଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
+    <string name="leech_action_tag_only">କେଵଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
     <!-- new_order_labels -->
     <string name="new_order_random">ଅନିୟମିତ କ୍ରମରେ ନୂତନ ପତ୍ର</string>
     <string name="new_order_order_added">ଯୋଡ଼ାଯିବା କ୍ରମରେ ନୂତନ ପତ୍ର</string>

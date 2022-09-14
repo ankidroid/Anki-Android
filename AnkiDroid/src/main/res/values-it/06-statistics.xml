@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Mai viste</string>
     <string name="statistics_suspended">Sospeso</string>
     <string name="statistics_buried">Sepolto</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Reimpara</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Reimpara</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Impara</string>
     <string name="statistics_cram">Studio focalizzato</string>
-    <string name="stats_cards">Carte</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Carte</string>
     <string name="stats_cards_intervals">Carte con intervallo specifico</string>
     <string name="stats_cumulative_cards">Carte cumulate</string>
     <string name="stats_cumulative_answers">Risposte cumulate</string>

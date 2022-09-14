@@ -196,7 +196,7 @@
     <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
     <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
     <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
-    <string name="custom_buttons_setting_menu_only">କେବଳ ମେନୁ</string>
+    <string name="custom_buttons_setting_menu_only">କେଵଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
@@ -345,10 +345,10 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">ପ୍ରାୟୋଗିକ</string>
     <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
-    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ବ୍ୟବହାର କରିବା</string>
+    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ଵ୍ୟଵହାର କରିବା</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>

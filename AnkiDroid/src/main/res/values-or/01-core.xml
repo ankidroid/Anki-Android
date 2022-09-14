@@ -160,7 +160,7 @@
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
-    <string name="custom_study_deck_exists">ପ୍ରଥମେ ବିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="custom_study_deck_exists">ପ୍ରଥମେ ଵିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
@@ -214,7 +214,7 @@
     <string name="card_info_title">ପତ୍ର ସୂଚନା</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ିବା ଓ ଲେଖିବା</string>
-    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ଅଧ୍ୟୟନ କରିବା ବ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="read_write_permission_description">ଵିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ଅଧ୍ୟୟନ କରିବା ଵ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="context_menu_anki_card_label">Anki ପତ୍ର</string>

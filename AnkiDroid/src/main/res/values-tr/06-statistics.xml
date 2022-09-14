@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Görülmemiş</string>
     <string name="statistics_suspended">Askıya Alınmış</string>
     <string name="statistics_buried">Gömülmüş</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Yeniden öğrenme</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Yeniden öğrenme</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Öğrenme</string>
     <string name="statistics_cram">Sıkı çalış</string>
-    <string name="stats_cards">Kart</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Kart</string>
     <string name="stats_cards_intervals">Verilen aralıktaki kartlar</string>
     <string name="stats_cumulative_cards">Birikmiş kartlar</string>
     <string name="stats_cumulative_answers">Birikmiş cevaplar</string>

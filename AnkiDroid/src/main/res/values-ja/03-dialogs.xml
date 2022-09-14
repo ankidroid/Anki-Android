@@ -119,7 +119,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_continue">続行</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">処理中です...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
     <string name="dialog_positive_delete">削除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -247,7 +247,7 @@
     <string name="deck_picker_counts">今日出題する予定のカード数などが記載されたデッキ概要ページを開きます。</string>
     <string name="import_deck_package">デッキパッケージ (.apkg)</string>
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">テキストファイル (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

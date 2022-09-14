@@ -48,6 +48,9 @@
     <plurals name="card_browser_subtitle">
         <item quantity="other">共有%d张卡片</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">所有牌组</string>
     <string name="card_browser_delete_card">删除卡牌记录</string>
     <string name="card_browser_suspend_card">暂停卡片</string>

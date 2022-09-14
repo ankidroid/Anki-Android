@@ -71,12 +71,12 @@
         <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ᱴᱚᱲᱚᱝ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%1$d ᱴᱚᱲᱚᱝ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d ᱫᱤᱱ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%1$d ᱫᱤᱱ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
@@ -163,7 +163,7 @@
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
