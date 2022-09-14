@@ -699,7 +699,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         val cardBrowser = browserWithNoNewCards
-        cardBrowser.searchCards("Hello").join()
+        cardBrowser.searchCards(cardBrowser.viewModel.searchTerms.copy(userInput = "Hello")).join()
         waitForAsyncTasksToComplete()
         assertThat(
             "Card browser should have Test Deck as the selected deck",
@@ -1311,7 +1311,7 @@ val CardBrowser.validDecksForChangeDeck
     get() = runBlocking { getValidDecksForChangeDeck() }
 
 suspend fun CardBrowser.searchCardsSync(query: String) {
-    searchCards(query)
+    searchCards(viewModel.searchTerms.copy(userInput = query))
     viewModel.searchJob?.join()
 }
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {

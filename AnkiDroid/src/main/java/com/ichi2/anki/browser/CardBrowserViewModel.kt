@@ -111,13 +111,12 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    var searchTerms = ""
+    var searchTerms = SearchParameters.EMPTY
         private set
-    private var restrictOnDeck: String = ""
 
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
-    val flowOfFilterQuery = MutableSharedFlow<String>()
+    val flowOfFilterQuery = MutableSharedFlow<SearchParameters>()
 
     /**
      * Whether the browser is working in Cards mode or Notes mode.
@@ -204,15 +203,15 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    suspend fun setDeckId(deckId: DeckId) {
+    fun setDeckId(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
         lastDeckIdRepository.lastDeckId = deckId
-        restrictOnDeck = if (deckId == ALL_DECKS_ID) {
-            ""
+        val newDeckRestriction = if (deckId == ALL_DECKS_ID) {
+            setOf()
         } else {
-            val deckName = withCol { decks.name(deckId) }
-            "deck:\"$deckName\" "
+            setOf(deckId)
         }
+        searchTerms = searchTerms.copy(deckIds = newDeckRestriction)
         flowOfDeckId.update { deckId }
     }
 
@@ -273,12 +272,16 @@ class CardBrowserViewModel(
 
         var selectAllDecks = false
         when (options) {
-            is CardBrowserLaunchOptions.SystemContextMenu -> { searchTerms = options.search.toString() }
+            is CardBrowserLaunchOptions.SystemContextMenu -> {
+                searchTerms = searchTerms.copy(userInput = options.search.toString())
+            }
             is CardBrowserLaunchOptions.SearchQueryJs -> {
-                searchTerms = options.search
+                searchTerms = searchTerms.copy(userInput = options.search)
                 selectAllDecks = options.allDecks
             }
-            is CardBrowserLaunchOptions.DeepLink -> { searchTerms = options.search }
+            is CardBrowserLaunchOptions.DeepLink -> {
+                searchTerms = searchTerms.copy(userInput = options.search)
+            }
             null -> {}
         }
 
@@ -644,7 +647,7 @@ class CardBrowserViewModel(
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
         this.filter { initCompleted }
 
-    suspend fun setFilterQuery(filterQuery: String) {
+    suspend fun setFilterQuery(filterQuery: SearchParameters) {
         this.flowOfFilterQuery.emit(filterQuery)
         launchSearchForCards(filterQuery)
     }
@@ -655,7 +658,7 @@ class CardBrowserViewModel(
     suspend fun searchForMarkedNotes() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
-        setFilterQuery("tag:marked")
+        setFilterQuery(searchTerms.copy(userInput = "tag:marked"))
     }
 
     /**
@@ -664,18 +667,19 @@ class CardBrowserViewModel(
     suspend fun searchForSuspendedCards() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
-        setFilterQuery("is:suspended")
+        setFilterQuery(searchTerms.copy(userInput = "is:suspended"))
     }
 
     suspend fun setFlagFilter(flag: Flag) {
         Timber.i("filtering to flag: %s", flag)
         val flagSearchTerm = "flag:${flag.code}"
-        val searchTerms = when {
-            searchTerms.contains("flag:") -> searchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
-            searchTerms.isNotEmpty() -> "$flagSearchTerm $searchTerms"
+        val userInput = searchTerms.userInput
+        val updatedInput = when {
+            userInput.contains("flag:") -> userInput.replaceFirst("flag:.".toRegex(), flagSearchTerm)
+            userInput.isNotEmpty() -> "$flagSearchTerm $userInput"
             else -> flagSearchTerm
         }
-        setFilterQuery(searchTerms)
+        setFilterQuery(searchTerms.copy(userInput = updatedInput))
     }
 
     suspend fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
@@ -685,7 +689,7 @@ class CardBrowserViewModel(
         if (selectedTags.isNotEmpty()) {
             sb.append("($tagsConcat)") // Only if we added anything to the tag list
         }
-        setFilterQuery(sb.toString())
+        setFilterQuery(searchTerms.copy(userInput = sb.toString()))
     }
 
     /** Previewing */
@@ -749,7 +753,7 @@ class CardBrowserViewModel(
      */
     fun endMultiSelectMode() = selectNone()
 
-    suspend fun launchSearchForCards(searchQuery: String): Job? {
+    suspend fun launchSearchForCards(searchQuery: SearchParameters): Job? {
         searchTerms = searchQuery
         return launchSearchForCards()
     }
@@ -763,11 +767,7 @@ class CardBrowserViewModel(
         // update the UI while we're searching
         clearCardsList()
 
-        val query: String = if (searchTerms.contains("deck:")) {
-            "($searchTerms)"
-        } else {
-            if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
-        }
+        val query: String = searchTerms.toQuery()
 
         searchJob?.cancel()
         searchJob = launchCatchingIO(
