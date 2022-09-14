@@ -150,6 +150,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
+        addNoteLabel.visibility = View.GONE
         if (animationEnabled()) {
             // Changes the background color of FAB to default
             mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
