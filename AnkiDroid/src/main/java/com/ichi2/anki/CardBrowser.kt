@@ -64,6 +64,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
 import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.*
@@ -2333,7 +2334,7 @@ open class CardBrowser :
                 }
                 Column.LAPSES -> card.lapses.toString()
                 Column.NOTE_TYPE -> card.model().optString("name")
-                Column.REVIEWS -> card.reps.toString()
+                Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
                 Column.QUESTION -> {
                     updateSearchItemQA()
                     mQa!!.first
