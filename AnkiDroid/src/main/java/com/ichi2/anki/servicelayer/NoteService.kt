@@ -28,6 +28,7 @@ import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
@@ -211,6 +212,9 @@ object NoteService {
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
+    //  TODO: should make a direct SQL query to do this
+    fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+
     interface NoteField {
         val ord: Int
 
@@ -218,3 +222,5 @@ object NoteService {
         val fieldText: String?
     }
 }
+
+fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
