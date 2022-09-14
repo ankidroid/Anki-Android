@@ -23,6 +23,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.ui.DoubleTapListener
@@ -36,6 +37,10 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     private val addNoteLabel: View = view.findViewById(R.id.add_note_label)
+
+    // Colors values obtained from attributes
+    private val fabNormalColor = MaterialColors.getColor(mFabMain, R.attr.fab_normal)
+    private val fabPressedColor = MaterialColors.getColor(mFabMain, R.attr.fab_pressed)
 
     // Add Note Drawable Icon
     private val addNoteIcon: Int = R.drawable.ic_add_note
@@ -60,7 +65,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             addNoteLabel.visibility = View.VISIBLE
             mFabMain.animate().apply {
                 // Changes the background color of FAB
-                mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_indigo_700))
+                mFabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
                 // Rotates FAB to 90 degrees
                 rotationBy(90f)
                 duration = 50
@@ -100,7 +105,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         addNoteLabel.visibility = View.GONE
         if (deckPicker.animationEnabled()) {
             // Changes the background color of FAB to default
-            mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
+            mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
             // Close with animation
             mFabMain.animate().apply {
                 // Rotates FAB to 180 degrees
