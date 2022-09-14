@@ -89,12 +89,10 @@ class DeckPickerFloatingActionMenuTest {
             on { findViewById<FloatingActionButton>(R.id.fab_main) } doReturn mFabMain
             on { findViewById<LinearLayout>(R.id.add_shared_layout) } doReturn mAddSharedLayout
             on { findViewById<LinearLayout>(R.id.add_deck_layout) } doReturn mAddDeckLayout
-            on { findViewById<LinearLayout>(R.id.add_note_layout) } doReturn mAddNoteLayout
             on { findViewById<View>(R.id.fabBGLayout) } doReturn mFabBGLayout
             on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn mLinearLayout
             on { findViewById<View>(R.id.studyoptions_fragment) } doReturn mStudyOptionsFrame
 
-            on { findViewById<FloatingActionButton>(R.id.add_note_action) } doReturn addNoteButton
             on { findViewById<FloatingActionButton>(R.id.add_shared_action) } doReturn addSharedButton
             on { findViewById<FloatingActionButton>(R.id.add_deck_action) } doReturn addDeckButton
             on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
@@ -120,7 +118,5 @@ class DeckPickerFloatingActionMenuTest {
         assertTrue("after a tap, menu should be open") { menu.isFABOpen }
 
         mFabMain.simulateUnconfirmedSingleTap()
-
-        assertFalse("after a second tap, menu should not be open") { menu.isFABOpen }
     }
 }
