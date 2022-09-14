@@ -64,6 +64,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
 import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.*
@@ -2331,7 +2332,7 @@ open class CardBrowser :
                     Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
                     else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * Stats.SECONDS_PER_DAY)
                 }
-                Column.LAPSES -> card.lapses.toString()
+                Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
                 Column.NOTE_TYPE -> card.model().optString("name")
                 Column.REVIEWS -> card.reps.toString()
                 Column.QUESTION -> {
