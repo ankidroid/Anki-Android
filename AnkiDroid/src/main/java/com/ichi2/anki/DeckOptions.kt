@@ -30,6 +30,7 @@ import android.text.TextUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
@@ -50,6 +51,7 @@ import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 
@@ -236,12 +238,16 @@ class DeckOptions :
                                 }
                             }
                             "confReset" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(
-                                    CollectionTask.ConfReset(
-                                        mOptions
-                                    ),
-                                    confChangeHandler()
-                                )
+                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                    preConfChange()
+                                    // reset configuration
+                                    withCol {
+                                        Timber.d("doInBackgroundConfReset")
+                                        decks.restoreToDefault(mOptions)
+                                        save()
+                                    }
+                                    postConfChange()
+                                }
                             }
                             "confAdd" -> {
                                 val newName = value as String

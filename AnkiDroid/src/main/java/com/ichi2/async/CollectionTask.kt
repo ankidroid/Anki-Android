@@ -824,15 +824,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ConfReset(private val conf: DeckConfig) : TaskDelegate<Void, Boolean?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean? {
-            Timber.d("doInBackgroundConfReset")
-            col.decks.restoreToDefault(conf)
-            col.save()
-            return null
-        }
-    }
-
     class ConfRemove(private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
             Timber.d("doInBackgroundConfRemove")
