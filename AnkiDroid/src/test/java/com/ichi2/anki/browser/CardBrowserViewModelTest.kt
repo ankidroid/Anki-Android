@@ -235,7 +235,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `default init`() =
         runTest {
             viewModel().apply {
-                assertThat(searchTerms, equalTo(""))
+                assertThat(searchTerms.userInput, equalTo(""))
             }
         }
 
@@ -243,7 +243,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `Card Browser menu init`() =
         runTest {
             viewModel(intent = SystemContextMenu("Hello")).apply {
-                assertThat(searchTerms, equalTo("Hello"))
+                assertThat(searchTerms.userInput, equalTo("Hello"))
             }
         }
 
@@ -251,7 +251,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `Deep Link init`() =
         runTest {
             viewModel(intent = DeepLink("Hello")).apply {
-                assertThat(searchTerms, equalTo("Hello"))
+                assertThat(searchTerms.userInput, equalTo("Hello"))
             }
         }
 

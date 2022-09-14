@@ -49,6 +49,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
@@ -66,9 +67,11 @@ import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.SaveSearchResult
+import com.ichi2.anki.browser.SearchParameters
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
+import com.ichi2.anki.browser.toQuery
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -164,9 +167,7 @@ open class CardBrowser :
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
     override fun onDeckSelected(deck: SelectableDeck?) {
-        deck?.let {
-            launchCatchingTask { selectDeckAndSave(deck.deckId) }
-        }
+        deck?.let { selectDeckAndSave(deck.deckId) }
     }
 
     private enum class TagsDialogListenerAction {
@@ -475,10 +476,10 @@ open class CardBrowser :
                 .setSelection(COLUMN2_KEYS.indexOf(column))
         }
 
-        fun onFilterQueryChanged(filterQuery: String) {
+        fun onFilterQueryChanged(filterQuery: SearchParameters) {
             // setQuery before expand does not set the view's value
             searchItem!!.expandActionView()
-            searchView!!.setQuery(filterQuery, submit = false)
+            searchView!!.setQuery(filterQuery.userInput, submit = false)
         }
 
         suspend fun onDeckIdChanged(deckId: DeckId?) {
@@ -520,8 +521,8 @@ open class CardBrowser :
                 SearchState.Initializing -> { }
                 SearchState.Searching -> {
                     invalidate()
-                    if ("" != viewModel.searchTerms && searchView != null) {
-                        searchView!!.setQuery(viewModel.searchTerms, false)
+                    if (viewModel.searchTerms.userInput.isNotEmpty() && searchView != null) {
+                        searchView!!.setQuery(viewModel.searchTerms.userInput, false)
                         searchItem!!.expandActionView()
                     }
                 }
@@ -654,7 +655,7 @@ open class CardBrowser :
         }
     }
 
-    suspend fun selectDeckAndSave(deckId: DeckId) {
+    fun selectDeckAndSave(deckId: DeckId) {
         viewModel.setDeckId(deckId)
     }
 
@@ -992,7 +993,7 @@ open class CardBrowser :
                         viewModel.setSearchQueryExpanded(false)
                         // SearchView doesn't support empty queries so we always reset the search when collapsing
                         searchView!!.setQuery("", false)
-                        searchCards("")
+                        searchCards(viewModel.searchTerms.copy(userInput = ""))
                         return true
                     }
                 },
@@ -1012,7 +1013,7 @@ open class CardBrowser :
                             }
 
                             override fun onQueryTextSubmit(query: String): Boolean {
-                                searchCards(query)
+                                searchCards(viewModel.searchTerms.copy(userInput = query))
                                 searchView!!.clearFocus()
                                 return true
                             }
@@ -1021,14 +1022,14 @@ open class CardBrowser :
                 }
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
-                searchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.userInput.isNotEmpty()) {
+                searchItem!!.expandActionView() // This calls searchView.setOnSearchClickListener
+                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms.userInput
                 searchView!!.setQuery(toUse!!, false)
             }
             searchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                searchView!!.setQuery(viewModel.searchTerms, false)
+                searchView!!.setQuery(viewModel.searchTerms.userInput, false)
             }
         } else {
             // multi-select mode
@@ -1364,12 +1365,12 @@ open class CardBrowser :
     }
 
     private fun openSaveSearchView() {
-        val searchTerms = searchView!!.query.toString()
+        val searchTerms = viewModel.searchTerms.copy(userInput = searchView!!.query.toString())
         showDialogFragment(
             newInstance(
                 null,
                 mySearchesDialogListener,
-                searchTerms,
+                searchTerms.toQuery(),
                 CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
             ),
         )
@@ -1627,7 +1628,7 @@ open class CardBrowser :
 
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
-        outState.putString("mSearchTerms", viewModel.searchTerms)
+        outState.putParcelable("mSearchTerms", viewModel.searchTerms)
         outState.putLong("mOldCardId", oldCardId)
         outState.putInt("mOldCardTopOffset", oldCardTopOffset)
         outState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
@@ -1644,7 +1645,8 @@ open class CardBrowser :
         shouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll")
         postAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         lastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
-        searchCards(savedInstanceState.getString("mSearchTerms", ""))
+        val searchParams = BundleCompat.getParcelable(savedInstanceState, "mSearchTerms", SearchParameters::class.java)
+        searchCards(searchParams ?: SearchParameters.EMPTY)
     }
 
     private fun invalidate() {
@@ -1653,7 +1655,7 @@ open class CardBrowser :
 
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
-            searchCards(searchView!!.query.toString())
+            searchCards(viewModel.searchTerms.copy(userInput = searchView!!.query.toString()))
         } else {
             searchCards()
         }
@@ -2459,7 +2461,7 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun searchCards(searchQuery: String) =
+    fun searchCards(searchQuery: SearchParameters) =
         launchCatchingTask {
             withProgress { viewModel.launchSearchForCards(searchQuery)?.join() }
         }
