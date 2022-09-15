@@ -61,6 +61,19 @@ open class CompatV21 : Compat {
         return MediaRecorder()
     }
 
+    override fun <T : Serializable?> getSerializable(
+        intent: Intent,
+        key: String,
+        className: Class<T>
+    ): T? {
+        return try {
+            @Suppress("UNCHECKED_CAST")
+            intent.getSerializableExtra(key) as T
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {
