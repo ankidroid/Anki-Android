@@ -97,101 +97,105 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         }
     }
 
-    fun closeFloatingActionMenu() {
-        mLinearLayout.alpha = 1f
-        mStudyOptionsFrame?.let { it.alpha = 1f }
-        isFABOpen = false
-        mFabBGLayout.visibility = View.GONE
-        addNoteLabel.visibility = View.GONE
-        if (deckPicker.animationEnabled()) {
-            // Changes the background color of FAB to default
-            mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
-            // Close with animation
-            mFabMain.animate().apply {
-                // Rotates FAB to 180 degrees
-                rotation(90f)
-                duration = 50
-                // Rise FAB animation
-                scaleX(1.2f)
-                scaleY(1.2f)
-                withEndAction {
-                    // At the end the image is changed to Add White Icon
-                    mFabMain.setImageResource(addWhiteIcon)
-                    // Shrink back FAB
-                    mFabMain.animate().rotation(90f).setDuration(50).scaleX(1f).scaleY(1f)
-                        .start()
-                }.start()
-            }
-
-            mAddSharedLayout.animate().translationY(200f).duration = 30
-            mAddDeckLayout.animate().alpha(0f).duration = 50
-            mAddSharedLayout.animate().alpha(0f).duration = 30
-            mAddDeckLayout.animate().translationY(400f).setDuration(100).setListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {}
-                override fun onAnimationEnd(animator: Animator) {
-                    if (!isFABOpen) {
-                        mAddSharedLayout.visibility = View.GONE
-                        mAddDeckLayout.visibility = View.GONE
-                    }
-                }
-
-                override fun onAnimationCancel(animator: Animator) {}
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-        } else {
-            // Close without animation
-            mAddSharedLayout.visibility = View.GONE
-            mAddDeckLayout.visibility = View.GONE
-        }
-    }
-
     /**
-     * This function is similar to {closeFloatingActionMenu} function except we don't apply the
-     * rise and shrink animation on the FAB. This is helpful in cases when we choose different
-     * options on screen without interacting with FAB.
+     * This function takes a parameter which decides if we want to apply the rise and shrink animation
+     * for FAB or not.
      *
-     * For example : While opening the side Navigation Drawer (It will prevent unwanted rise and shrink
-     * of FAB)
+     * Case 1: When the FAB is already opened and we close it by pressing the back button then we need to show
+     * the rise and shrink animation and get back to the FAB with `+` icon.
+     *
+     * Case 2: When the user opens the side navigation drawer (without touching the FAB). In that case we don't
+     * want to show any type of rise and shrink animation for the FAB so we put the value `false` for the parameter.
      */
-    fun closeFloatingActionMenuCaseTwo() {
-        mLinearLayout.alpha = 1f
-        mStudyOptionsFrame?.let { it.alpha = 1f }
-        isFABOpen = false
-        mFabBGLayout.visibility = View.GONE
-        addNoteLabel.visibility = View.GONE
-        if (animationEnabled()) {
-            // Changes the background color of FAB to default
-            mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
-            // Close with animation
-            mFabMain.animate().apply {
-                // Rotates FAB to 90 degrees
-                rotation(90f)
-                duration = 50
-                withEndAction {
-                    // At the end the image is changed to Add White Icon
-                    mFabMain.setImageResource(addWhiteIcon)
-                }.start()
-            }
-
-            mAddSharedLayout.animate().translationY(200f).duration = 30
-            mAddDeckLayout.animate().alpha(0f).duration = 50
-            mAddSharedLayout.animate().alpha(0f).duration = 30
-            mAddDeckLayout.animate().translationY(400f).setDuration(100).setListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {}
-                override fun onAnimationEnd(animator: Animator) {
-                    if (!isFABOpen) {
-                        mAddSharedLayout.visibility = View.GONE
-                        mAddDeckLayout.visibility = View.GONE
-                    }
+    fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
+        if (applyRiseAndShrinkAnimation) {
+            mLinearLayout.alpha = 1f
+            mStudyOptionsFrame?.let { it.alpha = 1f }
+            isFABOpen = false
+            mFabBGLayout.visibility = View.GONE
+            addNoteLabel.visibility = View.GONE
+            if (deckPicker.animationEnabled()) {
+                // Changes the background color of FAB to default
+                mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                // Close with animation
+                mFabMain.animate().apply {
+                    // Rotates FAB to 180 degrees
+                    rotation(90f)
+                    duration = 50
+                    // Rise FAB animation
+                    scaleX(1.2f)
+                    scaleY(1.2f)
+                    withEndAction {
+                        // At the end the image is changed to Add White Icon
+                        mFabMain.setImageResource(addWhiteIcon)
+                        // Shrink back FAB
+                        mFabMain.animate().rotation(90f).setDuration(50).scaleX(1f).scaleY(1f)
+                            .start()
+                    }.start()
                 }
 
-                override fun onAnimationCancel(animator: Animator) {}
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-        } else {
-            // Close without animation
-            mAddSharedLayout.visibility = View.GONE
-            mAddDeckLayout.visibility = View.GONE
+                mAddSharedLayout.animate().translationY(200f).duration = 30
+                mAddDeckLayout.animate().alpha(0f).duration = 50
+                mAddSharedLayout.animate().alpha(0f).duration = 30
+                mAddDeckLayout.animate().translationY(400f).setDuration(100)
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animator: Animator) {}
+                        override fun onAnimationEnd(animator: Animator) {
+                            if (!isFABOpen) {
+                                mAddSharedLayout.visibility = View.GONE
+                                mAddDeckLayout.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onAnimationCancel(animator: Animator) {}
+                        override fun onAnimationRepeat(animator: Animator) {}
+                    })
+            } else {
+                // Close without animation
+                mAddSharedLayout.visibility = View.GONE
+                mAddDeckLayout.visibility = View.GONE
+            }
+        } else if (!applyRiseAndShrinkAnimation) {
+            mLinearLayout.alpha = 1f
+            mStudyOptionsFrame?.let { it.alpha = 1f }
+            isFABOpen = false
+            mFabBGLayout.visibility = View.GONE
+            addNoteLabel.visibility = View.GONE
+            if (animationEnabled()) {
+                // Changes the background color of FAB to default
+                mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                // Close with animation
+                mFabMain.animate().apply {
+                    // Rotates FAB to 90 degrees
+                    rotation(90f)
+                    duration = 50
+                    withEndAction {
+                        // At the end the image is changed to Add White Icon
+                        mFabMain.setImageResource(addWhiteIcon)
+                    }.start()
+                }
+
+                mAddSharedLayout.animate().translationY(200f).duration = 30
+                mAddDeckLayout.animate().alpha(0f).duration = 50
+                mAddSharedLayout.animate().alpha(0f).duration = 30
+                mAddDeckLayout.animate().translationY(400f).setDuration(100)
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animator: Animator) {}
+                        override fun onAnimationEnd(animator: Animator) {
+                            if (!isFABOpen) {
+                                mAddSharedLayout.visibility = View.GONE
+                                mAddDeckLayout.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onAnimationCancel(animator: Animator) {}
+                        override fun onAnimationRepeat(animator: Animator) {}
+                    })
+            } else {
+                // Close without animation
+                mAddSharedLayout.visibility = View.GONE
+                mAddDeckLayout.visibility = View.GONE
+            }
         }
     }
 
@@ -229,13 +233,13 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 }
             }
         })
-        mFabBGLayout.setOnClickListener { closeFloatingActionMenu() }
+        mFabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
                 val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
-                closeFloatingActionMenuCaseTwo()
+                closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
