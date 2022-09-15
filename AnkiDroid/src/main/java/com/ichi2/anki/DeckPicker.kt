@@ -2420,46 +2420,30 @@ open class DeckPicker :
      * @param did the deck to delete
      */
     fun deleteDeck(did: DeckId) {
-        TaskManager.launchCollectionTask(DeleteDeck(did), deleteDeckListener(did))
-    }
-
-    private fun deleteDeckListener(did: DeckId): DeleteDeckListener {
-        return DeleteDeckListener(did, this)
-    }
-
-    private class DeleteDeckListener(private val did: DeckId, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, IntArray?>(deckPicker) {
-        // Flag to indicate if the deck being deleted is the current deck.
-        private var mRemovingCurrent = false
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.delete_deck), false
-            )
-            if (did == context.col.decks.current().optLong("id")) {
-                mRemovingCurrent = true
+        launchCatchingTask {
+            // Flag to indicate if the deck being deleted is the current deck.
+            val isRemovingCurrent = (did == col.decks.current().optLong("id"))
+            withProgress(resources.getString(R.string.delete_deck)) {
+                withCol {
+                    Timber.d("doInBackgroundDeleteDeck")
+                    col.decks.rem(did, true)
+                    // TODO: if we had "undo delete note" like desktop client then we won't need this.
+                    col.clearUndo()
+                }
             }
-        }
 
-        override fun actualOnPostExecute(context: DeckPicker, result: IntArray?) {
             // After deleting a deck there is no more undo stack
             // Rebuild options menu with side effect of resetting undo button state
-            context.invalidateOptionsMenu()
+            invalidateOptionsMenu()
 
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
-            if (context.fragmented && mRemovingCurrent) {
-                context.updateDeckList()
-                context.openStudyOptions(false)
+            if (fragmented && isRemovingCurrent) {
+                updateDeckList()
+                openStudyOptions(false)
             } else {
-                context.updateDeckList()
-            }
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                try {
-                    context.mProgressDialog!!.dismiss()
-                } catch (e: Exception) {
-                    Timber.e(e, "onPostExecute - Exception dismissing dialog")
-                }
+                updateDeckList()
             }
         }
     }

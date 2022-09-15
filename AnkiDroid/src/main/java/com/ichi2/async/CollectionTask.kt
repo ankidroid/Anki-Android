@@ -611,16 +611,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteDeck(private val did: DeckId) : TaskDelegate<Void, IntArray?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): IntArray? {
-            Timber.d("doInBackgroundDeleteDeck")
-            col.decks.rem(did, true)
-            // TODO: if we had "undo delete note" like desktop client then we won't need this.
-            col.clearUndo()
-            return null
-        }
-    }
-
     class RebuildCram : TaskDelegate<Void, DeckStudyData?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
             Timber.d("doInBackgroundRebuildCram")
