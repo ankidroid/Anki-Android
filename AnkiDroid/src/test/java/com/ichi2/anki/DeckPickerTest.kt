@@ -38,7 +38,6 @@ import kotlin.test.assertNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
-@KotlinCleanup("fix IDE lint issues")
 @KotlinCleanup("replace `when` usages")
 class DeckPickerTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
@@ -49,7 +48,7 @@ class DeckPickerTest : RobolectricTest() {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<String> {
-            return Arrays.asList("normal", "xlarge")
+            return listOf("normal", "xlarge")
         }
     }
 
@@ -193,7 +192,7 @@ class DeckPickerTest : RobolectricTest() {
         dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)
         for (i in 0..10) {
-            addNoteUsingBasicModel("Which card is this ?", Integer.toString(i))
+            addNoteUsingBasicModel("Which card is this ?", i.toString())
         }
         // This set a card as current card
         sched.card
@@ -552,12 +551,12 @@ class DeckPickerTest : RobolectricTest() {
         )
     }
 
-    protected fun setupColV16() {
+    private fun setupColV16() {
         Storage.setUseInMemory(false)
         useCollection(CollectionType.SCHEMA_V_16)
     }
 
-    protected fun setupColV250() {
+    private fun setupColV250() {
         Storage.setUseInMemory(false)
         useCollection(CollectionType.SCHEMA_V_250)
     }
