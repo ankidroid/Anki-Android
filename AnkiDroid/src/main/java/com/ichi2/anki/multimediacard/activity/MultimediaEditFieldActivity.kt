@@ -34,7 +34,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
-import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.utils.CheckCameraPermission
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -80,7 +80,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         enableToolbar(mainView)
         val intent = this.intent
         mField = getFieldFromIntent(intent)
-        mNote = CompatHelper.compat.getSerializable(intent, EXTRA_WHOLE_NOTE, IMultimediaEditableNote::class.java)
+        mNote = intent.getSerializableExtraCompat<IMultimediaEditableNote>(EXTRA_WHOLE_NOTE)
         mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0)
         if (mField == null) {
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)

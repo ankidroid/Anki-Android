@@ -1,6 +1,6 @@
 /*
  *  Copyright (c) 2022 Ashish Yadav <mailtoashish693@gmail.com>
- *                     David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -21,8 +21,8 @@ import android.content.Intent
 import java.io.Serializable
 
 @TargetApi(33)
-class CompatV33 : CompatV31(), Compat {
-    override fun <T : Serializable?> getSerializable(intent: Intent, key: String, className: Class<T>): T? {
-        return intent.getSerializableExtra(key, className)!!
+open class CompatV33 : CompatV31(), Compat {
+    override fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T? {
+        return intent.getSerializableExtra(name, className)
     }
 }

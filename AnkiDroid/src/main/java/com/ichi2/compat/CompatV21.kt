@@ -61,14 +61,14 @@ open class CompatV21 : Compat {
         return MediaRecorder()
     }
 
-    override fun <T : Serializable?> getSerializable(
+    override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
-        key: String,
+        name: String,
         className: Class<T>
     ): T? {
         return try {
             @Suppress("UNCHECKED_CAST")
-            intent.getSerializableExtra(key) as T
+            intent.getSerializableExtra(name) as? T?
         } catch (e: Exception) {
             return null
         }
