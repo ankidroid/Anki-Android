@@ -1049,23 +1049,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /**
-     * Adds a field of with name in given model
-     */
-    class ChangeSortField(private val model: Model, private val idx: Int) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            try {
-                Timber.d("doInBackgroundChangeSortField")
-                col.models.setSortIdx(model, idx)
-                col.save()
-            } catch (e: Exception) {
-                Timber.e(e, "Error changing sort field")
-                return false
-            }
-            return true
-        }
-    }
-
     class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
             return col.emptyCids(collectionTask)
