@@ -145,7 +145,15 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         }
     }
 
-    private fun closeFloatingActionMenuWhenChoosingCreateDeck() {
+    /**
+     * This function is similar to {closeFloatingActionMenu} function except we don't apply the
+     * rise and shrink animation on the FAB. This is helpful in cases when we choose different
+     * options on screen without interacting with FAB.
+     *
+     * For example : While opening the side Navigation Drawer (It will prevent unwanted rise and shrink
+     * of FAB)
+     */
+    fun closeFloatingActionMenuCaseTwo() {
         mLinearLayout.alpha = 1f
         mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
@@ -153,7 +161,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         addNoteLabel.visibility = View.GONE
         if (animationEnabled()) {
             // Changes the background color of FAB to default
-            mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
+            mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
             // Close with animation
             mFabMain.animate().apply {
                 // Rotates FAB to 90 degrees
@@ -227,7 +235,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
-                closeFloatingActionMenuWhenChoosingCreateDeck()
+                closeFloatingActionMenuCaseTwo()
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)

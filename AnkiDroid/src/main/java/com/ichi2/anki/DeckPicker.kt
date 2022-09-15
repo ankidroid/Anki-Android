@@ -575,7 +575,7 @@ open class DeckPicker :
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
-        mFloatingActionMenu.closeFloatingActionMenu()
+        mFloatingActionMenu.closeFloatingActionMenuCaseTwo()
         menuInflater.inflate(R.menu.deck_picker, menu)
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
         mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
