@@ -23,27 +23,26 @@ import java.util.*
 /**
  * Representation of the contents of a note in AnkiDroid.
  */
-class NoteInfo {
+public class NoteInfo {
     private val id: Long
     private val fields: Array<String>
     private val tags: Set<String>
 
-    companion object {
+    internal companion object {
         /**
          * Static initializer method to build a NoteInfo object from a Cursor
          * @param cursor from a query to FlashCardsContract.Note.CONTENT_URI
          * @return a NoteInfo object or null if the cursor was not valid
          */
         @JvmStatic // API Project
-        fun buildFromCursor(cursor: Cursor): NoteInfo? {
+        internal fun buildFromCursor(cursor: Cursor): NoteInfo? {
             return try {
                 val idIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID)
                 val fldsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.FLDS)
                 val tagsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.TAGS)
                 val fields = Utils.splitFields(cursor.getString(fldsIndex))
                 val id = cursor.getLong(idIndex)
-                val tags: Set<String> =
-                    HashSet(Arrays.asList(*Utils.splitTags(cursor.getString(tagsIndex))))
+                val tags: Set<String> = HashSet(listOf(*Utils.splitTags(cursor.getString(tagsIndex))))
                 NoteInfo(id, fields, tags)
             } catch (e: Exception) {
                 null
@@ -61,29 +60,29 @@ class NoteInfo {
      * Clone a NoteInfo object
      * @param parent the object to clone
      */
-    constructor(parent: NoteInfo) {
+    public constructor(parent: NoteInfo) {
         id = parent.id
         fields = parent.fields.clone()
         tags = HashSet(parent.tags)
     }
 
     /** Note ID  */
-    fun getId(): Long {
+    public fun getId(): Long {
         return id
     }
 
     /** The array of fields  */
-    fun getFields(): Array<String> {
+    public fun getFields(): Array<String> {
         return fields
     }
 
     /** The set of tags  */
-    fun getTags(): Set<String?> {
+    public fun getTags(): Set<String?> {
         return tags
     }
 
     /** The first field  */
-    fun getKey(): String {
+    public fun getKey(): String {
         return getFields()[0]
     }
 }
