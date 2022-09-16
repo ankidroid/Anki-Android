@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Nieuw</string>
     <string name="statistics_suspended">Geschorst</string>
     <string name="statistics_buried">Verborgen</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Opnieuw leren</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Opnieuw leren</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Leren</string>
     <string name="statistics_cram">Blokken</string>
-    <string name="stats_cards">Kaarten</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Kaarten</string>
     <string name="stats_cards_intervals">Kaarten met gegeven interval</string>
     <string name="stats_cumulative_cards">Cumulatief aantal kaarten</string>
     <string name="stats_cumulative_answers">Cumulatief aantal antwoorden</string>

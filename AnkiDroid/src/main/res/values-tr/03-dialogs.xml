@@ -246,7 +246,7 @@
         <item quantity="one">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
         <item quantity="other">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Bağlantınız ölçülü. Veri aktarımı para yazabilir</string>
     <string name="deck_picker_new">Bu destede bugün görülecek yeni kart sayısı</string>
     <string name="deck_picker_rev">Bu destede bugün vakti ğeçen yeni kart sayısı</string>
     <string name="deck_picker_lrn">Bu destede öğrenilen kart sayısı.</string>
@@ -256,7 +256,7 @@
     <string name="deck_picker_counts">Bugün bakılacak kart sayısını içeren deste genel görünüm sayfasını açın.</string>
     <string name="import_deck_package">Deste paketi (.apkg)</string>
     <string name="import_collection_package">Koleksiyon paketi (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Metin dosyası (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Bütün desteler için bir altdeste oluşturamazsınız</string>
 </resources>

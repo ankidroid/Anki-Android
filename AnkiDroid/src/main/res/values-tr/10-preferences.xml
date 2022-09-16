@@ -50,11 +50,11 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s dk</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Sonuç yok</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Genel</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Çalışma</string>
+    <string name="pref_cat_system_wide" maxLength="41">Sistem Geneli</string>
     <string name="pref_cat_reviewing" maxLength="41">Çalışma</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Senkronizasyon</string>
     <string name="pref_cat_scheduling" maxLength="41">Zamanlama</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
+    <string name="metered_sync_summary">Kapatılırsa, ölçülü bir bağlantıda senkronizasyon yapmaya çalışırsanız uyarılırsınız</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Gündüz teması</string>
     <string name="night_theme" maxLength="41">Gece teması</string>
@@ -343,12 +343,12 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ kaldır</string>
     <string name="bindings_already_bound">%s bileşenine bağlı zaten</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41">Deneysel</string>
+    <string name="experimental_pref_confirmation" maxLength="41">\"%s\" aç</string>
+    <string name="use_rust_backend_title" maxLength="41">Yeni backendi kullan</string>
+    <string name="use_rust_backend_summary">v3 zamanlayıcı gibi yeni Anki özelliklerini etkinleştirir\nSTABİL DEĞİL. Umursadığınız bir koleksiyonda kullanmayın. Uygulamayı kapatınca geri ALINMAZ</string>
+    <string name="use_rust_backend_warning">Bu, bir ihtimâlle yüklemenizi tamamen bozup uygulamayı kaldırmanızı ve AnkiDroid klasörünü silmenizi gerektirebilir, ve belki bozulmayı senkronizasyonla AnkiWeb\'e yayabilir.\n\nTest etmenizden memnuniyet duyarız, ama lütfen AnkiWeb-dışı geçerli bir yedeğiniz olduğundan emin olun.</string>
+    <string name="enable_v3_sched_title" maxLength="41">v3 zamanlayıcıyı kullan</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>

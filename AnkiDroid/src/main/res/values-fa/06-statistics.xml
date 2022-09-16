@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">دیده نشده</string>
     <string name="statistics_suspended">معلق شده</string>
     <string name="statistics_buried">دفن شده</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">بازآموزی</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">بازآموزی</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">یادگیری</string>
     <string name="statistics_cram">مطالعه فشرده</string>
-    <string name="stats_cards">کارتها</string>
+    <string name="stats_cards" comment="Title to use in stats pages">کارتها</string>
     <string name="stats_cards_intervals">کارت ها با وقفه داده شده</string>
     <string name="stats_cumulative_cards">کارت های تجمعی</string>
     <string name="stats_cumulative_answers">مجموع جواب ها</string>

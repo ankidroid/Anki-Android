@@ -66,7 +66,7 @@ class DeckOptions :
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptions: DeckOptions
+        val deckOptionsActivity: DeckOptions // TODO: rename the class to DeckOptionsActivity
             get() = this@DeckOptions
 
         @KotlinCleanup("Use kotlin's methods instead of java's")
@@ -392,21 +392,22 @@ class DeckOptions :
         TaskListenerWithContext<DeckPreferenceHack, Void?, Boolean?>(deckPreferenceHack) {
 
         override fun actualOnPreExecute(context: DeckPreferenceHack) {
-            @Suppress("unused") val res = context.deckOptions.resources
+            val res = context.deckOptionsActivity.resources
             context.progressDialog = StyledProgressDialog.show(
-                context.deckOptions as Context, null,
+                context.deckOptionsActivity as Context, null,
                 res?.getString(R.string.reordering_cards), false
             )
         }
 
-        @KotlinCleanup("Scope function")
         override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) {
-            context.cacheValues()
-            context.deckOptions.buildLists()
-            context.deckOptions.updateSummaries()
-            context.progressDialog.dismiss()
-            // Restart to reflect the new preference values
-            context.deckOptions.restartActivity()
+            context.apply {
+                cacheValues()
+                deckOptionsActivity.buildLists()
+                deckOptionsActivity.updateSummaries()
+                progressDialog.dismiss()
+                // Restart to reflect the new preference values
+                deckOptionsActivity.restartActivity()
+            }
         }
     }
 

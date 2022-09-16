@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">טרם נראה</string>
     <string name="statistics_suspended">מושהה</string>
     <string name="statistics_buried">קבור</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ללמוד מחדש</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ללמוד מחדש</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">ללמוד</string>
     <string name="statistics_cram">לפטם</string>
-    <string name="stats_cards">קלפים</string>
+    <string name="stats_cards" comment="Title to use in stats pages">קלפים</string>
     <string name="stats_cards_intervals">קלפים בעלי מרווח נתון</string>
     <string name="stats_cumulative_cards">קלפים מצטברים</string>
     <string name="stats_cumulative_answers">תשובות מצטברות</string>

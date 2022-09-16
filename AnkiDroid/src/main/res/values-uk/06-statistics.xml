@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Не переглядані</string>
     <string name="statistics_suspended">Призупинено</string>
     <string name="statistics_buried">Відкладені</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Повторно вчено</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Повторно вчено</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Вчено</string>
     <string name="statistics_cram">Зазубрені</string>
-    <string name="stats_cards">Картки</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Картки</string>
     <string name="stats_cards_intervals">Картки з даним інтервалом</string>
     <string name="stats_cumulative_cards">Сукупність карток</string>
     <string name="stats_cumulative_answers">Сукупність відповідей</string>

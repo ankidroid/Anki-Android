@@ -34,6 +34,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.utils.CheckCameraPermission
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -57,7 +58,6 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
      * Used to access past state from OnRequestPermissionsResultCallback
      */
     private var mCurrentChangeRequest: ChangeUIRequest? = null
-    @Suppress("deprecation") // getSerializable
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -80,7 +80,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         enableToolbar(mainView)
         val intent = this.intent
         mField = getFieldFromIntent(intent)
-        mNote = intent.getSerializableExtra(EXTRA_WHOLE_NOTE) as IMultimediaEditableNote?
+        mNote = intent.getSerializableExtraCompat<IMultimediaEditableNote>(EXTRA_WHOLE_NOTE)
         mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0)
         if (mField == null) {
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)

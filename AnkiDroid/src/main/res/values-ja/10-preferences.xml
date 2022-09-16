@@ -321,7 +321,7 @@
     <string name="contributors_title">コントリビューター</string>
     <string name="about_contributors_description"><![CDATA[AnkiDroidの開発を支えているのは、一人一人の<a href=\"%1$s\">コントリビューター</a>です。誰もが、プログラミング、翻訳、寄付、<a href=\"%2$s\">その他の方法</a>によってAnkiDroidの開発に貢献するコントリビューターになることができます。]]></string>
     <string name="license">ライセンス</string>
-    <string name="license_description"><![CDATA[AnkiDroidは<a href=\"%1$s\">GPL-3.0</a>および<a href=\"%2$s\">AGPL-3.0</a>のライセンスの下でリリースされています。 <a href=\"%3$s\">ソースコード</a>はGitHubで公開されています]]></string>
+    <string name="license_description"><![CDATA[AnkiDroidは<a href=\"%1$s\">GPL-3.0</a>および<a href=\"%2$s\">AGPL-3.0</a>のライセンスの下でリリースされています。 <a href=\"%3$s\">ソースコード</a>はGitHubで公開されています。]]></string>
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">寄付</a>することでAnkiDroidの開発を支援することができます。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ジェスチャーを追加</string>
@@ -341,12 +341,12 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
     <string name="bindings_already_bound">このキーには既に %s の操作を割り当て済みです</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">試験運用機能</string>
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

@@ -29,7 +29,7 @@
     <string name="front_field_name">Voorkant</string>
     <string name="back_field_name">Achterzijde</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Tekst</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Extra achterkant</string>
     <string name="field_to_ask_front_name">Omgekeerde toevoegen</string>
     <!--Card type-->
     <string name="card_n_name">Kaart %d</string>

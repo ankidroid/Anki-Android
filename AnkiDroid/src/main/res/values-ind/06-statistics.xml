@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Belum dilihat</string>
     <string name="statistics_suspended">Ditangguhkan</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Belajar ulang</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Belajar ulang</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Belajar</string>
     <string name="statistics_cram">Intensif</string>
-    <string name="stats_cards">Kartu</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Kartu</string>
     <string name="stats_cards_intervals">Kartu dengan interval</string>
     <string name="stats_cumulative_cards">Kartu kumulatif</string>
     <string name="stats_cumulative_answers">Jawaban kumulatif</string>

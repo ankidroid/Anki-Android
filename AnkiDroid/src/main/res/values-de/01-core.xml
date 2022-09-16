@@ -75,8 +75,8 @@
         <item quantity="other">%1$d Stunden %2$d verbleiben</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d Stunde %2$d verbleibend</item>
-        <item quantity="other">%1$d Stunden %2$d verbleibend</item>
+        <item quantity="one">%1$d Tag %2$d verbleibend</item>
+        <item quantity="other">%1$d Tage %2$d verbleibend</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
     <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
@@ -129,7 +129,7 @@
     <string name="menu_search">In %1$s nachschlagen</string>
     <string name="menu_mark_note">Notiz markieren</string>
     <string name="menu_unmark_note">Markierung entfernen</string>
-    <string name="menu_toggle_mic_tool_bar">Ausprache überprüfen</string>
+    <string name="menu_toggle_mic_tool_bar">Aussprache überprüfen</string>
     <string name="new_deck">Stapel erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
     <string name="directory_inaccessible">Auf das AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>

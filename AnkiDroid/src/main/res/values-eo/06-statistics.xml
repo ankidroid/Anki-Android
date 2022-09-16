@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Novaj</string>
     <string name="statistics_suspended">Kaŝitaj (daŭre)</string>
     <string name="statistics_buried">Kaŝitaj (tago)</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Relernendaj</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Relernendaj</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Lernataj</string>
     <string name="statistics_cram">Antaŭlernado</string>
-    <string name="stats_cards">Kartoj</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Kartoj</string>
     <string name="stats_cards_intervals">Kartoj laŭ intertempo</string>
     <string name="stats_cumulative_cards">Kartoj entute</string>
     <string name="stats_cumulative_answers">Respondoj entute</string>

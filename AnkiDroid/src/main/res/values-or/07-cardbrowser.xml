@@ -49,6 +49,10 @@
         <item quantity="one">%dଟିଏ ପତ୍ର ଦେଖାଯାଇଛି</item>
         <item quantity="other">%dଟି ପତ୍ର ଦେଖାଯାଇଛି</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">%d note shown</item>
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
     <string name="card_browser_delete_card">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରନ୍ତୁ</string>
     <string name="card_browser_suspend_card">ପତ୍ରଗୁଡ଼ିକୁ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
@@ -67,7 +71,7 @@
     <string name="card_browser_list_my_searches_title">ଏକ ସଞ୍ଚିତ ସନ୍ଧାନ ବାଛନ୍ତୁ</string>
     <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ </string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ଆପଣ ନାମ ବିନା ସନ୍ଧାନ ସଞ୍ଚୟ କରିପାରିବେ ନାହିଁ</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">ନାମ ବିଦ୍ୟମାନ ଅଛି</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">ନାଁଟି ଵିଦ୍ୟମାନ ଅଛି</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ବିଲୋପ କରନ୍ତୁ?</string>
     <string name="card_browser_change_display_order">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_browser_change_display_order_title">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>

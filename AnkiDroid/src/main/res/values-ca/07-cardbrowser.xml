@@ -49,6 +49,10 @@
         <item quantity="one">%d carta ensenyada</item>
         <item quantity="other">%d cartes ensenyades</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">%d note shown</item>
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">Tots els paquets</string>
     <string name="card_browser_delete_card">Esborrar nota</string>
     <string name="card_browser_suspend_card">Suspèn la fitxa</string>

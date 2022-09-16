@@ -82,13 +82,13 @@
     <string name="no_cards_placeholder_description">Αρχίστε να προστίθεται κάρτες με το εικονίδιο +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">Μελέτη %1$d κάρτας σε %2$s σήμερα</item>
+        <item quantity="other">Μελέτη %1$d καρτών σε %2$s σήμερα</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
+    <string name="type_answer_hint">Πληκτρολογήστε την απάντηση</string>
     <string name="show_answer">Εμφάνιση Απάντησης</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Απόκρυψη απάντησης</string>
     <string name="ease_button_again">Ξανά</string>
     <string name="ease_button_hard">Δύσκολη</string>
     <string name="ease_button_good">Καλή</string>
@@ -98,11 +98,11 @@
     <string name="undo">Αναίρεση</string>
     <string name="undo_action_review">last review</string>
     <string name="undo_action_change_deck_multi">αλλαγή τραπουλών</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="move_all_to_deck">Μετακίνηση όλων στην τράπουλα</string>
     <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="rename_deck">Μετονομασία τράπουλας</string>
+    <string name="create_shortcut">Δημιουργία συντόμευσης</string>
+    <string name="browse_cards">Περιήγηση καρτών</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Προσθήκη</string>
     <string name="menu_add_note">Προσθήκη σημείωσης</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Συγχρονισμός λογαριασμού</string>
@@ -121,9 +121,9 @@
     <string name="menu_flag_card_two">Πορτοκαλί σημαία</string>
     <string name="menu_flag_card_three">Πράσινη σημαία</string>
     <string name="menu_flag_card_four">Μπλε σημαία</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_five">Ροζ ετικέτα</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_seven">Μοβ ετικέτα</string>
     <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
     <string name="menu_search">Αναζήτηση στο %1$s</string>
@@ -137,7 +137,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Παρακαλούμε παραχωρήστε στο Anki-Droid την άδεια \'Αποθήκευσης\' για να συνεχίσετε</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -157,15 +157,15 @@
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Αναδόμηση</string>
     <string name="empty_cram_label">Κενή</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Δημιουργία υποτράπουλας</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Προσαρμοσμένη μελέτη λειτουργίας</string>
     <string name="custom_study_deck_exists">Παρακαλούμε μετονομάστε την υπάρχουσα τράπουλα Προσαρμοσμένης Μελέτης πρώτα.</string>
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Αναζήτηση</string>
+    <string name="empty_deck_add_note">Προσθήκη κάρτας</string>
+    <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
     <string name="studyoptions_empty">Αυτή η τράπουλα είναι κενή. Πατήστε το κουμπί + για να προσθέσετε πριεχόμενο.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
