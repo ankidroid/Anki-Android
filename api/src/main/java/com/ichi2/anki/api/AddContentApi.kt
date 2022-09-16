@@ -373,8 +373,7 @@ class AddContentApi(context: Context) {
      * Get the ID for the note type / model which is currently in use
      * @return id for current model, or &lt;0 if there was a problem
      */
-    // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
-    val currentModelId: Long
+    public val currentModelId: Long
         get() {
             // Get the current model
             val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID)
@@ -409,8 +408,7 @@ class AddContentApi(context: Context) {
      * Get a map of all model ids and names
      * @return map of (id, name) pairs
      */
-    // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
-    val modelList: Map<Long, String>?
+    public val modelList: Map<Long, String>?
         get() = getModelList(1)
 
     /**
@@ -466,8 +464,7 @@ class AddContentApi(context: Context) {
      * Get the name of the selected deck
      * @return deck name or null if there was a problem
      */
-    // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
-    val selectedDeckName: String?
+    public val selectedDeckName: String?
         get() {
             val selectedDeckQuery = mResolver.query(
                 Deck.CONTENT_SELECTED_URI,
@@ -487,8 +484,7 @@ class AddContentApi(context: Context) {
      * Get a list of all the deck id / name pairs
      * @return Map of (id, name) pairs, or null if there was a problem
      */
-    // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
-    val deckList: Map<Long, String>?
+    public val deckList: Map<Long, String>?
         get() {
             // Get the current model
             val allDecksQuery =
@@ -525,9 +521,8 @@ class AddContentApi(context: Context) {
      *
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
     @Suppress("deprecation") // API33 symbol required until minSdkVersion >= 33
-    val apiHostSpecVersion: Int
+    public val apiHostSpecVersion: Int
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
