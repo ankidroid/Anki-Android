@@ -214,6 +214,8 @@ object NoteService {
 
     //  TODO: should make a direct SQL query to do this
     fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+    
+    fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
 
     interface NoteField {
         val ord: Int
@@ -224,3 +226,5 @@ object NoteService {
 }
 
 fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
+
+fun Card.totalReviewsForNote() = NoteService.totalReviews(note())
