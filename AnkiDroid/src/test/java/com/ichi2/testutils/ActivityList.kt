@@ -79,23 +79,16 @@ object ActivityList {
         )
     }
 
-    @KotlinCleanup("use Kotlin scope functions")
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
-        val intent = Intent()
-        intent.putExtra(INTENT_QUESTION_FORMAT, "{{Front}}")
-        intent.putExtra(
-            INTENT_ANSWER_FORMAT,
-            "{{FrontSide}}\n{{Back}}"
-        )
-        return intent
+        return Intent().apply {
+            putExtra(INTENT_QUESTION_FORMAT, "{{Front}}")
+            putExtra(INTENT_ANSWER_FORMAT, "{{FrontSide}}\n{{Back}}")
+        }
     }
 
-    @KotlinCleanup("use Kotlin scope functions")
     private fun intentForCardTemplateEditor(): Intent {
-        val intent = Intent()
-        intent.putExtra("modelId", 1L)
-        return intent
+        return Intent().apply { putExtra("modelId", 1L) }
     }
 
     @KotlinCleanup("simplify expression by removing `get()`")
