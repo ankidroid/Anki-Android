@@ -29,7 +29,6 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -1076,8 +1075,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         TemporaryModel.clearTempModelFiles()
 
         // Set the finish animation if there is one on the intent which created the activity
-        val animation = intent!!.getParcelableExtraCompat<Parcelable>(FINISH_ANIMATION_EXTRA)
-        if (animation is ActivityTransitionAnimation.Direction) {
+        val animation = getIntent().getParcelableExtraCompat<ActivityTransitionAnimation.Direction>(FINISH_ANIMATION_EXTRA)
+        if (animation != null) {
             finishWithAnimation(animation)
             return
         }

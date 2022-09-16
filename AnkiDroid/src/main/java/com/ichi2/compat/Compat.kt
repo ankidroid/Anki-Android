@@ -34,7 +34,7 @@ import java.io.*
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
- *CRITI
+ *
  *
  * A set of implementations for the supported platforms are available.
  *

@@ -18,7 +18,6 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.Spannable
 import android.text.SpannableString
 import android.view.Gravity
@@ -109,8 +108,8 @@ class CardInfo : AnkiActivity() {
     }
 
     override fun finish() {
-        val animation = intent.getParcelableExtraCompat<Parcelable>(FINISH_ANIMATION_EXTRA)
-        if (animation is ActivityTransitionAnimation.Direction) {
+        val animation = intent.getParcelableExtraCompat<ActivityTransitionAnimation.Direction>(FINISH_ANIMATION_EXTRA)
+        if (animation != null) {
             finishWithAnimation(animation)
         } else {
             super.finish()
