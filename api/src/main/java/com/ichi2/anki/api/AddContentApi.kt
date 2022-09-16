@@ -36,7 +36,6 @@ import com.ichi2.anki.FlashCardsContract.Deck
 import com.ichi2.anki.FlashCardsContract.Model
 import com.ichi2.anki.FlashCardsContract.Note
 import java.io.File
-import java.lang.Exception
 import java.util.*
 
 /**
@@ -47,10 +46,9 @@ import java.util.*
  * this may be extended to all operations at a later date.
  */
 // TODO: High Priority: Kotlin Cleanup: fix nullability of all public methods
-// TODO: Kotlin Cleanup: IDE Lint
 class AddContentApi(context: Context) {
-    private val mResolver: ContentResolver
-    private val mContext: Context
+    private val mContext: Context = context.applicationContext
+    private val mResolver: ContentResolver = mContext.contentResolver
 
     /**
      * Create a new note with specified fields, tags, and model and place it in the specified deck.
@@ -66,18 +64,16 @@ class AddContentApi(context: Context) {
         return noteUri.lastPathSegment!!.toLong()
     }
 
-    // TODO: Kotlin Cleanup: use .apply internally
     private fun addNoteInternal(
         modelId: Long,
         deckId: Long,
         fields: Array<String>,
         tags: Set<String?>?
     ): Uri? {
-        val values = ContentValues()
-        values.put(Note.MID, modelId)
-        values.put(Note.FLDS, Utils.joinFields(fields))
-        if (tags != null) {
-            values.put(Note.TAGS, Utils.joinTags(tags))
+        val values = ContentValues().apply {
+            put(Note.MID, modelId)
+            put(Note.FLDS, Utils.joinFields(fields))
+            if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
         }
         return addNoteForContentValues(deckId, values)
     }
@@ -86,18 +82,14 @@ class AddContentApi(context: Context) {
         val newNoteUri = mResolver.insert(Note.CONTENT_URI, values) ?: return null
         // Move cards to specified deck
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
-        val cardsCursor = mResolver.query(cardsUri, null, null, null, null) ?: return null
-        try {
+        val cardsQuery = mResolver.query(cardsUri, null, null, null, null) ?: return null
+        cardsQuery.use { cardsCursor ->
             while (cardsCursor.moveToNext()) {
-                val ord =
-                    cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD))
-                val cardValues = ContentValues()
-                cardValues.put(Card.DECK_ID, deckId)
+                val ord = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD))
+                val cardValues = ContentValues().apply { put(Card.DECK_ID, deckId) }
                 val cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord)
                 mResolver.update(cardUri, cardValues, null, null)
             }
-        } finally {
-            cardsCursor.close()
         }
         return newNoteUri
     }
@@ -111,7 +103,6 @@ class AddContentApi(context: Context) {
      * @param tagsList List of tags (one per note) (may be null)
      * @return The number of notes added (&lt;0 means there was a problem)
      */
-    // TODO: Kotlin Cleanup: use .apply { } internally
     fun addNotes(
         modelId: Long,
         deckId: Long,
@@ -121,11 +112,12 @@ class AddContentApi(context: Context) {
         require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
         val newNoteValuesList: MutableList<ContentValues> = ArrayList(fieldsList.size)
         for (i in fieldsList.indices) {
-            val values = ContentValues()
-            values.put(Note.MID, modelId)
-            values.put(Note.FLDS, Utils.joinFields(fieldsList[i]))
-            if (tagsList != null && tagsList[i] != null) {
-                values.put(Note.TAGS, Utils.joinTags(tagsList[i]))
+            val values = ContentValues().apply {
+                put(Note.MID, modelId)
+                put(Note.FLDS, Utils.joinFields(fieldsList[i]))
+                if (tagsList != null && tagsList[i] != null) {
+                    put(Note.TAGS, Utils.joinTags(tagsList[i]))
+                }
             }
             newNoteValuesList.add(values)
         }
@@ -169,12 +161,10 @@ class AddContentApi(context: Context) {
         preferredName: String,
         mimeType: String
     ): String? {
-        @Suppress("NAME_SHADOWING")
-        var preferredName = preferredName
-        val contentValues = ContentValues()
-        contentValues.put(AnkiMedia.FILE_URI, fileUri.toString())
-        preferredName = preferredName.replace(" ", "_")
-        contentValues.put(AnkiMedia.PREFERRED_NAME, preferredName)
+        val contentValues = ContentValues().apply {
+            put(AnkiMedia.FILE_URI, fileUri.toString())
+            put(AnkiMedia.PREFERRED_NAME, preferredName.replace(" ", "_"))
+        }
         return try {
             val returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues)
             // get the filename from Uri, return [sound:%s] % file.getName()
@@ -185,18 +175,10 @@ class AddContentApi(context: Context) {
         }
     }
 
-    private fun formatMediaName(fname: String, mimeType: String): String? {
-        // TODO: Kotlin Cleanup: use string formatting
-        val formatted_fname: String?
-        formatted_fname = if (mimeType == "audio") {
-            String.format("[sound:%s]", fname.substring(1)) // first character in the path is "/"
-        } else if (mimeType == "image") {
-            String.format("<img src=\"%s\" />", fname.substring(1))
-        } else {
-            // something went wrong
-            null
-        }
-        return formatted_fname
+    private fun formatMediaName(fname: String, mimeType: String): String? = when (mimeType) {
+        "audio" -> "[sound:${fname.substring(1)}]" // first character in the path is "/"
+        "image" -> "<img src=\"${fname.substring(1)}\" />"
+        else -> null // something went wrong
     }
 
     /**
@@ -228,14 +210,7 @@ class AddContentApi(context: Context) {
      * @param mid id of the model to be used
      * @return number of notes that exist with that model ID or -1 if there was a problem
      */
-    fun getNoteCount(mid: Long): Int {
-        val cursor = compat.queryNotes(mid) ?: return 0
-        return try {
-            cursor.count
-        } finally {
-            cursor.close()
-        }
-    }
+    fun getNoteCount(mid: Long): Int = compat.queryNotes(mid)?.use { cursor -> cursor.count } ?: 0
 
     /**
      * Set the tags for a given note
@@ -265,30 +240,20 @@ class AddContentApi(context: Context) {
      * @return object containing the contents of note with noteID or null if there was a problem
      */
     fun getNote(noteId: Long): NoteInfo? {
-        val noteUri = Uri.withAppendedPath(
-            Note.CONTENT_URI,
-            java.lang.Long.toString(noteId)
-        )
-        val cursor = mResolver.query(noteUri, PROJECTION, null, null, null) ?: return null
-        return try {
+        val noteUri = Uri.withAppendedPath(Note.CONTENT_URI, noteId.toString())
+        val query = mResolver.query(noteUri, PROJECTION, null, null, null) ?: return null
+        return query.use { cursor ->
             if (!cursor.moveToNext()) {
                 null
             } else NoteInfo.buildFromCursor(cursor)
-        } finally {
-            cursor.close()
         }
     }
 
-    // TODO: Kotlin Cleanup simplify fun, use apply {}
     private fun updateNote(noteId: Long, fields: Array<String>?, tags: Set<String?>?): Boolean {
-        val builder = Note.CONTENT_URI.buildUpon()
-        val contentUri = builder.appendPath(java.lang.Long.toString(noteId)).build()
-        val values = ContentValues()
-        if (fields != null) {
-            values.put(Note.FLDS, Utils.joinFields(fields))
-        }
-        if (tags != null) {
-            values.put(Note.TAGS, Utils.joinTags(tags))
+        val contentUri = Note.CONTENT_URI.buildUpon().appendPath(noteId.toString()).build()
+        val values = ContentValues().apply {
+            if (fields != null) put(Note.FLDS, Utils.joinFields(fields))
+            if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
         }
         val numRowsUpdated = mResolver.update(contentUri, values, null, null)
         // provider doesn't check whether fields actually changed, so just returns number of notes with id == noteId
@@ -311,21 +276,18 @@ class AddContentApi(context: Context) {
         // Build map of HTML for each generated card
         val cards: MutableMap<String, Map<String, String>> = HashMap()
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
-        val cardsCursor = mResolver.query(cardsUri, null, null, null, null) ?: return null
-        try {
+        val cardsQuery = mResolver.query(cardsUri, null, null, null, null) ?: return null
+        cardsQuery.use { cardsCursor ->
             while (cardsCursor.moveToNext()) {
                 // add question and answer for each card to map
                 val n = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_NAME))
                 val q = cardsCursor.getString(cardsCursor.getColumnIndex(Card.QUESTION))
                 val a = cardsCursor.getString(cardsCursor.getColumnIndex(Card.ANSWER))
-                // TODO: Kotlin Cleanup: hashMapOf()
-                val html: MutableMap<String, String> = HashMap()
-                html["q"] = q
-                html["a"] = a
-                cards[n] = html
+                cards[n] = hashMapOf(
+                    "q" to q,
+                    "a" to a,
+                )
             }
-        } finally {
-            cardsCursor.close()
         }
         // Delete the note
         mResolver.delete(newNoteUri!!, null, null)
@@ -346,7 +308,7 @@ class AddContentApi(context: Context) {
 
     /**
      * Insert a new basic front/back model with two fields and TWO cards
-     * The first card goes from front-&gt;back, and the second goes from back-&gt;pront
+     * The first card goes from front-&gt;back, and the second goes from back-&gt;front
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
@@ -383,25 +345,25 @@ class AddContentApi(context: Context) {
         // Check that size of arrays are consistent
         require(!(qfmt.size != cards.size || afmt.size != cards.size)) { "cards, qfmt, and afmt arrays must all be same length" }
         // Create the model using dummy templates
-        // TODO: Kotlin Cleanup: use .apply { }
-        var values = ContentValues()
-        values.put(Model.NAME, name)
-        values.put(Model.FIELD_NAMES, Utils.joinFields(fields))
-        values.put(Model.NUM_CARDS, cards.size)
-        values.put(Model.CSS, css)
-        values.put(Model.DECK_ID, did)
-        values.put(Model.SORT_FIELD_INDEX, sortf)
+        var values = ContentValues().apply {
+            put(Model.NAME, name)
+            put(Model.FIELD_NAMES, Utils.joinFields(fields))
+            put(Model.NUM_CARDS, cards.size)
+            put(Model.CSS, css)
+            put(Model.DECK_ID, did)
+            put(Model.SORT_FIELD_INDEX, sortf)
+        }
         val modelUri = mResolver.insert(Model.CONTENT_URI, values) ?: return null
         // Set the remaining template parameters
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         for (i in cards.indices) {
-            val uri = Uri.withAppendedPath(templatesUri, Integer.toString(i))
-            // TODO: Kotlin Cleanup: use .apply { }
-            values = ContentValues()
-            values.put(CardTemplate.NAME, cards[i])
-            values.put(CardTemplate.QUESTION_FORMAT, qfmt[i])
-            values.put(CardTemplate.ANSWER_FORMAT, afmt[i])
-            values.put(CardTemplate.ANSWER_FORMAT, afmt[i])
+            val uri = Uri.withAppendedPath(templatesUri, i.toString())
+            values = ContentValues().apply {
+                put(CardTemplate.NAME, cards[i])
+                put(CardTemplate.QUESTION_FORMAT, qfmt[i])
+                put(CardTemplate.ANSWER_FORMAT, afmt[i])
+                put(CardTemplate.ANSWER_FORMAT, afmt[i])
+            }
             mResolver.update(uri, values, null, null)
         }
         return modelUri.lastPathSegment!!.toLong()
@@ -416,15 +378,11 @@ class AddContentApi(context: Context) {
         get() {
             // Get the current model
             val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID)
-            val singleModelCursor = mResolver.query(uri, null, null, null, null) ?: return -1L
-            val modelId: Long
-            modelId = try {
+            val singleModelQuery = mResolver.query(uri, null, null, null, null) ?: return -1L
+            return singleModelQuery.use { singleModelCursor ->
                 singleModelCursor.moveToFirst()
                 singleModelCursor.getLong(singleModelCursor.getColumnIndex(Model._ID))
-            } finally {
-                singleModelCursor.close()
             }
-            return modelId
         }
 
     /**
@@ -434,17 +392,15 @@ class AddContentApi(context: Context) {
      */
     fun getFieldList(modelId: Long): Array<String>? {
         // Get the current model
-        val uri = Uri.withAppendedPath(Model.CONTENT_URI, java.lang.Long.toString(modelId))
-        val modelCursor = mResolver.query(uri, null, null, null, null) ?: return null
+        val uri = Uri.withAppendedPath(Model.CONTENT_URI, modelId.toString())
+        val modelQuery = mResolver.query(uri, null, null, null, null) ?: return null
         var splitFlds: Array<String>? = null
-        try {
+        modelQuery.use { modelCursor ->
             if (modelCursor.moveToNext()) {
-                val flds =
+                splitFlds = Utils.splitFields(
                     modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES))
-                splitFlds = Utils.splitFields(flds)
+                )
             }
-        } finally {
-            modelCursor.close()
         }
         return splitFlds
     }
@@ -464,22 +420,21 @@ class AddContentApi(context: Context) {
      */
     fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
-        val allModelsCursor =
+        val allModelsQuery =
             mResolver.query(Model.CONTENT_URI, null, null, null, null)
                 ?: return null
         val models: MutableMap<Long, String> = HashMap()
-        try {
+        allModelsQuery.use { allModelsCursor ->
             while (allModelsCursor.moveToNext()) {
                 val modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID))
                 val name = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.NAME))
-                val flds = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.FIELD_NAMES))
+                val flds =
+                    allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.FIELD_NAMES))
                 val numFlds: Int = Utils.splitFields(flds).size
                 if (numFlds >= minNumFields) {
                     models[modelId] = name
                 }
             }
-        } finally {
-            allModelsCursor.close()
         }
         return models
     }
@@ -489,10 +444,7 @@ class AddContentApi(context: Context) {
      * @param mid id of model
      * @return the name of the model, or null if no model was found
      */
-    fun getModelName(mid: Long): String? {
-        val modelList = modelList
-        return modelList!![mid]
-    }
+    fun getModelName(mid: Long): String? = modelList!![mid]
 
     /**
      * Create a new deck with specified name and save the reference to SharedPreferences for later
@@ -501,8 +453,7 @@ class AddContentApi(context: Context) {
      */
     fun addNewDeck(deckName: String?): Long? {
         // Create a new note
-        val values = ContentValues()
-        values.put(Deck.DECK_NAME, deckName)
+        val values = ContentValues().apply { put(Deck.DECK_NAME, deckName) }
         val newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values)
         return if (newDeckUri != null) {
             newDeckUri.lastPathSegment!!.toLong()
@@ -518,23 +469,18 @@ class AddContentApi(context: Context) {
     // TODO: Kotlin Cleanup - val or fun - likely needs JvmField either way.
     val selectedDeckName: String?
         get() {
-            val selectedDeckCursor = mResolver.query(
+            val selectedDeckQuery = mResolver.query(
                 Deck.CONTENT_SELECTED_URI,
                 null,
                 null,
                 null,
                 null
-            )
-                ?: return null
-            var name: String? = null
-            try {
+            ) ?: return null
+            return selectedDeckQuery.use { selectedDeckCursor ->
                 if (selectedDeckCursor.moveToNext()) {
-                    name = selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(Deck.DECK_NAME))
-                }
-            } finally {
-                selectedDeckCursor.close()
+                    selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(Deck.DECK_NAME))
+                } else null
             }
-            return name
         } // Get the current model
 
     /**
@@ -545,17 +491,16 @@ class AddContentApi(context: Context) {
     val deckList: Map<Long, String>?
         get() {
             // Get the current model
-            val allDecksCursor =
+            val allDecksQuery =
                 mResolver.query(Deck.CONTENT_ALL_URI, null, null, null, null) ?: return null
             val decks: MutableMap<Long, String> = HashMap()
-            try {
+            allDecksQuery.use { allDecksCursor ->
                 while (allDecksCursor.moveToNext()) {
                     val deckId = allDecksCursor.getLong(allDecksCursor.getColumnIndex(Deck.DECK_ID))
-                    val name = allDecksCursor.getString(allDecksCursor.getColumnIndex(Deck.DECK_NAME))
+                    val name =
+                        allDecksCursor.getString(allDecksCursor.getColumnIndex(Deck.DECK_NAME))
                     decks[deckId] = name
                 }
-            } finally {
-                allDecksCursor.close()
             }
             return decks
         }
@@ -565,10 +510,7 @@ class AddContentApi(context: Context) {
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
      */
-    fun getDeckName(did: Long): String? {
-        val deckList = deckList
-        return deckList!![did]
-    }
+    fun getDeckName(did: Long): String? = deckList!![did]
 
     /**
      * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
@@ -613,12 +555,12 @@ class AddContentApi(context: Context) {
             }
         }
 
-    private fun hasReadWritePermission(): Boolean {
-        return (
-            mContext.checkPermission(READ_WRITE_PERMISSION, Process.myPid(), Process.myUid())
-                == PackageManager.PERMISSION_GRANTED
-            )
-    }
+    private fun hasReadWritePermission(): Boolean =
+        mContext.checkPermission(
+            READ_WRITE_PERMISSION,
+            Process.myPid(),
+            Process.myUid()
+        ) == PackageManager.PERMISSION_GRANTED
 
     /**
      * Best not to store this in case the user updates AnkiDroid app while client app is staying alive
@@ -657,7 +599,7 @@ class AddContentApi(context: Context) {
     private open inner class CompatV1 : Compat {
         override fun queryNotes(modelId: Long): Cursor? {
             val modelName = getModelName(modelId) ?: return null
-            val queryFormat = String.format("note:\"%s\"", modelName)
+            val queryFormat = "note:\"$modelName\""
             return mResolver.query(
                 Note.CONTENT_URI,
                 PROJECTION,
@@ -667,46 +609,36 @@ class AddContentApi(context: Context) {
             )
         }
 
-        override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int {
-            var result = 0
-            for (values in valuesArr) {
-                val noteUri = addNoteForContentValues(deckId, values)
-                if (noteUri != null) {
-                    result++
-                }
-            }
-            return result
-        }
+        override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int =
+            valuesArr.count { addNoteForContentValues(deckId, it) != null }
 
         override fun findDuplicateNotes(
             modelId: Long,
             keys: List<String?>
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
-            val modelName = getModelName(modelId)
-            val modelFieldList = getFieldList(modelId)
-            if (modelName == null || modelFieldList == null) {
-                return null
-            }
+            val modelName = getModelName(modelId) ?: return null
+            val modelFieldList = getFieldList(modelId) ?: return null
             val duplicates = SparseArray<MutableList<NoteInfo?>>()
             // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
             val queryFormat = String.format("%s:\"%%s\" note:\"%s\"", modelFieldList[0], modelName)
             for (outputPos in keys.indices) {
                 val selection = String.format(queryFormat, keys[outputPos])
-                val cursor = mResolver.query(
+                val query = mResolver.query(
                     Note.CONTENT_URI,
                     PROJECTION,
                     selection,
                     null,
                     null
-                )
-                    ?: continue
-                try {
+                ) ?: continue
+                query.use { cursor ->
                     while (cursor.moveToNext()) {
-                        addNoteToDuplicatesArray(NoteInfo.buildFromCursor(cursor), duplicates, outputPos)
+                        addNoteToDuplicatesArray(
+                            NoteInfo.buildFromCursor(cursor),
+                            duplicates,
+                            outputPos
+                        )
                     }
-                } finally {
-                    cursor.close()
                 }
             }
             return duplicates
@@ -721,9 +653,7 @@ class AddContentApi(context: Context) {
             val sparseArrayIndex = duplicates.indexOfKey(position)
             if (sparseArrayIndex < 0) {
                 // No existing NoteInfo objects mapping to same key as the current note so add a new List
-                val duplicatesForKey: MutableList<NoteInfo?> = ArrayList()
-                duplicatesForKey.add(note)
-                duplicates.put(position, duplicatesForKey)
+                duplicates.put(position, mutableListOf(note))
             } else { // Append note to existing list of duplicates for key
                 duplicates.valueAt(sparseArrayIndex).add(note)
             }
@@ -734,16 +664,13 @@ class AddContentApi(context: Context) {
         override fun queryNotes(modelId: Long): Cursor? {
             return mResolver.query(
                 Note.CONTENT_URI_V2, PROJECTION,
-                String.format(
-                    Locale.US, "%s=%d", Note.MID, modelId
-                ),
+                String.format(Locale.US, "%s=%d", Note.MID, modelId),
                 null, null
             )
         }
 
         override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int {
-            val builder = Note.CONTENT_URI.buildUpon()
-            builder.appendQueryParameter(
+            val builder = Note.CONTENT_URI.buildUpon().appendQueryParameter(
                 Note.DECK_ID_QUERY_PARAM,
                 deckId.toString()
             )
@@ -774,17 +701,16 @@ class AddContentApi(context: Context) {
                 Note.CSUM,
                 TextUtils.join(",", csums)
             )
-            val notesTableCursor = mResolver.query(
+            val notesTableQuery = mResolver.query(
                 Note.CONTENT_URI_V2,
                 PROJECTION,
                 sel,
                 null,
                 null
-            )
-                ?: return null
+            ) ?: return null
             // Loop through each note in the cursor, building the result array of duplicates
             val duplicates = SparseArray<MutableList<NoteInfo?>>()
-            try {
+            notesTableQuery.use { notesTableCursor ->
                 while (notesTableCursor.moveToNext()) {
                     val note = NoteInfo.buildFromCursor(notesTableCursor) ?: continue
                     if (keyToIndexesMap.containsKey(note.getKey())) { // skip notes that match csum but not key
@@ -799,8 +725,6 @@ class AddContentApi(context: Context) {
                         }
                     }
                 }
-            } finally {
-                notesTableCursor.close()
             }
             return duplicates
         }
@@ -825,7 +749,6 @@ class AddContentApi(context: Context) {
          * @param context a Context that can be used to get the PackageManager
          * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
          */
-        // TODO: Kotlin Cleanup: simplify into one line fun
         @Suppress("deprecation") // deprecated symbol until minSdkVersion >= 33
         fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager
@@ -837,11 +760,5 @@ class AddContentApi(context: Context) {
             else
                 manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)?.packageName
         }
-    }
-
-    // TODO: Kotlin Cleanup - inline
-    init {
-        mContext = context.applicationContext
-        mResolver = mContext.contentResolver
     }
 }
