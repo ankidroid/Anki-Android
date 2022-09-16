@@ -38,6 +38,7 @@ import androidx.fragment.app.FragmentManager
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -48,10 +49,7 @@ import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.Preferences.Companion.MINIMUM_CARDS_DUE_FOR_NOTIFICATION
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
-import com.ichi2.async.CollectionLoader
-import com.ichi2.async.CollectionTask
-import com.ichi2.async.TaskListener
-import com.ichi2.async.TaskManager
+import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
@@ -646,21 +644,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
         if (CollectionHelper.instance.colIsOpen()) {
-            val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {
-                override fun onPreExecute() {
-                    Timber.d("saveCollectionInBackground: start")
-                }
-
-                override fun onPostExecute(result: Void?) {
-                    Timber.d("saveCollectionInBackground: finished")
-                }
+            launchCatchingTask {
+                Timber.d("saveCollectionInBackground: start")
+                withCol { saveCollection(this, syncIgnoresDatabaseModification) }
+                Timber.d("saveCollectionInBackground: finished")
             }
-            TaskManager.launchCollectionTask(
-                CollectionTask.SaveCollection(
-                    syncIgnoresDatabaseModification
-                ),
-                listener
-            )
         }
     }
 
