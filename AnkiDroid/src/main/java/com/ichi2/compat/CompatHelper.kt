@@ -15,10 +15,12 @@
  ****************************************************************************************/
 package com.ichi2.compat
 
+import android.content.Intent
 import android.os.Build
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
 import com.ichi2.compat.CompatHelper.Companion.compat
+import java.io.Serializable
 
 /**
  * Selects a [Compat] class based on the device's [Build.VERSION.SDK_INT]
@@ -33,6 +35,7 @@ class CompatHelper private constructor() {
 
     // Note: Needs ": Compat" or the type system assumes `Compat21`
     private val compatValue: Compat = when {
+        sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
         sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
         sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
@@ -71,6 +74,9 @@ class CompatHelper private constructor() {
 
         fun hasScrollKeys(): Boolean {
             return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
+        }
+        inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
+            return compat.getSerializableExtra(this, name, T::class.java)
         }
     }
 }

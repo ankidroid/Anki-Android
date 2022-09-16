@@ -73,6 +73,7 @@ interface Compat {
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
+    fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
 
     @Throws(IOException::class)
     fun copyFile(source: String, target: String)
