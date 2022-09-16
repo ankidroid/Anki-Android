@@ -61,6 +61,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
@@ -646,7 +647,19 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         if (CollectionHelper.instance.colIsOpen()) {
             launchCatchingTask {
                 Timber.d("saveCollectionInBackground: start")
-                withCol { saveCollection(this, syncIgnoresDatabaseModification) }
+                withCol {
+                    Timber.d("doInBackgroundSaveCollection")
+                    try {
+                        if (syncIgnoresDatabaseModification) {
+                            SyncStatus.ignoreDatabaseModification { col.save() }
+                        } else {
+                            col.save()
+                        }
+                    } catch (e: Exception) {
+                        Timber.e(e, "Error on saving deck in background")
+                        // TODO should this error be reported through our error reporting service?
+                    }
+                }
                 Timber.d("saveCollectionInBackground: finished")
             }
         }
