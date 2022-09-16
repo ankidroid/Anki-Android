@@ -409,21 +409,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     private suspend fun changeSortField(model: Model, idx: Int) {
-        val result = withProgress(resources.getString(R.string.model_field_editor_changing)) {
+        withProgress(resources.getString(R.string.model_field_editor_changing)) {
             CollectionManager.withCol {
-                try {
-                    Timber.d("doInBackgroundChangeSortField")
-                    col.models.setSortIdx(model, idx)
-                    col.save()
-                    true
-                } catch (e: Exception) {
-                    Timber.e(e, "Error changing sort field")
-                    false
-                }
+                Timber.d("doInBackgroundChangeSortField")
+                models.setSortIdx(model, idx)
+                save()
             }
-        }
-        if (result == false) {
-            closeActivity()
         }
         initialize()
     }
