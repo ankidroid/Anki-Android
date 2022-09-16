@@ -64,8 +64,8 @@ import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
 import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
 import com.ichi2.anki.servicelayer.UndoService.Undo
-import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
+import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.*
