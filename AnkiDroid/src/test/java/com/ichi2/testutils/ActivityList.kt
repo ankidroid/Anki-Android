@@ -29,7 +29,6 @@ import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
-import com.ichi2.utils.KotlinCleanup
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import java.util.function.Function
@@ -91,19 +90,16 @@ object ActivityList {
         return Intent().apply { putExtra("modelId", 1L) }
     }
 
-    @KotlinCleanup("simplify expression by removing `get()`")
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
         private var intentBuilder: Function<Context, Intent>
     ) {
-        val simpleName: String
-            get() = activity.simpleName
+        val simpleName: String = activity.simpleName
 
         fun build(context: Context): ActivityController<out Activity> = Robolectric
             .buildActivity(activity, intentBuilder.apply(context))
 
-        val className: String
-            get() = activity.name
+        val className: String = activity.name
 
         companion object {
             operator fun get(
