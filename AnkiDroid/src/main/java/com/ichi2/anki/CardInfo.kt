@@ -32,6 +32,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.compat.CompatHelper.Companion.getParcelableExtraCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.stats.Stats
@@ -107,9 +108,8 @@ class CardInfo : AnkiActivity() {
         this.model = model
     }
 
-    @Suppress("deprecation") // getParcelableExtra
     override fun finish() {
-        val animation: Parcelable? = intent.getParcelableExtra(FINISH_ANIMATION_EXTRA)
+        val animation = intent.getParcelableExtraCompat<Parcelable>(FINISH_ANIMATION_EXTRA)
         if (animation is ActivityTransitionAnimation.Direction) {
             finishWithAnimation(animation)
         } else {

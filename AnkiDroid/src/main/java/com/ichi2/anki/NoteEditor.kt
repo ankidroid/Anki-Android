@@ -80,6 +80,7 @@ import com.ichi2.anki.widgets.PopupMenuWithIcons
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.CompatHelper.Companion.getParcelableExtraCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -1065,7 +1066,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         closeNoteEditor(result, intent)
     }
 
-    @Suppress("deprecation") // getParcelableExtra
     private fun closeNoteEditor(result: Int, intent: Intent?) {
         if (intent != null) {
             setResult(result, intent)
@@ -1076,7 +1076,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         TemporaryModel.clearTempModelFiles()
 
         // Set the finish animation if there is one on the intent which created the activity
-        val animation = getIntent().getParcelableExtra<Parcelable>(FINISH_ANIMATION_EXTRA)
+        val animation = intent!!.getParcelableExtraCompat<Parcelable>(FINISH_ANIMATION_EXTRA)
         if (animation is ActivityTransitionAnimation.Direction) {
             finishWithAnimation(animation)
             return

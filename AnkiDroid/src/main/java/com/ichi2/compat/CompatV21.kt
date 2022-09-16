@@ -29,6 +29,7 @@ import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Environment
+import android.os.Parcelable
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.widget.TimePicker
@@ -69,6 +70,18 @@ open class CompatV21 : Compat {
         return try {
             @Suppress("UNCHECKED_CAST")
             intent.getSerializableExtra(name) as? T?
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    override fun <T : Parcelable?> getParcelableExtra(
+        intent: Intent,
+        name: String,
+        className: Class<T>
+    ): T? {
+        return try {
+            intent.getParcelableExtra(name) as? T?
         } catch (e: Exception) {
             return null
         }
