@@ -20,7 +20,6 @@ import android.view.MenuItem
 import androidx.fragment.app.commit
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
-import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.utils.ExtendedFragmentFactory

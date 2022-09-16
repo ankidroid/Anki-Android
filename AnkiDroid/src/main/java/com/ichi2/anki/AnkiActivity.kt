@@ -49,6 +49,9 @@ import com.ichi2.anki.preferences.Preferences.Companion.MINIMUM_CARDS_DUE_FOR_NO
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
+import com.ichi2.async.CollectionTask
+import com.ichi2.async.TaskListener
+import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
@@ -640,6 +643,26 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }
         )
+
+    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
+        if (CollectionHelper.instance.colIsOpen()) {
+            val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {
+                override fun onPreExecute() {
+                    Timber.d("saveCollectionInBackground: start")
+                }
+
+                override fun onPostExecute(result: Void?) {
+                    Timber.d("saveCollectionInBackground: finished")
+                }
+            }
+            TaskManager.launchCollectionTask(
+                CollectionTask.SaveCollection(
+                    syncIgnoresDatabaseModification
+                ),
+                listener
+            )
+        }
+    }
 
     companion object {
         const val REQUEST_REVIEW = 901

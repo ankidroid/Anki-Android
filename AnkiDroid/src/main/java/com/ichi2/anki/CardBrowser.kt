@@ -43,7 +43,6 @@ import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
