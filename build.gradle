@@ -29,6 +29,8 @@ buildscript {
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
+
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.43.2"
     }
 }
 

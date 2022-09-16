@@ -45,6 +45,7 @@ import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
+import dagger.hilt.android.HiltAndroidApp
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -55,6 +56,7 @@ import java.util.regex.Pattern
 /**
  * Application class.
  */
+@HiltAndroidApp
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
 open class AnkiDroidApp : Application() {

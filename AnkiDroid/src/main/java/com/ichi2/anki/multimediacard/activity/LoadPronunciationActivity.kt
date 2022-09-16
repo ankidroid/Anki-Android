@@ -29,11 +29,12 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.di.IoDispatcher
+import com.ichi2.anki.di.MainDispatcher
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
@@ -41,15 +42,16 @@ import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.NetworkUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import javax.inject.Inject
 
 /**
  * Activity to load pronunciation files from Beolingus.
@@ -58,7 +60,15 @@ import java.net.URLEncoder
  * <p>
  * When activity finished, it passes the filepath as another extra to the caller.
  */
+@AndroidEntryPoint
 open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelListener {
+
+    @Inject
+    @MainDispatcher lateinit var mainDispatcher: CoroutineDispatcher
+
+    @Inject
+    @IoDispatcher lateinit var ioDispatcher: CoroutineDispatcher
+
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
@@ -345,14 +355,5 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
 
         // Passed out as a result
         const val EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path"
-
-        private var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-        private var mainDispatcher: CoroutineDispatcher = Dispatchers.Main
-
-        @VisibleForTesting
-        fun setTestDispatchers(dispatcher: CoroutineDispatcher) {
-            ioDispatcher = dispatcher
-            mainDispatcher = dispatcher
-        }
     }
 }
