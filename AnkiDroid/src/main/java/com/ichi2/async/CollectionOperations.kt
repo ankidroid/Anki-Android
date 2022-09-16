@@ -18,6 +18,7 @@ package com.ichi2.async
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
+import com.ichi2.utils.SyncStatus
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
@@ -105,4 +106,21 @@ fun deleteMedia(
         }
     }
     return unused.size
+}
+
+fun saveCollection(
+    col: Collection,
+    syncIgnoresDatabaseModification: Boolean
+): Void? {
+    Timber.d("doInBackgroundSaveCollection")
+    try {
+        if (syncIgnoresDatabaseModification) {
+            SyncStatus.ignoreDatabaseModification { col.save() }
+        } else {
+            col.save()
+        }
+    } catch (e: RuntimeException) {
+        Timber.e(e, "Error on saving deck in background")
+    }
+    return null
 }

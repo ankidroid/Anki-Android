@@ -174,17 +174,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
     class SaveCollection(private val syncIgnoresDatabaseModification: Boolean) : TaskDelegate<Void?, Void?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>): Void? {
-            Timber.d("doInBackgroundSaveCollection")
-            try {
-                if (syncIgnoresDatabaseModification) {
-                    ignoreDatabaseModification { col.save() }
-                } else {
-                    col.save()
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "Error on saving deck in background")
-            }
-            return null
+            return saveCollection(col, syncIgnoresDatabaseModification)
         }
     }
 
