@@ -57,10 +57,10 @@ suspend fun <T> FragmentActivity.runCatchingTask(
         exc.localizedMessage?.let { showSnackbar(it) }
     } catch (exc: BackendException) {
         Timber.e(exc, extraInfo)
-        showError(this, exc.localizedMessage!!)
+        showError(this, exc.localizedMessage!!, exc)
     } catch (exc: Exception) {
         Timber.e(exc, extraInfo)
-        showError(this, exc.toString())
+        showError(this, exc.toString(), exc)
     }
     return null
 }
@@ -100,11 +100,14 @@ fun Fragment.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit
 ): Job = requireActivity().launchCatchingTask(errorMessage, block)
 
-private fun showError(context: Context, msg: String) {
+private fun showError(context: Context, msg: String, exception: Throwable) {
     AlertDialog.Builder(context)
         .setTitle(R.string.vague_error)
         .setMessage(msg)
         .setPositiveButton(R.string.dialog_ok) { _, _ -> }
+        .setOnDismissListener {
+            CrashReportService.sendExceptionReport(exception, origin = context::class.java.simpleName)
+        }
         .show()
 }
 
