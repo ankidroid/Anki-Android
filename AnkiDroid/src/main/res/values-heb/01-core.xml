@@ -175,7 +175,6 @@
     <string name="empty_deck">החפיסה ריקה</string>
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">חיפוש חפיסה</string>
-    <string name="empty_deck_add_note">הוספת קלף</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
     <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>

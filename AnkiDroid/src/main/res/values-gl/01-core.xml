@@ -164,7 +164,6 @@
     <string name="empty_deck">Esta baralla está baleira</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Esta baralla está baleira. Preme no botón + para engadir contido novo.</string>
     <string name="studyoptions_limit_reached">Acadado o límite de estudo diario</string>

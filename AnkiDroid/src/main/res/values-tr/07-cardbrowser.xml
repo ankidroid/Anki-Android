@@ -50,19 +50,19 @@
         <item quantity="other">%d kart gösteriliyor</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d not gösteriliyor</item>
+        <item quantity="other">%d not gösteriliyor</item>
     </plurals>
     <string name="card_browser_all_decks">Bütün desteler</string>
     <string name="card_browser_delete_card">Notları sil</string>
     <string name="card_browser_suspend_card">Kartları askıya al</string>
     <string name="card_browser_change_deck">Desteyi değiştir</string>
     <string name="card_browser_unsuspend_card">Kartları askıdan al</string>
-    <string name="card_browser_mark_card">Notları işaretle</string>
-    <string name="card_browser_unmark_card">Notlardan işareti kaldır</string>
+    <string name="card_browser_mark_card">Notları işâretle</string>
+    <string name="card_browser_unmark_card">Notlardan işâreti kaldır</string>
     <string name="delete_card_title">Notu sil</string>
     <string name="changed_deck_message">%s\'e taşındı</string>
-    <string name="card_browser_show_marked">İşaretlileri göster</string>
+    <string name="card_browser_show_marked">İşâretlileri göster</string>
     <string name="card_browser_show_suspended">Askıdakileri göster</string>
     <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
     <string name="card_browser_search_by_flag">Bayrağa göre filtrele</string>

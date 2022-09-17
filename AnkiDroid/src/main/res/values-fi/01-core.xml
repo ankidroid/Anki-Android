@@ -164,7 +164,6 @@
     <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Lisää kortti</string>
     <string name="invalid_deck_name">Pätemätön pakka nimi</string>
     <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
     <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>

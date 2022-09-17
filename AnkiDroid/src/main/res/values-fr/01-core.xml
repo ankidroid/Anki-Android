@@ -164,7 +164,6 @@
     <string name="empty_deck">Ce paquet est vide</string>
     <string name="search_deck" comment="Deck search for selecting it">Recherche de paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
-    <string name="empty_deck_add_note">Ajouter une carte</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_empty">Ce paquet est vide. Appuyez sur le bouton + pour ajouter du contenu.</string>
     <string name="studyoptions_limit_reached">Vous avez révisé toutes vos cartes d\'aujourd\'hui</string>

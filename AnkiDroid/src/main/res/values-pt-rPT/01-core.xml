@@ -164,7 +164,6 @@
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Adicionar ficha</string>
     <string name="invalid_deck_name">Nome inválido do baralho</string>
     <string name="studyoptions_empty">Este baralho está vazio. Toque no botão \"+\" para adicionar novo conteúdo.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>

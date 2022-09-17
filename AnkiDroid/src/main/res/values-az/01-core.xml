@@ -164,7 +164,6 @@
     <string name="empty_deck">Bu dəstə boşdur</string>
     <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Dəstə axtar</string>
-    <string name="empty_deck_add_note">Kart əlavə edin</string>
     <string name="invalid_deck_name">Etibarsız kart adı</string>
     <string name="studyoptions_empty">Bu dəstə boşdur. Yeni məzmun əlavə etmək üçün + düyməsinə basın.</string>
     <string name="studyoptions_limit_reached">Gündəlik öyrənmə limitinə çatıldı</string>

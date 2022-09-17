@@ -164,7 +164,6 @@
     <string name="empty_deck">ეს დასტა ცარიელია</string>
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
-    <string name="empty_deck_add_note">ბარათის დამატება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
     <string name="studyoptions_empty">დასტა ცარიელია. დააჭირეთ + ნიშანს, რომ დაამატოთ ახალი კონტენტი.</string>
     <string name="studyoptions_limit_reached">დღიური სწავლის ლიმიტი მიღწეულია</string>

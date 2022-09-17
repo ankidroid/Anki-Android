@@ -164,7 +164,6 @@
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Կապուկը դատարկ է: Սեղմեք + կոճակը նոր բովանդակություն ավելացնելու համար:</string>
     <string name="studyoptions_limit_reached">Հասաք օրական սահմանափակման շեմին</string>

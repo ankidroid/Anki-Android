@@ -164,7 +164,6 @@
     <string name="empty_deck">Questo mazzo è vuoto</string>
     <string name="search_deck" comment="Deck search for selecting it">Ricerca mazzo</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Ricerca mazzo</string>
-    <string name="empty_deck_add_note">Aggiungi carta</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>
     <string name="studyoptions_limit_reached">Raggiunto il limite giornaliero di studio</string>

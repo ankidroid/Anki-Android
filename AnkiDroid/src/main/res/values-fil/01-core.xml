@@ -165,7 +165,6 @@ mga natitirang minuto</item>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ang deck na ito ay walang laman. Pindotin ang + na button para magdagdag ng laman.</string>
     <string name="studyoptions_limit_reached">Ang pang araw - araw na pag - aaral ay naabot na</string>

@@ -164,7 +164,6 @@
     <string name="empty_deck">Aquest paquet és buit</string>
     <string name="search_deck" comment="Deck search for selecting it">Cerca a paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Afegeix carta</string>
     <string name="invalid_deck_name">Nom de paquet invàlid</string>
     <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>
     <string name="studyoptions_limit_reached">Has arribat al límit d\'estudi diari</string>

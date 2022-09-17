@@ -164,7 +164,6 @@
     <string name="empty_deck">Това тесте е празно</string>
     <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Потърси тесте</string>
-    <string name="empty_deck_add_note">Добавяне на карта</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
     <string name="studyoptions_empty">Това тесте е празно. Натиснете бутона + за добавяне на ново съдържание.</string>
     <string name="studyoptions_limit_reached">Дневен лимит на учене достигнат</string>

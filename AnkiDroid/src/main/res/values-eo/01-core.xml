@@ -164,7 +164,6 @@
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
     <string name="search_deck" comment="Deck search for selecting it">Serĉi kartaron</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Serĉi kartaron</string>
-    <string name="empty_deck_add_note">Aldoni karton</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
     <string name="studyoptions_limit_reached">Limigo de taga lernado atingita</string>

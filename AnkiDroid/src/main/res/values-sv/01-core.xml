@@ -164,7 +164,6 @@
     <string name="empty_deck">Den här leken är tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Lägg till kort</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
     <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>

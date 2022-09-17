@@ -164,7 +164,6 @@
     <string name="empty_deck">Ez a pakli üres</string>
     <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Paklik keresése</string>
-    <string name="empty_deck_add_note">Kártya hozzáadása</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
     <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
     <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>

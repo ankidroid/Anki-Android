@@ -164,7 +164,6 @@
     <string name="empty_deck">Este mazo está vacío</string>
     <string name="search_deck" comment="Deck search for selecting it">Buscar mazo</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Búsqueda de Mazo</string>
-    <string name="empty_deck_add_note">Añadir tarjeta</string>
     <string name="invalid_deck_name">Nombre de mazo inválido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulse el botón + para añadir contenido nuevo.</string>
     <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>

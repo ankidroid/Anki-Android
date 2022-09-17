@@ -164,7 +164,6 @@
     <string name="empty_deck">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="search_deck" comment="Deck search for selecting it">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">ಕಾರ್ಡ್‌ ಸೇರಿಸಿ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
     <string name="studyoptions_empty">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ. ಹೊಸ ವಿಷಯವನ್ನು ಸೇರಿಸಲು + ಬಟನ್ ಒತ್ತಿರಿ.</string>
     <string name="studyoptions_limit_reached">ದೈನಂದಿನ ಅಧ್ಯಯನದ ಮಿತಿಯನ್ನು ತಲುಪಿದೆ</string>

@@ -117,7 +117,7 @@
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního učení</string>
+    <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního studia</string>
     <string name="importing_collection">Importuje se kolekce&#8230;</string>
     <string name="import_media_count">Importují se multimediální soubory %1$d%%&#8230;</string>
     <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
