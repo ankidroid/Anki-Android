@@ -217,6 +217,16 @@ object NoteService {
 
     fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
 
+    /**
+     * Returns the average interval of all the non-new and non-learning cards in the note,
+     * or if all the cards in the note are new or learning, returns null
+     */
+    fun avgInterval(note: Note): Int? {
+        val nonNewOrLearningCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
+
+        return nonNewOrLearningCards.average { it.ivl }?.toInt()
+    }
+
     interface NoteField {
         val ord: Int
 
@@ -228,3 +238,5 @@ object NoteService {
 fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
 
 fun Card.totalReviewsForNote() = NoteService.totalReviews(note())
+
+fun Card.avgIntervalOfNote() = NoteService.avgInterval(note())

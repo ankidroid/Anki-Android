@@ -64,6 +64,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
 import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
@@ -2328,11 +2329,7 @@ open class CardBrowser :
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(card.mod)
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
-                Column.INTERVAL -> when (card.type) {
-                    Consts.CARD_TYPE_NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                    Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
-                    else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * Stats.SECONDS_PER_DAY)
-                }
+                Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
                 Column.NOTE_TYPE -> card.model().optString("name")
                 Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
@@ -2363,6 +2360,24 @@ open class CardBrowser :
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
             } else {
                 "$avgEase%"
+            }
+        }
+
+        private fun queryIntervalForCards(): String {
+            return when (card.type) {
+                Consts.CARD_TYPE_NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
+                Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
+                else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * Stats.SECONDS_PER_DAY)
+            }
+        }
+
+        private fun queryAvgIntervalForNotes(): String {
+            val avgInterval = card.avgIntervalOfNote()
+
+            return if (avgInterval == null) {
+                "" // upstream does not display interval for notes with new or learning cards
+            } else {
+                Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, avgInterval * Stats.SECONDS_PER_DAY)
             }
         }
 
