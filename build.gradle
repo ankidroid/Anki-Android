@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.7.10'
-    ext.lint_version = '30.2.2'
+    ext.lint_version = '30.3.0'
     ext.acra_version = '5.7.0'
     ext.ankidroid_backend_version = '0.1.15-anki2.1.54' // this is parsed in tools/setup-anki-backend.sh
     ext.hamcrest_version = '2.2'
@@ -22,7 +22,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
