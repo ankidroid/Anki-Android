@@ -164,7 +164,6 @@
     <string name="empty_deck">Deze leerset is leeg</string>
     <string name="search_deck" comment="Deck search for selecting it">Leerset zoeken</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Set doorzoeken</string>
-    <string name="empty_deck_add_note">Kaart toevoegen</string>
     <string name="invalid_deck_name">Ongeldige setnaam</string>
     <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
     <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>

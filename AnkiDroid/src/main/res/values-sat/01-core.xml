@@ -164,7 +164,6 @@
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
     <string name="studyoptions_limit_reached">ᱫᱤᱱ ᱨᱮᱭᱟᱜ ᱯᱟᱲᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ</string>

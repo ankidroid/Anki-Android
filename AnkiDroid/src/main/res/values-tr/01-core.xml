@@ -164,7 +164,6 @@
     <string name="empty_deck">Bu deste boş</string>
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
-    <string name="empty_deck_add_note">Kart ekle</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>
     <string name="studyoptions_limit_reached">Günlük çalışma sınırına ulaşıldı</string>
@@ -190,7 +189,7 @@
     <string name="card_template_editor_front">Şablon Ön Yüz</string>
     <string name="card_template_editor_back">Şablon Arka Yüz</string>
     <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Kart Listeleyici Görünümü</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kart Tarayıcısı Görünümü</string>
     <string name="card_template_editor_deck_override">Desteyi Geçersiz Kılma</string>
     <string name="card_template_editor_insert_field">Alan Ekle</string>
     <string name="card_template_editor_select_field">Alan seç</string>
@@ -208,7 +207,7 @@
     <string name="card_template_editor_save_error">Kart şablon değişiklikleri yapılamıyor: %s</string>
     <string name="template_for_current_card_deleted">Kart için mevcut olan kart tipi silindi.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Listeleyici görünümü</string>
+    <string name="card_template_browser_appearance_title">Tarayıcı görünümü</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Kart Bilgileri</string>
@@ -216,7 +215,7 @@
     <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmek</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart Listeleyicisi</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart Tarayıcısı</string>
     <string name="context_menu_anki_card_label">Anki Kart</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s problem var:<br/>%2$s</string>
     <string name="more_information">Daha fazla bilgi</string>

@@ -174,7 +174,6 @@
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
-    <string name="empty_deck_add_note">Дадаць картку</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_empty">Гэта калода пустая. Націсніце кнопку +, каб дадаць новае змесціва.</string>
     <string name="studyoptions_limit_reached">Вы выканалі дзённую норму</string>

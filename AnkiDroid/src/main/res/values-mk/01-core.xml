@@ -164,7 +164,6 @@
     <string name="empty_deck">Овој deck е празен</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Невалидно име за шпил</string>
     <string name="studyoptions_empty">Овој deck е празен. Притиснете го копчето + за да додадете нова содржина.</string>
     <string name="studyoptions_limit_reached">Достигнато дневно ниво на студирање</string>

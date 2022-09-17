@@ -164,7 +164,6 @@
     <string name="empty_deck">See kaardipakk on tühi</string>
     <string name="search_deck" comment="Deck search for selecting it">Otsi kaardipakki</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Otsi kaardipakki</string>
-    <string name="empty_deck_add_note">Lisa kaart</string>
     <string name="invalid_deck_name">Vigane kaardipaki nimi</string>
     <string name="studyoptions_empty">See kaardipakk on tühi. Vajuta + nupule uue sisu lisamiseks.</string>
     <string name="studyoptions_limit_reached">Päevalimiit on saavutatud</string>

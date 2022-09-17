@@ -164,7 +164,6 @@
     <string name="empty_deck">हा डेक रिक्त आहे</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">कार्ड जोडा</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
     <string name="studyoptions_empty">हा डेक रिक्त आहे. नवीन सामग्री जोडण्यासाठी + बटण दाबा.</string>
     <string name="studyoptions_limit_reached">दररोज अभ्यासाची मर्यादा गाठली</string>

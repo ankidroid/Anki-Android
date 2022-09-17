@@ -164,7 +164,6 @@
     <string name="empty_deck">ഈ ഡെക്ക് ശൂന്യമാണ്</string>
     <string name="search_deck" comment="Deck search for selecting it">ഡെക്ക് തിരയൽ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">കാർഡ് ചേർക്കുക</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
     <string name="studyoptions_empty">ഈ ഡെക്ക് ശൂന്യമാണ്. പുതിയ ഉള്ളടക്കം ചേർക്കാൻ + ബട്ടൺ അമർത്തുക</string>
     <string name="studyoptions_limit_reached"> ദൈനംദിന പഠന പരിധിയിലെത്തി</string>

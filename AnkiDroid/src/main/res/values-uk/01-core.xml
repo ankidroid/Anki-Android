@@ -174,7 +174,6 @@
     <string name="empty_deck">Ця колода порожня</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
-    <string name="empty_deck_add_note">Додати картку</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_empty">Ця колода порожня. Натисніть на кнопку +, щоб додати новий вміст.</string>
     <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>

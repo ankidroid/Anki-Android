@@ -164,7 +164,6 @@
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">ఈ డెక్ ఖాళీగా ఉంది. క్రొత్త కంటెంట్ని జోడించడానికి + బటన్ నొక్కండి.</string>
     <string name="studyoptions_limit_reached">రోజువారీ అధ్యయనం పరిమితిని చేరుకుంది</string>

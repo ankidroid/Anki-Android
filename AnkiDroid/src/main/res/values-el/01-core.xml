@@ -164,7 +164,6 @@
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
     <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Αναζήτηση</string>
-    <string name="empty_deck_add_note">Προσθήκη κάρτας</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
     <string name="studyoptions_empty">Αυτή η τράπουλα είναι κενή. Πατήστε το κουμπί + για να προσθέσετε πριεχόμενο.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>

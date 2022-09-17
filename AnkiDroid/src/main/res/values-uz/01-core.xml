@@ -164,7 +164,6 @@
     <string name="empty_deck">Bu to\'plam bo\'sh</string>
     <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
-    <string name="empty_deck_add_note">Karta qo\'shish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
     <string name="studyoptions_empty">Bu to\'plam bo\'sh. Yangi karta qo\'shish uchun + tugmasini bosing.</string>
     <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
