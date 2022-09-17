@@ -44,7 +44,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.AddField
-import com.ichi2.async.CollectionTask.ChangeSortField
 import com.ichi2.async.CollectionTask.DeleteField
 import com.ichi2.async.CollectionTask.RepositionField
 import com.ichi2.async.TaskListenerWithContext
@@ -392,10 +391,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Changes the sort field (that displays in card browser) to the current field
      */
     private fun sortByField() {
-        val listener = changeFieldHandler()
         try {
             collection.modSchema()
-            TaskManager.launchCollectionTask(ChangeSortField(mModel, currentPos), listener)
+            launchCatchingTask { changeSortField(mModel, currentPos) }
         } catch (e: ConfirmModSchemaException) {
             e.log()
             // Handler mMod schema confirmation
@@ -403,11 +401,22 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
             val confirm = Runnable {
                 collection.modSchemaNoCheck()
-                TaskManager.launchCollectionTask(ChangeSortField(mModel, currentPos), listener)
+                launchCatchingTask { changeSortField(mModel, currentPos) }
             }
             c.setConfirm(confirm)
             this@ModelFieldEditor.showDialogFragment(c)
         }
+    }
+
+    private suspend fun changeSortField(model: Model, idx: Int) {
+        withProgress(resources.getString(R.string.model_field_editor_changing)) {
+            CollectionManager.withCol {
+                Timber.d("doInBackgroundChangeSortField")
+                models.setSortIdx(model, idx)
+                save()
+            }
+        }
+        initialize()
     }
 
     /*
