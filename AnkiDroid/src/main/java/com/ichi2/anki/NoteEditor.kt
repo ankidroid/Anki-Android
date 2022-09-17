@@ -1075,7 +1075,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         TemporaryModel.clearTempModelFiles()
 
         // Set the finish animation if there is one on the intent which created the activity
-        val animation = getIntent().getParcelableExtraCompat<ActivityTransitionAnimation.Direction>(FINISH_ANIMATION_EXTRA)
+        val animation = this.intent.getParcelableExtraCompat<ActivityTransitionAnimation.Direction>(FINISH_ANIMATION_EXTRA)
         if (animation != null) {
             finishWithAnimation(animation)
             return
