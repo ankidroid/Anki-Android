@@ -2323,7 +2323,7 @@ open class CardBrowser :
                 Column.SFLD -> card.note().sFld
                 Column.DECK -> col.decks.name(card.did)
                 Column.TAGS -> card.note().stringTags()
-                Column.CARD -> card.template().optString("name")
+                Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
                 Column.DUE -> card.dueString
                 Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod)
