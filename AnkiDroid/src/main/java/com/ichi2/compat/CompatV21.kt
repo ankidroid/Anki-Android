@@ -78,15 +78,10 @@ open class CompatV21 : Compat {
     override fun <T : Parcelable?> getParcelableExtra(
         intent: Intent,
         name: String,
-        className: Class<T>
+        clazz: Class<T>
     ): T? {
-        return try {
-            intent.getParcelableExtra(name) as? T?
-        } catch (e: Exception) {
-            return null
-        }
+        return intent.getParcelableExtra<T>(name)
     }
-
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {

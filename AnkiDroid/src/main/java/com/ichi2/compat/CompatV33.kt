@@ -27,7 +27,7 @@ open class CompatV33 : CompatV31(), Compat {
         return intent.getSerializableExtra(name, className)
     }
 
-    override fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, className: Class<T>): T? {
-        return intent.getParcelableExtra(name, className)
+    override fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T? {
+        return intent.getParcelableExtra(name, clazz)
     }
 }
