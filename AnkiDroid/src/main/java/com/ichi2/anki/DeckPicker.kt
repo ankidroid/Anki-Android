@@ -1479,19 +1479,44 @@ open class DeckPicker :
         }
     }
 
+    /**
+     * Schedules a background job to find missing, unused and invalid media files.
+     * Shows a progress dialog while operation is running.
+     * When check is finished a dialog box shows number of missing, unused and invalid media files.
+     *
+     * If has the storage permission, job is scheduled, otherwise storage permission is asked first.
+     */
     override fun mediaCheck() {
         // TODO show to the user this message when failing
         @Suppress("UNUSED_VARIABLE")
         val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
             launchCatchingTask {
-                val result = withProgress(resources.getString(R.string.check_media_message)) {
-                    withCol { if (!BackendFactory.defaultLegacySchema) media.check() else checkMedia(this) }
-                }
+                val result = withProgress(resources.getString(R.string.check_media_message)) { checkMedia() }
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
             }
         } else {
             requestStoragePermission()
+        }
+    }
+
+    /**
+     * Finds missing, unused and invalid media files
+     *
+     * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
+     */
+    @VisibleForTesting
+    suspend fun checkMedia() = withCol {
+        if (!BackendFactory.defaultLegacySchema) {
+            media.check()
+        } else {
+            Timber.d("doInBackgroundCheckMedia")
+            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+            col.media.rebuildIfInvalid()
+            // A media check on AnkiDroid will also update the media db
+            col.media.findChanges(true)
+            // Then do the actual check
+            col.media.check()
         }
     }
 
