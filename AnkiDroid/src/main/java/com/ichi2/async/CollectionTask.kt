@@ -38,7 +38,6 @@ import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
-import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
@@ -169,22 +168,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Timber.e(e, "doInBackgroundLoadDeckCounts - error")
                 null
             }
-        }
-    }
-
-    class SaveCollection(private val syncIgnoresDatabaseModification: Boolean) : TaskDelegate<Void?, Void?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>): Void? {
-            Timber.d("doInBackgroundSaveCollection")
-            try {
-                if (syncIgnoresDatabaseModification) {
-                    ignoreDatabaseModification { col.save() }
-                } else {
-                    col.save()
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "Error on saving deck in background")
-            }
-            return null
         }
     }
 

@@ -939,7 +939,7 @@ open class DeckPicker :
         if (colIsOpen()) {
             WidgetStatus.update(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
-            UIUtils.saveCollectionInBackground(true)
+            saveCollectionInBackground(true)
         }
     }
 

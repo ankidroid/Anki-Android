@@ -459,7 +459,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         super.onStop()
         if (!isFinishing) {
             WidgetStatus.update(this)
-            UIUtils.saveCollectionInBackground()
+            saveCollectionInBackground()
         }
     }
 

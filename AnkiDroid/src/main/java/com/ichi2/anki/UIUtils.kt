@@ -6,11 +6,7 @@ import android.content.Context
 import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.ichi2.async.CollectionTask.SaveCollection
-import com.ichi2.async.TaskListener
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.utils.Time
-import timber.log.Timber
 import java.util.*
 
 object UIUtils {
@@ -40,21 +36,6 @@ object UIUtils {
         cal[Calendar.SECOND] = 0
         cal[Calendar.MILLISECOND] = 0
         return cal.timeInMillis
-    }
-
-    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
-        if (CollectionHelper.instance.colIsOpen()) {
-            val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {
-                override fun onPreExecute() {
-                    Timber.d("saveCollectionInBackground: start")
-                }
-
-                override fun onPostExecute(result: Void?) {
-                    Timber.d("saveCollectionInBackground: finished")
-                }
-            }
-            TaskManager.launchCollectionTask(SaveCollection(syncIgnoresDatabaseModification), listener)
-        }
     }
 
     /**

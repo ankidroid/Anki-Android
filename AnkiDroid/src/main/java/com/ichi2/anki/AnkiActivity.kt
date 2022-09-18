@@ -38,6 +38,7 @@ import androidx.fragment.app.FragmentManager
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -48,7 +49,7 @@ import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.Preferences.Companion.MINIMUM_CARDS_DUE_FOR_NOTIFICATION
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
-import com.ichi2.async.CollectionLoader
+import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
@@ -60,6 +61,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
@@ -640,6 +642,28 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }
         )
+
+    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
+        if (CollectionHelper.instance.colIsOpen()) {
+            launchCatchingTask {
+                Timber.d("saveCollectionInBackground: start")
+                withCol {
+                    Timber.d("doInBackgroundSaveCollection")
+                    try {
+                        if (syncIgnoresDatabaseModification) {
+                            SyncStatus.ignoreDatabaseModification { col.save() }
+                        } else {
+                            col.save()
+                        }
+                    } catch (e: Exception) {
+                        Timber.e(e, "Error on saving deck in background")
+                        // TODO should this error be reported through our error reporting service?
+                    }
+                }
+                Timber.d("saveCollectionInBackground: finished")
+            }
+        }
+    }
 
     companion object {
         const val REQUEST_REVIEW = 901
