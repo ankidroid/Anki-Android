@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
@@ -42,7 +43,6 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuActio
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.CollectionTask.AddField
 import com.ichi2.async.CollectionTask.DeleteField
 import com.ichi2.async.CollectionTask.RepositionField
 import com.ichi2.async.TaskListenerWithContext
@@ -179,10 +179,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
-                    val listener = changeFieldHandler()
                     val fieldName = uniqueName(_fieldNameInput)
                     try {
-                        addField(fieldName, listener, true)
+                        addField(fieldName, true)
                     } catch (e: ConfirmModSchemaException) {
                         e.log()
 
@@ -191,7 +190,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
                         val confirm = Runnable {
                             try {
-                                addField(fieldName, listener, false)
+                                addField(fieldName, false)
                             } catch (e1: ConfirmModSchemaException) {
                                 e1.log()
                                 // This should never be thrown
@@ -209,8 +208,11 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
     }
 
+    /**
+     * Adds a field with the given name
+     */
     @Throws(ConfirmModSchemaException::class)
-    private fun addField(fieldName: String?, listener: ChangeHandler, modSchemaCheck: Boolean) {
+    private fun addField(fieldName: String?, modSchemaCheck: Boolean) {
         fieldName ?: return
         // Name is valid, now field is added
         if (modSchemaCheck) {
@@ -218,7 +220,20 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         } else {
             collection.modSchemaNoCheck()
         }
-        TaskManager.launchCollectionTask(AddField(mModel, fieldName), listener)
+        launchCatchingTask {
+            val result = withProgress {
+                withCol {
+                    Timber.d("doInBackgroundRepositionField")
+                    col.models.addFieldModChanged(mModel, col.models.newField(fieldName))
+                    col.save()
+                    true
+                }
+            }
+            if (result == false) {
+                closeActivity()
+            }
+            initialize()
+        }
     }
 
     /*
@@ -530,7 +545,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     @Throws(ConfirmModSchemaException::class)
     fun addField(fieldNameInput: EditText) {
         val fieldName = uniqueName(fieldNameInput)
-        addField(fieldName, ChangeHandler(this), true)
+        addField(fieldName, true)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
