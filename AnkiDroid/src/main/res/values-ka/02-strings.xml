@@ -193,11 +193,11 @@
     <string name="export_in_progress">მიმდინარეობს Аnki-პაკეტის ფაილის ექსპორტი&#8230;</string>
     <string name="export_successful_title">გაიგზავნოს Anki-პაკეტი?</string>
     <string name="export_send_button">გაგზავნა</string>
-    <string name="export_save_button">ფაილში შენახვა</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
     <string name="export_successful">ფაილი \"%s\" დაექსპორტდა. გინდათ გააგზავნოთ სხვა აპლიკაციით? </string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid-მა წარმატებით განახორციელა ბარათების ექსპორტი: %s</string>
     <string name="export_email_text"><![CDATA[        გამარჯობა!
         <br/><br/>

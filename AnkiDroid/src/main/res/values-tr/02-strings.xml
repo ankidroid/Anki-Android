@@ -193,11 +193,11 @@
     <string name="export_in_progress">Anki paketi dosyası dışarı aktarılıyor&#8230;</string>
     <string name="export_successful_title">Anki paketi gönderilsin mi?</string>
     <string name="export_send_button">Gönder</string>
-    <string name="export_save_button">Dosyaya kaydet</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid\'den aktarılan bilgi kartları: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
         <br/><br/>

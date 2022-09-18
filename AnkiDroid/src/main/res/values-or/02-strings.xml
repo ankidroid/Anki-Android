@@ -193,11 +193,11 @@
     <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
     <string name="export_successful_title">Anki package ପଠାଇବେ କି?</string>
     <string name="export_send_button">ପଠାନ୍ତୁ</string>
-    <string name="export_save_button">ଫାଇଲ ରେ ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">“%s” ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା। ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
     <string name="export_email_text"><![CDATA[        ନମସ୍କାର!
         <br/><br/>

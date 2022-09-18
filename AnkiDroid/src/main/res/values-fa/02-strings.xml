@@ -193,11 +193,11 @@
     <string name="export_in_progress">در حال صدور فایل مجموعۀ آنکی...</string>
     <string name="export_successful_title">ارسال بسته Anki؟</string>
     <string name="export_send_button">ارسال</string>
-    <string name="export_save_button">ذخیره در فایل</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای apkg در دسترس است. صرفه جویی در...</string>
     <string name="export_save_apkg_successful">بسته Anki با موفقیت ذخیره شد</string>
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
     <string name="export_email_text"><![CDATA[سلام!
 این یک دسته فلش کارت Anki فرستاده شده از AnkiDroid است. [1]

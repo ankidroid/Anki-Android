@@ -50,8 +50,8 @@
         <item quantity="other">%d tarjetas mostradas</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d nota mostrada</item>
+        <item quantity="other">%d notas mostradas</item>
     </plurals>
     <string name="card_browser_all_decks">Todos los mazos</string>
     <string name="card_browser_delete_card">Eliminar notas</string>

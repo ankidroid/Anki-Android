@@ -193,11 +193,11 @@
     <string name="export_in_progress">Elportado de Anki-pakaĵa dosiero&#8230;</string>
     <string name="export_successful_title">Ĉu sendi Anki-pakaĵon?</string>
     <string name="export_send_button">Sendi</string>
-    <string name="export_save_button">Konservi al dosiero</string>
     <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado…</string>
     <string name="export_save_apkg_successful">Sukcese savis Anki-pakaĵon</string>
     <string name="export_save_apkg_unsuccessful">Savi la Anki-pakaĵon malsukcesis</string>
     <string name="export_successful">Elportis dosieron “%s”. Ĉu sendi ĝin per alia aplikaĵo?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid elportis fulmokartojn: %s</string>
     <string name="export_email_text"><![CDATA[        Saluton!
         <br/><br/>

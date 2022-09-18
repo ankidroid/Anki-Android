@@ -189,11 +189,11 @@
     <string name="export_in_progress">Anki пакеты экспортлана... </string>
     <string name="export_successful_title">Anki пакетын җибәрергәме? </string>
     <string name="export_send_button">Җибәрү</string>
-    <string name="export_save_button">Файлга саклау</string>
     <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана... </string>
     <string name="export_save_apkg_successful">Anki пакеты уңышлы итеп сакланды</string>
     <string name="export_save_apkg_unsuccessful">Anki пакеты саклана алмады</string>
     <string name="export_successful">\"%s\" файлы экспортланды. Сез аны башка кушымта белән җибәрергә телисезме? </string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспортланган кәртләр: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

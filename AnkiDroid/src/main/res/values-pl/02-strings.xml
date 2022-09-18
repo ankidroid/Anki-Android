@@ -201,11 +201,11 @@
     <string name="export_in_progress">Eksportowanie pliku pakietu Anki&#8230;</string>
     <string name="export_successful_title">Wysłać pakiet Anki?</string>
     <string name="export_send_button">Wyślij</string>
-    <string name="export_save_button">Zapisz jako plik</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie...</string>
     <string name="export_save_apkg_successful">Pakiet Anki zapisany pomyślnie</string>
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

@@ -193,11 +193,11 @@
     <string name="export_in_progress">अंकी पॅकेज फाईल निर्यात करीत आहे ...</string>
     <string name="export_successful_title">अंकी पॅकेज पाठवायचे?</string>
     <string name="export_send_button">पाठवा</string>
-    <string name="export_save_button">फाईलमधे सेव्ह करा</string>
     <string name="export_send_no_handlers">एपीकेजी हाताळण्यासाठी कोणतेही अनुप्रयोग उपलब्ध नाहीत. बचत...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Phā\'ila \"%s\" niryāta karaṇyāta ālī. Āpaṇa dusaryā a̔ĕpasaha pāṭhavū icchitā?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid niryāta phlĕśakārḍa: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

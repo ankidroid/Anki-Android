@@ -193,11 +193,11 @@
     <string name="export_in_progress">Tuodaan Anki-tiedostoa...</string>
     <string name="export_successful_title">Lähetä Anki-tiedosto?</string>
     <string name="export_send_button">Lähetä</string>
-    <string name="export_save_button">Tallenna tiedostoon</string>
     <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan...</string>
     <string name="export_save_apkg_successful">Anki-tiedosto tallennettu.</string>
     <string name="export_save_apkg_unsuccessful">Anki-tiedoston tallennus epäonnistui.</string>
     <string name="export_successful">Tiedosto ”%s” tuotiin. Haluatko lähettää sen toisella sovelluksella?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid toi kortit: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
