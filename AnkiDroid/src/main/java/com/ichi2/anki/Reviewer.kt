@@ -26,11 +26,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.os.Parcelable
+import android.os.*
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
@@ -750,7 +746,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         mActionButtons.setCustomButtonsStatus(menu)
         var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (currentCard != null && isMarked(currentCard!!.note())) {
+        if (currentCard != null && currentCard!!.note().isMarked()) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)

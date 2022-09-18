@@ -18,7 +18,10 @@
 
 package com.ichi2.anki
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.SystemClock
@@ -57,10 +60,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.receiver.SdCardReceiver
-import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
-import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
-import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
+import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.isMarked
@@ -69,12 +69,7 @@ import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.*
-import com.ichi2.async.CollectionTask.ChangeDeckMulti
-import com.ichi2.async.CollectionTask.CheckCardSelection
-import com.ichi2.async.CollectionTask.DeleteNoteMulti
-import com.ichi2.async.CollectionTask.MarkNoteMulti
-import com.ichi2.async.CollectionTask.RenderBrowserQA
-import com.ichi2.async.CollectionTask.SuspendCardMulti
+import com.ichi2.async.CollectionTask.*
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -84,20 +79,19 @@ import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.upgrade.Upgrade.upgradeJSONIfNecessary
-import com.ichi2.utils.*
+import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalStateException
-import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -2303,7 +2297,7 @@ open class CardBrowser :
                     6 -> R.attr.flagTurquoise
                     7 -> R.attr.flagPurple
                     else -> {
-                        if (isMarked(card.note())) {
+                        if (card.note().isMarked()) {
                             R.attr.markedColor
                         } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                             R.attr.suspendedColor
@@ -2318,7 +2312,7 @@ open class CardBrowser :
             return when (key) {
                 Column.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                Column.MARKED -> if (isMarked(card.note())) "marked" else null
+                Column.MARKED -> if (card.note().isMarked()) "marked" else null
                 Column.SFLD -> card.note().sFld
                 Column.DECK -> col.decks.name(card.did)
                 Column.TAGS -> card.note().stringTags()

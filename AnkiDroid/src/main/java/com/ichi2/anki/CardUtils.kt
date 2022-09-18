@@ -36,7 +36,7 @@ object CardUtils {
     fun markAll(notes: List<Note>, mark: Boolean) {
         for (note in notes) {
             if (mark) {
-                if (!isMarked(note)) {
+                if (!note.isMarked()) {
                     note.addTag("marked")
                     note.flush()
                 }

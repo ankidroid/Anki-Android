@@ -353,7 +353,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val originalMarked: MutableList<Note> = ArrayList()
             val originalUnmarked: MutableList<Note> = ArrayList()
             for (n in notes) {
-                if (isMarked(n)) originalMarked.add(n) else originalUnmarked.add(n)
+                if (n.isMarked()) originalMarked.add(n) else originalUnmarked.add(n)
             }
             val hasUnmarked = !originalUnmarked.isEmpty()
             CardUtils.markAll(ArrayList(notes), hasUnmarked)
@@ -1053,7 +1053,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 val card = c.card
                 hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-                hasUnmarked = hasUnmarked || !isMarked(card.note())
+                hasUnmarked = hasUnmarked || !card.note().isMarked()
                 if (hasUnsuspended && hasUnmarked) break
             }
             return Pair(hasUnsuspended, hasUnmarked)

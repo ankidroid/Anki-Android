@@ -28,7 +28,10 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
+import android.os.SystemClock
 import android.text.TextUtils
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -107,7 +110,6 @@ import timber.log.Timber
 import java.io.*
 import java.lang.ref.WeakReference
 import java.net.URLDecoder
-import java.util.*
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReadWriteLock
 import java.util.concurrent.locks.ReentrantReadWriteLock
@@ -2120,7 +2122,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note())
+        return currentCard!!.note().isMarked()
     }
 
     protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {

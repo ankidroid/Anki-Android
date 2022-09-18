@@ -181,7 +181,7 @@ fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
 }
 
 suspend fun toggleMark(note: Note) {
-    if (isMarked(note)) {
+    if (note.isMarked()) {
         note.delTag("marked")
     } else {
         note.addTag("marked")
@@ -196,9 +196,7 @@ suspend fun toggleMark(note: Note) {
     }
 }
 
-fun isMarked(note: Note): Boolean {
-    return note.hasTag("marked")
-}
+fun Note.isMarked() = hasTag("marked")
 
 //  TODO: should make a direct SQL query to do this
 /**
