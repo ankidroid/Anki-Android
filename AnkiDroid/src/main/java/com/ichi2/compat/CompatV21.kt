@@ -93,7 +93,7 @@ open class CompatV21 : Compat {
             @Suppress("UNCHECKED_CAST")
             bundle.getSerializable(name) as? T?
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 
