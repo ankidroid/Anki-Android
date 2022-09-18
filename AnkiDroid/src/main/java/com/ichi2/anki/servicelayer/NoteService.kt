@@ -28,7 +28,6 @@ import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
-import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
@@ -230,9 +229,3 @@ interface NoteField {
     // ideally shouldn't be nullable
     val fieldText: String?
 }
-
-fun Card.totalLapsesOfNote() = note().totalLapses()
-
-fun Card.totalReviewsForNote() = note().totalReviews()
-
-fun Card.avgIntervalOfNote() = avgInterval(note())
