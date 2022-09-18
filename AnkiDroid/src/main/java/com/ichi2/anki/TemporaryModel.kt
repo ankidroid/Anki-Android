@@ -23,6 +23,7 @@ import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.SaveModelAndExitHa
 import com.ichi2.async.CollectionTask.SaveModel
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.utils.JSONObject
@@ -32,6 +33,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.io.Serializable
 
 class TemporaryModel(model: Model) {
     enum class ChangeType {
@@ -54,13 +56,12 @@ class TemporaryModel(model: Model) {
         return outState
     }
 
-    @Suppress("deprecation") // getSerializable
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
             @Suppress("UNCHECKED_CAST")
             @KotlinCleanup("use bundle.getSerializableWithCast() to improve nullability")
             mTemplateChanges =
-                (bundle.getSerializable("mTemplateChanges") as ArrayList<Array<Any>>)
+                (bundle.getSerializableCompat<Serializable>("mTemplateChanges") as ArrayList<Array<Any>>)
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }

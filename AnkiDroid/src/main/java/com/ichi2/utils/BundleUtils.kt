@@ -16,6 +16,8 @@
 package com.ichi2.utils
 
 import android.os.Bundle
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import java.io.Serializable
 
 /**
  * Collection of useful methods to be used with [android.os.Bundle]
@@ -49,8 +51,7 @@ object BundleUtils {
         return getLong(key)
     }
 
-    @Suppress("deprecation") // getSerializable
     inline fun <reified T> Bundle.getSerializableWithCast(key: String): T {
-        return getSerializable(key) as T
+        return getSerializableCompat<Serializable>(key) as T
     }
 }
