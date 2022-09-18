@@ -180,18 +180,18 @@ fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
     } else fieldData.replace(FieldEditText.NEW_LINE, "<br>")
 }
 
-suspend fun toggleMark(note: Note) {
-    if (note.isMarked()) {
-        note.delTag("marked")
+suspend fun Note.toggleMark() {
+    if (isMarked()) {
+        delTag("marked")
     } else {
-        note.addTag("marked")
+        addTag("marked")
     }
 
     withCol {
         if (BackendFactory.defaultLegacySchema) {
-            note.flush()
+            flush()
         } else {
-            newBackend.updateNote(note)
+            newBackend.updateNote(this@toggleMark)
         }
     }
 }
@@ -203,16 +203,16 @@ fun Note.isMarked() = hasTag("marked")
  * returns the average ease of all the non-new cards in the note,
  * or if all the cards in the note are new, returns null
  */
-fun avgEase(note: Note): Int? {
-    val nonNewCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW }
+fun Note.avgEase(): Int? {
+    val nonNewCards = cards().filter { it.type != Consts.CARD_TYPE_NEW }
 
     return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
 }
 
 //  TODO: should make a direct SQL query to do this
-fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+fun Note.totalLapses() = cards().sumOf { it.lapses }
 
-fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
+fun Note.totalReviews() = cards().sumOf { it.reps }
 
 /**
  * Returns the average interval of all the non-new and non-learning cards in the note,
@@ -231,8 +231,8 @@ interface NoteField {
     val fieldText: String?
 }
 
-fun Card.totalLapsesOfNote() = totalLapses(note())
+fun Card.totalLapsesOfNote() = note().totalLapses()
 
-fun Card.totalReviewsForNote() = totalReviews(note())
+fun Card.totalReviewsForNote() = note().totalReviews()
 
 fun Card.avgIntervalOfNote() = avgInterval(note())

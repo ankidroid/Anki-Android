@@ -247,7 +247,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             return
         }
         launchCatchingTask {
-            toggleMark(card.note())
+            card.note().toggleMark()
             refreshActionBar()
             onMarkChanged()
         }

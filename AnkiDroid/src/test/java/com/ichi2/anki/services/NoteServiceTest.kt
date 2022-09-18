@@ -253,7 +253,7 @@ class NoteServiceTest : RobolectricTest() {
             card.flush()
         }
         // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
-        assertEquals(156, avgEase(note))
+        assertEquals(156, note.avgEase())
 
         // test case: one card is new
         note.cards()[2].apply {
@@ -261,7 +261,7 @@ class NoteServiceTest : RobolectricTest() {
             flush()
         }
         // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
-        assertEquals(175, avgEase(note))
+        assertEquals(175, note.avgEase())
 
         // test case: all cards are new
         for (card in note.cards()) {
@@ -269,7 +269,7 @@ class NoteServiceTest : RobolectricTest() {
             card.flush()
         }
         // no cards are rev, so avg ease cannot be calculated
-        assertEquals(null, avgEase(note))
+        assertEquals(null, note.avgEase())
     }
 
     @Test
