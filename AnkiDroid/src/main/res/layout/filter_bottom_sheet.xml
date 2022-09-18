@@ -31,8 +31,7 @@
             android:id="@+id/clear_filter_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="clear"
-            tools:ignore="HardcodedText"
+            android:text="@string/multimedia_editor_text_field_editing_clear"
             android:textColor="?attr/filterItemTextColor"
             style="@style/Widget.MaterialComponents.Button.TextButton" />
 
