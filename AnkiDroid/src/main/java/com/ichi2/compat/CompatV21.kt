@@ -29,6 +29,7 @@ import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Environment
+import android.os.Parcelable
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.widget.TimePicker
@@ -74,6 +75,13 @@ open class CompatV21 : Compat {
         }
     }
 
+    override fun <T : Parcelable?> getParcelableExtra(
+        intent: Intent,
+        name: String,
+        clazz: Class<T>
+    ): T? {
+        return intent.getParcelableExtra<T>(name)
+    }
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {
