@@ -1000,18 +1000,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /**
-     * Adds a field with name in given model
-     */
-    class AddField(private val model: Model, private val fieldName: String) : TaskDelegate<Void, Boolean?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundRepositionField")
-            col.models.addFieldModChanged(model, col.models.newField(fieldName))
-            col.save()
-            return true
-        }
-    }
-
     class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
             return col.emptyCids(collectionTask)
