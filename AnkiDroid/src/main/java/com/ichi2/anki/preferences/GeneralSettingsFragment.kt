@@ -17,12 +17,12 @@ package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.LanguageUtil.getSystemLocale
 import kotlinx.coroutines.runBlocking
