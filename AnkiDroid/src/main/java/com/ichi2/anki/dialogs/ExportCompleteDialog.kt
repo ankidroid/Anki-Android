@@ -17,61 +17,43 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
-import com.ichi2.utils.iconAttr
+import com.ichi2.themes.Themes
 import java.io.File
 
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
         fun dismissAllDialogFragments()
-        fun emailFile(path: String)
+        fun shareFile(path: String) // path of the file to be shared
         fun saveExportFile(exportPath: String)
     }
+    val exportPath
+        get() = requireArguments().getString("exportPath")!!
 
     fun withArguments(exportPath: String): ExportCompleteDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
-        args.putString("exportPath", exportPath)
-        this.arguments = args
+        arguments = (arguments ?: bundleOf(Pair("exportPath", exportPath)))
         return this
     }
 
-    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val exportPath = requireArguments().getString("exportPath")!!
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)
             message(text = notificationMessage)
-            iconAttr(R.attr.dialogSendIcon)
+            icon(Themes.getResFromAttr(context, R.attr.dialogSendIcon))
             positiveButton(R.string.export_send_button) {
                 listener.dismissAllDialogFragments()
-                listener.emailFile(exportPath)
+                listener.shareFile(exportPath)
             }
-            negativeButton(R.string.export_save_button) {
-                listener.dismissAllDialogFragments()
-                listener.saveExportFile(exportPath)
-            }
-            neutralButton(R.string.dialog_cancel) {
-                // TODO: Discuss regarding alternatives to using a neutral button here
-                //  since it is deprecated and not recommended in material guidelines
-
-                listener.dismissAllDialogFragments()
-            }
+            negativeButton(R.string.dialog_cancel) { listener.dismissAllDialogFragments() }
         }
     }
 
     override val notificationTitle: String
-        get() {
-            return res().getString(R.string.export_successful_title)
-        }
+        get() = res().getString(R.string.export_successful_title)
 
     override val notificationMessage: String
-        get() {
-            val exportPath = File(requireArguments().getString("exportPath")!!)
-            return res().getString(R.string.export_successful, exportPath.name)
-        }
+        get() = res().getString(R.string.export_successful, File(exportPath).name)
 }

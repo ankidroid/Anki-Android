@@ -24,8 +24,8 @@ import com.ichi2.libanki.Collection
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -56,6 +56,7 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Test
     @Throws(ExecutionException::class, InterruptedException::class)
     @NeedsTest("explain this test")
+    @Ignore("failing in local test runs - https://github.com/ankidroid/Anki-Android/issues/12437")
     fun testCreateReviewSummaryStatistics() = runTest(testDispatcher) {
         verify(mCol, atMost(0))!!.db
         createReviewSummaryStatistics(mCol, mView, testDispatcher, testDispatcher)
