@@ -201,11 +201,11 @@
     <string name="export_in_progress">Exportovanie súboru balíka Anki&#8230;</string>
     <string name="export_successful_title">Odoslať Anki balík?</string>
     <string name="export_send_button">Odoslať</string>
-    <string name="export_save_button">Uložiť do súboru</string>
     <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie...</string>
     <string name="export_save_apkg_successful">Balík Anki úspešne uložený</string>
     <string name="export_save_apkg_unsuccessful">Uloženie Anki balíka zlyhalo</string>
     <string name="export_successful">Súbor “%s” bol exportovaný. Chcete ho odoslať s ďalšou aplikáciou?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid exportoval kartičky: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

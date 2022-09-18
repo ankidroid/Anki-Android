@@ -193,11 +193,11 @@
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
     <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">\"%s\" ఫైల్ ఎగుమతి చేయబడింది. మీరు మరొక అనువర్తనంతో పంపాలనుకుంటున్నారా?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ఫ్లాష్ కార్డ్స్ ఎగుమతి:%s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

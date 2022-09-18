@@ -193,11 +193,11 @@
     <string name="export_in_progress">Anki ᱯᱮᱠᱮᱡ ᱨᱮᱫ&#8230; ᱵᱷᱟᱡᱟᱜ ᱠᱟᱱᱟ </string>
     <string name="export_successful_title">Anki ᱯᱮᱠᱮᱡ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
     <string name="export_send_button">ᱵᱷᱮᱡᱟ</string>
-    <string name="export_save_button">ᱨᱟᱫ ᱥᱟᱝᱪᱟᱣ ᱢᱮ</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ...</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
     <string name="export_successful">ᱨᱮᱫ “%s” ᱵᱷᱮᱡᱟᱭ ᱮᱱᱟ ᱾ ᱚᱞᱜᱟ ᱮᱯᱯ ᱛᱮ ᱵᱷᱮᱡᱟ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

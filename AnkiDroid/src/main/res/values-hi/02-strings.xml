@@ -193,11 +193,11 @@
     <string name="export_in_progress">निर्यात Anki पैकेज फ़ाइल ...</string>
     <string name="export_successful_title">Anki पैकेज भेजें?</string>
     <string name="export_send_button">भेजें</string>
-    <string name="export_save_button">फ़ाइल में सेव करें</string>
     <string name="export_send_no_handlers">apkg को संभालने के लिए कोई एप्लिकेशन उपलब्ध नहीं है। सहेजा जा रहा है ...</string>
     <string name="export_save_apkg_successful">सफलतापूर्वक Anki पैकेज को सहेजा गया </string>
     <string name="export_save_apkg_unsuccessful">Anki पैकेज सहेजना विफल रहा </string>
     <string name="export_successful">फ़ाइल \"%s\" निर्यात किया गया था । क्या आप इसे किसी अंय अनुप्रयोग के साथ भेजना चाहते हैं?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

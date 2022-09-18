@@ -199,11 +199,11 @@
     <string name="export_in_progress">Esportende su documentu de pachete de Anki&#8230;</string>
     <string name="export_successful_title">Imbiare su pachete de Anki?</string>
     <string name="export_send_button">Imbia</string>
-    <string name="export_save_button">Sarva in unu documentu</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende…</string>
     <string name="export_save_apkg_successful">Pachete de Anki sarvadu in manera curreta</string>
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
     <string name="export_successful">Su documentu “%s” est istadu esportadu. Lu cheres imbiare cun un\'àtera aplicatzione?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">Cartas mnemònicas esportadas dae AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Salude!
         <br/><br/>

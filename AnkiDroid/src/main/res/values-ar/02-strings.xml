@@ -209,11 +209,11 @@
     <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
     <string name="export_successful_title">هل تريد إرسال حزمة أنكي؟</string>
     <string name="export_send_button">إرسال</string>
-    <string name="export_save_button">حفظ إلى ملف</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
     <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
     <string name="export_email_text"><![CDATA[        مرحبًا
         <br/><br/>

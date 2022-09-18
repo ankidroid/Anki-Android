@@ -201,11 +201,11 @@
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
     <string name="export_successful_title">Отправить Anki-пакет?</string>
     <string name="export_send_button">Отправить</string>
-    <string name="export_save_button">Сохранить в файл</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[        Привет!
         <br/><br/>

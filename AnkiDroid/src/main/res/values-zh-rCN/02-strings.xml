@@ -189,11 +189,11 @@
     <string name="export_in_progress">正在导出 Anki 软件包文件&#8230;</string>
     <string name="export_successful_title">发送 Anki 包？</string>
     <string name="export_send_button">发送</string>
-    <string name="export_save_button">保存到文件</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
     <string name="export_save_apkg_successful">已成功保存 Anki 包</string>
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
     <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
         <br/><br/>
