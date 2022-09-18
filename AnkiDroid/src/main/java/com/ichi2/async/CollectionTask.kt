@@ -882,26 +882,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * @return The results list from the check, or false if any errors.
-     */
-    class CheckMedia : TaskDelegate<Void, Computation<List<List<String>>>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<List<List<String>>> {
-            Timber.d("doInBackgroundCheckMedia")
-            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-            try {
-                col.media.rebuildIfInvalid()
-            } catch (e: IOException) {
-                Timber.w(e)
-                return Computation.err()
-            }
-            // A media check on AnkiDroid will also update the media db
-            col.media.findChanges(true)
-            // Then do the actual check
-            return Computation.ok(col.media.check())
-        }
-    }
-
-    /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */
     class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {

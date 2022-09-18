@@ -1479,44 +1479,41 @@ open class DeckPicker :
         }
     }
 
-    private fun mediaCheckListener(): MediaCheckListener {
-        return MediaCheckListener(this)
-    }
-
-    private class MediaCheckListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Computation<List<List<String>>>?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.check_media_message), false
-            )
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: Computation<List<List<String>>>?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            if (result!!.succeeded()) {
-                val checkList = result.value
-                context.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
-            } else {
-                context.showSimpleMessageDialog(context.resources.getString(R.string.check_media_failed))
-            }
-        }
-    }
-
+    /**
+     * Schedules a background job to find missing, unused and invalid media files.
+     * Shows a progress dialog while operation is running.
+     * When check is finished a dialog box shows number of missing, unused and invalid media files.
+     *
+     * If has the storage permission, job is scheduled, otherwise storage permission is asked first.
+     */
     override fun mediaCheck() {
+        // TODO show to the user this message when failing
+        @Suppress("UNUSED_VARIABLE")
+        val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
-            if (!BackendFactory.defaultLegacySchema) {
-                launchCatchingTask {
-                    val result = withProgress { withCol { media.check() } }
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
-                }
-            } else {
-                TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+            launchCatchingTask {
+                val result = withProgress(resources.getString(R.string.check_media_message)) { checkMedia() }
+                showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
             }
         } else {
             requestStoragePermission()
         }
+    }
+
+    /**
+     * Finds missing, unused and invalid media files
+     *
+     * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
+     */
+    @VisibleForTesting
+    suspend fun checkMedia() = withCol {
+        if (BackendFactory.defaultLegacySchema) {
+            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+            media.rebuildIfInvalid()
+            // A media check on AnkiDroid will also update the media db
+            media.findChanges(true)
+        }
+        media.check()
     }
 
     override fun deleteUnused(unused: List<String>) {

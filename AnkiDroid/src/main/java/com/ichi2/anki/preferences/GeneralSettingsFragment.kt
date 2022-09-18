@@ -22,7 +22,9 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.LanguageUtil.getSystemLocale
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -78,6 +80,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
     }
 
+    @NeedsTest("")
     private fun initializeLanguageDialog() {
         val languageSelection = requirePreference<ListPreference>(R.string.pref_language_key)
 
@@ -89,7 +92,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         val languageDialogLabels = arrayOfNulls<CharSequence>(items.size + 1)
         val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
         languageDialogLabels[0] = resources.getString(R.string.language_system)
-        languageDialogValues[0] = ""
+        languageDialogValues[0] = "${getSystemLocale()}"
         val itemsList = items.toList()
         for (i in 1..itemsList.size) {
             languageDialogLabels[i] = itemsList[i - 1].first

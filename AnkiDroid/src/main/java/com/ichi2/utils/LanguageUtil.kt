@@ -186,7 +186,9 @@ object LanguageUtil {
         "vi", // Tiếng Việt
         "zh-CN", // 简体中文
         "zh-TW", // 繁體中文
-    ) /**
+    )
+
+    /**
      * Returns the [Locale] for the given code or the default locale, if no code or preferences are given.
      *
      * @return The [Locale] for the given code
@@ -246,6 +248,9 @@ object LanguageUtil {
     fun getLocaleCompat(resources: Resources): Locale? {
         return ConfigurationCompat.getLocales(resources.configuration)[0]
     }
+
+    @JvmStatic
+    fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
     /** If locale is not provided, the current locale will be used. */
     fun setDefaultBackendLanguages(locale: String = "") {

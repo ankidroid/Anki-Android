@@ -29,6 +29,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        // enable explicit api mode for additional checks related to the public api
+        // see https://kotlinlang.org/docs/whatsnew14.html#explicit-api-mode-for-library-authors
+        // TODO When we finish cleaning up the api module we should move from warning to strict.
+        freeCompilerArgs += '-Xexplicit-api=warning'
+    }
 }
 
 apply from: "../lint.gradle"
