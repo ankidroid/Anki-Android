@@ -87,19 +87,6 @@ fun updateMultipleNotes(
 }
 
 /**
- * @return The results list from the check, or false if any errors.
- */
-fun checkMedia(col: Collection): List<List<String>> {
-    Timber.d("doInBackgroundCheckMedia")
-    // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-    col.media.rebuildIfInvalid()
-    // A media check on AnkiDroid will also update the media db
-    col.media.findChanges(true)
-    // Then do the actual check
-    return col.media.check()
-}
-
-/**
  * Takes a list of media file names and removes them from the Collection
  * @param col Collection from which media is to be deleted
  * @param unused List of media names to be deleted
