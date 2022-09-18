@@ -37,7 +37,7 @@ import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
-import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.NoteField
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
@@ -50,7 +50,7 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-class FieldEditText : FixedEditText, NoteService.NoteField {
+class FieldEditText : FixedEditText, NoteField {
     override var ord = 0
     private var mOrigBackground: Drawable? = null
     private var mSelectionChangeListener: TextSelectionListener? = null

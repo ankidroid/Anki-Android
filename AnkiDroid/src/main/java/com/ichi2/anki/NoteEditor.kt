@@ -70,8 +70,7 @@ import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.receiver.SdCardReceiver
-import com.ichi2.anki.servicelayer.LanguageHintService
-import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.NoteTypeSpinnerUtils
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -274,7 +273,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private val fieldsAsBundleForPreview: Bundle
-        get() = NoteService.getFieldsAsBundleForPreview(mEditFields, shouldReplaceNewlines())
+        get() = getFieldsAsBundleForPreview(mEditFields, shouldReplaceNewlines())
 
     // Finish initializing the activity after the collection has been correctly loaded
     @KotlinCleanup("move mToolbar to onCreate")
@@ -1164,7 +1163,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     // Import field media
                     // This goes before setting formattedValue to update
                     // media paths with the checksum when they have the same name
-                    NoteService.importMediaToDirectory(col, field)
+                    importMediaToDirectory(col, field)
                     // Completely replace text for text fields (because current text was passed in)
                     val formattedValue = field.formattedValue
                     if (field.type === EFieldType.TEXT) {
@@ -1232,9 +1231,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      */
     @KotlinCleanup("fix the requireNoNulls")
     private fun getCurrentMultimediaEditableNote(col: Collection): MultimediaEditableNote {
-        val note = NoteService.createEmptyNote(mEditorNote!!.model())
+        val note = createEmptyNote(mEditorNote!!.model())
         val fields = currentFieldStrings.requireNoNulls()
-        NoteService.updateMultimediaNoteFromFields(col, fields, mEditorNote!!.mid, note!!)
+        updateMultimediaNoteFromFields(col, fields, mEditorNote!!.mid, note!!)
         return note
     }
 
@@ -1892,7 +1891,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun updateField(field: FieldEditText?): Boolean {
         val fieldContent = field!!.text?.toString() ?: ""
-        val correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
+        val correctedFieldContent = convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
         if (mEditorNote!!.values()[field.ord] != correctedFieldContent) {
             mEditorNote!!.values()[field.ord] = correctedFieldContent
             return true

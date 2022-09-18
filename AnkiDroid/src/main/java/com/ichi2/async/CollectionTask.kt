@@ -29,8 +29,8 @@ import com.ichi2.anki.CardBrowser.CardCollection
 import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
-import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult
+import com.ichi2.anki.servicelayer.isMarked
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
@@ -353,7 +353,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val originalMarked: MutableList<Note> = ArrayList()
             val originalUnmarked: MutableList<Note> = ArrayList()
             for (n in notes) {
-                if (NoteService.isMarked(n)) originalMarked.add(n) else originalUnmarked.add(n)
+                if (isMarked(n)) originalMarked.add(n) else originalUnmarked.add(n)
             }
             val hasUnmarked = !originalUnmarked.isEmpty()
             CardUtils.markAll(ArrayList(notes), hasUnmarked)
@@ -1053,7 +1053,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 val card = c.card
                 hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-                hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
+                hasUnmarked = hasUnmarked || !isMarked(card.note())
                 if (hasUnsuspended && hasUnmarked) break
             }
             return Pair(hasUnsuspended, hasUnmarked)

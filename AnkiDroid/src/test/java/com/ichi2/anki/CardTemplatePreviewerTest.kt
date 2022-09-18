@@ -18,8 +18,8 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
+import com.ichi2.anki.servicelayer.NoteField
+import com.ichi2.anki.servicelayer.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Model
 import com.ichi2.utils.KotlinCleanup
@@ -193,7 +193,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun singleTemplateFromNoteEditorHasNoNavigation() {
-        val fields: MutableList<NoteService.NoteField?> = ArrayList()
+        val fields: MutableList<NoteField?> = ArrayList()
         fields.add(Field(0, "Hello"))
         fields.add(Field(1, "World"))
 
@@ -217,7 +217,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun nonClozeFromNoteEditorHasMultipleCards() {
-        val fields: MutableList<NoteService.NoteField?> = ArrayList()
+        val fields: MutableList<NoteField?> = ArrayList()
         fields.add(Field(0, "Hello"))
         fields.add(Field(1, "World"))
 
@@ -240,7 +240,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun clozeFromEditorHasMultipleCards() {
-        val fields: MutableList<NoteService.NoteField?> = ArrayList()
+        val fields: MutableList<NoteField?> = ArrayList()
         fields.add(Field(0, "{{c1::Hello}} {{c3::World}}"))
         fields.add(Field(1, "World"))
 
@@ -283,7 +283,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun cardTemplatePreviewerNoCards_issue9687() {
-        val fields: MutableList<NoteService.NoteField?> = ArrayList()
+        val fields: MutableList<NoteField?> = ArrayList()
         fields.add(Field(0, ""))
         fields.add(Field(1, ""))
 
@@ -305,7 +305,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @KotlinCleanup("Change visibility to private")
-    protected fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
+    protected fun getFieldsAsBundleForPreview(fields: List<NoteField?>?): Bundle {
         return getFieldsAsBundleForPreview(fields, false)
     }
 
@@ -346,7 +346,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @KotlinCleanup("Override fieldText in constructor and remove text")
-    private inner class Field(override val ord: Int, private val text: String) : NoteService.NoteField {
+    private inner class Field(override val ord: Int, private val text: String) : NoteField {
         override val fieldText: String
             get() = text
     }

@@ -23,7 +23,7 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
-import com.ichi2.anki.servicelayer.NoteService.avgEase
+import com.ichi2.anki.servicelayer.avgEase
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
