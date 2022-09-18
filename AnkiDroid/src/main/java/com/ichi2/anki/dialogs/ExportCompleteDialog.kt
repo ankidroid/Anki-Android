@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
@@ -25,16 +26,14 @@ import java.io.File
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
         fun dismissAllDialogFragments()
-        fun shareFile(path: String)
+        fun shareFile(path: String) // path of the file to be shared
         fun saveExportFile(exportPath: String)
     }
     val exportPath
         get() = requireArguments().getString("exportPath")!!
 
     fun withArguments(exportPath: String): ExportCompleteDialog {
-        arguments = (arguments ?: Bundle()).apply {
-            putString("exportPath", exportPath)
-        }
+        arguments = (arguments ?: bundleOf(Pair("exportPath", exportPath)))
         return this
     }
 

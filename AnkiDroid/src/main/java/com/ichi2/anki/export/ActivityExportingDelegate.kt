@@ -118,6 +118,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.dismissAllDialogFragments()
     }
 
+    @Suppress("deprecation") // API33 deprecation for pm.queryIntentActivities
     fun shareFileIntent(exportPath: String, uri: Uri): Intent {
         val attachment = File(exportPath)
         val pm: PackageManager = activity.packageManager
@@ -125,12 +126,15 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri)
         sendIntent.type = "application/apkg"
         val resInfo = pm.queryIntentActivities(sendIntent, 0)
+
+        // If we make two intents, one for save file and one for share, we get save file as
+        // an option in the share sheet
         val intentList = arrayListOf(
             LabeledIntent(
                 saveFileIntent(attachment),
                 BuildConfig.APPLICATION_ID,
-                "", // isn't actually used
-                0 // isn't actually used
+                "", // param "nonLocalizedLabel" isn't actually used
+                0 // param "icon" isn't actually used, this is the constant for "No icon"
             )
         )
 
