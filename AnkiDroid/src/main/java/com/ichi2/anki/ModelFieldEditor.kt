@@ -221,16 +221,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             collection.modSchemaNoCheck()
         }
         launchCatchingTask {
-            val result = withProgress {
+            Timber.d("doInBackgroundAddField")
+            withProgress {
                 withCol {
-                    Timber.d("doInBackgroundRepositionField")
-                    col.models.addFieldModChanged(mModel, col.models.newField(fieldName))
-                    col.save()
-                    true
+                    models.addFieldModChanged(mModel, col.models.newField(fieldName))
+                    save()
                 }
-            }
-            if (result == false) {
-                closeActivity()
             }
             initialize()
         }
