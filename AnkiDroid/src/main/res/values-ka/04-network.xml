@@ -45,14 +45,14 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
+    <string name="youre_offline">ხაზგარეშე რეჟიმში ხართ</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">შეცდომა სინქრონიზაციისას</string>
     <string name="vague_error" comment="Network error dialog title">შეცდომა</string>
     <string name="retry">ხელახლა ცდა</string>
     <string name="menu_get_shared_decks">გაზიარებული დასტების დამატება</string>
     <string name="connection_error_message">ქსელის შეცდომა მოხდა</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="not_logged_in_title">AnkiWeb-ში შესვლა</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
     <string name="username">ელფოსტის მისამართი</string>
@@ -68,29 +68,29 @@
     <string name="reset_password">პაროლის აღდგენა</string>
     <string name="lost_mail_instructions">დაგავიწყდათ ელფოსტა?</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_prepare_syncing">Preparing syncing&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Preparing full sync&#8230;</string>
+    <string name="deckpreferences_title">პარამეტრები XXX-სათვის</string>
+    <string name="sync_prepare_syncing">მიმდინარეობს სინქრონიზაციისთვის მომზადება&#8230;</string>
+    <string name="sync_preparing_full_sync_message">მიმდინარეობს სრული სინქრონიზაციისთვის მომზადება&#8230;</string>
     <string name="sync_uploading_message">მიმდინარეობს ატვირთვა...</string>
     <string name="sync_downloading_message">მიმდინარეობს ჩამოტვირთვა&#8230;</string>
     <string name="sync_title">სინქრონიზაცია</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+    <string name="sync_log_clocks_unsynchronized">თქვენი მოწყობილობის საათი არასწორია %1$d წამით%2$s. დარწმუნდით, რომ დაყენებულია სწორი თარიღი, დრო და სასაათო სარტყელი და ხელახლა სცადეთ სინქრონიზაცია.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
     <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
-    <string name="sync_no_changes_message">No changes found</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
+    <string name="sync_no_changes_message">ცვლილებები ვერ მოიძებნა</string>
+    <string name="sync_database_acknowledge">კოლექციის სინქრონიზაცია წარმატებით განხორციელდა</string>
+    <string name="sync_log_error_specific">სინქრონიზაციის შეცდომა, ტიპი: %1$s, შეტყობინება: %2$s</string>
     <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
-    <string name="sync_too_busy">Server busy. Try again later.</string>
-    <string name="sync_remote_db_error">The downloaded database was corrupt. Please try again.</string>
-    <string name="sync_overwrite_error">Your current collection couldn’t be overwritten by the downloaded file</string>
+    <string name="sync_too_busy">სერვერი დაკავებულია. სცადეთ მოგვიანებით.</string>
+    <string name="sync_remote_db_error">ჩამოტვირთული მონაცემთა ბაზა დაზიანებული იყო. გთხოვთ ხელახლა სცადოთ.</string>
+    <string name="sync_overwrite_error">მიმდინარე კოლექცია ვერ ჩანაცვლდა ჩამოტვირთული ფაილით</string>
     <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
     <string name="sync_write_access_error">The downloaded file couldn’t be saved to the SD card. Either the card is mounted read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Syncing deletions&#8230;</string>
-    <string name="sync_small_objects_message">Syncing small objects&#8230;</string>
-    <string name="sync_finish_message">Finishing syncing&#8230;</string>
+    <string name="sync_deletions_message">წაშლილების სინქრონიზაცია&#8230;</string>
+    <string name="sync_small_objects_message">პატარა ობიექტების სინქრონიზაცია&#8230;</string>
+    <string name="sync_finish_message">სინქრონიზაციის დასრულება&#8230;</string>
     <string name="sync_log_finish_error">Error while sending finish direction to server</string>
     <string name="sync_writing_db">Writing changes into database&#8230;</string>
     <string name="sync_download_chunk">ცვლილებების ჩამოტვირთვა&#8230;</string>
@@ -128,6 +128,6 @@
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_no_account">სინქრონიზაცია (ავტორიზაცია)</string>
     <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>
