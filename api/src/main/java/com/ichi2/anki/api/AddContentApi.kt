@@ -201,7 +201,7 @@ public class AddContentApi(context: Context) {
      * @param keys list of keys
      * @return a SparseArray with a list of duplicate notes for each key
      */
-    public fun findDuplicateNotes(mid: Long, keys: List<String?>): SparseArray<MutableList<NoteInfo?>>? {
+    public fun findDuplicateNotes(mid: Long, keys: List<String>): SparseArray<MutableList<NoteInfo?>>? {
         return compat.findDuplicateNotes(mid, keys)
     }
 
