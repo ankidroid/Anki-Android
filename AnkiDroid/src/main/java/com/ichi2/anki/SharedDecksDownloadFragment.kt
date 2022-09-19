@@ -105,7 +105,7 @@ class SharedDecksDownloadFragment : Fragment() {
         mTryAgainButton = view.findViewById(R.id.try_again_deck_download)
         mCheckNetworkInfoText = view.findViewById(R.id.check_network_info_text)
 
-        val fileToBeDownloaded = arguments?.getSerializableCompat<Serializable>(DOWNLOAD_FILE) as DownloadFile
+        val fileToBeDownloaded = requireArguments().getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         mDownloadManager = (activity as SharedDecksActivity).downloadManager
 
         downloadFile(fileToBeDownloaded)
