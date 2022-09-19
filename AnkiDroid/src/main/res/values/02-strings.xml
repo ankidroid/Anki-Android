@@ -453,6 +453,10 @@
     <string name="browser_options_dialog_heading">Browser Options</string>
 
     <!-- Manage Space -->
+    <!--- Collection deletion -->
+
     <string name="delete_collection">Delete collection</string>
     <string name="delete_collection_summary">Permanently erases your AnkiDroid collection and media.</string>
+    <string name="delete_data_confirmation">Are you sure you want to delete your whole collection and media?\n\nThis can\'t be undone.</string>
+    <string name="delete_data_ongoing">Your AnkiDroid collection, medias and back-ups are currently being deleted.</string>
 </resources>

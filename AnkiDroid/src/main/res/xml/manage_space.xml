@@ -20,5 +20,5 @@
   <Preference
       android:key="@string/delete_collection_key"
       android:summary="@string/delete_collection_summary"
-      android:title="@string/delete_collection" />
+      android:title="@string/delete_collection"/>
 </PreferenceScreen>
