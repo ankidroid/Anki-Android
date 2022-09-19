@@ -219,7 +219,7 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteTags(noteId: Long, tags: Set<String?>?): Boolean {
+    public fun updateNoteTags(noteId: Long, tags: Set<String>): Boolean {
         return updateNote(noteId, null, tags)
     }
 
