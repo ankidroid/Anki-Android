@@ -2223,7 +2223,12 @@ open class DeckPicker :
         renderPage()
         // Update the mini statistics bar as well
         launchCatchingTask {
-            AnkiStatsTaskHandler.createReviewSummaryStatistics(col, mReviewSummaryTextView)
+            val reviewSummaryStatsSting = AnkiStatsTaskHandler.getReviewSummaryStatisticsString(this@DeckPicker)
+            mReviewSummaryTextView.apply {
+                text = reviewSummaryStatsSting ?: ""
+                visibility = View.VISIBLE
+                invalidate()
+            }
         }
         Timber.d("Startup - Deck List UI Completed")
     }
