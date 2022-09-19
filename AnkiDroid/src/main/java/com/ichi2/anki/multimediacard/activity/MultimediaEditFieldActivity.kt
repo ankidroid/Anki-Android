@@ -459,7 +459,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         @KotlinCleanup("see if we can make this non-null")
         @VisibleForTesting
         fun getFieldFromIntent(intent: Intent): IField? {
-            return intent.extras!!.getSerializableCompat(EXTRA_FIELD) as IField?
+          return intent.extras!!.getSerializableCompat<IField>(EXTRA_FIELD)
         }
     }
 }
