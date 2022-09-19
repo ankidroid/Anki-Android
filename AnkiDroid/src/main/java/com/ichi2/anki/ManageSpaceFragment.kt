@@ -17,8 +17,13 @@
 package com.ichi2.anki
 
 import androidx.preference.Preference
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.CollectionManager.deleteCollectionDirectory
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
+import com.ichi2.themes.StyledProgressDialog
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class ManageSpaceFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -28,7 +33,22 @@ class ManageSpaceFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         requirePreference<Preference>(R.string.delete_collection_key).setOnPreferenceClickListener {
-            UIUtils.showThemedToast(context, "Not implemented yet", false)
+            MaterialDialog(requireContext()).show {
+                title(R.string.delete_collection)
+                message(R.string.delete_data_confirmation)
+                positiveButton(R.string.dialog_positive_delete) {
+                    val progressDialog = StyledProgressDialog.show(requireContext(), getString(R.string.delete_data_ongoing), null)
+                    launchCatchingTask {
+                        // TODO: close main ankidroid activity
+                        // TODO: Uses withProgress if we move to FragmentActivity
+                        deleteCollectionDirectory()
+                        MainScope().launch {
+                            progressDialog.dismiss()
+                        }
+                    }
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
             true
         }
     }

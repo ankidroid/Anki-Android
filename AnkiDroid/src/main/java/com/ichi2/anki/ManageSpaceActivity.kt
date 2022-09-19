@@ -30,7 +30,7 @@ class ManageSpaceActivity : AnkiActivity() {
         val mainFragment = ManageSpaceFragment()
 
         supportFragmentManager.commit {
-            add(R.id.manage_space_layout, mainFragment, mainFragment::class.java.simpleName)
+            replace(R.id.manage_space_layout, mainFragment, mainFragment::class.java.simpleName)
         }
     }
 }
