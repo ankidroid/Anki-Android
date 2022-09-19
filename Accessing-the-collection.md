@@ -14,7 +14,7 @@ In order to achieve our goal, all code that must access the collection should do
 * using `withCol{myCode}`, where, in `myCode`, `this` represents the collection,
 * using an instance of the collection that is given as function argument. 
 
-For example, `
+For example,
 ```Kotlin
 val count = withCol { decks.count() }
 ```
@@ -26,9 +26,9 @@ You should note that `withCol` is a [suspend function](https://kotlinlang.org/do
 
 The most standard way to call a coroutine function in AnkiDroid are:
 * calling it inside a function which is marked `suspend` already
-* putting `withCal` in a block that takes a coroutine block, such as:
-** `launchCatchingTask` which, as the name suggest, catch anything that is thrown (so you should ensure that you catch any exception you care about inside the block
-** or `withProgress`, that displays a progress bar, blocking the UI until the task is done.
+* putting `withCol` in a block that takes a coroutine block, such as:
+ * `launchCatchingTask` which, as the name suggest, catch anything that is thrown (so you should ensure that you catch any exception you care about inside the block
+ * or `withProgress`, that displays a progress bar, blocking the UI until the task is done.
 
 ## Restriction on the code inside `withCol` block.
 
