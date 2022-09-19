@@ -106,7 +106,7 @@ public class AddContentApi(context: Context) {
     public fun addNotes(
         modelId: Long,
         deckId: Long,
-        fieldsList: List<Array<String>?>,
+        fieldsList: List<Array<String>>,
         tagsList: List<Set<String>?>?
     ): Int {
         require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
