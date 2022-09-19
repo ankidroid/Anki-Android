@@ -32,6 +32,9 @@ class ManageSpaceFragment : SettingsFragment() {
         get() = "manageSpace"
 
     override fun initSubscreen() {
+        if (!CollectionManager.isThereACollectionDirectory()) {
+            noCollection()
+        }
         requirePreference<Preference>(R.string.delete_collection_key).setOnPreferenceClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.delete_collection)
@@ -44,12 +47,21 @@ class ManageSpaceFragment : SettingsFragment() {
                         deleteCollectionDirectory()
                         MainScope().launch {
                             progressDialog.dismiss()
+                            noCollection()
                         }
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
             }
             true
+        }
+    }
+
+    fun noCollection() {
+        requirePreference<Preference>(R.string.delete_collection_key).apply {
+            shouldDisableView = true
+            isEnabled = false
+            isSelectable = false
         }
     }
 }
