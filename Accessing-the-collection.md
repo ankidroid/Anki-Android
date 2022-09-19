@@ -27,8 +27,8 @@ You should note that `withCol` is a [suspend function](https://kotlinlang.org/do
 The most standard way to call a coroutine function in AnkiDroid are:
 * calling it inside a function which is marked `suspend` already
 * putting `withCol` in a block that takes a coroutine block, such as:
- * `launchCatchingTask` which, as the name suggest, catch anything that is thrown (so you should ensure that you catch any exception you care about inside the block
- * or `withProgress`, that displays a progress bar, blocking the UI until the task is done.
+  * `launchCatchingTask` which, as the name suggest, catch anything that is thrown (so you should ensure that you catch any exception you care about inside the block
+  * or `withProgress`, that displays a progress bar, blocking the UI until the task is done.
 
 ## Restriction on the code inside `withCol` block.
 
