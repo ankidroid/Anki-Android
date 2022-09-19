@@ -71,9 +71,15 @@ Here we explain how me can consider that the migration was sucesfull.
 
 There are two ways to migrate code using a collection. We'll describe both and then explain how to chose the best one.
 
-### Taking `col` as a method argument.
+### Not using collection
 
-This is probably the simplest migration possible. Consider the function, in the class `Card`,
+If you see a use of a collection, the first question should be "is there an easy way to avoid using it". Do not go out of your way. But if a simple changes can reuse already existing data, that may avoid launching an extra task. 
+
+For example, instead of `withCol{decks.count()}`, you could directly do `decks.count()` if you already have access to the deck manager in your code. Since any action that would cause the collection to close and the deck manager to change, would also reload the current activity, it is still probably safe to keep a reference to the deck manager itself and reuse it multiple time.
+
+### Taking `col: Collection` as a method argument.
+
+If you actually need access to the collection, this is probably the simplest migration possible. Consider the function, in the class `Card`,
 ```kotlin
     open fun note(reload: Boolean): Note {
         if (note == null || reload) {
@@ -101,11 +107,11 @@ Once `col` is not used anywhere anymore, you can remove `col` from being a class
 Let's now consider that you see some code 
 ```kotlin
 val col = CollectionHelper.instance.getCol(this)
-foo(col)
+val nids = col.findNotes(query)
 ```
 
-If this code appears inside a suspend function, great, you can just replace it with `withCol {foo(this)}`.
-Otherwise, you may need to do `launchCatchingTask{withCol{foo(this)}}`, assuming that you are fine with catching exceptions that `foo` may send.
+If this code appears inside a suspend function, great, you can just replace it with `val nids = withCol {findNotes(query)}`.
+Otherwise, you may need to do `launchCatchingTask{withCol{findNotes(query)}}`, assuming that you are fine with catching exceptions that `findNotes(query)` may send.
 
 ### Which method to use
 
