@@ -332,8 +332,9 @@ public class AddContentApi(context: Context) {
      * @param sortf index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
      * @return the mid of the model which was created, or null if it could not be created
      */
+    @Suppress("MemberVisibilityCanBePrivate") // silence IDE
     public fun addNewCustomModel(
-        name: String?,
+        name: String,
         fields: Array<String>,
         cards: Array<String>,
         qfmt: Array<String>,
