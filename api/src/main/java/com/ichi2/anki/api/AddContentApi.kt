@@ -299,7 +299,7 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasicModel(name: String?): Long? {
+    public fun addNewBasicModel(name: String): Long? {
         return addNewCustomModel(
             name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
             BasicModel.AFMT, null, null, null
