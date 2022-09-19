@@ -15,53 +15,24 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats
 
-import android.widget.TextView
+import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.createReviewSummaryStatistics
-import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.Collection
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
-import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.whenever
-import java.util.concurrent.ExecutionException
+import kotlin.test.assertNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class AnkiStatsTaskHandlerTest : RobolectricTest() {
-    @Mock
-    private lateinit var mCol: Collection
-
-    @Mock
-    private lateinit var mView: TextView
-
-    private val testDispatcher = StandardTestDispatcher()
-
-    @Before
-    override fun setUp() {
-        super.setUp()
-        MockitoAnnotations.openMocks(this)
-        whenever(mCol.db).thenReturn(null)
-        whenever(mCol.dbClosed).thenReturn(true)
-    }
 
     @Test
-    @Throws(ExecutionException::class, InterruptedException::class)
-    @NeedsTest("explain this test")
-    @Ignore("failing in local test runs - https://github.com/ankidroid/Anki-Android/issues/12437")
-    fun testCreateReviewSummaryStatistics() = runTest(testDispatcher) {
-        verify(mCol, atMost(0))!!.db
-        createReviewSummaryStatistics(mCol, mView, testDispatcher, testDispatcher)
-        advanceUntilIdle()
-        verify(mCol, atLeast(0))!!.db
-        verify(mCol, atLeast(1))!!.dbClosed
+    fun testCreateReviewSummaryStatistics() = runTest {
+        val deckPicker = startActivityNormallyOpenCollectionWithIntent(
+            DeckPicker::class.java, Intent()
+        )
+        assertNull(AnkiStatsTaskHandler.getReviewSummaryStatisticsString(deckPicker))
     }
 }

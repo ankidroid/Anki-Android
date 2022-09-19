@@ -16,10 +16,11 @@
 package com.ichi2.anki.stats
 
 import android.R
+import android.content.Context
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
-import android.widget.TextView
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.stats.Stats
@@ -125,45 +126,24 @@ class AnkiStatsTaskHandler private constructor(
             return instance!!
         }
 
-        suspend fun createReviewSummaryStatistics(
-            col: Collection,
-            view: TextView,
-            mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
-            defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
-        ): Unit = mutex.withLock {
-            withContext(defaultDispatcher) {
-                val todayStatString = if (!isActive || col.dbClosed) {
-                    Timber.d("Quitting DeckPreviewStatistics before execution")
-                    null
-                } else {
-                    Timber.d("Starting DeckPreviewStatistics")
-                    // eventually put this in Stats (in desktop it is not though)
-                    var cards: Int
-                    var minutes: Int
-                    /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
-                    val query = "select sum(case when ease > 0 then 1 else 0 end), " +
-                        "sum(time)/1000 from revlog where id > " + (col.sched.dayCutoff - Stats.SECONDS_PER_DAY) * 1000
-                    Timber.d("DeckPreviewStatistics query: %s", query)
-                    col.db
-                        .query(query).use { cur ->
-                            cur.moveToFirst()
-                            cards = cur.getInt(0)
-                            minutes = (cur.getInt(1) / 60.0).roundToInt()
-                        }
-                    val res = view.resources
-                    val span = res.getQuantityString(com.ichi2.anki.R.plurals.in_minutes, minutes, minutes)
-                    res.getQuantityString(com.ichi2.anki.R.plurals.studied_cards_today, cards, cards, span)
+        suspend fun getReviewSummaryStatisticsString(context: Context): String? = withOpenColOrNull {
+            Timber.d("Starting DeckPreviewStatistics")
+            // eventually put this in Stats (in desktop it is not though)
+            var cards: Int
+            var minutes: Int
+            /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+            val query = "select sum(case when ease > 0 then 1 else 0 end), " +
+                "sum(time)/1000 from revlog where id > " + (col.sched.dayCutoff - Stats.SECONDS_PER_DAY) * 1000
+            Timber.d("DeckPreviewStatistics query: %s", query)
+            col.db
+                .query(query).use { cur ->
+                    cur.moveToFirst()
+                    cards = cur.getInt(0)
+                    minutes = (cur.getInt(1) / 60.0).roundToInt()
                 }
-                todayStatString?.let {
-                    withContext(mainDispatcher) {
-                        view.apply {
-                            text = it
-                            visibility = View.VISIBLE
-                            invalidate()
-                        }
-                    }
-                }
-            }
+            val res = context.resources
+            val span = res.getQuantityString(com.ichi2.anki.R.plurals.in_minutes, minutes, minutes)
+            res.getQuantityString(com.ichi2.anki.R.plurals.studied_cards_today, cards, cards, span)
         }
     }
 }
