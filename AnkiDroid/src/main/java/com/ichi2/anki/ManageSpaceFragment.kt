@@ -16,21 +16,20 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.os.Bundle
-import androidx.fragment.app.commit
+import androidx.preference.Preference
+import com.ichi2.anki.preferences.SettingsFragment
+import com.ichi2.anki.preferences.requirePreference
 
-class ManageSpaceActivity : AnkiActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        if (showedActivityFailedScreen(savedInstanceState)) {
-            return
-        }
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manage_space)
+class ManageSpaceFragment : SettingsFragment() {
+    override val preferenceResource: Int
+        get() = R.xml.manage_space
+    override val analyticsScreenNameConstant: String
+        get() = "manageSpace"
 
-        val mainFragment = ManageSpaceFragment()
-
-        supportFragmentManager.commit {
-            add(R.id.manage_space_layout, mainFragment, mainFragment::class.java.simpleName)
+    override fun initSubscreen() {
+        requirePreference<Preference>(R.string.delete_collection_key).setOnPreferenceClickListener {
+            UIUtils.showThemedToast(context, "Not implemented yet", false)
+            true
         }
     }
 }
