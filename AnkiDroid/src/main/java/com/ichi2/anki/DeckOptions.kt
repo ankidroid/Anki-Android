@@ -145,24 +145,21 @@ class DeckOptions :
             return DeckConfig.parseTimerOpt(options, true)
         }
 
-        private val context = this // TODO: Remove [context], was introduces to extract out ConfChangeHandler
         fun preConfChange() {
-            val res = context.deckOptionsActivity.resources
-            context.progressDialog = StyledProgressDialog.show(
-                context.deckOptionsActivity as Context, null,
+            val res = deckOptionsActivity.resources
+            progressDialog = StyledProgressDialog.show(
+                deckOptionsActivity as Context, null,
                 res?.getString(R.string.reordering_cards), false
             )
         }
 
         fun postConfChange() {
-            context.apply {
-                cacheValues()
-                deckOptionsActivity.buildLists()
-                deckOptionsActivity.updateSummaries()
-                progressDialog.dismiss()
-                // Restart to reflect the new preference values
-                deckOptionsActivity.restartActivity()
-            }
+            cacheValues()
+            deckOptionsActivity.buildLists()
+            deckOptionsActivity.updateSummaries()
+            progressDialog.dismiss()
+            // Restart to reflect the new preference values
+            deckOptionsActivity.restartActivity()
         }
 
         inner class Editor : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
