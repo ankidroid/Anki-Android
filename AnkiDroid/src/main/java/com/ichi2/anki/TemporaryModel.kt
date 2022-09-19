@@ -60,8 +60,7 @@ class TemporaryModel(model: Model) {
         try {
             @Suppress("UNCHECKED_CAST")
             @KotlinCleanup("use bundle.getSerializableWithCast() to improve nullability")
-            mTemplateChanges =
-                (bundle.getSerializableCompat<Serializable>("mTemplateChanges") as ArrayList<Array<Any>>)
+            mTemplateChanges = bundle.getSerializableCompat("mTemplateChanges")!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
