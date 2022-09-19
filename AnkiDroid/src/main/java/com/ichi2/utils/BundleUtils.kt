@@ -50,7 +50,7 @@ object BundleUtils {
         }
         return getLong(key)
     }
-
+    @KotlinCleanup("inline this")
     inline fun <reified T> Bundle.getSerializableWithCast(key: String): T {
         return getSerializableCompat<Serializable>(key) as T
     }
