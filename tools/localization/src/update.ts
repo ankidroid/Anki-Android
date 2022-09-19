@@ -15,7 +15,7 @@
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { checkI18nFile } from "./check";
+import { checkI18nFile, VerifyJavaStringFormat } from "./check";
 import {
     LANGUAGES,
     LOCALIZED_REGIONS,
@@ -57,13 +57,19 @@ async function replacechars(fileName: string): Promise<boolean> {
             if (line.startsWith("    <item>0 </item>")) {
                 line = "    <item>0</item>\n";
             }
-            
+
             // running prettier will change this line, remove back slash
             line = line.replace(/\'/g, "\\'")
             line = line.replace(/\\\\\'/g, "\\'")
             line = line.replace(/\n\s/g, "\\n")
             line = line.replace(/…/g, "&#8230;")
-            
+
+            if (line.includes("%")) {
+                if (!VerifyJavaStringFormat(line)) {
+                    console.log(`Errors in file ${fileStream} at line ${line}`);
+                    errorOccured = true;
+                }
+            }
         }
 
         fs.appendFileSync(newfilename, line + "\n");

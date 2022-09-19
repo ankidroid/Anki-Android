@@ -22,6 +22,8 @@ const validFormat = `<resources><string name="field_remapping">%1$s (from “%2$
 // space in %1$ s
 const inValidFormat = `<resources><string name="field_remapping">%1$ s (from “%2$s”)</string></resources>`
 
+const validFloat = `<string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>`;
+
 const createTempFile = (name: string, str: string) => {
     fs.writeFile(`${TEMP_DIR}/${name}`, str, function (err) {
         if (err) {
@@ -81,5 +83,14 @@ describe("test inValidFormat", () => {
 
     it("should return false", async () => {
         expect(await checkStringFormatInFile(`${TEMP_DIR}/${name}`)).toBe(false);
+    });
+});
+
+describe("test validFloat", () => {
+    let name = "validFloat";
+    createTempFile(name, validFloat);
+
+    it("should return true", async () => {
+        expect(await checkStringFormatInFile(`${TEMP_DIR}/${name}`)).toBe(true);
     });
 });

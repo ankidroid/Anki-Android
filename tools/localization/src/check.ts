@@ -82,12 +82,6 @@ export const VerifyJavaStringFormat = (line: string) => {
                 continue;
             }
 
-            // ignore line if %.1f
-            if (c(index) === '.') {
-                index++;
-                continue;
-            }
-
             argCount++;
 
             const numDigits = consumeDigits(line, index);
@@ -103,6 +97,18 @@ export const VerifyJavaStringFormat = (line: string) => {
                 // catch %1$ d, space between positional
                 if (index < line.length && c(index) === '$' && (c(index + 1) === ' ')) {
                     noerror = false;
+                }
+
+                // check line if %.[num]f
+                if (index < line.length - 2 && c(index) === '$' && (c(index + 1) === '.')) {
+                    index+=2;
+
+                    const digits = consumeDigits(line, index);
+                    index += numDigits;
+                    
+                    if (c(index) != 'f') {
+                        noerror = false;
+                    }
                 }
 
             } else if (c(index) === '<') {
