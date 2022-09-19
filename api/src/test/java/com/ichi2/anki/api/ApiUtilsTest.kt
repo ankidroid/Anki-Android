@@ -21,7 +21,7 @@ import kotlin.test.assertNull
  */
 // TODO: @KotlinCleanup("replace Assert.assertEquals with kotlin.test.assertEquals")
 @RunWith(RobolectricTestRunner::class)
-class ApiUtilsTest {
+internal class ApiUtilsTest {
     @Test
     fun joinFieldsShouldJoinWhenListIsValid() {
         val fieldList = arrayOf<String>("A", "B", "C")
