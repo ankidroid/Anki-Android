@@ -59,7 +59,7 @@ public class AddContentApi(context: Context) {
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
      */
-    public fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String?>?): Long? {
+    public fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String>?): Long? {
         val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
         return noteUri.lastPathSegment!!.toLong()
     }
@@ -68,7 +68,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fields: Array<String>,
-        tags: Set<String?>?
+        tags: Set<String>?
     ): Uri? {
         val values = ContentValues().apply {
             put(Note.MID, modelId)
