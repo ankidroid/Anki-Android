@@ -36,9 +36,9 @@ Essentially, you can use `withCol` to read content from the collection or to edi
 
 ### Accessing data
 
-Each call to `withCol` should get some data needed and return it without using it. In the example above `val count = withCol { decks.count() }`, we only fetch the number of decks and then returns it. Whatever you need to do with this number of deck, you'll do it outside of `withCol` since the collection is not useful anymore.
+Each call to `withCol` should get some data needed and return it without using it. In the example above `val count = withCol { decks.count() }`, we only fetch the number of decks and then returns it. Whatever you need to do with this number of deck, you'll do it outside of `withCol` since the collection is not useful anymore.
 
-### Writing data 
+### Writing data 
 
 Each call to `withCol` should consider that the collection may be closed immediately after `withCol` ends. That means that you should always leave the collection in an acceptable state. For example, if you want to record that a card was reviewed, be sure to edit the log of review and the card in the same `withCol`. 
 
@@ -53,7 +53,7 @@ A few things are generally forbidden inside `withCol`.
 
 None of the rules described above apply to `com.ichi2.libanki.Storage` and `com.ichi2.anki.CollectionManager`. Those two classes are in charge of the low-level implementation of collection manipulation, and so are the only classes allowed to do what is forbidden everywhere else.
 
-# Migrating non-compliant code
+# Migrating non-compliant code
 
 The system described above was created in Summer 2022, when AnkiDroid started to use coroutine and increased its used of Anki code. AnkiDroid has more than a decade of code that directly access the collection that needs to be migrated.
 
@@ -61,7 +61,7 @@ On the one hand, this is NOT a priority. AnkiDroid works correctly today, and, e
 
 On the other hand, this task is important for the future of AnkiDroid, and we must eventually do the migration. The good news is that most part of the migration should be simple enough that new contributors could find one use of access of collection outside of `withCol` and remove it. If you are a new contributors, it's a good way to help us, discover various part of the codebase, and, in the worst case, get constructive feedback from maintainers if you didn't do the migration correctly on the first try.
 
-## End goal
+## End goal
 
 Here we explain how me can consider that the migration was sucesfull. 
 * com.ichi2.anki.CollectionHelper should probably disappear. If it can't disappear (this is yet to be determined), at least the methods `getCol*` should not be called anymore anywhere in the code; and subsequently should be deleted
@@ -129,4 +129,4 @@ Indeed, when you create a UI or respond to a user event, you should normally hav
 
 Now that you have read all of this wiki page, you may wonder how accessing the collection actually works internally. This is not a required reading, but may be interesting for any curious person. 
 
-The class `com.ichi2.anki.CollectionManager` deals with opening and closing the collection. Each time a block requires the collection, it is added to a queue of tasks, each tasks being executed in received order. Those tasks may have to wait until the collection is actually available, since opening it may takes time. 
+The class `com.ichi2.anki.CollectionManager` deals with opening and closing the collection. Each time a block requires the collection, it is added to a queue of tasks, each tasks being executed in received order. Those tasks may have to wait until the collection is actually available, since opening it may takes time.  
