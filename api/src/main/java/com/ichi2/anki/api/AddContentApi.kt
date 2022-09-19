@@ -450,7 +450,7 @@ public class AddContentApi(context: Context) {
      * @param deckName name of the deck to add
      * @return id of the added deck, or null if the deck was not added
      */
-    public fun addNewDeck(deckName: String?): Long? {
+    public fun addNewDeck(deckName: String): Long? {
         // Create a new note
         val values = ContentValues().apply { put(Deck.DECK_NAME, deckName) }
         val newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values)
