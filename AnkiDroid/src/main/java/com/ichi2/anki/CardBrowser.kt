@@ -994,12 +994,41 @@ open class CardBrowser :
         return checkedCardCount() >= cardCount // must handle 0.
     }
 
+    private fun flagTask(flag: Int) {
+        launchCatchingTask { updateSelectedCardsFlag(flag) }
+    }
+
+    /**
+     * Sets the flag for selected cards, default norm of flags are as:
+     *
+     * 0: No Flag, 1: RED, 2: ORANGE, 3: GREEN
+     * 4: BLUE, 5: PINK, 6: Turquoise, 7: PURPLE
+     *
+     * @return list of cards with updated flags
+     */
     @VisibleForTesting
-    fun flagTask(flag: Int) {
-        TaskManager.launchCollectionTask(
-            CollectionTask.Flag(selectedCardIds, flag),
-            flagCardHandler()
-        )
+    suspend fun updateSelectedCardsFlag(flag: Int) {
+        val updatedCards = withProgress {
+            withCol {
+                val cards = selectedCardIds.map { getCard(it) }
+                col.db.database.beginTransaction()
+                try {
+                    col.setUserFlag(flag, selectedCardIds)
+                    for (c in cards) {
+                        c.load()
+                    }
+                    col.db.database.setTransactionSuccessful()
+                } finally {
+                    DB.safeEndInTransaction(col.db)
+                }
+                cards
+            }
+        }
+        updateCardsInList(updatedCards)
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        if (updatedCards.map { card -> card.id }.contains(reviewerCardId)) {
+            mReloadRequired = true
+        }
     }
 
     /** Updates flag icon color and cards shown with given color  */
@@ -1776,12 +1805,6 @@ open class CardBrowser :
             }
         }
     }
-
-    private fun flagCardHandler(): FlagCardHandler {
-        return FlagCardHandler(this)
-    }
-
-    private class FlagCardHandler(browser: CardBrowser) : SuspendCardHandler(browser)
 
     private fun markCardHandler(): MarkCardHandler {
         return MarkCardHandler(this)

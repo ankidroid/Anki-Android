@@ -333,16 +333,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class Flag(cardIds: List<Long>, private val flag: Int) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            col.setUserFlag(flag, cardIds)
-            for (c in cards) {
-                c.load()
-            }
-            return true
-        }
-    }
-
     class MarkNoteMulti(cardIds: List<Long>) : DismissNotes<Void>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>, cards: Array<Card>): Boolean {
             val notes = CardUtils.getNotes(Arrays.asList(*cards))
