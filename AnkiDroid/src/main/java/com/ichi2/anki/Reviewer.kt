@@ -1085,10 +1085,14 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mPrefHideDueCount) {
             mRevCount = SpannableString("???")
         }
-        when (sched!!.countIdx(currentCard!!)) {
-            Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
-            Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
-            Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
+        // if this code is run as a card is being answered, currentCard may be non-null but
+        // the queues may be empty - we can't call countIdx() in such a case
+        if (counts.count() != 0) {
+            when (sched!!.countIdx(currentCard!!)) {
+                Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
+                Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
+                Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
+            }
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
