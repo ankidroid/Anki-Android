@@ -2,7 +2,7 @@ This page explains how AnkiDroid Kotlin code should access the collection. It ex
 
 # The goal
 
-Our main goal is to ensure that the collection do not get closed while we must use it, and that no code try to access the collection while it is closed. This avoids various subtile bug AnkiDroid used to have. 
+Our main goal is to ensure that the collection do not get closed while we must use it, and that no code try to access the collection while it is closed. This avoids various subtle bugs AnkiDroid used to have. 
 
 # How do I use the collection in my code?
 
@@ -28,7 +28,7 @@ The most standard way to call a coroutine function in AnkiDroid are:
 * calling it inside a function which is marked `suspend` already
 * putting `withCol` in a block that takes a coroutine block, such as:
   * `launchCatchingTask` which, as the name suggest, catch anything that is thrown (so you should ensure that you catch any exception you care about inside the block
-  * or `withProgress`, that displays a progress bar, blocking the UI until the task is done.
+  * or `withProgress`, that displays a progress bar, blocking the UI until the task is done. `withProgress` needs to be inside launchCatchingTask.
 
 ## Restriction on the code inside `withCol` block.
 
@@ -59,11 +59,11 @@ The system described above was created in Summer 2022, when AnkiDroid started to
 
 On the one hand, this is NOT a priority. AnkiDroid works correctly today, and, even if the current state may causes some bugs, they are rare enough that it is not worth it to stop all development to concentrate on this task.
 
-On the other hand, this task is important for the future of AnkiDroid, and we must eventually do the migration. The good news is that most part of the migration should be simple enough that new contributors could find one use of access of collection outside of `withCol` and remove it. If you are a new contributors, it's a good way to help us, discover various part of the codebase, and, in the worst case, get constructive feedback from maintainers if you didn't do the migration correctly on the first try.
+On the other hand, this task is important for the future of AnkiDroid, and we must eventually do the migration. The good news is that most part of the migration should be simple enough that new contributors could find one use of access of collection outside of `withCol` and remove it. If you are a new contributor, it's a good way to help us, discover various part of the codebase, and, in the worst case, get constructive feedback from maintainers if you didn't do the migration correctly on the first try.
 
 ## End goal
 
-Here we explain how me can consider that the migration was sucesfull. 
+Here we explain how me can consider that the migration was successful. 
 * com.ichi2.anki.CollectionHelper should probably disappear. If it can't disappear (this is yet to be determined), at least the methods `getCol*` should not be called anymore anywhere in the code; and subsequently should be deleted
 * no object should get any reference to a collection. For example, currently (September 2022), com.ichi2.libanki.Card has `var col: Collection`. This collection is used, for example, to return the note associated to the card.
 
