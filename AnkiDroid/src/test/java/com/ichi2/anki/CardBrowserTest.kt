@@ -126,7 +126,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun browserDoesNotFailWhenSelectingANonExistingCard() {
+    fun browserDoesNotFailWhenSelectingANonExistingCard() = runTest {
         // #5900
         val browser = getBrowserWithNotes(6)
         // Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
@@ -137,7 +137,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Ignore("Not yet implemented, feature has performance implications in large collections, instead we remove selections")
-    fun selectionsAreCorrectWhenNonExistingCardIsRemoved() {
+    fun selectionsAreCorrectWhenNonExistingCardIsRemoved() = runTest {
         val browser = getBrowserWithNotes(7)
         browser.checkCardsAtPositions(1, 3, 5, 6)
         deleteCardAtPosition(browser, 2) // delete non-selected
@@ -154,7 +154,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun canChangeDeckToRegularDeck() {
+    fun canChangeDeckToRegularDeck() = runTest {
         addDeck("Hello")
         val b = getBrowserWithNotes(5)
 
@@ -162,14 +162,14 @@ class CardBrowserTest : RobolectricTest() {
 
         for (d in decks) {
             if (d.getString("name") == "Hello") {
-                return
+                return@runTest
             }
         }
         fail("Added deck was not found in the Card Browser")
     }
 
     @Test
-    fun cannotChangeDeckToDynamicDeck() {
+    fun cannotChangeDeckToDynamicDeck() = runTest {
         // 5932 - dynamic decks are meant to have cards added to them through "Rebuild".
         addDynamicDeck("World")
         val b = getBrowserWithNotes(5)
@@ -182,7 +182,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun changeDeckIntegrationTestDynamicAndNon() {
+    fun changeDeckIntegrationTestDynamicAndNon() = runTest {
         addDeck("Hello")
         addDynamicDeck("World")
 
@@ -223,7 +223,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun changeDeckViaTaskIsHandledCorrectly() {
+    fun changeDeckViaTaskIsHandledCorrectly() = runTest {
         val dynId = addDynamicDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)
@@ -239,7 +239,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun flagsAreShownInBigDecksTest() {
+    fun flagsAreShownInBigDecksTest() = runTest {
         val numberOfNotes = 75
         val cardBrowser = getBrowserWithNotes(numberOfNotes)
 
@@ -752,7 +752,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun checkCardsNotesMode() {
+    fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 
         // set browser to be in cards mode
