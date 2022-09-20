@@ -193,11 +193,11 @@
     <string name="export_in_progress">Exportando arquivo Anki (.apkg)&#8230;</string>
     <string name="export_successful_title">Enviar arquivo Anki (.apkg)?</string>
     <string name="export_send_button">Enviar</string>
-    <string name="export_save_button">Salvar para o arquivo</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando...</string>
     <string name="export_save_apkg_successful">Arquivo Anki (.apkg) salvo com sucesso</string>
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
     <string name="export_successful">Arquivo \"%s\" foi exportado. Deseja enviá-lo com um outro app?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
     <string name="export_email_text"><![CDATA[        Olá!
         <br/><br/>

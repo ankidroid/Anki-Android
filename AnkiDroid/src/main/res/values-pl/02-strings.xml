@@ -188,8 +188,8 @@
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
     <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
+    <string name="import_error_multiple_colpkg">Wybrano wiele plików colpkg.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Zamiana kolekcji&#8230;</string>
@@ -201,11 +201,11 @@
     <string name="export_in_progress">Eksportowanie pliku pakietu Anki&#8230;</string>
     <string name="export_successful_title">Wysłać pakiet Anki?</string>
     <string name="export_send_button">Wyślij</string>
-    <string name="export_save_button">Zapisz jako plik</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie...</string>
     <string name="export_save_apkg_successful">Pakiet Anki zapisany pomyślnie</string>
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>

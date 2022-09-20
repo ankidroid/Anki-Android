@@ -203,11 +203,11 @@
     <string name="export_in_progress">קובץ חבילה של Anki מיוצא&#8230;</string>
     <string name="export_successful_title">לשלוח חבילת Anki?</string>
     <string name="export_send_button">שלח</string>
-    <string name="export_save_button">שמירה לקובץ</string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>
     <string name="export_save_apkg_successful">חבילת ה־Anki נשמרה בהצלחה</string>
     <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
     <string name="export_successful">הקובץ %s יוּצא. לשלוח אותו בעזרת אפליקציה אחרת?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
     <string name="export_email_text"><![CDATA[         היי!
          <br/><br/>

@@ -44,25 +44,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
+    <string name="check_db_title">შემოწმდეს მონაცემთა ბაზა?</string>
+    <string name="check_db_warning">ამას შეიძლება დიდი ხანი დასჭირდეს</string>
+    <string name="check_db_acknowledge">მონაცემთა ბაზა შემოწმდა</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
+    <string name="contextmenu_deckpicker_delete_deck">დასტის წაშლა</string>
     <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="delete_deck_title">წაიშალოს დასტა?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
     </plurals>
     <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
+    <string name="initializing_tts">ხმოვანი წამკითხველის ინიციალიზაცია&#8230;</string>
+    <string name="tts_no_tts">არ წაიკითხოს</string>
+    <string name="unused_strings">\n\nგამოუყენებელი ფაილები:\n</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">წინასწარ ნახვა</string>
+    <string name="reposition_card_dialog_title">ახალი ბარათის გადაადგილება</string>
+    <string name="reposition_card_dialog_message">საწყისი პოზიცია:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>
@@ -91,23 +91,23 @@
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
-    <string name="answering_error_title">Database error</string>
+    <string name="answering_error_title">მონაცემთა ბაზის შეცდომა</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Report error</string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
+    <string name="intent_aedict_empty">კატეგორია „ნაგულისხმევი“ ცარიელია</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_new_total_new">ახალი ბარათი დასტაში: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+    <string name="custom_study_ahead">X დღით ადრე სწავლა:</string>
+    <string name="custom_study_random">დასტიდან x ბარათის შემთხვევით ამორჩევა:</string>
+    <string name="custom_study_preview">ბოლო x დღეში დამატებული ბარათების წინასწარ ნახვა:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Importing collection&#8230;</string>
-    <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
+    <string name="importing_collection">კოლექციის იმპორტირება&#8230;</string>
+    <string name="import_media_count">მედიაფაილების %1$d%% იმპორტირება&#8230;</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
     <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
     <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
@@ -115,9 +115,9 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD card full</string>
-    <string name="sd_card_almost_full_title">SD card almost full</string>
-    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="sd_card_full_title">SD ბარათი სავსეა</string>
+    <string name="sd_card_almost_full_title">SD ბარათი თითქმის სავსეა</string>
+    <string name="no_space_to_downgrade_title">მეხსიერების სივრცე არ არის</string>
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
@@ -126,35 +126,35 @@
     <string name="dialog_ok">დიახ</string>
     <string name="dialog_no">არა</string>
     <string name="dialog_continue">გაგრძელება</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">მუშავდება…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>
     <string name="dialog_positive_delete">წაშლა</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_remove">Remove</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_positive_restore">Restore</string>
-    <string name="dialog_positive_set">Set</string>
+    <string name="dialog_positive_overwrite">ჩანაცვლება</string>
+    <string name="dialog_positive_remove">ამოშლა</string>
+    <string name="dialog_positive_repair">შეკეთება</string>
+    <string name="dialog_positive_replace">ჩანაცვლება</string>
+    <string name="dialog_positive_restore">აღდგენა</string>
+    <string name="dialog_positive_set">დაყენება</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
+    <string name="check_media_title">შემოწმდეს მედიაფაილები?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_acknowledge">Media checked</string>
-    <string name="check_media_failed">Media check failed</string>
-    <string name="check_media_invalid">Files with invalid encoding: %d</string>
+    <string name="check_media_message">მედიაფაილების შემოწმება&#8230;</string>
+    <string name="check_media_acknowledge">მედიაფაილები შემოწმდა</string>
+    <string name="check_media_failed">მედიაფაილები ვერ შემოწმდა</string>
+    <string name="check_media_invalid">ფაილები არასწორი კოდირებით: %d</string>
     <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
     <string name="check_media_no_unused_missing">No unused or missing files found</string>
     <string name="check_media_db_updated">Media database rebuilt</string>
     <string name="check_media_delete_unused">Delete unused</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">მიმდინარეობს მედიაფაილების წაშლა&#8230;</string>
+    <string name="delete_media_result_title">წაშლის შედეგი</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d ფაილი წაიშალა</item>
+        <item quantity="other">%d ფაილი წაიშალა</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
@@ -179,13 +179,13 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">მაინც გაგრძელება</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">დასტა ვერ შეიცვალა</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
     <string name="undo_succeeded">Undone \"%s\"</string>
@@ -225,12 +225,12 @@
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_title_support_ankidroid">AnkiDroid-ის მხარდაჭერა</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_rate_ankidroid">შეფასება</string>
     <string name="help_item_support_other_ankidroid">სხვა</string>
-    <string name="help_title_community">Community</string>
+    <string name="help_title_community">საზოგადოება</string>
     <string name="help_item_anki_forums">Anki Forums</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>

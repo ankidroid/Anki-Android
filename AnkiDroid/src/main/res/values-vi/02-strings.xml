@@ -189,11 +189,11 @@
     <string name="export_in_progress">Đang kết xuất gói tệp tin Anki&#8230;</string>
     <string name="export_successful_title">Gửi gói Anki?</string>
     <string name="export_send_button">Gửi</string>
-    <string name="export_save_button">Lưu vào tệp tin</string>
     <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu...</string>
     <string name="export_save_apkg_successful">Lưu gói Anki thành công</string>
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
     <string name="export_successful">Tệp tin \"%s\" đã được kết xuất. Bạn có muốn gửi nó đi với ứng dụng khác?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
     <string name="export_email_text"><![CDATA[        Xin chào!
         <br/><br/>

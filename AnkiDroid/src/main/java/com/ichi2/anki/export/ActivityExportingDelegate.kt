@@ -15,8 +15,10 @@
  */
 package com.ichi2.anki.export
 
-import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.LabeledIntent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.activity.result.ActivityResult
@@ -116,8 +118,52 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.dismissAllDialogFragments()
     }
 
-    @SuppressLint("StringFormatInvalid")
-    override fun emailFile(path: String) {
+    @Suppress("deprecation") // API33 deprecation for pm.queryIntentActivities
+    fun shareFileIntent(exportPath: String, uri: Uri): Intent {
+        val attachment = File(exportPath)
+        val pm: PackageManager = activity.packageManager
+        val sendIntent = Intent(Intent.ACTION_SEND)
+        sendIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        sendIntent.type = "application/apkg"
+        val resInfo = pm.queryIntentActivities(sendIntent, 0)
+
+        // If we make two intents, one for save file and one for share, we get save file as
+        // an option in the share sheet
+        val intentList = arrayListOf(
+            LabeledIntent(
+                saveFileIntent(attachment),
+                BuildConfig.APPLICATION_ID,
+                "", // param "nonLocalizedLabel" isn't actually used
+                0 // param "icon" isn't actually used, this is the constant for "No icon"
+            )
+        )
+
+        for (ri in resInfo) {
+            val packageName = ri.activityInfo.packageName
+            val intent = IntentBuilder(activity)
+                .setType("application/apkg")
+                .setStream(uri)
+                .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
+                .setHtmlText(activity.getString(R.string.export_email_text, activity.getString(R.string.link_manual), activity.getString(R.string.link_distributions)))
+                .intent
+                .setAction(Intent.ACTION_SEND)
+                .setDataAndType(uri, "application/apkg")
+                .setComponent(ComponentName(packageName, ri.activityInfo.name))
+                .setPackage(packageName)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            intentList.add(
+                LabeledIntent(intent, packageName, ri.loadLabel(pm), ri.iconResource)
+            )
+        }
+
+        return Intent.createChooser(
+            intentList.first(),
+            activity.getString(R.string.export_share_title)
+        ).apply { putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toTypedArray()) }
+    }
+
+    override fun shareFile(path: String) {
         // Make sure the file actually exists
         val attachment = File(path)
         if (!attachment.exists()) {
@@ -133,14 +179,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
             return
         }
-        val shareIntent = IntentBuilder(activity)
-            .setType("application/apkg")
-            .setStream(uri)
-            .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
-            .setHtmlText(activity.getString(R.string.export_email_text, activity.getString(R.string.link_manual), activity.getString(R.string.link_distributions)))
-            .intent
-        if (shareIntent.resolveActivity(activity.packageManager) != null) {
-            activity.startActivityWithoutAnimation(shareIntent)
+
+        val shareFileIntent = shareFileIntent(path, uri)
+        if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
+            activity.startActivityWithoutAnimation(shareFileIntent)
         } else {
             // Try to save it?
             activity.showSnackbar(R.string.export_send_no_handlers)
@@ -159,15 +201,19 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
         // Send the user to the standard Android file picker via Intent
         mExportFileName = exportPath
-        val saveIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        saveIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        saveIntent.type = "application/apkg"
-        saveIntent.putExtra(Intent.EXTRA_TITLE, attachment.name)
-        saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true)
-        saveIntent.putExtra("android.content.extra.FANCY", true)
-        saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true)
+        val saveIntent = saveFileIntent(attachment)
         mSaveFileLauncher.launch(saveIntent)
     }
+
+    private fun saveFileIntent(file: File): Intent =
+        Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/apkg"
+            putExtra(Intent.EXTRA_TITLE, file.name)
+            putExtra("android.content.extra.SHOW_ADVANCED", true)
+            putExtra("android.content.extra.FANCY", true)
+            putExtra("android.content.extra.SHOW_FILESIZE", true)
+        }
 
     private fun saveFileCallback(result: ActivityResult) {
         val isSuccessful = exportToProvider(result.data!!, true)

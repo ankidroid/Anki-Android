@@ -201,11 +201,11 @@
     <string name="export_in_progress">Ідзе экспартаванне пакета Anki&#8230;</string>
     <string name="export_successful_title">Адправіць пакет Anki?</string>
     <string name="export_send_button">Адправіць</string>
-    <string name="export_save_button">Захаваць у файл</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне...</string>
     <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
     <string name="export_email_text"><![CDATA[        Добры дзень!
         <br/><br/>

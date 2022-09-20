@@ -59,7 +59,7 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">სინქრონიზაცია</string>
     <string name="pref_cat_scheduling" maxLength="41">სწავლის განრიგი</string>
     <string name="pref_cat_whiteboard" maxLength="41">დაფა</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
+    <string name="pref_cat_appearance" maxLength="41">იერსახე</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_fonts" maxLength="41">შრიფტები</string>
     <string name="pref_cat_gestures" maxLength="41">ჟესტები</string>
@@ -89,9 +89,9 @@
     <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
     <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
-        <item>None</item>
+        <item>ზევით</item>
+        <item>ქვევით</item>
+        <item>არცერთი</item>
     </string-array>
     <string name="gestures" maxLength="41">Enable gestures</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="more_scrolling_buttons" maxLength="41">ელ-წამკითხველი</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">„%s“-მენიუ</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
@@ -153,7 +153,7 @@
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX წმ</string>
     <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
     <string name="select_locale_title">ენის არჩევა</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
@@ -178,7 +178,7 @@
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
     <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current" maxLength="41">Deck for new cards</string>
+    <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
     <string name="new_spread" maxLength="41">New card position</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
@@ -247,16 +247,16 @@
         <item quantity="one">%1$s\n%2$d deck uses this group</item>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">New cards</string>
+    <string name="deck_conf_new_cards" maxLength="41">ახალი ბარათები</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Reminders</string>
     <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
-    <string name="deck_conf_order" maxLength="41">Order</string>
+    <string name="deck_conf_order" maxLength="41">თანმიმდევრობა</string>
     <string name="deck_conf_new_cards_day" maxLength="41">New cards/day</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
-    <string name="deck_conf_days">XXX day(s)</string>
+    <string name="deck_conf_days">XXX დღე</string>
     <string name="deck_conf_easy_ivl" maxLength="41">Easy interval</string>
     <string name="deck_conf_start_ease" maxLength="41">Starting ease</string>
     <string name="deck_conf_max_rev" maxLength="41">Maximum reviews/day</string>
@@ -323,7 +323,7 @@
     <string name="pref_cat_about_title" maxLength="41">About</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">ლიცენზია</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->

@@ -36,6 +36,7 @@ package com.ichi2.libanki
 
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
+import anki.decks.FilteredDeckForUpdate
 import com.google.protobuf.ByteString
 import com.ichi2.libanki.Decks.Companion.ACTIVE_DECKS
 import com.ichi2.libanki.Utils.ids2str
@@ -909,4 +910,12 @@ class DecksV16(private val col: CollectionV16) :
 // These take and return bytes that the frontend TypeScript code will encode/decode.
 fun CollectionV16.getDeckNamesRaw(input: ByteArray): ByteArray {
     return backend.getDeckNamesRaw(input)
+}
+
+/**
+ * Gets the filtered deck with given [did]
+ * or creates a new one if [did] = 0
+ */
+fun CollectionV16.getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate {
+    return backend.getOrCreateFilteredDeck(did = did)
 }

@@ -189,11 +189,11 @@
     <string name="export_in_progress">匯出 Anki 套件檔案中&#8230;</string>
     <string name="export_successful_title">發送 Anki 套件？</string>
     <string name="export_send_button">發送</string>
-    <string name="export_save_button">儲存到檔案</string>
     <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中…</string>
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
     <string name="export_successful">檔案 “%s” 匯出完畢，您想用其它應用程式發送它嗎？</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
     <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>

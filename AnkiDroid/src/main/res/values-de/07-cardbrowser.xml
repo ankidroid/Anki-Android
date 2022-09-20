@@ -50,8 +50,8 @@
         <item quantity="other">%d Karten angezeigt</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d Notiz angezeigt</item>
+        <item quantity="other">%d Notizen angezeigt</item>
     </plurals>
     <string name="card_browser_all_decks">Alle Stapel</string>
     <string name="card_browser_delete_card">Notizen löschen</string>

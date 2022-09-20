@@ -190,11 +190,11 @@
     <string name="export_in_progress">Anki 패키지 파일 내보내는 중...</string>
     <string name="export_successful_title">Anki 패키지를 보내시겠습니까?</string>
     <string name="export_send_button">공유</string>
-    <string name="export_save_button">파일로 저장</string>
     <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중...</string>
     <string name="export_save_apkg_successful">Anki 패키지 저장 성공</string>
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
     <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
     <string name="export_email_text"><![CDATA[        안녕하세요!
         <br/><br/>

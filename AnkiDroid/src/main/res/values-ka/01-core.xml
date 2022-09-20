@@ -216,7 +216,7 @@
     <string name="read_write_permission_description">წვდომა არსებულ შენიშვნებთან, ბარათებთან, შენიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ბარათების საძიებო</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki-ბარათი</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s აქვს პრობლემა:<br/>%2$s</string>
     <string name="more_information">მეტი ინფორმაცია</string>
     <string name="no_field">\"{{%1$s}}\" ნაპოვნია, მაგრამ ველი \"%1$s\" არ არის</string>
