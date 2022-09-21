@@ -22,7 +22,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.Decks
@@ -36,10 +35,6 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     private var mOnNewDeckCreated: Consumer<Long>? = null
     private var mInitialDeckName = ""
     private var mShownDialog: MaterialDialog? = null
-
-    init {
-        (context as? DeckPicker)?.createDeckDialog = this
-    }
 
     enum class DeckDialogType {
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK

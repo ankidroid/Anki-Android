@@ -28,16 +28,16 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
+import timber.log.Timber
 import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -66,31 +66,26 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun testRenameDeck() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
+            addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 1)
 
-            createDeckDialog!!.renameDeck("Deck 2")
-            assertEquals("Deck 2", col.decks.name(deckId))
+            assertDialogTitleEquals("Rename deck")
         }
     }
 
     @Test
     fun testCreateSubdeck() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
+            addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 2)
 
-            createDeckDialog!!.createSubDeck(deckId, "Deck 2")
-            assertThat(
-                col.decks.allNames(),
-                containsInAnyOrder("Default", "Deck 1", "Deck 1::Deck 2")
-            )
+            assertDialogTitleEquals("Create subdeck")
         }
     }
 
@@ -112,13 +107,13 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun testDeleteDeck() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
+            val deckId = addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 7)
 
-            assertThat(col.decks.allNames(), contains("Default"))
+            assertThat(col.decks.allIds(), not(containsInAnyOrder(deckId)))
         }
     }
 
@@ -165,25 +160,20 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 4)
 
-            assertNotNull(ShadowDialog.getLatestDialog() as MaterialDialog?)
+            assertDialogTitleEquals("Custom study")
         }
     }
 
     @Test
     fun testExportDeck() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
+            addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 5)
 
-            assertEquals(
-                "Export “${col.decks.name(deckId)}” as apkg file?",
-                (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
-                    .view.findViewById<RtlTextView>(R.id.md_text_message)
-                    .text
-            )
+            assertDialogTitleEquals("Export")
         }
     }
 
@@ -207,6 +197,16 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
+    }
+
+    private fun assertDialogTitleEquals(expectedTitle: String) {
+        val actualTitle =
+            (ShadowDialog.getLatestDialog() as MaterialDialog)
+                .view
+                .findViewById<RtlTextView>(R.id.md_text_title)
+                ?.text
+        Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
+        assertEquals(expectedTitle, "$actualTitle")
     }
 
     private fun allCardsInSameDeck(cardIds: List<Long>, deckId: Long): Boolean =
