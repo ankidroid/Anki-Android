@@ -31,7 +31,6 @@ import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import timber.log.Timber
-import java.util.*
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>
@@ -164,7 +163,7 @@ class TemplateManager {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
-                val fields = _note.items().map { Pair(it[0], it[1]) }.toMap().toMutableMap()
+                val fields = _note.items().map { Pair(it[0]!!, it[1]!!) }.toMap().toMutableMap()
 
                 // add (most) special fields
                 fields["Tags"] = _note.stringTags().trim()

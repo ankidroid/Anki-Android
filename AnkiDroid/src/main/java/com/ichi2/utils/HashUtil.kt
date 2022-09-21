@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.utils
 
-import java.util.HashMap
 import java.util.HashSet
 
 object HashUtil {
