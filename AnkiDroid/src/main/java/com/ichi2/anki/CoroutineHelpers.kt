@@ -71,6 +71,9 @@ suspend fun <T> FragmentActivity.runCatchingTask(
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  *
+ * Typically you'll want to use [launchCatchingTask] instead; this routine is mainly useful for
+ * launching tasks in an activity that is not a lifecycleOwner.
+ *
  * @return [CoroutineExceptionHandler]
  * @see [FragmentActivity.launchCatchingTask]
  */

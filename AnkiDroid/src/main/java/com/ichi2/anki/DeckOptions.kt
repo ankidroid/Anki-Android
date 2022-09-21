@@ -238,12 +238,17 @@ class DeckOptions :
                                 launch(getCoroutineExceptionHandler(this@DeckOptions)) {
                                     preConfChange()
                                     // reset configuration
-                                    withCol {
-                                        Timber.d("doInBackgroundConfReset")
-                                        decks.restoreToDefault(mOptions)
-                                        save()
+                                    try {
+                                        withCol {
+                                            Timber.d("doInBackgroundConfReset")
+                                            decks.restoreToDefault(mOptions)
+                                            save()
+                                        }
+                                    } finally {
+                                        // need to call postConfChange in finally because if withCol{} throws an exception,
+                                        // postConfChange would never get called and progress-bar will never get dismissed
+                                        postConfChange()
                                     }
-                                    postConfChange()
                                 }
                             }
                             "confAdd" -> {
