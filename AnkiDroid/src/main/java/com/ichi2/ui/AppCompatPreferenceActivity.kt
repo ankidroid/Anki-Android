@@ -27,15 +27,18 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -46,6 +49,7 @@ import kotlin.collections.HashMap
  */
 abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceActivity<PreferenceHack>.AbstractPreferenceHack> :
     PreferenceActivity(),
+    CoroutineScope by MainScope(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     private var mDelegate: AppCompatDelegate? = null
     fun isColInitialized() = ::col.isInitialized
@@ -246,6 +250,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         super.onDestroy()
         delegate.onDestroy()
         unregisterReceiver(unmountReceiver)
+        cancel() // cancel all the Coroutines started from Activity's Scope
     }
 
     override fun invalidateOptionsMenu() {

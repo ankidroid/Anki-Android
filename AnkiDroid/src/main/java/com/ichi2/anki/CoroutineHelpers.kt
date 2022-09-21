@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
@@ -64,6 +65,37 @@ suspend fun <T> FragmentActivity.runCatchingTask(
     }
     return null
 }
+
+/**
+ * Returns CoroutineExceptionHandler which catches any uncaught exceptions and reports it to user
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ *
+ * Typically you'll want to use [launchCatchingTask] instead; this routine is mainly useful for
+ * launching tasks in an activity that is not a lifecycleOwner.
+ *
+ * @return [CoroutineExceptionHandler]
+ * @see [FragmentActivity.launchCatchingTask]
+ */
+fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = null) =
+    CoroutineExceptionHandler { _, throwable ->
+        val extraInfo = errorMessage ?: ""
+        // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
+        when (throwable) {
+            is BackendInterruptedException -> {
+                Timber.e(throwable, extraInfo)
+                throwable.localizedMessage?.let { activity.showSnackbar(it) }
+            }
+            is BackendException -> {
+                Timber.e(throwable, extraInfo)
+                showError(activity, throwable.localizedMessage!!, throwable)
+            }
+            else -> {
+                Timber.e(throwable, extraInfo)
+                showError(activity, throwable.toString(), throwable)
+            }
+        }
+    }
 
 /**
  * Calls [runBlocking] while catching errors with [runCatchingTask].

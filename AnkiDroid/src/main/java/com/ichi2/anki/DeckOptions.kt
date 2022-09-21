@@ -30,6 +30,7 @@ import android.text.TextUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
@@ -50,6 +51,7 @@ import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 
@@ -143,6 +145,23 @@ class DeckOptions :
             return DeckConfig.parseTimerOpt(options, true)
         }
 
+        fun preConfChange() {
+            val res = deckOptionsActivity.resources
+            progressDialog = StyledProgressDialog.show(
+                deckOptionsActivity as Context, null,
+                res?.getString(R.string.reordering_cards), false
+            )
+        }
+
+        fun postConfChange() {
+            cacheValues()
+            deckOptionsActivity.buildLists()
+            deckOptionsActivity.updateSummaries()
+            progressDialog.dismiss()
+            // Restart to reflect the new preference values
+            deckOptionsActivity.restartActivity()
+        }
+
         inner class Editor : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("DeckOptions - commit() changes back to database")
@@ -216,12 +235,21 @@ class DeckOptions :
                                 }
                             }
                             "confReset" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(
-                                    CollectionTask.ConfReset(
-                                        mOptions
-                                    ),
-                                    confChangeHandler()
-                                )
+                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                    preConfChange()
+                                    // reset configuration
+                                    try {
+                                        withCol {
+                                            Timber.d("doInBackgroundConfReset")
+                                            decks.restoreToDefault(mOptions)
+                                            save()
+                                        }
+                                    } finally {
+                                        // need to call postConfChange in finally because if withCol{} throws an exception,
+                                        // postConfChange would never get called and progress-bar will never get dismissed
+                                        postConfChange()
+                                    }
+                                }
                             }
                             "confAdd" -> {
                                 val newName = value as String
@@ -391,24 +419,9 @@ class DeckOptions :
     class ConfChangeHandler(deckPreferenceHack: DeckPreferenceHack) :
         TaskListenerWithContext<DeckPreferenceHack, Void?, Boolean?>(deckPreferenceHack) {
 
-        override fun actualOnPreExecute(context: DeckPreferenceHack) {
-            val res = context.deckOptionsActivity.resources
-            context.progressDialog = StyledProgressDialog.show(
-                context.deckOptionsActivity as Context, null,
-                res?.getString(R.string.reordering_cards), false
-            )
-        }
+        override fun actualOnPreExecute(context: DeckPreferenceHack) = context.preConfChange()
 
-        override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) {
-            context.apply {
-                cacheValues()
-                deckOptionsActivity.buildLists()
-                deckOptionsActivity.updateSummaries()
-                progressDialog.dismiss()
-                // Restart to reflect the new preference values
-                deckOptionsActivity.restartActivity()
-            }
-        }
+        override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) = context.postConfChange()
     }
 
     @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
