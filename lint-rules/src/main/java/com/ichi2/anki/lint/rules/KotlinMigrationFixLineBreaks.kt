@@ -25,6 +25,7 @@ import com.ichi2.anki.lint.utils.Constants
 import org.jetbrains.uast.UClass
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 @Beta
 class KotlinMigrationFixLineBreaks : Detector(), SourceCodeScanner {

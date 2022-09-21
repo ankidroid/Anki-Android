@@ -29,6 +29,7 @@ import java.io.IOException
 import java.lang.Exception
 import java.util.*
 import kotlin.Throws
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class UtilsTest {

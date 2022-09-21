@@ -21,6 +21,7 @@ import android.content.pm.PackageManager
 import timber.log.Timber
 import java.lang.Exception
 import java.util.*
+import kotlin.collections.*
 
 object CheckCameraPermission {
     @Suppress("deprecation") // getPackageInfo

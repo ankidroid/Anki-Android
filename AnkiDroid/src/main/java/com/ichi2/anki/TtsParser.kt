@@ -6,6 +6,7 @@ import com.ichi2.libanki.template.TemplateFilters
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Parse card sides, extracting text snippets that should be read using a text-to-speech engine.

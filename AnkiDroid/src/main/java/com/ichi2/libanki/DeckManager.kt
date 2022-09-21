@@ -26,6 +26,7 @@ import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import java.util.*
+import kotlin.collections.*
 
 abstract class DeckManager {
 

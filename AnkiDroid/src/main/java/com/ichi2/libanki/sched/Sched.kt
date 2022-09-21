@@ -37,6 +37,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("cleanup: use formatted string for all queries")

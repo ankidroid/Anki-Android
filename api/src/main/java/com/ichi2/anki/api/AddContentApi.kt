@@ -37,6 +37,7 @@ import com.ichi2.anki.FlashCardsContract.Model
 import com.ichi2.anki.FlashCardsContract.Note
 import java.io.File
 import java.util.*
+import kotlin.collections.*
 
 /**
  * API which can be used to add and query notes,cards,decks, and models to AnkiDroid

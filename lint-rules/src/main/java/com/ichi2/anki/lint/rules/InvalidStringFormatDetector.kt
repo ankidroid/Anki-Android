@@ -33,6 +33,7 @@ import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 /**
  * Fix for "Linting Error - String format should be valid."

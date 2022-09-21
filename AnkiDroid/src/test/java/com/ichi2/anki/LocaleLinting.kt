@@ -32,6 +32,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Linting to ensure that all locales have valid strings

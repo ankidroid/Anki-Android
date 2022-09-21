@@ -309,7 +309,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         for (fieldOrd in noteFields.keySet()) {
             ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)
         }
-        return ArrayList(listOf(*ret))
+        return ret.map { it!! }.toMutableList()
     }
 
     /**

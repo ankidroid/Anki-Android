@@ -20,6 +20,7 @@ import timber.log.Timber
 import java.net.URLEncoder
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 object NpmUtils {
     /**

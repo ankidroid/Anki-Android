@@ -32,6 +32,7 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.HashUtil.HashMapInit
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Display forecast statistics based on a simulation of future reviews.

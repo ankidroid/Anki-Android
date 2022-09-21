@@ -20,6 +20,7 @@ import android.text.TextUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import java.util.*
+import kotlin.collections.*
 
 fun <T> MutableList<T>.append(value: T) {
     this.add(value)

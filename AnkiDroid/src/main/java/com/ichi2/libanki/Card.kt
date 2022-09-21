@@ -38,6 +38,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException
+import kotlin.collections.*
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive

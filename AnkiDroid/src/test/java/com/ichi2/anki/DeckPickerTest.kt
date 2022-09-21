@@ -34,6 +34,7 @@ import org.robolectric.RuntimeEnvironment
 import java.io.File
 import java.lang.Exception
 import java.util.*
+import kotlin.collections.*
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 

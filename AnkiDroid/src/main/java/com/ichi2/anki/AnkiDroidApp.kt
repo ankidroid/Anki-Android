@@ -51,6 +51,7 @@ import timber.log.Timber.DebugTree
 import java.io.InputStream
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 /**
  * Application class.

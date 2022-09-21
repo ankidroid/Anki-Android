@@ -32,6 +32,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("Lots to do")

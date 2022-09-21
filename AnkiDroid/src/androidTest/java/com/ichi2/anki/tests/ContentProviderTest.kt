@@ -49,6 +49,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 import kotlin.test.assertNotNull
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 

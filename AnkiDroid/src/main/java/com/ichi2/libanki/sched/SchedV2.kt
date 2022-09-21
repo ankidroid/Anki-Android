@@ -48,6 +48,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.collections.*
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("much to do - keep in line with libAnki")

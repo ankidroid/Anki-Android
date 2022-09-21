@@ -19,6 +19,7 @@ package com.ichi2.utils
 
 import org.jetbrains.annotations.Contract
 import java.util.*
+import kotlin.collections.*
 
 object StringUtil {
     /** Trims from the right hand side of a string  */

@@ -24,6 +24,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import kotlin.Throws
+import kotlin.collections.*
 
 @KotlinCleanup("lateinit")
 @RunWith(AndroidJUnit4::class)

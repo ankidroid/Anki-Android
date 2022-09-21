@@ -51,6 +51,7 @@ import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 @KotlinCleanup("lateinit if possible")
 @KotlinCleanup("IDE-lint")

@@ -26,6 +26,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.never
 import java.util.*
+import kotlin.collections.*
 
 class UniqueArrayListTest {
     private val mDupData = listOf(

@@ -25,6 +25,7 @@ import com.ichi2.utils.KotlinCleanup
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.Throws
+import kotlin.collections.*
 
 @KotlinCleanup("IDE Lint")
 class Replacement(

@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.util.*
+import kotlin.collections.*
 
 @RunWith(Parameterized::class)
 class TimePreferenceTest(private val parsableHour: String, private val expectedHour: Int) {

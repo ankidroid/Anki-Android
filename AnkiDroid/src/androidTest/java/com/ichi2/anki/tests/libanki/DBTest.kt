@@ -33,6 +33,7 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class DBTest : InstrumentedTest() {

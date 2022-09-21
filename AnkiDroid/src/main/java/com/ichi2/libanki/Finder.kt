@@ -33,6 +33,7 @@ import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 @RustCleanup("remove this once Java backend is gone")
 class Finder(private val col: Collection) {

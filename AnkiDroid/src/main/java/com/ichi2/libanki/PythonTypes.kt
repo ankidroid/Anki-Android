@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import java.util.*
+import kotlin.collections.*
 
 /*
  * We can't use private typealiases until

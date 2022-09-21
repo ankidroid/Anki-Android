@@ -21,6 +21,7 @@ import com.ichi2.libanki.Decks
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
+import kotlin.collections.*
 import kotlin.math.max
 import kotlin.math.min
 

@@ -33,6 +33,7 @@ import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
 import java.lang.Double.*
 import java.util.*
+import kotlin.collections.*
 import kotlin.test.assertNull
 
 /**

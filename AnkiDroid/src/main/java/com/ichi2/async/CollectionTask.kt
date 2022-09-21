@@ -47,6 +47,7 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
+import kotlin.collections.*
 
 /**
  * This is essentially an AsyncTask with some more logging. It delegates to TaskDelegate the actual business logic.

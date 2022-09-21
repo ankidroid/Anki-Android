@@ -22,6 +22,7 @@ import timber.log.Timber
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 @KotlinCleanup("for better possibly-null handling")
 object HtmlColors {

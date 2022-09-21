@@ -36,6 +36,7 @@ import com.ichi2.utils.iconAttr
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.collections.*
 
 object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)

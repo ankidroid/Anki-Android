@@ -17,6 +17,7 @@ package com.ichi2.libanki.utils
 
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.*
 
 object TimeUtils {
     fun getTimestamp(time: Time): String {

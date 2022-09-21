@@ -41,6 +41,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class FinderTest : RobolectricTest() {

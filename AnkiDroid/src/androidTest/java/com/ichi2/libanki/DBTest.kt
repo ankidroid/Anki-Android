@@ -24,6 +24,7 @@ import org.junit.Assume.assumeThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class DBTest : InstrumentedTest() {

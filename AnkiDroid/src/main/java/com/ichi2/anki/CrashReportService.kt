@@ -36,6 +36,7 @@ import org.acra.config.*
 import org.acra.sender.HttpSender
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 import kotlin.collections.HashMap
 
 object CrashReportService {

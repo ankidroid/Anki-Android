@@ -40,6 +40,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
+import kotlin.collections.*
 
 @KotlinCleanup("IDE-lint")
 class Syncer(

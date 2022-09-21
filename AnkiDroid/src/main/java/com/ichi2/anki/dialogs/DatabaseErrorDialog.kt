@@ -41,6 +41,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.*
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
     private lateinit var mRepairValues: IntArray

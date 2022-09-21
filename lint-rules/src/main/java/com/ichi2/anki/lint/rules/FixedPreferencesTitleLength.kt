@@ -24,6 +24,7 @@ import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
 import org.w3c.dom.Element
 import java.util.*
+import kotlin.collections.*
 
 class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
     companion object {

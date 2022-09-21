@@ -27,6 +27,7 @@ import com.ichi2.utils.Computation
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException
+import kotlin.collections.*
 import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 

@@ -44,6 +44,7 @@ import org.mockito.kotlin.whenever
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest {

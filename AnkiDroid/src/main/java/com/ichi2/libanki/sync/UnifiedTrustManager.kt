@@ -24,6 +24,7 @@ import java.security.cert.X509Certificate
 import java.util.*
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
+import kotlin.collections.*
 
 // https://stackoverflow.com/questions/27562666/programmatically-add-a-certificate-authority-while-keeping-android-system-ssl-ce
 // Changes:

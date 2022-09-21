@@ -18,6 +18,7 @@ package com.wildplot.android.rendering
 
 import com.wildplot.android.rendering.interfaces.Drawable
 import java.util.*
+import kotlin.collections.*
 
 /**
  * This class is used to store information for a certain plot in a multi-plot sheet.

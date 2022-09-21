@@ -52,6 +52,7 @@ import org.robolectric.annotation.Config
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
+import kotlin.collections.*
 
 /**
  * This black box test was written without inspecting the non-free org.json sourcecode.

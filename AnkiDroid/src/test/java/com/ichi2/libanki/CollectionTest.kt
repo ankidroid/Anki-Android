@@ -26,6 +26,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class CollectionTest : RobolectricTest() {

@@ -48,7 +48,8 @@ import com.ichi2.utils.Permissions
 import okhttp3.Response
 import timber.log.Timber
 import java.io.IOException
-import java.util.Arrays
+import java.util.*
+import kotlin.collections.*
 
 @Suppress("DEPRECATION") // #7108: AsyncTask
 @KotlinCleanup("Simplify null comparison, !! -> ?.")

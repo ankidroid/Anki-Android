@@ -21,6 +21,7 @@ import com.ichi2.anki.model.DiskFile
 import org.acra.util.IOUtils
 import java.io.File
 import java.util.*
+import kotlin.collections.*
 
 object FileUtil {
     /**

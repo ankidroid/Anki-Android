@@ -25,6 +25,7 @@ import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Utility call for proving language related functionality.

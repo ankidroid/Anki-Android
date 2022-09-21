@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.dialogs.RecursivePictureMenu
 import java.util.*
+import kotlin.collections.*
 
 class RecursivePictureMenuUtil {
     companion object {

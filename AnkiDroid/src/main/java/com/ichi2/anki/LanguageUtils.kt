@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import java.util.*
+import kotlin.collections.*
 
 object LanguageUtils {
     /**

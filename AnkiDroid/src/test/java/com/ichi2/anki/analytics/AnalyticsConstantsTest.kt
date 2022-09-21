@@ -23,6 +23,7 @@ import org.junit.runners.Parameterized
 import java.lang.RuntimeException
 import java.util.*
 import kotlin.Throws
+import kotlin.collections.*
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 

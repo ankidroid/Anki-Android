@@ -28,6 +28,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 import java.util.stream.Collectors
+import kotlin.collections.*
 import kotlin.math.min
 
 /** Regression test for Rust  */

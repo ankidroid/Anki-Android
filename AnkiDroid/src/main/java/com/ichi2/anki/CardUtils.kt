@@ -6,6 +6,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
 import com.ichi2.utils.HashUtil.HashSetInit
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Utilities for working on multiple cards

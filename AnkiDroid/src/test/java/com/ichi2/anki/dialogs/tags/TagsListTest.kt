@@ -24,6 +24,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import java.util.*
+import kotlin.collections.*
 
 // suppressed to have a symmetry in all tests, Arrays.asList(...) should be all you need.
 @KotlinCleanup("Use kotlin functions instead of Arrays.asList")

@@ -40,6 +40,7 @@ import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 @KotlinCleanup("IDE Lint")
 // NICE_TO_HAVE: Abstract, then add tests for #6111

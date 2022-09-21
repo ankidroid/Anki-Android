@@ -21,6 +21,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 typealias ButtonText = String
 

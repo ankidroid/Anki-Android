@@ -45,6 +45,7 @@ import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 import kotlin.math.ceil
 
 /**

@@ -52,6 +52,7 @@ import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.*
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")

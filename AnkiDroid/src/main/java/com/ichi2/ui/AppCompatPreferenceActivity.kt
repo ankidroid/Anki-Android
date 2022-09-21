@@ -35,6 +35,7 @@ import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 import kotlin.collections.HashMap
 
 /**

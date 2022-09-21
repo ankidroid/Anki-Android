@@ -48,6 +48,7 @@ import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Preferences dialog.

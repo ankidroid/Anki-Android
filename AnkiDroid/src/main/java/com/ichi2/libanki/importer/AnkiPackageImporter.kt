@@ -36,6 +36,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.util.*
+import kotlin.collections.*
 
 class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!, file!!) {
     @KotlinCleanup("lateinit")

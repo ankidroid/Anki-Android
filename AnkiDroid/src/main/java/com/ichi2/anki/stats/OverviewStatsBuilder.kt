@@ -26,6 +26,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.themes.Themes.getColorFromAttr
 import java.util.*
+import kotlin.collections.*
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 

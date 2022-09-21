@@ -18,6 +18,7 @@ package com.ichi2.utils
 import androidx.annotation.RequiresApi
 import org.apache.commons.collections4.list.SetUniqueList
 import java.util.*
+import kotlin.collections.*
 
 /**
  * A collection of items that doesn't allow duplicate items, and allows fast random access, lookup, maintaining order, and sorting.

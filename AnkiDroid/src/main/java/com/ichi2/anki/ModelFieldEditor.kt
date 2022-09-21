@@ -58,6 +58,7 @@ import java.lang.NumberFormatException
 import java.lang.RuntimeException
 import java.util.*
 import kotlin.Throws
+import kotlin.collections.*
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected

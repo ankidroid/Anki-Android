@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import java.util.*
 import java.util.function.BiFunction
 import java.util.stream.Collectors
+import kotlin.collections.*
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
 enum class ViewerCommand(val resourceId: Int) {

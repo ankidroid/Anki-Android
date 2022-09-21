@@ -9,6 +9,7 @@ import java.io.File
 import java.lang.RuntimeException
 import java.lang.StringBuilder
 import java.util.*
+import kotlin.collections.*
 
 class AnkiFont private constructor(val name: String, private val family: String, private val attributes: List<String>, val path: String) {
     private var mIsDefault = false

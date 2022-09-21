@@ -20,6 +20,7 @@ import com.ichi2.utils.ThreadUtil.sleep
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.*
 
 /**
  * This class consists essentially in executing each received TaskDelegate in the order in which they are received.

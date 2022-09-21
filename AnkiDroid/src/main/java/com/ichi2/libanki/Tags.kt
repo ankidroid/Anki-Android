@@ -24,6 +24,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.JSONObject
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 /**
  * Anki maintains a cache of used tags so it can quickly present a list of tags

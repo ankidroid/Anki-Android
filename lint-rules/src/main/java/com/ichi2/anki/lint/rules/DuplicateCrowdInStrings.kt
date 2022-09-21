@@ -46,6 +46,7 @@ import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.util.*
+import kotlin.collections.*
 
 class DuplicateCrowdInStrings : ResourceXmlDetector() {
     /*

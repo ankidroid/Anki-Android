@@ -20,6 +20,7 @@ import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.util.*
+import kotlin.collections.*
 
 @RunWith(Enclosed::class)
 class TagsUtilTest {

@@ -31,6 +31,7 @@ import com.ichi2.libanki.utils.Time.Companion.gregorianCalendar
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
     enum class AxisType(val days: Int, val descriptionId: Int) {

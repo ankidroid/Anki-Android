@@ -28,6 +28,7 @@ import com.ichi2.libanki.Model
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.NamedJSONComparator
 import java.util.*
+import kotlin.collections.*
 
 /** Setup for a spinner which displays all note types */
 object NoteTypeSpinnerUtils {

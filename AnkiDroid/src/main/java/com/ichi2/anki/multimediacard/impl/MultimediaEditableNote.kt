@@ -24,6 +24,7 @@ import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.libanki.NoteTypeId
 import org.acra.util.IOUtils
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Implementation of the editable note.

@@ -25,6 +25,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.StringUtil
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: Int?, val unicodeCharacter: Char?, val gesture: Gesture?) {
     constructor(gesture: Gesture?) : this(null, null, null, gesture)

@@ -21,6 +21,7 @@ import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 object ChessFilter {
     private val fFenPattern = Pattern.compile("\\[fen ?([^]]*)]([^\\[]+)\\[/fen]")

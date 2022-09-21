@@ -19,6 +19,7 @@
 package com.ichi2.utils
 
 import java.util.*
+import kotlin.collections.*
 
 object NoteFieldDecorator {
     private val random = Random()

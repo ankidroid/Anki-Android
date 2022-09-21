@@ -19,6 +19,7 @@
 package com.ichi2.anki.multimediacard.language
 
 import java.util.*
+import kotlin.collections.*
 
 /**
  * This one lister services in beolingus. It is used to load pronunciation.

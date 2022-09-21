@@ -16,6 +16,7 @@
 package com.ichi2.anki.testutil
 
 import java.util.*
+import kotlin.collections.*
 
 object TestEnvironment {
     fun isDisplayingDefaultEnglishStrings(): Boolean {

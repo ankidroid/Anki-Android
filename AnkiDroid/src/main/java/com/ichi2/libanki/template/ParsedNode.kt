@@ -24,6 +24,7 @@ import com.ichi2.libanki.template.TemplateError.*
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Represents a template, allow to check in linear time which card is empty/render card.

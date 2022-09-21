@@ -39,6 +39,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import net.ankiweb.rsdroid.BackendFactory
 import java.util.*
+import kotlin.collections.*
 
 @KotlinCleanup("lots to do")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {

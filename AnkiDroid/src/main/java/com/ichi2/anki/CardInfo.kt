@@ -43,6 +43,7 @@ import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
 import java.util.function.Function
+import kotlin.collections.*
 
 @RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")
 class CardInfo : AnkiActivity() {

@@ -29,6 +29,7 @@ import com.ichi2.ui.CheckBoxTriStates.State.*
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.TypedFilter
 import java.util.*
+import kotlin.collections.*
 
 /**
  * @param tags A reference to the {@link TagsList} passed.

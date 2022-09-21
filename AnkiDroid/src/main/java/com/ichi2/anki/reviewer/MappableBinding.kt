@@ -24,6 +24,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 import kotlin.collections.ArrayList
 
 /**

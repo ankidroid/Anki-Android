@@ -23,6 +23,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.IntroductionActivity.Companion.INTRODUCTION_SLIDES_SHOWN
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 import kotlin.collections.HashSet
 
 class OnboardingUtils {

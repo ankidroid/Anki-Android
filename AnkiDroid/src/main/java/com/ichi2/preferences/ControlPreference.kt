@@ -37,6 +37,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.ui.KeyPicker
 import java.util.*
+import kotlin.collections.*
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)

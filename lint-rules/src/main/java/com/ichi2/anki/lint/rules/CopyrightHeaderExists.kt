@@ -25,6 +25,7 @@ import org.jetbrains.uast.UClass
 import org.jetbrains.uast.UElement
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.*
 
 /**
  * Ensures that a GPLv3-compatible copyright header exists in all files.

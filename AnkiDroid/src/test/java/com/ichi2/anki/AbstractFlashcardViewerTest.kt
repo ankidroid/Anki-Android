@@ -38,6 +38,7 @@ import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowToast
 import java.util.*
 import java.util.stream.Stream
+import kotlin.collections.*
 
 @RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)

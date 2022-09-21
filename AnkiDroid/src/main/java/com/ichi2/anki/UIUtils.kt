@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import com.ichi2.libanki.utils.Time
 import java.util.*
+import kotlin.collections.*
 
 object UIUtils {
     fun showThemedToast(context: Context?, text: String?, shortLength: Boolean) {

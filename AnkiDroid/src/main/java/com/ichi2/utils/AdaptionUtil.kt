@@ -29,6 +29,7 @@ import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.*
 
 object AdaptionUtil {
     private var sHasRunWebBrowserCheck = false

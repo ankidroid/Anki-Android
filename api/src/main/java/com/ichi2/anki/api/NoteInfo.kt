@@ -19,6 +19,7 @@ package com.ichi2.anki.api
 import android.database.Cursor
 import com.ichi2.anki.FlashCardsContract
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Representation of the contents of a note in AnkiDroid.

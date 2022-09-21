@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
 import java.util.*
+import kotlin.collections.*
 
 /**
  * Dialog fragment used to show the fields that the user can insert in the card editor. This

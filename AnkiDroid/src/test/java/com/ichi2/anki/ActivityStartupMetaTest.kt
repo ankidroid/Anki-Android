@@ -28,6 +28,7 @@ import org.junit.runner.RunWith
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.Throws
+import kotlin.collections.*
 
 @RunWith(AndroidJUnit4::class)
 class ActivityStartupMetaTest : RobolectricTest() {
