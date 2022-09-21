@@ -25,16 +25,17 @@ import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("import MatcherAssert/Matchers to simplify assertion methods calls")
-@KotlinCleanup("replace Assert.assert* calls with kotlin.test.* assertions")
 class UndoTest : RobolectricTest() {
     /*****************
      * Undo
@@ -60,7 +61,7 @@ class UndoTest : RobolectricTest() {
         col.save("studyopts")
         col.set_config("abc", 5)
         // it should be listed as undoable
-        Assert.assertEquals("studyopts", col.undoName(targetContext.resources))
+        assertEquals("studyopts", col.undoName(targetContext.resources))
         // with about 5 minutes until it's clobbered
         /* lastSave
            assertThat(getTime().now() - col._lastSave, lesserThan(1));
@@ -68,22 +69,22 @@ class UndoTest : RobolectricTest() {
         // undoing should restore the old value
         col.undo()
         assertNull(col.undoType())
-        Assert.assertFalse(col.has_config("abc"))
+        assertFalse(col.has_config("abc"))
         // an (auto)save will clear the undo
         col.save("foo")
-        Assert.assertEquals("foo", col.undoName(targetContext.resources))
+        assertEquals("foo", col.undoName(targetContext.resources))
         col.save()
-        Assert.assertEquals("", col.undoName(targetContext.resources))
+        assertEquals("", col.undoName(targetContext.resources))
         // and a review will, too
         col.save("add")
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
         col.reset()
-        Assert.assertEquals("add", col.undoName(targetContext.resources))
+        assertEquals("add", col.undoName(targetContext.resources))
         val c = col.sched.card
         col.sched.answerCard(c!!, Consts.BUTTON_TWO)
-        Assert.assertEquals("Review", col.undoName(targetContext.resources))
+        assertEquals("Review", col.undoName(targetContext.resources))
     }
 
     @Test
@@ -102,39 +103,39 @@ class UndoTest : RobolectricTest() {
 
          */
         // answer
-        Assert.assertEquals(Counts(1, 0, 0), col.sched.counts())
+        assertEquals(Counts(1, 0, 0), col.sched.counts())
         var c = col.sched.card
-        Assert.assertEquals(QUEUE_TYPE_NEW, c!!.queue)
+        assertEquals(QUEUE_TYPE_NEW, c!!.queue)
         col.sched.answerCard(c, Consts.BUTTON_THREE)
-        Assert.assertEquals(1001, c.left)
-        Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
-        Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
+        assertEquals(1001, c.left)
+        assertEquals(Counts(0, 1, 0), col.sched.counts())
+        assertEquals(QUEUE_TYPE_LRN, c.queue)
         // undo
         assertNotNull(col.undoType())
         col.undo()
         col.reset()
-        Assert.assertEquals(Counts(1, 0, 0), col.sched.counts())
+        assertEquals(Counts(1, 0, 0), col.sched.counts())
         c.load()
-        Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
-        Assert.assertNotEquals(1001, c.left)
+        assertEquals(QUEUE_TYPE_NEW, c.queue)
+        assertNotEquals(1001, c.left)
         assertNull(col.undoType())
         // we should be able to undo multiple answers too
         note = col.newNote()
         note.setItem("Front", "two")
         col.addNote(note)
         col.reset()
-        Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
+        assertEquals(Counts(2, 0, 0), col.sched.counts())
         c = col.sched.card
         col.sched.answerCard(c!!, Consts.BUTTON_THREE)
         c = col.sched.card
         col.sched.answerCard(c!!, Consts.BUTTON_THREE)
-        Assert.assertEquals(Counts(0, 2, 0), col.sched.counts())
+        assertEquals(Counts(0, 2, 0), col.sched.counts())
         col.undo()
         col.reset()
-        Assert.assertEquals(Counts(1, 1, 0), col.sched.counts())
+        assertEquals(Counts(1, 1, 0), col.sched.counts())
         col.undo()
         col.reset()
-        Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
+        assertEquals(Counts(2, 0, 0), col.sched.counts())
         // performing a normal op will clear the review queue
         c = col.sched.card
         col.sched.answerCard(c!!, Consts.BUTTON_THREE)

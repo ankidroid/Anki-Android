@@ -2,11 +2,11 @@
 
 package com.ichi2.anki.api
 
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.util.HashSet
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 /**
@@ -19,7 +19,6 @@ import kotlin.test.assertNull
  * E-mail: rcbresan@gmail.com
  * Slack: bresan
  */
-// TODO: @KotlinCleanup("replace Assert.assertEquals with kotlin.test.assertEquals")
 @RunWith(RobolectricTestRunner::class)
 internal class ApiUtilsTest {
     @Test
@@ -77,6 +76,7 @@ internal class ApiUtilsTest {
     }
 
     companion object {
+        // We need to keep a copy because a change to Utils.FIELD_SEPARATOR should break the tests
         private const val delimiter = "\u001F"
     }
 }
