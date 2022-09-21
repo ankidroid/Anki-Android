@@ -753,7 +753,7 @@ class JSONObjectTest {
     @Test
     fun testToStringWithIndentFactor() {
         val testObject = JSONObject()
-        testObject.put("foo", JSONArray(Arrays.asList(5, 6)))
+        testObject.put("foo", JSONArray(listOf(5, 6)))
         testObject.put("bar", JSONObject())
         val foobar = """{
      "foo": [
@@ -807,7 +807,7 @@ class JSONObjectTest {
         assertTrue(keys.hasNext())
         result.add(keys.next())
         assertFalse(keys.hasNext())
-        assertEquals(HashSet(Arrays.asList("foo", "bar")), result)
+        assertEquals(HashSet(listOf("foo", "bar")), result)
         assertThrows<NoSuchElementException> {
             keys.next()
         }

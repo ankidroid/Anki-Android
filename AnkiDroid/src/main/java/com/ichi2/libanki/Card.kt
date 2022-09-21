@@ -566,7 +566,7 @@ open class Card : Cloneable {
 
         // A list of class members to skip in the toString() representation
         val SKIP_PRINT: Set<String> = HashSet(
-            Arrays.asList(
+            listOf(
                 "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
                 "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
             )
