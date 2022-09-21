@@ -22,7 +22,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil
-import java.util.ArrayList
 
 open class RecursivePictureMenuUtilTest : RobolectricTest() {
     var activity: FragmentTestActivity? = null

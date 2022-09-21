@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
-import java.util.ArrayList
 
 object ViewGroupUtils {
     fun getAllChildren(viewGroup: ViewGroup): List<View> {
