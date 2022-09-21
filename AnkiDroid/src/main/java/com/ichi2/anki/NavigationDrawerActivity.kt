@@ -457,9 +457,8 @@ abstract class NavigationDrawerActivity :
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
                 .setIntent(intentCardBrowser)
                 .build()
-            @KotlinCleanup("listOf")
             shortcutManager.addDynamicShortcuts(
-                Arrays.asList(
+                listOf(
                     reviewCardsShortcut,
                     NoteEditorShortcut,
                     cardBrowserShortcut

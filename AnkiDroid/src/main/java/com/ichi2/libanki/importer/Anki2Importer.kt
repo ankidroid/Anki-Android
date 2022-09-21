@@ -425,7 +425,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         var name = g.getString("name")
         // if there's a prefix, replace the top level deck
         if (!TextUtils.isEmpty(mDeckPrefix)) {
-            val parts = Arrays.asList(*Decks.path(name))
+            val parts = listOf(*Decks.path(name))
             val tmpname = TextUtils.join("::", parts.subList(1, parts.size))
             name = mDeckPrefix!!
             if (!TextUtils.isEmpty(tmpname)) {
@@ -434,7 +434,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         }
         // Manually create any parents so we can pull in descriptions
         var head: String? = ""
-        val parents = Arrays.asList(*Decks.path(name))
+        val parents = listOf(*Decks.path(name))
         for (parent in parents.subList(0, parents.size - 1)) {
             if (!TextUtils.isEmpty(head)) {
                 head += "::"

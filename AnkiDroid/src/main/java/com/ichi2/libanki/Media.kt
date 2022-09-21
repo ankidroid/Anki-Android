@@ -934,7 +934,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             Pattern.compile("(?i)(<(?:img|audio)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)")
         private val fObjectRegExpU =
             Pattern.compile("(?i)(<object\\b[^>]* data=(?!['\"])([^ >]+)[^>]*?>)")
-        val REGEXPS = Arrays.asList(
+        val REGEXPS = listOf(
             fSoundRegexps,
             fImgAudioRegExpQ,
             fImgAudioRegExpU,
@@ -955,7 +955,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         fun escapeImages(string: String, unescape: Boolean = false): String {
             @Suppress("NAME_SHADOWING")
             var string = string
-            for (p in Arrays.asList(fImgAudioRegExpQ, fImgAudioRegExpU)) {
+            for (p in listOf(fImgAudioRegExpQ, fImgAudioRegExpU)) {
                 val m = p.matcher(string)
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using

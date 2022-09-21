@@ -47,7 +47,7 @@ class TextNoteExporterTest(
         val n1 = mCollection!!.newNote()
         n1.setItem("Front", "foo")
         n1.setItem("Back", "bar<br>")
-        n1.addTags(HashSet(Arrays.asList("tag", "tag2")))
+        n1.addTags(HashSet(listOf("tag", "tag2")))
         mCollection!!.addNote(n1)
         val n2 = mCollection!!.newNote()
         n2.setItem("Front", "baz")
@@ -58,7 +58,7 @@ class TextNoteExporterTest(
             Timber.e(filteredAncestor)
         }
         mCollection!!.addNote(n2)
-        mNoteList = Arrays.asList(n1, n2)
+        mNoteList = listOf(n1, n2)
     }
 
     @Test

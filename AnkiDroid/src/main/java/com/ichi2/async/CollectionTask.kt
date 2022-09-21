@@ -251,7 +251,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
     class MarkNoteMulti(cardIds: List<Long>) : DismissNotes<Void>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>, cards: Array<Card>): Boolean {
-            val notes = CardUtils.getNotes(Arrays.asList(*cards))
+            val notes = CardUtils.getNotes(listOf(*cards))
             // collect undo information
             val originalMarked: MutableList<Note> = ArrayList()
             val originalUnmarked: MutableList<Note> = ArrayList()
@@ -277,7 +277,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val sched = col.sched
             // list of all ids to pass to remNotes method.
             // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-            val notes = CardUtils.getNotes(Arrays.asList(*cards))
+            val notes = CardUtils.getNotes(listOf(*cards))
             val allCards = CardUtils.getAllCards(notes)
             // delete note
             val uniqueNoteIds = LongArray(notes.size)

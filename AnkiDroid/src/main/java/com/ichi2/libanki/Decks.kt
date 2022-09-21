@@ -902,7 +902,7 @@ class Decks(private val col: Collection) : DeckManager() {
         for (deck in decks) {
             val node = Node()
             childMap[deck.getLong("id")] = node
-            val parts = Arrays.asList(*path(deck.getString("name")))
+            val parts = listOf(*path(deck.getString("name")))
             if (parts.size > 1) {
                 val immediateParent = TextUtils.join("::", parts.subList(0, parts.size - 1))
                 val pid = byName(immediateParent)!!.getLong("id")
@@ -1123,7 +1123,7 @@ class Decks(private val col: Collection) : DeckManager() {
         fun parent(deckName: String): String? {
             // method parent, from sched's method deckDueList in python
             if (!sParentCache.containsKey(deckName)) {
-                var parts = Arrays.asList(*path(deckName))
+                var parts = listOf(*path(deckName))
                 if (parts.size < 2) {
                     sParentCache[deckName] = null
                 } else {

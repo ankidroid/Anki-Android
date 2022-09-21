@@ -11,10 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.anyFloat
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.ArgumentMatchers.floatThat
+import org.mockito.ArgumentMatchers.*
 import org.mockito.Mock
 import org.mockito.MockedStatic
 import org.mockito.Mockito
@@ -23,7 +20,6 @@ import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 import java.util.*
-import java.util.Arrays.asList
 
 @RunWith(Parameterized::class)
 class PieChartParameterizedTest {
@@ -97,7 +93,7 @@ class PieChartParameterizedTest {
         @JvmStatic // required for Parameters
         fun data(): Collection<Array<Any>> {
             return createParametersCollection(
-                asList(
+                listOf(
                     values(1.0),
                     values(0.0, 1.0),
                     values(1.0, 0.0),
