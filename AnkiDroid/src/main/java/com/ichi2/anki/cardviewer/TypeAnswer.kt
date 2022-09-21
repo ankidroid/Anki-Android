@@ -227,11 +227,9 @@ class TypeAnswer(
     }
 
     companion object {
-        @JvmField
         /** Regular expression in card data for a 'type answer' after processing has occurred */
         val PATTERN: Pattern = Pattern.compile("\\[\\[type:(.+?)]]")
 
-        @JvmStatic
         fun createInstance(preferences: SharedPreferences): TypeAnswer {
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
@@ -250,7 +248,6 @@ class TypeAnswer(
          * @param answer The content of the field the text typed by the user is compared to.
          * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
          */
-        @JvmStatic
         fun cleanCorrectAnswer(answer: String?): String {
             if (answer.isNullOrEmpty()) return ""
 

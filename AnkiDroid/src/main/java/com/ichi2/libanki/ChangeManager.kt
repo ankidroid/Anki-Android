@@ -29,15 +29,19 @@
 
 package com.ichi2.libanki
 
+import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.import_export.ImportResponse
+import com.ichi2.anki.CollectionManager.withCol
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 object ChangeManager {
-    interface ChangeSubscriber {
+    interface Subscriber {
         /**
          * Called after a backend method invoked via col.op() or col.opWithProgress()
          * has modified the collection. Subscriber should inspect the changes, and update
@@ -46,14 +50,14 @@ object ChangeManager {
         fun opExecuted(changes: OpChanges, handler: Any?)
     }
 
-    private val subscribers = mutableListOf<WeakReference<ChangeSubscriber>>()
+    private val subscribers = mutableListOf<WeakReference<Subscriber>>()
 
-    fun subscribe(subscriber: ChangeSubscriber) {
+    fun subscribe(subscriber: Subscriber) {
         subscribers.add(WeakReference(subscriber))
     }
 
     private fun notifySubscribers(changes: OpChanges, handler: Any?) {
-        val expired = mutableListOf<WeakReference<ChangeSubscriber>>()
+        val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
             val ref = subscriber.get()
             if (ref == null) {
@@ -67,7 +71,12 @@ object ChangeManager {
         }
     }
 
-    fun<T> notifySubscribers(changes: T, initiator: Any?) {
+    @VisibleForTesting
+    fun clearSubscribers() {
+        subscribers.clear()
+    }
+
+    internal fun <T> notifySubscribers(changes: T, initiator: Any?) {
         val opChanges = when (changes) {
             is OpChanges -> changes
             is OpChangesWithCount -> changes.changes
@@ -77,5 +86,22 @@ object ChangeManager {
             else -> TODO("unhandled change type")
         }
         notifySubscribers(opChanges, initiator)
+    }
+}
+
+/** Wrap a routine that returns OpChanges* or similar undo info with this
+ * to notify change subscribers of the changes. */
+suspend fun <T> undoableOp(handler: Any? = null, block: CollectionV16.() -> T): T {
+    return withCol {
+        val result = newBackend.block()
+        // any backend operation clears legacy undo and resets study queues if it
+        // succeeds
+        clearUndo()
+        reset()
+        result
+    }.also {
+        withContext(Dispatchers.Main) {
+            ChangeManager.notifySubscribers(it, handler)
+        }
     }
 }

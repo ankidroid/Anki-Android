@@ -49,6 +49,10 @@
         <item quantity="one">%d Karte angezeigt</item>
         <item quantity="other">%d Karten angezeigt</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">%d Notiz angezeigt</item>
+        <item quantity="other">%d Notizen angezeigt</item>
+    </plurals>
     <string name="card_browser_all_decks">Alle Stapel</string>
     <string name="card_browser_delete_card">Notizen löschen</string>
     <string name="card_browser_suspend_card">Karten ausschließen</string>
@@ -94,7 +98,7 @@
     <string name="card_browser_no_cards_in_deck">Keine Karten im Stapel »%s« gefunden</string>
     <string name="card_browser_search_all_decks">In allen Stapeln suchen</string>
     <string name="card_browser_unknown_deck_name">Unbekannt</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Inhalt kürzen</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d Karte gelöscht</item>
         <item quantity="other">%d Karten gelöscht</item>

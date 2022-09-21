@@ -67,7 +67,7 @@
     <string name="hide_whiteboard">Схаваць дошку</string>
     <string name="clear_whiteboard">Ачысціць дошку</string>
     <string name="replay_audio">Паўтарыць аўдыя</string>
-    <string name="leech_suspend_notification">Картка пазначаная як надакучлівая і яна была прыпынена</string>
+    <string name="leech_suspend_notification">Картка пазначана як надакучлівая і была прыпынена</string>
     <string name="leech_notification">Картка пазначаная як надакучлівая</string>
     <string name="corrupt_font">Файл шрыфту %s пашкоджаны</string>
     <string name="webview_crash_unknown">Невядомая памылка</string>
@@ -99,6 +99,9 @@
         <item>Створана</item>
         <item>Запіс зменены</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Ужыць</string>
+    <string name="filter_by_flags">Сцягі</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
     <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>
@@ -180,14 +183,12 @@
     <string name="import_log_insufficient_space_error">Недастаткова месца для імпартавання пакета.\nНеабходна - %1$s \nДаступна - %2$s.\n\nНешта працуе не так? Паспрабуйце вызваліць месца на вашай прыладзе. Ці паспрабуйце сінхранізацыю, для якой неабходна менш месца, чым для імпартавання. Вы можаце імпартаваць пакет на прыладзе з большым аб\'ёмам памяці (напрыклад, Anki Desktop), а потым сінхранізаваць яго з гэтай прыладай.</string>
     <string name="import_log_file_cache_cleared">Памылка імпартавання файла. Верагодна, што кэш-памяць была ачышчаная падчас апрацоўкі.\nПаспрабуйце яшчэ раз.</string>
     <string name="import_succeeded_but_check_database">Імпартаванне даных паспяхова выканана, але пасля гэтага працэсу адбылася памылка ачысткі. Запусціць праверку базы даных пазней. Галоўная прычына: %s</string>
-    <string name="import_error_unhandled_request">Не атрымалася апрацаваць запыт на імпарт</string>
     <string name="import_error_corrupt_zip">Пашкоджаны файл apkg. Спачатку выдаліце яго, а потым спампуйце дадзены файл паўторна. \n\nГалоўная прычына: %s</string>
-    <string name="import_error_exception">Не атрымалася імпартаваць пакет\n\n%s</string>
+    <string name="import_error_handle_exception">Не атрымалася імпартаваць файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
-    <string name="import_error_copy_file_to_cache">Памылка аперацыі copyFileToCache() (верагодна не засталося месца)</string>
-    <string name="import_error_unhandled_scheme">Неапрацаваны імпарт з: “%s”</string>
+    <string name="import_error_copy_to_cache">Не атрымалася кэшыраваць файл (магчыма, што скончылася месца ў сховішчы)</string>
     <string name="import_error_multiple_colpkg">Было выбрана некалькі файлаў colpkg.</string>
     <string name="import_error_colpkg_apkg">Абодва файлы apkg і colpkg былі выбраны разам.</string>
     <string name="import_stats_error">Адбыліся некаторыя памылкі падчас імпартавання наступных файлаў:\n%s</string>
@@ -200,11 +201,11 @@
     <string name="export_in_progress">Ідзе экспартаванне пакета Anki&#8230;</string>
     <string name="export_successful_title">Адправіць пакет Anki?</string>
     <string name="export_send_button">Адправіць</string>
-    <string name="export_save_button">Захаваць у файл</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне...</string>
     <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
     <string name="export_email_text"><![CDATA[        Добры дзень!
         <br/><br/>
@@ -287,8 +288,6 @@
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Памылка загрузкі \'%s\'.</string>
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
     <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
@@ -300,7 +299,7 @@
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выберыце відарыс</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Вярнуцца да стандартных</string>
+    <string name="restore_default">Усталяваць налады па змаўчанні</string>
     <string name="cloze_sample_text">Гэта {{%1$s::sample}} заданне з пропускамі.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">праклад</string>
     <string name="basic_answer_sample_text">прыклад</string>
@@ -313,34 +312,7 @@
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
     <string name="title_whiteboard_pen_color">Колер крэйды дошкі</string>
     <string name="title_whiteboard_editor">Рэдактар дошкі</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Знойдзеныя пустыя карткі. Калі ласка, запусціце Інструменты->Пустыя карткі.]]></string>
-    <string name="note_importer_error_empty_first_field">Першае поле пустое: %s</string>
-    <string name="note_importer_error_first_field_matched">Першае поле супадае: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Даданы дублікат з першым полем: %s</string>
-    <string name="note_importer_error_appeared_twice">Двойчы сустракаецца ў файле: %s</string>
-    <string name="note_importer_error_empty_notes">Адзін або больш запісаў не імпартаваныя з той прычыны, што яны не стварылі ніякіх картак. Гэта здараецца таму, што прысутнічалі пустыя палі або вы памылкова супаставілі змесціва тэкставага файла з правільнымі палямі</string>
-    <string name="csv_importer_error_invalid_field_count">У ‘%1$s’ мала %2$d палёў, а павінна быць %3$d</string>
-    <string name="csv_importer_error_exception">Перарвана: %s</string>
     <string name="user_is_a_robot">Выяўлены аўтаматычны тэст. У выпадку, калі вы чалавек, калі ласка, напішыце ў падтрымку AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">Дададзены %d запіс</item>
-        <item quantity="few">Дададзеныя %d запісы</item>
-        <item quantity="many">Дададзеныя %d запісаў</item>
-        <item quantity="other">Дададзеныя %d запісы</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">Абноўлены %d запіс</item>
-        <item quantity="few">Абноўленыя %d запісы</item>
-        <item quantity="many">Абноўленыя %d запісаў</item>
-        <item quantity="other">Абноўленыя %d запісы</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">Не зменены %d запіс</item>
-        <item quantity="few">Не змененыя %d запісы</item>
-        <item quantity="many">Не змененыя %d запісаў</item>
-        <item quantity="other">Не змененыя %d запісы</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">У гэтай карткі ёсць магчымасці, якія не падтрымлівае AnkiDroid. Звярніцеся да распрацоўшчыка %1$s або паспрабуйце знайсці неабходную інфармацыю ў Wikipedia. %2$s</string>
     <string name="invalid_json_data">У картцы прысутнічаюць недапушчальныя даныя. %s</string>
@@ -354,7 +326,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Памылка змесціва карткі: неабходна абнаўленне медыяфайлаў</string>
-    <string name="cannot_load_http_resource">Загрузка рэсурсаў http больш не падтрымліваецца</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Памылка загрузкі калоды ‘%s’</string>
     <string name="search_decks">Пошук калод</string>
@@ -407,10 +378,6 @@
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="home">Галоўная</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Супастаўлена з %s</string>
-    <string name="import_mapped_to_tags">Супастаўлена з меткамі</string>
-    <string name="import_mapped_to_nothing">Праігнаравана</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Адкладзеная картка</string>
     <string name="buried_note">Адкладзеныя карткі</string>
@@ -442,5 +409,23 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Разгарнуць тэг \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Вучыцца менш</string>
+    <string name="intro_ankidroid_tagline_two">Запамінайце больш</string>
+    <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашу ненадзейную памяць і трымаюць яе ў тонусе</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Пачаць працу</string>
+    <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
+    <string name="already_logged_in">Вы ўжо ўвайшлі</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Калода існуе</string>
+    <string name="deck_created">Створаная калода</string>
+    <string name="deck_renamed">Перайменаваная калода</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
+    <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
+    <string name="toggle_browser_mode_help">Пераключыць адлюстраванне картак або нататак у браўзеры</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="browser_options_dialog_heading">Налады браўзера</string>
 </resources>

@@ -3,7 +3,6 @@
     <color name="theme_black_primary">#000000</color>
     <color name="theme_black_primary_dark">#000000</color>
     <color name="theme_black_primary_light">#151515</color>
-    <color name="theme_black_accent">#1565C0</color>
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_secondary_text">#a0a0a0</color>
     <color name="theme_black_row_current">#1a1a1a</color>
@@ -12,12 +11,13 @@
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_black_primary_dark</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/theme_black_accent</item>
+        <item name="colorAccent">@color/material_blue_500</item>
         <item name="android:textColor">@color/theme_black_primary_text</item>
         <item name="android:textColorPrimary">@color/theme_black_primary_text</item>
         <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">#303030</item>
         <item name="largeButtonBackgroundColorFocused">#444444</item>
@@ -112,10 +112,31 @@
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">#000000</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
+        <item name="android:statusBarColor">@color/black</item>
 
         <item name="editTextDisabled">@color/material_grey_700</item>
         <item name="android:navigationBarColor">@color/black</item>
         <item name="iconColor">?android:attr/textColor</item>
+
+        <!-- Filter Bottom sheet -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeBlack</item>
+        <item name="filterSheetBackground">@color/theme_black_primary</item>
+        <item name="filterItemBackground">@color/theme_black_primary_light</item>
+        <item name="filterItemBackgroundSelected">@color/theme_dark_drawer_row_current</item>
+        <item name="filterItemTextColor">@color/theme_dark_drawer_item</item>
+        <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
+        <item name="filterHeaderDivider">@color/white</item>
+
+        <!-- Snackbar -->
+        <item name="snackbarTextViewStyle">@style/SnackbarTextStyleBlack</item>
+        <item name="snackbarBackgroundTintColor">#ff303030</item>
+        <item name="snackbarButtonTextColor">@color/material_light_blue_300</item>
+
+        <!-- Introduction -->
+        <item name="introductionLogoTransparent">#55111111</item>
+
+        <!-- Browser Options Dialog-->
+        <item name="colorSurface">@color/theme_black_primary</item>
     </style>
 
     <!-- Preferences screens -->
@@ -123,6 +144,18 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_dark</item>
-        <item name="android:textColorSecondary">@color/prefs_item_dark</item>
+        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
+    </style>
+
+    <!-- Filter Sheet Style -->
+    <style name="AppBottomSheetDialogThemeBlack" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

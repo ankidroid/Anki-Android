@@ -1,3 +1,18 @@
+/****************************************************************************************
+ * Copyright (c) 2020 lukstbit <52494258+lukstbit@users.noreply.github.com>             *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 @file:Suppress("UnstableApiUsage")
 
 package com.ichi2.anki.lint.rules
@@ -25,7 +40,6 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
         private const val EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
             "during testing. Calendar instances must be obtained through the collection's getTime() method"
         private val implementation = Implementation(DirectCalendarInstanceUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

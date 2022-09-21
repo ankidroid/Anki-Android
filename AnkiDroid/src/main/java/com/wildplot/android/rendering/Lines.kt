@@ -33,12 +33,16 @@ class Lines
  * @param plotSheet the sheet the lines and points will be drawn onto
  * @param pointList x- , y-positions of given points
  * @param color     point and line color
- */(private val plotSheet: PlotSheet, private val pointList: Array<DoubleArray>, private val color: ColorWrap) : Drawable, Legendable {
+ */(private val plotSheet: PlotSheet, private val pointList: Array<DoubleArray>, override var color: ColorWrap) : Drawable, Legendable {
     private var mHasShadow = false
     private var mShadowDx = 0.0f
     private var mShadowDy = 0.0f
     private var mShadowColor = ColorWrap.BLACK
-    private var mName = ""
+    override var name: String = ""
+        set(value) {
+            field = value
+            mNameIsSet = true
+        }
     private var mNameIsSet = false
     private var size = 0f
     fun setSize(size: Float) {
@@ -83,21 +87,8 @@ class Lines
         return false
     }
 
-    override fun getColor(): ColorWrap {
-        return color
-    }
-
-    override fun getName(): String {
-        return mName
-    }
-
     override fun nameIsSet(): Boolean {
         return mNameIsSet
-    }
-
-    fun setName(name: String) {
-        mName = name
-        mNameIsSet = true
     }
 
     fun setShadow(dx: Float, dy: Float, color: ColorWrap) {

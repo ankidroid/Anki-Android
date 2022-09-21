@@ -19,14 +19,15 @@
  */
 package com.ichi2.anki.multimediacard
 
-import android.media.MediaPlayer
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.*
 import timber.log.Timber
 import java.io.IOException
 
 class AudioPlayer {
     private var mPlayer: MediaPlayer? = null
-    private var mOnStoppingListener: Runnable? = null
-    private var mOnStoppedListener: Runnable? = null
+
+    var onStoppingListener: (() -> Unit)? = null
+    var onStoppedListener: (() -> Unit)? = null
 
     @Throws(IOException::class)
     fun play(audioPath: String?) {
@@ -42,21 +43,23 @@ class AudioPlayer {
     }
 
     private fun onStopped() {
-        mOnStoppedListener?.run()
+        onStoppedListener?.invoke()
     }
 
     private fun onStopping() {
-        mOnStoppingListener?.run()
+        onStoppingListener?.invoke()
     }
 
     fun start() {
+        if (arrayOf(INITIALIZED, STOPPED).contains(mPlayer!!.state)) {
+            mPlayer!!.prepare()
+        }
         mPlayer!!.start()
     }
 
     fun stop() {
         try {
-            mPlayer!!.prepare()
-            mPlayer!!.seekTo(0)
+            mPlayer!!.stop()
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -64,13 +67,5 @@ class AudioPlayer {
 
     fun pause() {
         mPlayer!!.pause()
-    }
-
-    fun setOnStoppingListener(listener: Runnable?) {
-        mOnStoppingListener = listener
-    }
-
-    fun setOnStoppedListener(listener: Runnable?) {
-        mOnStoppedListener = listener
     }
 }

@@ -48,7 +48,6 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
         private const val EXPLANATION_MAX_LENGTH = "Preference Title should contain maxLength attribute " +
             "because it fixes translated string length"
         private val implementation = Implementation(FixedPreferencesTitleLength::class.java, Scope.RESOURCE_FILE_SCOPE)
-        @JvmField
         val ISSUE_TITLE_LENGTH: Issue = Issue.create(
             ID_TITLE_LENGTH,
             DESCRIPTION_TITLE_LENGTH,
@@ -58,7 +57,6 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
             Constants.ANKI_XML_SEVERITY,
             implementation
         )
-        @JvmField
         val ISSUE_MAX_LENGTH: Issue = Issue.create(
             ID_MAX_LENGTH,
             DESCRIPTION_MAX_LENGTH,

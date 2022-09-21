@@ -50,26 +50,23 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">Perunu resurtadu</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">Impostatziones generales</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Generale</string>
+    <string name="pref_cat_studying" maxLength="41">Istudiende</string>
+    <string name="pref_cat_system_wide" maxLength="41">Pro totu su sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisione</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizatzione</string>
+    <string name="pref_cat_scheduling" maxLength="41">Programmatzione</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
     <string name="pref_cat_appearance" maxLength="41">Aparèntzia</string>
-    <string name="pref_cat_appearance_summ">Muda sos temas e su caràtere predefinidu</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
     <string name="pref_cat_fonts" maxLength="41">Caràtere</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_controls" maxLength="41">Controllos</string>
     <string name="pref_cat_advanced" maxLength="41">Avantzadas</string>
-    <string name="pref_cat_advanced_summ">Otimizatzione e funtzionalidades isperimentales</string>
-    <string name="pref_cat_performance" maxLength="41">Prestatziones</string>
     <string name="pref_cat_workarounds" maxLength="41">Solutziones alternativas</string>
     <string name="pref_cat_plugins" maxLength="41">Estensiones</string>
-    <string name="about_title" maxLength="41">Informatziones in subra de AnkiDroid</string>
-    <string name="about_version">Versione:</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Grussària de du tratu</string>
     <string name="use_input_tag" maxLength="41">Iscrie sa risposta in sa carta</string>
@@ -126,15 +123,17 @@
     <string name="swipe_sensitivity" maxLength="41">Sensibilidade de sa trisinadura</string>
     <string name="tts" maxLength="41">Sìntesi de sa boghe (TTS)</string>
     <string name="tts_summ">Leghet sa pregunta e sa risposta si non b\'est unu documentu sonoru inclùdidu</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Recùpera sos mèdios cun sa sincronizatzione</string>
     <string name="sync_fetch_missing_media_summ">Recùpera in manera automàtica sos elementos multimediales chi mancant in su mentres chi ses sincronizende</string>
     <string name="sync_account" maxLength="41">Contu de AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non ses intradu</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizatzione automàtica</string>
     <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Ammustra s\'istadu de sincronizatzione</string>
     <string name="sync_status_badge_summ">Muda s\'icona de sincronizatzione cando  sas modìficas si podent carrigare</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema pro sa die</string>
     <string name="night_theme" maxLength="41">Tema pro sa note</string>
@@ -184,13 +183,9 @@
     <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>
     <string name="new_timezone" maxLength="41">Gestione noa de su fusu oràriu</string>
     <string name="day_offset_with_description" maxLength="41">Incumintzu de sa die chi benit</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s oras a pustis de mesanote</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Mesanote</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">Pranificadore V2</string>
-    <string name="sched_v2_summ">Abìlita su pranificadore nou. Fortzat modìficas cara a un\'ala in sa sincronizatzione imbeniente</string>
-    <string name="sched_ver_toggle_title">Cunfirma</string>
-    <string name="sched_ver_1to2">Su pranificadore isperimentale diat pòdere causare una pranificatzione isballiada. Assegura·ti, in antis, de t\'àere leghidu sa documentatzione. Cheres sighire?</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantene s\'ischermu allutu</string>
     <string name="pref_keep_screen_on_summ">Disabìlita s\'istudadura automàtica de s\'ischermu</string>
     <string name="convert_fen_text" maxLength="41">Suportu pro sa notatzione de sos iscacos</string>
@@ -208,8 +203,8 @@
     <string name="html_javascript_debugging" maxLength="41">Depuratzione de còdighe HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abìlita sas connessiones remotas WebView, e sarva s\'HTML de sa carta in sa cartella de AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
+    <string name="accessibility" maxLength="41">Atzessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla sas immàgines in PNG</string>
     <string name="paste_as_png_summary">Comente impostatzione predefinida Anki incollat sas immàgines in punta de billete in formadu JPG pro savare logu in sa memòria. Pro incollare sas immàgines in formadu PNG podes, imbetzes, impreare custa optzione.</string>
@@ -238,7 +233,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronizatzione multimediale</string>
     <string name="custom_sync_server_media_url_invalid">Url de sincronizatzione multimediale non vàlidu</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Tecladu</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mapadura de sos cumandos</string>
     <!-- studyoptions -->
@@ -324,12 +319,19 @@
     <string name="no_code_formatting_summ">Acontzat su problema de ‘􏿾’ chi aparit in sos resurtados de sas rispostas iscritas</string>
     <string name="type_in_answer_focus" maxLength="41">Pone in evidèntzia ‘iscrie sa risposta’</string>
     <string name="type_in_answer_focus_summ">Pone in evidèntzia in automàticu su campu ‘iscrie sa risposta’ in su revisore</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Aberi su registru de sas modìficas</string>
+    <string name="pref_cat_about_title" maxLength="41">Informatziones</string>
+    <string name="contributors_title">Contribuidores</string>
+    <string name="about_contributors_description"><![CDATA[Custos sunt sos <a href=\"%1$s\">contribuidores</a> istravanados nostros. Fintzas tue podes agiudare AnkiDroid programmende, bortende, donende e  <a href=\"%2$s\">àteru galu</a>!]]></string>
+    <string name="license">Litzèntzia</string>
+    <string name="license_description"><![CDATA[AnkiDroid est publicadu suta de sas litzèntzias <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a>, cun su còdighe de orìgine a disponimentu <a href=\"%3$s\">in GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Podes suportare s\'isvilupu de AnkiDroid <a href=\"%1$s\">cun una donatzione</a>. Cale si siat tantu est apretziadu meda.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Annanghe unu gestu</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Sostitui su gestu</string>
     <string name="binding_add_key">Annanghe una tecla</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Sostitui sa tecla</string>
     <string name="key_picker_default_press_key">Incarca una tecla</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seletziona su ladu de sa carta</string>
@@ -342,4 +344,17 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Boga ‘%s’</string>
     <string name="bindings_already_bound">Giai assotziadu a %s</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">Isperimentale</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Abìlita ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Imprea su backend nou</string>
+    <string name="use_rust_backend_summary">Abìlitat funtzionalidades noas de Anki, che a su pranificadore v3\nINSTÀBILE. Non l\'imprees cun una colletzione a sa cale tenes. NON benit annulladu serrende s\'aplicatzione</string>
+    <string name="use_rust_backend_warning">B\'at una possibilidade chi custu potzat corrumpere s\'installatzione tua de su totu, faghende in manera chi siat netzessària una disinstallatzione de s\'aplicatzione e un\'iscantzelladura de sa cartella de AnkiDroid, e tenet sa possibilidade de ispàrghere sa corrutzione finas a AnkiWeb pro mèdiu de sa sincronizatzione.\n\nAgradessimus sas proas, ma assegura·ti de tènnere una còpia de seguresa non de AnkiWeb vàlida.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Optziones de isvilupu</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Abìlita sas optziones de isvilupu</string>
+    <string name="disable_dev_options">Disabìlita sas optziones de isvilupu</string>
+    <string name="dev_options_warning">        Assegura·ti de s\'intentu tuo in antis de abilitare sas optziones de isvilupu. Custas optziones sunt perigulosas e diant pòdere segare s\'aplicatzione o corrùmpere sa colletzione tua.\n\nTene in contu chi custas optziones non sunt adatas pro sa parte manna de sos utentes e pro custa resone non sunt traduidas, duncas sunt in inglesu.
+    </string>
 </resources>

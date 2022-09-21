@@ -65,7 +65,6 @@ class KotlinMigrationBrokenEmails : Detector(), SourceCodeScanner {
             "Check all comments to see if this also affected emails.\n" +
             "This can be fixed before conversion by changing the comments from /** to /* if appropriate"
         private val implementation = Implementation(KotlinMigrationBrokenEmails::class.java, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES))
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

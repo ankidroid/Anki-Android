@@ -58,27 +58,13 @@ class ColorWrap {
 
     companion object {
         val red = ColorWrap(Color.RED)
-
-        @JvmField
         val RED = ColorWrap(Color.RED)
-
-        @JvmField
         val BLACK = ColorWrap(Color.BLACK)
-
-        @JvmField
         val black = ColorWrap(Color.BLACK)
-
-        @JvmField
         val GREEN = ColorWrap(Color.GREEN)
         val green = ColorWrap(Color.GREEN)
-
-        @JvmField
         val LIGHT_GRAY = ColorWrap(Color.LTGRAY)
-
-        @JvmField
         val WHITE = ColorWrap(Color.WHITE)
-
-        @JvmField
         val white = ColorWrap(Color.WHITE)
     }
 }

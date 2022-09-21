@@ -33,7 +33,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 dialog.show {
                     message(text = notificationMessage)
                     positiveButton(R.string.dialog_ok) {
-                        (activity as MediaCheckDialogListener?)!!.mediaCheck()
+                        (activity as MediaCheckDialogListener).mediaCheck()
                         (activity as MediaCheckDialogListener?)
                             ?.dismissAllDialogFragments()
                     }
@@ -86,7 +86,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
                     fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
                     dialog.positiveButton(R.string.check_media_delete_unused) {
-                        (activity as MediaCheckDialogListener?)!!.deleteUnused(unused)
+                        (activity as MediaCheckDialogListener).deleteUnused(unused)
                         dismissAllDialogFragments()
                     }
                         .negativeButton(R.string.dialog_cancel) {
@@ -96,7 +96,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 } else {
                     fileListTextView.visibility = View.GONE
                     dialog.negativeButton(R.string.dialog_ok) {
-                        (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments()
+                        (activity as MediaCheckDialogListener).dismissAllDialogFragments()
                     }
                 }
                 dialog.show {
@@ -109,7 +109,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
     }
 
     fun dismissAllDialogFragments() {
-        (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments()
+        (activity as MediaCheckDialogListener).dismissAllDialogFragments()
     }
 
     override val notificationMessage: String
@@ -144,7 +144,6 @@ class MediaCheckDialog : AsyncDialogFragment() {
     companion object {
         const val DIALOG_CONFIRM_MEDIA_CHECK = 0
         const val DIALOG_MEDIA_CHECK_RESULTS = 1
-        @JvmStatic
         fun newInstance(dialogType: Int): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
@@ -153,7 +152,6 @@ class MediaCheckDialog : AsyncDialogFragment() {
             return f
         }
 
-        @JvmStatic
         fun newInstance(dialogType: Int, checkList: List<List<String?>?>): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()

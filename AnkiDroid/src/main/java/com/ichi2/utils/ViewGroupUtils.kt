@@ -25,7 +25,6 @@ import timber.log.Timber
 import java.util.ArrayList
 
 object ViewGroupUtils {
-    @JvmStatic
     fun getAllChildren(viewGroup: ViewGroup): List<View> {
         val childrenCount = viewGroup.childCount
         val views: MutableList<View> = ArrayList(childrenCount)
@@ -35,7 +34,6 @@ object ViewGroupUtils {
         return views
     }
 
-    @JvmStatic
     fun getAllChildrenRecursive(viewGroup: ViewGroup): MutableList<View> {
         val views: MutableList<View> = ArrayList()
         for (i in 0 until viewGroup.childCount) {
@@ -48,7 +46,6 @@ object ViewGroupUtils {
         return views
     }
 
-    @JvmStatic
     fun setRenderWorkaround(activity: Activity) {
         if (AnkiDroidApp.getSharedPrefs(activity).getBoolean("softwareRender", false)) {
             Timber.i("ViewGroupUtils::setRenderWorkaround - software render requested, altering Views...")

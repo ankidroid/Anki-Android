@@ -38,7 +38,6 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
         private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
             " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created"
         private val implementation = Implementation(DirectToastMakeTextUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

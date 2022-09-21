@@ -51,7 +51,6 @@ object MethodLogger {
     /**
      * Logs the method being called.
      */
-    @JvmStatic
     fun log() {
         logInternal("")
     }

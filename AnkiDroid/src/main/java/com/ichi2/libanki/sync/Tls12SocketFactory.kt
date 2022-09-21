@@ -111,7 +111,6 @@ class Tls12SocketFactory private constructor(
     companion object {
         private val TLS_V12_ONLY = arrayOf("TLSv1.2")
 
-        @JvmStatic
         fun enableTls12OnPreLollipop(client: OkHttpClient.Builder): OkHttpClient.Builder {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 && "Samsung" == Build.MANUFACTURER) {
                 try {

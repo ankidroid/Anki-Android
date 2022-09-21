@@ -24,6 +24,7 @@ package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.assertThrows
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,15 +47,11 @@ class JSONArrayTest {
         val array = JSONArray()
         assertEquals(0, array.length())
         assertEquals("", array.join(" AND "))
-        try {
+        assertThrows<JSONException> {
             array[0]
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             array.getBoolean(0)
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals("[]", array.toString())
         assertEquals("[]", array.toString(4))
@@ -132,44 +129,6 @@ class JSONArrayTest {
         assertEquals(false, other.getBoolean(3))
     }
 
-    @Test
-    fun testNulls() {
-        val array = JSONArray()
-        array.put(3, null)
-        array.put(0, JSONObject.NULL)
-        assertEquals(4, array.length())
-        assertEquals("[null,null,null,null]", array.toString())
-        // there's 2 ways to represent null; each behaves differently!
-        assertEquals(JSONObject.NULL, array[0])
-        try {
-            array[1]
-            fail()
-        } catch (e: JSONException) {
-        }
-        try {
-            array[2]
-            fail()
-        } catch (e: JSONException) {
-        }
-        try {
-            array[3]
-            fail()
-        } catch (e: JSONException) {
-        }
-        assertEquals(JSONObject.NULL, array.opt(0))
-        assertEquals(null, array.opt(1))
-        assertEquals(null, array.opt(2))
-        assertEquals(null, array.opt(3))
-        assertTrue(array.isNull(0))
-        assertTrue(array.isNull(1))
-        assertTrue(array.isNull(2))
-        assertTrue(array.isNull(3))
-        assertEquals("null", array.optString(0))
-        assertEquals("", array.optString(1))
-        assertEquals("", array.optString(2))
-        assertEquals("", array.optString(3))
-    }
-
     /**
      * Our behaviour is questioned by this bug:
      * http://code.google.com/p/android/issues/detail?id=7257
@@ -180,17 +139,13 @@ class JSONArrayTest {
         array.put(null)
         assertEquals("null", array[0])
         assertEquals(JSONObject.NULL, array[1])
-        try {
+        assertThrows<JSONException> {
             array[2]
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals("null", array.getString(0))
         assertEquals("null", array.getString(1))
-        try {
+        assertThrows<JSONException> {
             array.getString(2)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -281,10 +236,8 @@ class JSONArrayTest {
         assertEquals(9.223372036854776E18, array.getDouble(2), 0.0)
         assertEquals(Int.MAX_VALUE, array.getInt(2))
         assertFalse(array.isNull(3))
-        try {
+        assertThrows<JSONException> {
             array.getDouble(3)
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals(NaN, array.optDouble(3), 0.0)
         assertEquals(-1.0, array.optDouble(3, -1.0), 0.0)
@@ -305,12 +258,6 @@ class JSONArrayTest {
         assertEquals("null & \"\\\"\" & 5 & true & [true,false]", array.join(" & "))
         array.put(JSONObject(Collections.singletonMap("x", 6)))
         assertEquals("null & \"\\\"\" & 5 & true & [true,false] & {\"x\":6}", array.join(" & "))
-    }
-
-    @Test
-    fun testJoinWithNull() {
-        val array = JSONArray(mutableListOf(5, 6))
-        assertEquals("5null6", array.join(null))
     }
 
     @Test
@@ -388,20 +335,14 @@ class JSONArrayTest {
     @Test
     fun testPutUnsupportedNumbers() {
         val array = JSONArray()
-        try {
+        assertThrows<JSONException> {
             array.put(Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             array.put(0, Double.NEGATIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             array.put(0, Double.POSITIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -409,12 +350,11 @@ class JSONArrayTest {
     fun testPutUnsupportedNumbersAsObject() {
         val array = JSONArray()
 
-        try {
+        assertThrows<JSONException> {
             array.put(NaN)
             array.put(NEGATIVE_INFINITY)
             array.put(POSITIVE_INFINITY)
             assertEquals(null, array.toString())
-        } catch (e: JSONException) {
         }
     }
 
@@ -454,28 +394,17 @@ class JSONArrayTest {
 
     @Test
     fun testTokenerConstructorWrongType() {
-        try {
+        assertThrows<JSONException> {
             JSONArray(JSONTokener("{\"foo\": false}"))
-            fail()
-        } catch (e: JSONException) {
-        }
-    }
-
-    @Test
-    fun testTokenerConstructorNull() {
-        try {
-            JSONArray(null as JSONTokener?)
-            fail()
-        } catch (e: NullPointerException) {
         }
     }
 
     @Test
     fun testTokenerConstructorParseFail() {
         try {
-            JSONArray(JSONTokener("["))
-            fail()
-        } catch (e: JSONException) {
+            assertThrows<JSONException> {
+                JSONArray(JSONTokener("["))
+            }
         } catch (e: StackOverflowError) {
             fail("Stack overflowed on input: \"[\"")
         }
@@ -490,28 +419,17 @@ class JSONArrayTest {
 
     @Test
     fun testStringConstructorWrongType() {
-        try {
+        assertThrows<JSONException> {
             JSONArray("{\"foo\": false}")
-            fail()
-        } catch (e: JSONException) {
-        }
-    }
-
-    @Test
-    fun testStringConstructorNull() {
-        try {
-            JSONArray(null as String?)
-            fail()
-        } catch (e: NullPointerException) {
         }
     }
 
     @Test
     fun testStringConstructorParseFail() {
         try {
-            JSONArray("[")
-            fail()
-        } catch (e: JSONException) {
+            assertThrows<JSONException> {
+                JSONArray("[")
+            }
         } catch (e: StackOverflowError) {
             fail("Stack overflowed on input: \"[\"")
         }
@@ -534,25 +452,17 @@ class JSONArrayTest {
         assertEquals(null, array.opt(-3))
         assertEquals("", array.optString(3))
         assertEquals("", array.optString(-3))
-        try {
+        assertThrows<JSONException> {
             array[3]
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             array[-3]
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             array.getString(3)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             array.getString(-3)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 }

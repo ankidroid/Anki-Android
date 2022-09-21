@@ -39,7 +39,8 @@ import timber.log.Timber
  *
  * Currently used by [GesturePicker]
  */
-class GestureDisplay @JvmOverloads
+class GestureDisplay
+@JvmOverloads // fixes: Error inflating class com.ichi2.ui.GestureDisplay
 constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attributeSet, defStyleAttr) {
 

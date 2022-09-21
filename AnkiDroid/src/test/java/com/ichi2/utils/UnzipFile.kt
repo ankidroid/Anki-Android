@@ -22,8 +22,7 @@ import java.lang.Exception
 
 class UnzipFile {
     companion object {
-        @JvmStatic
-        fun unzip(exportedFile: File?, destDir: String?) {
+        fun unzip(exportedFile: File?, destDir: String) {
             try {
                 val zipFile = ZipFile(exportedFile)
                 Utils.unzipAllFiles(zipFile, destDir)

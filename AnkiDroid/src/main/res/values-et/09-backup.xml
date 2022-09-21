@@ -44,12 +44,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
-    <string name="sd_space_warning">Less than %d MB space on your SD card left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Restore from backup</string>
-    <string name="backup_new_collection">New collection</string>
-    <string name="backup_del_collection">Delete collection and create new one</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
+    <string name="backup_deck_no_space_left">Varukoopia pole salvestatud. Pole piisavalt ruumi SD-kaardil. Võtke väiksemaks detailsust või eemaldage mõned muud failid.</string>
+    <string name="sd_space_warning">Vähem kui %d MB ruumi on jäänud SD-kaardil.\nVabastage veidi mälu, et mitte kaotada andmeid.</string>
+    <string name="backup_restore">Taasta varukoopia põhjal</string>
+    <string name="backup_new_collection">Uus kogumik</string>
+    <string name="backup_del_collection">Kustuta kogumik ja loo uut</string>
+    <string name="backup_del_collection_question">Kustuta kogumik ja loo uut? See kustutab kõike teie õppimise andmeid ja kustutab kõik kaardid.</string>
     <string name="backup_full_sync_from_server">Full sync from server</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
     <string name="error_handling_title">Error handling</string>

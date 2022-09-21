@@ -28,7 +28,6 @@ import java.util.*
 
 object FileUtil {
     /** Gets the free disk space given a file  */
-    @JvmStatic
     fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
         return try {
             StatFs(file.parentFile?.path).availableBytes
@@ -46,7 +45,6 @@ object FileUtil {
      * @return the internal file after copying the data across.
      * @throws IOException
      */
-    @JvmStatic
     @Throws(IOException::class)
     @KotlinCleanup("nonnull uri")
     fun internalizeUri(uri: Uri?, internalFile: File, contentResolver: ContentResolver): File {
@@ -69,7 +67,6 @@ object FileUtil {
     /**
      * @return Key: Filename; Value: extension including dot
      */
-    @JvmStatic
     fun getFileNameAndExtension(fileName: String?): Map.Entry<String, String>? {
         if (fileName == null) {
             return null
@@ -90,7 +87,6 @@ object FileUtil {
      * @param directory Abstract representation of the file/directory whose size needs to be calculated
      * @return Size of the directory in bytes
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun getDirectorySize(directory: File): Long {
         var directorySize: Long = 0
@@ -113,8 +109,6 @@ object FileUtil {
      * @param file Abstract representation of the file/directory whose size needs to be calculated
      * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
      */
-    @JvmStatic
-    @KotlinCleanup("remove JvmStatic once FileUtilTest is in Kotlin")
     fun getSize(file: File) = if (file.isDirectory) {
         getDirectorySize(file)
     } else {
@@ -127,7 +121,6 @@ object FileUtil {
      * @param dir Abstract representation of a directory
      * @throws IOException if dir is not a directory or could not be created
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun ensureFileIsDirectory(dir: File) {
         if (dir.exists()) {
@@ -148,7 +141,6 @@ object FileUtil {
      * @return An array of abstract representations of the files / directories present in the directory represented
      * by dir
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun listFiles(dir: File): Array<File> {
         return dir.listFiles()

@@ -28,6 +28,7 @@ import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
@@ -62,7 +63,7 @@ class ReminderService : BroadcastReceiver() {
         val colHelper: CollectionHelper
         val col: Collection?
         try {
-            colHelper = CollectionHelper.getInstance()
+            colHelper = CollectionHelper.instance
             col = colHelper.getCol(context)
         } catch (t: Throwable) {
             Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")
@@ -173,8 +174,7 @@ class ReminderService : BroadcastReceiver() {
         const val EXTRA_DECK_OPTION_ID = "EXTRA_DECK_OPTION_ID"
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
 
-        @JvmStatic
-        fun getReviewDeckIntent(context: Context, deckId: Long): Intent {
+        fun getReviewDeckIntent(context: Context, deckId: DeckId): Intent {
             return Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
         }
     }

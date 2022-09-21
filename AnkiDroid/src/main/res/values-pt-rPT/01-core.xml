@@ -103,7 +103,7 @@
     <string name="rename_deck">Renomear baralho</string>
     <string name="create_shortcut">Criar atalho</string>
     <string name="browse_cards">Navegar fichas</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Adicionar</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Conta de sincronização</string>
     <string name="menu_dismiss_note">Ocultar / Eliminar</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Adicionar ficha</string>
     <string name="invalid_deck_name">Nome inválido do baralho</string>
     <string name="studyoptions_empty">Este baralho está vazio. Toque no botão \"+\" para adicionar novo conteúdo.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>

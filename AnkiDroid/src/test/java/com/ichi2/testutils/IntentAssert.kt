@@ -21,13 +21,11 @@ import org.hamcrest.MatcherAssert.assertThat
 import kotlin.test.assertNotNull
 
 object IntentAssert {
-    @JvmStatic
     fun doesNotHaveExtra(intent: Intent, extraKey: String?) {
         val keySet = assertNotNull(intent.extras).keySet()
         assertThat(String.format("Intent should not have extra '%s'", extraKey), keySet, not(hasItem(extraKey)))
     }
 
-    @JvmStatic
     fun hasExtra(intent: Intent, extraKey: String?, value: Long) {
         val keySet = assertNotNull(intent.extras).keySet()
         assertThat(String.format("Intent should have extra '%s'", extraKey), keySet, hasItem(extraKey))

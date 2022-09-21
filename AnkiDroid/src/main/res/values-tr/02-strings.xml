@@ -99,6 +99,9 @@
         <item>Oluşturulma</item>
         <item>Değiştirilmiş notlar</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Uygula</string>
+    <string name="filter_by_flags">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
     <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>
@@ -172,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Paketi içe aktarmak için yeterli alan yok.\nGerekli - %1$s \nMevcut - %2$s.\n\nSorun mu yaşıyorsunuz? Mümkünse telefonunuzda yer açmaya çalışın. Alternatif olarak, senkronizasyon, içe aktarmadan daha az alan kullanır. Paketi daha fazla alana sahip bir cihazla (örneğin Anki Desktop) içe aktarmayı deneyebilir ve ardından bu cihazla senkronize edebilirsiniz.</string>
     <string name="import_log_file_cache_cleared">Dosya aktarımında hata, muhtemelen işlem esnasında önbellek temizliği.\nLütfen yeniden deneyin.</string>
     <string name="import_succeeded_but_check_database">Veri aktarımı başarılı ama aktarım sonrası temizlik başarısız oldu. Daha sonra veritabanı kontrolünü çalıştırın. Temel sebep: %s</string>
-    <string name="import_error_unhandled_request">Aktarım isteği işlenemedi</string>
     <string name="import_error_corrupt_zip">Apkg dosyası bozuk. Lütfen silip yeniden indirin.\n\nTemel sebep: %s</string>
-    <string name="import_error_exception">Paket içeri aktarılamadı\n\n%s</string>
+    <string name="import_error_handle_exception">Dosya aktarılamadı\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() başarısız oldu (belki depolama alanı bitmiştir)</string>
-    <string name="import_error_unhandled_scheme">Şurdan ele alınmayan içeri aktarım: \"%s\"</string>
+    <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
     <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
     <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
     <string name="import_stats_error">Aşağıdaki dosyaları içeri aktarırken hatalar meydana geldi:\n%s</string>
@@ -192,11 +193,11 @@
     <string name="export_in_progress">Anki paketi dosyası dışarı aktarılıyor&#8230;</string>
     <string name="export_successful_title">Anki paketi gönderilsin mi?</string>
     <string name="export_send_button">Gönder</string>
-    <string name="export_save_button">Dosyaya kaydet</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid\'den aktarılan bilgi kartları: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
         <br/><br/>
@@ -265,8 +266,6 @@
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' Yüklemesi başarısız oldu.</string>
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
     <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına pcden veya mobilden girin: </string>
@@ -291,28 +290,7 @@
     <string name="white_board_image_saved">Yazı tahtası resmi %s adresine kaydedildi</string>
     <string name="title_whiteboard_pen_color">Beyaz tahta kalem rengi</string>
     <string name="title_whiteboard_editor">Yazı tahtası düzenleyici</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Boş kartlar bulundu. Lütfen Araçlar>Boş Kartlar\'ı çalıştırın.]]></string>
-    <string name="note_importer_error_empty_first_field">Boş ilk alan: %s</string>
-    <string name="note_importer_error_first_field_matched">İlk alan eşleşti: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">İlk alanla tekrar eklendi: %s</string>
-    <string name="note_importer_error_appeared_twice">Dosyada iki kez çıktı: %s</string>
-    <string name="note_importer_error_empty_notes">Bir veya daha fazla not içeri aktarılmadı, çünkü hiç kart üretmediler. Bu durum boş alanlarınız olduğunda ya da metin dosyasındaki içeriği doğru alanlarla eşlemediğinizde meydana gelebilir.</string>
-    <string name="csv_importer_error_invalid_field_count">\"%1$s\"in %2$d alanı vardı, %3$d bekleniyordu</string>
-    <string name="csv_importer_error_exception">İptal edildi: %s</string>
     <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin.</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d notu eklendi</item>
-        <item quantity="other">%d notları eklendi</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d notu güncellendi</item>
-        <item quantity="other">%d notları güncellendi</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d notu değiştirilmedi</item>
-        <item quantity="other">%d notları değiştirilmedi</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Bu kart desteklenmeyen AnkiDroid özellikleri kullanıyor. Geliştiriciyle iletişime geçin (%1$s), veya vikiye bakın. %2$s</string>
     <string name="invalid_json_data">Kart geçersiz veri sağladı. %s</string>
@@ -326,7 +304,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <string name="card_viewer_media_relative_protocol">Kart İçeriği Hatası: Medya güncellemesi gerekli</string>
-    <string name="cannot_load_http_resource">Yüklenen HTTP kaynakları artık desteklenmiyor</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
     <string name="search_decks">Deste ara</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="home">Ana sayfa</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">%s ile eşlendi</string>
-    <string name="import_mapped_to_tags">etiketler ile eşlendi</string>
-    <string name="import_mapped_to_nothing">Yok sayıldı</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Gömülmüş kart</string>
     <string name="buried_note">Gömülmüş not</string>
@@ -414,5 +387,23 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">\"%s\" etiketini genişlet</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Koleksiyona erişilemedi. Lütfen tekrar deneyin!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Daha az ders çalış</string>
+    <string name="intro_ankidroid_tagline_two">Daha çok hatırla</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'nin kart zamanlayıcısı en zayıf anılarınızı güçlendirip en güçlülerinizi muhafaza ederek zaman kazandırır</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Başla</string>
+    <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
+    <string name="already_logged_in">Zaten giriş yapılmış</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deste var</string>
+    <string name="deck_created">Deste oluşturuldu</string>
+    <string name="deck_renamed">Destenin adı değiştirildi</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
+    <string name="toggle_cards_notes">Kartları/Notları Aç/Kapat</string>
+    <string name="toggle_browser_mode_help">Kartları veya notları tarayıcıda göstermeyi aç/kapat</string>
+    <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
+    <string name="browser_options_dialog_heading">Tarayıcı Seçenekleri</string>
 </resources>

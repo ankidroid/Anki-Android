@@ -53,6 +53,14 @@
         <item quantity="many">%d بطاقة معروضة</item>
         <item quantity="other">%d بطاقة معروضة</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="zero">%d notes shown</item>
+        <item quantity="one">%d note shown</item>
+        <item quantity="two">%d notes shown</item>
+        <item quantity="few">%d notes shown</item>
+        <item quantity="many">%d notes shown</item>
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">كل الرزم</string>
     <string name="card_browser_delete_card">حذف الملحوظات</string>
     <string name="card_browser_suspend_card">تعليق البطاقات</string>

@@ -113,7 +113,7 @@
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
     <string name="browse_cards">Показать список</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
     <string name="menu_dismiss_note">Спрятать или удалить</string>
@@ -174,7 +174,6 @@
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
-    <string name="empty_deck_add_note">Добавить карточку</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
     <string name="studyoptions_limit_reached">На сегодня всё</string>

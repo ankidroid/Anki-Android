@@ -34,6 +34,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.SuspendNote
 import com.ichi2.libanki.Card
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -244,7 +245,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         }
 
         fun displayAnswerForTest() {
-            sDisplayAnswer = true
+            displayAnswer = true
         }
 
         override fun answerFieldIsFocused(): Boolean {
@@ -368,8 +369,9 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             handleKeyPress(buttonCode, '\u0000')
         }
 
-        override fun undo() {
+        override fun undo(): Job? {
             undoCalled = true
+            return null
         }
 
         val suspendNoteCalled: Boolean
@@ -417,7 +419,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             @CheckResult
             fun displayingAnswer(): KeyboardInputTestReviewer {
                 val keyboardInputTestReviewer = KeyboardInputTestReviewer()
-                sDisplayAnswer = true
+                displayAnswer = true
                 keyboardInputTestReviewer.mProcessor.setup()
                 return keyboardInputTestReviewer
             }
@@ -425,7 +427,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             @CheckResult
             fun displayingQuestion(): KeyboardInputTestReviewer {
                 val keyboardInputTestReviewer = KeyboardInputTestReviewer()
-                sDisplayAnswer = false
+                displayAnswer = false
                 keyboardInputTestReviewer.mProcessor.setup()
                 return keyboardInputTestReviewer
             }

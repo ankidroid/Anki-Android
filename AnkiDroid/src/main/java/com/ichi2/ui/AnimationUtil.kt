@@ -27,7 +27,6 @@ object AnimationUtil {
     /** This is a fast animation - We don't want the user incorrectly selecting the current position
      * for the next collapse operation  */
     private const val DURATION_MILLIS = 200
-    @JvmStatic
     fun collapseView(view: View, animationEnabled: Boolean) {
         view.animate().cancel()
         if (!animationEnabled) {
@@ -56,7 +55,6 @@ object AnimationUtil {
         view.startAnimation(set)
     }
 
-    @JvmStatic
     fun expandView(view: View, enableAnimation: Boolean) {
         view.animate().cancel()
         if (!enableAnimation) {

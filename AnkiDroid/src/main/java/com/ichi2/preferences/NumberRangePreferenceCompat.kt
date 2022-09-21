@@ -25,41 +25,44 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
-import androidx.annotation.StringRes
+import androidx.core.content.withStyledAttributes
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-open class NumberRangePreferenceCompat : EditTextPreference {
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        min = getMinFromAttributes(attrs)
-        max = getMaxFromAttributes(attrs)
-        defaultValue = getDefaultValueFromAttributes(attrs)
-    }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        min = getMinFromAttributes(attrs)
-        max = getMaxFromAttributes(attrs)
-        defaultValue = getDefaultValueFromAttributes(attrs)
-    }
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        min = getMinFromAttributes(attrs)
-        max = getMaxFromAttributes(attrs)
-        defaultValue = getDefaultValueFromAttributes(attrs)
-    }
-    constructor(context: Context) : super(context) {
-        defaultValue = null
-    }
+@NeedsTest("removing JvmOverloads should fail")
+open class NumberRangePreferenceCompat
+@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.editTextPreferenceStyle,
+    defStyleRes: Int = R.style.Preference_DialogPreference_EditTextPreference
+) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes) {
 
-    val defaultValue: String?
+    var defaultValue: String? = null
 
     var min = 0
         protected set
     var max = 0
         private set
 
-    fun setFormattedSummary(@StringRes resId: Int) {
-        setSummaryProvider { context.getString(resId, text) }
+    init {
+        min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
+        max = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE) ?: Int.MAX_VALUE
+        defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
+
+        context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
+            val summaryFormat = this.getString(R.styleable.CustomPreference_summaryFormat)
+            if (summaryFormat != null) {
+                setSummaryProvider {
+                    String.format(summaryFormat, text)
+                }
+            }
+        }
     }
 
     /** The maximum available number of digits */
@@ -112,36 +115,6 @@ open class NumberRangePreferenceCompat : EditTextPreference {
                 min
             }
         }
-    }
-
-    /**
-     * Returns the value of the min attribute, or its default value if not specified
-     *
-     *
-     * This method should only be called once from the constructor.
-     */
-    private fun getMinFromAttributes(attrs: AttributeSet?): Int {
-        return attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
-    }
-
-    /**
-     * Returns the value of the max attribute, or its default value if not specified
-     *
-     *
-     * This method should only be called once from the constructor.
-     */
-    private fun getMaxFromAttributes(attrs: AttributeSet?): Int {
-        return attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE)
-            ?: Int.MAX_VALUE
-    }
-
-    /**
-     * Returns the default Value, or null if not specified
-     *
-     * This method should only be called once from the constructor.
-     */
-    private fun getDefaultValueFromAttributes(attrs: AttributeSet?): String? {
-        return attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
     }
 
     /**
@@ -205,16 +178,19 @@ open class NumberRangePreferenceCompat : EditTextPreference {
             editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
         }
 
+        @NeedsTest("value is set to preference previous value if text is blank")
         override fun onDialogClosed(positiveResult: Boolean) {
-            if (!positiveResult) {
+            // don't change the value if the dialog was cancelled or closed without any text
+            if (!positiveResult || editText.text.isEmpty()) {
                 return
             }
-
-            numberRangePreference.setValue(editText.text.toString())
+            val newValue = editText.text.toString().toInt()
+            if (numberRangePreference.callChangeListener(newValue)) {
+                numberRangePreference.setValue(newValue)
+            }
         }
 
         companion object {
-            @JvmStatic
             fun newInstance(key: String?): NumberRangeDialogFragmentCompat {
                 val fragment = NumberRangeDialogFragmentCompat()
                 val b = Bundle(1)

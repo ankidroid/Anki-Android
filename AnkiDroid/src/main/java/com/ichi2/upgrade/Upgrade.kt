@@ -6,7 +6,7 @@ import com.ichi2.utils.JSONException
 import timber.log.Timber
 
 object Upgrade {
-    @JvmStatic
+    @JvmStatic // tests fail if removed: CardBrowserTest
     fun upgradeJSONIfNecessary(col: Collection, name: String, defaultValue: Boolean): Boolean {
         var value = defaultValue
         try {

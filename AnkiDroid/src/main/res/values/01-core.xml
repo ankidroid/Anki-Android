@@ -82,7 +82,7 @@
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Add</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can't be found in AnkiDroid directly.">Sync account</string>
     <string name="menu_dismiss_note">Hide / delete</string>
@@ -142,7 +142,6 @@
     <string name="empty_deck">This deck is empty</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>

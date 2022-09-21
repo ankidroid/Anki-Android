@@ -18,52 +18,45 @@ package com.ichi2.async
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Collection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-// #7108: AsyncTask
-@Suppress("Deprecation")
-class CollectionLoader private constructor(private val lifecycleOwner: LifecycleOwner, private val callback: Callback) : android.os.AsyncTask<Void?, Void?, Collection?>() {
-    interface Callback {
+object CollectionLoader {
+    fun interface Callback {
         fun execute(col: Collection?)
     }
 
-    override fun doInBackground(vararg params: Void?): Collection? {
-        // Don't touch collection if lockCollection flag is set
-        if (CollectionHelper.getInstance().isCollectionLocked) {
-            Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.")
-            return null
-        }
-        // load collection
-        return try {
-            Timber.d("CollectionLoader accessing collection")
-            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().applicationContext)
-            Timber.i("CollectionLoader obtained collection")
-            col
-        } catch (e: RuntimeException) {
-            Timber.e(e, "loadInBackground - RuntimeException on opening collection")
-            CrashReportService.sendExceptionReport(e, "CollectionLoader.loadInBackground")
-            null
-        }
-    }
-
-    override fun onPostExecute(col: Collection?) {
-        @Suppress("Deprecation")
-        super.onPostExecute(col)
-        if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
-            callback.execute(col)
-        }
-    }
-
-    companion object {
-        @JvmStatic
-        fun load(lifecycleOwner: LifecycleOwner, callback: Callback) {
-            val loader = CollectionLoader(lifecycleOwner, callback)
-            @Suppress("Deprecation")
-            loader.execute()
+    fun load(lifecycleOwner: LifecycleOwner, callback: Callback) {
+        lifecycleOwner.lifecycleScope.launch {
+            val col = withContext(Dispatchers.IO) {
+                // Don't touch collection if lockCollection flag is set
+                if (CollectionHelper.instance.isCollectionLocked) {
+                    Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.")
+                    null
+                } else {
+                    // load collection
+                    try {
+                        Timber.d("CollectionLoader accessing collection")
+                        val col = CollectionHelper.instance.getCol(AnkiDroidApp.instance.applicationContext)
+                        Timber.i("CollectionLoader obtained collection")
+                        col
+                    } catch (e: RuntimeException) {
+                        Timber.e(e, "loadInBackground - RuntimeException on opening collection")
+                        CrashReportService.sendExceptionReport(e, "CollectionLoader.load")
+                        null
+                    }
+                }
+            }
+            if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
+                callback.execute(col)
+            }
         }
     }
 }

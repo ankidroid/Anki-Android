@@ -26,8 +26,10 @@ import java.util.*
 internal typealias Dict<K, V> = HashMap<K, V>
 internal typealias ImmutableList<T> = List<T>
 internal typealias str = String
-internal typealias did = Long
+internal typealias DeckId = Long
+internal typealias CardId = Long
 internal typealias dcid = Long
-internal typealias ntid = Long
+internal typealias NoteId = Long
+internal typealias NoteTypeId = Long
 internal typealias bool = Boolean
 internal typealias Tuple<T1, T2> = Pair<T1, T2>

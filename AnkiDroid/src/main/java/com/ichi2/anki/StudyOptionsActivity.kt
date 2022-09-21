@@ -15,12 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.fragment.app.commit
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
-import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.utils.ExtendedFragmentFactory
@@ -49,7 +48,9 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
             withDeckOptions = intent.extras!!.getBoolean("withDeckOptions")
         }
         val currentFragment = StudyOptionsFragment.newInstance(withDeckOptions)
-        supportFragmentManager.beginTransaction().replace(R.id.studyoptions_frame, currentFragment).commit()
+        supportFragmentManager.commit {
+            replace(R.id.studyoptions_frame, currentFragment)
+        }
     }
 
     private val currentFragment: StudyOptionsFragment?
@@ -64,12 +65,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    @Suppress("deprecation") // #10086
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode)
     }
 
     private fun closeStudyOptions(result: Int = RESULT_OK) {

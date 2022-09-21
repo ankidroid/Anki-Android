@@ -27,12 +27,12 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
        This can happen when the DialogFragment is shown from
        the onPostExecute() method of an AsyncTask */
     abstract val notificationMessage: String?
-    abstract val notificationTitle: String?
+    abstract val notificationTitle: String
     open val dialogHandlerMessage: Message? get() = null
 
     protected fun res(): Resources {
         return try {
-            AnkiDroidApp.getAppResources()
+            AnkiDroidApp.appResources
         } catch (e: Exception) {
             Timber.w(e, "AnkiDroidApp.getAppResources failure. Returning Fragment resources as fallback.")
             resources

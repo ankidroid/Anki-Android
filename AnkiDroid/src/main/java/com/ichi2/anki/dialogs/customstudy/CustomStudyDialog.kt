@@ -49,6 +49,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
@@ -60,13 +61,12 @@ import java.util.*
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
-        fun showDialogFragment(newFragment: DialogFragment?)
+        fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
-        fun startActivityForResultWithoutAnimation(intent: Intent?, requestCode: Int)
+        fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int)
     }
 
-    @JvmOverloads
-    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: Long, jumpToReviewer: Boolean = false): CustomStudyDialog {
+    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()
@@ -82,7 +82,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerFragmentResultReceiver(this)
+        registerFragmentResultReceiver()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -196,7 +196,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
         // Set material dialog parameters
         val dialog = MaterialDialog(requireActivity())
-            .customView(view = v, scrollable = true)
+            .customView(view = v, scrollable = true, noVerticalPadding = true, horizontalPadding = true)
             .positiveButton(R.string.dialog_ok) {
                 // Get the value selected by user
                 val n: Int = try {
@@ -313,13 +313,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
      */
-    override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
         val sb = StringBuilder()
         when (option) {
             1 -> sb.append("is:new ")
             2 -> sb.append("is:due ")
         }
-        val arr: MutableList<String?> = ArrayList(selectedTags!!.size)
+        val arr: MutableList<String?> = ArrayList(selectedTags.size)
         if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {
                 arr.add("tag:'$tag'")
@@ -380,7 +380,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private val text1: String
         get() {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
@@ -389,7 +389,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     private val text2: String
         get() {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)

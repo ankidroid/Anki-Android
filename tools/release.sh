@@ -151,6 +151,9 @@ fi
 
 github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "**For regular users:**<br/><br/>Install the main APK below, trying the 'universal' build first for new installs. If it refuses to install and run correctly or you have previously installed from the Play Store, you must pick the APK that matches CPU instruction set for your device.<br/><br/>This will be arm64-v8a for most phones from the last few years but [here is a guide to help you choose](https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/)<br/><br/><br/>**For testers and multiple profiles users:**<br/><br/>The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences" $PRE_RELEASE
 
+echo "Sleeping 30s to make sure the release exists, see issue 11746"
+sleep 30
+
 for ABI in $ABIS; do
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
 done

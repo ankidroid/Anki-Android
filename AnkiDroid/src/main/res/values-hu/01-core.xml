@@ -103,7 +103,7 @@
     <string name="rename_deck">Pakli átnevezése</string>
     <string name="create_shortcut">Kezdőképernyőre</string>
     <string name="browse_cards">cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hozzáadás</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>
     <string name="menu_dismiss_note">Elrejtés / Törlés</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">Ez a pakli üres</string>
     <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Paklik keresése</string>
-    <string name="empty_deck_add_note">Kártya hozzáadása</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
     <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
     <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>

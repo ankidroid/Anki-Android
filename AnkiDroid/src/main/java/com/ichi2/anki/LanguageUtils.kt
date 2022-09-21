@@ -28,7 +28,6 @@ object LanguageUtils {
      * Returns a Locale object constructed from an empty string if the input string is null, empty
      * or contains more than 3 fields separated by underscores.
      */
-    @JvmStatic
     fun localeFromStringIgnoringScriptAndExtensions(localeCodeStr: String): Locale {
         val localeCode = stripScriptAndExtensions(localeCodeStr)
         val fields = localeCode.split("_".toRegex()).toTypedArray()

@@ -30,14 +30,13 @@ class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
             message(R.string.backup_deck_no_space_left)
             cancelable(true)
             positiveButton(R.string.dialog_ok) {
-                (activity as DeckPicker?)!!.startLoadingCollection()
+                (activity as DeckPicker).startLoadingCollection()
             }
-            setOnCancelListener { (activity as DeckPicker?)!!.startLoadingCollection() }
+            setOnCancelListener { (activity as DeckPicker).startLoadingCollection() }
         }
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): DeckPickerNoSpaceLeftDialog {
             return DeckPickerNoSpaceLeftDialog()
         }

@@ -18,20 +18,12 @@ package com.ichi2.anki.contextmenu
 import android.content.Context
 
 class CardBrowserContextMenu(context: Context) : SystemContextMenu(context) {
-
-    override val defaultEnabledStatus: Boolean
-        get() = false
-    override val preferenceKey: String
-        get() = CARD_BROWSER_CONTEXT_MENU_PREF_KEY
     override val activityName: String
         get() = "com.ichi2.anki.CardBrowserContextMenuAction"
 
     companion object {
-        const val CARD_BROWSER_CONTEXT_MENU_PREF_KEY = "card_browser_enable_external_context_menu"
-
-        @JvmStatic
-        fun ensureConsistentStateWithSharedPreferences(context: Context) {
-            CardBrowserContextMenu(context).ensureConsistentStateWithSharedPreferences()
+        fun ensureConsistentStateWithPreferenceStatus(context: Context, preferenceStatus: Boolean) {
+            CardBrowserContextMenu(context).ensureConsistentStateWithPreferenceStatus(preferenceStatus)
         }
     }
 }

@@ -54,7 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">בדיקת היגוי</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">ההיגוי נכשל</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">רק מילה אחת בכל פעם נתמכת</string>
     <string name="multimedia_editor_word_search_try_lower_case">נסו להשתמש באותיות קטנות</string>
     <string name="multimedia_editor_poweredbeolingus">אפשרות זו משתמשת ב־Beolingus</string>
     <!-- Field editing general -->

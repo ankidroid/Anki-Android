@@ -53,7 +53,6 @@ object UsageAnalytics {
      *
      * @param context required to look up the analytics codes for the app
      */
-    @JvmStatic
     @Synchronized
     fun initialize(context: Context): GoogleAnalytics? {
         Timber.i("initialize()")
@@ -165,7 +164,6 @@ object UsageAnalytics {
      *
      * @param dryRun set to true if you want to log analytics hit but not dispatch
      */
-    @JvmStatic
     @Synchronized
     fun setDryRun(dryRun: Boolean) {
         Timber.i("setDryRun(): %s, warning dryRun is experimental", dryRun)
@@ -182,7 +180,7 @@ object UsageAnalytics {
         sAnalytics!!.flush()
         sAnalytics = null
         unInstallDefaultExceptionHandler()
-        initialize(AnkiDroidApp.getInstance().applicationContext)
+        initialize(AnkiDroidApp.instance.applicationContext)
     }
 
     /**
@@ -192,7 +190,6 @@ object UsageAnalytics {
      * @param object the result of Object.getClass().getSimpleName() will be used as the screen tag
      */
     @KotlinCleanup("rename object")
-    @JvmStatic
     fun sendAnalyticsScreenView(`object`: Any) {
         sendAnalyticsScreenView(`object`.javaClass.simpleName)
     }
@@ -218,7 +215,6 @@ object UsageAnalytics {
      * @param action   the action the user performed
      */
     @KotlinCleanup("remove when all callers are Kotlin")
-    @JvmStatic
     fun sendAnalyticsEvent(category: String, action: String) {
         sendAnalyticsEvent(category, action, Integer.MIN_VALUE, null)
     }
@@ -231,7 +227,6 @@ object UsageAnalytics {
      * @param value    A value for the event, Integer.MIN_VALUE signifies caller shouldn't send the value
      * @param label    A label for the event, may be null
      */
-    @JvmStatic
     fun sendAnalyticsEvent(category: String, action: String, value: Int = Int.MIN_VALUE, label: String? = null) {
         Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label)
         if (!optIn) {
@@ -253,12 +248,10 @@ object UsageAnalytics {
      * @param t     Throwable to send for analysis
      * @param fatal whether it was fatal or not
      */
-    @JvmStatic
     fun sendAnalyticsException(t: Throwable, fatal: Boolean) {
         sendAnalyticsException(getCause(t).toString(), fatal)
     }
 
-    @JvmStatic
     @KotlinCleanup("convert to sequence")
     fun getCause(t: Throwable): Throwable {
         var cause: Throwable?
@@ -298,17 +291,16 @@ object UsageAnalytics {
     // A listener on this preference handles the rest
     var isEnabled: Boolean
         get() {
-            val userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+            val userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
             return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false)
         }
         set(value) {
             // A listener on this preference handles the rest
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit()
                 .putBoolean(ANALYTICS_OPTIN_KEY, value)
                 .apply()
         }
 
-    @JvmStatic
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun resetForTests() {
         sAnalytics = null
@@ -453,5 +445,8 @@ object UsageAnalytics {
 
         @AnalyticsConstant
         val IMPORT_COLPKG_FILE = "Import COLPKG"
+
+        @AnalyticsConstant
+        val IMPORT_CSV_FILE = "Import CSV"
     }
 }

@@ -26,11 +26,10 @@ import android.widget.AdapterView.OnItemLongClickListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.saveCollectionInBackground
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu
@@ -38,7 +37,6 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.CountModels
-import com.ichi2.async.CollectionTask.DeleteModel
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
@@ -50,9 +48,7 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.lang.RuntimeException
 import java.util.ArrayList
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
@@ -113,28 +109,6 @@ class ModelBrowser : AnkiActivity() {
         }
     }
 
-    /*
-     * Displays loading bar when deleting a model loading bar is needed
-     * because deleting a model also deletes all of the associated cards/notes *
-     */
-    private fun deleteModelHandler(): DeleteModelHandler {
-        return DeleteModelHandler(this)
-    }
-
-    private class DeleteModelHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Boolean?>(browser) {
-        override fun actualOnPreExecute(context: ModelBrowser) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: ModelBrowser, result: Boolean?) {
-            if (result == false) {
-                throw RuntimeException()
-            }
-            context.hideProgressBar()
-            context.refreshList()
-        }
-    }
-
     /**
      * Handle the actions that can be done on  a note type from the list.
      */
@@ -175,6 +149,7 @@ class ModelBrowser : AnkiActivity() {
     }
 
     @KotlinCleanup("Replace with when")
+    @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val itemId = item.itemId
         if (itemId == android.R.id.home) {
@@ -263,7 +238,7 @@ class ModelBrowser : AnkiActivity() {
         val newModelAdapter = ArrayAdapter(this, R.layout.dropdown_deck_item, mNewModelLabels!!.toList())
         addSelectionSpinner.adapter = newModelAdapter
         MaterialDialog(this).show {
-            customView(view = addSelectionSpinner, scrollable = true)
+            customView(view = addSelectionSpinner, scrollable = true, horizontalPadding = true)
             title(R.string.model_browser_add)
             positiveButton(R.string.dialog_ok) {
                 modelNameInput = FixedEditText(this@ModelBrowser)
@@ -426,11 +401,6 @@ class ModelBrowser : AnkiActivity() {
      * the user to edit the current note's templates.
      */
     private fun openTemplateEditor() {
-        if (!BackendFactory.defaultLegacySchema) {
-            // this screen needs rewriting for the new backend
-            AlertDialog.Builder(this).setTitle("Not yet supported on new backend").show()
-            return
-        }
         val intent = Intent(this, CardTemplateEditor::class.java)
         intent.putExtra("modelId", mCurrentID)
         launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, ActivityTransitionAnimation.Direction.START)
@@ -455,11 +425,23 @@ class ModelBrowser : AnkiActivity() {
         TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
     }
 
-    /*
-     * Deletes the currently selected model
+    /**
+     * Deletes the currently selected model and all notes associated with it
+     *
+     * Displays loading bar when deleting a model loading bar is needed
+     * because deleting a model also deletes all of the associated cards/notes
      */
     private fun deleteModel() {
-        TaskManager.launchCollectionTask(DeleteModel(mCurrentID), deleteModelHandler())
+        launchCatchingTask {
+            withProgress {
+                withCol {
+                    Timber.d("doInBackGroundDeleteModel")
+                    col.models.rem(col.models.get(mCurrentID)!!)
+                    col.save()
+                }
+            }
+            refreshList()
+        }
         mModels!!.removeAt(mModelListPosition)
         mModelIds!!.removeAt(mModelListPosition)
         mModelDisplayList!!.removeAt(mModelListPosition)

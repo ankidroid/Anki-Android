@@ -27,13 +27,10 @@ import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
 import android.text.TextUtils
-import android.view.KeyEvent
-import android.view.MenuItem
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask
@@ -41,7 +38,6 @@ import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -62,32 +58,27 @@ import java.util.*
 @KotlinCleanup("IDE lint")
 @KotlinCleanup("All java.lang. methods")
 class DeckOptions :
-    AppCompatPreferenceActivity() {
+    AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
-    private lateinit var mDeck: Deck
-    private var mUnmountReceiver: BroadcastReceiver? = null
-    private lateinit var mPref: DeckPreferenceHack
 
-    inner class DeckPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
-        val mSummaries: MutableMap<String, String?> = HashMap()
+    inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         @Suppress("Deprecation")
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptions: DeckOptions
+        val deckOptionsActivity: DeckOptions // TODO: rename the class to DeckOptionsActivity
             get() = this@DeckOptions
 
         @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
-        fun cacheValues() {
+        override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
-                mOptions = col.decks.confForDid(mDeck.getLong("id"))
+                mOptions = col.decks.confForDid(deck.getLong("id"))
 
-                mValues["name"] = mDeck.getString("name")
-                mValues["desc"] = mDeck.getString("desc")
-                mValues["deckConf"] = mDeck.getString("conf")
+                mValues["name"] = deck.getString("name")
+                mValues["desc"] = deck.getString("desc")
+                mValues["deckConf"] = deck.getString("conf")
                 // general
                 mValues["maxAnswerTime"] = mOptions.getString("maxTaken")
                 mValues["showAnswerTimer"] = java.lang.Boolean.toString(parseTimerValue(mOptions))
@@ -124,7 +115,7 @@ class DeckOptions :
                 mValues["lapLeechThres"] = lapOptions.getString("leechFails")
                 mValues["lapLeechAct"] = lapOptions.getString("leechAction")
                 // options group management
-                mValues["currentConf"] = col.decks.getConf(mDeck.getLong("conf"))!!.getString("name")
+                mValues["currentConf"] = col.decks.getConf(deck.getLong("conf"))!!.getString("name")
                 // reminders
                 if (mOptions.has("reminder")) {
                     val reminder = mOptions.getJSONObject("reminder")
@@ -152,20 +143,12 @@ class DeckOptions :
             return DeckConfig.parseTimerOpt(options, true)
         }
 
-        inner class Editor : SharedPreferences.Editor {
-            private var mUpdate = ContentValues()
-
-            override fun clear(): SharedPreferences.Editor {
-                Timber.d("clear()")
-                mUpdate = ContentValues()
-                return this
-            }
-
+        inner class Editor : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("DeckOptions - commit() changes back to database")
 
                 try {
-                    for ((key, value) in mUpdate.valueSet()) {
+                    for ((key, value) in update.valueSet()) {
                         Timber.i("Change value for key '%s': %s", key, value)
 
                         when (key) {
@@ -216,15 +199,15 @@ class DeckOptions :
                             "autoPlayAudio" -> mOptions.put("autoplay", value)
                             "replayQuestion" -> mOptions.put("replayq", value)
                             "desc" -> {
-                                mDeck.put("desc", value)
-                                col.decks.save(mDeck)
+                                deck.put("desc", value)
+                                col.decks.save(deck)
                             }
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
-                                TaskManager.launchCollectionTask(CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler())
+                                TaskManager.launchCollectionTask(CollectionTask.ConfChange(deck, mOptions), confChangeHandler())
                             }
                             "confRename" -> {
                                 val newName = value as String
@@ -245,8 +228,8 @@ class DeckOptions :
                                 if (!TextUtils.isEmpty(newName)) {
                                     // New config clones current config
                                     val id = col.decks.confId(newName, mOptions.toString())
-                                    mDeck.put("conf", id)
-                                    col.decks.save(mDeck)
+                                    deck.put("conf", id)
+                                    col.decks.save(deck)
                                 }
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
@@ -279,7 +262,7 @@ class DeckOptions :
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(CollectionTask.ConfSetSubdecks(mDeck, mOptions), confChangeHandler())
+                                TaskManager.launchCollectionTask(CollectionTask.ConfSetSubdecks(deck, mOptions), confChangeHandler())
                             }
                             "reminderEnabled" -> {
                                 val reminder = JSONObject()
@@ -383,56 +366,6 @@ class DeckOptions :
                 return true
             }
 
-            override fun putBoolean(key: String, value: Boolean): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putFloat(key: String, value: Float): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putInt(key: String, value: Int): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putLong(key: String, value: Long): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putString(key: String, value: String?): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun remove(key: String): SharedPreferences.Editor {
-                Timber.d("Editor.remove(key=%s)", key)
-                mUpdate.remove(key)
-                return this
-            }
-
-            override fun apply() {
-                commit()
-            }
-
-            // @Override On Android 1.5 this is not Override
-            override fun putStringSet(arg0: String, arg1: Set<String>?): SharedPreferences.Editor? {
-                // TODO Auto-generated method stub
-                return null
-            }
-
-            @Suppress("unused")
-            @KotlinCleanup("maybe remove this")
-            val deckPreferenceHack: DeckPreferenceHack
-                get() = this@DeckPreferenceHack
-
-            fun confChangeHandler(): ConfChangeHandler {
-                return ConfChangeHandler(this@DeckPreferenceHack)
-            }
-
             /**
              * Remove the currently selected options group
              */
@@ -442,61 +375,16 @@ class DeckOptions :
                 col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
                 TaskManager.launchCollectionTask(CollectionTask.ConfRemove(mOptions), confChangeHandler())
-                mDeck.put("conf", 1)
+                deck.put("conf", 1)
             }
-        }
 
-        override fun contains(key: String): Boolean {
-            return mValues.containsKey(key)
+            private fun confChangeHandler(): ConfChangeHandler {
+                return ConfChangeHandler(this@DeckPreferenceHack)
+            }
         }
 
         override fun edit(): Editor {
             return Editor()
-        }
-
-        override fun getAll(): Map<String, *> {
-            return mValues
-        }
-
-        override fun getBoolean(key: String, defValue: Boolean): Boolean {
-            return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
-        }
-
-        override fun getFloat(key: String, defValue: Float): Float {
-            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
-        }
-
-        override fun getInt(key: String, defValue: Int): Int {
-            return this.getString(key, Integer.toString(defValue))!!.toInt()
-        }
-
-        override fun getLong(key: String, defValue: Long): Long {
-            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
-        }
-
-        override fun getString(key: String, defValue: String?): String? {
-            Timber.d("getString(key=%s, defValue=%s)", key, defValue)
-            return if (!mValues.containsKey(key)) {
-                defValue
-            } else mValues[key]
-        }
-
-        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            mListeners.add(listener)
-        }
-
-        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            mListeners.remove(listener)
-        }
-
-        // @Override On Android 1.5 this is not Override
-        override fun getStringSet(arg0: String, arg1: Set<String>?): Set<String>? {
-            // TODO Auto-generated method stub
-            return null
-        }
-
-        init {
-            cacheValues()
         }
     }
 
@@ -504,27 +392,23 @@ class DeckOptions :
         TaskListenerWithContext<DeckPreferenceHack, Void?, Boolean?>(deckPreferenceHack) {
 
         override fun actualOnPreExecute(context: DeckPreferenceHack) {
-            @Suppress("unused") val res = context.deckOptions.resources
+            val res = context.deckOptionsActivity.resources
             context.progressDialog = StyledProgressDialog.show(
-                context.deckOptions as Context, null,
+                context.deckOptionsActivity as Context, null,
                 res?.getString(R.string.reordering_cards), false
             )
         }
 
-        @KotlinCleanup("Scope function")
         override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) {
-            context.cacheValues()
-            context.deckOptions.buildLists()
-            context.deckOptions.updateSummaries()
-            context.progressDialog.dismiss()
-            // Restart to reflect the new preference values
-            context.deckOptions.restartActivity()
+            context.apply {
+                cacheValues()
+                deckOptionsActivity.buildLists()
+                deckOptionsActivity.updateSummaries()
+                progressDialog.dismiss()
+                // Restart to reflect the new preference values
+                deckOptionsActivity.restartActivity()
+            }
         }
-    }
-
-    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
-        Timber.d("getSharedPreferences(name=%s)", name)
-        return mPref
     }
 
     @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
@@ -551,19 +435,19 @@ class DeckOptions :
             return
         }
         val extras = intent.extras
-        mDeck = if (extras != null && extras.containsKey("did")) {
+        deck = if (extras != null && extras.containsKey("did")) {
             col.decks.get(extras.getLong("did"))
         } else {
             col.decks.current()
         }
         registerExternalStorageListener()
 
-        mPref = DeckPreferenceHack()
+        pref = DeckPreferenceHack()
         // #6068 - constructor can call finish()
         if (this.isFinishing) {
             return
         }
-        mPref.registerOnSharedPreferenceChangeListener(this)
+        pref.registerOnSharedPreferenceChangeListener(this)
 
         addPreferencesFromResource(R.xml.deck_options)
         if (isSchedV2) {
@@ -575,7 +459,7 @@ class DeckOptions :
         var title = resources.getString(R.string.deckpreferences_title)
         if (title.contains("XXX")) {
             title = try {
-                title.replace("XXX", mDeck.getString("name"))
+                title.replace("XXX", deck.getString("name"))
             } catch (e: JSONException) {
                 Timber.w(e)
                 title.replace("XXX", "???")
@@ -586,15 +470,6 @@ class DeckOptions :
         // Add a home button to the actionbar
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-    }
-
-    @Deprecated("Deprecated in Java") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            closeWithResult()
-            return true
-        }
-        return false
     }
 
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
@@ -610,16 +485,7 @@ class DeckOptions :
         return false
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("DeckOptions - onBackPressed()")
-            closeWithResult()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-    private fun closeWithResult() {
+    override fun closeWithResult() {
         if (prefChanged) {
             setResult(RESULT_OK)
         } else {
@@ -629,20 +495,12 @@ class DeckOptions :
         ActivityTransitionAnimation.slide(this, FADE)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
-    }
-
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     @KotlinCleanup("remove reduntant val res = resources")
     override fun updateSummaries() {
         val res = resources
         // for all text preferences, set summary as current database value
-        for (key in mPref.mValues.keys) {
+        for (key in pref.mValues.keys) {
             val pref = findPreference(key)
             if ("deckConf" == key) {
                 var groupName = optionsGroupName
@@ -661,15 +519,15 @@ class DeckOptions :
                 val lp = pref
                 if (lp.entry != null) lp.entry.toString() else ""
             } else {
-                mPref.getString(key, "")
+                this.pref.getString(key, "")
             }
             // update summary
             @KotlinCleanup("Remove `val s` and use pref.summary?.toString()")
-            if (!mPref.mSummaries.containsKey(key)) {
+            if (!this.pref.mSummaries.containsKey(key)) {
                 val s = pref.summary
-                mPref.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
             }
-            val summ = mPref.mSummaries[key]
+            val summ = this.pref.mSummaries[key]
             @KotlinCleanup("pref.summary = if ...")
             if (summ != null && summ.contains("XXX")) {
                 pref.summary = summ.replace("XXX", value!!)
@@ -698,17 +556,17 @@ class DeckOptions :
         }
         deckConfPref.entries = confLabels
         deckConfPref.entryValues = confValues
-        deckConfPref.value = mPref.getString("deckConf", "0")
+        deckConfPref.value = pref.getString("deckConf", "0")
 
         val newOrderPref = findPreference("newOrder") as ListPreference
         newOrderPref.setEntries(R.array.new_order_labels)
         newOrderPref.setEntryValues(R.array.new_order_values)
-        newOrderPref.value = mPref.getString("newOrder", "0")
+        newOrderPref.value = pref.getString("newOrder", "0")
 
         val leechActPref = findPreference("lapLeechAct") as ListPreference
         leechActPref.setEntries(R.array.leech_action_labels)
         leechActPref.setEntryValues(R.array.leech_action_values)
-        leechActPref.value = mPref.getString(
+        leechActPref.value = pref.getString(
             "lapLeechAct",
             Integer.toString(Consts.LEECH_SUSPEND)
         )
@@ -732,7 +590,7 @@ class DeckOptions :
     private val optionsGroupCount: Int
         get() {
             var count = 0
-            val conf = mDeck.getLong("conf")
+            val conf = deck.getLong("conf")
             @KotlinCleanup("Join both if blocks")
             for (deck in col.decks.all()) {
                 if (deck.isDyn) {
@@ -750,7 +608,7 @@ class DeckOptions :
      */
     private val optionsGroupName: String
         get() {
-            val confId = mPref.getLong("deckConf", 0)
+            val confId = pref.getLong("deckConf", 0)
             return col.decks.getConf(confId)!!.getString("name")
         }
 
@@ -761,7 +619,7 @@ class DeckOptions :
     private val subdeckCount: Int
         get() {
             var count = 0
-            val did = mDeck.getLong("id")
+            val did = deck.getLong("id")
             val children = col.decks.children(did)
             for (childDid in children.values) {
                 val child = col.decks.get(childDid)
@@ -772,24 +630,6 @@ class DeckOptions :
             }
             return count
         }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (SdCardReceiver.MEDIA_EJECT == intent.action) {
-                    finish()
-                }
-            }
-        }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
-    }
 
     private fun restartActivity() {
         recreate()

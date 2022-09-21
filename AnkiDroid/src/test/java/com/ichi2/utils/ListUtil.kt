@@ -53,11 +53,11 @@ class ListUtil {
         @Throws(ArrayComparisonFailure::class)
         fun assertListEquals(
             message: String?,
-            expected: List<Any>?,
-            actuals: List<Any>?
+            expected: List<Any?>?,
+            actuals: List<Any?>?
         ) {
-            val expectedArray: Array<Any>? = expected?.toTypedArray()
-            val actualArray: Array<Any>? = actuals?.toTypedArray()
+            val expectedArray: Array<Any?>? = expected?.toTypedArray()
+            val actualArray: Array<Any?>? = actuals?.toTypedArray()
             Assert.assertArrayEquals(message, expectedArray, actualArray)
         }
 
@@ -72,8 +72,7 @@ class ListUtil {
          * @param actuals Object list or list of arrays (multi-dimensional array) with
          * actual values
          */
-        @JvmStatic
-        fun assertListEquals(expected: List<Any>?, actuals: List<Any>?) {
+        fun assertListEquals(expected: List<Any?>?, actuals: List<Any?>?) {
             assertListEquals(null, expected, actuals)
         }
     }

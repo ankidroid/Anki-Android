@@ -67,6 +67,7 @@ object AnalyticsConstantsTest {
         listOfConstantFields.add("Exception Report")
         listOfConstantFields.add("Import APKG")
         listOfConstantFields.add("Import COLPKG")
+        listOfConstantFields.add("Import CSV")
     }
 
     internal val analyticsConstantFields
@@ -103,7 +104,7 @@ object AnalyticsConstantsTest {
         }
 
         companion object {
-            @JvmStatic
+            @JvmStatic // required for Parameters
             @Parameterized.Parameters
             fun addAnalyticsConstants(): List<String> {
                 return listOfConstantFields

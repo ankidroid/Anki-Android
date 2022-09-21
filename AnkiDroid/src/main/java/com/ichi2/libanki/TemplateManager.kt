@@ -24,11 +24,10 @@ package com.ichi2.libanki
 
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.av_tags_to_native
 import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.model.to_backend_note
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.StringUtil
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import timber.log.Timber
@@ -115,7 +114,7 @@ class TemplateManager {
         note: Note,
         browser: bool = false,
         notetype: NoteType? = null,
-        template: Dict<str, str>? = null,
+        template: JSONObject? = null,
         fill_empty: bool = false
     ) {
 
@@ -125,7 +124,7 @@ class TemplateManager {
         internal var _card: Card = card
         internal var _note: Note = note
         internal var _browser: bool = browser
-        internal var _template: Dict<str, str>? = template
+        internal var _template: JSONObject? = template
         internal var _fill_empty: bool = fill_empty
         private var _fields: Dict<str, str>? = null
         internal var _note_type: NoteType = notetype ?: note.model()
@@ -145,7 +144,7 @@ class TemplateManager {
                 note: Note,
                 card: Card,
                 notetype: NoteType,
-                template: Dict<str, str>,
+                template: JSONObject,
                 fill_empty: bool,
             ): TemplateRenderContext {
                 return TemplateRenderContext(
@@ -168,12 +167,12 @@ class TemplateManager {
                 val fields = _note.items().map { Pair(it[0], it[1]) }.toMap().toMutableMap()
 
                 // add (most) special fields
-                fields["Tags"] = StringUtil.strip(_note.stringTags())
+                fields["Tags"] = _note.stringTags().trim()
                 fields["Type"] = _note_type.name
                 fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
-                fields["Subdeck"] = Decks.basename(fields["Deck"])
+                fields["Subdeck"] = Decks.basename(fields["Deck"]!!)
                 if (_template != null) {
-                    fields["Card"] = _template!!["name"]
+                    fields["Card"] = _template!!["name"] as String
                 } else {
                     fields["Card"] = ""
                 }
@@ -220,21 +219,25 @@ class TemplateManager {
 
             val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
             val qout = col().backend.extractAVTags(text = qtext, questionSide = true)
+            var qoutText = qout.text
 
             val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
             val aout = col().backend.extractAVTags(text = atext, questionSide = false)
+            var aoutText = aout.text
+
+            if (!_browser) {
+                val svg = _note_type.optBoolean("latexsvg", false)
+                qoutText = LaTeX.mungeQA(qout.text, _col, svg)
+                aoutText = LaTeX.mungeQA(aout.text, _col, svg)
+            }
 
             val output = TemplateRenderOutput(
-                question_text = qout.text,
-                answer_text = aout.text,
+                question_text = qoutText,
+                answer_text = aoutText,
                 question_av_tags = av_tags_to_native(qout.avTagsList),
                 answer_av_tags = av_tags_to_native(aout.avTagsList),
                 css = note_type().getString("css"),
             )
-
-            if (!_browser) {
-                // hooks.card_did_render(output, self)
-            }
 
             return output
         }
@@ -245,9 +248,9 @@ class TemplateManager {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(
-                        _note.to_backend_note(),
+                        _note.toBackendNote(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template!!.toMap())),
+                        BackendUtils.to_json_bytes(JSONObject(_template!!)),
                         _fill_empty,
                     )
                 } else {
@@ -266,10 +269,8 @@ class TemplateManager {
             @get:JvmName("getAnswerText")
             @set:JvmName("setAnswerText")
             var answer_text: str,
-            @RustCleanup("make non-null")
-            val question_av_tags: List<AvTag>?,
-            @RustCleanup("make non-null")
-            val answer_av_tags: List<AvTag>?,
+            val question_av_tags: List<AvTag>,
+            val answer_av_tags: List<AvTag>,
             val css: str = ""
         ) {
 

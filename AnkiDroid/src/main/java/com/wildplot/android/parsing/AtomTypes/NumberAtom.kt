@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint
 import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.parsing.Atom.AtomType
 import com.wildplot.android.parsing.ExpressionFormatException
@@ -24,15 +23,14 @@ import timber.log.Timber
 import java.lang.NumberFormatException
 import kotlin.Throws
 
-@SuppressLint("NonPublicNonStaticFieldName")
 class NumberAtom(factorString: String) : TreeElement {
 
     private var atomType = AtomType.NUMBER
-    private var value: Double? = null
+    private var valueField: Double? = null
 
     init {
         try {
-            value = factorString.toDouble()
+            valueField = factorString.toDouble()
         } catch (e: NumberFormatException) {
             Timber.w(e)
             atomType = AtomType.INVALID
@@ -44,21 +42,19 @@ class NumberAtom(factorString: String) : TreeElement {
         return atomType
     }
 
-    @Throws(ExpressionFormatException::class)
-    override fun getValue(): Double {
-        return if (atomType != AtomType.INVALID) {
-            value!!
+    @get:Throws(ExpressionFormatException::class)
+    override val value: Double
+        get() = if (atomType != AtomType.INVALID) {
+            valueField!!
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 
-    @Throws(ExpressionFormatException::class)
-    override fun isVariable(): Boolean {
-        return if (atomType != AtomType.INVALID) {
+    @get:Throws(ExpressionFormatException::class)
+    override val isVariable: Boolean
+        get() = if (atomType != AtomType.INVALID) {
             false
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
-    }
 }

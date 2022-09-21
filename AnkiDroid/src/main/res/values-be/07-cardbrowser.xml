@@ -51,6 +51,12 @@
         <item quantity="many">Паказана %d картак</item>
         <item quantity="other">Паказана %d карткі</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">Паказана %d нататка</item>
+        <item quantity="few">Паказана %d нататкі</item>
+        <item quantity="many">Паказана %d нататак</item>
+        <item quantity="other">Паказана %d нататкі</item>
+    </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
     <string name="card_browser_delete_card">Выдаліць запісы</string>
     <string name="card_browser_suspend_card">Прыпыніць карткі</string>

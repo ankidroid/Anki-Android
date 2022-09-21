@@ -18,15 +18,12 @@ package com.ichi2.testutils
 import android.content.Context
 import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertTrue
 import java.io.File
 import java.lang.IllegalStateException
 
 object BackupManagerTestUtilities {
-    @JvmStatic
-    @KotlinCleanup("make context non-null")
-    fun setupSpaceForBackup(context: Context?) {
+    fun setupSpaceForBackup(context: Context) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
 
         val path = File(currentAnkiDroidDirectory).parentFile
@@ -36,7 +33,6 @@ object BackupManagerTestUtilities {
         assertTrue(enoughDiscSpace(currentAnkiDroidDirectory))
     }
 
-    @JvmStatic
     fun reset() {
         ShadowStatFs.reset()
     }

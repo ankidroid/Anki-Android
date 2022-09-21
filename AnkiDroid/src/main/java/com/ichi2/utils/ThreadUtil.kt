@@ -19,7 +19,6 @@ package com.ichi2.utils
 import timber.log.Timber
 
 object ThreadUtil {
-    @JvmStatic
     fun sleep(timeout: Int) {
         try {
             Thread.sleep(timeout.toLong())

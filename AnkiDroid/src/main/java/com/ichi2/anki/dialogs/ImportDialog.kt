@@ -44,7 +44,7 @@ class ImportDialog : AsyncDialogFragment() {
                     title(R.string.import_title)
                     message(text = resources.getQuantityString(R.plurals.import_files_message_add_confirm, dialogMessageList.size, displayFileName))
                     positiveButton(R.string.import_message_add) {
-                        (activity as ImportDialogListener?)!!.importAdd(dialogMessageList)
+                        (activity as ImportDialogListener).importAdd(dialogMessageList)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -55,7 +55,7 @@ class ImportDialog : AsyncDialogFragment() {
                     title(R.string.import_title)
                     message(text = resources.getString(R.string.import_message_replace_confirm, displayFileName))
                     positiveButton(R.string.dialog_positive_replace) {
-                        (activity as ImportDialogListener?)!!.importReplace(dialogMessageList)
+                        (activity as ImportDialogListener).importReplace(dialogMessageList)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -87,7 +87,7 @@ class ImportDialog : AsyncDialogFragment() {
         }
 
     fun dismissAllDialogFragments() {
-        (activity as ImportDialogListener?)!!.dismissAllDialogFragments()
+        (activity as ImportDialogListener).dismissAllDialogFragments()
     }
 
     companion object {
@@ -101,7 +101,6 @@ class ImportDialog : AsyncDialogFragment() {
          * @param dialogMessageList An optional ArrayList of string(s) which can be used to show a custom message
          * or specify import path
          */
-        @JvmStatic
         fun newInstance(dialogType: Int, dialogMessageList: ArrayList<String>): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()

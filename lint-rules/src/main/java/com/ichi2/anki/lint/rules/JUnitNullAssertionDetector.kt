@@ -60,7 +60,6 @@ class JUnitNullAssertionDetector : Detector(), SourceCodeScanner {
             "afterwards. Use JUnitAsserter if passing in a message, kotlin.test top level functions otherwise"
         private val implementation = Implementation(JUnitNullAssertionDetector::class.java, JAVA_FILE_SCOPE)
 
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

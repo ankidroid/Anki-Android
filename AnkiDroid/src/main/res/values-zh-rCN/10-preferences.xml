@@ -47,29 +47,26 @@
     <!-- generic strings -->
     <string name="disabled">禁用</string>
     <string name="enabled">启用</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s 秒</string>
+    <string name="pref_summary_minutes">%s 分钟</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">无结果</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">常规</string>
-    <string name="pref_cat_general_summ">常用设置</string>
+    <string name="pref_cat_studying" maxLength="41">学习中</string>
+    <string name="pref_cat_system_wide" maxLength="41">系统范围</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
     <string name="pref_cat_scheduling" maxLength="41">计划任务</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外观</string>
-    <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
     <string name="pref_cat_themes" maxLength="41">主题</string>
     <string name="pref_cat_fonts" maxLength="41">字体</string>
     <string name="pref_cat_gestures" maxLength="41">手势操作</string>
     <string name="pref_cat_controls" maxLength="41">控制</string>
     <string name="pref_cat_advanced" maxLength="41">高级设置</string>
-    <string name="pref_cat_advanced_summ">优化和实验性的功能</string>
-    <string name="pref_cat_performance" maxLength="41">性能</string>
     <string name="pref_cat_workarounds" maxLength="41">变通方法</string>
     <string name="pref_cat_plugins" maxLength="41">插件</string>
-    <string name="about_title" maxLength="41">关于</string>
-    <string name="about_version">版本：</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
@@ -126,15 +123,17 @@
     <string name="swipe_sensitivity" maxLength="41">滑动灵敏度</string>
     <string name="tts" maxLength="41">文本转语音</string>
     <string name="tts_summ">若没有附带声音文件则读出问题和答案</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">同步时获取媒体文件</string>
     <string name="sync_fetch_missing_media_summ">同步时自动获取缺失的媒体文件</string>
     <string name="sync_account" maxLength="41">AnkiWeb 帐户</string>
     <string name="sync_account_summ_logged_out">未登录</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
     <string name="sync_status_badge" maxLength="41">显示同步状态</string>
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
+    <string name="metered_sync_title" maxLength="41">允许通过按流量计费连接同步</string>
+    <string name="metered_sync_summary">如禁用，如果您试图通过按流量计费连接进行同步，你将被警告</string>
     <string name="app_theme" maxLength="41">主题</string>
     <string name="day_theme" maxLength="41">白天主题</string>
     <string name="night_theme" maxLength="41">夜间主题</string>
@@ -184,13 +183,9 @@
     <string name="time_limit" maxLength="41">时间盒时间限制</string>
     <string name="new_timezone" maxLength="41">新时区处理</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间 (0为午夜，23为 11PM)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">午夜过后 %s 小时</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
-    <string name="sched_v2" maxLength="41">V2 调度器</string>
-    <string name="sched_v2_summ">启用新版调度器。在下次同步时强制单向变更</string>
-    <string name="sched_ver_toggle_title">确认</string>
-    <string name="sched_ver_1to2">实验性调度器可能会产生错误的进度。请确保您首先已阅读文档。继续吗？</string>
     <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
     <string name="convert_fen_text" maxLength="41">国际象棋标注支持</string>
@@ -320,8 +315,15 @@
     <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
     <string name="type_in_answer_focus" maxLength="41">聚焦“输入答案”</string>
     <string name="type_in_answer_focus_summ">自动聚焦在复习者的“输入答案”字段</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">打开更新日志</string>
+    <string name="pref_cat_about_title" maxLength="41">关于</string>
+    <string name="contributors_title">贡献者</string>
+    <string name="about_contributors_description"><![CDATA[这些是我们非常棒的 <a href=\"%1$s\">贡献者</a>。您也可以通过编程、翻译、捐赠和 <a href=\"%2$s\">更多</a> 来帮助AnkiDroid！]]></string>
+    <string name="license">许可证</string>
+    <string name="license_description"><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>许可证下发布，源代码位于 <a href=\"%3$s\">Github 上</a>]]></string>
+    <string name="donate_description"><![CDATA[您可以通过 <a href=\"%1$s\"> 捐赠 </a > 支持 AnkiDroid\ 的开发。我们感谢任何数额的捐赠。]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">添加手势</string>
     <string name="binding_replace_gesture">替换手势</string>
     <string name="binding_add_key">添加按键</string>
@@ -338,4 +340,17 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除“%s”</string>
     <string name="bindings_already_bound">已绑定到 %s</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">实验性功能</string>
+    <string name="experimental_pref_confirmation" maxLength="41">启用 \'%s\'</string>
+    <string name="use_rust_backend_title" maxLength="41">使用新后端</string>
+    <string name="use_rust_backend_summary">启用较新的 Anki 功能，例如 v3 版调度程序\n不稳定。不要用在你在意的牌组上。应用关闭时不会还原。</string>
+    <string name="use_rust_backend_warning">此操作可能彻底损坏您的安装。 要求应用卸载和删除 AnkiDroid 文件夹，并可能通过同步将损坏传播到 AnkiWeb。\n\n 我们欢迎测试，但请确保您有一个有效的非 AnkiWeb 备份。</string>
+    <string name="enable_v3_sched_title" maxLength="41">使用 v3 调度器</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
+    <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>
+    <string name="disable_dev_options">禁用开发者选项</string>
+    <string name="dev_options_warning">        启用开发者选项之前，您需要知晓这些选项很危险，可能会破坏应用程序或损坏您的牌组。\n\n注意这些选项不适合大多数用户，因而没有翻译，所以它们仍以英语显示。
+    </string>
 </resources>

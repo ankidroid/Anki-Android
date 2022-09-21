@@ -52,7 +52,6 @@ class HtmlGenerator(
     }
 
     companion object {
-        @JvmStatic
         fun createInstance(context: Context, typeAnswer: TypeAnswer, baseUrl: String): HtmlGenerator {
             val preferences = AnkiDroidApp.getSharedPrefs(context)
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(context), preferences)

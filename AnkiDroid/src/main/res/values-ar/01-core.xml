@@ -123,7 +123,7 @@
     <string name="rename_deck">تغيير اسم الرزمة</string>
     <string name="create_shortcut">إنشاء اختصار</string>
     <string name="browse_cards">تصفح البطاقات</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>
     <string name="menu_dismiss_note">إخفاء / حذف</string>
@@ -184,7 +184,6 @@
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
-    <string name="empty_deck_add_note">إضافة بِطاقة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_empty">هذه الرزمة فارغة. اضغط زر + لإضافة محتوى جديد.</string>
     <string name="studyoptions_limit_reached">بلغت حد الدراسة اليومي</string>

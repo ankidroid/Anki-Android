@@ -75,16 +75,16 @@
         <item quantity="other">Zostało %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Pozostała %1$d godzina %2$d</item>
+        <item quantity="few">Pozostały %1$d godziny %2$d</item>
+        <item quantity="many">Pozostało %1$d godzin %2$d</item>
+        <item quantity="other">Pozostało %1$d godzin %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Pozostał %1$d dzień %2$d</item>
+        <item quantity="few">Pozostały %1$d dni %2$d</item>
+        <item quantity="many">Pozostało %1$d dni %2$d</item>
+        <item quantity="other">Pozostało %1$d dni %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
     <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>
@@ -113,7 +113,7 @@
     <string name="rename_deck">Zmień nazwę talii</string>
     <string name="create_shortcut">Utwórz skrót</string>
     <string name="browse_cards">Przeglądaj karty</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj notatkę</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizacja konta</string>
     <string name="menu_dismiss_note">Ukryj / Usuń</string>
@@ -174,7 +174,6 @@
     <string name="empty_deck">Ta talia jest pusta</string>
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Wyszukiwanie talii</string>
-    <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
     <string name="studyoptions_limit_reached">Dzienny limit nauki został osiągnięty</string>

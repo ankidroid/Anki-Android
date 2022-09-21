@@ -22,15 +22,21 @@ package com.ichi2.anki.servicelayer
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.utils.CollectionUtils.average
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -42,7 +48,6 @@ object NoteService {
      * @param model the model in JSOBObject format
      * @return a new note instance
      */
-    @JvmStatic
     fun createEmptyNote(model: JSONObject): MultimediaEditableNote? {
         try {
             val fieldsArray = model.getJSONArray("flds")
@@ -67,8 +72,7 @@ object NoteService {
         return null
     }
 
-    @JvmStatic
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: Long, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             var field: IField?
@@ -96,7 +100,6 @@ object NoteService {
      * @param noteSrc
      * @param editorNoteDst
      */
-    @JvmStatic
     fun updateJsonNoteFromMultimediaNote(noteSrc: IMultimediaEditableNote?, editorNoteDst: Note) {
         if (noteSrc is MultimediaEditableNote) {
             val mmNote = noteSrc
@@ -105,7 +108,7 @@ object NoteService {
             }
             val totalFields: Int = mmNote.numberOfFields
             for (i in 0 until totalFields) {
-                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue
+                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue!!
             }
         }
     }
@@ -115,7 +118,6 @@ object NoteService {
      *
      * @param field
      */
-    @JvmStatic
     fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
@@ -154,7 +156,6 @@ object NoteService {
     /**
      * @param replaceNewlines Converts [FieldEditText.NEW_LINE] to HTML linebreaks
      */
-    @JvmStatic
     @VisibleForTesting
     @CheckResult
     fun getFieldsAsBundleForPreview(editFields: Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
@@ -174,26 +175,56 @@ object NoteService {
         return fields
     }
 
-    @JvmStatic
     fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
         return if (!replaceNewlines) {
             fieldData
         } else fieldData.replace(FieldEditText.NEW_LINE, "<br>")
     }
 
-    @JvmStatic
-    fun toggleMark(note: Note) {
+    suspend fun toggleMark(note: Note) {
         if (isMarked(note)) {
             note.delTag("marked")
         } else {
             note.addTag("marked")
         }
-        note.flush()
+
+        withCol {
+            if (BackendFactory.defaultLegacySchema) {
+                note.flush()
+            } else {
+                newBackend.updateNote(note)
+            }
+        }
     }
 
-    @JvmStatic
     fun isMarked(note: Note): Boolean {
         return note.hasTag("marked")
+    }
+
+    //  TODO: should make a direct SQL query to do this
+    /**
+     * returns the average ease of all the non-new cards in the note,
+     * or if all the cards in the note are new, returns null
+     */
+    fun avgEase(note: Note): Int? {
+        val nonNewCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW }
+
+        return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
+    }
+
+    //  TODO: should make a direct SQL query to do this
+    fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+
+    fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
+
+    /**
+     * Returns the average interval of all the non-new and non-learning cards in the note,
+     * or if all the cards in the note are new or learning, returns null
+     */
+    fun avgInterval(note: Note): Int? {
+        val nonNewOrLearningCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
+
+        return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
 
     interface NoteField {
@@ -203,3 +234,9 @@ object NoteService {
         val fieldText: String?
     }
 }
+
+fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
+
+fun Card.totalReviewsForNote() = NoteService.totalReviews(note())
+
+fun Card.avgIntervalOfNote() = NoteService.avgInterval(note())

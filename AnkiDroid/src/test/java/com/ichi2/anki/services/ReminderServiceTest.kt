@@ -68,7 +68,7 @@ class ReminderServiceTest : RobolectricTest() {
 
         whenever(mockCol.sched).thenThrow(IllegalStateException("Unit test: simulating database exception"))
 
-        CollectionHelper.getInstance().setColForTests(mockCol)
+        CollectionHelper.instance.setColForTests(mockCol)
 
         buildDefaultDeckReminders()
 

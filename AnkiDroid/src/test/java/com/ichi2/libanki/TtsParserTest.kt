@@ -37,6 +37,19 @@ class TtsParserTest {
     }
 
     @Test
+    fun clozeIsReplacedWithBlankInTTSTag() {
+        val content = """<style>.card {
+ font-family: arial;
+ font-size: 20px;
+ text-align: center;
+ color: black;
+ background-color: white;
+}.cloze {font-weight: bold;color: blue;}</style><tts service="android">This is a <span class=cloze>[...]</span></tts>"""
+        val actual = getTtsTagFrom(content)
+        assertThat(actual.fieldText, equalTo("This is a blank"))
+    }
+
+    @Test
     fun providedExampleClozeReplaces() {
         val content = """<style>.card {
  font-family: arial;

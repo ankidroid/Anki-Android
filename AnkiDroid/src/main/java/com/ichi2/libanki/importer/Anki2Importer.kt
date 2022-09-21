@@ -22,6 +22,7 @@ import android.util.Pair
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
@@ -31,11 +32,7 @@ import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
-import com.ichi2.libanki.DB
-import com.ichi2.libanki.Decks
-import com.ichi2.libanki.Media
 import com.ichi2.libanki.Storage.collection
-import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
@@ -58,7 +55,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     private val mAllowUpdate: Boolean
     private var mDupeOnSchemaChange: Boolean
 
-    private class NoteTriple(val nid: Long, val mod: Long, val mid: Long)
+    private class NoteTriple(val nid: NoteId, val mod: Long, val mid: NoteTypeId)
 
     private var mNotes: MutableMap<String, NoteTriple>? = null
     private var mDecks: MutableMap<Long, Long>? = null
@@ -107,7 +104,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         try {
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
-            dst.media.db.database.beginTransaction()
+            dst.media.db!!.database.beginTransaction()
             if (!TextUtils.isEmpty(mDeckPrefix)) {
                 val id = dst.decks.id_safe(mDeckPrefix!!)
                 dst.decks.select(id)
@@ -126,14 +123,14 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             _postImport()
             publishProgress(100, 100, 50)
             dst.db.database.setTransactionSuccessful()
-            dst.media.db.database.setTransactionSuccessful()
+            dst.media.db!!.database.setTransactionSuccessful()
         } catch (err: Exception) {
             Timber.e(err, "_import() exception")
             throw err
         } finally {
             // endTransaction throws about invalid transaction even when you check first!
             DB.safeEndInTransaction(dst.db)
-            DB.safeEndInTransaction(dst.media.db)
+            DB.safeEndInTransaction(dst.media.db!!)
         }
         Timber.i("Performing vacuum/analyze")
         try {
@@ -419,7 +416,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      */
     /** Given did in src col, return local id.  */
     @KotlinCleanup("use scope function")
-    private fun _did(did: Long): Long {
+    private fun _did(did: DeckId): Long {
         // already converted?
         if (mDecks!!.containsKey(did)) {
             return mDecks!![did]!!
@@ -722,7 +719,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         return _mediaData(fname, dst.media.dir())
     }
 
-    private fun _writeDstMedia(fname: String?, data: BufferedInputStream) {
+    private fun _writeDstMedia(fname: String, data: BufferedInputStream) {
         try {
             val path = File(dst.media.dir(), Utils.nfcNormalized(fname)).absolutePath
             Utils.writeToFile(data, path)
@@ -743,7 +740,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     // running splitFields() on every note is fairly expensive and actually not necessary
-    private fun _mungeMedia(mid: Long, fields: String): String {
+    private fun _mungeMedia(mid: NoteTypeId, fields: String): String {
         var _fields = fields
         for (p in Media.REGEXPS) {
             val m = p.matcher(_fields)
@@ -824,16 +821,15 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes This is only used
      * for comparison of media files with the limited resources of mobile devices
      */
-    @KotlinCleanup("rename `is` ")
-    private fun _mediaPick(`is`: BufferedInputStream): ByteArray? {
+    private fun _mediaPick(inputStream: BufferedInputStream): ByteArray? {
         return try {
             val baos = ByteArrayOutputStream(MEDIAPICKLIMIT * 2)
             val buf = ByteArray(MEDIAPICKLIMIT)
             var readLen: Int
             var readSoFar = 0
-            `is`.mark(MEDIAPICKLIMIT * 2)
+            inputStream.mark(MEDIAPICKLIMIT * 2)
             while (true) {
-                readLen = `is`.read(buf)
+                readLen = inputStream.read(buf)
                 baos.write(buf)
                 if (readLen == -1) {
                     break
@@ -843,7 +839,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     break
                 }
             }
-            `is`.reset()
+            inputStream.reset()
             val result = ByteArray(MEDIAPICKLIMIT)
             System.arraycopy(
                 baos.toByteArray(),

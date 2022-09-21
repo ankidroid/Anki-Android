@@ -31,7 +31,7 @@ import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.libanki.Card
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
@@ -50,7 +50,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_NONE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
     }
 
     @Test
@@ -59,7 +59,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_NONE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
     }
 
     @Test
@@ -69,7 +69,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(UNSET_FLAG)
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_NONE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
     }
 
     @Test
@@ -79,7 +79,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_BLUE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_BLUE))
     }
 
     @Test
@@ -89,7 +89,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_NONE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_NONE))
     }
 
     @Test
@@ -98,7 +98,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_RED))
+        assertThat(viewer.lastFlag, equalTo(FLAG_RED))
     }
 
     @Test
@@ -107,7 +107,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_ORANGE)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_ORANGE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_ORANGE))
     }
 
     @Test
@@ -116,7 +116,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_GREEN)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_GREEN))
+        assertThat(viewer.lastFlag, equalTo(FLAG_GREEN))
     }
 
     @Test
@@ -125,7 +125,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_BLUE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_BLUE))
     }
 
     @Test
@@ -134,7 +134,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_PINK)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_PINK))
+        assertThat(viewer.lastFlag, equalTo(FLAG_PINK))
     }
 
     @Test
@@ -143,7 +143,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_TURQUOISE)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_TURQUOISE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_TURQUOISE))
     }
 
     @Test
@@ -152,7 +152,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_PURPLE)
 
-        assertThat(viewer.lastFlag, `is`(FLAG_PURPLE))
+        assertThat(viewer.lastFlag, equalTo(FLAG_PURPLE))
     }
 
     @Test
@@ -172,7 +172,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(command)
         viewer.executeCommand(command)
 
-        assertThat(command.toString(), viewer.lastFlag, `is`(FLAG_NONE))
+        assertThat(command.toString(), viewer.lastFlag, equalTo(FLAG_NONE))
     }
 
     @KotlinCleanup("rename the getter method to createViewer(), remove val")
@@ -190,16 +190,15 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         return c
     }
 
-    private class CommandTestCardViewer(currentCard: Card?) : Reviewer() {
+    private class CommandTestCardViewer(private var currentCardOverride: Card?) : Reviewer() {
         var lastFlag = 0
             private set
 
-        // we don't have getCol() here and we don't need the additional sound processing.
         override var currentCard: Card?
-            get() = super.currentCard
+            get() = currentCardOverride
             set(card) {
-                mCurrentCard = card
                 // we don't have getCol() here and we don't need the additional sound processing.
+                currentCardOverride = card
             }
 
         override fun setTitle() {
@@ -222,11 +221,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         override fun onFlag(card: Card?, @FlagDef flag: Int) {
             lastFlag = flag
-            mCurrentCard!!.setUserFlag(flag)
-        }
-
-        init {
-            this@CommandTestCardViewer.currentCard = currentCard
+            currentCard!!.setUserFlag(flag)
         }
     }
 }

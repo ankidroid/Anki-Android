@@ -103,7 +103,7 @@
     <string name="rename_deck">Omdøb kortsæt</string>
     <string name="create_shortcut">Opret genvej</string>
     <string name="browse_cards">Gennemse kort</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tilføj</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>
     <string name="menu_dismiss_note">Skjul / slet</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">Dette kortsæt er tomt</string>
     <string name="search_deck" comment="Deck search for selecting it">Søgning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Tilføj kort</string>
     <string name="invalid_deck_name">Ugyldigt dæknavn</string>
     <string name="studyoptions_empty">Dette dæk er tomt. Tryk på + knappen for at tilføje nyt indhold.</string>
     <string name="studyoptions_limit_reached">Daglig studiegrænse nået</string>

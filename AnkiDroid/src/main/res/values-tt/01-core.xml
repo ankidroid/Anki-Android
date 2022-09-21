@@ -98,7 +98,7 @@
     <string name="rename_deck">Исемен үзгәртү</string>
     <string name="create_shortcut">Тамга ясау</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Кушу</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Кушу</string>
     <string name="menu_add_note">Язу кушу</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронизация аккаунты</string>
     <string name="menu_dismiss_note">Качыру / бетерү</string>
@@ -159,7 +159,6 @@
     <string name="empty_deck">Бу колода буш</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
     <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>
     <string name="studyoptions_limit_reached">Бүгенге өйрәнү үтәлде</string>

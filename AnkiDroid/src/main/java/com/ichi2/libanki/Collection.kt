@@ -15,19 +15,24 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+// remove "LeakingThis" this after CollectionV16 is inlined
+// "FunctionName": many libAnki functions used to have leading _s
+@file:Suppress("LeakingThis", "FunctionName")
+
 package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabaseLockedException
 import android.text.TextUtils
 import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode
+import anki.search.SearchNodeKt
+import anki.search.searchNode
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -36,17 +41,16 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask
-import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.exception.NoSuchDeckException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.hooks.ChessFilter
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
@@ -62,13 +66,14 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
 import java.util.regex.Pattern
+import kotlin.math.max
+import kotlin.random.Random
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
-@KotlinCleanup("IDE Lint")
 @KotlinCleanup("Fix @Contract annotations to work in Kotlin")
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
@@ -99,8 +104,18 @@ open class Collection(
 
     open val newBackend: CollectionV16
         get() = throw Exception("invalid call to newBackend on old backend")
+
     open val newMedia: BackendMedia
         get() = throw Exception("invalid call to newMedia on old backend")
+
+    open val newTags: TagsV16
+        get() = throw Exception("invalid call to newTags on old backend")
+
+    open val newModels: ModelsV16
+        get() = throw Exception("invalid call to newModels on old backend")
+
+    open val newDecks: DecksV16
+        get() = throw Exception("invalid call to newDecks on old backend")
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
@@ -116,6 +131,9 @@ open class Collection(
         get() = dbInternal!!
 
     var dbInternal: DB? = null
+
+    /** whether the v3 scheduler is enabled */
+    open var v3Enabled: Boolean = false
 
     /**
      * Getters/Setters ********************************************************** *************************************
@@ -135,7 +153,7 @@ open class Collection(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    private var _config: ConfigManager? = null
+    protected var config: ConfigManager? = null
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -147,10 +165,11 @@ open class Collection(
     // BEGIN: SQL table columns
     open var crt: Long = 0
     open var mod: Long = 0
-    var scm: Long = 0
+    open var scm: Long = 0
+    @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
-    private var mLs: Long = 0
+    var ls: Long = 0
     // END: SQL table columns
 
     /* this getter is only for syncing routines, use usn() instead elsewhere */
@@ -203,9 +222,8 @@ open class Collection(
         return deckManager
     }
 
-    @KotlinCleanup("make non-null")
-    protected open fun initConf(conf: String?): ConfigManager {
-        return Config(conf!!)
+    protected open fun initConf(conf: String): ConfigManager {
+        return Config(conf)
     }
 
     protected open fun initTags(): TagManager {
@@ -237,18 +255,18 @@ open class Collection(
     }
 
     // Note: Additional members in the class duplicate this
-    private fun _loadScheduler() {
+    fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            sched = SchedV2(this)
+            sched = if (v3Enabled) {
+                SchedV3(this.newBackend)
+            } else {
+                SchedV2(this)
+            }
             if (!server) {
-                try {
-                    set_config("localOffset", sched._current_timezone_offset())
-                } catch (e: BackendNotSupportedException) {
-                    throw e.alreadyUsingRustBackend()
-                }
+                set_config("localOffset", sched._current_timezone_offset())
             }
         }
     }
@@ -277,31 +295,24 @@ open class Collection(
     /**
      * DB-related *************************************************************** ********************************
      */
-    @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
-    fun load() {
-        var cursor: Cursor? = null
-        var deckConf: String?
-        try {
-            // Read in deck table columns
-            cursor = db.query(
-                "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, dconf, tags FROM col"
-            )
-            if (!cursor.moveToFirst()) {
-                return
+    open fun load() {
+        val deckConf: String?
+        // Read in deck table columns
+        db.query("""SELECT crt, mod, scm, dty, usn, ls, conf, dconf, tags FROM col""")
+            .use { cursor ->
+                if (!cursor.moveToFirst()) {
+                    return
+                }
+                crt = cursor.getLong(0)
+                mod = cursor.getLong(1)
+                scm = cursor.getLong(2)
+                dirty = cursor.getInt(3) == 1 // No longer used
+                mUsn = cursor.getInt(4)
+                ls = cursor.getLong(5)
+                config = initConf(cursor.getString(6))
+                deckConf = cursor.getString(7)
+                tags.load(cursor.getString(8))
             }
-            crt = cursor.getLong(0)
-            mod = cursor.getLong(1)
-            scm = cursor.getLong(2)
-            dirty = cursor.getInt(3) == 1 // No longer used
-            mUsn = cursor.getInt(4)
-            mLs = cursor.getLong(5)
-            _config = initConf(cursor.getString(6))
-            deckConf = cursor.getString(7)
-            tags.load(cursor.getString(8))
-        } finally {
-            cursor?.close()
-        }
         decks = initDecks(deckConf)!!
     }
 
@@ -315,8 +326,7 @@ open class Collection(
             }
             // This is valid for the framework sqlite as far back as Android 5 / SDK21
             // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
-            val WINDOW_SIZE_KB = 2048
-            val cursorWindowSize = WINDOW_SIZE_KB * 1024
+            val cursorWindowSize = SQLITE_WINDOW_SIZE_KB * 1024
 
             // reduce the actual size a little bit.
             // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
@@ -324,19 +334,19 @@ open class Collection(
             return sChunk
         }
 
-    fun loadColumn(columnName: String): String {
+    private fun loadColumn(columnName: String): String {
         var pos = 1
         val buf = StringBuilder()
         while (true) {
             db.query(
                 "SELECT substr($columnName, ?, ?) FROM col",
-                Integer.toString(pos), Integer.toString(chunk)
+                pos.toString(), chunk.toString()
             ).use { cursor ->
                 if (!cursor.moveToFirst()) {
                     return buf.toString()
                 }
                 val res = cursor.getString(0)
-                if (res.length == 0) {
+                if (res.isEmpty()) {
                     return buf.toString()
                 }
                 buf.append(res)
@@ -360,20 +370,19 @@ open class Collection(
     /**
      * Flush state to DB, updating mod time.
      */
-    @KotlinCleanup("scope function")
-    @JvmOverloads
     open fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
         this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
-        val values = ContentValues()
-        values.put("crt", this.crt)
-        values.put("mod", this.mod)
-        values.put("scm", scm)
-        values.put("dty", if (dirty) 1 else 0)
-        values.put("usn", mUsn)
-        values.put("ls", mLs)
-        if (flushConf()) {
-            values.put("conf", Utils.jsonToString(conf))
+        val values = ContentValues().apply {
+            put("crt", this@Collection.crt)
+            put("mod", this@Collection.mod)
+            put("scm", scm)
+            put("dty", if (dirty) 1 else 0)
+            put("usn", mUsn)
+            put("ls", ls)
+            if (flushConf()) {
+                put("conf", Utils.jsonToString(conf))
+            }
         }
         db.update("col", values)
     }
@@ -386,24 +395,8 @@ open class Collection(
      * Flush, commit DB, and take out another write lock.
      */
     @Synchronized
-    fun save() {
-        save(null, 0)
-    }
-
-    @Synchronized
-    fun save(mod: Long) {
-        save(null, mod)
-    }
-
-    @Synchronized
-    fun save(name: String?) {
-        save(name, 0)
-    }
-
-    @Synchronized
-    @KotlinCleanup("remove name")
-    @KotlinCleanup("JvmOverloads")
-    fun save(@Suppress("UNUSED_PARAMETER") name: String?, mod: Long) {
+    @Suppress("UNUSED_PARAMETER") // name is required by tests and likely should be used
+    fun save(name: String? = null, mod: Long = 0) {
         // let the managers conditionally flush
         models.flush()
         decks.flush()
@@ -434,13 +427,12 @@ open class Collection(
 
     @Synchronized
     @KotlinCleanup("remove/rename val db")
-    @JvmOverloads
     fun close(save: Boolean, downgrade: Boolean, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
                 val db = db.database
                 if (save) {
-                    this.db.executeInTransaction({ this.save() })
+                    this.db.executeInTransaction { this.save() }
                 } else {
                     DB.safeEndInTransaction(db)
                 }
@@ -459,17 +451,19 @@ open class Collection(
     }
 
     /** True if DB was created */
-    @JvmOverloads
     fun reopen(afterFullSync: Boolean = false): Boolean {
         Timber.i("(Re)opening Database: %s", path)
-        if (dbClosed) {
+        return if (dbClosed) {
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
             media.connect()
             _openLog()
-            return created
+            if (afterFullSync) {
+                _loadScheduler()
+            }
+            created
         } else {
-            return false
+            false
         }
     }
 
@@ -479,7 +473,7 @@ open class Collection(
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    fun modSchemaNoCheck() {
+    open fun modSchemaNoCheck() {
         scm = TimeManager.time.intTimeMS()
         setMod()
     }
@@ -504,12 +498,12 @@ open class Collection(
     }
 
     /** True if schema changed since last sync.  */
-    fun schemaChanged(): Boolean {
-        return scm > mLs
+    open fun schemaChanged(): Boolean {
+        return scm > ls
     }
 
     @KotlinCleanup("maybe change to getter")
-    fun usn(): Int {
+    open fun usn(): Int {
         return if (server) {
             mUsn
         } else {
@@ -530,13 +524,13 @@ open class Collection(
         tags.beforeUpload()
         decks.beforeUpload()
         modSchemaNoCheck()
-        mLs = scm
+        ls = scm
         Timber.i("Compacting database before full upload")
         // ensure db is compacted before upload
         db.execute("vacuum")
         db.execute("analyze")
         // downgrade the collection
-        close(true, true)
+        close(save = true, downgrade = true)
     }
 
     /**
@@ -547,10 +541,6 @@ open class Collection(
         return Card(this, id)
     }
 
-    fun getCardCache(id: Long): Card.Cache {
-        return Card.Cache(this, id)
-    }
-
     fun getNote(id: Long): Note {
         return Note(this, id)
     }
@@ -558,12 +548,9 @@ open class Collection(
     /**
      * Utils ******************************************************************** ***************************
      */
-    @KotlinCleanup("combine first two lines (use typeParam)")
     fun nextID(typeParam: String): Int {
-        var type = typeParam
-        type = "next" + Character.toUpperCase(type[0]) + type.substring(1)
-        val id: Int
-        id = try {
+        val type = "next" + Character.toUpperCase(typeParam[0]) + typeParam.substring(1)
+        val id: Int = try {
             get_config_int(type)
         } catch (e: JSONException) {
             Timber.w(e)
@@ -583,25 +570,13 @@ open class Collection(
     /**
      * Deletion logging ********************************************************* **************************************
      */
-    @KotlinCleanup("scope function")
-    fun _logRem(ids: LongArray, type: Int) {
-        for (id in ids) {
-            val values = ContentValues()
-            values.put("usn", usn())
-            values.put("oid", id)
-            values.put("type", type)
-            db.insert("graves", values)
-        }
-    }
-
-    @KotlinCleanup("scope function")
-    @KotlinCleanup("combine with above")
     fun _logRem(ids: kotlin.collections.Collection<Long>, @Consts.REM_TYPE type: Int) {
         for (id in ids) {
-            val values = ContentValues()
-            values.put("usn", usn())
-            values.put("oid", id)
-            values.put("type", type)
+            val values = ContentValues().apply {
+                put("usn", usn())
+                put("oid", id)
+                put("type", type)
+            }
             db.insert("graves", values)
         }
     }
@@ -612,20 +587,15 @@ open class Collection(
     fun noteCount(): Int {
         return db.queryScalar("SELECT count() FROM notes")
     }
+
     /**
      * Return a new note with the model derived from the deck or the configuration
      * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
      * the configuration (curModel)
      * @return The new note
      */
-    /**
-     * Return a new note with the default model from the deck
-     * @return The new note
-     */
-    @KotlinCleanup("combine comments")
-    @JvmOverloads
     fun newNote(forDeck: Boolean = true): Note {
-        return newNote(models.current(forDeck))
+        return newNote(models.current(forDeck)!!)
     }
 
     /**
@@ -633,24 +603,18 @@ open class Collection(
      * @param m The model to use for the new note
      * @return The new note
      */
-    @KotlinCleanup("non-null")
-    fun newNote(m: Model?): Note {
-        return Note(this, m!!)
+    fun newNote(m: Model): Note {
+        return Note(this, m)
     }
+
     /**
      * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
      * @param note  The note to add to the collection
      * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
      * @return Number of card added
-     */
-    /**
-     * @param note A note to add if it generates card
      * @return Number of card added.
      */
-    @KotlinCleanup("combine comments")
-    @KotlinCleanup("allowEmpty: non-null")
-    @JvmOverloads
-    fun addNote(note: Note, allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE): Int {
+    fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
         val cms = findTemplates(note, allowEmpty)
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
@@ -669,7 +633,7 @@ open class Collection(
         return ncards
     }
 
-    fun remNotes(ids: LongArray?) {
+    open fun remNotes(ids: LongArray) {
         val list = db
             .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
         remCards(list)
@@ -678,6 +642,7 @@ open class Collection(
     /**
      * Bulk delete notes by ID. Don't call this directly.
      */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun _remNotes(ids: kotlin.collections.Collection<Long>) {
         if (ids.isEmpty()) {
             return
@@ -698,14 +663,12 @@ open class Collection(
      * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    @KotlinCleanup("allowEmpty: non-null")
-    @JvmOverloads
     fun findTemplates(
         note: Note,
-        allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE
+        allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE
     ): ArrayList<JSONObject> {
         val model = note.model()
-        val avail = Models.availOrds(model, note.fields, allowEmpty!!)
+        val avail = Models.availOrds(model, note.fields, allowEmpty)
         return _tmplsFromOrds(model, avail)
     }
 
@@ -743,28 +706,34 @@ open class Collection(
      */
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int?, Int>>(Utils.collection2Array(nids), model)
+    fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
+        return genCards<CollectionTask<Int, Int>>(Utils.collection2Array(nids), model)
     }
 
     fun <T> genCards(
-        nids: kotlin.collections.Collection<Long?>?,
+        nids: kotlin.collections.Collection<Long>,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: Long): ArrayList<Long>? {
+    fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
         return genCards(nids, models.get(mid)!!)
     }
 
-    @JvmOverloads
+    fun genCards(
+        nid: NoteId,
+        model: Model
+    ): ArrayList<Long>? {
+        return genCards("($nid)", model, task = null)
+    }
+
     fun <T> genCards(
-        nid: Long,
+        nid: NoteId,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards("($nid)", model, task)
     }
 
@@ -773,12 +742,11 @@ open class Collection(
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    @JvmOverloads
     fun <T> genCards(
-        nids: LongArray?,
+        nids: LongArray,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         // build map of (nid,ord) so we don't create dupes
         val snids = Utils.ids2str(nids)
         return genCards(snids, model, task)
@@ -792,11 +760,12 @@ open class Collection(
      * @param <T>
      </T> */
     @KotlinCleanup("see if we can cleanup if (!have.containsKey(nid)) { to a default dict or similar?")
+    @KotlinCleanup("use task framework to handle cancellation, don't return null")
     fun <T> genCards(
         snids: String,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         val nbCount = noteCount()
         // For each note, indicates ords of cards it contains
         val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
@@ -864,12 +833,7 @@ open class Collection(
                 task?.doProgress(avail.size)
                 var did = dids[nid]
                 // use sibling due if there is one, else use a new id
-                var due: Long
-                due = if (dues.containsKey(nid)) {
-                    dues[nid]!!
-                } else {
-                    nextID("pos").toLong()
-                }
+                val due = dues.getOrElse(nid) { nextID("pos").toLong() }
                 if (did == null || did == 0L) {
                     did = model.did
                 }
@@ -880,7 +844,7 @@ open class Collection(
                     val doHave = have.containsKey(nid) && have[nid]!!.containsKey(tord)
                     if (!doHave) {
                         // check deck is not a cram deck
-                        var ndid: Long
+                        var ndid: DeckId
                         try {
                             ndid = t.optLong("did", 0)
                             if (ndid != 0L) {
@@ -921,30 +885,12 @@ open class Collection(
     /**
      * Create a new card.
      */
-    @KotlinCleanup("inline flush = true with a named arg")
-    private fun _newCard(note: Note, template: JSONObject, due: Int): Card {
-        val flush = true
-        return _newCard(note, template, due, flush)
-    }
-
-    @KotlinCleanup("remove - unused")
-    private fun _newCard(note: Note, template: JSONObject, due: Int, did: Long): Card {
-        val flush = true
-        return _newCard(note, template, due, did, flush)
-    }
-
-    private fun _newCard(note: Note, template: JSONObject, due: Int, flush: Boolean): Card {
-        val did = 0L
-        return _newCard(note, template, due, did, flush)
-    }
-
-    @KotlinCleanup("JvmOverloads")
     private fun _newCard(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
-        flush: Boolean
+        @Suppress("SameParameterValue") parameterDid: DeckId = 0L,
+        flush: Boolean = true
     ): Card {
         val card = Card(this)
         return getNewLinkedCard(card, note, template, due, parameterDid, flush)
@@ -955,13 +901,12 @@ open class Collection(
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
     @KotlinCleanup("use card.nid in the query to remove the need for a few variables.")
-    @KotlinCleanup("1 -> Consts.DEFAULT_DECK_ID")
     fun getNewLinkedCard(
         card: Card,
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val nid = note.id
@@ -974,6 +919,7 @@ open class Collection(
         if (did == 0L) {
             did = template.optLong("did", 0)
             if (did > 0 && decks.get(did, false) != null) {
+                // did is valid
             } else if (parameterDid != 0L) {
                 did = parameterDid
             } else {
@@ -985,7 +931,7 @@ open class Collection(
         val deck = decks.get(card.did)
         if (deck.isDyn) {
             // must not be a filtered deck
-            card.did = 1
+            card.did = Consts.DEFAULT_DECK_ID
         } else {
             card.did = deck.getLong("id")
         }
@@ -996,9 +942,7 @@ open class Collection(
         return card
     }
 
-    @KotlinCleanup("scope function for random")
-    @KotlinCleanup("use Kotlin's random library instead of Java's")
-    fun _dueForDid(did: Long, due: Int): Int {
+    private fun _dueForDid(did: DeckId, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
         return if (conf.getJSONObject("new")
@@ -1008,9 +952,8 @@ open class Collection(
         } else {
             // random mode; seed with note ts so all cards of this note get
             // the same random number
-            val r = Random()
-            r.setSeed(due.toLong())
-            r.nextInt(Math.max(due, 1000) - 1) + 1
+            val r = Random(due.toLong())
+            r.nextInt(max(due, 1000) - 1) + 1
         }
     }
 
@@ -1025,11 +968,11 @@ open class Collection(
     }
 
     // NOT IN LIBANKI //
-    fun cardCount(vararg dids: Long?): Int {
+    fun cardCount(vararg dids: Long): Int {
         return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
     }
 
-    fun isEmptyDeck(vararg dids: Long?): Boolean {
+    fun isEmptyDeck(vararg dids: Long): Boolean {
         return cardCount(*dids) == 0
     }
 
@@ -1040,7 +983,7 @@ open class Collection(
         remCards(ids, true)
     }
 
-    @KotlinCleanup("JvmOverloads")
+    @KotlinCleanup("add overloads")
     fun remCards(ids: kotlin.collections.Collection<Long>, notes: Boolean) {
         if (ids.isEmpty()) {
             return
@@ -1061,7 +1004,7 @@ open class Collection(
         _remNotes(nids)
     }
 
-    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int?>?, T : CancelListener? {
+    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
         val rem: MutableList<Long> = ArrayList()
         for (m in models.all()) {
             rem.addAll(genCards(models.nids(m), m, task)!!)
@@ -1069,40 +1012,20 @@ open class Collection(
         return rem
     }
 
-    fun emptyCardReport(cids: List<Long>?): String {
-        val rep = StringBuilder()
-        db.query(
-            "select group_concat(ord+1), count(), flds from cards c, notes n " +
-                "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid"
-        ).use { cur ->
-            while (cur.moveToNext()) {
-                val ords = cur.getString(0)
-                // int cnt = cur.getInt(1);  // present but unused upstream as well
-                val flds = cur.getString(2)
-                rep.append(
-                    String.format(
-                        "Empty card numbers: %s\nFields: %s\n\n",
-                        ords,
-                        flds.replace("\u001F", " / ")
-                    )
-                )
-            }
-        }
-        return rep.toString()
-    }
+    /** Returned data from [_fieldData] */
+    private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
 
     /**
      * Field checksums and sorting fields ***************************************
      * ********************************************************
      */
-    @KotlinCleanup("return List<class>")
-    private fun _fieldData(snids: String): ArrayList<Array<Any>> {
-        val result = ArrayList<Array<Any>>(
+    private fun _fieldData(snids: String): ArrayList<FieldData> {
+        val result = ArrayList<FieldData>(
             db.queryScalar("SELECT count() FROM notes WHERE id IN$snids")
         )
         db.query("SELECT id, mid, flds FROM notes WHERE id IN $snids").use { cur ->
             while (cur.moveToNext()) {
-                result.add(arrayOf(cur.getLong(0), cur.getLong(1), cur.getString(2)))
+                result.add(FieldData(nid = cur.getLong(0), modelId = cur.getLong(1), flds = cur.getString(2)))
             }
         }
         return result
@@ -1111,7 +1034,7 @@ open class Collection(
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids
      */
-    fun updateFieldCache(nids: kotlin.collections.Collection<Long>?) {
+    fun updateFieldCache(nids: kotlin.collections.Collection<Long>) {
         val snids = Utils.ids2str(nids)
         updateFieldCache(snids)
     }
@@ -1119,7 +1042,7 @@ open class Collection(
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids
      */
-    fun updateFieldCache(nids: LongArray?) {
+    fun updateFieldCache(nids: LongArray) {
         val snids = Utils.ids2str(nids)
         updateFieldCache(snids)
     }
@@ -1131,12 +1054,12 @@ open class Collection(
         val data = _fieldData(snids)
         val r = ArrayList<Array<Any>>(data.size)
         for (o in data) {
-            val fields = Utils.splitFields(o[2] as String)
-            val model = models.get((o[1] as Long))
+            val fields = Utils.splitFields(o.flds)
+            val model = models.get(o.modelId)
                 ?: // note point to invalid model
                 continue
             val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
-            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0]))
+            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o.nid))
         }
         // apply, relying on calling code to bump usn+mod
         db.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r)
@@ -1148,12 +1071,12 @@ open class Collection(
      * Returns hash of id, question, answer.
      */
     fun _renderQA(
-        cid: Long,
+        cid: CardId,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int
     ): HashMap<String, String> {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
@@ -1161,12 +1084,12 @@ open class Collection(
 
     @RustCleanup("#8951 - Remove FrontSide added to the front")
     fun _renderQA(
-        cid: Long,
+        cid: CardId,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int,
         browser: Boolean,
         qfmtParam: String?,
@@ -1178,7 +1101,7 @@ open class Collection(
         var afmt = afmtParam
         val fmap = Models.fieldMap(model)
         val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String?> = HashUtil.HashMapInit(maps.size + 8)
+        val fields: MutableMap<String, String> = HashUtil.HashMapInit(maps.size + 8)
         for ((key, value) in maps) {
             fields[key] = flist[value.first]
         }
@@ -1186,11 +1109,10 @@ open class Collection(
         fields["Tags"] = tags.trim { it <= ' ' }
         fields["Type"] = model.getString("name")
         fields["Deck"] = decks.name(did)
-        val baseName = Decks.basename(fields["Deck"])
+        val baseName = Decks.basename(fields["Deck"]!!)
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
-        val template: JSONObject
-        template = if (model.isStd) {
+        val template: JSONObject = if (model.isStd) {
             model.getJSONArray("tmpls").getJSONObject(ord)
         } else {
             model.getJSONArray("tmpls").getJSONObject(0)
@@ -1199,10 +1121,10 @@ open class Collection(
         fields[String.format(Locale.US, "c%d", cardNum)] = "1"
         // render q & a
         val d = HashUtil.HashMapInit<String, String>(2)
-        d["id"] = java.lang.Long.toString(cid)
-        qfmt = if (TextUtils.isEmpty(qfmt)) template.getString("qfmt") else qfmt
-        afmt = if (TextUtils.isEmpty(afmt)) template.getString("afmt") else afmt
-        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
+        d["id"] = cid.toString()
+        qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
+        afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
+        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt), Pair("a", afmt))) {
             val type = p.first
             var format = p.second
             if ("q" == type) {
@@ -1218,7 +1140,7 @@ open class Collection(
                     .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
                 // the following line differs from libanki // TODO: why?
                 fields["FrontSide"] =
-                    d["q"] // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                    d["q"]!! // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
             var html: String
             html = try {
@@ -1230,7 +1152,8 @@ open class Collection(
             html = ChessFilter.fenToChessboard(html, context)
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
-                html = LaTeX.mungeQA(html, this, model)
+                val svg = model.optBoolean("latexsvg", false)
+                html = LaTeX.mungeQA(html, this, svg)
             }
             d[type] = html
             // empty cloze?
@@ -1249,31 +1172,7 @@ open class Collection(
         return d
     }
 
-    /**
-     * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
-     */
-    @JvmOverloads
-    @KotlinCleanup("either remove or return class - probably remove?")
-    fun _qaData(where: String = ""): ArrayList<Array<Any?>> {
-        val data = ArrayList<Array<Any?>>()
-        db.query(
-            "SELECT c.id, n.id, n.mid, c.did, c.ord, " +
-                "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where
-        ).use { cur ->
-            while (cur.moveToNext()) {
-                data.add(
-                    arrayOf(
-                        cur.getLong(0), cur.getLong(1),
-                        models.get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6), cur.getInt(7)
-                    )
-                )
-            }
-        }
-        return data
-    }
-
-    fun _flagNameFromCardFlags(flags: Int): String {
+    private fun _flagNameFromCardFlags(flags: Int): String {
         val flag = flags and 0b111
         return if (flag == 0) {
             ""
@@ -1320,41 +1219,39 @@ open class Collection(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    fun findCards(search: String, order: SortOrder): List<Long> {
+    open fun findCards(search: String, order: SortOrder): List<Long> {
         return Finder(this).findCards(search, order)
     }
 
-    /**
-     * @return A list of card ids
-     * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
-     */
-    open fun findCards(search: String, order: SortOrder, task: PartialSearch?): List<Long?>? {
-        return Finder(this).findCards(search, order, task)
+    /** Return a list of card ids  */
+    @RustCleanup("Remove in V16.") // Not in libAnki
+    fun findOneCardByNote(query: String?): List<Long> {
+        return Finder(this).findOneCardByNote(query!!)
     }
 
-    /** Return a list of note ids  */
-    fun findNotes(query: String?): List<Long> {
+    /** Return a list of note ids
+     * @param order only used in overridden V16 findNotes() method
+     * */
+    open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
         return Finder(this).findNotes(query)
     }
 
-    fun findReplace(nids: List<Long?>?, src: String?, dst: String?): Int {
+    fun findReplace(nids: List<Long?>, src: String, dst: String): Int {
         return Finder.findReplace(this, nids, src, dst)
     }
 
-    fun findReplace(nids: List<Long?>?, src: String?, dst: String?, regex: Boolean): Int {
+    fun findReplace(nids: List<Long?>, src: String, dst: String, regex: Boolean): Int {
         return Finder.findReplace(this, nids, src, dst, regex)
     }
 
-    fun findReplace(nids: List<Long?>?, src: String?, dst: String?, field: String?): Int {
-        return Finder.findReplace(this, nids, src, dst, field)
+    fun findReplace(nids: List<Long?>, src: String, dst: String, field: String?): Int {
+        return Finder.findReplace(this, nids, src, dst, field = field)
     }
 
-    @KotlinCleanup("JvmOverloads")
-    @KotlinCleanup("make non-null")
     fun findReplace(
-        nids: List<Long?>?,
-        src: String?,
-        dst: String?,
+        nids: List<Long?>,
+        src: String,
+        dst: String,
         regex: Boolean,
         field: String?,
         fold: Boolean
@@ -1362,19 +1259,30 @@ open class Collection(
         return Finder.findReplace(this, nids, src, dst, regex, field, fold)
     }
 
-    fun findDupes(fieldName: String?): List<Pair<String, List<Long>>> {
-        return Finder.findDupes(this, fieldName, "")
-    }
-
-    @KotlinCleanup("JvmOverloads")
-    fun findDupes(fieldName: String?, search: String?): List<Pair<String, List<Long>>> {
+    fun findDupes(fieldName: String?, search: String? = ""): List<Pair<String, List<Long>>> {
         return Finder.findDupes(this, fieldName, search)
     }
+
+    @KotlinCleanup("inline in Finder.java after conversion to Kotlin")
+    fun buildFindDupesString(fieldName: String, search: String): String {
+        return buildSearchString(
+            searchNode {
+                group = SearchNodeKt.group {
+                    joiner = SearchNode.Group.Joiner.AND
+                    if (search.isNotEmpty()) {
+                        nodes += searchNode { literalText = search }
+                    }
+                    nodes += searchNode { this.fieldName = fieldName }
+                }
+            }
+        )
+    }
+
     /*
       Stats ******************************************************************** ***************************
      */
 
-    // cardstats
+    // card stats
     // stats
 
     /*
@@ -1425,26 +1333,35 @@ open class Collection(
     @VisibleForTesting
     fun undoType(): UndoAction? {
         return if (!undo.isEmpty()) {
-            undo.getLast()
+            undo.last
         } else null
     }
 
-    fun undoName(res: Resources?): String {
+    open fun undoName(res: Resources): String {
         val type = undoType()
-        return type?.name(res!!) ?: ""
+        return type?.name(res) ?: ""
     }
 
-    fun undoAvailable(): Boolean {
+    open fun undoAvailable(): Boolean {
         Timber.d("undoAvailable() undo size: %s", undo.size)
         return !undo.isEmpty()
     }
 
-    fun undo(): Card? {
+    open fun undo(): Card? {
         val lastUndo: UndoAction = undo.removeLast()
         Timber.d("undo() of type %s", lastUndo.javaClass)
         return lastUndo.undo(this)
     }
 
+    @BlocksSchemaUpgrade("audit all UI actions that call this, and make sure they call a backend method")
+    @RustCleanup("this will be unnecessary after legacy schema dropped")
+    /**
+     * In the legacy schema, this adds the undo action to the undo list.
+     * In the new schema, this action is not useful, as the backend stores its own
+     * undo information, and will clear the [undo] list when the backend has an undo
+     * operation available. If you find an action is not undoable with the new backend,
+     * you probably need to be calling the relevant backend method to perform it,
+     * instead of trying to do it with raw SQL. */
     fun markUndo(undoAction: UndoAction) {
         Timber.d("markUndo() of type %s", undoAction.javaClass)
         undo.add(undoAction)
@@ -1465,42 +1382,47 @@ open class Collection(
     }
 
     @RustCleanup("Hack for Card Template Previewer, needs review")
-    @KotlinCleanup("named params")
     fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
         val f = c.note(reload)
         val m = c.model()
         val t = c.template()
-        val did: Long
-        did = if (c.isInDynamicDeck) {
+        val did: DeckId = if (c.isInDynamicDeck) {
             c.oDid
         } else {
             c.did
         }
-        val qa: HashMap<String, String>
-        qa = if (browser) {
+        val qa: HashMap<String, String> = if (browser) {
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
-                c.id,
-                m,
-                did,
-                c.ord,
-                f.stringTags(),
-                f.fields,
-                c.internalGetFlags(),
-                browser,
-                bqfmt,
-                bafmt
+                cid = c.id,
+                model = m,
+                did = did,
+                ord = c.ord,
+                tags = f.stringTags(),
+                flist = f.fields,
+                flags = c.internalGetFlags(),
+                browser = browser,
+                qfmtParam = bqfmt,
+                afmtParam = bafmt
             )
         } else {
-            _renderQA(c.id, m, did, c.ord, f.stringTags(), f.fields, c.internalGetFlags())
+            _renderQA(
+                cid = c.id,
+                model = m,
+                did = did,
+                ord = c.ord,
+                tags = f.stringTags(),
+                flist = f.fields,
+                flags = c.internalGetFlags()
+            )
         }
         return TemplateRenderOutput(
-            qa["q"]!!,
-            qa["a"]!!,
-            null,
-            null,
-            c.model().getString("css")
+            question_text = qa["q"]!!,
+            answer_text = qa["a"]!!,
+            question_av_tags = listOf(),
+            answer_av_tags = listOf(),
+            css = c.model().getString("css")
         )
     }
 
@@ -1817,7 +1739,7 @@ open class Collection(
         // get the deck Ids to query
         val dynDeckIds = decks.allDynamicDeckIds()
         // make it mutable
-        val dynIdsAndZero: MutableList<Long> = ArrayList(Arrays.asList(*dynDeckIds))
+        val dynIdsAndZero: MutableList<Long> = ArrayList(listOf(*dynDeckIds))
         dynIdsAndZero.add(0L)
         val cardIds = db.queryLongList(
             "select id from cards where did in " +
@@ -1911,7 +1833,7 @@ open class Collection(
         val ids =
             db.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000")
         notifyProgress.run()
-        if (!ids.isEmpty()) {
+        if (ids.isNotEmpty()) {
             problems.add("Reviews had incorrect due date.")
             db.execute(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
@@ -1990,17 +1912,17 @@ open class Collection(
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun getDeckOrFail(deckId: Long): Deck {
+    private fun getDeckOrFail(deckId: DeckId): Deck {
         return decks.get(deckId, false) ?: throw NoSuchDeckException(deckId)
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun hasDeckOptions(deckId: Long): Boolean {
+    private fun hasDeckOptions(deckId: DeckId): Boolean {
         return getDeckOrFail(deckId).has("conf")
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun removeDeckOptions(deckId: Long) {
+    private fun removeDeckOptions(deckId: DeckId) {
         getDeckOrFail(deckId).remove("conf")
     }
 
@@ -2094,13 +2016,7 @@ open class Collection(
                 try {
                     val flds = cur.getString(1)
                     val id = cur.getLong(0)
-                    @KotlinCleanup("count { }")
-                    var fldsCount = 0
-                    for (i in 0 until flds.length) {
-                        if (flds[i].code == 0x1f) {
-                            fldsCount++
-                        }
-                    }
+                    val fldsCount = flds.count { it.code == 0x1f }
                     if (fldsCount + 1 != m.getJSONArray("flds").length()) {
                         ids.add(id)
                     }
@@ -2127,7 +2043,7 @@ open class Collection(
             }
             Timber.i("deleteNotesWithWrongFieldCounts - completed successfully")
             notifyProgress.run()
-            if (!ids.isEmpty()) {
+            if (ids.isNotEmpty()) {
                 problems.add("Deleted " + ids.size + " note(s) with wrong field count.")
                 _remNotes(ids)
             }
@@ -2155,7 +2071,7 @@ open class Collection(
                     "SELECT id FROM notes WHERE mid = ?)",
                 m.getLong("id")
             )
-            if (!ids.isEmpty()) {
+            if (ids.isNotEmpty()) {
                 problems.add("Deleted " + ids.size + " card(s) with missing template.")
                 remCards(ids)
             }
@@ -2209,7 +2125,7 @@ open class Collection(
      * @param integrityCheckProblems list of problems, the first 10 will be used
      */
     private fun logProblems(integrityCheckProblems: List<String?>) {
-        if (!integrityCheckProblems.isEmpty()) {
+        if (integrityCheckProblems.isNotEmpty()) {
             val additionalInfo = StringBuffer()
             var i = 0
             while (i < 10 && integrityCheckProblems.size > i) {
@@ -2224,7 +2140,6 @@ open class Collection(
         }
     }
 
-    @KotlinCleanup("changed array to mutable list")
     fun log(vararg argsParam: Any?) {
         val args = argsParam.toMutableList()
         if (!debugLog) {
@@ -2244,11 +2159,10 @@ open class Collection(
         writeLog(s)
     }
 
-    @KotlinCleanup("remove !! with scope function")
     private fun writeLog(s: String) {
-        if (mLogHnd != null) {
+        mLogHnd?.let {
             try {
-                mLogHnd!!.println(s)
+                it.println(s)
             } catch (e: Exception) {
                 Timber.w(e, "Failed to write to collection log")
             }
@@ -2278,20 +2192,17 @@ open class Collection(
         }
     }
 
-    @KotlinCleanup("remove !! via scope function")
     private fun _closeLog() {
         Timber.i("Closing Collection Log")
-        if (mLogHnd != null) {
-            mLogHnd!!.close()
-            mLogHnd = null
-        }
+        mLogHnd?.close()
+        mLogHnd = null
     }
 
     /**
      * Card Flags *****************************************************************************************************
      */
-    fun setUserFlag(flag: Int, cids: List<Long>?) {
-        assert(0 <= flag && flag <= 7)
+    fun setUserFlag(flag: Int, cids: List<Long>) {
+        assert(flag in (0..7))
         db.execute(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
@@ -2335,7 +2246,7 @@ open class Collection(
     // prior to version 2.16 and has been corrected with
     // dae/anki#347
     var conf: JSONObject
-        get() = _config!!.json
+        get() = config!!.json
         set(conf) {
             // Anki sometimes set sortBackward to 0/1 instead of
             // False/True. This should be repaired before setting mConf;
@@ -2345,7 +2256,7 @@ open class Collection(
             // prior to version 2.16 and has been corrected with
             // dae/anki#347
             Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false)
-            _config!!.json = conf
+            config!!.json = conf
         }
 
     // region JSON-Related Config
@@ -2356,51 +2267,53 @@ open class Collection(
     // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
     fun has_config(key: String): Boolean {
         // not in libAnki
-        return _config!!.has(key)
+        return config!!.has(key)
     }
 
     fun has_config_not_null(key: String): Boolean {
         // not in libAnki
-        return has_config(key) && !_config!!.isNull(key)
+        return has_config(key) && !config!!.isNull(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_boolean(key: String): Boolean {
-        return _config!!.getBoolean(key)
+        return config!!.getBoolean(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_long(key: String): Long {
-        return _config!!.getLong(key)
+        return config!!.getLong(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_int(key: String): Int {
-        return _config!!.getInt(key)
+        return config!!.getInt(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
+    @Suppress("unused")
     fun get_config_double(key: String): Double {
-        return _config!!.getDouble(key)
+        return config!!.getDouble(key)
     }
 
     /**
      * Edits to this object are not persisted to preferences.
      * @throws JSONException object does not exist or can't be cast
      */
+    @Suppress("unused")
     fun get_config_object(key: String): JSONObject {
-        return JSONObject(_config!!.getJSONObject(key))
+        return JSONObject(config!!.getJSONObject(key))
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
     fun get_config_array(key: String): JSONArray {
-        return JSONArray(_config!!.getJSONArray(key))
+        return JSONArray(config!!.getJSONArray(key))
     }
 
     /**
@@ -2408,122 +2321,113 @@ open class Collection(
      * @throws JSONException object does not exist, or can't be cast
      */
     fun get_config_string(key: String): String {
-        return _config!!.getString(key)
+        return config!!.getString(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Boolean?): Boolean? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getBoolean(key)
+        } else config!!.getBoolean(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Long?): Long? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getLong(key)
+        } else config!!.getLong(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Int?): Int? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getInt(key)
+        } else config!!.getInt(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Double?): Double? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getDouble(key)
+        } else config!!.getDouble(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: String?): String? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getString(key)
+        } else config!!.getString(key)
     }
 
     /** Edits to the config are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             if (defaultValue == null) null else JSONObject(defaultValue)
-        } else JSONObject(_config!!.getJSONObject(key))
+        } else JSONObject(config!!.getJSONObject(key))
     }
 
     /** Edits to the array are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONArray?): JSONArray? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             if (defaultValue == null) null else JSONArray(defaultValue)
-        } else JSONArray(_config!!.getJSONArray(key))
+        } else JSONArray(config!!.getJSONArray(key))
     }
 
     fun set_config(key: String, value: Boolean) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: Long) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: Int) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: Double) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: String?) {
         setMod()
-        _config!!.put(key, value!!)
+        config!!.put(key, value!!)
     }
 
     fun set_config(key: String, value: JSONArray?) {
         setMod()
-        _config!!.put(key, value!!)
+        config!!.put(key, value!!)
     }
 
     fun set_config(key: String, value: JSONObject?) {
         setMod()
-        _config!!.put(key, value!!)
+        config!!.put(key, value!!)
     }
 
     fun set_config(key: String, value: Any?) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun remove_config(key: String) {
         setMod()
-        _config!!.remove(key)
+        config!!.remove(key)
     }
 
     //endregion
-
-    @KotlinCleanup("merge with `mLs`")
-    fun setLs(ls: Long) {
-        mLs = ls
-    }
 
     fun setUsnAfterSync(usn: Int) {
         mUsn = usn
     }
 
-    fun crtCalendar(): Calendar {
-        return Time.calendar((crt * 1000).toLong())
-    }
-
     fun crtGregorianCalendar(): GregorianCalendar {
-        return Time.gregorianCalendar((crt * 1000).toLong())
+        return Time.gregorianCalendar((crt * 1000))
     }
 
     /** Not in libAnki  */
@@ -2541,16 +2445,11 @@ open class Collection(
         }
     }
 
-    // This duplicates _loadScheduler (but returns the value and sets the report limit).
-    fun createScheduler(reportLimit: Int): AbstractSched? {
-        val ver = schedVer()
-        if (ver == 1) {
-            sched = Sched(this)
-        } else if (ver == 2) {
-            sched = SchedV2(this)
-        }
-        sched.setReportLimit(reportLimit)
-        return sched
+    open fun setDeck(cids: LongArray, did: Long) {
+        db.execute(
+            "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
+            did, usn(), TimeManager.time.intTime()
+        )
     }
 
     class CheckDatabaseResult(private val oldSize: Long) {
@@ -2569,7 +2468,7 @@ open class Collection(
         }
 
         fun hasProblems(): Boolean {
-            return !mProblems.isEmpty()
+            return mProblems.isNotEmpty()
         }
 
         val problems: List<String?>
@@ -2592,7 +2491,7 @@ open class Collection(
             return markAsFailed()
         }
 
-        private fun setLocked(value: Boolean) {
+        private fun setLocked(@Suppress("SameParameterValue") value: Boolean) {
             databaseLocked = value
         }
     }
@@ -2601,9 +2500,8 @@ open class Collection(
      * Allows a collection to be used as a CollectionGetter
      * @return Itself.
      */
-    override fun getCol(): Collection {
-        return this
-    }
+    override val col: Collection
+        get() = this
 
     /** https://stackoverflow.com/questions/62150333/lateinit-property-mock-object-has-not-been-initialized */
     @VisibleForTesting
@@ -2624,7 +2522,7 @@ open class Collection(
          * See: #8926
          */
         private const val fDefaultSchedulerVersion = 1
-        private val fSupportedSchedulerVersions = Arrays.asList(1, 2)
+        private val fSupportedSchedulerVersions = listOf(1, 2)
 
         // other options
         const val DEFAULT_CONF = (
@@ -2638,5 +2536,7 @@ open class Collection(
             ) // add new to currently selected deck?
         private const val UNDO_SIZE_MAX = 20
         private var sChunk = 0
+
+        private const val SQLITE_WINDOW_SIZE_KB = 2048
     }
 }

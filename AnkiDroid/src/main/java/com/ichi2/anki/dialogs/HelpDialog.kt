@@ -30,7 +30,6 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem.ActivityConsumer
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
-import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.removeFrom
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
@@ -41,18 +40,16 @@ import java.util.*
 
 object HelpDialog {
     private fun openManual(ankiActivity: AnkiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()))
+        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.manualUrl))
     }
 
-    private fun openFeedback(ankiActivity: AnkiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()))
+    fun openFeedback(ankiActivity: AnkiActivity) {
+        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.feedbackUrl))
     }
 
-    @JvmStatic
-    fun createInstance(context: Context?): DialogFragment {
+    fun createInstance(): DialogFragment {
         val exceptionReportItem = ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24, UsageAnalytics.Actions.EXCEPTION_REPORT)
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG)
-        val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
         val allItems = arrayOf<RecursivePictureMenu.Item>(
             ItemHeader(
                 R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
@@ -96,14 +93,9 @@ object HelpDialog {
                 LinkItem(R.string.help_item_ankiweb_terms_and_conditions, R.drawable.ic_baseline_description_24, UsageAnalytics.Actions.OPENED_ANKIWEB_TERMS_AND_CONDITIONS, R.string.link_ankiweb_terms_and_conditions)
             )
         )
-        val itemList = ArrayList(listOf(*allItems))
-        if (!canOpenIntent(context!!, AnkiDroidApp.getMarketIntent(context))) {
-            removeFrom(itemList, rateAppItem)
-        }
-        return createInstance(itemList, R.string.help)
+        return createInstance(ArrayList(listOf(*allItems)), R.string.help)
     }
 
-    @JvmStatic
     fun createInstanceForSupportAnkiDroid(context: Context?): DialogFragment {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID)
         val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
@@ -124,7 +116,7 @@ object HelpDialog {
         )
         val itemList = ArrayList(listOf(*allItems))
         if (!canOpenIntent(context!!, AnkiDroidApp.getMarketIntent(context))) {
-            removeFrom(itemList, rateAppItem)
+            itemList.remove(rateAppItem)
         }
         return createInstance(itemList, R.string.help_title_support_ankidroid)
     }
@@ -144,7 +136,8 @@ object HelpDialog {
         private constructor(`in`: Parcel?) : super(`in`!!)
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
                 override fun createFromParcel(`in`: Parcel): RateAppItem {
                     return RateAppItem(`in`)
                 }
@@ -187,7 +180,8 @@ object HelpDialog {
         }
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
                 override fun createFromParcel(`in`: Parcel): LinkItem {
                     return LinkItem(`in`)
                 }
@@ -212,6 +206,7 @@ object HelpDialog {
             mFunc.consume(activity)
         }
 
+        @Suppress("deprecation") // readSerializable
         private constructor(`in`: Parcel) : super(`in`) {
             mFunc = `in`.readSerializable() as ActivityConsumer
         }
@@ -230,7 +225,8 @@ object HelpDialog {
         }
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
                 override fun createFromParcel(`in`: Parcel): FunctionItem {
                     return FunctionItem(`in`)
                 }
@@ -264,8 +260,8 @@ object HelpDialog {
         override fun remove(toRemove: RecursivePictureMenu.Item?) {}
 
         companion object {
-
-            @JvmField val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
                 override fun createFromParcel(`in`: Parcel): ExceptionReportItem {
                     return ExceptionReportItem(`in`)
                 }

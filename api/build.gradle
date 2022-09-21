@@ -12,10 +12,10 @@ repositories {
     mavenCentral()
 }
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 29
     }
@@ -29,6 +29,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        // enable explicit api mode for additional checks related to the public api
+        // see https://kotlinlang.org/docs/whatsnew14.html#explicit-api-mode-for-library-authors
+        freeCompilerArgs += '-Xexplicit-api=strict'
+    }
 }
 
 apply from: "../lint.gradle"
@@ -38,7 +43,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.robolectric:robolectric:4.8.1'
+    testImplementation 'org.robolectric:robolectric:4.8.2'
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
     lintChecks project(":lint-rules")
 }
@@ -131,5 +137,3 @@ publishMavenJavaPublicationToMavenRepository.dependsOn(assemble)
 publish.dependsOn(assemble)
 generateRelease.dependsOn(publish)
 generateRelease.dependsOn(zipRelease)
-
-apply from: "./kotlinMigration-api.gradle"

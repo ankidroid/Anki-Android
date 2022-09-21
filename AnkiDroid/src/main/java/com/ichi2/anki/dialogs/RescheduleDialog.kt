@@ -23,7 +23,6 @@ import com.ichi2.libanki.sched.SchedV2
 import java.util.function.Consumer
 
 object RescheduleDialog : IntegerDialog() {
-    @JvmStatic
     @CheckResult
     fun rescheduleSingleCard(
         resources: Resources,
@@ -44,7 +43,6 @@ object RescheduleDialog : IntegerDialog() {
         return rescheduleDialog
     }
 
-    @JvmStatic
     @CheckResult
     fun rescheduleMultipleCards(resources: Resources, consumer: Consumer<Int>?, cardCount: Int): RescheduleDialog {
         val rescheduleDialog = RescheduleDialog

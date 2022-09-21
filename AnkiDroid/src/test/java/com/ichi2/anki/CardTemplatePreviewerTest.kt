@@ -93,8 +93,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
-        assertThat(arr[0], `is`("(" + fields[0] + ")"))
-        assertThat(arr[1], `is`("(" + fields[1] + ")"))
+        assertThat(arr[0], equalTo("(" + fields[0] + ")"))
+        assertThat(arr[1], equalTo("(" + fields[1] + ")"))
     }
 
     @Test
@@ -114,8 +114,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
-        assertThat(arr[0], `is`(testCardTemplatePreviewer.getString(R.string.cloze_sample_text, "c1")))
-        assertThat(arr[1], `is`("(" + fields[1] + ")"))
+        assertThat(arr[0], equalTo(testCardTemplatePreviewer.getString(R.string.cloze_sample_text, "c1")))
+        assertThat(arr[1], equalTo("(" + fields[1] + ")"))
     }
 
     @Test
@@ -135,8 +135,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
-        assertThat(arr[0], `is`("(" + fields[0] + ")"))
-        assertThat(arr[1], `is`(testCardTemplatePreviewer.getString(R.string.basic_answer_sample_text)))
+        assertThat(arr[0], equalTo("(" + fields[0] + ")"))
+        assertThat(arr[1], equalTo(testCardTemplatePreviewer.getString(R.string.basic_answer_sample_text)))
     }
 
     @Test
@@ -211,8 +211,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("prev should not be visible", testCardTemplatePreviewer.previousButtonVisible(), `is`(false))
-        assertThat("next should not be visible", testCardTemplatePreviewer.nextButtonVisible(), `is`(false))
+        assertThat("prev should not be visible", testCardTemplatePreviewer.previousButtonVisible(), equalTo(false))
+        assertThat("next should not be visible", testCardTemplatePreviewer.nextButtonVisible(), equalTo(false))
     }
 
     @Test
@@ -301,7 +301,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing, `is`(true))
+        assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing, equalTo(true))
     }
 
     @KotlinCleanup("Change visibility to private")
@@ -311,28 +311,28 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @KotlinCleanup("Change visibility to private")
     protected fun assertTwoCards(testCardTemplatePreviewer: TestCardTemplatePreviewer) {
-        assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), `is`(false))
-        assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), `is`(true))
+        assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
+        assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
 
         testCardTemplatePreviewer.onNextTemplate()
 
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, `is`(1))
-        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), `is`(true))
-        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), `is`(false))
+        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
+        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
         testCardTemplatePreviewer.onNextTemplate()
 
         // no effect
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, `is`(1))
-        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), `is`(true))
-        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), `is`(false))
+        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
+        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
         testCardTemplatePreviewer.onPreviousTemplate()
 
         // previous
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, `is`(0))
-        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), `is`(false))
-        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), `is`(true))
+        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(0))
+        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
+        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
     }
 
     private fun getSavedCard(model: Model, ordinal: Int): Card {

@@ -23,9 +23,7 @@ object FragmentFactoryUtils {
     /**
      * A convenience util method that instantiate a fragment using the passed activity [FragmentFactory]
      */
-    @JvmStatic
-    @Suppress("UNCHECKED_CAST")
-    fun <F : Fragment?> instantiate(activity: FragmentActivity, cls: Class<F>): F {
+    inline fun <reified F : Fragment?> instantiate(activity: FragmentActivity, cls: Class<F>): F {
         val factory = activity.supportFragmentManager.fragmentFactory
         return factory.instantiate(activity.classLoader, cls.name) as F
     }

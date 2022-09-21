@@ -13,6 +13,8 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  */
+@file:Suppress("FunctionName") // _createDb and other names defined by libAnki
+
 package com.ichi2.libanki
 
 import android.content.ContentValues
@@ -31,9 +33,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.lang.Exception
 import kotlin.Throws
-import kotlin.jvm.JvmOverloads
 
-@KotlinCleanup("IDE warnings")
 object Storage {
     var isInMemory = false
         private set
@@ -57,7 +57,6 @@ object Storage {
     /**
      * Helper method for when the collection can't be opened
      */
-    @JvmStatic
     @Throws(UnknownDatabaseVersionException::class)
     fun getDatabaseVersion(context: Context, path: String): Int {
         return try {
@@ -77,8 +76,6 @@ object Storage {
     /**
      *  Open a new or existing collection. Path must be unicode
      * */
-    @JvmOverloads
-    @JvmStatic
     fun collection(
         context: Context,
         path: String,
@@ -128,7 +125,7 @@ object Storage {
         }
         // add in reverse order so basic is default
         for (i in StdModels.STD_MODELS.indices.reversed()) {
-            StdModels.STD_MODELS[i].add(col)
+            StdModels.STD_MODELS[i].add(col!!)
         }
     }
 
@@ -173,7 +170,6 @@ object Storage {
         _updateIndices(db)
     }
 
-    @JvmStatic
     fun setUseInMemory(useInMemoryDatabase: Boolean) {
         isInMemory = useInMemoryDatabase
     }

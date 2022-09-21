@@ -21,7 +21,6 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.libanki.sync.HostNum
 
 object HostNumFactory {
-    @JvmStatic
     fun getInstance(context: Context?): HostNum {
         return PreferenceBackedHostNum.fromPreferences(AnkiDroidApp.getSharedPrefs(context))
     }

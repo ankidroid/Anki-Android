@@ -48,7 +48,6 @@ object DatabaseUtils {
      * @param positionParam The start position for filling the window.
      * @param window The window to fill.
      */
-    @JvmStatic
     fun cursorFillWindow(
         cursor: Cursor,
         positionParam: Int,

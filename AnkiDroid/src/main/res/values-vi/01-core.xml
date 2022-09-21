@@ -98,7 +98,7 @@
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Tạo lối tắt</string>
     <string name="browse_cards">Xem các thẻ</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Thêm</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
     <string name="menu_dismiss_note">Ẩn / xoá</string>
@@ -159,7 +159,6 @@
     <string name="empty_deck">Bộ thẻ này rỗng</string>
     <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Tìm kiếm bộ thẻ</string>
-    <string name="empty_deck_add_note">Thêm thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>
     <string name="studyoptions_limit_reached">Đã đạt giới hạn học hằng ngày</string>

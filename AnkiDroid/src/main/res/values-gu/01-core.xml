@@ -103,7 +103,7 @@
     <string name="rename_deck">થપ્પીનું નામ બદલો </string>
     <string name="create_shortcut">ટૂંકો રસ્તો બનાવો</string>
     <string name="browse_cards">કાર્ડસ જોવો</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ઉમેરો</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ઉમેરો</string>
     <string name="menu_add_note">નોંધ ઉમેરો</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
     <string name="menu_dismiss_note">છુપાવો / કાઢો</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">This deck is empty</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>

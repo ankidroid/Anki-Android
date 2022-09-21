@@ -175,7 +175,7 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        val shouldScroll = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        val shouldScroll = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
             .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {
             mToolbar.addView(button, mToolbar.childCount)
@@ -367,8 +367,8 @@ class Toolbar : FrameLayout {
      * If not, at the end of the string
      */
     data class StringFormat(
-        @JvmField var result: String = "",
-        @JvmField var selectionStart: Int = 0,
-        @JvmField var selectionEnd: Int = 0
+        var result: String = "",
+        var selectionStart: Int = 0,
+        var selectionEnd: Int = 0
     )
 }

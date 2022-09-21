@@ -32,12 +32,14 @@ import org.hamcrest.Matchers
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.hasSize
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
+@Ignore("flaky in ci")
 class UpgradeGesturesToControlsTest(private val testData: TestData) : RobolectricTest() {
     private val changedKeys = HashSet<String>()
 

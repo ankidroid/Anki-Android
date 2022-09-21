@@ -24,6 +24,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
 
@@ -166,7 +167,6 @@ class AutomaticAnswer(
      * If enabled in preferences, call [AutomaticallyAnswered.automaticShowAnswer]
      * after a user-specified duration, plus an additional delay for media
      */
-    @JvmOverloads
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceAnswer) return
@@ -177,7 +177,6 @@ class AutomaticAnswer(
      * If enabled in preferences, call [AutomaticallyAnswered.automaticShowQuestion]
      * after a user-specified duration, plus an additional delay for media
      */
-    @JvmOverloads
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceQuestion) return
@@ -194,13 +193,11 @@ class AutomaticAnswer(
     }
 
     companion object {
-        @JvmStatic
         @CheckResult
         fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer {
             return AutomaticAnswer(target, AutomaticAnswerSettings())
         }
 
-        @JvmStatic
         @CheckResult
         fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
             val settings = AutomaticAnswerSettings.createInstance(preferences, col)
@@ -245,11 +242,10 @@ class AutomaticAnswerSettings(
          * @return null if the deck is dynamic (use global settings),
          * or if "useGeneralTimeoutSettings" is set
          */
-        @JvmStatic
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
-            selectedDid: Long
+            selectedDid: DeckId
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
@@ -270,7 +266,6 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
-        @JvmStatic
         fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
@@ -278,7 +273,6 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
-        @JvmStatic
         fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
             // deck specific options take precedence over general (preference-based) options.
             // the action can only be set via preferences (but is stored in the collection).

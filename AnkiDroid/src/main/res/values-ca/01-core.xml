@@ -103,7 +103,7 @@
     <string name="rename_deck">Canvia el nom del paquet</string>
     <string name="create_shortcut">Crear drecera</string>
     <string name="browse_cards">Examinar cartes</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Afegir</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Afegir</string>
     <string name="menu_add_note">Afegir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de sincronització</string>
     <string name="menu_dismiss_note">Amagar / eliminar</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">Aquest paquet és buit</string>
     <string name="search_deck" comment="Deck search for selecting it">Cerca a paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Afegeix carta</string>
     <string name="invalid_deck_name">Nom de paquet invàlid</string>
     <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>
     <string name="studyoptions_limit_reached">Has arribat al límit d\'estudi diari</string>

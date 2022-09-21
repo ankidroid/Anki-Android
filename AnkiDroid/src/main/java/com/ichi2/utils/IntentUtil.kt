@@ -24,7 +24,7 @@ import timber.log.Timber
 import java.lang.Exception
 
 object IntentUtil {
-    @JvmStatic
+    @JvmStatic // (fixable) required due to structure of unit tests
     fun canOpenIntent(context: Context, intent: Intent): Boolean {
         return try {
             val packageManager = context.packageManager
@@ -35,7 +35,6 @@ object IntentUtil {
         }
     }
 
-    @JvmStatic
     fun tryOpenIntent(activity: AnkiActivity, intent: Intent) {
         try {
             if (canOpenIntent(activity, intent)) {

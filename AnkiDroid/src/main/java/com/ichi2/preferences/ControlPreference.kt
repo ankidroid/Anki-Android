@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import androidx.preference.ListPreference
-import androidx.preference.PreferenceCategory
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.AnkiDroidApp
@@ -222,17 +221,5 @@ class ControlPreference : ListPreference {
     companion object {
         private const val ADD_KEY_INDEX = -2
         private const val ADD_GESTURE_INDEX = -1
-
-        /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-        fun addAllControlPreferencesToCategory(category: PreferenceCategory) {
-            for (command in ViewerCommand.values()) {
-                val preference = ControlPreference(category.context).apply {
-                    setTitle(command.resourceId)
-                    key = command.preferenceKey
-                    setDefaultValue(command.defaultValue.toPreferenceString())
-                }
-                category.addPreference(preference)
-            }
-        }
     }
 }

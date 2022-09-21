@@ -15,30 +15,17 @@
  */
 package com.ichi2.anki.preferences
 
-import com.ichi2.anki.Preferences.SpecificSettingsFragment
 import com.ichi2.anki.R
-import com.ichi2.preferences.SeekBarPreferenceCompat
 
 /**
  * Fragment with preferences related to notifications
  */
-class AccessibilitySettingsFragment : SpecificSettingsFragment() {
+class AccessibilitySettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
-        get() = R.xml.preferences_acessibility
+        get() = R.xml.preferences_accessibility
     override val analyticsScreenNameConstant: String
         get() = "prefs.accessibility"
 
     override fun initSubscreen() {
-        addPreferencesFromResource(preferenceResource)
-
-        // Card zoom
-        requirePreference<SeekBarPreferenceCompat>(R.string.card_zoom_preference)
-            .setFormattedSummary(R.string.pref_summary_percentage)
-        // Image zoom
-        requirePreference<SeekBarPreferenceCompat>(R.string.image_zoom_preference)
-            .setFormattedSummary(R.string.pref_summary_percentage)
-        // Answer button size
-        requirePreference<SeekBarPreferenceCompat>(R.string.answer_button_size_preference)
-            .setFormattedSummary(R.string.pref_summary_percentage)
     }
 }

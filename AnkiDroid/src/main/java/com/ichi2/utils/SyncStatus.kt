@@ -16,10 +16,11 @@
 
 package com.ichi2.utils
 
+import anki.sync.SyncAuth
+import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.libanki.Collection
-import timber.log.Timber
-import java.util.function.Supplier
+import net.ankiweb.rsdroid.BackendFactory
 
 enum class SyncStatus {
     INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED;
@@ -28,25 +29,15 @@ enum class SyncStatus {
         private var sPauseCheckingDatabase = false
         private var sMarkedInMemory = false
 
-        @JvmStatic
-        fun getSyncStatus(getCol: Supplier<Collection>): SyncStatus {
-            val col: Collection
-            col = try {
-                getCol.get()
-            } catch (e: Exception) {
-                Timber.w(e)
-                return INCONCLUSIVE
-            }
-            return getSyncStatus(col)
-        }
-
-        @JvmStatic
-        fun getSyncStatus(col: Collection): SyncStatus {
+        fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED
             }
-            if (!isLoggedIn) {
+            if (auth == null) {
                 return NO_ACCOUNT
+            }
+            if (!BackendFactory.defaultLegacySchema) {
+                return syncStatusFromRequired(col.newBackend.backend.syncStatus(auth).required)
             }
             if (col.schemaChanged()) {
                 return FULL_SYNC
@@ -58,21 +49,30 @@ enum class SyncStatus {
             }
         }
 
+        private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus {
+            return when (required) {
+                SyncStatusResponse.Required.NO_CHANGES -> NO_CHANGES
+                SyncStatusResponse.Required.NORMAL_SYNC -> HAS_CHANGES
+                SyncStatusResponse.Required.FULL_SYNC -> FULL_SYNC
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+            }
+        }
+
         private val isDisabled: Boolean
             get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
         val isLoggedIn: Boolean
             get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 val hkey = preferences.getString("hkey", "")
                 return hkey != null && hkey.length != 0
             }
 
         /** Whether data has been changed - to be converted to Rust  */
         fun hasDatabaseChanges(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("changesSinceLastSync", false)
+            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getBoolean("changesSinceLastSync", false)
         }
 
         /** To be converted to Rust  */
@@ -81,18 +81,16 @@ enum class SyncStatus {
                 return
             }
             sMarkedInMemory = true
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit().putBoolean("changesSinceLastSync", true).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", true).apply()
         }
 
         /** To be converted to Rust  */
         @KotlinCleanup("Convert these to @RustCleanup")
-        @JvmStatic
         fun markSyncCompleted() {
             sMarkedInMemory = false
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit().putBoolean("changesSinceLastSync", false).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", false).apply()
         }
 
-        @JvmStatic
         fun ignoreDatabaseModification(runnable: Runnable) {
             sPauseCheckingDatabase = true
             try {

@@ -60,13 +60,6 @@
     <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">സംസാരിക്കരുത്</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-        <item><![CDATA[AnkiDroid മികച്ചതാക്കാൻ ഞങ്ങളെ സഹായിക്കുന്നതിന്, ദയവായി <a href=\"%1$s\"> പ്രശ്ന ട്രാക്കറിൽ </a> ബഗുകൾ റിപ്പോർട്ടുചെയ്യുക; പുതിയ സവിശേഷത ആശയങ്ങളും വളരെ സ്വാഗതം ചെയ്യുന്നു. <a href=\"%2$s\"> വിക്കി </a> യിൽ ഉത്തരങ്ങൾ കണ്ടെത്തുക അല്ലെങ്കിൽ <a href=\"%3$s\"> ഫോറത്തിൽ </a> ഒരു ചർച്ച ആരംഭിക്കുക.]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"%1$s\"> ഓപ്പൺ സോഴ്‌സ് സോഫ്റ്റ്വെയർ <a/> ആണ്, അതിനാൽ എല്ലാവരേയും <a href=\"%2$s\"> ഒരു സംഭാവകനാകാൻ പ്രോത്സാഹിപ്പിക്കുന്നു </a>: - )]]></item>
-        <item><![CDATA[ഡവലപ്പർമാരല്ലാത്തവർക്കും സഹായിക്കാനാകും. ഉദാഹരണത്തിന്, നിങ്ങൾക്ക് <a href=\"%1$s\"> വിവർത്തനം ചെയ്യാൻ സഹായിക്കാം </a> അങ്കിഡ്രോയിഡ്, വിക്കി അപ്‌ഡേറ്റ് ചെയ്യുക, സ്ക്രീൻഷോട്ടുകൾ നൽകുക, അല്ലെങ്കിൽ അങ്കിഡ്രോയിഡിനെക്കുറിച്ച് ബ്ലോഗ് ചെയ്യുക.]]></item>
-        <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">പ്രിവ്യൂ</string>
     <string name="reposition_card_dialog_title">പുതിയ കാർഡ് പുന  സ്ഥാപിക്കുക</string>
     <string name="reposition_card_dialog_message">പ്രാരംഭ സ്ഥാനം</string>
@@ -133,6 +126,7 @@
     <string name="dialog_ok">ശരി</string>
     <string name="dialog_no">No (വേണ്ട)</string>
     <string name="dialog_continue">തുടരുക</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">സൃഷ്ടിച്ചു</string>
     <string name="dialog_positive_delete">ഇല്ലാതാക്കുക</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -252,6 +246,7 @@
         <item quantity="one">%d സെക്കൻഡിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
         <item quantity="other">%d സെക്കൻഡിനുള്ളിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_rev">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_lrn">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
@@ -261,4 +256,7 @@
     <string name="deck_picker_counts">ഇന്ന് കാണുന്നതിന് കാർഡുകളുടെ എണ്ണം അടങ്ങിയ ഡെക്ക് അവലോകന പേജ് തുറക്കുക.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

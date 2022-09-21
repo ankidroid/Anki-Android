@@ -16,31 +16,18 @@
 
 package com.ichi2.libanki.backend.model
 
+import anki.notes.note
 import com.ichi2.libanki.Note
 
-fun Note.to_backend_note(): anki.notes.Note {
-
-    return anki.notes.Note.newBuilder()
-        .setId(this.id)
-        .setGuid(this.guId)
-        .setNotetypeId(this.mid)
-        .setMtimeSecs(this.mod.toInt()) // this is worrying, 2038 problem
-        .setUsn(this.usn)
-        .setTagsList(this.tags)
-        .setFieldList(this.fields)
-        .build()
-}
-
-private fun anki.notes.Note.Builder.setFieldList(fields: Array<String>): anki.notes.Note.Builder {
-    for (t in fields.withIndex()) {
-        this.setFields(t.index, t.value)
+fun Note.toBackendNote(): anki.notes.Note {
+    val note = this
+    return note {
+        id = note.id
+        guid = note.guId!!
+        notetypeId = note.mid
+        mtimeSecs = note.mod.toInt() // this is worrying, 2038 problem
+        usn = note.usn
+        tags.addAll(note.tags.asIterable())
+        fields.addAll(note.fields.asIterable())
     }
-    return this
-}
-
-private fun anki.notes.Note.Builder.setTagsList(tags: ArrayList<String>): anki.notes.Note.Builder {
-    for (t in tags.withIndex()) {
-        this.setTags(t.index, t.value)
-    }
-    return this
 }

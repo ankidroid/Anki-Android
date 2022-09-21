@@ -16,19 +16,12 @@
 package com.ichi2.utils
 
 object CollectionUtils {
-    /** Throws IndexOutOfBoundsException on empty list */
-    @JvmStatic
-    @KotlinCleanup("Replace with List<T>.last() Kotlin extension")
-    fun <T> getLastListElement(l: List<T>): T {
-        return l[l.size - 1]
-    }
 
     /**
      * @param c A collection in which to add elements of it
      * @param it An iterator returning things to add to C
      * @param <T> Type of elements to copy from iterator to collection
      */
-    @JvmStatic
     @KotlinCleanup("replace with Kotlin extension: MutableCollections.addAll")
     fun <T> addAll(c: MutableCollection<T>, it: Iterable<T>) {
         for (elt in it) {
@@ -48,5 +41,13 @@ object CollectionUtils {
                 }
             }
         }
+    }
+
+    /**
+     * Return the average of the elements in the iterable,
+     * or null if the iterable is empty.
+     */
+    fun <T> Iterable<T>.average(f: (T) -> Int): Double? {
+        return this.map(f).average().let { if (it.isNaN()) null else it }
     }
 }

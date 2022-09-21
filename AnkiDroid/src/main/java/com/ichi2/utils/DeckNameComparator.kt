@@ -19,8 +19,8 @@ package com.ichi2.utils
 import com.ichi2.libanki.Decks
 import java.util.Comparator
 
-class DeckNameComparator : Comparator<String?> {
-    override fun compare(lhs: String?, rhs: String?): Int {
+class DeckNameComparator : Comparator<String> {
+    override fun compare(lhs: String, rhs: String): Int {
         val o1 = Decks.path(lhs)
         val o2 = Decks.path(rhs)
         for (i in 0 until Math.min(o1.size, o2.size)) {
@@ -33,7 +33,6 @@ class DeckNameComparator : Comparator<String?> {
     }
 
     companion object {
-        @JvmField
         val INSTANCE = DeckNameComparator()
     }
 }

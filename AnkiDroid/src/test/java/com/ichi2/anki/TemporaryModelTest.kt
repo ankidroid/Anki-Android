@@ -56,6 +56,7 @@ class TemporaryModelTest : RobolectricTest() {
     }
 
     @Test
+    @Suppress("deprecation") // getSerializable
     fun testAddDeleteTracking() {
 
         // Assume you start with a 2 template model (like "Basic (and reversed)")
@@ -139,12 +140,12 @@ class TemporaryModelTest : RobolectricTest() {
         if (actual !is ArrayList<*>) {
             Assert.fail("actual array null or not the correct type")
         }
-        Assert.assertEquals("arrays didn't have the same length?", expected.size.toLong(), (actual as ArrayList<Array<Any?>?>?)!!.size.toLong())
+        Assert.assertEquals("arrays didn't have the same length?", expected.size.toLong(), (actual as ArrayList<Array<Any?>?>).size.toLong())
         for (i in expected.indices) {
-            if (actual!![i] !is Array<Any?>) {
+            if (actual[i] !is Array<Any?>) {
                 Assert.fail("actual array does not contain Object[] entries")
             }
-            val actualChange = (actual as ArrayList<Array<Any?>>?)!![i]
+            val actualChange = (actual as ArrayList<Array<Any?>>)[i]
             Assert.assertEquals("ordinal at $i not correct?", expected[i][0], actualChange[0])
             Assert.assertEquals("changeType at $i not correct?", expected[i][1], actualChange[1])
         }

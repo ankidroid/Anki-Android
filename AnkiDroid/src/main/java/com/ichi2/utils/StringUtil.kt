@@ -22,7 +22,6 @@ import java.util.*
 
 object StringUtil {
     /** Trims from the right hand side of a string  */
-    @JvmStatic
     @Contract("null -> null; !null -> !null")
     fun trimRight(s: String?): String? {
         if (s == null) return null
@@ -34,37 +33,7 @@ object StringUtil {
         return if (newLength < s.length) s.substring(0, newLength) else s
     }
 
-    /**
-     * Remove all whitespace from the start and the end of a [String].
-     *
-     * A whitespace is defined by [Character.isWhitespace]
-     *
-     * @param string the string to be stripped, may be null
-     * @return the stripped string
-     */
-    @JvmStatic
-    @Contract("null -> null; !null -> !null")
-    fun strip(string: String?): String? {
-        if (string.isNullOrEmpty()) return string
-
-        var start = 0
-        while (start < string.length && Character.isWhitespace(string[start])) {
-            start++
-        }
-        if (start == string.length) {
-            return ""
-        }
-        var end = string.length
-        while (end > start && Character.isWhitespace(string[end - 1])) {
-            end--
-        }
-        return if (start == 0 && end == string.length) {
-            string
-        } else string.substring(start, end)
-    }
-
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
-    @JvmStatic
     @Contract("null -> null; !null -> !null")
     fun toTitleCase(s: String?): String? {
         if (s == null) return null

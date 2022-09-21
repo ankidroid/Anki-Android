@@ -16,59 +16,56 @@
 
 package com.ichi2.anki.dialogs
 
-import android.widget.EditText
+import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
-import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.DeckManager
+import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.positiveButton
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import org.hamcrest.MatcherAssert
-import org.hamcrest.core.Is
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 class CreateDeckDialogTest : RobolectricTest() {
-    private var mActivityScenario: ActivityScenario<DeckPicker>? = null
+    private lateinit var activityScenario: ActivityScenario<DeckPicker>
     override fun setUp() {
         super.setUp()
+        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
         ensureCollectionLoadIsSynchronous()
-        mActivityScenario = ActivityScenario.launch(DeckPicker::class.java)
-        val activityScenario: ActivityScenario<DeckPicker>? = mActivityScenario
-        activityScenario?.moveToState(Lifecycle.State.STARTED)
+        activityScenario = ActivityScenario.launch(DeckPicker::class.java).apply {
+            moveToState(Lifecycle.State.STARTED)
+        }
     }
 
     @Test
     fun testCreateFilteredDeckFunction() {
-        mActivityScenario!!.onActivity { activity: DeckPicker ->
-            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-            val isCreated = AtomicReference(false)
-            val deckName = "filteredDeck"
-            advanceRobolectricLooper()
+        val deckName = "filteredDeck"
+        ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
-                try {
-                    isCreated.set(true)
-                    val decks: DeckManager = activity.col!!.decks
-                    MatcherAssert.assertThat(id, Is.`is`(decks.id(deckName)))
-                } catch (filteredAncestor: DeckRenameException) {
-                    throw RuntimeException(filteredAncestor)
-                }
+                assertThat(id, equalTo(col.decks.id(deckName)))
+                assertionCalled()
             }
             createDeckDialog.createFilteredDeck(deckName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
         }
     }
 
@@ -76,41 +73,27 @@ class CreateDeckDialogTest : RobolectricTest() {
     @Throws(DeckRenameException::class)
     fun testCreateSubDeckFunction() {
         val deckParentId = col.decks.id("Deck Name")
-        mActivityScenario!!.onActivity { activity: DeckPicker ->
-            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.SUB_DECK, deckParentId)
-            val isCreated = AtomicReference(false)
-            val deckName = "filteredDeck"
-            advanceRobolectricLooper()
+        val deckName = "filteredDeck"
+        ensureExecutionOfScenario(DeckDialogType.SUB_DECK, deckParentId) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
-                try {
-                    isCreated.set(true)
-                    val decks: DeckManager = activity.col!!.decks
-                    val deckNameWithParentName = decks.getSubdeckName(deckParentId, deckName)
-                    MatcherAssert.assertThat(id, Is.`is`(decks.id(deckNameWithParentName!!)))
-                } catch (filteredAncestor: DeckRenameException) {
-                    throw RuntimeException(filteredAncestor)
-                }
+                val deckNameWithParentName = col.decks.getSubdeckName(deckParentId, deckName)
+                assertThat(id, equalTo(col.decks.id(deckNameWithParentName!!)))
+                assertionCalled()
             }
             createDeckDialog.createSubDeck(deckParentId, deckName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
         }
     }
 
     @Test
     fun testCreateDeckFunction() {
-        mActivityScenario!!.onActivity { activity: DeckPicker ->
-            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-            val isCreated = AtomicReference(false)
-            val deckName = "Deck Name"
-            advanceRobolectricLooper()
+        val deckName = "Deck Name"
+        ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
-                isCreated.set(true)
-                val decks: DeckManager? = activity.col?.decks
-                MatcherAssert.assertThat(id, Is.`is`(decks?.byName(deckName)!!.getLong("id")))
+                assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
+                assertionCalled()
             }
             createDeckDialog.createDeck(deckName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
         }
     }
 
@@ -118,114 +101,155 @@ class CreateDeckDialogTest : RobolectricTest() {
     fun testRenameDeckFunction() {
         val deckName = "Deck Name"
         val deckNewName = "New Deck Name"
-        mActivityScenario!!.onActivity { activity: DeckPicker ->
-            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
+        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.deckName = deckName
-            val isCreated = AtomicReference(false)
-            advanceRobolectricLooper()
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a deck name was renamed
-                isCreated.set(true)
-                val decks: DeckManager = activity.col!!.decks
-                MatcherAssert.assertThat(deckNewName, Is.`is`(decks.name(id!!)))
+                assertThat(deckNewName, equalTo(col.decks.name(id!!)))
+                assertionCalled()
             }
             createDeckDialog.renameDeck(deckNewName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
         }
     }
 
     @Test
     fun nameMayNotBeZeroLength() {
-        mActivityScenario!!.onActivity { activity: DeckPicker? ->
-            val createDeckDialog = CreateDeckDialog(activity!!, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-            val materialDialog = createDeckDialog.showDialog()
-            val actionButton = materialDialog.getActionButton(WhichButton.POSITIVE)
-            MatcherAssert.assertThat("Ok is disabled if zero length input", actionButton.isEnabled, Is.`is`(false))
-            val editText: EditText? = Objects.requireNonNull(materialDialog.getInputField())
-            editText?.setText("NotEmpty")
-            MatcherAssert.assertThat("Ok is enabled if not zero length input", actionButton.isEnabled, Is.`is`(true))
+        testDialog(DeckDialogType.DECK) {
+            assertThat("Ok is disabled if zero length input", positiveButton.isEnabled, equalTo(false))
+            input = "NotEmpty"
+            assertThat("Ok is enabled if not zero length input", positiveButton.isEnabled, equalTo(true))
+            input = "A::B"
+            assertThat("OK is enabled if fully qualified input provided ('A::B')", positiveButton.isEnabled, equalTo(true))
         }
     }
 
     @Test
-    fun searchDecksIconVisibilityDeckCreationTest() {
-        mActivityScenario!!.onActivity { deckPicker ->
-            val decks = deckPicker.col.decks
-            val deckCounter = AtomicInteger(1)
-            for (i in 0 until 10) {
-                val createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+    fun searchDecksIconVisibilityDeckCreationTest() = runTest {
+        // await deckpicker
+        val deckPicker = suspendCoroutine { coro ->
+            activityScenario.onActivity { deckPicker ->
+                coro.resume(deckPicker)
+            }
+        }
+
+        suspend fun decksCount() = withCol { decks.count() }
+        val deckCounter = AtomicInteger(1)
+
+        for (i in 0 until 10) {
+            val createDeckDialog = CreateDeckDialog(
+                deckPicker,
+                R.string.new_deck,
+                DeckDialogType.DECK,
+                null
+            )
+            val did = suspendCoroutine { coro ->
                 createDeckDialog.setOnNewDeckCreated { did ->
-                    assertEquals(deckCounter.incrementAndGet(), decks.count())
-
-                    assertEquals(deckCounter.get(), decks.count())
-
-                    deckPicker.updateDeckList()
-                    assertEquals(deckPicker.searchDecksIcon!!.isVisible, decks.count() >= 10)
-
-                    // After the last deck was created, delete a deck
-                    if (decks.count() >= 10) {
-                        deckPicker.confirmDeckDeletion(did)
-                        assertEquals(deckCounter.decrementAndGet(), decks.count())
-
-                        assertEquals(deckCounter.get(), decks.count())
-
-                        deckPicker.updateDeckList()
-                        assertFalse(deckPicker.searchDecksIcon!!.isVisible)
-                    }
+                    coro.resume(did)
                 }
                 createDeckDialog.createDeck("Deck$i")
             }
+            assertEquals(deckCounter.incrementAndGet(), decksCount())
+
+            assertEquals(deckCounter.get(), decksCount())
+
+            updateSearchDecksIcon(deckPicker)
+            assertEquals(
+                deckPicker.optionsMenuState?.searchIcon, decksCount() >= 10
+            )
+
+            // After the last deck was created, delete a deck
+            if (decksCount() >= 10) {
+                deckPicker.confirmDeckDeletion(did)
+                assertEquals(deckCounter.decrementAndGet(), decksCount())
+
+                assertEquals(deckCounter.get(), decksCount())
+
+                updateSearchDecksIcon(deckPicker)
+                assertFalse(deckPicker.optionsMenuState?.searchIcon ?: true)
+            }
+        }
+    }
+
+    private suspend fun updateSearchDecksIcon(deckPicker: DeckPicker) {
+        // the icon update requires a call to refreshState() and subsequent menu
+        // rebuild; access it directly instead so the test passes
+        deckPicker.updateMenuState()
+    }
+
+    @Test
+    fun searchDecksIconVisibilitySubdeckCreationTest() = runTest {
+        val deckPicker =
+            suspendCoroutine { coro -> activityScenario.onActivity { coro.resume(it) } }
+        deckPicker.updateMenuState()
+        assertEquals(deckPicker.optionsMenuState!!.searchIcon, false)
+        // a single top-level deck with lots of subdecks should turn the icon on
+        withCol {
+            decks.id(deckTreeName(0, 10, "Deck"))
+        }
+        deckPicker.updateMenuState()
+        assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
+    }
+
+    @Test
+    fun `Duplicate decks can't be created`() {
+        createDeck("deck")
+        createDeck("parent::child")
+        testDialog(DeckDialogType.DECK) {
+            input = "deck"
+            assertThat("Cannot create duplicate deck: 'deck'", positiveButton.isEnabled, equalTo(false))
+            input = "Deck"
+            assertThat("Cannot create duplicate deck: (case insensitive: 'Deck')", positiveButton.isEnabled, equalTo(false))
+            input = "Deck2"
+            assertThat("Can create deck with new name: 'Deck2'", positiveButton.isEnabled, equalTo(true))
+            input = "parent::child"
+            assertThat("Can't create fully qualified duplicate deck: 'parent::child'", positiveButton.isEnabled, equalTo(false))
         }
     }
 
     @Test
-    fun searchDecksIconVisibilitySubdeckCreationTest() {
-        mActivityScenario!!.onActivity { deckPicker ->
-            var createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-            val decks = deckPicker.col.decks
-            createDeckDialog.setOnNewDeckCreated {
-                assertEquals(10, decks.count())
-                deckPicker.updateDeckList()
-                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
-
-                deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
-                assertEquals(2, decks.count())
-                deckPicker.updateDeckList()
-                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
-            }
-            createDeckDialog.createDeck(deckTreeName(0, 8, "Deck"))
-
-            createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-            createDeckDialog.setOnNewDeckCreated {
-                assertEquals(12, decks.count())
-                deckPicker.updateDeckList()
-                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
-
-                deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
-                assertEquals(2, decks.count())
-                deckPicker.updateDeckList()
-                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
-            }
-            createDeckDialog.createDeck(deckTreeName(0, 10, "Deck"))
-
-            createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-            createDeckDialog.setOnNewDeckCreated {
-                assertEquals(6, decks.count())
-                deckPicker.updateDeckList()
-                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
-            }
-            createDeckDialog.createDeck(deckTreeName(0, 4, "Deck"))
-
-            createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-            createDeckDialog.setOnNewDeckCreated {
-                assertEquals(12, decks.count())
-                deckPicker.updateDeckList()
-                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
-            }
-            createDeckDialog.createDeck(deckTreeName(6, 11, "Deck"))
+    fun `Duplicate subdecks can't be created`() {
+        // Subdecks have a 'context' of the parent deck: selecting 'A' and entering 'B' creates 'A::B'
+        createDeck("parent::child")
+        val parentDeckId = col.decks.byName("parent")!!.getLong("id")
+        testDialog(DeckDialogType.SUB_DECK, parentDeckId) {
+            input = "parent"
+            assertThat("'parent::parent' should be valid", positiveButton.isEnabled, equalTo(true))
+            input = "child"
+            assertThat("'parent::child' already exists so should be invalid", positiveButton.isEnabled, equalTo(false))
+            input = "Child"
+            assertThat("'parent::child' already exists so should be invalid (case insensitive)", positiveButton.isEnabled, equalTo(false))
         }
     }
 
+    private fun createDeck(deckName: String) {
+        col.decks.id(deckName)
+    }
+
+    /**
+     * Executes [callback] on the [MaterialDialog] created from [CreateDeckDialog]
+     */
+    private fun testDialog(deckDialogType: DeckDialogType, parentId: DeckId? = null, callback: (MaterialDialog.() -> Unit)) {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val dialog = CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId).showDialog()
+            callback(dialog)
+        }
+    }
+
+    /**
+     * Tests a scenario with a [DeckPicker] hosting a [CreateDeckDialog].
+     * The second parameter of the callback ('assertionCalled') must be called for this to pass
+     */
+    private fun ensureExecutionOfScenario(deckDialogType: DeckDialogType, parentId: DeckId? = null, callback: ((CreateDeckDialog, (() -> Unit)) -> Unit)) {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val assertionCalled = AtomicReference(false)
+            callback(CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)) {
+                assertionCalled.set(true)
+            }
+            assertThat("no call to assertionCalled()", assertionCalled.get(), equalTo(true))
+        }
+    }
+
+    @Suppress("SameParameterValue")
     private fun deckTreeName(start: Int, end: Int, prefix: String): String {
         return List(end - start + 1) { "${prefix}${it + start}" }
             .joinToString("::")

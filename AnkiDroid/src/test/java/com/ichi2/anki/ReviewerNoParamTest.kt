@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
@@ -143,7 +144,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    fun undoingCardHidesFullScreen() {
+    fun undoingCardHidesFullScreen() = runTest {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()
 
@@ -154,7 +155,8 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        reviewer.executeCommand(ViewerCommand.UNDO)
+        reviewer.undo()
+
         advanceRobolectricLooperWithSleep()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
@@ -300,7 +302,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, false, value)
     }
 
-    private fun storeLightModeColor(value: Int, did: Long?) {
+    private fun storeLightModeColor(value: Int, did: DeckId?) {
         MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }
 

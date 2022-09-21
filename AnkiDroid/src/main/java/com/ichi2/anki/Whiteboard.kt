@@ -517,7 +517,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     companion object {
         private const val TOUCH_TOLERANCE = 4f
         private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
-        @JvmStatic
         fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
             val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
@@ -532,7 +531,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         }
 
         private val displayDimensions: Point
-            get() = getDisplayDimensions(AnkiDroidApp.getInstance().applicationContext)
+            get() = getDisplayDimensions(AnkiDroidApp.instance.applicationContext)
     }
 
     init {

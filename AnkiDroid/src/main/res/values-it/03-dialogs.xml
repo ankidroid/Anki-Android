@@ -60,13 +60,6 @@
     <string name="initializing_tts">Inizializzo TTS&#8230;</string>
     <string name="tts_no_tts">Non parlare</string>
     <string name="unused_strings">\n\nFile inutilizzati:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid è un\'applicazione di flashcard che è pienamente compatibile con il software desktop <a href=\"%2$s\"> Anki</a>. Si può creare, scaricare e studiare materiale su entrambi AnkiDroid o Anki Desktop e sincronizzarli facilmente con AnkiWeb.]]></item>
-        <item><![CDATA[Per aiutarci a rendere AnkiDroid migliore, segnala i bug a <a href=\"%1$s\">gestione problemi</a>; proposte di nuove funzioni sono benvenute. Trova risposte sulla <a href=\"%2$s\"> wiki</a> o avvia una discussione sul <a href=\"%3$s\">forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid è un <a href=\"%1$s\">software open source <a/>, ognuno è invitato a <a href=\"%2$s\">contribuire</a> :-)]]></item>
-        <item><![CDATA[Anche non-sviluppatori possono aiutare. Per esempio, puoi <a href=\"%1$s\">aiutare a tradurre</a> AnkiDroid, aggiornare il wiki, fornire screenshot o scrivere di AnkiDroid sui blog.]]></item>
-        <item><![CDATA[AnkiDroid è rilasciato sotto la <a href=\"%1$s\">licenza GNU-GPL v3</a> e il codice sorgente è disponibile <a href=\"%2$s\">su GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Anteprima</string>
     <string name="reposition_card_dialog_title">Riposiziona nuova carta</string>
     <string name="reposition_card_dialog_message">Posizione iniziale:</string>
@@ -119,8 +112,8 @@
     <string name="import_update_details">Aggiornate %1$d di %2$d note esistenti.</string>
     <string name="import_update_ignored">Alcuni aggiornamenti sono stati ignorati perché il tipo di nota è cambiato</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Carte importate: %2$d</item>
+        <item quantity="other">File importati: %1$d\nCarte importate in totale: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">Scheda SD piena</string>
     <string name="sd_card_almost_full_title">Scheda SD quasi piena</string>
@@ -133,6 +126,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Continua</string>
+    <string name="dialog_processing">Elaborazione...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
     <string name="dialog_positive_delete">Elimina</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -252,6 +246,7 @@
         <item quantity="one">Una sincronizzazione automatica potrebbe essere attivata in %d secondo</item>
         <item quantity="other">Una sincronizzazione automatica potrebbe essere attivata in %d secondi</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Numero di nuove carte da vedere oggi in questo mazzo.</string>
     <string name="deck_picker_rev">Numero di carte in questo mazzo che scadono oggi.</string>
     <string name="deck_picker_lrn">Numero di carte da imparare in questo mazzo.</string>
@@ -261,4 +256,7 @@
     <string name="deck_picker_counts">Aprire la pagina panoramica del mazzo contenente il numero di carte da vedere oggi.</string>
     <string name="import_deck_package">Pacchetto mazzo (.apkg)</string>
     <string name="import_collection_package">Pacchetto di raccolta (.colpkg)</string>
+    <string name="import_csv">File di testo (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">Non puoi creare un sottomazzo per tutti i mazzi</string>
 </resources>

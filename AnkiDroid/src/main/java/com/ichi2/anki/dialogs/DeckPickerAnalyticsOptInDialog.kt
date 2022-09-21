@@ -34,15 +34,14 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
             checkBoxPrompt(R.string.analytics_title, isCheckedDefault = true, onToggle = null)
             positiveButton(R.string.dialog_continue) {
                 UsageAnalytics.isEnabled = it.isCheckPromptChecked()
-                (activity as DeckPicker?)!!.dismissAllDialogFragments()
+                (activity as DeckPicker).dismissAllDialogFragments()
             }
             cancelable(true)
-            setOnCancelListener { (activity as DeckPicker?)!!.dismissAllDialogFragments() }
+            setOnCancelListener { (activity as DeckPicker).dismissAllDialogFragments() }
         }
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): DeckPickerAnalyticsOptInDialog {
             return DeckPickerAnalyticsOptInDialog()
         }

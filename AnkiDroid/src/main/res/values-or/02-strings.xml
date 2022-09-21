@@ -99,6 +99,9 @@
         <item>ସୃଷ୍ଟି ହୋଇଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">ପ୍ରୟୋଗ କର</string>
+    <string name="filter_by_flags">ପତାକା</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
@@ -141,7 +144,7 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ପୂର୍ବାବଲୋକନ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ର %1$d</string>
-    <string name="error_insufficient_memory">ଆପଣଙ୍କ ଡିଭାଇସରେ ଅପର୍ଯ୍ୟାପ୍ତ ମେମୋରୀ ଯୋଗୁ ଏହା ହେଇପାରିଲାନାହିଁ</string>
+    <string name="error_insufficient_memory">ଆପଣଙ୍କ ଡିଵାଇସରେ ଅପର୍ଯ୍ୟାପ୍ତ ମେମୋରୀ ଯୋଗୁ ଏହା ହେଇପାରିଲାନାହିଁ</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="default_conf_delete_error">ଡିଫଲ୍ଟ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ ହୋଇପାରିବ ନାହିଁ</string>
     <plurals name="factadder_cards_added">
@@ -159,7 +162,7 @@
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
+    <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ଵିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ଵିଲୋପ କରିଦେଇ ଏହାକୁ %s ଫାଇଲର ତଥ୍ୟ ସହିତ ପ୍ରତିସ୍ଥାପିତ କରିବ</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">ସଂଗ୍ରହରେ “%s” କୁ ଯୋଡ଼ିବେ ତ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</item>
         <item quantity="other">ଆପଣ ନିମ୍ନଲିଖିତ ଫାଇଲଗୁଡ଼ିକୁ ଆମଦାନି କରିବାକୁ ଚାହୁଁଛନ୍ତି ତ:\n%s\nଏହା ବହୁତ ସମୟ ନେଇପାରେ</item>
@@ -169,17 +172,15 @@
     <string name="import_log_failed_unzip">apkg: %s କୁ unzip କରିବାରେ ବିଫଳ</string>
     <string name="import_log_failed_copy_to">%s କୁ apkg ନକଲ କରିବାରେ ବିଫଳ</string>
     <string name="import_log_failed_validate">ଏ.ପି.କେ.ଜି ର ବିଫଳ ବୈଧତା</string>
-    <string name="import_log_insufficient_space_error">ପ୍ୟାକେଜ୍ ଆମଦାନୀ କରିବାକୁ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।\nଆବଶ୍ୟକ - %1$s \nଉପଲବ୍ଧ - %2$s.\n\nଅସୁବିଧା ହେଉଛି କି? ଯଦି ସମ୍ଭବ ଆପଣଙ୍କ ଫୋନରେ ସ୍ପେସ୍ ମୁକ୍ତ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ। ବୈକଳ୍ପିକ ଭାବରେ, ସିଙ୍କ୍ ଆମଦାନୀ ଅପେକ୍ଷା କମ୍ ସ୍ଥାନ ବ୍ୟବହାର କରେ। ଆପଣ ଅଧିକ ସ୍ପେସ୍ ଥିବା ଏକ ଡିଭାଇସ୍ (ଉଦାହରଣ ସ୍ୱରୂପ Anki Desktop) ସହ ପ୍ୟାକେଜ୍ ଆମଦାନୀ କରିବାକୁ ଚେଷ୍ଟା କରିପାରନ୍ତି ଏବଂ ତାପରେ ଏହାକୁ ଏହି ଡିଭାଇସରେ ସିଙ୍କ୍ କରିପାରିବେ।</string>
+    <string name="import_log_insufficient_space_error">ପ୍ୟାକେଜ୍ ଆମଦାନୀ କରିବାକୁ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।\nଆବଶ୍ୟକ - %1$s \nଉପଲବ୍ଧ - %2$s.\n\nଅସୁବିଧା ହେଉଛି କି? ଯଦି ସମ୍ଭବ ଆପଣଙ୍କ ଫୋନରେ ସ୍ପେସ୍ ମୁକ୍ତ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ। ବୈକଳ୍ପିକ ଭାବରେ, ସିଙ୍କ୍ ଆମଦାନୀ ଅପେକ୍ଷା କମ୍ ସ୍ଥାନ ବ୍ୟବହାର କରେ। ଆପଣ ଅଧିକ ସ୍ପେସ୍ ଥିବା ଏକ ଡିଵାଇସ୍ (ଉଦାହରଣ ସ୍ୱରୂପ Anki Desktop) ସହ ପ୍ୟାକେଜ୍ ଆମଦାନୀ କରିବାକୁ ଚେଷ୍ଟା କରିପାରନ୍ତି ଏବଂ ତାପରେ ଏହାକୁ ଏହି ଡିଵାଇସରେ ସିଙ୍କ୍ କରିପାରିବେ।</string>
     <string name="import_log_file_cache_cleared">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ତ୍ରୁଟି, ପ୍ରକ୍ରିୟାକରଣ ସମୟରେ ସମ୍ଭବତଃ ଏକ କ୍ୟାଚ୍ ଖାଲି ହେଇଥାଇପାରେ।\nଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="import_succeeded_but_check_database">ଡାଟା ଆମଦାନୀ ସଫଳ ହେଲା କିନ୍ତୁ ଆମଦାନୀ ପରବର୍ତ୍ତୀ ସଫେଇ ବିଫଳ ହେଲା। ପରେ ଡାଟାବେସ୍ ଯାଞ୍ଚ ଚଲାନ୍ତୁ। ମୂଳ କାରଣ: %s</string>
-    <string name="import_error_unhandled_request">ଆମଦାନୀ ଅନୁରୋଧ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ଅସମର୍ଥ</string>
     <string name="import_error_corrupt_zip">apkg ଫାଇଲଟି ତ୍ରୁଟିଗ୍ରସ୍ତ ଅଟେ। ଦୟାକରି ଏହାକୁ ବିଲୋପ କରନ୍ତୁ ଏବଂ ପୁନଃ ଡାଉନଲୋଡ୍ କରନ୍ତୁ।\n\nମୂଳ କାରଣ: %s</string>
-    <string name="import_error_exception">ପ୍ୟାକେଜ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
+    <string name="import_error_handle_exception">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବରେ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() ବିଫଳ ହେଲା (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
-    <string name="import_error_unhandled_scheme">“%s” ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">ଏକାଧିକ colpkg ଫାଇଲ୍ ଚୟନ କରାଯାଇଥିଲା।</string>
     <string name="import_error_colpkg_apkg">ଉଭୟ apkg ଏବଂ colpkg ଫାଇଲଗୁଡ଼ିକ ଏକାସାଙ୍ଗରେ ଚୟନ କରାଯାଇଥିଲା।</string>
     <string name="import_stats_error">ନିମ୍ନଲିଖିତ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କଲାବେଳେ କିଛି ତ୍ରୁଟି ଘଟିଛି:\n%s</string>
@@ -192,11 +193,11 @@
     <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
     <string name="export_successful_title">Anki package ପଠାଇବେ କି?</string>
     <string name="export_send_button">ପଠାନ୍ତୁ</string>
-    <string name="export_save_button">ଫାଇଲ ରେ ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">“%s” ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା। ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
     <string name="export_email_text"><![CDATA[        ନମସ୍କାର!
         <br/><br/>
@@ -219,7 +220,7 @@
     <string name="sched_unbury_action">ସେଗୁଡ଼ିକୁ ଦେଖିବା ପାଇଁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
     <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ପତ୍ରଗୁଡ଼ିକୁ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାହେଇଛି</string>
     <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
-    <string name="tag_editor_add_feedback_existing">ସାମ୍ପ୍ରତିକ ଟ୍ୟାଗ “%1$s” ବଛାହେଲା</string>
+    <string name="tag_editor_add_feedback_existing">ଵିଦ୍ୟମାନ ଟ୍ୟାଗ୍ “%1$s” ଚୟନ କରାଯାଇଛି</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s ସେକେଣ୍ଡ</item>
@@ -253,7 +254,7 @@
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">ସେ ତାସଖଣ୍ଡଟି ଆଗରୁ ବିଦ୍ୟମାନ ଅଛି</string>
+    <string name="decks_rename_exists">ସେ ତାସଖଣ୍ଡଟି ଆଗରୁ ଵିଦ୍ୟମାନ ଅଛି</string>
     <string name="decks_rename_filtered_nosubdecks">ଏକ ଶୋଧିତ ତାସଖଣ୍ଡ ରେ ଉପତାସଖଣ୍ଡ ରହିପାରିବନାହିଁ</string>
     <string name="filtered_deck_name">ଶୋଧିତ ତାସଖଣ୍ଡ</string>
     <string name="reminder_title">ଆଜି ଅଧ୍ୟୟନ କରିବାକୁ ଭୁଲନ୍ତୁ ନାହିଁ!</string>
@@ -265,8 +266,6 @@
     <string name="apk_share_error">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ Anki ର ଏକ ନୂତନ ସଂସ୍କରଣ ଆବଶ୍ୟକ କରେ।</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' ଧାରଣ କରିବା ବିଫଳ ହୋଇଛି।</string>
     <string name="activity_start_failed">ଏହି ସିଷ୍ଟମରେ ଏହି କାମ କରିବାଯୋଗ୍ୟ ଆପ୍ ସଂସ୍ଥାପିତ ହେଇନାହିଁ।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[କ୍ୟାମେରା ପ୍ରତିଛବିଗୁଡ଼ିକ ବଡ଼ ହେଇପାରେ। ମିଡ଼ିଆ ଡିରେକ୍ଟୋରୀରେ ଆପଣ ପ୍ରତିଛବିଗୁଡ଼ିକର ସଙ୍କୋଚନ ଏବଂ ଆକାର ପରିବର୍ତ୍ତନ କରିପାରିବେ]]></string>
     <string name="no_browser_notification">କୌଣସି ବ୍ରାଉଜର୍ ମିଳିଲା ନାହିଁ, ଦୟାକରି PC କିମ୍ୱା ମୋବାଇଲ୍ ଦ୍ୱାରା ୱେବ୍ ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ: </string>
@@ -291,28 +290,7 @@
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
     <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
     <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ରଗୁଡ଼ିକ ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡ଼ିକ>ଖାଲି ପତ୍ରଗୁଡ଼ିକ ଚଲାନ୍ତୁ।]]></string>
-    <string name="note_importer_error_empty_first_field">ପ୍ରଥମ କ୍ଷେତ୍ରଟି ଖାଲି ଅଛି: %s</string>
-    <string name="note_importer_error_first_field_matched">ପ୍ରଥମ କ୍ଷେତ୍ର ମେଳ ହେଲା : %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ସହିତ ନକଲି ଯୋଡ଼ା ହେଲା : %s</string>
-    <string name="note_importer_error_appeared_twice">ଫାଇଲରେ ଦୁଇଥର ଦେଖାଗଲା: %s</string>
-    <string name="note_importer_error_empty_notes">ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ଆମଦାନୀ ହୋଇନଥିଲା, କାରଣ ସେଗୁଡ଼ିକ କୌଣସି ପତ୍ର ସୃଷ୍ଟି କରିନଥିଲେ। ଏହା ସେତେବେଳେ ହୋଇପାରେ ଯେତେବେଳେ ଆପଣଙ୍କର ଖାଲି କ୍ଷେତ୍ର ଥାଏ କିମ୍ବା ଯେତେବେଳେ ଆପଣ ପାଠ୍ୟ ଫାଇଲରେ ଥିବା ବିଷୟବସ୍ତୁକୁ ସଠିକ୍ କ୍ଷେତ୍ରରେ ମ୍ୟାପ୍ କରିନାହାଁନ୍ତି</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ରେ %2$d କ୍ଷେତ୍ରସବୁ ଥିଲା, %3$d ଆଶା କରାଯାଉଥିଲା</string>
-    <string name="csv_importer_error_exception">ପରିତ୍ୟାଗୀତ: %s</string>
     <string name="user_is_a_robot">ସ୍ୱୟଂଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d ନୋଟ୍ ଯୋଡା ଯାଇଛି</item>
-        <item quantity="other">%d ଟି ନୋଟ୍ ଯୋଡା ଯାଇଛି </item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%dଟିଏ ନୋଟ୍ ଅଦ୍ୟତନ ହୋଇଛି</item>
-        <item quantity="other">%dଟି ନୋଟ୍ ଅଦ୍ୟତନ ହୋଇଛି</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d ନୋଟ୍ ଅପରିବର୍ତ୍ତିତ</item>
-        <item quantity="other">%d  ଟି ନୋଟ୍ ଅପରିବର୍ତ୍ତିତ</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">ଏହି ପତ୍ର ଅସମର୍ଥିତ AnkiDroid ବୈଶିଷ୍ଠ୍ୟଗୁଡ଼ିକ ବ୍ୟବହାର କରେ। ବିକାଶକାରୀ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ %1$s, କିମ୍ବା ୱିକି ଦେଖନ୍ତୁ। %2$s</string>
     <string name="invalid_json_data">ପତ୍ର ଅବୈଧ ତଥ୍ୟ ପ୍ରଦାନ କଲା। %s</string>
@@ -326,7 +304,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
     <string name="card_viewer_media_relative_protocol">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକୀୟ</string>
-    <string name="cannot_load_http_resource">http ସମ୍ପଦ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
     <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
@@ -379,10 +356,6 @@
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="home">ଗୃହ</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">%sକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
-    <string name="import_mapped_to_tags">ଟ୍ୟାଗ୍ ଗୁଡ଼ିକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
-    <string name="import_mapped_to_nothing">ଉପେକ୍ଷା କରାଯାଇଛି</string>
     <!-- Reviewer actions -->
     <string name="buried_card">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା</string>
     <string name="buried_note">ନୋଟ୍ ସ୍ଥଗିତ କରାଗଲା</string>
@@ -415,4 +388,22 @@
     <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">ସଂଗ୍ରହକୁ ପ୍ରବେଶ କରିବାରେ ବିଫଳ। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ଆରମ୍ଭ କରିବା</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">ତାସଖଣ୍ଡଟି ଵିଦ୍ୟମାନ ଅଛି</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ପତ୍ର</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>
+    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
+    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="browser_options_dialog_heading">Browser Options</string>
 </resources>

@@ -168,7 +168,6 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
-        @JvmField
         var ISSUE: Issue = Issue.create(
             ID,
             "Duplicate Strings (CrowdIn)",

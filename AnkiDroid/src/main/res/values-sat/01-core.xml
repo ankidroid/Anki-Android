@@ -71,12 +71,12 @@
         <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ᱴᱚᱲᱚᱝ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%1$d ᱴᱚᱲᱚᱝ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d ᱫᱤᱱ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%1$d ᱫᱤᱱ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
@@ -103,7 +103,7 @@
     <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
     <string name="create_shortcut">ᱥᱚᱴᱠᱚᱴ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="browse_cards">ᱠᱟᱰ ᱠᱚ ᱵᱨᱟᱩᱡᱽ ᱢᱮ</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ᱥᱮᱞᱮᱫ </string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ᱥᱮᱞᱮᱫ </string>
     <string name="menu_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
     <string name="menu_dismiss_note">ᱩᱠᱩᱭ ᱢᱮ/ᱜᱫ ᱜᱤᱰᱤ</string>
@@ -163,8 +163,7 @@
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
     <string name="studyoptions_limit_reached">ᱫᱤᱱ ᱨᱮᱭᱟᱜ ᱯᱟᱲᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ</string>

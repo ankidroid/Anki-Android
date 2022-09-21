@@ -83,7 +83,6 @@ enum class TapGestureMode {
     NINE_POINT;
 
     companion object {
-        @JvmStatic
         fun fromPreference(preferences: SharedPreferences): TapGestureMode =
             when (preferences.getBoolean("gestureCornerTouch", false)) {
                 true -> NINE_POINT

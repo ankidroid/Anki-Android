@@ -17,6 +17,7 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.ViewConfiguration
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import io.mockk.every
@@ -55,16 +56,19 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
 
     companion object {
         @BeforeClass
-        @JvmStatic
+        @JvmStatic // required for @BeforeClass
         fun before() {
             mockkStatic(ViewConfiguration::class)
             every { ViewConfiguration.get(any()) } answers { mockk(relaxed = true) }
+
+            AnkiDroidApp.internalSetInstanceValue(mockk(relaxed = true))
         }
 
-        @JvmStatic
+        @JvmStatic // required for @AfterClass
         @AfterClass
         fun after() {
             unmockkStatic(ViewConfiguration::class)
+            AnkiDroidApp.simulateRestoreFromBackup()
         }
     }
 }

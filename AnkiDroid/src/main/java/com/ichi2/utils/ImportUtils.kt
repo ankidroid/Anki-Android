@@ -46,6 +46,7 @@ import java.net.URLEncoder
 import java.util.*
 import java.util.zip.ZipException
 import java.util.zip.ZipInputStream
+import kotlin.collections.ArrayList
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */
@@ -58,12 +59,17 @@ object ImportUtils {
      * @param intent contains the file to import
      * @return null if successful, otherwise error message
      */
-    @JvmStatic
     fun handleFileImport(context: Context, intent: Intent): ImportResult {
         return FileImporter().handleFileImport(context, intent)
     }
 
-    @JvmStatic
+    /**
+     * Makes a cached copy of the file selected on [intent] and returns its path
+     */
+    fun getFileCachedCopy(context: Context, intent: Intent): String? {
+        return FileImporter().getFileCachedCopy(context, intent)
+    }
+
     fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
@@ -73,7 +79,6 @@ object ImportUtils {
     }
 
     /** @return Whether the file is either a deck, or a collection package */
-    @JvmStatic
     @Contract("null -> false")
     fun isValidPackageName(filename: String?): Boolean {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename)
@@ -83,7 +88,6 @@ object ImportUtils {
      * Whether importUtils can handle the given intent
      * Caused by #6312 - A launcher was sending ACTION_VIEW instead of ACTION_MAIN
      */
-    @JvmStatic
     fun isInvalidViewIntent(intent: Intent): Boolean {
         return intent.data == null && intent.clipData == null
     }
@@ -112,35 +116,30 @@ object ImportUtils {
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
-                ImportResult.fromErrorString(context.getString(R.string.import_error_exception, e.localizedMessage))
+                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception, e.localizedMessage))
             }
         }
 
         private fun handleFileImportInternal(context: Context, intent: Intent): ImportResult {
-            if (intent.data == null) {
-                Timber.i("No intent data. Attempting to read clip data.")
-                if (intent.clipData == null ||
-                    intent.clipData!!.itemCount == 0
-                ) {
-                    return ImportResult.fromErrorString(context.getString(R.string.import_error_unhandled_request))
-                }
-                val clipUriList: ArrayList<Uri> = ArrayList()
-                // Iterate over clipUri & create clipUriList
-                // Pass clipUri list.
-                for (i in 0 until intent.clipData!!.itemCount) {
-                    intent.clipData?.getItemAt(i)?.let { clipUriList.add(it.uri) }
-                }
-                return handleContentProviderFile(context, intent, clipUriList)
-            }
-
-            // If Uri is of scheme which is supported by ContentResolver, read the contents
-            val intentUriScheme = intent.data!!.scheme
-            return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
-                Timber.i("Attempting to read content from intent.")
-                val intentDataList: ArrayList<Uri> = arrayListOf(intent.data!!)
-                handleContentProviderFile(context, intent, intentDataList)
+            val dataList = getUris(intent)
+            return if (dataList != null) {
+                handleContentProviderFile(context, intent, dataList)
             } else {
-                ImportResult.fromErrorString(context.resources.getString(R.string.import_error_unhandled_scheme, intent.data))
+                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception))
+            }
+        }
+
+        /**
+         * Makes a cached copy of the file selected on [intent] and returns its path
+         */
+        fun getFileCachedCopy(context: Context, intent: Intent): String? {
+            val uri = getUris(intent)?.get(0) ?: return null
+            val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
+            val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+            return if (copyFileToCache(context, uri, tempPath)) {
+                tempPath
+            } else {
+                null
             }
         }
 
@@ -166,7 +165,7 @@ object ImportUtils {
                     } else {
                         Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile")
                         CrashReportService.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
-                        return ImportResult.fromErrorString(AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing"))
+                        return ImportResult.fromErrorString(AnkiDroidApp.appResources.getString(R.string.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"))
                     }
                 }
                 if (!isValidPackageName(filename)) {
@@ -182,7 +181,7 @@ object ImportUtils {
                     // Copy to temporary file
                     filename = ensureValidLength(filename)
                     val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                    val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
+                    val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_to_cache)
                     // Show import dialog
                     if (errorMessage != null) {
                         CrashReportService.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
@@ -280,9 +279,9 @@ object ImportUtils {
             return MimeTypeMap.getFileExtensionFromUrl(file.toString())
         }
 
-        protected open fun getFileNameFromContentProvider(context: Context, data: Uri?): String? {
+        protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
             var filename: String? = null
-            context.contentResolver.query(data!!, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
+            context.contentResolver.query(data, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
                 if (cursor != null && cursor.moveToFirst()) {
                     filename = cursor.getString(0)
                     Timber.d("handleFileImport() Importing from content provider: %s", filename)
@@ -340,6 +339,31 @@ object ImportUtils {
         }
 
         companion object {
+            fun getUris(intent: Intent): ArrayList<Uri>? {
+                if (intent.data == null) {
+                    Timber.i("No intent data. Attempting to read clip data.")
+                    if (intent.clipData == null || intent.clipData!!.itemCount == 0) {
+                        return null
+                    }
+                    val clipUriList: ArrayList<Uri> = ArrayList()
+                    // Iterate over clipUri & create clipUriList
+                    // Pass clipUri list.
+                    for (i in 0 until intent.clipData!!.itemCount) {
+                        intent.clipData?.getItemAt(i)?.let { clipUriList.add(it.uri) }
+                    }
+                    return clipUriList
+                }
+
+                // If Uri is of scheme which is supported by ContentResolver, read the contents
+                val intentUriScheme = intent.data!!.scheme
+                return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
+                    Timber.i("Attempting to read content from intent.")
+                    arrayListOf(intent.data!!)
+                } else {
+                    null
+                }
+            }
+
             /**
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
              * @param pathList list of path(s) to apkg file which will be imported

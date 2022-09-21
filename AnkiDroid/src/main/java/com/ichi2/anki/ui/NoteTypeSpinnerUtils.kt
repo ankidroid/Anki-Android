@@ -31,7 +31,6 @@ import java.util.*
 
 /** Setup for a spinner which displays all note types */
 object NoteTypeSpinnerUtils {
-    @JvmStatic
     fun setupNoteTypeSpinner(context: Context, noteTypeSpinner: Spinner, col: com.ichi2.libanki.Collection): ArrayList<Long> {
         val models: List<Model> = col.models.all()
         Collections.sort(models, NamedJSONComparator.INSTANCE)

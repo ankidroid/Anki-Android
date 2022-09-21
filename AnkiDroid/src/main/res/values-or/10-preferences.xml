@@ -47,29 +47,26 @@
     <!-- generic strings -->
     <string name="disabled">ଅକ୍ଷମ</string>
     <string name="enabled">ସକ୍ଷମ</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s ସେ</string>
+    <string name="pref_summary_minutes">%s ମି</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">କିଛି ପରିଣାମ ନାହିଁ</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ସାଧାରଣ</string>
-    <string name="pref_cat_general_summ">ସାଧାରଣ ସେଟିଂସ୍</string>
+    <string name="pref_cat_studying" maxLength="41">ଅଧ୍ୟୟନ କରିବା</string>
+    <string name="pref_cat_system_wide" maxLength="41">ସିଷ୍ଟମ୍-ବ୍ୟାପୀ</string>
     <string name="pref_cat_reviewing" maxLength="41">ସମୀକ୍ଷା</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସିଙ୍କ୍</string>
     <string name="pref_cat_scheduling" maxLength="41">ନିର୍ଦ୍ଧାରଣ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ଧଳାପଟା</string>
     <string name="pref_cat_appearance" maxLength="41">ରୂପ</string>
-    <string name="pref_cat_appearance_summ">ଥିମ୍ ଏବଂ ଡିଫଲ୍ଟ ଫଣ୍ଟ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="pref_cat_themes" maxLength="41">ଥିମ୍</string>
     <string name="pref_cat_fonts" maxLength="41">ଫଣ୍ଟ</string>
     <string name="pref_cat_gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ</string>
     <string name="pref_cat_controls" maxLength="41">ନିୟନ୍ତ୍ରଣଗୁଡ଼ିକ</string>
     <string name="pref_cat_advanced" maxLength="41">ବିକଶିତ</string>
-    <string name="pref_cat_advanced_summ">ଅନୁକୂଲନ ଏବଂ ପରୀକ୍ଷାମୂଳକ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ</string>
-    <string name="pref_cat_performance" maxLength="41">ସଞ୍ଚାଳନକାରିତା</string>
     <string name="pref_cat_workarounds" maxLength="41">କାର୍ଯ୍ୟକ୍ଷେତ୍ର</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="about_title" maxLength="41">AnkiDroid ବିଷୟରେ</string>
-    <string name="about_version">ସଂସ୍କରଣ: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ଷ୍ଟ୍ରୋକ ଓସାର</string>
     <string name="use_input_tag" maxLength="41">ପତ୍ରରେ ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
@@ -126,15 +123,17 @@
     <string name="swipe_sensitivity" maxLength="41">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
     <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">ଥିମ୍</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
     <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
@@ -159,7 +158,7 @@
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="safe_display" maxLength="41">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
-    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଭାଇସଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି।</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଵାଇସଗୁଡ଼ିକ ଏହା ଲୋଡ଼ି ପାରନ୍ତି।</string>
     <string name="disable_extended_text_ui" maxLength="41">ଗୋଟିଏ-କ୍ଷେତ୍ର ସମ୍ପାଦନା ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
@@ -184,13 +183,9 @@
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="new_timezone" maxLength="41">ନୂତନ ସମୟମଣ୍ଡଳ ପରିଚାଳନା</string>
     <string name="day_offset_with_description" maxLength="41">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">ମଧ୍ୟରାତ୍ରିରୁ %s ଘଣ୍ଟା ପରେ</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">ମଧ୍ୟରାତ୍ରି</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 ଅନୁସୂଚକ</string>
-    <string name="sched_v2_summ">ନୂତନ ଅନୁସୂଚକ ସକ୍ଷମ କରନ୍ତୁ। ପରବର୍ତ୍ତୀ ସିଙ୍କରେ ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରେ</string>
-    <string name="sched_ver_toggle_title">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
-    <string name="sched_ver_1to2">ପରୀକ୍ଷାମୂଳକ ଅନୁସୂଚକ ଭୁଲ କାର୍ଯ୍ୟସୂଚୀ ସୃଷ୍ଟି କରିପାରେ। ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣ ପ୍ରଥମେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ିଛନ୍ତି। ଅଗ୍ରସର ହେବେ?</string>
     <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରିନ୍ ସଚଳ ରଖନ୍ତୁ</string>
     <string name="pref_keep_screen_on_summ">ସ୍କ୍ରିନ୍ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
@@ -201,7 +196,7 @@
     <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
     <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
     <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
-    <string name="custom_buttons_setting_menu_only">କେବଳ ମେନୁ</string>
+    <string name="custom_buttons_setting_menu_only">କେଵଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
@@ -294,12 +289,12 @@
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="deck_conf_add_summ">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ଏକ କପି ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="deck_conf_remove_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ କରିବେ କି?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ସେଟ କରନ୍ତୁ </string>
+    <string name="deck_conf_set_subdecks" maxLength="41">ସବୁ ଉପତାସଖଣ୍ଡ ପାଇଁ ସେଟ୍ କରିବା</string>
     <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s ଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀ ବ୍ୟବହାର କରିବ</item>
-        <item quantity="other">%s ଟି ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀ ବ୍ୟବହାର କରିବେ </item>
+        <item quantity="one">%sଟିଏ ଉପତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରିବ</item>
+        <item quantity="other">%sଟି ଉପତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରିବେ</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">ଏହି ତାସଖଣ୍ଡର ସମସ୍ତ ଉପତାସଖଣ୍ଡ ପାଇଁ ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ସେଟ୍ କରନ୍ତୁ?</string>
+    <string name="deck_conf_set_subdecks_message">ଏହି ତାସଖଣ୍ଡର ସମସ୍ତ ଉପତାସଖଣ୍ଡ ପାଇଁ ଚଳିତ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ସେଟ୍ କରିବେ ତ?</string>
     <string name="pref_browser_editor_font" maxLength="41">ବ୍ରାଉଜର୍ ଏବଂ ସମ୍ପାଦକର ଫଣ୍ଟ</string>
     <string name="deck_conf_cram_filter" maxLength="41">ଶୋଧକ</string>
     <string name="deck_conf_cram_search" maxLength="41">ସନ୍ଧାନ</string>
@@ -322,8 +317,15 @@
     <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକଙ୍କ ମଧ୍ୟରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
+    <string name="pref_cat_about_title" maxLength="41">ବିଷୟରେ</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">ଲାଇସେନ୍ସ</string>
+    <string name="license_description"><![CDATA[AnkiDroidକୁ <a href=\"%1$s\">GPL-3.0</a> ଏବଂ <a href=\"%2$s\">AGPL-3.0</a> ଲାଇସେନ୍ସ ଅଧୀନରେ ପ୍ରକାଶିତ କରାଯାଏ, ତାହା ସହ ସୋର୍ସ କୋଡ୍ କୁ <a href=\"%3$s\">GitHubରେ</a> ଉପଲବ୍ଧ କରାଇ ଦିଆଯାଇଥାଏ]]></string>
+    <string name="donate_description"><![CDATA[ଆପଣ <a href=\"%1$s\">ଦାନ</a> କରି AnkiDroidର ବିକାଶକୁ ସମର୍ଥନ କରିପାରିବେ। ଯେକୌଣସି ରାଶି ଅତ୍ୟନ୍ତ ପ୍ରଶଂସନୀୟ ଅଟେ।]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">ଅଙ୍ଗଭଙ୍ଗୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="binding_replace_gesture">ଅଙ୍ଗଭଙ୍ଗୀ ବଦଳାନ୍ତୁ</string>
     <string name="binding_add_key">Key ଯୋଡ଼ନ୍ତୁ</string>
@@ -340,4 +342,17 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ ଅପସାରଣ କରନ୍ତୁ</string>
     <string name="bindings_already_bound">ପୂର୍ବରୁ %s କୁ ବନ୍ଧା</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">ପ୍ରାୟୋଗିକ</string>
+    <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
+    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ଵ୍ୟଵହାର କରିବା</string>
+    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
+    <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
+    <string name="disable_dev_options">ଡେଵେଲପର୍ ବିକଳ୍ପ ଅକ୍ଷମ କରିବା</string>
+    <string name="dev_options_warning">        ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା ପୂର୍ବରୁ ଦୟାକରି ନିଶ୍ଚିତ ହୁଅନ୍ତୁ। ଏଇ ବିକଳ୍ପଗୁଡ଼ିକ ବିପଜ୍ଜନକ ଏବଂ ଆପ୍ ଭାଙ୍ଗିପାରନ୍ତି କିମ୍ବା ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଭ୍ରଷ୍ଟ କରିପାରନ୍ତି।\n\nଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ଏହି ବିକଳ୍ପଗୁଡ଼ିକ ଅଧିକାଂଶ ଉପଭୋକ୍ତାଙ୍କ ପାଇଁ ଉପଯୁକ୍ତ ନୁହେଁ ଏବଂ ସେଥିପାଇଁ ଅନୁବାଦ କରାନଯାଇ ଇଂରାଜୀରେ ହି ଥାଏ।
+    </string>
 </resources>

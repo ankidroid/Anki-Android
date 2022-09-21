@@ -83,13 +83,15 @@ Join Us On
 <a href="https://www.reddit.com/r/Anki"><img src="docs/graphics/logos/reddit_logo_color.png" height="50px"/></a>
 <a href="https://www.facebook.com/AnkiDroid/"><img src="docs/graphics/logos/facebook_logo_color.png" height="50px"/></a>
 <a href="https://twitter.com/ankidroid"><img src="docs/graphics/logos/twitter_logo_color.png" height="50px"/></a>
+<a href="https://forums.ankiweb.net/"><img src="/docs/graphics/logos/anki_forums_logo.png" height="50px"/></a>
 
 ## Credits
+<!--- Do not rename this section. AnkiDroid contains a deep link to the section
+header - see https://github.com/ankidroid/Anki-Android/pull/11803 --->
 
+### Code Contributors
 
-### Github Contributors
-
-Thanks to these awesome contributors who keep this project going
+Thanks to these awesome code contributors who keep this project going
 
 <a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://opencollective.com/ankidroid/contributors.svg?width=890&button=false" /></a>
 
@@ -122,16 +124,11 @@ Thank you to all our backers! 🙏
 
 <a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
 
-### [Contributors](https://opencollective.com/ankidroid#contributors)
+### [Translators](https://crowdin.com/project/ankidroid/activity-stream)
 
-Our Awesome Team of Contributors
-
-<a href="https://opencollective.com/ankidroid#contributors" target="_blank"><img src="https://opencollective.com/ankidroid/contributors.svg?width=890"></a>
-
-
-
+Thanks to our 1400 translators, for allowing us to be available, partially or totally, in 99 languages as of July 2022.
 
 License
 -------
-[GPL-3.0 License](https://github.com/ankidroid/Anki-Android/blob/main/COPYING)
-[AGPL-3.0 Licence](https://github.com/ankitects/anki/blob/main/LICENSE) for some part of the back-end
+* [GPL-3.0 License](https://github.com/ankidroid/Anki-Android/blob/main/COPYING)
+* [AGPL-3.0 Licence](https://github.com/ankitects/anki/blob/main/LICENSE) for some part of the back-end

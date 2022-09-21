@@ -27,7 +27,6 @@ import timber.log.Timber
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
     /** Returns null on success  */
-    @JvmStatic
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? {
 
@@ -37,16 +36,16 @@ object InitialActivity {
         }
 
         // If we're OK, return null
-        if (CollectionHelper.getInstance().getColSafe(context) != null) {
+        if (CollectionHelper.instance.getColSafe(context) != null) {
             return null
         }
-        if (!AnkiDroidApp.isSdCardMounted()) {
+        if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SD_CARD_NOT_MOUNTED
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
         }
 
-        return when (CollectionHelper.getLastOpenFailure()) {
+        return when (CollectionHelper.lastOpenFailure) {
             CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
             CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
             CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED
@@ -59,7 +58,6 @@ object InitialActivity {
 
     /** @return Whether any preferences were upgraded
      */
-    @JvmStatic
     fun upgradePreferences(context: Context?, previousVersionCode: Long): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
@@ -76,11 +74,9 @@ object InitialActivity {
      * in practice, this doesn't occur due to CollectionHelper.getCol creating a new collection, and it's called before
      * this in the startup script
      */
-    @JvmStatic
     @CheckResult
     fun performSetupFromFreshInstallOrClearedPreferences(preferences: SharedPreferences): Boolean {
-        val lastVersionWasSet = "" != preferences.getString("lastVersion", "")
-        if (lastVersionWasSet) {
+        if (!wasFreshInstall(preferences)) {
             Timber.d("Not a fresh install [preferences]")
             return false
         }
@@ -90,8 +86,15 @@ object InitialActivity {
         return true
     }
 
+    /**
+     * true if the app was launched the first time
+     * false if the app was launched for the second time after a successful initialisation
+     * false if the app was launched after an update
+     */
+    fun wasFreshInstall(preferences: SharedPreferences) =
+        "" == preferences.getString("lastVersion", "")
+
     /** Sets the preference stating that the latest version has been applied  */
-    @JvmStatic
     fun setUpgradedToLatestVersion(preferences: SharedPreferences) {
         Timber.i("Marked prefs as upgraded to latest version: %s", pkgVersionName)
         preferences.edit().putString("lastVersion", pkgVersionName).apply()
@@ -102,7 +105,6 @@ object InitialActivity {
      * This is not called in the case of performSetupFromFreshInstall returning true.
      * So this should not use the default value
      */
-    @JvmStatic
     fun isLatestVersion(preferences: SharedPreferences): Boolean {
         return preferences.getString("lastVersion", "") == pkgVersionName
     }

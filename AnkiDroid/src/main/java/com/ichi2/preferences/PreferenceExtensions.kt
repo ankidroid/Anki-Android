@@ -28,12 +28,11 @@ object PreferenceExtensions {
      *
      * Defect #5828 - This is potentially not thread safe and could cause another preference commit to fail.
      */
-    @JvmStatic
     @CheckResult // Not truly an error as this has a side effect, but you should use a "set" API for perf.
-    fun getOrSetString(target: SharedPreferences, key: String, supplier: Supplier<String?>): String? {
+    fun getOrSetString(target: SharedPreferences, key: String, supplier: Supplier<String>): String {
         if (target.contains(key)) {
             // the default Is never returned. The value might be able be optimised, but the Android API should be better.
-            return target.getString(key, "")
+            return target.getString(key, "")!!
         }
         val supplied = supplier.get()
         target.edit().putString(key, supplied).apply()

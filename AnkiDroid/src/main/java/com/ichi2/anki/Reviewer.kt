@@ -53,7 +53,7 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
 import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
-import com.ichi2.anki.UIUtils.saveCollectionInBackground
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -90,7 +90,9 @@ import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
+import com.ichi2.utils.iconAlpha
 import com.ichi2.widget.WidgetStatus.update
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
@@ -115,8 +117,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mPrefHideDueCount = false
 
     // Whiteboard
-    @JvmField
-    var mPrefWhiteboard = false
+    var prefWhiteboard = false
 
     @get:CheckResult
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -142,15 +143,14 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mOverflowMenuIsOpen = false
     private lateinit var mToolbar: Toolbar
 
-    @JvmField
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { result: T ->
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
                 resources.getQuantityString(toastResourceId, cardCount, cardCount), true
@@ -209,7 +209,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     @NeedsTest("is not hidden if flag is on app bar and fullscreen is enabled")
     protected val flagToDisplay: Int
         get() {
-            val actualValue = mCurrentCard!!.userFlag()
+            val actualValue = currentCard!!.userFlag()
             if (actualValue == CardMarker.FLAG_NONE) {
                 return CardMarker.FLAG_NONE
             }
@@ -250,13 +250,15 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (card == null) {
             return
         }
-        toggleMark(card.note())
-        refreshActionBar()
-        onMarkChanged()
+        launchCatchingTask {
+            toggleMark(card.note())
+            refreshActionBar()
+            onMarkChanged()
+        }
     }
 
     private fun onMarkChanged() {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return
         }
         mCardMarker!!.displayMark(shouldDisplayMark())
@@ -266,25 +268,34 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (card == null) {
             return
         }
-        card.setUserFlag(flag)
-        card.flush()
-        refreshActionBar()
-        /* Following code would allow to update value of {{cardFlag}}.
-           Anki does not update this value when a flag is changed, so
-           currently this code would do something that anki itself
-           does not do. I hope in the future Anki will correct that
-           and this code may becomes useful.
+        launchCatchingTask {
+            card.setUserFlag(flag)
+            if (BackendFactory.defaultLegacySchema) {
+                card.flush()
+                /* Following code would allow to update value of {{cardFlag}}.
+               Anki does not update this value when a flag is changed, so
+               currently this code would do something that anki itself
+               does not do. I hope in the future Anki will correct that
+               and this code may becomes useful.
 
-        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
-        if (sDisplayAnswer) {
-            displayCardAnswer();
-        } else {
-            displayCardQuestion();
-            } */onFlagChanged()
+            card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
+            if (sDisplayAnswer) {
+                displayCardAnswer();
+            } else {
+                displayCardQuestion();
+                } */
+            } else {
+                withCol {
+                    newBackend.setUserFlagForCards(listOf(card.id), flag)
+                }
+            }
+            refreshActionBar()
+            onFlagChanged()
+        }
     }
 
     private fun onFlagChanged() {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             return
         }
         mCardMarker!!.displayFlag(flagToDisplay)
@@ -339,8 +350,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
-        mPrefWhiteboard = MetaDB.getWhiteboardState(this, parentDid)
-        if (mPrefWhiteboard) {
+        prefWhiteboard = MetaDB.getWhiteboardState(this, parentDid)
+        if (prefWhiteboard) {
             // DEFECT: Slight inefficiency here, as we set the database using these methods
             val whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, parentDid)
             setWhiteboardEnabledState(true)
@@ -386,7 +397,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             R.id.action_mark_card -> {
                 Timber.i("Reviewer:: Mark button pressed")
-                onMark(mCurrentCard)
+                onMark(currentCard)
             }
             R.id.action_replay -> {
                 Timber.i("Reviewer:: Replay audio button pressed (from menu)")
@@ -475,35 +486,35 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             R.id.action_flag_zero -> {
                 Timber.i("Reviewer:: No flag")
-                onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+                onFlag(currentCard, CardMarker.FLAG_NONE)
             }
             R.id.action_flag_one -> {
                 Timber.i("Reviewer:: Flag one")
-                onFlag(mCurrentCard, CardMarker.FLAG_RED)
+                onFlag(currentCard, CardMarker.FLAG_RED)
             }
             R.id.action_flag_two -> {
                 Timber.i("Reviewer:: Flag two")
-                onFlag(mCurrentCard, CardMarker.FLAG_ORANGE)
+                onFlag(currentCard, CardMarker.FLAG_ORANGE)
             }
             R.id.action_flag_three -> {
                 Timber.i("Reviewer:: Flag three")
-                onFlag(mCurrentCard, CardMarker.FLAG_GREEN)
+                onFlag(currentCard, CardMarker.FLAG_GREEN)
             }
             R.id.action_flag_four -> {
                 Timber.i("Reviewer:: Flag four")
-                onFlag(mCurrentCard, CardMarker.FLAG_BLUE)
+                onFlag(currentCard, CardMarker.FLAG_BLUE)
             }
             R.id.action_flag_five -> {
                 Timber.i("Reviewer:: Flag five")
-                onFlag(mCurrentCard, CardMarker.FLAG_PINK)
+                onFlag(currentCard, CardMarker.FLAG_PINK)
             }
             R.id.action_flag_six -> {
                 Timber.i("Reviewer:: Flag six")
-                onFlag(mCurrentCard, CardMarker.FLAG_TURQUOISE)
+                onFlag(currentCard, CardMarker.FLAG_TURQUOISE)
             }
             R.id.action_flag_seven -> {
                 Timber.i("Reviewer:: Flag seven")
-                onFlag(mCurrentCard, CardMarker.FLAG_PURPLE)
+                onFlag(currentCard, CardMarker.FLAG_PURPLE)
             }
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
@@ -517,13 +528,13 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     public override fun toggleWhiteboard() {
-        mPrefWhiteboard = !mPrefWhiteboard
-        Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard)
+        prefWhiteboard = !prefWhiteboard
+        Timber.i("Reviewer:: Whiteboard enabled state set to %b", prefWhiteboard)
         // Even though the visibility is now stored in its own setting, we want it to be dependent
         // on the enabled status
-        setWhiteboardEnabledState(mPrefWhiteboard)
-        setWhiteboardVisibility(mPrefWhiteboard)
-        if (!mPrefWhiteboard) {
+        setWhiteboardEnabledState(prefWhiteboard)
+        setWhiteboardVisibility(prefWhiteboard)
+        if (!prefWhiteboard) {
             mColorPalette!!.visibility = View.GONE
         }
         refreshActionBar()
@@ -547,34 +558,32 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun updateForNewCard() {
         super.updateForNewCard()
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
     }
 
     override fun unblockControls() {
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.isEnabled = true
         }
         super.unblockControls()
     }
 
     public override fun blockControls(quick: Boolean) {
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.isEnabled = false
         }
         super.blockControls(quick)
     }
 
-    @KotlinCleanup("tempAudioPath!!")
     override fun closeReviewer(result: Int, saveDeck: Boolean) {
         // Stop the mic recording if still pending
-        if (audioView != null) {
-            audioView!!.notifyStopRecord()
-        }
+        audioView?.notifyStopRecord()
+
         // Remove the temporary audio file
-        if (tempAudioPath != null) {
-            val tempAudioPathToDelete = File(tempAudioPath!!)
+        tempAudioPath?.let {
+            val tempAudioPathToDelete = File(it)
             if (tempAudioPathToDelete.exists()) {
                 tempAudioPathToDelete.delete()
             }
@@ -649,10 +658,10 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     private fun showRescheduleCardDialog() {
         val runnable = Consumer { days: Int ->
-            val cardIds = listOf(mCurrentCard!!.id)
+            val cardIds = listOf(currentCard!!.id)
             RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
         }
-        val dialog = rescheduleSingleCard(resources, mCurrentCard!!, runnable)
+        val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
         showDialogFragment(dialog)
     }
 
@@ -666,7 +675,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         dialog.setArgs(title, message)
         val confirm = Runnable {
             Timber.i("NoteEditor:: ResetProgress button pressed")
-            val cardIds = listOf(mCurrentCard!!.id)
+            val cardIds = listOf(currentCard!!.id)
             ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
         }
         dialog.setConfirm(confirm)
@@ -684,13 +693,18 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
-        val intent = Intent(this, CardInfo::class.java)
+        val intent = if (BackendFactory.defaultLegacySchema) {
+            Intent(this, CardInfo::class.java).apply {
+                putExtra("cardId", currentCard!!.id)
+            }
+        } else {
+            com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
+        }
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra("cardId", mCurrentCard!!.id)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
@@ -736,18 +750,18 @@ open class Reviewer : AbstractFlashcardViewer() {
         mActionButtons.setCustomButtonsStatus(menu)
         var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (mCurrentCard != null && isMarked(mCurrentCard!!.note())) {
+        if (currentCard != null && isMarked(currentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
         }
-        markCardIcon.icon.mutate().alpha = alpha
+        markCardIcon.iconAlpha = alpha
 
         // 1643 - currently null on a TV
         val flag_icon = menu.findItem(R.id.action_flag)
         if (flag_icon != null) {
-            if (mCurrentCard != null) {
-                when (mCurrentCard!!.userFlag()) {
+            if (currentCard != null) {
+                when (currentCard!!.userFlag()) {
                     1 -> flag_icon.setIcon(R.drawable.ic_flag_red)
                     2 -> flag_icon.setIcon(R.drawable.ic_flag_orange)
                     3 -> flag_icon.setIcon(R.drawable.ic_flag_green)
@@ -758,7 +772,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                     else -> flag_icon.setIcon(R.drawable.ic_flag_transparent)
                 }
             }
-            flag_icon.icon.mutate().alpha = alpha
+            flag_icon.iconAlpha = alpha
         }
 
         // Undo button
@@ -777,8 +791,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         val alpha_undo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
-        undoIcon.setEnabled(undoEnabled).icon.mutate().alpha = alpha_undo
-        undoIcon.actionView.isEnabled = undoEnabled
+        undoIcon.setEnabled(undoEnabled).iconAlpha = alpha_undo
+        undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
         }
@@ -789,7 +803,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard)
         val change_pen_color_icon = menu.findItem(R.id.action_change_whiteboard_pen_color)
         // White board button
-        if (mPrefWhiteboard) {
+        if (prefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             toggle_whiteboard_icon.setTitle(R.string.disable_whiteboard)
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
@@ -852,8 +866,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             bury_icon.setTitle(R.string.menu_bury_card)
         }
         alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
-        bury_icon.icon.mutate().alpha = alpha
-        suspend_icon.icon.mutate().alpha = alpha
+        bury_icon.iconAlpha = alpha
+        suspend_icon.iconAlpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
         mOnboarding.onCreate()
         if (mOverflowMenuIsOpen)
@@ -1016,7 +1030,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, mCurrentCard!!, button)
+            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, currentCard!!, button)
 
             easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
             easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
@@ -1030,7 +1044,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     val buttonCount: Int
-        get() = sched!!.answerButtons(mCurrentCard!!)
+        get() = sched!!.answerButtons(currentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
@@ -1055,14 +1069,14 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     protected fun updateScreenCounts() {
-        if (mCurrentCard == null) return
+        if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = sched!!.counts(mCurrentCard!!)
+        val counts = sched!!.counts(currentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
                 mEta = sched!!.eta(counts, false)
-                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), (mEta * 60).toLong()))
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.instance, (mEta * 60).toLong()))
             }
         }
         mNewCount = SpannableString(counts.new.toString())
@@ -1071,11 +1085,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mPrefHideDueCount) {
             mRevCount = SpannableString("???")
         }
-        when (sched!!.countIdx(mCurrentCard!!)) {
+        when (sched!!.countIdx(currentCard!!)) {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
@@ -1097,7 +1110,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        answerTimer.setupForCard(mCurrentCard!!)
+        answerTimer.setupForCard(currentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }
@@ -1117,8 +1130,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
         // can't move this into onCreate due to mTopBarLayout
-        val mark = mTopBarLayout!!.findViewById<ImageView>(R.id.mark_icon)
-        val flag = mTopBarLayout!!.findViewById<ImageView>(R.id.flag_icon)
+        val mark = topBarLayout!!.findViewById<ImageView>(R.id.mark_icon)
+        val flag = topBarLayout!!.findViewById<ImageView>(R.id.flag_icon)
         mCardMarker = CardMarker(mark, flag)
     }
 
@@ -1142,7 +1155,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun initControls() {
         super.initControls()
-        if (mPrefWhiteboard) {
+        if (prefWhiteboard) {
             setWhiteboardVisibility(mShowWhiteboard)
         }
         if (mShowRemainingCardCount) {
@@ -1186,11 +1199,11 @@ open class Reviewer : AbstractFlashcardViewer() {
                 return true
             }
             ViewerCommand.UNSET_FLAG -> {
-                onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+                onFlag(currentCard, CardMarker.FLAG_NONE)
                 return true
             }
             ViewerCommand.MARK -> {
-                onMark(mCurrentCard)
+                onMark(currentCard)
                 return true
             }
             ViewerCommand.ADD_NOTE -> {
@@ -1206,12 +1219,12 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun toggleFlag(@FlagDef flag: Int) {
-        if (mCurrentCard!!.userFlag() == flag) {
+        if (currentCard!!.userFlag() == flag) {
             Timber.i("Toggle flag: unsetting flag")
-            onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+            onFlag(currentCard, CardMarker.FLAG_NONE)
         } else {
             Timber.i("Toggle flag: Setting flag to %d", flag)
-            onFlag(mCurrentCard, flag)
+            onFlag(currentCard, flag)
         }
     }
 
@@ -1236,7 +1249,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun onCardEdited(card: Card?) {
         super.onCardEdited(card)
-        if (mPrefWhiteboard && whiteboard != null) {
+        if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
         if (!isDisplayingAnswer) {
@@ -1262,7 +1275,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun setWhiteboardEnabledState(state: Boolean) {
-        mPrefWhiteboard = state
+        prefWhiteboard = state
         MetaDB.storeWhiteboardState(this, parentDid, state)
         if (state && whiteboard == null) {
             createWhiteboard()
@@ -1283,7 +1296,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Show / hide the Action bar together with the status bar
         val prefs = AnkiDroidApp.getSharedPrefs(a)
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimaryDark)
+        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimary)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)
@@ -1349,6 +1362,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
         })
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
+            if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
             if (!whiteboard!!.isCurrentlyDrawing && (
                 !mShowWhiteboard || (
@@ -1361,7 +1375,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 v.performClick()
                 return@setOnTouchListener gestureDetector!!.onTouchEvent(event)
             }
-            whiteboard!!.handleTouchEvent(event!!)
+            whiteboard!!.handleTouchEvent(event)
         }
     }
 
@@ -1387,8 +1401,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override val currentCardId: Long?
-        get() = mCurrentCard!!.id
+    override val currentCardId: CardId?
+        get() = currentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -1406,21 +1420,21 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
-        return if (mCurrentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked()) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-            mCurrentCard!!.nid, mCurrentCard!!.id
+            currentCard!!.nid, currentCard!!.id
         ) == 1
         // whether there exists a sibling not buried.
     }
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
-        return if (mCurrentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked()) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-            mCurrentCard!!.nid, mCurrentCard!!.id
+            currentCard!!.nid, currentCard!!.id
         ) == 1
         // Whether there exists a sibling which is neither suspended nor buried
     }
@@ -1512,7 +1526,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         showsSubMenu: () -> Boolean
     ): View = ImageButton(context, null, R.attr.actionButtonStyle).apply {
         TooltipCompat.setTooltipText(this, menuItem.title)
-        menuItem.icon.isAutoMirrored = true
+        menuItem.icon?.isAutoMirrored = true
         setImageDrawable(menuItem.icon)
         id = menuItem.itemId
         setOnClickListener {

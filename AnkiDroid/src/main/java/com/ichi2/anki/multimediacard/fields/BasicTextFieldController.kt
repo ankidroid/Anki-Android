@@ -144,6 +144,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      * from here returns, the MultimediaEditFieldActivity passes control here back. And the results from the started before
      * activity are received.
      */
+    @Suppress("deprecation") // get
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_PRONUNCIATION && resultCode == Activity.RESULT_OK) {
             try {

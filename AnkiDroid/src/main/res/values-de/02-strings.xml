@@ -99,6 +99,9 @@
         <item>Erstellt</item>
         <item>Notiz geändert</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Anwenden</string>
+    <string name="filter_by_flags">Flaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
     <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>
@@ -161,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">\"%s\" zu Ihrer Sammlung hinzufügen? Das könnte etwas Zeit beanspruchen.</item>
+        <item quantity="other">Möchten Sie die folgenden Dateien importieren:\n%s\nDies kann lange dauern</item>
     </plurals>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
     <string name="import_title_error" comment="Title of error dialog">Fehler</string>
@@ -172,17 +175,15 @@
     <string name="import_log_insufficient_space_error">Es gibt nicht genügend Speicherplatz, um das Paket zu importieren.\nBenötigt - %1$s \nVerfügbar - %2$s.\n\nHaben Sie Probleme? Versuchen Sie, wenn möglich, Platz auf Ihrem Telefon freizugeben. Alternativ verbraucht die Synchronisation weniger Speicherplatz als der Import. Sie können versuchen, das Paket auf einem Gerät mit mehr Speicherplatz zu importieren (z.B. Anki Desktop) und es dann mit diesem Gerät synchronisieren.</string>
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
-    <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
     <string name="import_error_corrupt_zip">Die APKG-Datei ist beschädigt. Bitte löschen und erneut herunterladen.\n\nUrsache: %s</string>
-    <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
+    <string name="import_error_handle_exception">Fehler beim Importieren der Datei\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
-    <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
+    <string name="import_error_copy_to_cache">Fehler beim Zwischenspeichern (evtl. mangelnder Speicherplatz)</string>
     <string name="import_error_multiple_colpkg">Mehrere KOLPKG-Dateien wurden ausgewählt.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_colpkg_apkg">Beide apkg &amp; colpkg Dateien wurden auf einmal ausgewählt.</string>
+    <string name="import_stats_error">Beim Importieren der folgenden Dateien sind einige Fehler aufgetreten:\n%s</string>
     <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
@@ -192,11 +193,11 @@
     <string name="export_in_progress">Anki-Paketdatei wird exportiert &#8230;</string>
     <string name="export_successful_title">Anki-Paket senden?</string>
     <string name="export_send_button">Senden</string>
-    <string name="export_save_button">In Datei speichern</string>
     <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert …</string>
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
     <string name="export_email_text"><![CDATA[        Hallo!
         <br/><br/>
@@ -265,8 +266,6 @@
     <string name="apk_share_error">Fehler beim Teilen der APKG-Datei</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Diese Datei benötigt eine neuere Version von Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">»%s« konnte nicht geladen werden.</string>
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
     <string name="no_browser_notification">Kein Browser gefunden. Bitte besuchen Sie die Webseite via PC oder Mobilgerät: </string>
@@ -291,28 +290,7 @@
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
     <string name="title_whiteboard_pen_color">Stiftfarbe des Whiteboards</string>
     <string name="title_whiteboard_editor">Whiteboard-Editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Leere Karten gefunden. Bitte führen Sie Werkzeuge>Leere Karten aus.]]></string>
-    <string name="note_importer_error_empty_first_field">Leeres erstes Feld: %s</string>
-    <string name="note_importer_error_first_field_matched">Erstes Feld übereinstimmen: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Doppeltes mit dem ersten Feld hinzugefügt: %s</string>
-    <string name="note_importer_error_appeared_twice">Erscheint zweimal in Datei: %s</string>
-    <string name="note_importer_error_empty_notes">Eine oder mehrere Notizen wurden nicht importiert, da keine Karten generiert wurden. Dies kann passieren, wenn Sie leere Felder haben oder wenn Sie den Inhalt in der Textdatei nicht den korrekten Feldern zugeordnet haben</string>
-    <string name="csv_importer_error_invalid_field_count">»%1$s« hatte %2$d Felder, erwartet %3$d</string>
-    <string name="csv_importer_error_exception">Abgebrochen: %s</string>
     <string name="user_is_a_robot">Automatischer Test erkannt. Wenn Sie ein Mensch sind, wenden Sie sich an AnkiDroid-Support</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d Notiz hinzugefügt</item>
-        <item quantity="other">%d Notizen hinzugefügt</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d Notiz aktualisiert</item>
-        <item quantity="other">%d Notizen aktualisiert</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d Notiz unverändert</item>
-        <item quantity="other">%d Notizen unverändert</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Diese Karte verwendet AnkiDroid-Funktionen, die nicht  nicht unterstützt sind. Kontaktieren Sie den Entwickler %1$s oder sehen Sie sich das Wiki an. %2$s</string>
     <string name="invalid_json_data">Karte hat ungültige Daten angegeben. %s</string>
@@ -326,7 +304,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fehler im Karteninhalt: Laden von »%s« fehlgeschlagen</string>
     <string name="card_viewer_media_relative_protocol">Fehler beim Karteninhalt: Medienaktualisierung erforderlich</string>
-    <string name="cannot_load_http_resource">Das Laden von http-Ressourcen wird nicht mehr unterstützt</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fehler beim Laden von Stapel »%s«</string>
     <string name="search_decks">Stapel durchsuchen</string>
@@ -348,7 +325,7 @@
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
     <string name="edit_toolbar_item">Toolbar Element bearbeiten</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">Geben Sie den HTML-Code ein, der vor und nach dem ausgewählten Text eingefügt werden soll\n\nDrücken Sie lange auf ein Symbol in der Symbolleiste, um es zu entfernen</string>
     <string name="remove_toolbar_item">Element der Werkzeugleiste entfernen?</string>
     <string name="note_editor_paste_too_large">Das Bild ist zu groß zum Einfügen, bitte fügen Sie das Bild manuell ein</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android-Sicherung im Gange. Bitte versuchen Sie es erneut</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Bitte überprüfen Sie die Netzverbindung</string>
     <string name="search_using_deck_name">Über Stapelnamen suchen</string>
     <string name="home">Start</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">%s zugeordnet</string>
-    <string name="import_mapped_to_tags">Schlagwörtern zugeordnet</string>
-    <string name="import_mapped_to_nothing">Ignoriert</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Karte aufgeschoben</string>
     <string name="buried_note">Vergrabene Notiz</string>
@@ -412,7 +385,25 @@
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
     <string name="file_extract_exceeds_storage_space">Datei-Extrahierung überschreitet Speicherplatz</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Tag \'%s\' erweitern</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Zugriff auf die Sammlung fehlgeschlagen. Bitte versuchen Sie es erneut!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Lerne weniger</string>
+    <string name="intro_ankidroid_tagline_two">Merke dir mehr</string>
+    <string name="intro_short_ankidroid_explanation">Ankis Zeitplaner spart Zeit, indem er deine schwächsten Erinnerungen stärkt und deine Stärksten aufrechterhält</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Los geht\'s</string>
+    <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
+    <string name="already_logged_in">Bereits angemeldet</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Stapel existiert bereits</string>
+    <string name="deck_created">Stapel wurde erstellt</string>
+    <string name="deck_renamed">Stapel wurde umbenannt</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>
+    <string name="toggle_cards_notes">Karten/Notizen umschalten</string>
+    <string name="toggle_browser_mode_help">Das Anzeigen von Karten oder Notizen umschalten</string>
+    <string name="truncate_content_help">Die Höhe jeder Zeile der Kartenübersicht anpassen, sodass nur die ersten 3 Zeilen des Inhalts zu sehen sind.</string>
+    <string name="browser_options_dialog_heading">Kartenübersichts-Einstellungen</string>
 </resources>

@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">Server</string>
     <string name="force_full_sync_title">Forceer complete synchronisatie</string>
     <string name="force_full_sync_summary">Bij volgende synchronisatie, wijzigingen forceren in één richting</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Geforceerde volledige synchronisatie</string>
     <string name="full_sync_confirmation">De gevraagde wijziging vergt een volledige upload van de database wanneer u de volgende keer uw collectie synchroniseert. Indien u overhoringen of wijzigingen heeft op een ander apparaat dat nog niet is gesynchroniseerd, dan zullen zij verloren gaan. Wilt u verder gaan?</string>
     <string name="full_sync_confirmation_upgrade">Vanwege een fout in een vorige versie van AnkiDroid, is het aan te raden om een volledige synchronisatie uit te voeren.</string>
     <string name="sync_error_407_proxy_required">Proxyverificatie vereist.</string>

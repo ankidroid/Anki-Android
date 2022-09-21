@@ -45,7 +45,7 @@ class SingleTaskManager : TaskManager() {
      * The most recently started [CollectionTask] instance.
      */
     private var mLatestInstance: CollectionTask<*, *>? = null
-    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>?) {
+    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {
         mLatestInstance = task
     }
 
@@ -80,16 +80,15 @@ class SingleTaskManager : TaskManager() {
      */
     // #7108: AsyncTask
     @Suppress("DEPRECATION")
-    @KotlinCleanup("use scoped function")
     override fun <Progress, Result> launchCollectionTaskConcrete(
         task: TaskDelegateBase<Progress, Result>,
         listener: TaskListener<in Progress, in Result?>?
     ): Cancellable {
         // Start new task
-        val newTask = CollectionTask(task, listener, mLatestInstance)
-        addTasks(newTask)
-        newTask.execute()
-        return newTask
+        return CollectionTask(task, listener, mLatestInstance).apply {
+            addTasks(this)
+            execute()
+        }
     }
 
     /**
@@ -106,18 +105,19 @@ class SingleTaskManager : TaskManager() {
      */
     // #7108: AsyncTask
     @Suppress("DEPRECATION")
-    @KotlinCleanup("Simplify null checks with ?.")
     override fun waitToFinishConcrete(timeoutSeconds: Int?): Boolean {
         return try {
-            if (mLatestInstance != null && mLatestInstance!!.status != android.os.AsyncTask.Status.FINISHED) {
-                Timber.d(
-                    "CollectionTask: waiting for task %s to finish...",
-                    mLatestInstance!!.task.javaClass
-                )
-                if (timeoutSeconds != null) {
-                    mLatestInstance!![timeoutSeconds.toLong(), TimeUnit.SECONDS]
-                } else {
-                    mLatestInstance!!.get()
+            mLatestInstance?.apply {
+                if (status != android.os.AsyncTask.Status.FINISHED) {
+                    Timber.d(
+                        "CollectionTask: waiting for task %s to finish...",
+                        task.javaClass
+                    )
+                    if (timeoutSeconds != null) {
+                        get(timeoutSeconds.toLong(), TimeUnit.SECONDS)
+                    } else {
+                        get()
+                    }
                 }
             }
             true
@@ -163,15 +163,13 @@ class SingleTaskManager : TaskManager() {
     override fun waitForAllToFinishConcrete(timeoutSeconds: Int): Boolean {
         // HACK: This should be better - there is currently a race condition in sLatestInstance, and no means to obtain this information.
         // This should work in all reasonable cases given how few tasks we have concurrently blocking.
-        var result: Boolean
-        result = waitToFinish(timeoutSeconds / 4)
-        sleep(10)
-        result = result and waitToFinish(timeoutSeconds / 4)
-        sleep(10)
-        result = result and waitToFinish(timeoutSeconds / 4)
-        sleep(10)
-        result = result and waitToFinish(timeoutSeconds / 4)
-        sleep(10)
+        var result = true
+
+        repeat(4) {
+            result = result and waitToFinish(timeoutSeconds / 4)
+            sleep(10)
+        }
+
         Timber.i("Waited for all tasks to finish")
         return result
     }

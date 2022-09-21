@@ -17,11 +17,12 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
-internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
+abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
     // sched.getCol is null.
     private val sched: AbstractSched?
 ) {
@@ -38,7 +39,7 @@ internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched a
         return queue.remove()!!.card
     }
 
-    fun remove(cid: Long): Boolean {
+    fun remove(cid: CardId): Boolean {
         // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
         return queue.remove(col?.let { Card.Cache(it, cid) })
     }
@@ -62,7 +63,7 @@ internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched a
         Collections.shuffle(queue, r)
     }
 
-    fun listIterator(): ListIterator<T?> {
+    fun listIterator(): MutableListIterator<T> {
         return queue.listIterator()
     }
 

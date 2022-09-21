@@ -17,19 +17,15 @@ package com.ichi2.anki
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-import android.content.*
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.*
-import android.view.KeyEvent
-import android.view.MenuItem
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Deck
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
 import com.ichi2.themes.Themes
@@ -42,14 +38,12 @@ import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.util.*
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
-class FilteredDeckOptions : AppCompatPreferenceActivity() {
-    @KotlinCleanup("try to make mDeck non-null / use lateinit")
-    private var mDeck: Deck? = null
+class FilteredDeckOptions :
+    AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
     private var mAllowCommit = true
-    private var mUnmountReceiver: BroadcastReceiver? = null
 
     // TODO: not anymore used in libanki?
     private val mDynExamples = arrayOf(
@@ -63,25 +57,23 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}"
     )
 
-    inner class DeckPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashMap()
-        val mSummaries: MutableMap<String, String?> = HashMap()
+    inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         var secondFilter = false
-        protected fun cacheValues() {
+        override fun cacheValues() {
             Timber.d("cacheValues()")
-            val ar = mDeck!!.getJSONArray("terms").getJSONArray(0)
-            secondFilter = if (mDeck!!.getJSONArray("terms").length() > 1) true else false
-            var ar2: JSONArray?
+            val ar = deck.getJSONArray("terms").getJSONArray(0)
+            secondFilter = deck.getJSONArray("terms").length() > 1
+            val ar2: JSONArray?
             mValues["search"] = ar.getString(0)
             mValues["limit"] = ar.getString(1)
             mValues["order"] = ar.getString(2)
             if (secondFilter) {
-                ar2 = mDeck!!.getJSONArray("terms").getJSONArray(1)
+                ar2 = deck.getJSONArray("terms").getJSONArray(1)
                 mValues["search_2"] = ar2.getString(0)
                 mValues["limit_2"] = ar2.getString(1)
                 mValues["order_2"] = ar2.getString(2)
             }
-            val delays = mDeck!!.optJSONArray("delays")
+            val delays = deck.optJSONArray("delays")
             if (delays != null) {
                 mValues["steps"] = convertFromJSON(delays)
                 mValues["stepsOn"] = java.lang.Boolean.toString(true)
@@ -89,77 +81,83 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
                 mValues["steps"] = "1 10"
                 mValues["stepsOn"] = java.lang.Boolean.toString(false)
             }
-            mValues["resched"] = java.lang.Boolean.toString(mDeck!!.getBoolean("resched"))
+            mValues["resched"] = java.lang.Boolean.toString(deck.getBoolean("resched"))
         }
 
-        inner class Editor : SharedPreferences.Editor {
-            private var mUpdate = ContentValues()
-            override fun clear(): SharedPreferences.Editor {
-                Timber.d("clear()")
-                mUpdate = ContentValues()
-                return this
-            }
-
+        inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("commit() changes back to database")
-                for ((key, value) in mUpdate.valueSet()) {
+                for ((key, value) in update.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
-                    val ar = mDeck!!.getJSONArray("terms")
+                    val ar = deck.getJSONArray("terms")
                     if (pref.secondFilter) {
-                        if ("search_2" == key) {
-                            ar.getJSONArray(1).put(0, value)
-                        } else if ("limit_2" == key) {
-                            ar.getJSONArray(1).put(1, value)
-                        } else if ("order_2" == key) {
-                            ar.getJSONArray(1).put(2, (value as String).toInt())
+                        when (key) {
+                            "search_2" -> {
+                                ar.getJSONArray(1).put(0, value)
+                            }
+                            "limit_2" -> {
+                                ar.getJSONArray(1).put(1, value)
+                            }
+                            "order_2" -> {
+                                ar.getJSONArray(1).put(2, (value as String).toInt())
+                            }
                         }
                     }
-                    if ("search" == key) {
-                        ar.getJSONArray(0).put(0, value)
-                    } else if ("limit" == key) {
-                        ar.getJSONArray(0).put(1, value)
-                    } else if ("order" == key) {
-                        ar.getJSONArray(0).put(2, (value as String).toInt())
-                    } else if ("resched" == key) {
-                        mDeck!!.put("resched", value)
-                    } else if ("stepsOn" == key) {
-                        val on = value as Boolean
-                        if (on) {
-                            val steps = convertToJSON(mValues["steps"]!!)
-                            if (steps!!.length() > 0) {
-                                mDeck!!.put("delays", steps)
-                            }
-                        } else {
-                            mDeck!!.put("delays", JSONObject.NULL)
+                    when (key) {
+                        "search" -> {
+                            ar.getJSONArray(0).put(0, value)
                         }
-                    } else if ("steps" == key) {
-                        mDeck!!.put("delays", convertToJSON((value as String)))
-                    } else if ("preset" == key) {
-                        val i: Int = (value as String).toInt()
-                        if (i > 0) {
-                            val presetValues = JSONObject(mDynExamples[i])
-                            val arr = presetValues.names() ?: continue
-                            for (name in arr.stringIterable()) {
-                                if ("steps" == name) {
-                                    mUpdate.put("stepsOn", true)
+
+                        "limit" -> {
+                            ar.getJSONArray(0).put(1, value)
+                        }
+                        "order" -> {
+                            ar.getJSONArray(0).put(2, (value as String).toInt())
+                        }
+                        "resched" -> {
+                            deck.put("resched", value)
+                        }
+                        "stepsOn" -> {
+                            val on = value as Boolean
+                            if (on) {
+                                val steps = convertToJSON(mValues["steps"]!!)
+                                if (steps!!.length() > 0) {
+                                    deck.put("delays", steps)
                                 }
-                                if ("resched" == name) {
-                                    mUpdate.put(name, presetValues.getBoolean(name))
-                                    mValues[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
-                                } else {
-                                    mUpdate.put(name, presetValues.getString(name))
-                                    mValues[name] = presetValues.getString(name)
-                                }
+                            } else {
+                                deck.put("delays", JSONObject.NULL)
                             }
-                            mUpdate.put("preset", "0")
-                            commit()
+                        }
+                        "steps" -> {
+                            deck.put("delays", convertToJSON((value as String)))
+                        }
+                        "preset" -> {
+                            val i: Int = (value as String).toInt()
+                            if (i > 0) {
+                                val presetValues = JSONObject(mDynExamples[i]!!)
+                                val arr = presetValues.names() ?: continue
+                                for (name in arr.stringIterable()) {
+                                    if ("steps" == name) {
+                                        update.put("stepsOn", true)
+                                    }
+                                    if ("resched" == name) {
+                                        update.put(name, presetValues.getBoolean(name))
+                                        mValues[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
+                                    } else {
+                                        update.put(name, presetValues.getString(name))
+                                        mValues[name] = presetValues.getString(name)
+                                    }
+                                }
+                                update.put("preset", "0")
+                                commit()
+                            }
                         }
                     }
                 }
 
                 // save deck
                 try {
-                    col.decks.save(mDeck!!)
+                    col.decks.save(deck)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
                     CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
@@ -177,110 +175,15 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
                 }
                 return true
             }
-
-            override fun putBoolean(key: String, value: Boolean): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putFloat(key: String, value: Float): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putInt(key: String, value: Int): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putLong(key: String, value: Long): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putString(key: String, value: String?): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun remove(key: String): SharedPreferences.Editor {
-                Timber.d("Editor.remove(key=%s)", key)
-                mUpdate.remove(key)
-                return this
-            }
-
-            override fun apply() {
-                if (mAllowCommit) {
-                    commit()
-                }
-            }
-
-            // @Override On Android 1.5 this is not Override
-            override fun putStringSet(arg0: String, arg1: Set<String>?): SharedPreferences.Editor? {
-                // TODO Auto-generated method stub
-                return null
-            }
-        }
-
-        override fun contains(key: String): Boolean {
-            return mValues.containsKey(key)
         }
 
         override fun edit(): Editor {
             return Editor()
         }
 
-        override fun getAll(): Map<String, *> {
-            return mValues
-        }
-
-        override fun getBoolean(key: String, defValue: Boolean): Boolean {
-            return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
-        }
-
-        override fun getFloat(key: String, defValue: Float): Float {
-            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
-        }
-
-        override fun getInt(key: String, defValue: Int): Int {
-            return this.getString(key, Integer.toString(defValue))!!.toInt()
-        }
-
-        override fun getLong(key: String, defValue: Long): Long {
-            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
-        }
-
-        override fun getString(key: String, defValue: String?): String? {
-            Timber.d("getString(key=%s, defValue=%s)", key, defValue)
-            return if (!mValues.containsKey(key)) {
-                defValue
-            } else mValues[key]
-        }
-
-        val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
-        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            listeners.add(listener)
-        }
-
-        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            listeners.remove(listener)
-        }
-
-        // @Override On Android 1.5 this is not Override
-        override fun getStringSet(arg0: String, arg1: Set<String>?): Set<String>? {
-            // TODO Auto-generated method stub
-            return null
-        }
-
         init {
             cacheValues()
         }
-    }
-
-    private lateinit var pref: DeckPreferenceHack
-    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
-        Timber.d("getSharedPreferences(name=%s)", name)
-        return pref
     }
 
     @Deprecated("Deprecated in Java")
@@ -293,13 +196,13 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
             return
         }
         val extras = intent.extras
-        mDeck = if (extras != null && extras.containsKey("did")) {
+        deck = if (extras != null && extras.containsKey("did")) {
             col.decks.get(extras.getLong("did"))
         } else {
             col.decks.current()
         }
         registerExternalStorageListener()
-        if (mDeck!!.isStd) {
+        if (deck.isStd) {
             Timber.w("Deck is not a dyn deck")
             finish()
             return
@@ -315,7 +218,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         var title = resources.getString(R.string.deckpreferences_title)
         if (title.contains("XXX")) {
             title = try {
-                title.replace("XXX", mDeck!!.getString("name"))
+                title.replace("XXX", deck.getString("name"))
             } catch (e: JSONException) {
                 Timber.w(e)
                 title.replace("XXX", "???")
@@ -368,44 +271,17 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            closeDeckOptions()
-            return true
-        }
-        return false
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("DeckOptions - onBackPressed()")
-            closeDeckOptions()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-    private fun closeDeckOptions() {
+    override fun closeWithResult() {
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                col.sched.rebuildDyn(mDeck!!.getLong("id"))
+                col.sched.rebuildDyn(deck.getLong("id"))
             } catch (e: JSONException) {
                 Timber.e(e)
             }
         }
         finish()
         slide(this, ActivityTransitionAnimation.Direction.FADE)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        @Suppress("DEPRECATION")
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
@@ -415,8 +291,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         val keys: Set<String> = pref.mValues.keys
         for (key in keys) {
             val pref = findPreference(key)
-            var value: String?
-            value = if (pref == null) {
+            val value: String? = if (pref == null) {
                 continue
             } else if (pref is CheckBoxPreference) {
                 continue
@@ -446,7 +321,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
     }
 
     @Suppress("deprecation") // Tracked as #5019 on github
-    protected fun buildLists() {
+    private fun buildLists() {
         val newOrderPref = findPreference("order") as ListPreference
         val newOrderPrefSecond = findPreference("order_2") as ListPreference
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels)
@@ -454,25 +329,9 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         newOrderPref.value = pref.getString("order", "0")
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPrefSecond.value = pref.getString("order_2", "5")
-    }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                    finish()
-                }
-            }
+        if (pref.secondFilter) {
+            newOrderPrefSecond.value = pref.getString("order_2", "5")
         }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
     }
 
     @Suppress("deprecation")
@@ -488,15 +347,15 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
                 return@OnPreferenceChangeListener true
             }
             if (!newValue) {
-                mDeck!!.getJSONArray("terms").remove(1)
+                deck.getJSONArray("terms").remove(1)
                 secondFilter.isEnabled = false
             } else {
                 secondFilter.isEnabled = true
                 /**Link to the defaults used in AnkiDesktop
                  * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
                  */
-                val narr = JSONArray(Arrays.asList("", 20, 5))
-                mDeck!!.getJSONArray("terms").put(1, narr)
+                val narr = JSONArray(listOf("", 20, 5))
+                deck.getJSONArray("terms").put(1, narr)
                 val newOrderPrefSecond = findPreference("order_2") as ListPreference
                 newOrderPrefSecond.value = "5"
             }

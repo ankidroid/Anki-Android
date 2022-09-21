@@ -26,7 +26,6 @@ object AnkiSerialization {
     /**
      * @return singleton of {@link ObjectMapper} used to bind json to java classes
      */
-    @JvmStatic
     val objectMapper: ObjectMapper by lazy {
         ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }
@@ -34,7 +33,6 @@ object AnkiSerialization {
     /**
      * @return singleton of {@link JsonFactory} used for json stream processing
      */
-    @JvmStatic
     val factory: JsonFactory
         get() = objectMapper.factory
 }

@@ -49,6 +49,10 @@
         <item quantity="one">%d kártyát mutat</item>
         <item quantity="other">%d kártyát mutat</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">%d note shown</item>
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">Minden pakli</string>
     <string name="card_browser_delete_card">Jegyzet törlése</string>
     <string name="card_browser_suspend_card">Kártyák felfüggesztése</string>

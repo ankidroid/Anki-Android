@@ -57,7 +57,7 @@
     <string name="studyoptions_new_total">新規カード:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
-    <string name="studyoptions_start">学習開始</string>
+    <string name="studyoptions_start">スタート</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
@@ -98,7 +98,7 @@
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">延期、保留、削除</string>
@@ -159,7 +159,6 @@
     <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
-    <string name="empty_deck_add_note">カードを追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>

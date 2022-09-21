@@ -45,7 +45,6 @@ object ResourceLoader {
         }
     }
 
-    @JvmStatic
     fun getTempCollection(context: Context, name: String): String {
         return getTempFilePath(context, name, "collection.anki2")
     }

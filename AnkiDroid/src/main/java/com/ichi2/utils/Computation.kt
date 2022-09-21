@@ -51,15 +51,15 @@ class Computation<out ComputedType : Any> {
     }
 
     companion object {
-        @JvmField val ERR: Computation<*> = Computation<Any>()
-        @JvmField val OK: Computation<*> = Computation(Any())
+        val ERR: Computation<*> = Computation<Any>()
+        val OK: Computation<*> = Computation(Any())
 
         /** A strongly typed error return value */
-        @JvmStatic fun <ComputedType : Any> err(): Computation<ComputedType> {
+        fun <ComputedType : Any> err(): Computation<ComputedType> {
             return Computation()
         }
 
-        @JvmStatic fun <ComputedType : Any> ok(value: ComputedType): Computation<ComputedType> {
+        fun <ComputedType : Any> ok(value: ComputedType): Computation<ComputedType> {
             return Computation(value)
         }
     }

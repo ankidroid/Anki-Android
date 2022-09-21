@@ -90,14 +90,12 @@ abstract class Time {
     }
 
     companion object {
-        @JvmStatic
         fun calendar(timeInMS: Long): Calendar {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = timeInMS
             return calendar
         }
 
-        @JvmStatic
         fun gregorianCalendar(timeInMS: Long): GregorianCalendar {
             val calendar = GregorianCalendar()
             calendar.timeInMillis = timeInMS
@@ -107,7 +105,6 @@ abstract class Time {
         /**
          * Calculate the UTC offset
          */
-        @JvmStatic
         fun utcOffset(): Double {
             // Okay to use real time, as the result does not depends on time at all here
             val cal = Calendar.getInstance()

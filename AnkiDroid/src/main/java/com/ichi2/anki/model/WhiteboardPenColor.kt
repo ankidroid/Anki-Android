@@ -29,7 +29,6 @@ class WhiteboardPenColor(val lightPenColor: Int?, val darkPenColor: Int?) {
     }
 
     companion object {
-        @JvmStatic
         @get:CheckResult
         val default: WhiteboardPenColor
             get() = WhiteboardPenColor(null, null)

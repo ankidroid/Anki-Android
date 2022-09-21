@@ -26,7 +26,6 @@ package com.ichi2.libanki.utils
 //    }
 //
 //    companion object {
-//        @JvmStatic
 //        @Suppress("deprecation")
 //        @RustCleanup("remove suppress on BuiltinSortKind")
 //        @Parameterized.Parameters(name = "{0}")

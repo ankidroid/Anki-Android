@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_cards_notes"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="16dp" />
+
+        <RadioGroup
+            android:id="@+id/select_browser_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <RadioButton
+                android:id="@+id/select_cards_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_cards" />
+
+            <RadioButton
+                android:id="@+id/select_notes_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_notes" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_browser_mode_help"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginHorizontal="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/card_browser_truncate"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="16dp" />
+
+        <CheckBox
+            android:id="@+id/truncate_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_browser_truncate"
+            android:layout_marginHorizontal="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/truncate_content_help"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginHorizontal="16dp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

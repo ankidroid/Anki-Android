@@ -111,7 +111,6 @@ private constructor(
      *
      * @see Collections.sort
      */
-    @Suppress("UNCHECKED_CAST")
     @KotlinCleanup("sortWith")
     override fun sort(c: Comparator<in E>?) {
         sortOverride(c)
@@ -147,8 +146,6 @@ private constructor(
          * @param source the source collection that will be used to construct UniqueArrayList
          * @param comparator used to judge uniqueness
          */
-        @JvmStatic
-        @JvmOverloads
         fun <E> from(source: List<E>, comparator: Comparator<in E>? = null): UniqueArrayList<E> {
             val set: Set<E> = if (comparator == null) {
                 HashSet()

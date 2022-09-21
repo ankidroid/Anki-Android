@@ -27,6 +27,7 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Parcelable
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
@@ -73,6 +74,8 @@ interface Compat {
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
+    fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
+    fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
     @Throws(IOException::class)
     fun copyFile(source: String, target: String)

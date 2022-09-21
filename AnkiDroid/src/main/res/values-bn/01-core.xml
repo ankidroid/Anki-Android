@@ -103,7 +103,7 @@
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
     <string name="create_shortcut">শর্টকাট তৈরী করুন</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">যোগ করুন</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">যোগ করুন</string>
     <string name="menu_add_note">নোট যোগ করুন</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">হিসাব সিঙ্ক করুন</string>
     <string name="menu_dismiss_note">গোপন / মুছে ফেলুন</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
     <string name="search_deck" comment="Deck search for selecting it">ডেক অনুসন্ধান</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">কার্ড যোগ করো</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
     <string name="studyoptions_empty">এই ডেক খালি আছে। প্রেস + বাটন নতুন উপাদান যোগ করতে।</string>
     <string name="studyoptions_limit_reached">প্রতিদিনের পড়াশোনা সীমায় পৌঁছে গিয়েছে</string>

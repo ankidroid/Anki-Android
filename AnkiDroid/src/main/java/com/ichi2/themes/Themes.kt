@@ -19,17 +19,15 @@
 package com.ichi2.themes
 
 import android.content.Context
+import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 
 /**
- * Handles the user selectable themes
- * The user can choose one of the app themes or "Follow system" option
- * If one of the themes is selected, it will always be the theme used by the app
- * If "Follow system" is selected, the theme will be what is selected
- * on "Day" or "Night" theme categories, following the current system mode.
+ * Helper methods to configure things related to AnkiDroid's themes
  */
 object Themes {
     const val ALPHA_ICON_ENABLED_LIGHT = 255 // 100%
@@ -40,16 +38,12 @@ object Themes {
     private const val DAY_THEME_KEY = "dayTheme"
     private const val NIGHT_THEME_KEY = "nightTheme"
 
-    @JvmField
     var currentTheme: Theme = Theme.fallback
-
-    @JvmField
     var systemIsInNightMode: Boolean = false
 
     /**
      * Sets theme to [currentTheme]
      */
-    @JvmStatic
     fun setTheme(context: Context) {
         context.setTheme(currentTheme.resId)
     }
@@ -67,9 +61,8 @@ object Themes {
      * on `Day` or `Night` theme according to system's current mode
      * Otherwise, updates to the selected theme.
      */
-    @JvmStatic
     fun updateCurrentTheme() {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().applicationContext)
+        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.applicationContext)
 
         currentTheme = if (themeFollowsSystem()) {
             if (systemIsInNightMode) {
@@ -85,7 +78,6 @@ object Themes {
     /**
      * #8150: Fix icons not appearing in Note Editor due to MIUI 12's "force dark" mode
      */
-    @JvmStatic
     fun disableXiaomiForceDarkMode(context: Context) {
         // Setting a theme is an additive operation, so this adds a single property.
         context.setTheme(R.style.ThemeOverlay_Xiaomi)
@@ -105,14 +97,14 @@ object Themes {
         return attrs
     }
 
-    @JvmStatic
+    @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
     fun getColorFromAttr(context: Context?, colorAttr: Int): Int {
         val attrs = intArrayOf(colorAttr)
         return getColorFromAttr(context!!, attrs)[0]
     }
 
-    @JvmStatic
+    @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
     fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
@@ -124,11 +116,18 @@ object Themes {
     }
 
     /**
+     * @return required color depending on the theme from the given attribute
+     */
+    @ColorInt
+    fun Fragment.getColorFromAttr(@AttrRes attribute: Int): Int {
+        return getColorFromAttr(requireContext(), attribute)
+    }
+
+    /**
      * @return if current selected theme is `Follow system`
      */
-    @JvmStatic
     fun themeFollowsSystem(): Boolean {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().applicationContext)
+        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.applicationContext)
         return prefs.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE
     }
 }

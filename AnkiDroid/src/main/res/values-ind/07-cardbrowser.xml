@@ -48,6 +48,9 @@
     <plurals name="card_browser_subtitle">
         <item quantity="other">%d kartu ditampilkan</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="other">%d notes shown</item>
+    </plurals>
     <string name="card_browser_all_decks">Semua dek</string>
     <string name="card_browser_delete_card">Hapus catatan</string>
     <string name="card_browser_suspend_card">Tangguhkan kartu</string>

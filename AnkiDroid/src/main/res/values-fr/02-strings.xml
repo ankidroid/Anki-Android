@@ -99,6 +99,9 @@
         <item>Créée</item>
         <item>Note modifiée</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Appliquer</string>
+    <string name="filter_by_flags">Marqueurs</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifier la limite de nouvelles cartes d\'aujourd\'hui</string>
     <string name="custom_study_increase_review_limit">Modifier la limite de cartes à réviser d\'aujourd\'hui</string>
@@ -172,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Il n\'y a pas assez d\'espace pour importer le paquet.\nEspace nécessaire - %1$s \nEspace disponible - %2$s.\n\nVous avez du mal ? Essayez de libérer de l\'espace sur votre appareil. Sinon, la synchronisation utilise moins d\'espace que l\'importation. Vous pouvez essayer d\'importer le paquet sur un appareil qui possède plus d\'espace (par exemple Anki Desktop) et ensuite le synchroniser à cet appareil.</string>
     <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache ait été effacé pendant le traitement.\nVeuillez réessayer</string>
     <string name="import_succeeded_but_check_database">L\'importation des données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
-    <string name="import_error_unhandled_request">Impossible de traiter la demande d\'importation</string>
     <string name="import_error_corrupt_zip">Le fichier APKG est corrompu. Veuillez le supprimer et le retélécharger.\n\nRaison racine : %s</string>
-    <string name="import_error_exception">Impossible d\'importer le paquet\n\n%s</string>
+    <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() a échoué (peut être un manque d\'espace de stockage)</string>
-    <string name="import_error_unhandled_scheme">Importation non gérée depuis : \"%s\"</string>
+    <string name="import_error_copy_to_cache">Échec de la mise en cache du fichier (éventuellement à court d\'espace de stockage)</string>
     <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
     <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
     <string name="import_stats_error">Des erreurs se sont produites lors de l\'importation des fichiers suivants :\n%s</string>
@@ -192,11 +193,11 @@
     <string name="export_in_progress">Exportation du fichier Anki&#8230;</string>
     <string name="export_successful_title">Envoyer le paquet Anki ?</string>
     <string name="export_send_button">Envoyer</string>
-    <string name="export_save_button">Enregistrer sous...</string>
     <string name="export_send_no_handlers">Aucune application disponible pour ouvrir le fichier APKG. Sauvegarde...</string>
     <string name="export_save_apkg_successful">Paquet Anki sauvegardé avec succès</string>
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du paquet Anki</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
+    <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes</string>
     <string name="export_email_text"><![CDATA[        Bonjour !
         <br/><br/>
@@ -265,8 +266,6 @@
     <string name="apk_share_error">Erreur lors du partage du fichier apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Le chargement de \'%s\' a échoué.</string>
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
     <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
@@ -291,28 +290,7 @@
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
     <string name="title_whiteboard_pen_color">Couleur du stylo du tableau blanc</string>
     <string name="title_whiteboard_editor">Éditeur de tableau blanc</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Cartes vides trouvées. Veuillez exécuter Outils>Cartes vides.]]></string>
-    <string name="note_importer_error_empty_first_field">Premier champ vide : %s</string>
-    <string name="note_importer_error_first_field_matched">Premier champ correspondant : %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Duplication ajoutée avec le premier champ : %s</string>
-    <string name="note_importer_error_appeared_twice">Apparu deux fois dans le fichier : %s</string>
-    <string name="note_importer_error_empty_notes">Une ou plusieurs notes n\'ont pas été importées, car elles n\'ont généré aucune carte. Ceci peut se produire lorsque vous avez des champs vides ou lorsque vous n\'avez pas désigné le contenu du fichier texte dans les bons champs</string>
-    <string name="csv_importer_error_invalid_field_count">« %1$s » avait %2$d champs, sur %3$d attendus</string>
-    <string name="csv_importer_error_exception">Abandonné : %s</string>
     <string name="user_is_a_robot">Test automatisé détecté. Si vous êtes humain, contactez l\'assistance AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note ajoutée</item>
-        <item quantity="other">%d notes ajoutées</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note mise à jour</item>
-        <item quantity="other">%d notes mises à jour</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note inchangée</item>
-        <item quantity="other">%d notes inchangées</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Cette carte utilise des fonctionnalités AnkiDroid non prises en charge. Contactez le développeur %1$s ou allez voir le wiki %2$s</string>
     <string name="invalid_json_data">La carte a fourni des données invalides. %s</string>
@@ -326,7 +304,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
     <string name="card_viewer_media_relative_protocol">Erreur de contenu de la carte : mise à jour du média requise</string>
-    <string name="cannot_load_http_resource">Le chargement des ressources http n\'est plus supporté</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
     <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
     <string name="home">Accueil</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Classé dans %s</string>
-    <string name="import_mapped_to_tags">Classé dans les Étiquettes</string>
-    <string name="import_mapped_to_nothing">Ignoré</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Carte enterrée</string>
     <string name="buried_note">Note enterrée</string>
@@ -413,4 +386,22 @@
     <string name="expand_tag">Développer le tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Réviser moins</string>
+    <string name="intro_ankidroid_tagline_two">Souvenez-vous de plus</string>
+    <string name="intro_short_ankidroid_explanation">Le planificateur de cartes Anki permet de gagner du temps en renforçant vos mémoires les plus faibles et en préservant votre plus fort</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Commencer</string>
+    <string name="intro_sync_from_ankiweb">Synchroniser avec AnkiWeb</string>
+    <string name="already_logged_in">Déjà connecté</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Le paquet existe déjà</string>
+    <string name="deck_created">Paquet créé</string>
+    <string name="deck_renamed">Paquet renommé</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
+    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
+    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="browser_options_dialog_heading">Browser Options</string>
 </resources>

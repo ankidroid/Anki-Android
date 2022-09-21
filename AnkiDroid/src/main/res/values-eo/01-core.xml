@@ -103,7 +103,7 @@
     <string name="rename_deck">Renomi kartaron</string>
     <string name="create_shortcut">Krei simbolan ligilon</string>
     <string name="browse_cards">Foliumi kartojn</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aldoni</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
     <string name="menu_dismiss_note">Kaŝi / forigi</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
     <string name="search_deck" comment="Deck search for selecting it">Serĉi kartaron</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Serĉi kartaron</string>
-    <string name="empty_deck_add_note">Aldoni karton</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
     <string name="studyoptions_limit_reached">Limigo de taga lernado atingita</string>

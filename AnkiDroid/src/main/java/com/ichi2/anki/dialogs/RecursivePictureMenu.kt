@@ -19,26 +19,25 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.updatePadding
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
+import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
-import timber.log.Timber
 import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
 class RecursivePictureMenu : DialogFragment() {
+    @Suppress("deprecation") // getParcelableArrayList
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val items: List<Item> = requireArguments().getParcelableArrayList("bundle")!!
         val title = requireContext().getString(requireArguments().getInt("titleRes"))
@@ -61,30 +60,10 @@ class RecursivePictureMenu : DialogFragment() {
                 return items.size
             }
         }
-        val dialog = MaterialDialog(requireContext())
-            .customListAdapter(adapter, null)
-            .title(text = title)
-        setMenuBreadcrumbHeader(dialog)
-        val v = dialog.findViewById<RecyclerView>(R.id.md_recyclerview_content)
-        v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, 0)
-        // DEFECT: There is 9dp of bottom margin which I can't seem to get rid of.
-        dialog.show()
-        return dialog
-    }
-
-    protected fun setMenuBreadcrumbHeader(dialog: MaterialDialog) {
-        try {
-            val titleFrame = dialog.findViewById<View>(R.id.md_title_layout)
-            titleFrame.setPadding(10, 22, 10, 10)
-            titleFrame.setOnClickListener { dismiss() }
-            val icon = dialog.findViewById<ImageView>(R.id.md_icon_title)
-            icon.visibility = View.VISIBLE
-            val iconValue = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_menu_back_black_24dp)
-            iconValue!!.isAutoMirrored = true
-            icon.setImageDrawable(iconValue)
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to set Menu title/icon")
-        }
+        return MaterialDialog(requireContext()).show {
+            customListAdapter(adapter, null)
+            title(text = title)
+        }.apply { getRecyclerView().updatePadding(bottom = 0) }
     }
 
     abstract class Item : Parcelable {
@@ -160,6 +139,7 @@ class RecursivePictureMenu : DialogFragment() {
             }
         }
 
+        @Suppress("deprecation") // readList
         protected constructor(parcel: Parcel) : super(parcel) {
             if (parcel.readByte().toInt() == 0x01) {
                 mChildren = ArrayList()
@@ -180,7 +160,8 @@ class RecursivePictureMenu : DialogFragment() {
         }
 
         companion object {
-            @JvmField val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
+            @JvmField // required field that makes Parcelables from a Parcel
+            val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
                 override fun createFromParcel(parcel: Parcel): ItemHeader {
                     return ItemHeader(parcel)
                 }
@@ -193,7 +174,6 @@ class RecursivePictureMenu : DialogFragment() {
     }
 
     companion object {
-        @JvmStatic
         @CheckResult
         fun createInstance(itemList: ArrayList<Item?>?, @StringRes title: Int): RecursivePictureMenu {
             val helpDialog = RecursivePictureMenu()
@@ -204,7 +184,6 @@ class RecursivePictureMenu : DialogFragment() {
             return helpDialog
         }
 
-        @JvmStatic
         fun removeFrom(allItems: List<Item>, toRemove: Item?) {
             // Note: currently doesn't remove the top-level elements.
             for (i in allItems) {

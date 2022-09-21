@@ -6,14 +6,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
-    ext.kotlin_version = '1.7.0'
-    ext.lint_version = '30.2.1'
+    ext.kotlin_version = '1.7.10'
+    ext.lint_version = '30.3.0'
     ext.acra_version = '5.7.0'
-    ext.ankidroid_backend_version = '0.1.14-anki2.1.54'
+    ext.ankidroid_backend_version = '0.1.15-anki2.1.54' // this is parsed in tools/setup-anki-backend.sh
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.8.2'
-    ext.coroutines_version = '1.6.2'
-    ext.fragments_version = "1.5.0"
+    ext.junit_version = '5.9.0'
+    ext.coroutines_version = '1.6.4'
+    ext.fragments_version = "1.5.2"
 
     repositories {
         google()
@@ -22,13 +22,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.3.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
     }
 }
 
@@ -55,6 +55,9 @@ subprojects {
                 includeAndroidResources = true
             }
             project.android.testOptions.unitTests.all {
+                // tell backend to avoid rollover time, and disable interval fuzzing
+                environment "ANKI_TEST_MODE", "1"
+
                 useJUnitPlatform()
                 testLogging {
                     events "failed", "skipped"
@@ -69,20 +72,10 @@ subprojects {
             }
         }
 
-        // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
-        project.tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:deprecation" << "-Xlint:fallthrough" << "-Xmaxwarns" << "1000" << "-Werror"
-
-            // https://guides.gradle.org/performance/#compiling_java
-            // 1- fork improves things over time with repeated builds, doesn't harm CI single builds
-            options.fork = true
-            // 2- incremental will be the default in the future and can help now
-            options.incremental = true
-        }
-
         ktlint {
             // remove version override when ktlint gradle plugin releases with 0.45+ transitive
-            // check here https://github.com/JLLeitschuh/ktlint-gradle/blob/ddd465e28d77b879384886e1eef5666ebe518b4d/plugin/gradle/libs.versions.toml#L3
+            // check for "ktlint" here:
+            // https://github.com/JLLeitschuh/ktlint-gradle/blob/master/plugin/gradle/libs.versions.toml
             version = "0.45.2"
             disabledRules = ["no-wildcard-imports"]
         }

@@ -201,14 +201,12 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         }
 
         @CheckResult
-        @JvmStatic
         fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
             val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
             return fromPreferenceString(value)
         }
 
         @CheckResult
-        @JvmStatic
         fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> {
             return ViewerCommand.values().map {
                 Pair(it, fromPreference(prefs, it))

@@ -18,20 +18,12 @@ package com.ichi2.anki.contextmenu
 import android.content.Context
 
 class AnkiCardContextMenu(context: Context) : SystemContextMenu(context) {
-
-    override val defaultEnabledStatus: Boolean
-        get() = true
-    override val preferenceKey: String
-        get() = ANKI_CARD_CONTEXT_MENU_PREF_KEY
     override val activityName: String
         get() = "com.ichi2.anki.AnkiCardContextMenuAction"
 
     companion object {
-        const val ANKI_CARD_CONTEXT_MENU_PREF_KEY = "anki_card_enable_external_context_menu"
-
-        @JvmStatic
-        fun ensureConsistentStateWithSharedPreferences(context: Context) {
-            AnkiCardContextMenu(context).ensureConsistentStateWithSharedPreferences()
+        fun ensureConsistentStateWithPreferenceStatus(context: Context, preferenceStatus: Boolean) {
+            AnkiCardContextMenu(context).ensureConsistentStateWithPreferenceStatus(preferenceStatus)
         }
     }
 }

@@ -48,7 +48,6 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
             return CustomToolbarButton(index, fields[1], fields[2], fields[3])
         }
 
-        @JvmStatic
         fun fromStringSet(hs: Set<String?>): ArrayList<CustomToolbarButton> {
             val buttons = ArrayList<CustomToolbarButton>(hs.size)
             for (s in hs) {
@@ -64,7 +63,6 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
             return buttons
         }
 
-        @JvmStatic
         fun toStringSet(buttons: ArrayList<CustomToolbarButton>): Set<String> {
             val ret = HashSetInit<String>(buttons.size)
             for (b in buttons) {

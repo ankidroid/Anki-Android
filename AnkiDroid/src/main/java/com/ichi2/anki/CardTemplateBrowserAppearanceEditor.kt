@@ -156,14 +156,15 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
     private fun saveAndExit() {
         Timber.i("Save and Exit")
-        val data = Intent()
-        data.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-        data.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+        val data = Intent().apply {
+            putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+            putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+        }
         setResult(RESULT_OK, data)
         finishActivityWithFade(this)
     }
 
-    fun hasChanges(): Boolean {
+    private fun hasChanges(): Boolean {
         return try {
             questionHasChanged(intent) || answerHasChanged(intent)
         } catch (e: Exception) {
@@ -182,7 +183,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         }
 
         companion object {
-            @JvmStatic
             @Contract("null -> null")
             fun fromIntent(intent: Intent?): Result? {
                 return if (intent == null) {
@@ -205,7 +205,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         /** Specified the card browser should use the default template formatter  */
         const val VALUE_USE_DEFAULT = ""
-        @JvmStatic
         @CheckResult
         fun getIntentFromTemplate(context: Context, template: JSONObject): Intent {
             val browserQuestionTemplate = template.getString("bqfmt")
@@ -215,10 +214,10 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         @CheckResult
         fun getIntent(context: Context, questionFormat: String, answerFormat: String): Intent {
-            val intent = Intent(context, CardTemplateBrowserAppearanceEditor::class.java)
-            intent.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-            intent.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
-            return intent
+            return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
+                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+            }
         }
     }
 }

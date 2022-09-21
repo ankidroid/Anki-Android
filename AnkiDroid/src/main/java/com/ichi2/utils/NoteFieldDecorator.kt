@@ -62,7 +62,6 @@ object NoteFieldDecorator {
         "Nxfunl0701",
     )
 
-    @JvmStatic
     fun aplicaHuevo(fieldText: String?): String? {
         val revuelto = huevoRevuelto(fieldText)
         for (huevo in huevoOpciones) {

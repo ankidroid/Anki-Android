@@ -48,28 +48,25 @@
     <string name="disabled">Devredışı</string>
     <string name="enabled">Etkin</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_minutes">%s dk</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">Sonuç yok</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Genel</string>
-    <string name="pref_cat_general_summ">Genel ayarlar</string>
+    <string name="pref_cat_studying" maxLength="41">Çalışma</string>
+    <string name="pref_cat_system_wide" maxLength="41">Sistem Geneli</string>
     <string name="pref_cat_reviewing" maxLength="41">Çalışma</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Senkronizasyon</string>
     <string name="pref_cat_scheduling" maxLength="41">Zamanlama</string>
     <string name="pref_cat_whiteboard" maxLength="41">Yazı tahtası</string>
     <string name="pref_cat_appearance" maxLength="41">Görünüş</string>
-    <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
     <string name="pref_cat_themes" maxLength="41">Temalar</string>
     <string name="pref_cat_fonts" maxLength="41">Fontlar</string>
     <string name="pref_cat_gestures" maxLength="41">Jestler</string>
     <string name="pref_cat_controls" maxLength="41">Kontroller</string>
     <string name="pref_cat_advanced" maxLength="41">Gelişmiş</string>
-    <string name="pref_cat_advanced_summ">Optimizasyon ve deneysel özellikler</string>
-    <string name="pref_cat_performance" maxLength="41">Performans</string>
     <string name="pref_cat_workarounds" maxLength="41">Geçici çözümler</string>
     <string name="pref_cat_plugins" maxLength="41">Eklentiler</string>
-    <string name="about_title" maxLength="41">AnkiDroid hakkında</string>
-    <string name="about_version">Sürüm: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Kontur genişliği</string>
     <string name="use_input_tag" maxLength="41">Cevabı karta yaz</string>
@@ -126,15 +123,17 @@
     <string name="swipe_sensitivity" maxLength="41">Kaydırma duyarlılığı</string>
     <string name="tts" maxLength="41">Metin seslendirme</string>
     <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Eşitlemede medyayı aktar</string>
     <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
     <string name="sync_account" maxLength="41">AnkiWeb hesabı</string>
     <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
+    <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
+    <string name="metered_sync_summary">Kapatılırsa, ölçülü bir bağlantıda senkronizasyon yapmaya çalışırsanız uyarılırsınız</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Gündüz teması</string>
     <string name="night_theme" maxLength="41">Gece teması</string>
@@ -184,13 +183,9 @@
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
     <string name="new_timezone" maxLength="41">Yeni zaman dilimi idaresi</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">Gece yarısından %s saat sonra</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Gece Yarısı</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">V2 zamanlayıcı</string>
-    <string name="sched_v2_summ">Yeni zamanlayıcıyı etkinleştirin. Bir sonraki senkronizasyonda değişiklikleri bir yönde zorlar</string>
-    <string name="sched_ver_toggle_title">Onayla</string>
-    <string name="sched_ver_1to2">Deneysel zamanlayıcı hatalı zamanlamaya yol açabilir. Lütfen önce dokümentasyonu okuduğunuza emin olun. Devam edilsin mi?</string>
     <string name="pref_keep_screen_on" maxLength="41">Ekranı açık tut</string>
     <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
     <string name="convert_fen_text" maxLength="41">Satranç gösterimi desteği</string>
@@ -322,8 +317,15 @@
     <string name="no_code_formatting_summ">Yazılı cevap sonuçlarında \"􏿾\" çıkmasını düzeltir</string>
     <string name="type_in_answer_focus" maxLength="41">\"Cevabı yaz\"a odaklan</string>
     <string name="type_in_answer_focus_summ">Çalışıcıda otomatik olarak \"Cevabı yaz\" alanına odaklan</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Değişim Kaydını Aç</string>
+    <string name="pref_cat_about_title" maxLength="41">Hakkında</string>
+    <string name="contributors_title">Katkıda Bulunanlar</string>
+    <string name="about_contributors_description"><![CDATA[İşte uygulamamıza katkıda bulunan müthiş <a href=\"%1$s\">insanlar</a>. Siz de AnkiDroid\'e programlayarak, çevirerek, bağış yaparak ve <a href=\"%2$s\">daha fazla yolla</a> yardım edebilirsiniz!]]></string>
+    <string name="license">Lisans</string>
+    <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> ve <a href=\"%2$s\">AGPL-3.0</a> lisansları altında yayınlanmaktadır, kaynak kodu <a href=\"%3$s\">GitHub\'da</a> mevcuttur]]></string>
+    <string name="donate_description"><![CDATA[AnkiDroid\'in geliştirilmesine <a href=\"%1$s\">bağış yaparak</a> destek olabilirsiniz. Miktarı ne olursa olsun içten teşekkürlerimizi kazanırsınız.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Hareket ekle</string>
     <string name="binding_replace_gesture">El hareketini değiştir</string>
     <string name="binding_add_key">Anahtar ekle</string>
@@ -340,4 +342,16 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ kaldır</string>
     <string name="bindings_already_bound">%s bileşenine bağlı zaten</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">Deneysel</string>
+    <string name="experimental_pref_confirmation" maxLength="41">\"%s\" aç</string>
+    <string name="use_rust_backend_title" maxLength="41">Yeni backendi kullan</string>
+    <string name="use_rust_backend_summary">v3 zamanlayıcı gibi yeni Anki özelliklerini etkinleştirir\nSTABİL DEĞİL. Umursadığınız bir koleksiyonda kullanmayın. Uygulamayı kapatınca geri ALINMAZ</string>
+    <string name="use_rust_backend_warning">Bu, bir ihtimâlle yüklemenizi tamamen bozup uygulamayı kaldırmanızı ve AnkiDroid klasörünü silmenizi gerektirebilir, ve belki bozulmayı senkronizasyonla AnkiWeb\'e yayabilir.\n\nTest etmenizden memnuniyet duyarız, ama lütfen AnkiWeb-dışı geçerli bir yedeğiniz olduğundan emin olun.</string>
+    <string name="enable_v3_sched_title" maxLength="41">v3 zamanlayıcıyı kullan</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
+    <string name="disable_dev_options">Geliştirici seçeneklerini kapat</string>
+    <string name="dev_options_warning">        Lütfen geliştirici seçeneklerini açmadan önce emin olun. Bu seçenekler tehlikelidir ve uygulamayı ya da koleksiyonunuzu bozabilir.\n\nBu seçenekler çoğu kullanıcı için uygun değildir ve çevrilmezler, bu yüzden İngilizce olduklarını göz önünde bulundurun.</string>
 </resources>

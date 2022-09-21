@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
     <string name="unused_strings">\n\nUnused ᱯᱟᱹᱤᱞ:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[&lt;h2&gt;%1$s:&lt;br/&gt;Android ᱞᱟᱹᱜᱤᱫ ᱯᱷᱞᱟᱥᱠᱟᱰ&lt;/h2&gt;AnkiDroid ᱫᱚ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱮᱯᱞᱤᱠᱮᱚᱱ ᱱᱚᱶᱟᱫᱚ ᱰᱮᱥᱠᱴᱟᱹᱯ ᱥᱚᱯᱷᱴᱣᱮᱨ ᱥᱟᱞᱟᱜ ᱛᱮ ᱦᱚᱸ ᱠᱟᱹᱢᱤᱟᱭ&lt;a href=\&quot;%2$s\&quot;&gt;Anki&lt;/a&gt; ᱾ ᱟᱢ Ankidroid ᱟᱨ Anki Desktop ᱨᱮ ᱠᱟᱰ ᱛᱮᱭᱟᱨ, ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ , ᱟᱨᱦᱚᱸ ᱡᱷᱚᱛᱚ Ankiweb ᱨᱮ synchronize ᱫᱟᱲᱮᱭᱟᱜᱟ ᱾]]></item>
-        <item><![CDATA[AnkiDroid ᱟᱨᱦᱚᱸ ᱵᱮᱥ ᱛᱮᱭᱟᱨ ᱞᱟᱹᱜᱤᱫ bugs ᱨᱤᱯᱚᱴ ᱢᱮ&lt;a href=\&quot;%1$s\&quot;&gt;Issue tracker ᱴᱷᱮᱱ&lt;/a&gt;; ᱱᱟᱶᱟ ᱵᱤᱪᱟᱨ ᱠᱚ ᱮᱢᱟᱱ ᱵᱟᱛᱟᱣᱫᱟᱲᱮᱟᱜ ᱯᱮ ᱾ answers ᱯᱟᱱᱛᱮ ᱯᱮ &lt;a href=\&quot;%2$s\&quot;&gt;ᱣᱤᱠᱤ ᱨᱮ&lt;/a&gt;ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ discussion ᱮᱛᱦᱚᱵ ᱯᱮ&lt;a href=\&quot;%3$s\&quot;&gt;ᱯᱷᱚᱨᱩᱢ ᱨᱮ&lt;/a&gt;.]]></item>
-        <item><![CDATA[AnkiDroid ᱫᱚ&lt;a href=\&quot;%1$s\&quot;&gt;open source software ᱠᱟᱱᱟ&lt;a/&gt;, ᱡᱷᱚᱛᱚᱦᱚᱲ encourage ᱠᱚ ᱠᱟᱱᱟ ᱡᱮ &lt;a href=\&quot;%2$s\&quot;&gt;contributor ᱛᱮᱭᱟᱨᱚᱜ ᱯᱮ&lt;/a&gt; :-)]]></item>
-        <item><![CDATA[Non-developers ᱦᱚᱸ ᱜᱚᱸᱲᱚᱸ ᱢᱮᱥᱟ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱚ. ᱡᱮᱢᱛᱤ ᱟᱢ&lt;a href=\&quot;%1$s\&quot;&gt;translate ᱠᱚᱨᱮ&lt;/a&gt; AnkiDroid ᱜᱚᱲᱚᱭᱯᱮ, ᱣᱤᱠᱤ ᱠᱚᱨᱮ ᱟᱹᱯᱰᱮᱴ ᱠᱟᱛᱮ, screenshots ᱮᱢ ᱟᱨᱦᱚᱸ AnkiDroid blog ᱠᱟᱛᱮ ᱾]]></item>
-        <item><![CDATA[AnkiDroid ᱫᱚ&lt;a href=\&quot;%1$s\&quot;&gt;GNU-GPL v3 license&lt;/a&gt;ᱛᱮ ᱚᱰᱚᱠ ᱟᱠᱟᱱᱟ ᱟᱨ source code&lt;a href=\&quot;%2$s\&quot;&gt;ᱫᱚ GitHub ᱨᱮ ᱯᱮ ᱧᱟᱢᱟ&lt;/a&gt;.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
     <string name="reposition_card_dialog_message">ᱮᱛᱦᱚᱵ ᱡᱟᱭᱜᱟᱺ</string>
@@ -133,6 +126,7 @@
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -252,6 +246,7 @@
         <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
         <item quantity="other">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">ᱱᱚᱣᱟ ᱰᱮᱠᱨᱮ ᱛᱮᱦᱮᱧ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱣᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱮᱞ</string>
     <string name="deck_picker_rev">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮ ᱛᱮᱦᱮᱧ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱟᱜ ᱱᱟᱣᱟ ᱮᱞ</string>
     <string name="deck_picker_lrn">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮᱭᱟᱜ ᱥᱮᱪᱮᱫ ᱠᱟᱰ  ᱮᱞ </string>
@@ -261,4 +256,7 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">ᱰᱮᱠ ᱯᱭᱟᱠᱮᱡᱽ (apkg)</string>
     <string name="import_collection_package">ᱦᱟᱞᱟᱝᱥᱟᱢᱴᱟ ᱯᱭᱟᱠᱮᱡ (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

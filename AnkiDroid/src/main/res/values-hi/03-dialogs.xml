@@ -60,13 +60,6 @@
     <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
     <string name="tts_no_tts">बात न करें</string>
     <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>एंड्रॉइड के लिए फ़्लैशकार्ड</h2>AnkiDroid एक फ़्लैशकार्ड अनुप्रयोग है जो डेस्कटॉप सॉफ्टवेयर <a href=\"%2$s\">Anki</a> से पूरी तरह सांगत है। आप Anki डेस्कटॉप और AnkiDroid सामग्री बना, डाउनलोड कर और सीख सकते हैं, और AnkiWeb से साथ आसानी से समकालीन कर सकते हैं।]]></item>
-        <item><![CDATA[AnkiDroid को बेहतर बनाने में हमारी सहायता करने के लिए, कृपया <a href=\"%1$s\">समस्या ट्रैकर</a> को दोष सूचित करें; नई सुविधाओं के विचार भी स्वीकारे जाते हैं। <a href=\"%2$s\"> विकि</a> पर उतर खोजें या <a href=\"%3$s\">फोरम</a> पर बातचीत शुरू करें।]]></item>
-        <item><![CDATA[AnkiDroid एक <a href=\"%1$s\">मुक्त स्रोत सॉफ्टवेयर<a/> है, इसलिए हम सभी को <a href=\"%2$s\">योगदानकर्ता बनने</a> के लिए प्रोत्सहित करते हैं :-)]]></item>
-        <item><![CDATA[गैर-विकासक भी सहायता कर सकते हैं। उदाहरण के लिए, आप AnkiDroid के<a href=\"%1$s\">अनुवाद में सहायता</a>, विकि का अद्यतन, स्क्रीनशॉट प्रदान, या AnkiDroid के बारे में ब्लॉग कर सकते हैं।]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"%1$s\"> v3 GNU-GPL लाइसेंस</a> के तहत जारी किया गया है और स्रोत कोड <a href=\"%2$s\"> GitHub पर</a>उपलब्ध है।]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>
     <string name="reposition_card_dialog_title">नया कार्ड पुन: प्रस्तुत करें</string>
     <string name="reposition_card_dialog_message">शुरू करने की स्थिति:</string>
@@ -133,6 +126,7 @@
     <string name="dialog_ok">ठीक है</string>
     <string name="dialog_no">नहीं</string>
     <string name="dialog_continue">जारी रखें</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">बनाएँ</string>
     <string name="dialog_positive_delete">हटाएँ</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -252,6 +246,7 @@
         <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
         <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>
     <string name="deck_picker_rev">इस डेक में आज के लिए पत्तियों की संख्या।</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -261,4 +256,7 @@
     <string name="deck_picker_counts">डेक अवलोकन पृष्ठ खोलें जिसमें आज देखने के लिए पत्तियों की संख्या है।</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

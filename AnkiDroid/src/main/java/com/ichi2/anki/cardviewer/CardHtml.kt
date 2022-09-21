@@ -25,6 +25,7 @@ import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.regex.Pattern
@@ -43,7 +44,6 @@ class CardHtml(
     @RustCleanup("too many variables, combine once we move away from backend")
     private var questionSound: List<SoundOrVideoTag>? = null,
     private var answerSound: List<SoundOrVideoTag>? = null,
-    private val usingBackend: Boolean = answerSound != null
 ) {
     fun getSoundTags(sideFor: Side): List<SoundOrVideoTag> {
         if (sideFor == this.side) {
@@ -136,9 +136,12 @@ class CardHtml(
             val renderOutput = card.render_output()
             val questionAv = renderOutput.question_av_tags
             val answerAv = renderOutput.answer_av_tags
-
-            val questionSound = questionAv?.filterIsInstance(SoundOrVideoTag::class.java)
-            val answerSound = answerAv?.filterIsInstance(SoundOrVideoTag::class.java)
+            var questionSound: List<SoundOrVideoTag>? = null
+            var answerSound: List<SoundOrVideoTag>? = null
+            if (!BackendFactory.defaultLegacySchema) {
+                questionSound = questionAv.filterIsInstance(SoundOrVideoTag::class.java)
+                answerSound = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
+            }
 
             // legacy (slow) function to return the answer without the front side
             fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
@@ -198,7 +201,6 @@ class CardHtml(
          * @param answerContent     The content from which to remove front side audio.
          * @return The content stripped of audio due to {{FrontSide}} inclusion.
          */
-        @JvmStatic
         fun removeFrontSideAudio(card: Card, answerContent: String): String {
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
@@ -213,7 +215,6 @@ class CardHtml(
             return newAnswerContent
         }
 
-        @JvmStatic
         fun legacyGetTtsTags(card: Card, cardSide: Sound.SoundSide, context: Context): List<TTSTag>? {
             val cardSideContent: String = when {
                 Sound.SoundSide.QUESTION == cardSide -> card.q(true)

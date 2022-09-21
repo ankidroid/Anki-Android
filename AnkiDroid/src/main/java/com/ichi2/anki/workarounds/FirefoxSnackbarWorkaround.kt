@@ -34,7 +34,6 @@ import timber.log.Timber
  * Reported as fixed in Firefox Preview
  */
 object FirefoxSnackbarWorkaround {
-    @JvmStatic
     fun handledLaunchFromWebBrowser(intent: Intent?, context: Context): Boolean {
         if (intent == null) {
             Timber.w("FirefoxSnackbarWorkaround: No intent provided")

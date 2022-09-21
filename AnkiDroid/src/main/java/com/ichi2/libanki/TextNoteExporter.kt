@@ -14,7 +14,6 @@ package com.ichi2.libanki
 
 import android.text.TextUtils
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.strip
 import java.io.BufferedWriter
 import java.io.FileOutputStream
 import java.io.IOException
@@ -23,13 +22,13 @@ import java.nio.charset.StandardCharsets
 
 class TextNoteExporter(
     col: Collection,
-    did: Long?,
+    did: DeckId?,
     val includeID: Boolean,
     val includedTags: Boolean,
     includeHTML: Boolean
 ) : Exporter(col, did) {
     init {
-        mIncludeHTML = includeHTML
+        this.includeHTML = includeHTML
     }
 
     constructor(
@@ -58,16 +57,16 @@ class TextNoteExporter(
                     row.add(id)
                 }
                 for (field in Utils.splitFields(flds)) {
-                    row.add(processText(field!!))
+                    row.add(processText(field))
                 }
                 if (includedTags) {
-                    row.add(strip(tags))
+                    row.add(tags.trim())
                 }
                 @KotlinCleanup("use kotlin joinToString function")
                 data.add(TextUtils.join("\t", row))
             }
         }
-        mCount = data.size
+        count = data.size
         val out = TextUtils.join("\n", data)
         BufferedWriter(
             OutputStreamWriter(

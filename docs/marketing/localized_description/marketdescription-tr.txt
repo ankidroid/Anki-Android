@@ -22,7 +22,7 @@ Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uy
 • cevapları yazma (isteğe bağlı)
 • yazı tahtası
 • kart düzenleyici/ekleyici
-• kart tarayıcı
+• kart tarayıcısı
 • tablet düzeni
 • var olan koleksiyon dosyalarını içeri aktarma (Anki Desktop aracılığıyla)
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
