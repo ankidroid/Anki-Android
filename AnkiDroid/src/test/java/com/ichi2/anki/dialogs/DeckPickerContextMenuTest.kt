@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Intent
+import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.assertThrows
@@ -31,6 +33,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
@@ -42,6 +45,11 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest : RobolectricTest() {
+    @Before
+    fun before() {
+        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+    }
+
     @Test
     fun ensure_cannot_be_instantiated_without_arguments() {
         assertThrows<IllegalStateException> { DeckPickerContextMenu(col).deckId }
