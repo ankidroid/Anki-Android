@@ -24,7 +24,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.util.*
 
 object FileUtil {
     /** Gets the free disk space given a file  */
@@ -67,14 +66,14 @@ object FileUtil {
     /**
      * @return Key: Filename; Value: extension including dot
      */
-    fun getFileNameAndExtension(fileName: String?): Map.Entry<String, String>? {
+    fun getFileNameAndExtension(fileName: String?): Pair<String, String>? {
         if (fileName == null) {
             return null
         }
         val index = fileName.lastIndexOf(".")
         return if (index < 1) {
             null
-        } else AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
+        } else Pair(fileName.substring(0, index), fileName.substring(index))
     }
 
     /**

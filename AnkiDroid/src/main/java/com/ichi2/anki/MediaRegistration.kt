@@ -50,15 +50,15 @@ class MediaRegistration(private val context: Context) {
         val fd = openInputStreamWithURI(uri)
         val fileNameAndExtension = getFileNameAndExtension(filename)
         fileName = if (checkFilename(fileNameAndExtension!!)) {
-            String.format("%s-name", fileNameAndExtension.key)
+            String.format("%s-name", fileNameAndExtension.first)
         } else {
-            fileNameAndExtension.key
+            fileNameAndExtension.first
         }
         var clipCopy: File
         var bytesWritten: Long
         openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
+            if (shouldConvertToJPG(fileNameAndExtension.second, copyFd)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
@@ -66,7 +66,7 @@ class MediaRegistration(private val context: Context) {
                     return null
                 }
             } else {
-                clipCopy = File.createTempFile(fileName, fileNameAndExtension.value)
+                clipCopy = File.createTempFile(fileName, fileNameAndExtension.second)
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
             }
         }
@@ -122,8 +122,8 @@ class MediaRegistration(private val context: Context) {
         return true
     }
 
-    private fun checkFilename(fileNameAndExtension: Map.Entry<String, String>): Boolean {
-        return fileNameAndExtension.key.length <= 3
+    private fun checkFilename(fileNameAndExtension: Pair<String, String>): Boolean {
+        return fileNameAndExtension.first.length <= 3
     }
 
     fun onImagePaste(uri: Uri): String? {

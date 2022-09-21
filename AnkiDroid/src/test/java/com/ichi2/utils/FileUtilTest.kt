@@ -15,9 +15,9 @@
  */
 package com.ichi2.utils
 
-import org.acra.util.IOUtils.*
+import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThrows
 import org.junit.Rule
@@ -25,8 +25,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
-import kotlin.Throws
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -144,15 +142,15 @@ class FileUtilTest {
     @Test
     fun testFileNameNormal() {
         val fileNameAndExtension = FileUtil.getFileNameAndExtension("abc.jpg")
-        assertThat(fileNameAndExtension!!.key, equalTo("abc"))
-        assertThat(fileNameAndExtension.value, equalTo(".jpg"))
+        assertThat(fileNameAndExtension!!.first, equalTo("abc"))
+        assertThat(fileNameAndExtension.second, equalTo(".jpg"))
     }
 
     @Test
     fun testFileNameTwoDot() {
         val fileNameAndExtension = FileUtil.getFileNameAndExtension("a.b.c")
-        assertThat(fileNameAndExtension!!.key, equalTo("a.b"))
-        assertThat(fileNameAndExtension.value, equalTo(".c"))
+        assertThat(fileNameAndExtension!!.first, equalTo("a.b"))
+        assertThat(fileNameAndExtension.second, equalTo(".c"))
     }
 
     @Test
