@@ -23,7 +23,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.utils.KotlinCleanup
 
 /**
  * The UI of an ease button
@@ -67,10 +66,9 @@ class EaseButton(private val ease: Int, private val layout: LinearLayout, privat
         layout.setBackgroundResource(color)
     }
 
-    @KotlinCleanup("change lambdas to non-null variants")
     fun setListeners(easeHandler: AbstractFlashcardViewer.SelectEaseHandler) {
-        layout.setOnClickListener { view: View? -> easeHandler.onClick(view!!) }
-        layout.setOnTouchListener { view: View?, event: MotionEvent? -> easeHandler.onTouch(view!!, event!!) }
+        layout.setOnClickListener { view: View -> easeHandler.onClick(view) }
+        layout.setOnTouchListener { view: View, event: MotionEvent -> easeHandler.onTouch(view, event) }
     }
 
     fun detachFromParent() {
