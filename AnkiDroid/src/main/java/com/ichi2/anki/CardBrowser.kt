@@ -1004,26 +1004,22 @@ open class CardBrowser :
      * 0: No Flag, 1: RED, 2: ORANGE, 3: GREEN
      * 4: BLUE, 5: PINK, 6: Turquoise, 7: PURPLE
      *
-     * @return list of cards with updated flags
      */
     @VisibleForTesting
     suspend fun updateSelectedCardsFlag(flag: Int) {
+        // list of cards with updated flags
         val updatedCards = withProgress {
             withCol {
-                val cards = selectedCardIds.map { getCard(it) }
-                col.db.database.beginTransaction()
-                try {
-                    col.setUserFlag(flag, selectedCardIds)
-                    for (c in cards) {
-                        c.load()
-                    }
-                    col.db.database.setTransactionSuccessful()
-                } finally {
-                    DB.safeEndInTransaction(col.db)
+                db.executeInTransaction {
+                    setUserFlag(flag, selectedCardIds)
+                    selectedCardIds
+                        .map { getCard(it) }
+                        .onEach { load() }
                 }
-                cards
             }
         }
+        // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
+        // otherwise it could hang the main thread
         updateCardsInList(updatedCards)
         invalidateOptionsMenu() // maybe the availability of undo changed
         if (updatedCards.map { card -> card.id }.contains(reviewerCardId)) {
