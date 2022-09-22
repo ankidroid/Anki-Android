@@ -1,5 +1,5 @@
 # Translation
-Here is a documentation on adding string resources , which will get translated by crowdin.
+Here is a documentation on adding string resources , which will get translated either by crowdin or by pontoon.
 
 ## Steps are:
 
