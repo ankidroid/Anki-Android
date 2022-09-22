@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_item_browser"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground">
+
+    <CheckBox
+        android:id="@+id/card_checkbox"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity= "center_vertical"/>
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/card_sfld"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:paddingVertical="1dp"
+        android:gravity="top"/>
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="?attr/cardBrowserDivider" />
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/card_column2"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="4dp"
+        android:paddingEnd="2dp"
+        android:paddingVertical="1dp"
+        android:gravity="top"/>
+
+</LinearLayout>

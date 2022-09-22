@@ -1,0 +1,36 @@
+Hafalkan semuanya dengan AnkiDroid!
+
+AnkiDroid memungkinkanmu mempelajari kartu flash secara efisien dengan menampilkannya sesaat sebelum kamu lupa. Aplikasi ini sepenuhnya kompatibel dengan perangkat lunak hafalan berjarak Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
+
+Belajar banyak hal di manapun dan kapanpun kamu mau. Manfaatkan waktu gabut saat naik bus, di antrean supermarket atau waktu lainnya!
+
+Buat dek sendiri atau unduh dek bebas dari berbagai macam bahasa dan topik (lebih dari 6000 tersedia).
+
+Tambahkan materi melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. Aplikasi juga mendukung menambah materi secara otomatis dari kamus!
+
+★ Fitur utama:
+• isi kartu flash yang didukung: teks, gambar, audio, LaTeX
+• hafalan berjarak (algoritma supermemo 2)
+• integrasi teks-suara
+• lebih dari 6000 dek tersedia
+• gawit kemajuan
+• statistik yang rinci
+• sinkronisasi dengan AnkiWeb
+• sumber terbuka (open source)
+
+★ Fitur tambahan:
+• tulis jawaban (opsional)
+• whiteboard
+• editor/tambah kartu
+• penelusur kartu
+• tata letak tablet
+• impor berkas koleksi yang ada (lewat Anki Desktop)
+• tambahkan kartu dengan intent dari aplikasi lain seperti kamus
+• dukungan fon kustom
+• cadangan sistem penuh
+• navigasi dengan usapan, tekan
+• dapat disesuaikan
+• penanganan dek kartu dinamis
+• mode malam
+• tersedia dalam 27 bahasa
+• Semua versi AnkiDroid sebelumnya dapat diunduh dari situs web

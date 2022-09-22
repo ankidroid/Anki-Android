@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/DeckPickerHoriz"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/deck_picker_left_padding"
+    android:paddingEnd="@dimen/deck_picker_right_padding"
+    tools:background="@android:color/holo_orange_light">
+
+    <ImageButton
+        android:id="@+id/deckpicker_indent"
+        android:minWidth="0dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/transparent" />
+    <LinearLayout
+        android:id="@+id/deck_name_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/deckpicker_indent"
+        android:layout_toStartOf="@+id/counts_layout"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageButton
+            android:id="@+id/deckpicker_expander"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:minWidth="48dp"
+            android:padding="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/deckpicker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:background="@color/transparent"
+            android:gravity="start|center_vertical"
+            android:maxLines="2"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="Deck name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/counts_layout"
+        android:contentDescription="@string/deck_picker_counts"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:minWidth="70dp"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" >
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/deckpicker_new"
+            android:contentDescription="@string/deck_picker_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingEnd="5dip"
+            android:textSize="14sp"
+            tools:text="10" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/deckpicker_lrn"
+            android:contentDescription="@string/deck_picker_lrn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingEnd="5dip"
+            android:textSize="14sp"
+            tools:text="42" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/deckpicker_rev"
+            android:contentDescription="@string/deck_picker_rev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="6dip"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:textSize="14sp"
+            tools:text="13" />
+    </LinearLayout>
+</RelativeLayout>

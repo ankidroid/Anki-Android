@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Advanced Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
+    android:title="@string/pref_cat_advanced"
+    android:key="@string/pref_advanced_screen_key">
+        <EditTextPreference
+            android:defaultValue="/sdcard/AnkiDroid"
+            android:key="@string/pref_ankidroid_directory_key"
+            android:title="@string/col_path"
+            app1:useSimpleSummaryProvider="true"/>
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:defaultValue="8"
+            android:key="@string/pref_backup_max_key"
+            android:title="@string/pref_backup_max"
+            app1:useSimpleSummaryProvider="true"
+            app:min="0"
+            app:max="99" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/tts_key"
+            android:summary="@string/tts_summ"
+            android:title="@string/tts" />
+        <Preference
+            android:summary="@string/reset_languages_summ"
+            android:title="@string/reset_languages"
+            android:key="@string/pref_reset_languages_key" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/convert_fen_text_key"
+            android:summary="@string/convert_fen_text_summ"
+            android:title="@string/convert_fen_text" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/more_scrolling_buttons_key"
+            android:summary="@string/more_scrolling_buttons_summ"
+            android:title="@string/more_scrolling_buttons" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/double_scrolling_gap_key"
+            android:summary="@string/double_scrolling_gap_summ"
+            android:title="@string/double_scrolling_gap" />
+        <PreferenceCategory android:title="@string/statistics">
+            <ListPreference
+                android:entries="@array/stats_default_deck_labels"
+                android:entryValues="@array/stats_default_deck_values"
+                android:key="@string/stats_default_deck_key"
+                android:title="@string/stats_default_deck_title"
+                android:defaultValue="current"
+                app1:useSimpleSummaryProvider="true"/>
+            <Preference
+                android:key="@string/pref_advanced_statistics_key"
+                android:title="@string/advanced_statistics_title"
+                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment"
+                search:ignore="true"/>
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:key="@string/pref_cat_workarounds_key"
+            android:title="@string/pref_cat_workarounds" >
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/disable_hardware_render_key"
+                android:summary="@string/software_render_summ"
+                android:title="@string/software_render" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/safe_display_key"
+                android:summary="@string/safe_display_summ"
+                android:title="@string/safe_display" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/use_input_tag_key"
+                android:disableDependentsState="true"
+                android:summary="@string/use_input_tag_summ"
+                android:title="@string/use_input_tag" />
+            <!-- Workaround for #5533 -->
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/disable_single_field_edit_key"
+                android:summary="@string/disable_extended_text_ui_summ"
+                android:title="@string/disable_extended_text_ui" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/note_editor_newline_replace_key"
+                android:summary="@string/note_editor_replace_newlines_summ"
+                android:title="@string/note_editor_replace_newlines"
+                />
+            <!-- #7896 - Workaround for old webviews which could not render some characters in a <code> block
+            due to problems with the default monospace font handling -->
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/no_code_formatting_key"
+                android:summary="@string/no_code_formatting_summ"
+                android:title="@string/no_code_formatting" />
+            <!-- #8424 - allow users to decide if they want to focus the EditText
+                Note: this functionality is already disabled if useInputTag is enabled
+                UseInputTag: has had `disableDependentsState` set, so this is disabled
+                if useInputTag is true
+             -->
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/type_in_answer_focus_key"
+                android:summary="@string/type_in_answer_focus_summ"
+                android:dependency="@string/use_input_tag_key"
+                android:title="@string/type_in_answer_focus" />
+            <!-- #9639 - allow all files in media selection dialog - .opus is application/octet-stream
+            in older versions of Android (fixed between API 26 and API 30)
+             We don't want to allow this by default, but we want an override -->
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/media_import_allow_all_files_key"
+                android:summary="@string/media_import_allow_all_files_summ"
+                android:title="@string/media_import_allow_all_files" />
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:key="@string/pref_cat_plugins_key"
+            android:title="@string/pref_cat_plugins" >
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/enable_api_key"
+                android:summary="@string/enable_api_summary"
+                android:title="@string/enable_api_title"/>
+            <Preference
+                android:key="@string/thirdparty_apps_key"
+                android:summary="@string/thirdparty_apps_summary"
+                android:title="@string/thirdparty_apps_title">
+            </Preference>
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:title="@string/pref_cat_experimental">
+            <SwitchPreference
+                android:key="@string/pref_rust_backend_key"
+                android:title="@string/use_rust_backend_title"
+                android:summary="@string/use_rust_backend_summary"
+                android:defaultValue="false"/>
+            <SwitchPreference
+                android:key="@string/enable_v3_sched_key"
+                android:dependency="@string/pref_rust_backend_key"
+                android:title="@string/enable_v3_sched_title"
+                android:defaultValue="false"/>
+        </PreferenceCategory>
+</PreferenceScreen>

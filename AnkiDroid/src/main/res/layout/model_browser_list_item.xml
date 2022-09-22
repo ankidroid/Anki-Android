@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="7dip"
+    android:paddingStart="@dimen/keyline_1"
+    android:paddingEnd="5dip">
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/model_list_item_1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:gravity="start"
+        android:textColor="?android:textColorPrimary"
+        android:maxLines="1"
+
+        android:layout_height="wrap_content" />
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/model_list_item_2"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:gravity="start"
+        android:textColor="?android:textColorSecondary"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

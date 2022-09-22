@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/tags_dialog_title"
+        android:id="@+id/tags_dialog_toolbar"/>
+    <com.ichi2.ui.FixedTextView android:id="@+id/tags_dialog_no_tags_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tags_dialog_toolbar"
+        android:text="@string/no_tags"
+        android:visibility="gone"/>
+
+
+    <RadioGroup android:id="@+id/tags_dialog_options_radiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_dialog_option_all_cards"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_dialog_option_new_cards"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_dialog_option_due_cards"/>
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_dialog_tags_list"
+                                               android:scrollbars="vertical"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:layout_above="@id/tags_dialog_options_radiogroup"
+                                               android:layout_below="@id/tags_dialog_toolbar"/>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tags_dialog_snackbar"/>
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+
+  This program is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation; either version 3 of the License, or (at your option) any later
+  version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/deck_picker_dialog_action_filter"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/deck_picker_dialog_filter_decks"
+        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/deck_picker_dialog_action_add_deck"
+        android:icon="@drawable/ic_add_white"
+        android:title="@string/menu_add"
+        ankidroid:showAsAction="always" />
+</menu>

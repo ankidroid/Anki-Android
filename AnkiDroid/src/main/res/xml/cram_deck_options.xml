@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki" >
+
+    <PreferenceCategory android:title="@string/deck_conf_cram_filter" >
+        <EditTextPreference
+            android:key="@string/filtered_deck_search_key"
+            android:title="@string/deck_conf_cram_search" />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreference
+            android:key="@string/filtered_deck_limit_key"
+            android:numeric="integer"
+            android:title="@string/deck_conf_cram_limit"
+            app:max="99999"
+            app:min="1" />
+
+        <ListPreference
+            android:key="@string/filtered_deck_order_key"
+            android:title="@string/deck_conf_cram_order" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/deck_conf_cram_filter" android:key="@string/filtered_deck_secondFilter_key" android:enabled="false">
+        <EditTextPreference
+            android:key="@string/filtered_deck_search_2_key"
+            android:title="@string/deck_conf_cram_search" />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreference
+            android:key="@string/filtered_deck_limit_2_key"
+            android:numeric="integer"
+            android:title="@string/deck_conf_cram_limit"
+            app:max="99999"
+            app:min="1" />
+
+        <ListPreference
+            android:key="@string/filtered_deck_order_2_key"
+            android:title="@string/deck_conf_cram_order" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/study_options" android:key="@string/filtered_deck_studyOptions_key" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/filtered_deck_resched_key"
+            android:summary="@string/deck_conf_cram_reschedule_summ"
+            android:title="@string/deck_conf_cram_reschedule" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:disableDependentsState="false"
+            android:key="@string/filtered_deck_stepsOn_key"
+            android:title="@string/deck_conf_cram_steps_summ" />
+
+        <com.ichi2.preferences.StepsPreference
+            android:dependency="@string/filtered_deck_stepsOn_key"
+            android:key="@string/filtered_deck_steps_key"
+            android:title="@string/deck_conf_cram_steps"
+            app:allowEmpty="false" />
+
+        <CheckBoxPreference
+            android:key="@string/filtered_deck_filterSecond_key"
+            android:summary="@string/deck_conf_cram_filter_2_check"
+            android:title="@string/deck_conf_cram_filter" />
+    </PreferenceCategory>
+</PreferenceScreen>

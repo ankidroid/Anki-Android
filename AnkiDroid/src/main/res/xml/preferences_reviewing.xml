@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Reviewing Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    android:title="@string/pref_cat_reviewing"
+    android:key="@string/pref_reviewing_screen_key">
+    <PreferenceCategory android:title="@string/pref_cat_scheduling" >
+        <ListPreference
+            android:entries="@array/new_spread_labels"
+            android:entryValues="@array/new_spread_values"
+            android:key="@string/new_spread_preference"
+            android:title="@string/new_spread"
+            app1:useSimpleSummaryProvider="true"/>
+        <com.ichi2.preferences.SeekBarPreferenceCompat
+            android:key="@string/day_offset_preference"
+            android:max="23"
+            android:title="@string/day_offset_with_description"
+            app:interval="1"
+            app:min="0"
+            app:xlabel="@string/xlabel_dayoffset_seekbar"
+            app:ylabel="@string/ylabel_dayoffset_seekbar"
+            app1:summaryFormat="@string/day_offset_summary"/>
+        <com.ichi2.preferences.NumberRangePreferenceCompat
+            android:key="@string/learn_cutoff_preference"
+            android:title="@string/learn_cutoff"
+            app:max="999"
+            app:min="0"
+            app1:summaryFormat="@string/pref_summary_minutes"/>
+        <com.ichi2.preferences.NumberRangePreferenceCompat
+            android:key="@string/time_limit_preference"
+            android:title="@string/time_limit"
+            app:max="9999"
+            app:min="0"
+            app1:summaryFormat="@string/pref_summary_minutes"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/timeout_answer_text" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:disableDependentsState="false"
+            android:key="@string/timeout_answer_preference"
+            android:summary="@string/timeout_answer_summ"
+            android:title="@string/timeout_answer_text" />
+        <ListPreference
+            android:entries="@array/automatic_answer_options"
+            android:dependency="@string/timeout_answer_preference"
+            android:entryValues="@array/automatic_answer_values"
+            android:defaultValue="0"
+            android:key="@string/automatic_answer_action_preference"
+            android:title="@string/timeout_answer"
+            app1:useSimpleSummaryProvider="true"/>
+        <com.ichi2.preferences.SeekBarPreferenceCompat
+            android:defaultValue="20"
+            android:dependency="@string/timeout_answer_preference"
+            android:key="@string/timeout_answer_seconds_preference"
+            android:max="30"
+            android:title="@string/timeout_answer_seconds"
+            app1:summaryFormat="@string/pref_summary_seconds"/>
+        <com.ichi2.preferences.SeekBarPreferenceCompat
+            android:defaultValue="60"
+            android:dependency="@string/timeout_answer_preference"
+            android:key="@string/timeout_question_seconds_preference"
+            android:max="60"
+            android:title="@string/timeout_question_seconds"
+            app1:summaryFormat="@string/pref_summary_seconds"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_advanced">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/keep_screen_on_preference"
+            android:summary="@string/pref_keep_screen_on_summ"
+            android:title="@string/pref_keep_screen_on" />
+        <SwitchPreference
+            android:key="@string/new_timezone_handling_preference"
+            android:title="@string/new_timezone"
+            android:defaultValue="false" />
+        <com.ichi2.preferences.NumberRangePreferenceCompat
+            android:defaultValue="200"
+            android:key="@string/double_tap_time_interval_preference"
+            android:summary="@string/pref_double_tap_time_interval_summary"
+            android:title="@string/pref_double_tap_time_interval"
+            app:min="0"
+            app:max="2000" />
+    </PreferenceCategory>
+</PreferenceScreen>

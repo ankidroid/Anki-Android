@@ -1,0 +1,13 @@
+android {
+    lintOptions {
+        textReport true
+        textOutput "stdout"
+        explainIssues false
+        showAll true
+        abortOnError = true
+        warningsAsErrors true
+        lintConfig file("../lint-release.xml")
+        checkReleaseBuilds = true
+        checkTestSources = true
+    }
+}

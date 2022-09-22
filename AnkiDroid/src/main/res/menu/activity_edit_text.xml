@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/multimedia_edit_field_to_text"
+        android:icon="@drawable/ic_format_color_text_white"
+        android:orderInCategory="100"
+        android:title="@string/multimedia_editor_field_editing_text"
+        ankidroid:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/multimedia_edit_field_to_image"
+        android:icon="@drawable/ic_image_white"
+        android:orderInCategory="100"
+        android:title="@string/multimedia_editor_field_editing_image"
+        ankidroid:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/multimedia_edit_field_to_audio"
+        android:icon="@drawable/ic_mic_white"
+        android:orderInCategory="100"
+        android:title="@string/multimedia_editor_field_editing_audio"
+        ankidroid:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/multimedia_edit_field_to_audio_clip"
+        android:icon="@drawable/ic_audioclip_white"
+        android:orderInCategory="100"
+        android:title="@string/multimedia_editor_field_editing_audio_clip"
+        ankidroid:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/multimedia_edit_field_done"
+        android:icon="@drawable/ic_done_white"
+        android:orderInCategory="100"
+        android:title="@string/multimedia_editor_field_editing_done"
+        ankidroid:showAsAction="always" />
+
+</menu>

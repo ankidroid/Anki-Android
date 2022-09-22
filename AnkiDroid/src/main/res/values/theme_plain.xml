@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
+    <color name="theme_plain_primary">#9E9E9E</color>
+    <color name="theme_plain_primary_dark">#616161</color>
+    <color name="theme_plain_primary_light">#F5F5F5</color>
+    <color name="theme_plain_accent">#607D8B</color>
+    <color name="theme_plain_primary_text">#212121</color>
+    <color name="theme_plain_secondary_text">#727272</color>
+
+    <style name="Theme_Light.Plain">
+        <!-- Android colors -->
+        <item name="colorPrimary">@color/theme_plain_primary</item>
+        <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
+        <item name="colorAccent">@color/theme_plain_accent</item>
+        <item name="android:textColor">@color/theme_plain_primary_text</item>
+        <item name="android:textColorPrimary">@color/theme_plain_primary_text</item>
+        <item name="android:textColorSecondary">@color/theme_plain_secondary_text</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <!-- App buttons -->
+        <item name="largeButtonBackgroundColor">#607D8B</item>
+        <item name="largeButtonBackgroundColorFocused">#587180</item>
+        <item name="largeButtonBackgroundColorPressed">#475C66</item>
+        <!-- Action bar styles -->
+        <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
+        <item name="actionModeBackground">@color/theme_plain_primary</item>
+        <!-- Reviewer colors -->
+        <item name="topBarColor">@color/theme_plain_primary_light</item>
+        <!-- Reviewer button drawables -->
+        <item name="againButtonRef">@drawable/footer_button_all_plain</item>
+        <item name="hardButtonRef">@drawable/footer_button_all_plain</item>
+        <item name="goodButtonRef">@drawable/footer_button_all_plain</item>
+        <item name="easyButtonRef">@drawable/footer_button_all_plain</item>
+        <item name="againButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
+        <item name="hardButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
+        <item name="goodButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
+        <item name="easyButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
+        <!-- Card Browser Colors -->
+        <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
+        <!-- Note editor colors -->
+        <item name="editTextBackgroundColor">#EBCCCCCC</item>
+        <item name="toolbarBackgroundColor">#D6D7D7</item>
+        <item name="toolbarIconColor">@color/black</item>
+        <item name="buttonShadowColor">#FFAAAAAA</item>
+        <item name="buttonRippleColor">#595959</item>
+        <item name="buttonForegroundColor">#D6D7D7</item>
+        <!-- FAB -->
+        <item name="fab_normal">@color/theme_plain_accent</item>
+        <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
+        <!--Custom Tabs colors-->
+        <item name="customTabNavBarColor">@color/material_grey_500</item>
+        <!-- StatusBar -->
+        <item name="android:statusBarColor">@color/theme_plain_primary</item>
+        <!-- Navbar -->
+        <item name="android:navigationBarColor">@color/semi_transparent_black</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
+        <item name="iconColor">?attr/colorPrimary</item>
+
+        <!--Dialog-->
+        <item name="md_color_button_text">@color/black</item>
+
+        <!-- Filter Bottom sheet -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemePlain</item>
+        <item name="filterSheetBackground">@color/white</item>
+        <item name="filterItemBackground">@color/white</item>
+        <item name="filterItemBackgroundSelected">@color/theme_light_drawer_row_current</item>
+        <item name="filterItemTextColor">@color/theme_light_drawer_item</item>
+        <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
+        <item name="filterHeaderDivider">@color/black</item>
+
+        <item name="snackbarButtonTextColor">#96bdce</item>
+
+        <!-- Introduction -->
+        <item name="introductionLogoTransparent">#99FFFFFF</item>
+
+        <!-- Browser Options Dialog-->
+        <item name="colorSurface">@color/white</item>
+    </style>
+
+    <!-- Preferences screens -->
+    <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
+    <style name="LegacyActionBarPlain" parent="Theme_Light.Plain">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:textColor">@color/prefs_item_light</item>
+        <item name="android:textColorSecondary">@color/prefs_item_light_secondary</item>
+    </style>
+
+    <!-- Filter Sheet Style -->
+    <style name="AppBottomSheetDialogThemePlain" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+</resources>

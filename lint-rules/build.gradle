@@ -1,0 +1,19 @@
+apply plugin: 'kotlin'
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "com.android.tools.lint:lint-api:$lint_version"
+    compileOnly "com.android.tools.lint:lint:$lint_version"
+
+    testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+    testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
+    testImplementation "com.android.tools.lint:lint:$lint_version"
+    testImplementation "com.android.tools.lint:lint-api:$lint_version"
+    testImplementation "com.android.tools.lint:lint-tests:$lint_version"
+}

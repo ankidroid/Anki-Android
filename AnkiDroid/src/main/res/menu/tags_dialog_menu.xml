@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tags_dialog_action_filter"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/filter_tags"
+        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/tags_dialog_action_add"
+        android:icon="@drawable/ic_add_white"
+        android:title="@string/add_tag"
+        ankidroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tags_dialog_action_select_all"
+        android:icon="@drawable/ic_select_all_white"
+        android:title="@string/check_all_tags"
+        ankidroid:showAsAction="ifRoom"/>
+</menu>

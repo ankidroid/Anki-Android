@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<!--
+~ Some strings aren't translated because these preferences are aimed
+~ at developers, who are assumed to speak English.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/pref_cat_dev_options"
+    android:key="@string/pref_dev_options_screen_key">
+    <SwitchPreference
+        android:title="@string/dev_options_enabled_pref"
+        android:key="@string/dev_options_enabled_by_user_key"
+        android:defaultValue="true"/>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/html_javascript_debugging_key"
+        android:summary="@string/html_javascript_debugging_summ"
+        android:title="@string/html_javascript_debugging"/>
+    <Preference
+        android:title="Trigger test crash"
+        android:summary="Touch here for an immediate test crash"
+        android:key="@string/pref_trigger_crash_key"/>
+    <Preference
+        android:title="Switch Analytics to dev mode"
+        android:summary="Touch here to use Analytics dev tag and 100% sample rate"
+        android:key="@string/pref_analytics_debug_key"/>
+    <Preference
+        android:title="Lock Database"
+        android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
+        android:key="@string/pref_lock_database_key"/>
+    <SwitchPreference
+        android:title="@string/show_onboarding"
+        android:summary="@string/show_onboarding_desc"
+        android:key="@string/pref_show_onboarding_key"
+        android:defaultValue="false"/>
+    <Preference
+        android:title="Enable Scoped Storage"
+        android:summary="UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE"
+        android:key="@string/pref_scoped_storage_key"/>
+    <Preference
+        android:title="@string/reset_onboarding"
+        android:summary="@string/reset_onboarding_desc"
+        android:key="@string/pref_reset_onboarding_key"/>
+</PreferenceScreen>

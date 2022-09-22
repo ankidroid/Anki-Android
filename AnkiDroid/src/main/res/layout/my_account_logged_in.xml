@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="center">
+
+        <include layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:id="@+id/logged_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_centerInParent="true"
+            >
+
+            <com.ichi2.ui.FixedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logged_as"
+                android:textSize="@dimen/md_title_textsize"
+                android:layout_margin="@dimen/content_vertical_padding"/>
+
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/username_logged_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/md_title_textsize"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/content_vertical_padding"/>
+
+            <Button
+                android:id="@+id/logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/LargeButtonStyle"
+                android:singleLine="true"
+                android:textSize="@dimen/md_title_textsize"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="@string/log_out"
+                android:layout_margin="@dimen/content_vertical_padding"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

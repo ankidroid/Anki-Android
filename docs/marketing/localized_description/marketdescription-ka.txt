@@ -1,0 +1,36 @@
+AnkiDroid-ით დაიმახსოვრებ ყველაფერს, რისი ცოდნაც გსურს!
+
+AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+
+Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+
+Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+
+Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+
+★ ძირითადი ფუნქციები:
+• ბარათი შეიძლება შეიცავდეს: ტექსტს, სურათებს, ხმებს, LaTeX
+• შუალედებიანი გამეორება (SuperMemo 2-ის ალგორითმი)
+• ხმოვანი წამკითხველის ინტეგრაცია
+• 6000-ზე მეტი მზა დასტა
+• პროგრესის ვიჯეტი
+• დეტალური სტატისტიკა
+• სინქრონიზაცია AnkiWeb-თან
+• ღია საწყისი კოდი
+
+★ დამატებითი ფუნქციები:
+• პასუხების ჩაწერა (არასავალდებულო)
+• დაფა
+• ბარათების დამატება და რედაქტირება
+• ბარათების საძიებელი
+• პლანშეტის განლაგება
+• არსებული კოლექციების იმპორტირება (Anki Desktop-ის მეშვეობით)
+• ბარათების დამატება სხვა აპლიკაციებიდან (მაგ. ლექსიკონებიდან)
+• სხვა შრიფტების მხარდაჭერა
+• დახვეწილი სარეზერვო სისტემა
+• ნავიგაცია ჟესტებით
+• მორგებადი
+• დინამიკური დასტები
+• ღამის რეჟიმი
+• თარგმნილია 27 ენაზე
+• AnkiDroid-ის ყველა წინა ვერსია შეგიძლიათ საიტიდან ჩამოტვირთოთ

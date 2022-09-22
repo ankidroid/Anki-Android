@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+
+  This program is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation; either version 3 of the License, or (at your option) any later
+  version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!-- An item in a deck selection screen. Partially based off deck_item -->
+<com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/deck_picker_dialog"
+    android:id="@+id/deck_picker_dialog_list_item_value"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingStart="@dimen/deck_picker_left_padding"
+    android:paddingEnd="8dp"
+    android:gravity="start|center_vertical"
+    android:background="?attr/selectableItemBackground"
+    android:textStyle="bold"
+    android:textSize="20sp"
+    android:textIsSelectable="false"
+    android:focusable="true"
+    android:clickable="true"
+     />

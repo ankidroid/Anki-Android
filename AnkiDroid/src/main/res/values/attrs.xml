@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
+
+    <!-- Android provides a straightforward way to control action bar styles; an additional color attribute
+     specifically for action bar text color isn't necessary, but it simplifies the color setting
+     while making it accessible everywhere and eases the use of themes -->
+    <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
+    <attr name="actionBarPopupTextColor" format="color"/>
+
+    <!-- Custom preferences -->
+    <attr name="min" format="integer" />
+    <attr name="max" format="integer" />
+    <attr name="allowEmpty" format="boolean" />
+
+    <declare-styleable name="SeekBarPreference">
+        <attr name="interval" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomPreference">
+        <!-- Whether the preference should automatically set its summary to the value saved for the
+             preference, and update the summary when the value is changed. Defaults to false -->
+        <attr name="useSimpleSummaryProvider" format="boolean"/>
+        <!-- Format string to be used as template to build the preference summary.
+             The placeholder is replaced by the preference value, and it must be only one placeholder.
+             If the preference value is updated, the summary is automatically updated as well. -->
+        <attr name="summaryFormat" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="HeaderPreference">
+        <!-- String array of entries to join in order to build the preference summary -->
+        <attr name="summaryEntries" format="reference"/>
+    </declare-styleable>
+
+    <!-- App buttons -->
+    <attr name="largeButtonBackgroundColor" format="color"/>
+    <attr name="largeButtonBackgroundColorFocused" format="color"/>
+    <attr name="largeButtonBackgroundColorPressed" format="color"/>
+    <attr name="largeButtonTextColor" format="color"/>
+    <attr name="largeButtonSecondaryBackgroundColor" format="color"/>
+    <attr name="largeButtonSecondaryBackgroundColorFocused" format="color"/>
+    <attr name="largeButtonSecondaryBackgroundColorPressed" format="color"/>
+    <attr name="largeButtonSecondaryTextColor" format="color"/>
+    <!-- Deck list colors, divider, and expander -->
+    <attr name="currentDeckBackground" format="reference"/>
+    <attr name="currentDeckBackgroundColor" format="color"/>
+    <attr name="dynDeckColor" format="color"/>
+    <attr name="deckDivider" format="reference"/>
+    <attr name="expandRef" format="reference"/>
+    <attr name="collapseRef" format="reference"/>
+    <!-- Navigation drawer -->
+    <attr name="navDrawerItemColor" format="reference"/>
+    <attr name="navDrawerItemBackgroundColor" format="reference"/>
+    <!-- Card count colors -->
+    <attr name="newCountColor" format="color"/>
+    <attr name="learnCountColor" format="color"/>
+    <attr name="reviewCountColor" format="color"/>
+    <attr name="zeroCountColor" format="color"/>
+    <!-- Reviewer button backgrounds -->
+    <attr name="againButtonRef" format="reference"/>
+    <attr name="hardButtonRef" format="reference"/>
+    <attr name="goodButtonRef" format="reference"/>
+    <attr name="easyButtonRef" format="reference"/>
+    <!-- Same thing but with ripples -->
+    <attr name="againButtonRippleRef" format="reference"/>
+    <attr name="hardButtonRippleRef" format="reference"/>
+    <attr name="goodButtonRippleRef" format="reference"/>
+    <attr name="easyButtonRippleRef" format="reference"/>
+    <!-- Reviewer button text colors-->
+    <attr name="answerButtonTextColor" format="color"/>
+    <attr name="againButtonTextColor" format="color"/>
+    <attr name="hardButtonTextColor" format="color"/>
+    <attr name="goodButtonTextColor" format="color"/>
+    <attr name="easyButtonTextColor" format="color"/>
+    <!-- Card Browser Colors -->
+    <attr name="cardBrowserDivider" format="color"/>
+    <!-- Stats colors -->
+    <attr name="stats_young" format="color"/>
+    <attr name="stats_mature" format="color"/>
+    <attr name="stats_learn" format="color"/>
+    <attr name="stats_relearn" format="color"/>
+    <attr name="stats_cram" format="color"/>
+    <attr name="stats_interval" format="color"/>
+    <attr name="stats_hours" format="color"/>
+    <attr name="stats_counts" format="color"/>
+    <attr name="stats_unseen" format="color"/>
+    <attr name="stats_suspended" format="color"/>
+    <attr name="stats_buried" format="color"/>
+    <attr name="stats_cumulative" format="color"/>
+    <!-- Reviewer other colors -->
+    <attr name="topBarColor" format="color"/>
+    <attr name="maxTimerColor" format="color"/>
+    <!-- Browser colors -->
+    <attr name="suspendedColor" format="color"/>
+    <attr name="selectedColor" format="color"/>
+    <attr name="markedColor" format="color"/>
+    <attr name="flagRed" format="color"/>
+    <attr name="flagOrange" format="color"/>
+    <attr name="flagGreen" format="color"/>
+    <attr name="flagBlue" format="color"/>
+    <attr name="flagPink" format="color"/>
+    <attr name="flagTurquoise" format="color"/>
+    <attr name="flagPurple" format="color"/>
+    <!-- Note editor colors -->
+    <attr name="duplicateColor" format="color"/>
+    <attr name="editTextBackgroundColor" format="color"/>
+    <attr name="toolbarBackgroundColor" format="color"/>
+    <attr name="toolbarIconColor" format="color"/>
+    <attr name="buttonShadowColor" format="color"/>
+    <attr name="buttonRippleColor" format="color"/>
+    <attr name="buttonForegroundColor" format="color"/>
+    <!-- Images -->
+    <attr name="navDrawerImage" format="integer"/>
+    <attr name="attachFileImage" format="integer"/>
+    <attr name="toggleStickyImage" format="integer"/>
+    <attr name="upDownImage" format="integer"/>
+    <attr name="dialogErrorIcon" format="integer"/>
+    <attr name="dialogSyncErrorIcon" format="integer"/>
+    <attr name="dialogSendIcon" format="integer"/>
+
+    <!-- Filter Bottom Sheet -->
+    <attr name="filterSheetBackground" format="color"/>
+    <attr name="filterItemBackground" format="color"/>
+    <attr name="filterItemBackgroundSelected" format="color"/>
+    <attr name="filterItemTextColor" format="color"/>
+    <attr name="filterItemTextColorSelected" format="color"/>
+    <attr name="filterHeaderDivider" format="color"/>
+
+    <!-- Introduction -->
+    <attr name="introductionLogoTransparent" format="color"/>
+
+    <!-- FAB -->
+    <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
+    <attr name="fab_pressed" format="color"/>
+    <attr name="fab_labelsTextColor" format="color">#fff</attr>
+    <attr name="fab_item_background" format="reference"/>
+    <!--Custom Tabs colors-->
+    <attr name="customTabNavBarColor" format="color"/>
+    <!-- Popup menus' background color -->
+    <attr name="popupBackgroundColor" format="reference"/>
+    <attr name="iconColor" format="color"/>
+
+    <attr name="editTextDisabled" format="color"/>
+
+    <attr name="snackbarBackgroundTintColor" format="color"/>
+    <attr name="snackbarButtonTextColor" format="color"/>
+
+    <declare-styleable name="CheckBoxTriStates">
+        <attr name="cycle_checked_to_indeterminate" format="boolean" />
+        <attr name="cycle_indeterminate_to_checked" format="boolean" />
+    </declare-styleable>
+</resources>

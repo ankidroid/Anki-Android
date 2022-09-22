@@ -1,0 +1,10 @@
+<com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/model_editor_list_display"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:paddingBottom="7dip"
+        android:paddingStart="@dimen/keyline_1"
+        android:paddingEnd="5dip"
+        android:textSize="20sp"
+        android:textColor="?android:textColorPrimary"/>

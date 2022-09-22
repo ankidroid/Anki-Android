@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reference: appcompat's support_simple_spinner_dropdown_item -->
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dropdown_deck_name"
+    style="?android:attr/spinnerDropDownItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/dropdownListPreferredItemHeight"
+    android:singleLine="true"
+    tools:background="@android:color/holo_orange_light"
+    tools:layout_height="wrap_content"
+    tools:text="Deck name" />

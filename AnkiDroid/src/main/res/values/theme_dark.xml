@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
+    <color name="theme_dark_primary">#3d3d3d</color>
+    <color name="theme_dark_primary_dark">@color/material_grey_900</color>
+    <color name="theme_dark_primary_light">@color/material_grey_800</color>
+    <color name="theme_dark_primary_text">@color/white</color>
+    <color name="theme_dark_secondary_text">#b2ffffff</color>
+    <color name="theme_dark_row_current">#393939</color>
+    <color name="theme_dark_drawer_row_current">#33999999</color>
+    <color name="theme_dark_drawer_item">#DEFFFFFF</color>
+
+    <style name="Theme_Dark" parent="@style/Theme.MaterialComponents.Bridge">
+        <!-- Android colors -->
+        <item name="colorPrimary">@color/theme_dark_primary</item>
+        <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
+        <item name="colorAccent">@color/material_blue_400</item>
+        <item name="android:textColor">@color/theme_dark_primary_text</item>
+        <item name="android:textColorPrimary">@color/theme_dark_primary_text</item>
+        <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
+        <item name="android:colorBackground">@color/material_theme_grey</item>
+        <item name="android:windowBackground">@color/material_theme_grey</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <!-- Navigation drawer -->
+        <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
+        <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
+        <!-- App buttons -->
+        <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
+        <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
+        <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
+        <item name="largeButtonTextColor">@color/white</item>
+        <item name="largeButtonSecondaryBackgroundColor">@color/material_grey_800</item>
+        <item name="largeButtonSecondaryBackgroundColorFocused">@color/material_grey_700</item>
+        <item name="largeButtonSecondaryBackgroundColorPressed">@color/material_grey_600</item>
+        <item name="largeButtonSecondaryTextColor">@color/material_grey_500</item>
+        <!-- Action bar styles -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionBarTextColor">@color/white</item>
+        <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
+        <item name="actionModeBackground">@color/theme_dark_primary</item>
+        <!-- Deck list colors and divider -->
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
+        <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
+        <item name="dynDeckColor">#6699d6</item>
+        <item name="deckDivider">@drawable/divider_dark</item>
+        <item name="expandRef">@drawable/ic_chevron_right_white</item>
+        <item name="collapseRef">@drawable/ic_expand_more_white</item>
+        <!-- Count colors -->
+        <item name="newCountColor">@color/material_indigo_200</item>
+        <item name="learnCountColor">@color/material_red_200</item>
+        <item name="reviewCountColor">@color/material_green_200</item>
+        <item name="zeroCountColor">#202020</item>
+        <!-- Reviewer colors -->
+        <item name="topBarColor">@color/theme_dark_primary_light</item>
+        <item name="maxTimerColor">@color/material_red_300</item>
+        <item name="answerButtonTextColor">@color/white</item>
+        <item name="againButtonTextColor">@color/white</item>
+        <item name="hardButtonTextColor">@color/white</item>
+        <item name="goodButtonTextColor">@color/white</item>
+        <item name="easyButtonTextColor">@color/white</item>
+        <!-- Reviewer button drawables -->
+        <item name="againButtonRef">@drawable/footer_button_again_dark</item>
+        <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
+        <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
+        <item name="easyButtonRef">@drawable/footer_button_easy_dark</item>
+        <item name="againButtonRippleRef">@drawable/footer_button_again_dark_ripple</item>
+        <item name="hardButtonRippleRef">@drawable/footer_button_hard_dark_ripple</item>
+        <item name="goodButtonRippleRef">@drawable/footer_button_good_dark_ripple</item>
+        <item name="easyButtonRippleRef">@drawable/footer_button_easy_dark_ripple</item>
+        <!-- Card Browser Colors -->
+        <item name="cardBrowserDivider">@color/white</item>
+        <!-- Stats colors -->
+        <item name="stats_young">@color/material_light_green_A700</item>
+        <item name="stats_mature">@color/material_green_200</item>
+        <item name="stats_learn">@color/material_indigo_200</item>
+        <item name="stats_relearn">@color/material_red_200</item>
+        <item name="stats_cram">#ff0</item>
+        <item name="stats_interval">#077</item>
+        <item name="stats_hours">#ccc</item>
+        <item name="stats_counts">#E6000000</item>
+        <item name="stats_unseen">#000</item>
+        <item name="stats_suspended">#ff0</item>
+        <item name="stats_buried">#606264</item>
+        <item name="stats_cumulative">@color/stats_cumulative</item>
+        <!-- Browser colors -->
+        <item name="suspendedColor">@color/material_grey_700</item>
+        <item name="markedColor">@color/material_deep_purple_400</item>
+        <item name="flagRed">@color/flag_red_dark</item>
+        <item name="flagOrange">@color/flag_orange_dark</item>
+        <item name="flagGreen">@color/flag_green_dark</item>
+        <item name="flagBlue">@color/flag_blue_dark</item>
+        <item name="flagPink">@color/flag_pink_dark</item>
+        <item name="flagTurquoise">@color/flag_turquoise_dark</item>
+        <item name="flagPurple">@color/flag_purple_dark</item>
+        <!-- Note editor colors -->
+        <item name="duplicateColor">#855</item>
+        <item name="editTextBackgroundColor">#EE5C5C5C</item>
+        <item name="toolbarBackgroundColor">#616161</item>
+        <item name="toolbarIconColor">@color/white</item>
+        <item name="buttonShadowColor">#bdbdbd</item>
+        <item name="buttonRippleColor">#BABABA</item>
+        <item name="buttonForegroundColor">#757575</item>
+        <!-- FAB -->
+        <item name="fab_normal">@color/material_light_blue_700</item>
+        <item name="fab_pressed">@color/material_light_blue_900</item>
+        <item name="fab_labelsTextColor">@color/white</item>
+        <item name="fab_item_background">@drawable/fab_label_background</item>
+        <!-- Images -->
+        <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
+        <item name="attachFileImage">@drawable/ic_attachment_white</item>
+        <item name="toggleStickyImage">@drawable/ic_baseline_push_pin_24</item>
+        <item name="upDownImage">@drawable/ic_import_export_white</item>
+        <item name="dialogErrorIcon">@drawable/ic_warning_white</item>
+        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white</item>
+        <item name="dialogSendIcon">@drawable/ic_send_white</item>
+        <!-- Dialog styles -->
+        <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="md_color_button_text">@color/white</item>
+        <!--Custom Tabs colors-->
+        <item name="customTabNavBarColor">@color/material_grey_800</item>
+        <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
+        <item name="editTextDisabled">@color/material_grey_500</item>
+        <!-- StatusBar -->
+        <item name="android:statusBarColor">@color/theme_dark_primary</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <!-- Navbar -->
+        <item name="android:navigationBarColor">@color/material_theme_grey</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+        <!-- Filter Bottom Sheet-->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeDark</item>
+        <item name="filterSheetBackground">@color/theme_dark_primary</item>
+        <item name="filterItemBackground">@color/theme_dark_primary_dark</item>
+        <item name="filterItemBackgroundSelected">@color/theme_dark_drawer_row_current</item>
+        <item name="filterItemTextColor">@color/theme_dark_drawer_item</item>
+        <item name="filterItemTextColorSelected">?attr/colorAccent</item>
+        <item name="filterHeaderDivider">@color/white</item>
+
+        <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
+             must be *all* present in a theme (or its parent) in order for the snackbar
+             to pick up the proper layout that uses these attributes. -->
+        <item name="snackbarStyle">@style/SnackbarStyle</item>
+        <item name="snackbarTextViewStyle">@style/Widget.MaterialComponents.Snackbar.TextView</item>
+        <item name="snackbarButtonStyle">@style/SnackbarButtonStyle</item>
+        <item name="snackbarBackgroundTintColor">#cfcfcf</item>
+        <item name="snackbarButtonTextColor">@color/material_light_blue_900</item>
+
+        <!-- Introduction -->
+        <item name="introductionLogoTransparent">#883d3d3d</item>
+
+        <!-- Browser Options Dialog-->
+        <item name="colorSurface">@color/theme_dark_primary</item>
+    </style>
+
+    <!-- Preferences screens -->
+    <!-- Legacy action bar  (used in Preferences with no explicit Toolbar) -->
+    <style name="LegacyActionBarDark" parent="Theme_Dark">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:textColor">@color/prefs_item_dark</item>
+        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
+    </style>
+
+    <!-- Filter Sheet Style -->
+    <style name="AppBottomSheetDialogThemeDark" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+</resources>

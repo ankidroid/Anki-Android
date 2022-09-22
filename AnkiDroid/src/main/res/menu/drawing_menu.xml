@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_whiteboard_edit"
+        android:icon="@drawable/ic_mode_edit_white"
+        android:title="@string/title_whiteboard_editor"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_done_white"
+        android:title="@string/save"
+        ankidroid:showAsAction="always"/>
+</menu>

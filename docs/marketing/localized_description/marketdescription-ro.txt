@@ -1,0 +1,72 @@
+Memorează orice cu AnkiDroid! 
+ 
+ AnkiDroid îți permite să înveți foarte eficient cu ajutorul cardurilor, prin afișarea lor chiar înainte de a uita informația conținută pe ele. Este perfect compatibil cu programul de repetiție spațiată Anki (incluzând sincronizarea), fiind disponibil pentru Windows, Linux și MacOS. 
+ 
+ Învață și reține tot felul de lucruri, oriunde și oricând vrei. Fructifică timpul mort din călătoriile cu autobuzul, trenul, statul la coadă în supermarket-uri, bănci sau în orice altă situație asemănătoare! 
+ 
+ Creează-ți propriile pachete de flashcarduri sau descarcă pachete gratuite, gata făcute în diverse limbi și domenii (peste 6000 disponibile) 
+ 
+ Adaugă informațiile dorite cu ajutorul aplicației pentru desktop Anki, sau direct în Ankidroid. Aplicația acceptă adăugarea materialului automat dintr-un dicționar! 
+ 
+ Caracteristici principale: 
+ - conținutul suportat: text, imagine, sunete, Latex 
+ - repetiție spațiată (algoritmul supermemo 2) 
+ - integrare text-to-speech 
+ - >6000 pachete deja făcute 
+ - widget ce indică progresul și timpul rămas 
+ - statistici detaliate 
+ - sincronizare cu AnkiWeb 
+ - open source 
+ 
+ Caracteristici adiționale: 
+ - scrie răspunsurile (opțional) 
+ - whiteboard 
+ - editor de carduri 
+ - card browser 
+ - tablet layout 
+ - importă fișiere din Anki Desktop 
+ - integrare cu diverse dicționare web (ColorDict, GoldenDict, Leo.org, Aedict etc.) 
+ - adaugă carduri din alte aplicații precum dicționare 
+ - suport pentru font personalizat 
+ - sistem full backup 
+ - navighează prin deplasare cu degetul, apăsare, înclinare 
+ - complet personalizabil 
+ - control dinamic al pachetelor 
+ - mod de noapte 
+ - 27 de localizări 
+ - toate versiunile anterioare AnkiDroid pot fi descărcate de pe website
+
+AnkiDroid îți permite să înveți foarte eficient cu ajutorul cardurilor, prin afișarea lor chiar înainte de a uita informația conținută pe ele. Este perfect compatibil cu programul de repetiție spațiată Anki (incluzând sincronizarea), fiind disponibil pentru Windows, Linux și MacOS.
+
+Învață și reține tot felul de lucruri, oriunde și oricând vrei. Fructifică timpul mort din călătoriile cu autobuzul, trenul, statul la coadă în supermarket-uri, bănci sau în orice altă situație asemănătoare!
+
+Creează-ți propriile pachete de flashcarduri sau descarcă pachete gratuite, gata făcute în diverse limbi și domenii (peste 6000 disponibile).
+
+Adaugă informațiile dorite cu ajutorul aplicației pentru desktop Anki, sau direct în AnkiDroid. Aplicația acceptă adăugarea materialului automat dintr-un dicționar!
+
+★ Caracteristici principale:
+• conținutul suportat: text, imagine, sunete, Latex
+• repetiție spațiată (algoritmul supermemo 2)
+• integrare text-to-speech
+• >6000 pachete deja făcute
+• widget ce indică progresul și timpul rămas
+• statistici detaliate
+• sincronizare cu AnkiWeb
+• open-source
+
+Caracteristici suplimentare:
+• scrie răspunsurile (opţional)
+• tabla
+• editor de carduri
+• card de browser
+• aspectul tabletei
+• importă fișiere din Anki Desktop
+• adaugă carduri din alte aplicații precum dicționare
+• suport pentru font personalizat
+• sistem full backup
+• navighează prin deplasare cu degetul, apăsare, înclinare
+• complet personalizabil
+• control dinamic al pachetelor
+• mod de noapte
+• 27 de localizări
+• toate versiunile anterioare AnkiDroid pot fi descărcate de pe website

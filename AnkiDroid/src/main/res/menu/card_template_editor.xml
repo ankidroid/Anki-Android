@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/action_confirm"
+        android:icon="@drawable/ic_done_white"
+        android:title="@string/save"
+        ankidroid:showAsAction="ifRoom"
+        android:visible="true"/>
+    <item
+        android:id="@+id/action_preview"
+        android:icon="@drawable/ic_remove_red_eye_white"
+        android:title="@string/card_editor_preview_card"
+        ankidroid:showAsAction="ifRoom"
+        android:visible="true"/>
+    <item
+        android:id="@+id/action_add"
+        android:title="@string/menu_add"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/dialog_positive_delete"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_card_browser_appearance"
+        android:icon="@drawable/ic_view_list_white_24dp"
+        android:title="@string/card_template_editor_menu_card_browser_appearance"
+        ankidroid:showAsAction="ifRoom"/>
+    <!-- never show - no icon. Title is dynamic (on/off) -->
+    <item
+        android:id="@+id/action_add_deck_override"
+        android:title="@string/card_template_editor_deck_override"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_insert_field"
+        android:title="@string/card_template_editor_insert_field"
+        ankidroid:showAsAction="never"/>
+</menu>

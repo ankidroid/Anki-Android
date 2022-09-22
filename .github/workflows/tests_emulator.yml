@@ -1,0 +1,169 @@
+name: Emulator Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
+      - '**/*.gradle'
+      - 'gradle/**'
+  push:
+    branches:
+      - main
+      - i18n_sync
+      - dependency-updates
+      - 'release**'
+    paths:
+      - '.github/workflows/**'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
+      - '**/*.gradle'
+      - 'gradle/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  emulator_test:
+    name: Android Emulator Test
+    runs-on: macos-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        # Refactor to make these dynamic with a low/high bracket only on schedule, not push
+        # For now this is just the fastest combo (api/arch/target/snapshot-warm-time) based on testing
+        api-level: [29]
+        arch: [x86_64]
+        target: [google_apis]
+        first-boot-delay: [600]
+        # This is useful for benchmarking, do 0, 1, 2, etc (up to 256 max job-per-matrix limit) for averages
+        iteration: [0]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 50
+
+      - name: Configure JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "11" # ubuntu-latest is about to default to 11, force it everywhere
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        timeout-minutes: 5
+        with:
+          # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
+          # Builds on other branches will only read from main branch cache writes
+          # Comment this and the with: above out for performance testing on a branch
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+
+      - name: Warm Gradle Cache
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 15
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest --daemon
+
+        # This appears to be 'Cache Size: ~1230 MB (1290026823 B)' based on watching action logs
+        # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
+        # We don't want branches to evict main branch snapshot, so save on main, read-only all else
+      - name: AVD cache
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ hashFiles('~/.android/avd/**/snapshots/**') }}
+          restore-keys: |
+            avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
+
+      - name: AVD Boot and Snapshot Creation
+        # Only generate a snapshot for saving if we are on main branch with a cache miss
+        # Comment the if out to generate snapshots on branch for performance testing
+        if: steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          sdcard-path-or-size: 100M
+          disable-animations: true
+          # Give the emulator a little time to run and do first boot stuff before taking snapshot
+          script: echo "Generated AVD snapshot for caching."
+
+        # This step is separate so pure install time may be calculated as a step
+      - name: Emulator Snapshot After Firstboot Warmup
+        # Only generate a snapshot for saving if we are on main branch with a cache miss
+        # Switch the if statements via comment if generating snapshots for performance testing
+        # if: matrix.first-boot-delay != '0'
+        if: steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main'
+        env:
+          FIRST_BOOT_DELAY: ${{ matrix.first-boot-delay }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          sdcard-path-or-size: 100M
+          disable-animations: true
+          # Give the emulator a little time to run and do first boot stuff before taking snapshot
+          script: |
+            sleep $FIRST_BOOT_DELAY
+            echo "First boot warmup completed."
+
+      - name: Run Emulator Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        timeout-minutes: 30
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          sdcard-path-or-size: 100M
+          disable-animations: true
+          script: |
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' > adb-log.txt &
+            sleep 5
+            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
+            sleep 10
+            ./gradlew uninstallAll jacocoAndroidTestReport --daemon
+
+      - name: Compress Emulator Log
+        if: always()
+        run: gzip -9 adb-log.txt
+        shell: bash
+
+      - name: Upload Emulator Log
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
+          path: adb-log.txt.gz
+
+      - name: Submit Coverage
+        # This can fail on timeouts etc, wrap with retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh 

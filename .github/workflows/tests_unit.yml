@@ -1,0 +1,107 @@
+name: Unit Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
+      - '**/*.gradle'
+      - 'gradle/**'
+  push:
+    branches:
+      - main
+      - i18n_sync
+      - dependency-updates
+      - 'release**'
+    paths:
+      - '.github/workflows/**'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
+      - '**/*.gradle'
+      - 'gradle/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: JUnit Tests
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    #env:
+    #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
+    steps:
+      - name: Configure Windows Pagefile
+        uses: al-cheb/configure-pagefile-action@v1.2
+        if: matrix.os == 'windows-latest'
+        with:
+          minimum-size: 8GB
+          maximum-size: 12GB
+          disk-root: "D:"
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 50
+
+      - name: Configure JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "11" # ubuntu-latest is about to default to 11, force it everywhere
+
+      - name: Verify JDK11
+        # Default JDK varies depending on different runner flavors, make sure we are on 11
+        # Run a check that exits with error unless it is 11 version to future-proof against unexpected upgrades
+        run: java -fullversion 2>&1 | grep '11.0'
+        shell: bash
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        timeout-minutes: 5
+        with:
+          # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
+          # Builds on other branches will only read from main branch cache writes
+          # Comment this and the with: above out for performance testing on a branch
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+
+      - name: Gradle Dependency Download
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew robolectricSdkDownload --daemon
+
+      - name: Run Unit Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: jacocoUnitTestReport --daemon
+
+      - name: Stop Gradle
+        if: matrix.os == 'windows-latest'
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --stop
+
+      - name: Submit Coverage
+        # This can fail on timeouts etc, wrap with retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          shell: bash
+          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh

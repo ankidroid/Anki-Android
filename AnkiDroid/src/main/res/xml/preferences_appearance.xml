@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Fonts & Style Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
+        android:title="@string/pref_cat_appearance"
+        android:key="@string/pref_appearance_screen_key">
+    <PreferenceCategory android:title="@string/pref_cat_themes" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/app_theme_labels"
+            android:entryValues="@array/app_theme_values"
+            android:key="@string/app_theme_key"
+            android:title="@string/app_theme"
+            app1:useSimpleSummaryProvider="true"/>
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/day_theme_labels"
+            android:entryValues="@array/day_theme_values"
+            android:key="@string/day_theme_key"
+            android:shouldDisableView="true"
+            android:title="@string/day_theme"
+            app1:useSimpleSummaryProvider="true"
+            search:ignore="true"/>
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/night_theme_labels"
+            android:entryValues="@array/night_theme_values"
+            android:key="@string/night_theme_key"
+            android:shouldDisableView="true"
+            android:title="@string/night_theme"
+            app1:useSimpleSummaryProvider="true"
+            search:ignore="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/background_image_title" >
+        <SwitchPreference
+            android:checked="false"
+            android:defaultValue="0"
+            android:key="@string/pref_deck_picker_background_key"
+            android:shouldDisableView="true"
+            android:title="@string/choose_an_image" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_reviewer" >
+        <Preference
+            android:summary="@string/custom_buttons_summary"
+            android:title="@string/custom_buttons"
+            android:key="@string/custom_buttons_link_preference"
+            android:fragment="com.ichi2.anki.preferences.CustomButtonsSettingsFragment"
+            search:ignore="true"/>
+        <ListPreference
+            android:defaultValue="0"
+            android:key="@string/fullscreen_mode_preference"
+            android:entries="@array/full_screen_mode_labels"
+            android:entryValues="@array/full_screen_mode_values"
+            android:title="@string/fullscreen_review"
+            app1:useSimpleSummaryProvider="true"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/center_vertically_preference"
+            android:summary="@string/vertical_centering_summ"
+            android:title="@string/vertical_centering" />
+        <SwitchPreference
+            android:key="@string/show_estimates_preference"
+            android:summary="@string/show_estimates_summ"
+            android:title="@string/show_estimates" />
+        <ListPreference
+            android:defaultValue="bottom"
+            android:entries="@array/answer_buttons_position_labels"
+            android:entryValues="@array/answer_buttons_position"
+            android:key="@string/answer_buttons_position_preference"
+            android:title="@string/answer_buttons_position"
+            app1:useSimpleSummaryProvider="true"/>
+        <SwitchPreference
+            android:key="@string/show_topbar_preference"
+            android:defaultValue="true"
+            android:summary="@string/show_top_bar_summ"
+            android:title="@string/show_top_bar" />
+        <SwitchPreference
+            android:key="@string/show_progress_preference"
+            android:summary="@string/show_progress_summ"
+            android:title="@string/show_progress" />
+        <SwitchPreference
+            android:key="@string/show_eta_preference"
+            android:defaultValue="true"
+            android:summary="@string/show_eta_summ"
+            android:title="@string/show_eta" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_fonts" >
+        <ListPreference
+            android:defaultValue="@string/empty_string"
+            android:key="@string/pref_default_font_key"
+            android:shouldDisableView="true"
+            android:title="@string/default_font"
+            app1:useSimpleSummaryProvider="true"/>
+        <ListPreference
+            android:defaultValue="0"
+            android:key="@string/pref_font_applicability_key"
+            android:entries="@array/override_font_labels"
+            android:entryValues="@array/override_font_values"
+            android:title="@string/override_font"
+            app1:useSimpleSummaryProvider="true"/>
+        <ListPreference
+            android:defaultValue="@string/empty_string"
+            android:key="@string/pref_browser_and_editor_font_key"
+            android:title="@string/pref_browser_editor_font"
+            app1:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/card_browser">
+        <SwitchPreference
+            android:checked="false"
+            android:defaultValue="false"
+            android:key="@string/pref_display_filenames_in_browser_key"
+            android:title="@string/card_browser_hide_media"
+            android:summary="@string/card_browser_hide_media_summary"/>
+    </PreferenceCategory>
+</PreferenceScreen>

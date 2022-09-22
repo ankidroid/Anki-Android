@@ -1,0 +1,44 @@
+<!-- First child of DrawerLayout assumed to be main content, others are drawers.
+ We use a Coordinator layout as root View for main content as it allows snackbars
+ to be swiped off screen. Other behaviors can also be added in the future if necessary -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bring in each component from separate files as we have fullscreen versions of reviewer -->
+    <RelativeLayout
+        android:id="@+id/front_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/toolbar"/>
+
+        <include
+            layout="@layout/reviewer_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar" />
+
+        <include
+            layout="@layout/reviewer_mic_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_bar" />
+
+        <include
+            layout="@layout/reviewer_flashcard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/mic_tool_bar_layer" />
+
+        <include
+            layout="@layout/reviewer_whiteboard_editor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/bottom_area_layout"/>
+
+        <include layout="@layout/reviewer_answer_buttons" />
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!-- Left navigation drawer -->
