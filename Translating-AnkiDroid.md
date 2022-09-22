@@ -39,6 +39,37 @@ To see where texts are used and check your translation, you can see screenshot o
 * Some translation strings may have many plural forms in your language. These are represented by labels like `one`, `few`, `many`, etc. in Crowdin.
 You can find the meanings of these terms for your language [here](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html).
 
+# AnkiDroid specific translations on Pontoon:
+
+  It is a recently-developed system that makes it easier for translators to deal with plurals, and makes it easier for developers to provide useful comments to help with translation. Steps to follow : 
+  * Firstly , you need to create an account in order to make changes on https://anki.tenderapp.com/discussions/private with  the following information:
+    1. The language or languages you'd like to translate.
+    2. Your email address. Please note that the email address you provide will be visible to people browsing GitHub.
+    3. The username you'd like to use (for example, 'bob5')
+    4. Please include the following text in your message: "I license any translations I contribute under the 3-clause BSD license."
+  * You must now visit to https://i18n.ankiweb.net/ and sign in to your account . 
+  * Choose a language.
+  * Select one of the project(core,desktop,mobile).
+  * Choose one of the resourse . 
+  * Selece any of the filter acoording to the translation status.(by default = all)
+  * Green bullet=translated, Grey bullet= Missing .  
+  * Terms like "%s", "%1$d" are placeholders for strings or numbers which will be filled later by AnkiDroid. They must not be changed, e.g. reversed ("1%d2") or filled with  spaces ("% s").
+ 
+
+For each grey bullet, translate the English text to your language. 
+Here is an eg of simple replacement in pontoon .
+**Simple Replacement**
+
+<img src="https://translating.ankiweb.net/anki/simple-replacement@2x.png" height=300></img>
+* When the text is a simple string, all you need to do is write the text in your native language and click Save (or press the Enter key).
+* Under the English text, many strings will contain a comment to help you understand where the string is being used, or to give an example of how it appears.
+* "Context" is the short name for this string, and may sometimes give you a hint as to where it is used or what it is trying to represent.
+
+
+**Tips:**
+* Many languages change words depending on number. For example, English uses "1 cat", but "3 cats".
+You can find the meanings of these terms for your language [here](https://translating.ankiweb.net/intro.html).
+
 ## Logic of the separation in different files
 
   * android\_market.xml : Text seen by Android users who see AnkiDroid in the Market, and are pondering whether to install it or not.
