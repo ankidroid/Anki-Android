@@ -17,8 +17,9 @@ package com.ichi2.libanki.sched
 
 import android.app.Activity
 import androidx.annotation.VisibleForTesting
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -195,15 +196,14 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
         protected fun leech(card: Card, activity: Activity?) {
             if (activity != null) {
                 val res = activity.resources
-                val leechMessage: String
-                leechMessage = if (card.queue < 0) {
+                val leechMessage: String = if (card.queue < 0) {
                     res.getString(R.string.leech_suspend_notification)
                 } else {
                     res.getString(R.string.leech_notification)
                 }
-                activity.runOnUiThread(Runnable { showThemedToast(activity, leechMessage, true) })
+                activity.showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             } else {
-                Timber.w("LeechHook :: could not show leech toast as activity was null")
+                Timber.w("LeechHook :: could not show leech snackbar as activity was null")
             }
         }
     }
