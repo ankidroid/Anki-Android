@@ -753,6 +753,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     if (srcData == null) {
                         // file was not in source, ignore
                         m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)!!))
+                        continue
                     }
                     // if model-local file exists from a previous import, use that
                     val split = Utils.splitFilename(fname)
@@ -766,13 +767,13 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                         )
                         continue
                     } else if (dstData == null || compareMedia(
-                            srcData!!,
+                            srcData,
                             dstData
                         )
                     ) { // if missing or the same, pass unmodified
                         // need to copy?
                         if (dstData == null) {
-                            _writeDstMedia(fname, srcData!!)
+                            _writeDstMedia(fname, srcData)
                         }
                         m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)!!))
                         continue
