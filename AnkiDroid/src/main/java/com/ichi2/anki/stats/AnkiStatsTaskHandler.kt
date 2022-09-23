@@ -20,8 +20,8 @@ import android.content.Context
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
@@ -38,7 +38,6 @@ import java.net.URLEncoder
 import kotlin.math.roundToInt
 
 class AnkiStatsTaskHandler private constructor(
-    private val collectionData: Collection,
     private val mainDispatcher: CoroutineDispatcher,
     private val defaultDispatcher: CoroutineDispatcher
 ) {
@@ -60,11 +59,13 @@ class AnkiStatsTaskHandler private constructor(
                 null
             } else {
                 Timber.d("Starting CreateChartTask, type: %s", chartType.name)
-                val chartBuilder = ChartBuilder(
-                    chartView, collectionData,
-                    mDeckId, chartType
-                )
-                chartBuilder.renderChart(statType)
+                withCol {
+                    val chartBuilder = ChartBuilder(
+                        chartView, this,
+                        mDeckId, chartType
+                    )
+                    chartBuilder.renderChart(statType)
+                }
             }
             plotSheet?.let {
                 withContext(mainDispatcher) {
@@ -85,9 +86,11 @@ class AnkiStatsTaskHandler private constructor(
                     null
                 } else {
                     Timber.d("Starting CreateStatisticsOverview")
-                    val overviewStatsBuilder =
-                        OverviewStatsBuilder(webView, collectionData, mDeckId, statType)
-                    overviewStatsBuilder.createInfoHtmlString()
+                    withCol {
+                        val overviewStatsBuilder =
+                            OverviewStatsBuilder(webView, this, mDeckId, statType)
+                        overviewStatsBuilder.createInfoHtmlString()
+                    }
                 }
                 html?.let {
                     withContext(mainDispatcher) {
@@ -116,12 +119,11 @@ class AnkiStatsTaskHandler private constructor(
         private val mutex = Mutex()
         @Synchronized
         fun getInstance(
-            collection: Collection,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
         ): AnkiStatsTaskHandler {
-            if (instance == null || instance!!.collectionData !== collection) {
-                instance = AnkiStatsTaskHandler(collection, mainDispatcher, defaultDispatcher)
+            if (instance == null) {
+                instance = AnkiStatsTaskHandler(mainDispatcher, defaultDispatcher)
             }
             return instance!!
         }

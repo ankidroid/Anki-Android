@@ -29,6 +29,7 @@ import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
 import timber.log.Timber
 import kotlin.math.*
 
+// The entire lifespan of [ChartBuilder] should appear in a single [withCol].
 class ChartBuilder(private val chartView: ChartView, private val collectionData: Collection, private val deckId: DeckId, private val chartType: ChartType) {
     private var mMaxCards = 0
     private var mBackwards = false
@@ -81,7 +82,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             return null
         }
         val rect = RectangleWrap(width, height)
-        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData).standardTextSize) * 0.85f
+        val textSize = (AnkiStatsTaskHandler.getInstance().standardTextSize) * 0.85f
         paint.textSize = textSize
         val fontHeight = paint.textSize
         val desiredPixelDistanceBetweenTicks = (paint.measureText("100000") * 2.6f).roundToInt()

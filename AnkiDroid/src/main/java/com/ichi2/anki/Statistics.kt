@@ -19,11 +19,7 @@ package com.ichi2.anki
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.webkit.WebView
 import android.widget.ProgressBar
@@ -54,7 +50,7 @@ import com.ichi2.ui.FixedTextView
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.Locale
+import java.util.*
 
 @RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")
 class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleListener {
@@ -84,7 +80,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         super.onCollectionLoaded(col)
 
         // Setup Task Handler
-        taskHandler = getInstance(col)
+        taskHandler = getInstance()
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         // Set up the ViewPager with the sections adapter.

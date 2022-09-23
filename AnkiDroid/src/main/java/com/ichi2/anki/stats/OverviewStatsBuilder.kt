@@ -32,6 +32,7 @@ import kotlin.math.roundToLong
 /**
  * @param webView for resources access
  */
+// The entire lifespan of [OverviewStatsBuilder] should appear in a single [withCol].
 class OverviewStatsBuilder(private val webView: WebView, private val col: Collection, private val deckId: DeckId, private val type: AxisType) {
     class OverviewStats {
         var forecastTotalReviews = 0
