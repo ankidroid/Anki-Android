@@ -317,3 +317,21 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
         }
     }
 }
+
+suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
+    if (withCol { schemaChanged() }) {
+        return true
+    }
+    val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
+        MaterialDialog(this).show {
+            message(text = TR.deckConfigWillRequireFullSync())
+            positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
+            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+            onCancel { coroutine.resume(false) }
+        }
+    }
+    if (hasAcceptedSchemaChange) {
+        withCol { modSchemaNoCheck() }
+    }
+    return hasAcceptedSchemaChange
+}
