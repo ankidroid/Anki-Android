@@ -20,7 +20,6 @@ package com.ichi2.libanki
 import android.database.SQLException
 import android.net.Uri
 import android.text.TextUtils
-import android.util.Pair
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters

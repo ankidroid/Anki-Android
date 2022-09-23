@@ -17,7 +17,6 @@
 
 package com.ichi2.libanki
 
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.BlocksSchemaUpgrade

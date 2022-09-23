@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Pair
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemLongClickListener
@@ -102,7 +101,7 @@ class ModelBrowser : AnkiActivity() {
             }
             context.let {
                 it.hideProgressBar()
-                it.mModels = ArrayList(result.first!!)
+                it.mModels = ArrayList(result.first)
                 it.mCardCounts = result.second
                 it.fillModelList()
             }

@@ -18,7 +18,6 @@ package com.ichi2.anki.noteeditor
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Pair
 import android.util.SparseArray
 import android.view.View
 import com.ichi2.anki.FieldEditLine

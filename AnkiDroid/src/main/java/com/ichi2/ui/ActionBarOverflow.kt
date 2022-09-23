@@ -15,7 +15,6 @@
  */
 package com.ichi2.ui
 
-import android.util.Pair
 import android.view.MenuItem
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting

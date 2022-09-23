@@ -18,7 +18,6 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Pair
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.SaveModelAndExitHandler
 import com.ichi2.async.CollectionTask.SaveModel
 import com.ichi2.async.TaskManager

@@ -17,7 +17,6 @@
 package com.ichi2.libanki.sync
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
@@ -131,7 +130,7 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun upload(): Pair<ConnectionResultType, Array<Any?>>? {
+    fun upload(): Pair<ConnectionResultType, Array<Any?>?>? {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file)
         if (!"ok".equals(mCol!!.db.queryString("PRAGMA integrity_check"), ignoreCase = true)) {

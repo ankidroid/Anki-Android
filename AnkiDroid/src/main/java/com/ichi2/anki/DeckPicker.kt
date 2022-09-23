@@ -34,7 +34,6 @@ import android.net.Uri
 import android.os.*
 import android.provider.Settings
 import android.text.TextUtils
-import android.util.Pair
 import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener

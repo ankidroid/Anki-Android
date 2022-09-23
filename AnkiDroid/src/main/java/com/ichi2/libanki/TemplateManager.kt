@@ -279,7 +279,7 @@ class TemplateManager {
         }
 
         @RustCleanup("legacy")
-        fun templates_for_card(card: Card, browser: bool): Tuple<str, str> {
+        fun templates_for_card(card: Card, browser: bool): Pair<str, str> {
             val template = card.template()
             var a: String? = null
             var q: String? = null

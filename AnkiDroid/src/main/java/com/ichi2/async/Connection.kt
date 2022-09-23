@@ -22,7 +22,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.PowerManager
 import android.os.PowerManager.WakeLock
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
@@ -307,10 +306,10 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             if (ret == null) {
                                 return returnGenericError(data)
                             }
-                            if (ret.first == ARBITRARY_STRING && ret.second[0] != HttpSyncer.ANKIWEB_STATUS_OK) {
+                            if (ret.first == ARBITRARY_STRING && ret.second!![0] != HttpSyncer.ANKIWEB_STATUS_OK) {
                                 data.success = false
                                 data.resultType = ret.first
-                                data.result = ret.second
+                                data.result = ret.second!!
                                 return data
                             }
                         }
@@ -371,25 +370,20 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 try {
                     Timber.i("Sync - Performing media sync")
                     ret = mediaClient.sync()
-                    if (ret.first == null) {
-                        mediaError =
-                            AnkiDroidApp.appResources.getString(R.string.sync_media_error)
+                    if (CORRUPT == ret.first) {
+                        mediaError = AnkiDroidApp.appResources
+                            .getString(R.string.sync_media_db_error)
+                        noMediaChanges = true
+                    }
+                    if (NO_CHANGES == ret.first) {
+                        publishProgress(R.string.sync_media_no_changes)
+                        noMediaChanges = true
+                    }
+                    if (MEDIA_SANITY_FAILED == ret.first) {
+                        mediaError = AnkiDroidApp.appResources
+                            .getString(R.string.sync_media_sanity_failed)
                     } else {
-                        if (CORRUPT == ret.first) {
-                            mediaError = AnkiDroidApp.appResources
-                                .getString(R.string.sync_media_db_error)
-                            noMediaChanges = true
-                        }
-                        if (NO_CHANGES == ret.first) {
-                            publishProgress(R.string.sync_media_no_changes)
-                            noMediaChanges = true
-                        }
-                        if (MEDIA_SANITY_FAILED == ret.first) {
-                            mediaError = AnkiDroidApp.appResources
-                                .getString(R.string.sync_media_sanity_failed)
-                        } else {
-                            publishProgress(R.string.sync_media_success)
-                        }
+                        publishProgress(R.string.sync_media_success)
                     }
                 } catch (e: RuntimeException) {
                     Timber.w(e)

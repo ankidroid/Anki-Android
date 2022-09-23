@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
-import android.util.Pair
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.model.WhiteboardPenColor.Companion.default
 import com.ichi2.libanki.DeckId
