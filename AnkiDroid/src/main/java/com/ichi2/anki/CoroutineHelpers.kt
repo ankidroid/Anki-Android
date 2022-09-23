@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -44,7 +45,7 @@ import kotlin.coroutines.suspendCoroutine
  *   If not, add a comment explaining why, or refactor to have a method that returns
  *   a non-null localized message.
  */
-suspend fun <T> FragmentActivity.runCatchingTask(
+suspend fun <T> Activity.runCatchingTask(
     errorMessage: String? = null,
     block: suspend () -> T?
 ): T? {
@@ -103,7 +104,7 @@ fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = nul
  * request handlers in a synchronous context on a background thread. In most cases, you will want
  * to use [FragmentActivity.launchCatchingTask] instead.
  */
-fun <T> FragmentActivity.runBlockingCatching(
+fun <T> Activity.runBlockingCatching(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> T?
 ): T? {
@@ -117,13 +118,11 @@ fun <T> FragmentActivity.runBlockingCatching(
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  */
-fun FragmentActivity.launchCatchingTask(
+fun ComponentActivity.launchCatchingTask(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit
-): Job {
-    return lifecycle.coroutineScope.launch {
-        runCatchingTask(errorMessage) { block() }
-    }
+): Job = lifecycle.coroutineScope.launch {
+    runCatchingTask(errorMessage) { block() }
 }
 
 /** See [FragmentActivity.launchCatchingTask] */
@@ -168,7 +167,7 @@ suspend fun <T> Backend.withProgress(
  * Run the provided operation, showing a progress window until it completes.
  * Progress info is polled from the backend.
  */
-suspend fun <T> FragmentActivity.withProgress(
+suspend fun <T> Activity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     op: suspend () -> T
@@ -195,7 +194,7 @@ suspend fun <T> FragmentActivity.withProgress(
  * Run the provided operation, showing a progress window with the provided
  * message until the operation completes.
  */
-suspend fun <T> FragmentActivity.withProgress(
+suspend fun <T> Activity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
     op: suspend () -> T
 ): T = withProgressDialog(
@@ -209,7 +208,7 @@ suspend fun <T> FragmentActivity.withProgress(
 
 @Suppress("Deprecation") // ProgressDialog deprecation
 private suspend fun <T> withProgressDialog(
-    context: FragmentActivity,
+    context: Activity,
     onCancel: (() -> Unit)?,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
@@ -246,7 +245,7 @@ private suspend fun monitorProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
 ) {
-    var state = ProgressContext(Progress.getDefaultInstance())
+    val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
         state.progress = backend.latestProgress()
         state.extractProgress()
