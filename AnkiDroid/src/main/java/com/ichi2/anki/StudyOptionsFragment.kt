@@ -39,7 +39,9 @@ import com.ichi2.anki.servicelayer.ComputeResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.*
+import com.ichi2.async.CollectionTask.EmptyCram
+import com.ichi2.async.CollectionTask.RebuildCram
+import com.ichi2.async.CollectionTask.UpdateValuesFromDeck
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection

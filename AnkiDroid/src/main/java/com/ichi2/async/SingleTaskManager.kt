@@ -18,7 +18,8 @@ package com.ichi2.async
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ThreadUtil.sleep
 import timber.log.Timber
-import java.util.*
+import java.util.Collections
+import java.util.LinkedList
 import java.util.concurrent.TimeUnit
 
 /**

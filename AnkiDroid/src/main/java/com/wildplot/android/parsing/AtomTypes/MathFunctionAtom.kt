@@ -17,12 +17,10 @@
 package com.wildplot.android.parsing.AtomTypes
 
 import com.ichi2.utils.KotlinCleanup
-import com.wildplot.android.parsing.AtomTypes.MathFunctionAtom.MathType
 import com.wildplot.android.parsing.Expression
 import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TopLevelParser
 import com.wildplot.android.parsing.TreeElement
-import kotlin.Throws
 
 @KotlinCleanup("IDE Lint")
 class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) : TreeElement {

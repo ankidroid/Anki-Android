@@ -16,8 +16,6 @@
 
 package com.ichi2.utils
 
-import java.util.Comparator
-
 class NamedJSONComparator : Comparator<JSONObject> {
     override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
         val o1 = lhs.getString("name")

@@ -22,7 +22,16 @@ import android.media.MediaDataSource
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
-import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.*
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.END
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.ERROR
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.IDLE
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.INITIALIZED
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.PAUSED
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.PLAYBACK_COMPLETE
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.PREPARED
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.PREPARING
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.STARTED
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.STOPPED
 import java.io.FileDescriptor
 import java.net.HttpCookie
 

@@ -18,7 +18,6 @@ package com.ichi2.utils
 import com.ichi2.libanki.Utils
 import org.apache.commons.compress.archivers.zip.ZipFile
 import java.io.File
-import java.lang.Exception
 
 class UnzipFile {
     companion object {

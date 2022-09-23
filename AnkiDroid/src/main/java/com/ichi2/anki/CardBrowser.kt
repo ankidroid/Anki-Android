@@ -18,15 +18,31 @@
 
 package com.ichi2.anki
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
 import android.util.TypedValue
-import android.view.*
-import android.widget.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.AbsListView
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
+import android.widget.CheckBox
+import android.widget.ListView
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -43,15 +59,21 @@ import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.*
+import com.ichi2.anki.dialogs.BrowserOptionsDialog
+import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog.Companion.newInstance
+import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.anki.dialogs.RescheduleDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleMultipleCards
 import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleSingleCard
+import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -67,24 +89,41 @@ import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.async.*
+import com.ichi2.async.CollectionTask
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
 import com.ichi2.async.CollectionTask.CheckCardSelection
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
 import com.ichi2.async.CollectionTask.MarkNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
+import com.ichi2.async.TaskListenerWithContext
+import com.ichi2.async.TaskManager
+import com.ichi2.async.updateCard
+import com.ichi2.async.updateMultipleNotes
 import com.ichi2.compat.Compat
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
+import com.ichi2.libanki.ChangeManager
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.libanki.SortOrder.UseCollectionOrdering
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.bool
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.upgrade.Upgrade.upgradeJSONIfNecessary
-import com.ichi2.utils.*
+import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
@@ -94,7 +133,8 @@ import timber.log.Timber
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.lang.StringBuilder
-import java.util.*
+import java.util.Collections
+import java.util.Locale
 import java.util.function.Consumer
 import kotlin.collections.ArrayList
 import kotlin.math.abs
@@ -2581,7 +2621,11 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {
-        return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
+        return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(
+            String.format(
+                Locale.US, "Card '%d' not found", cardId
+            )
+        )
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

@@ -18,8 +18,9 @@ package com.ichi2.libanki.sched
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.BUTTON_FOUR
 import com.ichi2.libanki.Consts.BUTTON_ONE
 import com.ichi2.libanki.Consts.BUTTON_THREE
@@ -37,6 +38,8 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.Consts.STARTING_FACTOR
 import com.ichi2.libanki.Consts.SYNC_VER
+import com.ichi2.libanki.DecksTest
+import com.ichi2.libanki.Models
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
@@ -57,11 +60,9 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.platform.commons.util.CollectionUtils
 import org.junit.runner.RunWith
-import java.lang.Exception
 import java.time.Instant
 import java.time.ZoneOffset
-import java.util.*
-import kotlin.Throws
+import java.util.Arrays
 import kotlin.math.roundToLong
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull

@@ -30,14 +30,21 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.DECK_STD
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.*
 import com.ichi2.utils.CollectionUtils.addAll
+import com.ichi2.utils.DeckComparator
 import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.SyncStatus
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.text.Normalizer
-import java.util.*
+import java.util.Arrays
+import java.util.Collections
+import java.util.LinkedList
+import java.util.TreeMap
 import java.util.regex.Pattern
 
 // fixmes:

@@ -16,7 +16,6 @@
 package com.ichi2.anki.cardviewer
 
 import androidx.annotation.CheckResult
-import java.lang.IllegalStateException
 
 class CardTemplate(template: String) {
     private var mPreStyle: String? = null

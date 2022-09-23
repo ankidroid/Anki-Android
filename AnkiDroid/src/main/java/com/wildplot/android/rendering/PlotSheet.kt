@@ -22,7 +22,8 @@ import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
 import com.wildplot.android.rendering.interfaces.Drawable
 import com.wildplot.android.rendering.interfaces.Legendable
 import timber.log.Timber
-import java.util.*
+import java.util.Collections
+import java.util.Vector
 
 /**
  * This is a sheet that is used to plot mathematical functions including coordinate systems and optional extras like

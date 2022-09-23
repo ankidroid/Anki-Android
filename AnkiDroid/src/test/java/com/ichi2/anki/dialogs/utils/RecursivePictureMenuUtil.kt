@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.dialogs.RecursivePictureMenu
-import java.util.*
+import java.util.Objects
 
 class RecursivePictureMenuUtil {
     companion object {

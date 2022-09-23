@@ -16,8 +16,20 @@
 
 package com.wildplot.android.parsing
 
-import com.wildplot.android.parsing.Atom.AtomType.*
-import com.wildplot.android.parsing.AtomTypes.*
+import com.wildplot.android.parsing.Atom.AtomType.EXP_IN_BRACKETS
+import com.wildplot.android.parsing.Atom.AtomType.FUNCTION_MATH
+import com.wildplot.android.parsing.Atom.AtomType.FUNCTION_X
+import com.wildplot.android.parsing.Atom.AtomType.FUNCTION_X_Y
+import com.wildplot.android.parsing.Atom.AtomType.INVALID
+import com.wildplot.android.parsing.Atom.AtomType.NUMBER
+import com.wildplot.android.parsing.Atom.AtomType.VARIABLE
+import com.wildplot.android.parsing.AtomTypes.FunctionXAtom
+import com.wildplot.android.parsing.AtomTypes.FunctionXYAtom
+import com.wildplot.android.parsing.AtomTypes.MathFunctionAtom
+import com.wildplot.android.parsing.AtomTypes.NumberAtom
+import com.wildplot.android.parsing.AtomTypes.VariableAtom
+import com.wildplot.android.parsing.AtomTypes.XVariableAtom
+import com.wildplot.android.parsing.AtomTypes.YVariableAtom
 
 class Atom(private val parser: TopLevelParser) : TreeElement {
     var atomType: AtomType = INVALID

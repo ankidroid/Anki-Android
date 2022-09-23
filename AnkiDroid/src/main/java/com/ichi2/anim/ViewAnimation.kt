@@ -7,7 +7,12 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.TranslateAnimation
-import com.ichi2.anim.ViewAnimation.Slide.*
+import com.ichi2.anim.ViewAnimation.Slide.SLIDE_IN_FROM_BOTTOM
+import com.ichi2.anim.ViewAnimation.Slide.SLIDE_IN_FROM_LEFT
+import com.ichi2.anim.ViewAnimation.Slide.SLIDE_IN_FROM_RIGHT
+import com.ichi2.anim.ViewAnimation.Slide.SLIDE_IN_FROM_TOP
+import com.ichi2.anim.ViewAnimation.Slide.SLIDE_OUT_TO_LEFT
+import com.ichi2.anim.ViewAnimation.Slide.SLIDE_OUT_TO_RIGHT
 
 object ViewAnimation {
     enum class Slide {

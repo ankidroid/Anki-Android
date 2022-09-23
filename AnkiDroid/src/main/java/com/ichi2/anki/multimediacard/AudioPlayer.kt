@@ -19,7 +19,8 @@
  */
 package com.ichi2.anki.multimediacard
 
-import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.*
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.INITIALIZED
+import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.STOPPED
 import timber.log.Timber
 import java.io.IOException
 

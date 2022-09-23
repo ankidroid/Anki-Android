@@ -16,7 +16,7 @@
 
 package com.ichi2.anki
 
-import java.util.*
+import java.util.Locale
 
 object LanguageUtils {
     /**

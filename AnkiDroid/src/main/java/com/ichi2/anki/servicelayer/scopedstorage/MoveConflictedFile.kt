@@ -21,10 +21,13 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileConflictResolutionFailedException
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileDirectoryConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import java.io.File
-import java.lang.IllegalStateException
 
 /**
  * Moves a file from [sourceFile] to [proposedDestinationFile].

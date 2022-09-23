@@ -43,7 +43,6 @@ package com.ichi2.utils
 
 import org.json.JSONException
 import org.json.JSONTokener
-import kotlin.Throws
 
 class JSONTokener(s: String) : JSONTokener(s) {
     @Throws(JSONException::class)

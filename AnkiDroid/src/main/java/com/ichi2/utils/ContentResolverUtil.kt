@@ -23,9 +23,7 @@ import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
 import timber.log.Timber
 import java.io.File
-import java.lang.Exception
-import java.lang.IllegalStateException
-import java.util.*
+import java.util.Locale
 
 object ContentResolverUtil {
     /** Obtains the filename from the url. Throws if all methods return exception  */

@@ -22,7 +22,10 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.AnswerButtons.*
+import com.ichi2.anki.reviewer.AnswerButtons.AGAIN
+import com.ichi2.anki.reviewer.AnswerButtons.EASY
+import com.ichi2.anki.reviewer.AnswerButtons.GOOD
+import com.ichi2.anki.reviewer.AnswerButtons.HARD
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils

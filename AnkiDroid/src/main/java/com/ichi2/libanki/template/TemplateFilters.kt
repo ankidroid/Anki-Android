@@ -25,8 +25,7 @@ import com.ichi2.libanki.template.FuriganaFilters.kanaFilter
 import com.ichi2.libanki.template.FuriganaFilters.kanjiFilter
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.lang.Exception
-import java.util.*
+import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 

@@ -20,8 +20,6 @@ import com.wildplot.android.parsing.Atom.AtomType
 import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TreeElement
 import timber.log.Timber
-import java.lang.NumberFormatException
-import kotlin.Throws
 
 class NumberAtom(factorString: String) : TreeElement {
 

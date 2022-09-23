@@ -31,7 +31,6 @@ import com.ichi2.anki.lint.utils.StringFormatDetector
 import com.ichi2.anki.lint.utils.childrenSequence
 import org.w3c.dom.Element
 import org.w3c.dom.Node
-import java.lang.IllegalStateException
 
 /**
  * Fix for "Multiple substitutions specified in non-positional format"

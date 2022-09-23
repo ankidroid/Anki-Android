@@ -18,7 +18,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.provider
 
-import android.content.*
+import android.content.ContentProvider
+import android.content.ContentUris
+import android.content.ContentValues
+import android.content.UriMatcher
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.database.MatrixCursor
@@ -26,13 +29,29 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.text.TextUtils
 import android.webkit.MimeTypeMap
-import com.ichi2.anki.*
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.ModelManager
+import com.ichi2.libanki.Models
 import com.ichi2.libanki.Models.AllowEmpty
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.AbstractSched
@@ -48,8 +67,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 /**
  * Supported URIs:

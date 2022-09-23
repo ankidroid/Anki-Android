@@ -35,7 +35,6 @@
 package com.ichi2.anki.lint.utils
 
 import org.w3c.dom.Node
-import java.lang.StringBuilder
 
 object StringFormatDetector {
     fun addText(sb: StringBuilder, node: Node) {

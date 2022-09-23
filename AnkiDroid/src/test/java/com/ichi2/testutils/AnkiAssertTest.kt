@@ -15,13 +15,12 @@
  */
 package com.ichi2.testutils
 
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.sameInstance
 import org.junit.Assert
 import org.junit.Test
-import java.lang.AssertionError
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
 
 class AnkiAssertTest {
     // We're not going to use the class under test to verify that these are working.

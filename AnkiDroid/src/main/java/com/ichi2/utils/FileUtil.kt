@@ -24,7 +24,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.util.*
+import java.util.AbstractMap.SimpleEntry
 
 object FileUtil {
     /** Gets the free disk space given a file  */
@@ -74,7 +74,7 @@ object FileUtil {
         val index = fileName.lastIndexOf(".")
         return if (index < 1) {
             null
-        } else AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
+        } else SimpleEntry(fileName.substring(0, index), fileName.substring(index))
     }
 
     /**

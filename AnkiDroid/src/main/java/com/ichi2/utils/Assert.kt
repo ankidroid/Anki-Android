@@ -18,7 +18,6 @@
 package com.ichi2.utils
 
 import org.jetbrains.annotations.Contract
-import java.lang.AssertionError
 
 object Assert {
     fun that(condition: Boolean) {

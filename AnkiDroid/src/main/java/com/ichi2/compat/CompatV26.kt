@@ -29,8 +29,18 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.io.*
-import java.nio.file.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.nio.file.DirectoryIteratorException
+import java.nio.file.DirectoryStream
+import java.nio.file.Files
+import java.nio.file.NoSuchFileException
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 
 /** Implementation of [Compat] for SDK level 26 and higher. Check  [Compat]'s for more detail.  */
 @TargetApi(26)

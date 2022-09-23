@@ -28,7 +28,19 @@ class DirectDateInstantiationTest {
     @Language("JAVA")
     private val stubDate = """                         
 package java.util;                               
-                                                 
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                 
 public class Date {                              
                                                  
     public Date() {                              
@@ -43,7 +55,19 @@ public class Date {
     @Language("JAVA")
     private val javaFileToBeTested = """               
 package com.ichi2.anki.lint.rules;               
-                                                 
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                 
 import java.util.Date;                           
                                                  
 public class TestJavaClass {                     
@@ -57,7 +81,19 @@ public class TestJavaClass {
     @Language("JAVA")
     private val javaFileWithTime = """                 
 package com.ichi2.anki.lint.rules;               
-                                                 
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                 
 import java.util.Date;                           
                                                  
 public abstract class Time {                     
@@ -71,7 +107,19 @@ public abstract class Time {
     @Language("JAVA")
     private val javaFileUsingDateWithLong = """        
 package com.ichi2.anki.lint.rules;               
-                                                 
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                 
 import java.util.Date;                           
                                                  
 public class TestJavaClass {                     

@@ -18,7 +18,7 @@ package com.ichi2.libanki
 import android.content.Context
 import android.content.res.Resources
 import anki.config.ConfigKey
-import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.RustConfigBackend
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException

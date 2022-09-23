@@ -20,7 +20,6 @@ import android.os.Looper
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import timber.log.Timber
-import java.lang.RuntimeException
 
 /**
  * Helper class for checking for programming errors while using threads.

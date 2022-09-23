@@ -39,7 +39,6 @@ import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.lang.Exception
 import java.net.UnknownHostException
 
 /**

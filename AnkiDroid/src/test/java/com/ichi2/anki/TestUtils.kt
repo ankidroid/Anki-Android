@@ -18,8 +18,6 @@ package com.ichi2.anki
 
 import com.ichi2.utils.FileOperation.Companion.getFileContentsBytes
 import java.io.File
-import java.lang.Exception
-import java.lang.StringBuilder
 import java.security.MessageDigest
 
 open class TestUtils {

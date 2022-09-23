@@ -24,7 +24,7 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 /**
  * The language that a keyboard should open with when an [EditText] is selected

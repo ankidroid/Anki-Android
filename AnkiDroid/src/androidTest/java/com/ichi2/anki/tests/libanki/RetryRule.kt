@@ -19,7 +19,6 @@ package com.ichi2.anki.tests.libanki
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import kotlin.Throws
 
 /**
  * Retry a test maxTries times, only failing if zero successes.

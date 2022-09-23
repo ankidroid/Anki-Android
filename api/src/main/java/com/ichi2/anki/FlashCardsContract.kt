@@ -7,6 +7,9 @@
 package com.ichi2.anki
 
 import android.net.Uri
+import com.ichi2.anki.FlashCardsContract.Card
+import com.ichi2.anki.FlashCardsContract.Model
+import com.ichi2.anki.FlashCardsContract.Note
 
 /**
  * The contract between AnkiDroid and applications. Contains definitions for the supported URIs and

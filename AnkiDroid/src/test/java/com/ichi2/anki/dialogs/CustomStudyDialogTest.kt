@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.dialogs
 
-import androidx.core.view.get
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4

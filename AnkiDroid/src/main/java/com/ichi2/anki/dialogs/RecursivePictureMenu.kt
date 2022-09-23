@@ -33,7 +33,6 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
-import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
 class RecursivePictureMenu : DialogFragment() {

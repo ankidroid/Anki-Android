@@ -19,7 +19,12 @@ package com.ichi2.anki.dialogs
 import android.os.Handler
 import android.os.Message
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.NotificationChannels
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HandlerUtils.getDefaultLooper

@@ -25,14 +25,19 @@ package com.ichi2.utils
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
-import java.lang.Double.*
-import java.util.*
+import java.lang.Double.NEGATIVE_INFINITY
+import java.lang.Double.NaN
+import java.lang.Double.POSITIVE_INFINITY
+import java.util.Collections
 import kotlin.test.assertNull
 
 /**

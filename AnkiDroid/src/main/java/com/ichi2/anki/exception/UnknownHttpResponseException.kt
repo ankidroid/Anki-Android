@@ -16,6 +16,4 @@
 
 package com.ichi2.anki.exception
 
-import java.lang.Exception
-
 class UnknownHttpResponseException(message: String?, val responseCode: Int) : Exception(message)

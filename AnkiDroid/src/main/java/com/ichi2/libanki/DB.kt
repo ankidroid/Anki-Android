@@ -35,10 +35,6 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.RuntimeException
-import java.util.ArrayList
-import kotlin.Throws
 
 /**
  * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend

@@ -25,7 +25,9 @@ import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
-import java.util.*
+import java.util.Collections
+import java.util.LinkedList
+import java.util.TreeMap
 
 abstract class DeckManager {
 

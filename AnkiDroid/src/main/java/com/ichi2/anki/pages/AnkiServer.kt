@@ -20,9 +20,14 @@ package com.ichi2.anki.pages
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
 import com.ichi2.anki.runBlockingCatching
-import com.ichi2.libanki.*
+import com.ichi2.libanki.getDeckNamesRaw
+import com.ichi2.libanki.getFieldNamesRaw
+import com.ichi2.libanki.getNotetypeNamesRaw
 import com.ichi2.libanki.importer.getCsvMetadataRaw
-import com.ichi2.libanki.stats.*
+import com.ichi2.libanki.stats.cardStatsRaw
+import com.ichi2.libanki.stats.getGraphPreferencesRaw
+import com.ichi2.libanki.stats.graphsRaw
+import com.ichi2.libanki.stats.setGraphPreferencesRaw
 import fi.iki.elonen.NanoHTTPD
 import timber.log.Timber
 import java.io.ByteArrayInputStream

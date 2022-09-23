@@ -19,7 +19,7 @@ package com.ichi2.libanki.hooks
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 object ChessFilter {

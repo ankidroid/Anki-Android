@@ -26,7 +26,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.LanguageUtil.getSystemLocale
 import kotlinx.coroutines.runBlocking
-import java.util.*
+import java.util.TreeMap
 
 class GeneralSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int

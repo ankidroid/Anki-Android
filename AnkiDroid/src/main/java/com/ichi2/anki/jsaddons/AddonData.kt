@@ -28,7 +28,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.net.URL
-import kotlin.jvm.Throws
 
 /**
  * When package.json fetched from https://registry.npmjs.org/some-addon/latest,

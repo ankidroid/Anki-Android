@@ -19,7 +19,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Parcelable
 import android.view.KeyCharacterMap.deviceHasKey
-import android.view.KeyEvent.*
+import android.view.KeyEvent.KEYCODE_PAGE_DOWN
+import android.view.KeyEvent.KEYCODE_PAGE_UP
+import android.view.KeyEvent.KEYCODE_PICTSYMBOLS
+import android.view.KeyEvent.KEYCODE_SWITCH_CHARSET
 import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable
 

@@ -17,7 +17,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.util.Arrays
 
 class TextCardExporter(col: Collection, did: DeckId?, includeHTML: Boolean) : Exporter(col, did) {
     init {

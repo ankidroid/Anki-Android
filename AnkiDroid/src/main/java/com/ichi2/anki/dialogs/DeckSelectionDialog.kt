@@ -39,8 +39,11 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionGetter
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
@@ -50,7 +53,7 @@ import com.ichi2.utils.TypedFilter
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import java.util.Objects.requireNonNull
 
 /**

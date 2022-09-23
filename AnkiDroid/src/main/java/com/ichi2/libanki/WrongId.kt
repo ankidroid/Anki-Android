@@ -15,6 +15,4 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
-import java.lang.RuntimeException
-
 class WrongId(id: Long, kind: String) : RuntimeException(" No $kind with id $id")

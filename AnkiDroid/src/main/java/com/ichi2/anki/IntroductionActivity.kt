@@ -28,7 +28,7 @@ import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroPageTransformerType
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.introduction.SetupCollectionFragment
-import com.ichi2.anki.introduction.SetupCollectionFragment.*
+import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.themes.Themes

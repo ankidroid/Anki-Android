@@ -40,7 +40,7 @@ import com.ichi2.anki.UIUtils.getDensityAdjustedValue
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
 import com.ichi2.utils.KotlinCleanup
-import java.util.*
+import java.util.Locale
 
 @KotlinCleanup("check which properties could be made not nullable")
 class FieldEditLine : FrameLayout {

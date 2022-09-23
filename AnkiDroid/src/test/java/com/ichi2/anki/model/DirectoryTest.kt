@@ -21,7 +21,9 @@ import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert
 import org.junit.Test
 import java.io.File

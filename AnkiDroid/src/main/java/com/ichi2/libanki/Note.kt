@@ -24,7 +24,7 @@ import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import timber.log.Timber
-import java.util.*
+import java.util.AbstractSet
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")

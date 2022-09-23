@@ -17,7 +17,7 @@ package com.wildplot.android.rendering
 
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import com.wildplot.android.rendering.interfaces.Drawable
-import java.util.*
+import java.util.Vector
 
 class DrawableContainer(private val isOnFrame: Boolean, private val isCritical: Boolean) : Drawable {
     private val drawableVector = Vector<Drawable>()

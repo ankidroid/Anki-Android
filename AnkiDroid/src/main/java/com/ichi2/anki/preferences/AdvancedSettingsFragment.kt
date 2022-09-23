@@ -24,9 +24,15 @@ import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.MetaDB
+import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper

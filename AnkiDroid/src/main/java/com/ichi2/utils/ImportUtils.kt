@@ -43,10 +43,9 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 import java.util.zip.ZipException
 import java.util.zip.ZipInputStream
-import kotlin.collections.ArrayList
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */

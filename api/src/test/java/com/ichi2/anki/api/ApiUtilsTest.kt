@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.api
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

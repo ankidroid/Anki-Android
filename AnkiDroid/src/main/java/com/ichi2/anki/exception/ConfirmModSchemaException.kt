@@ -17,7 +17,6 @@
 package com.ichi2.anki.exception
 
 import timber.log.Timber
-import java.lang.Exception
 
 class ConfirmModSchemaException : Exception() {
     /**

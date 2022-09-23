@@ -21,7 +21,9 @@ package com.ichi2.libanki
 import android.database.SQLException
 import android.text.TextUtils
 import androidx.annotation.CheckResult
-import com.ichi2.libanki.SortOrder.*
+import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
+import com.ichi2.libanki.SortOrder.NoOrdering
+import com.ichi2.libanki.SortOrder.UseCollectionOrdering
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.HashUtil.HashMapInit
@@ -30,7 +32,9 @@ import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.text.Normalizer
-import java.util.*
+import java.util.Arrays
+import java.util.Collections
+import java.util.LinkedList
 import java.util.regex.Pattern
 
 @RustCleanup("remove this once Java backend is gone")

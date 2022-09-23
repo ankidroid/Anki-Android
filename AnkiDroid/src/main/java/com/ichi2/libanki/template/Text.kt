@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki.template
 
-import java.lang.StringBuilder
-
 class Text(private val text: String) : ParsedNode() {
     override fun template_is_empty(nonempty_fields: Set<String>): Boolean {
         return true

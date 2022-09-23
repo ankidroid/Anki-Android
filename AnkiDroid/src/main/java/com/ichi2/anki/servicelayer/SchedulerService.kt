@@ -20,14 +20,17 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.UndoAction
 import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
+import com.ichi2.libanki.Utils
 import com.ichi2.utils.Computation
 import timber.log.Timber
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.CancellationException
-import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 
 typealias NextCardAnd<T> = Computation<NextCard<T>>

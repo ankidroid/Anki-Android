@@ -25,7 +25,9 @@ import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
-import junit.framework.TestCase.*
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before
@@ -34,7 +36,6 @@ import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import java.io.File
 import java.io.IOException
-import kotlin.collections.HashSet
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {

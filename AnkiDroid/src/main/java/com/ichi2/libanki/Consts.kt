@@ -16,7 +16,6 @@
 package com.ichi2.libanki
 
 import androidx.annotation.IntDef
-import kotlin.annotation.Retention
 
 object Consts {
     // whether new cards should be mixed with reviews, or shown first or last

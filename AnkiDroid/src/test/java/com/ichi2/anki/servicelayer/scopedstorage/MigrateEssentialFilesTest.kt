@@ -34,7 +34,11 @@ import com.ichi2.testutils.CollectionDBCorruption
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers
 import org.junit.After
@@ -42,7 +46,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.kotlin.*
+import org.mockito.kotlin.KStubbing
+import org.mockito.kotlin.any
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString

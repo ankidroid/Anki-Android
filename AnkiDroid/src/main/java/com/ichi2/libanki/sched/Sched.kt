@@ -23,20 +23,33 @@ import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.DECK_STD
 import com.ichi2.libanki.Consts.REVLOG_TYPE
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.sched.Counts.Queue
-import com.ichi2.libanki.sched.Counts.Queue.*
+import com.ichi2.libanki.sched.Counts.Queue.LRN
+import com.ichi2.libanki.sched.Counts.Queue.NEW
+import com.ichi2.libanki.sched.Counts.Queue.REV
 import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
-import com.ichi2.utils.*
+import com.ichi2.utils.Assert
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import timber.log.Timber
-import java.util.*
+import java.util.LinkedList
+import java.util.Locale
+import java.util.Random
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("cleanup: use formatted string for all queries")

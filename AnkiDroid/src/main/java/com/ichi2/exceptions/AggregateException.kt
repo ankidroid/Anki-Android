@@ -16,9 +16,6 @@
 
 package com.ichi2.exceptions
 
-import java.lang.Exception
-import java.lang.RuntimeException
-
 /**
  * An exception which describes separate failures.
  * For example: if an operation should continue after some errors, but those errors would stop

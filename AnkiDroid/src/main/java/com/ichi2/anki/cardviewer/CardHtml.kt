@@ -20,7 +20,11 @@ import android.content.Context
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Media
+import com.ichi2.libanki.Sound
+import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme

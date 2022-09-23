@@ -15,7 +15,6 @@
  */
 package com.ichi2.libanki
 
-import androidx.core.util.Pair
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
@@ -26,7 +25,7 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
+import java.util.Collections
 import java.util.stream.Collectors
 import kotlin.math.min
 

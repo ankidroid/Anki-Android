@@ -25,8 +25,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.util.*
-import kotlin.Throws
+import java.util.Arrays
 
 @KotlinCleanup("lateinit wherever possible")
 @KotlinCleanup("IDE-lint")

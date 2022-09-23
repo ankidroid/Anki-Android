@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentResultListener
 import com.ichi2.utils.KotlinCleanup
-import java.util.ArrayList
 
 @KotlinCleanup("make selectedTags and indeterminateTags non-null")
 interface TagsDialogListener {

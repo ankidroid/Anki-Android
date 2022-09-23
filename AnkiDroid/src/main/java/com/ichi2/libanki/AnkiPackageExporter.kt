@@ -29,7 +29,14 @@ import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import timber.log.Timber
-import java.io.*
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 @KotlinCleanup("lots in this file")
 open class Exporter(protected val col: Collection, protected val did: DeckId?) {

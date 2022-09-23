@@ -20,7 +20,6 @@ import com.ichi2.compat.CompatHelper
 import java.io.File
 import java.io.IOException
 import java.nio.file.NotDirectoryException
-import kotlin.jvm.Throws
 
 /**
  * A directory which is assumed to exist (existed when class was instantiated)

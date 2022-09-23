@@ -42,9 +42,6 @@
 
 package com.ichi2.utils
 
-import java.lang.RuntimeException
-import kotlin.Throws
-
 /**
  * Similar to JSONException in meaning, but unchecked  */
 class JSONException : RuntimeException {

@@ -31,7 +31,11 @@ import android.widget.TextView
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.Info
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.appName

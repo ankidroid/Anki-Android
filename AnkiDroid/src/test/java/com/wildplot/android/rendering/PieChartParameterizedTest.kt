@@ -22,7 +22,7 @@ import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
-import java.util.*
+import java.util.Arrays
 import java.util.Arrays.asList
 
 @RunWith(Parameterized::class)

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION") // conversion to fragments tracked in github as #5019
+
 package com.ichi2.anki
 
 /****************************************************************************************
@@ -20,7 +22,11 @@ package com.ichi2.anki
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.preference.*
+import android.preference.CheckBoxPreference
+import android.preference.EditTextPreference
+import android.preference.ListPreference
+import android.preference.Preference
+import android.preference.PreferenceCategory
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -284,7 +290,6 @@ class FilteredDeckOptions :
         slide(this, ActivityTransitionAnimation.Direction.FADE)
     }
 
-    @Suppress("deprecation") // conversion to fragments tracked in github as #5019
     override fun updateSummaries() {
         mAllowCommit = false
         // for all text preferences, set summary as current database value

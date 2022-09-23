@@ -19,8 +19,7 @@ package com.ichi2.utils
 import android.content.Context
 import android.content.pm.PackageManager
 import timber.log.Timber
-import java.lang.Exception
-import java.util.*
+import java.util.Arrays
 
 object CheckCameraPermission {
     @Suppress("deprecation") // getPackageInfo

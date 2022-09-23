@@ -29,7 +29,8 @@ import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.util.*
+import java.util.Arrays
+import java.util.WeakHashMap
 import java.util.regex.Pattern
 
 @KotlinCleanup("IDE Lint")

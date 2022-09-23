@@ -19,8 +19,12 @@ package com.ichi2.libanki
 
 import android.app.Activity
 import android.content.Context
-import android.media.*
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
+import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.net.Uri
 import android.os.Build
@@ -32,13 +36,15 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.ReadText
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Sound.OnErrorListener
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.StringUtil.trimRight
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Arrays
+import java.util.Locale
 import java.util.regex.Pattern
 
 @KotlinCleanup("IDE Lint")

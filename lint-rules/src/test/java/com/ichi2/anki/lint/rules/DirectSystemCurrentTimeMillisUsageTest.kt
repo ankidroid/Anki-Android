@@ -15,17 +15,29 @@
  ****************************************************************************************/
 package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.*
-import com.android.tools.lint.checks.infrastructure.TestLintTask.*
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create
+import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import org.intellij.lang.annotations.Language
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class DirectSystemCurrentTimeMillisUsageTest {
     @Language("JAVA")
     private val stubSystem = """                                     
 package java.lang;                                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 public class System {                                          
                                                                
     public static long currentTimeMillis() {                   
@@ -37,7 +49,19 @@ public class System {
     @Language("JAVA")
     private val javaFileToBeTested = """                             
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.lang.System;                                       
                                                                
 public class TestJavaClass {                                   
@@ -51,7 +75,19 @@ public class TestJavaClass {
     @Language("JAVA")
     private val javaFileWithSystemTime = """                         
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.lang.System;                                       
                                                                
 public class SystemTime {                                      

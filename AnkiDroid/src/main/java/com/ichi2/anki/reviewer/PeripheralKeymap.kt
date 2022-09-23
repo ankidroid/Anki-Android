@@ -23,7 +23,6 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.key
 import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
-import java.util.HashMap
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */

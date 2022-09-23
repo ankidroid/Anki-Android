@@ -27,7 +27,11 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.BackupManager
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
@@ -40,7 +44,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
     private lateinit var mRepairValues: IntArray

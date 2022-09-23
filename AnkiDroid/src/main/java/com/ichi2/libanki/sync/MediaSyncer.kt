@@ -28,7 +28,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 /**
  * About conflicts:

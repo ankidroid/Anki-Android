@@ -19,10 +19,13 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.template.TemplateError.*
+import com.ichi2.libanki.template.TemplateError.ConditionalNotClosed
+import com.ichi2.libanki.template.TemplateError.ConditionalNotOpen
+import com.ichi2.libanki.template.TemplateError.WrongConditionalClosed
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.util.*
+import java.util.Arrays
+import java.util.WeakHashMap
 
 /**
  * Represents a template, allow to check in linear time which card is empty/render card.

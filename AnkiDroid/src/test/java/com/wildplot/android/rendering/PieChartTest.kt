@@ -21,7 +21,6 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import java.lang.IllegalArgumentException
 
 class PieChartTest {
     @Mock

@@ -42,8 +42,16 @@ import com.ichi2.libanki.Decks.Companion.ACTIVE_DECKS
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.libanki.utils.*
 import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.libanki.utils.append
+import com.ichi2.libanki.utils.extend
+import com.ichi2.libanki.utils.isNotNullOrEmpty
+import com.ichi2.libanki.utils.isNullOrEmpty
+import com.ichi2.libanki.utils.items
+import com.ichi2.libanki.utils.join
+import com.ichi2.libanki.utils.len
+import com.ichi2.libanki.utils.pop
+import com.ichi2.libanki.utils.toJsonArray
 import com.ichi2.utils.CollectionUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
@@ -52,7 +60,11 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
-import java.util.*
+import java.util.LinkedList
+import java.util.TreeMap
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.set
 
 data class DeckNameId(val name: String, val id: DeckId)
 

@@ -34,7 +34,6 @@ import com.ichi2.utils.WebViewDebugging.hasSetDataDirectory
 import org.acra.ACRA
 import org.acra.util.Installation
 import timber.log.Timber
-import java.lang.RuntimeException
 
 @KotlinCleanup("see if we can make variables lazy, or properties without the `s` prefix")
 object UsageAnalytics {

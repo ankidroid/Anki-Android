@@ -26,7 +26,6 @@ import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 
 /** Tests Sound Rendering - should be extracted from the GUI at some point */
 @RustCleanup("doesn't work with V16")

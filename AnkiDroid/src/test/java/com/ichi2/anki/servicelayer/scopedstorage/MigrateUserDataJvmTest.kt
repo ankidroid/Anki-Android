@@ -19,10 +19,14 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import android.content.SharedPreferences
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceType.*
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceType.MISSING_DIR
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceType.NOT_SET
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserDataJvmTest.SourceType.VALID_DIR
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.BeforeClass
 import org.junit.Test

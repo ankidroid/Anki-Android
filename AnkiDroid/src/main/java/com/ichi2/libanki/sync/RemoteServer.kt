@@ -28,7 +28,7 @@ import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Response
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 class RemoteServer(
     con: Connection,

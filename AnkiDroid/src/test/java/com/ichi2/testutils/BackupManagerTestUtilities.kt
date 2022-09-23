@@ -20,7 +20,6 @@ import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
 import com.ichi2.anki.CollectionHelper
 import org.junit.Assert.assertTrue
 import java.io.File
-import java.lang.IllegalStateException
 
 object BackupManagerTestUtilities {
     fun setupSpaceForBackup(context: Context) {

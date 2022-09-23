@@ -17,7 +17,7 @@ package com.ichi2.libanki.template
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.KotlinCleanup
-import java.util.*
+import java.util.Arrays
 
 @KotlinCleanup("fix hashCode issue suppression")
 @Suppress("EqualsOrHashCode")

@@ -46,7 +46,8 @@ import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
+import java.util.Objects
 import kotlin.math.max
 import kotlin.math.min
 

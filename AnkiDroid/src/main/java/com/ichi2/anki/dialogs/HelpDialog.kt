@@ -36,7 +36,6 @@ import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.KotlinCleanup
 import java.io.Serializable
-import java.util.*
 
 object HelpDialog {
     private fun openManual(ankiActivity: AnkiActivity) {

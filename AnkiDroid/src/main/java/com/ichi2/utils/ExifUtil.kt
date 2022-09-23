@@ -24,7 +24,6 @@ import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
 import timber.log.Timber
 import java.io.File
-import java.lang.Exception
 
 object ExifUtil {
     fun rotateFromCamera(theFile: File, _bmp: Bitmap): Bitmap {

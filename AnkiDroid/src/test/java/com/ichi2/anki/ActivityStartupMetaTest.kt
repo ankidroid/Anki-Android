@@ -25,9 +25,8 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
+import java.util.Arrays
 import java.util.stream.Collectors
-import kotlin.Throws
 
 @RunWith(AndroidJUnit4::class)
 class ActivityStartupMetaTest : RobolectricTest() {

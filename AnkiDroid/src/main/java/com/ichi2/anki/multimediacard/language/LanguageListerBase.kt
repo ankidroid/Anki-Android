@@ -19,7 +19,7 @@
 
 package com.ichi2.anki.multimediacard.language
 
-import java.util.*
+import java.util.Collections
 
 /**
  * This is some sort of tool, which translates from languages in a user readable form to a code, used to invoke some

@@ -22,16 +22,29 @@ import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileConflictResolutionFailedException
 import com.ichi2.compat.Test21And26
-import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.addTempFile
+import com.ichi2.testutils.assertThrows
+import com.ichi2.testutils.assertThrowsSubclass
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.endsWith
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.io.FileMatchers
 import org.junit.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import java.io.File
 import java.io.IOException
-import java.lang.IllegalStateException
 
 class MoveConflictedFileTest : Test21And26(), OperationTest {
 

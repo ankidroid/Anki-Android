@@ -17,7 +17,11 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import anki.scheduler.*
+import anki.scheduler.CardAnswer
+import anki.scheduler.NextCardStates
+import anki.scheduler.QueuedCards
+import anki.scheduler.SchedulingState
+import anki.scheduler.cardAnswer
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CollectionV16

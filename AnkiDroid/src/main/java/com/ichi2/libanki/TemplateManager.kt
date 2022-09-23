@@ -31,7 +31,7 @@ import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import timber.log.Timber
-import java.util.*
+import java.util.HashMap
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>

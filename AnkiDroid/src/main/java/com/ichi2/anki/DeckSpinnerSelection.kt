@@ -19,7 +19,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Filter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
@@ -29,8 +28,12 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.servicelayer.DeckService.shouldShowDefaultDeck
 import com.ichi2.anki.widgets.DeckDropDownAdapter
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
 import com.ichi2.utils.FragmentManagerSupplier
 import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.asFragmentManagerSupplier

@@ -21,7 +21,7 @@ import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
-import java.util.*
+import java.util.Arrays
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
@@ -73,7 +73,8 @@ internal class UnifiedTrustManager(localKeyStore: KeyStore?) : X509TrustManager 
         mLocalTrustManager = createTrustManager(localKeyStore)
         val first = mDefaultTrustManager.acceptedIssuers
         val second = mLocalTrustManager.acceptedIssuers
-        mAcceptedIssuers = Arrays.copyOf(first, first.size + second.size)
+        mAcceptedIssuers =
+            Arrays.copyOf(first, first.size + second.size)
         System.arraycopy(second, 0, mAcceptedIssuers, first.size, second.size)
     }
 }

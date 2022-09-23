@@ -19,7 +19,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.*
+import org.hamcrest.core.Is.`is`
 
 @KotlinCleanup("fix 'is'")
 object CollectionAssert {

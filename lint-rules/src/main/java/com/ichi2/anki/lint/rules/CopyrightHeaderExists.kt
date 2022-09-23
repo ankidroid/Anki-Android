@@ -17,13 +17,19 @@
 
 package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.detector.api.*
+import com.android.tools.lint.detector.api.Context
+import com.android.tools.lint.detector.api.Detector
+import com.android.tools.lint.detector.api.Implementation
+import com.android.tools.lint.detector.api.Issue
+import com.android.tools.lint.detector.api.Location
+import com.android.tools.lint.detector.api.Scope
+import com.android.tools.lint.detector.api.SourceCodeScanner
 import com.google.common.annotations.Beta
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
 import org.jetbrains.uast.UClass
 import org.jetbrains.uast.UElement
-import java.util.*
+import java.util.EnumSet
 import java.util.regex.Pattern
 
 /**

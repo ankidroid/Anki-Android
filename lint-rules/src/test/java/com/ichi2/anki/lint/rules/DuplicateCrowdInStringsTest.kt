@@ -15,8 +15,8 @@
  */
 package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.checks.infrastructure.TestFiles.*
-import com.android.tools.lint.checks.infrastructure.TestLintTask.*
+import com.android.tools.lint.checks.infrastructure.TestFiles.xml
+import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import org.intellij.lang.annotations.Language
 import org.junit.Test
 

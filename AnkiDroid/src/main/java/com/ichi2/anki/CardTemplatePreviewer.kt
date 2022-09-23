@@ -23,15 +23,19 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
+import java.util.ArrayList
+import java.util.Arrays
 
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where

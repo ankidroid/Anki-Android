@@ -20,7 +20,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
-import java.util.*
+import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 

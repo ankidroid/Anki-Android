@@ -15,6 +15,7 @@
  ****************************************************************************************/
 
 package com.ichi2.async
+
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note

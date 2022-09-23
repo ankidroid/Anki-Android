@@ -20,7 +20,6 @@ import android.content.Context
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import timber.log.Timber
-import java.lang.Exception
 
 /**
  * A simple little hack to force the icons to display in the PopupMenu

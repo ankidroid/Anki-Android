@@ -20,7 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.DeckPicker.CheckDatabaseListener
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric

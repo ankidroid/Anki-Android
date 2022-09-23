@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
-import java.util.*
 
 class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {

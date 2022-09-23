@@ -31,7 +31,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 /**
  * Linting to ensure that all locales have valid strings

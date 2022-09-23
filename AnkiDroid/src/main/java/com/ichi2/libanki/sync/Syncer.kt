@@ -26,10 +26,25 @@ import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsEvent
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.async.Connection
 import com.ichi2.async.Connection.Companion.isCancelled
-import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckConfig
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.BAD_AUTH
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.BASIC_CHECK_FAILED
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.CLOCK_OFF
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.FINISH_ERROR
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.FULL_SYNC
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.IO_EXCEPTION
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.NO_CHANGES
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.OUT_OF_MEMORY_ERROR
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.SANITY_CHECK_ERROR
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.SERVER_ABORT
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.SUCCESS
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
@@ -38,7 +53,8 @@ import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
+import java.util.Arrays
+import java.util.LinkedList
 
 @KotlinCleanup("IDE-lint")
 class Syncer(

@@ -23,11 +23,23 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.themes.Themes.getColorFromAttr
-import com.wildplot.android.rendering.*
+import com.wildplot.android.rendering.BarGraph
+import com.wildplot.android.rendering.LegendDrawable
+import com.wildplot.android.rendering.Lines
+import com.wildplot.android.rendering.PieChart
+import com.wildplot.android.rendering.PlotSheet
+import com.wildplot.android.rendering.XAxis
+import com.wildplot.android.rendering.XGrid
+import com.wildplot.android.rendering.YAxis
+import com.wildplot.android.rendering.YGrid
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
 import timber.log.Timber
-import kotlin.math.*
+import kotlin.math.floor
+import kotlin.math.ln
+import kotlin.math.log10
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 class ChartBuilder(private val chartView: ChartView, private val collectionData: Collection, private val deckId: DeckId, private val chartType: ChartType) {
     private var mMaxCards = 0

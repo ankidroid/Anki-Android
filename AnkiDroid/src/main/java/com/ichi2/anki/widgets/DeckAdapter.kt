@@ -24,7 +24,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +43,7 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import net.ankiweb.rsdroid.BackendFactory
-import java.util.*
+import java.util.Locale
 
 @KotlinCleanup("lots to do")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {

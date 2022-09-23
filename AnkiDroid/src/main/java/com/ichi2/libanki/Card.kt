@@ -36,7 +36,7 @@ import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.*
+import java.util.Arrays
 import java.util.concurrent.CancellationException
 
 /**

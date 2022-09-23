@@ -21,7 +21,6 @@ import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TopLevelParser
 import com.wildplot.android.parsing.TreeElement
 import java.util.regex.Pattern
-import kotlin.Throws
 
 /**
  * @author Michael Goldbach

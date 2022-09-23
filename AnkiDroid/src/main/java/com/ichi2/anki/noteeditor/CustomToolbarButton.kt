@@ -20,7 +20,6 @@ import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
-import java.util.*
 
 typealias ButtonText = String
 

@@ -6,9 +6,6 @@ import android.graphics.Typeface
 import com.ichi2.libanki.Utils
 import timber.log.Timber
 import java.io.File
-import java.lang.RuntimeException
-import java.lang.StringBuilder
-import java.util.*
 
 class AnkiFont private constructor(val name: String, private val family: String, private val attributes: List<String>, val path: String) {
     private var mIsDefault = false

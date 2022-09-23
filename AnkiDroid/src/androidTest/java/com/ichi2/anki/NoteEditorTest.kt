@@ -28,7 +28,6 @@ import org.hamcrest.Matchers
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
-import java.util.ArrayList
 
 @KotlinCleanup("fix ide lint issues")
 abstract class NoteEditorTest protected constructor() {

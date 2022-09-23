@@ -20,7 +20,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.fragment.app.commit
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.R
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.net.ServerSocket

@@ -18,7 +18,7 @@ package com.ichi2.libanki.utils
 
 import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
-import java.util.*
+import java.util.Stack
 
 /** Singleton providing an instance of [Time].
  * Used for tests to mock the time provider

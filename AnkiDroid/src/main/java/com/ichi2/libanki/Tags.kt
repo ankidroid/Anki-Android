@@ -22,7 +22,9 @@ import android.text.TextUtils
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.JSONObject
-import java.util.*
+import java.util.Locale
+import java.util.TreeMap
+import java.util.TreeSet
 import java.util.regex.Pattern
 
 /**

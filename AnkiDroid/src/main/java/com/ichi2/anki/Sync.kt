@@ -37,7 +37,11 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
-import com.ichi2.libanki.sync.*
+import com.ichi2.libanki.sync.fullDownload
+import com.ichi2.libanki.sync.fullUpload
+import com.ichi2.libanki.sync.syncCollection
+import com.ichi2.libanki.sync.syncLogin
+import com.ichi2.libanki.sync.syncMedia
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber

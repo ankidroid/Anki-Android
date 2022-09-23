@@ -21,7 +21,6 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import timber.log.Timber
-import java.lang.Exception
 
 object IntentUtil {
     @JvmStatic // (fixable) required due to structure of unit tests

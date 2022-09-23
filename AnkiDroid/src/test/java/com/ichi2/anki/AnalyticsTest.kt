@@ -13,12 +13,14 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+// TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@file:Suppress("DEPRECATION")
 package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.preference.*
+import android.preference.PreferenceManager
 import com.brsanthu.googleanalytics.GoogleAnalytics
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder
 import com.brsanthu.googleanalytics.request.ExceptionHit
@@ -28,7 +30,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito.spy
+import org.mockito.Mockito.validateMockitoUsage
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 
@@ -82,8 +91,7 @@ class AnalyticsTest {
         validateMockitoUsage()
     }
 
-    @Test // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    @Suppress("DEPRECATION")
+    @Test
     fun testSendException() {
         mockStatic(PreferenceManager::class.java).use { _ ->
             mockStatic(GoogleAnalytics::class.java).use { _ ->

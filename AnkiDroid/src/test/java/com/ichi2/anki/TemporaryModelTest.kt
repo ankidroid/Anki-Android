@@ -17,7 +17,8 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.TemporaryModel.ChangeType.*
+import com.ichi2.anki.TemporaryModel.ChangeType.ADD
+import com.ichi2.anki.TemporaryModel.ChangeType.DELETE
 import com.ichi2.libanki.Model
 import com.ichi2.utils.JSONObject
 import org.junit.Assert

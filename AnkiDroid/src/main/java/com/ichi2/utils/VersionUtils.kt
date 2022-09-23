@@ -22,7 +22,6 @@ import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import timber.log.Timber
-import java.lang.NullPointerException
 
 /**
  * Created by Tim on 11/04/2015.

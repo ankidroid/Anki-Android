@@ -32,7 +32,11 @@ import org.junit.runner.RunWith
 import org.mockito.Answers
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import kotlin.test.assertFalse

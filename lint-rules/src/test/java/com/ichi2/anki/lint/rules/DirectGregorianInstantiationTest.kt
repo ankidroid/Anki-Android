@@ -28,7 +28,19 @@ class DirectGregorianInstantiationTest {
     @Language("JAVA")
     private val stubZoned = """                                      
 package java.time;                                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 public class ZonedDateTime {                                   
                                                                
                                                                
@@ -41,7 +53,19 @@ public class ZonedDateTime {
     @Language("JAVA")
     private val stubGregorian = """                                  
 package java.util;                                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.time.ZonedDateTime;                                
                                                                
 public class GregorianCalendar {                               
@@ -59,7 +83,19 @@ public class GregorianCalendar {
     @Language("JAVA")
     private val javaFileWithFromCall = """                           
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.util.GregorianCalendar;                            
                                                                
 public class TestJavaClass {                                   
@@ -73,7 +109,19 @@ public class TestJavaClass {
     @Language("JAVA")
     private val javaFileWithConstructorInvocation = """              
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.util.GregorianCalendar;                            
                                                                
 public class TestJavaClass {                                   
@@ -87,7 +135,19 @@ public class TestJavaClass {
     @Language("JAVA")
     private val javaFileWithTime = """                               
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.util.GregorianCalendar;                            
                                                                
 public class Time {                                            

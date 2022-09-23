@@ -16,7 +16,7 @@
 package com.ichi2.libanki.utils
 
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 object TimeUtils {
     fun getTimestamp(time: Time): String {

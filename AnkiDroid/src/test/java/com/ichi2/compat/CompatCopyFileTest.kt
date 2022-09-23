@@ -20,7 +20,11 @@ import com.ichi2.anki.TestUtils
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import org.junit.Assert
 import org.junit.Test
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.net.URL
 
 class CompatCopyFileTest : Test21And26() {

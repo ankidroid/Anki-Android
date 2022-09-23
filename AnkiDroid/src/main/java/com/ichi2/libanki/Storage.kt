@@ -31,8 +31,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
-import java.lang.Exception
-import kotlin.Throws
 
 object Storage {
     var isInMemory = false

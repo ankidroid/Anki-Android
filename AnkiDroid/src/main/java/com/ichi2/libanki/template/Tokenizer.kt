@@ -17,8 +17,6 @@ package com.ichi2.libanki.template
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.template.TemplateError.NoClosingBrackets
-import java.util.NoSuchElementException
-import kotlin.Throws
 
 /**
  * This class encodes template.rs's file creating template.

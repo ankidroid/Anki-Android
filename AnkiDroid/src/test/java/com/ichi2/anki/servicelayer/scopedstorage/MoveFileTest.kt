@@ -18,10 +18,19 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.EquivalentFileException
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileDirectoryConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException.MissingFile
-import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import com.ichi2.testutils.FileUtil
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.assertThrows
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.length
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasSize

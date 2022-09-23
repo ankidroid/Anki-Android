@@ -20,7 +20,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.annotation.CheckResult
 import timber.log.Timber
-import java.lang.Exception
 
 abstract class SystemContextMenu(private val context: Context) {
     /** We use an activity alias as the name so we can disable the context menu without disabling the activity  */

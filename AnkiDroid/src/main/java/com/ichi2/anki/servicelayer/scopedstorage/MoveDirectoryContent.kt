@@ -18,6 +18,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.servicelayer.scopedstorage.MoveDirectoryContent.Companion.createInstance
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.FileStream
 import java.io.File

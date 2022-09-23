@@ -21,7 +21,7 @@ package com.ichi2.anki
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.awaitBackupCompletion
 import com.ichi2.libanki.createBackup
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
 
 fun DeckPicker.performBackupInBackground() {
     launchCatchingTask {

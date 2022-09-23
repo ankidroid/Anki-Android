@@ -19,6 +19,7 @@
  ****************************************************************************************/
 
 package com.ichi2.anki.web
+
 import android.content.Context
 import com.ichi2.async.Connection
 import com.ichi2.compat.CompatHelper

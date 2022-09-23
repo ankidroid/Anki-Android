@@ -40,7 +40,9 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.END
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.START
 import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
@@ -50,7 +52,7 @@ import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.util.*
+import java.util.Arrays
 
 @KotlinCleanup("lateinit if possible")
 @KotlinCleanup("IDE-lint")

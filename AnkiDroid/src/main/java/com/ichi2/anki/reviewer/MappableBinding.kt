@@ -23,8 +23,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import timber.log.Timber
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Objects
 
 /**
  * Binding + additional contextual information

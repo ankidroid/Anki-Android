@@ -28,7 +28,19 @@ class DirectCalendarInstanceUsageTest {
     @Language("JAVA")
     private val stubCalendar = """                                   
 package java.util;                                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 public class Calendar {                                        
                                                                
     public static Calendar getInstance() {                     
@@ -40,7 +52,19 @@ public class Calendar {
     @Language("JAVA")
     private val javaFileToBeTested = """                             
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.util.Calendar;                                     
                                                                
 public class TestJavaClass {                                   
@@ -55,7 +79,19 @@ public class TestJavaClass {
     @Language("JAVA")
     private val javaFileWithTime = """                               
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import java.util.Calendar;                                     
                                                                
 public abstract class Time {                                   

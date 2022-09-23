@@ -26,10 +26,11 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockedStatic
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito.`when`
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.RuntimeException
 
 @SuppressLint("LogNotTimber", "LogConditional")
 @KotlinCleanup("fix 'when'")

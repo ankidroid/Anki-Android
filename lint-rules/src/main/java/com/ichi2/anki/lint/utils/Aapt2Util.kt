@@ -37,8 +37,10 @@
 
 package com.ichi2.anki.lint.utils
 
+import com.ichi2.anki.lint.utils.Aapt2Util.FormatData
 import com.ichi2.anki.lint.utils.Aapt2Util.FormatData.DateFormatData
 import com.ichi2.anki.lint.utils.Aapt2Util.FormatData.StringFormatData
+import com.ichi2.anki.lint.utils.Aapt2Util.verifyJavaStringFormat
 
 /**
  * CHANGELOG:

@@ -15,7 +15,7 @@
  */
 package com.ichi2.anki.testutil
 
-import java.util.*
+import java.util.Locale
 
 object TestEnvironment {
     fun isDisplayingDefaultEnglishStrings(): Boolean {

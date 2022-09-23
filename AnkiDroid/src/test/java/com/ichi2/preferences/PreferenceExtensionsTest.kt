@@ -26,7 +26,6 @@ import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import java.lang.RuntimeException
 import java.util.function.Supplier
 
 // Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.

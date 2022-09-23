@@ -11,8 +11,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalStateException
 import java.util.regex.Pattern
 
 /**

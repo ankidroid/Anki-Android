@@ -51,13 +51,13 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.*
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
-import java.lang.NumberFormatException
-import java.lang.RuntimeException
-import java.util.*
-import kotlin.Throws
+import java.util.Locale
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
@@ -420,7 +420,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private suspend fun changeSortField(model: Model, idx: Int) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
-            CollectionManager.withCol {
+            withCol {
                 Timber.d("doInBackgroundChangeSortField")
                 models.setSortIdx(model, idx)
                 save()

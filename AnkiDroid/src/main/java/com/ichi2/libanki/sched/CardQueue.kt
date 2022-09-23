@@ -20,7 +20,9 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
-import java.util.*
+import java.util.Collections
+import java.util.LinkedList
+import java.util.Random
 
 abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
     // sched.getCol is null.

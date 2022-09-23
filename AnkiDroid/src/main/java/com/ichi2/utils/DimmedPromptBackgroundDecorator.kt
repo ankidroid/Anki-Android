@@ -38,7 +38,11 @@
 package com.ichi2.utils
 
 import android.content.res.Resources
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
 import com.ichi2.anki.PromptBackgroundInterface
 import com.ichi2.anki.PromptBackgroundInterfaceAdapter.Companion.toInterface
 import uk.co.samuelwall.materialtaptargetprompt.extras.PromptBackground

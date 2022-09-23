@@ -32,8 +32,13 @@ import androidx.core.content.ContextCompat
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper.Companion.getParcelableExtraCompat
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.LanguageUtil
@@ -41,7 +46,8 @@ import com.ichi2.utils.UiUtil.makeColored
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import java.util.function.Function
 
 @RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")

@@ -28,7 +28,7 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import java.util.*
+import java.util.Arrays
 import java.util.function.BiFunction
 import java.util.stream.Collectors
 

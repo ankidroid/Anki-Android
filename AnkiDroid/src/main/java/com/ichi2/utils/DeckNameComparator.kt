@@ -17,7 +17,6 @@
 package com.ichi2.utils
 
 import com.ichi2.libanki.Decks
-import java.util.Comparator
 
 class DeckNameComparator : Comparator<String> {
     override fun compare(lhs: String, rhs: String): Int {

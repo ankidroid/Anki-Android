@@ -35,7 +35,14 @@ import android.provider.MediaStore
 import android.widget.TimePicker
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.Serializable
 
 /** Baseline implementation of [Compat]. Check  [Compat]'s for more detail.  */
 @KotlinCleanup("add extension method logging file.delete() failure" + "Fix Deprecation")

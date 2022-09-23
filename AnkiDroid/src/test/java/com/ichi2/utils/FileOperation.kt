@@ -17,7 +17,7 @@ package com.ichi2.utils
 
 import java.io.File
 import java.io.RandomAccessFile
-import java.util.*
+import java.util.Objects
 
 class FileOperation {
     companion object {

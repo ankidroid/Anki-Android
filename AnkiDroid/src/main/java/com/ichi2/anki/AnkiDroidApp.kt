@@ -44,12 +44,16 @@ import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes
-import com.ichi2.utils.*
+import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.ExceptionUtil
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.Permissions
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.io.InputStream
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 /**

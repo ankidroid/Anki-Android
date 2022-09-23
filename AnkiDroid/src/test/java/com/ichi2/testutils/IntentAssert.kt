@@ -16,7 +16,9 @@
 package com.ichi2.testutils
 
 import android.content.Intent
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.hasItem
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import kotlin.test.assertNotNull
 

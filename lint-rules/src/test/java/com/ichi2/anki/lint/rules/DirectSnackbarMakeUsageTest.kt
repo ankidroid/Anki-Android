@@ -28,7 +28,19 @@ class DirectSnackbarMakeUsageTest {
     @Language("JAVA")
     private val stubSnackbar = """                                      
 package com.google.android.material.snackbar;                     
-public class Snackbar {                                           
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanuppublic class Snackbar {                                           
                                                                   
     public static Snackbar make(View view,                        
                                 CharSequence text,                
@@ -41,7 +53,19 @@ public class Snackbar {
     @Language("JAVA")
     private val javaFileToBeTested = """                             
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import com.google.android.material.snackbar.Snackbar;          
                                                                
 public class TestJavaClass {                                   
@@ -56,7 +80,19 @@ public class TestJavaClass {
     @Language("JAVA")
     private val javaFileWithSnackbarsKt = """                            
 package com.ichi2.anki.lint.rules;                             
-                                                               
+
+import java.io.File
+import java.util.Locale
+import java.util.LinkedList
+import java.util.Random
+import java.util.Collections
+import java.util.Arrays
+import java.util.TreeSet
+import java.util.LinkedList
+import java.util.TreeMap
+import java.util.LinkedListWeakHashMap
+import java.util.LinkedList
+import com.ichi2.utils.KotlinCleanup                                                               
 import com.google.android.material.snackbar.Snackbar;          
                                                                
 public class SnackbarsKt {                                         

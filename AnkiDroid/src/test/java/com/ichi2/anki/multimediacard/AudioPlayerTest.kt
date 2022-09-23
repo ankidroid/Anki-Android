@@ -25,12 +25,11 @@ import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
-import org.mockito.kotlin.*
+import org.mockito.kotlin.mock
 import org.robolectric.shadows.ShadowMediaPlayer
 import org.robolectric.shadows.util.DataSource
 import java.io.File
 import java.io.IOException
-import kotlin.Throws
 
 @RunWith(AndroidJUnit4::class)
 class AudioPlayerTest : RobolectricTest() {

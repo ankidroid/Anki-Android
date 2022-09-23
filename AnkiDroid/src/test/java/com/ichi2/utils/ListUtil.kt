@@ -17,11 +17,8 @@ package com.ichi2.utils
 
 import com.ichi2.testutils.assertThrows
 import org.junit.Assert
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.internal.ArrayComparisonFailure
-import java.lang.AssertionError
-import kotlin.Throws
 
 class ListUtil {
     @Test

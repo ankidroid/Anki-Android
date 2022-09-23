@@ -15,8 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing
 
-import java.lang.IllegalArgumentException
-
 class ExpressionFormatException : IllegalArgumentException {
     constructor() : super()
     constructor(detailMessage: String?) : super(detailMessage)

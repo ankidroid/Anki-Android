@@ -22,9 +22,7 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.template.TemplateError.FieldNotFound
 import com.ichi2.libanki.template.TemplateFilters.apply_filter
 import com.ichi2.utils.KotlinCleanup
-import java.lang.StringBuilder
-import java.util.*
-import kotlin.Throws
+import java.util.Arrays
 
 @KotlinCleanup("IDE Lint")
 class Replacement(

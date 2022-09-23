@@ -17,8 +17,6 @@
 
 package com.ichi2.utils
 
-import kotlin.Throws
-
 object JSON {
     /**
      * Returns the input if it is a JSON-permissible value; throws otherwise.

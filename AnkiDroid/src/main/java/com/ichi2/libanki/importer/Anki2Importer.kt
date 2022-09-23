@@ -21,7 +21,6 @@ import android.text.TextUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
-import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
@@ -31,7 +30,14 @@ import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Media
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.Storage.collection
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup

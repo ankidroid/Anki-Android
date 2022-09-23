@@ -15,8 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.utils
 
-import java.util.Comparator
-
 class DeckComparator : Comparator<JSONObject> {
     override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
         return DeckNameComparator.INSTANCE.compare(lhs.getString("name"), rhs.getString("name"))

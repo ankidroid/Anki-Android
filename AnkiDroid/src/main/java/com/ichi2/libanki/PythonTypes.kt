@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki
 
-import java.util.*
-
 /*
  * We can't use private typealiases until
  * https://youtrack.jetbrains.com/issue/KT-24700 is fixed

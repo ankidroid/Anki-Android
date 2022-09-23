@@ -18,8 +18,7 @@ package com.ichi2.libanki.sched
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
-import java.lang.UnsupportedOperationException
-import java.util.*
+import java.util.Locale
 
 /**
  * Holds the data for a single node (row) in the deck due tree (the user-visible list

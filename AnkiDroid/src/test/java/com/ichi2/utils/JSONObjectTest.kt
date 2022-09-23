@@ -41,7 +41,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.assertThrowsSubclass
-import junit.framework.TestCase.*
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertNull
+import junit.framework.TestCase.assertSame
+import junit.framework.TestCase.assertTrue
+import junit.framework.TestCase.fail
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
 import org.junit.Assert
@@ -51,7 +56,8 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.*
+import java.util.Arrays
+import java.util.Collections
 
 /**
  * This black box test was written without inspecting the non-free org.json sourcecode.

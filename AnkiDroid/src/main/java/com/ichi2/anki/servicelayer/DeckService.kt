@@ -20,7 +20,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Utils
-import java.util.*
+import java.util.TreeMap
 
 object DeckService {
     fun shouldShowDefaultDeck(col: Collection): Boolean =

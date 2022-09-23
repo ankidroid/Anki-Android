@@ -34,8 +34,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
-import kotlin.Throws
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.

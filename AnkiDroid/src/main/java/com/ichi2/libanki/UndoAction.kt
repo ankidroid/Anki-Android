@@ -22,7 +22,7 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.R
 import com.ichi2.utils.LanguageUtil.getLocaleCompat
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 abstract class UndoAction
 /**

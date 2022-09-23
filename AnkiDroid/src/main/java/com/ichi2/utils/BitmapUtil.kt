@@ -27,7 +27,6 @@ import com.ichi2.anki.CrashReportService
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
-import java.lang.Exception
 
 object BitmapUtil {
     fun decodeFile(theFile: File, IMAGE_MAX_SIZE: Int): Bitmap? {

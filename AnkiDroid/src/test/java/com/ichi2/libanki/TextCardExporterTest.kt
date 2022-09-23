@@ -22,8 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
-import java.util.*
-import kotlin.Throws
+import java.util.Locale
 
 @KotlinCleanup("lateinit")
 @RunWith(AndroidJUnit4::class)

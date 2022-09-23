@@ -27,10 +27,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat.IntentBuilder
 import androidx.core.content.FileProvider
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
+import com.ichi2.anki.exportApkg
+import com.ichi2.anki.exportColpkg
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.ExportApkg
 import com.ichi2.async.TaskManager

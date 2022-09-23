@@ -19,7 +19,9 @@
 package com.ichi2.anki
 
 import android.app.AlarmManager
-import android.content.*
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.CheckBoxPreference
@@ -50,10 +52,17 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
-import com.ichi2.utils.*
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.*
+import java.util.Calendar
+import java.util.Collections
+import java.util.LinkedList
+import java.util.Locale
 
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
