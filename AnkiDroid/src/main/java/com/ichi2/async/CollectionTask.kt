@@ -407,16 +407,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("doesn't work on null collection - only on non-openable")
-    class RepairCollection : UnsafeTaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundRepairCollection")
-            Timber.i("RepairCollection: Closing collection")
-            col.close(false)
-            return BackupManager.repairCollection(col)
-        }
-    }
-
     class UpdateValuesFromDeck(private val reset: Boolean) : TaskDelegate<Void, DeckStudyData?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
             Timber.d("doInBackgroundUpdateValuesFromDeck")

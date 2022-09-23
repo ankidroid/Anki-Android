@@ -1425,33 +1425,24 @@ open class DeckPicker :
         CrashReportService.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
     }
 
-    private fun repairCollectionTask(): RepairCollectionTask {
-        return RepairCollectionTask(this)
-    }
-
-    private class RepairCollectionTask(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Boolean?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.backup_repair_deck_progress), false
-            )
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: Boolean?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            if (!result!!) {
-                showThemedToast(context, context.resources.getString(R.string.deck_repair_error), true)
-                context.showCollectionErrorDialog()
-            }
-        }
-    }
-
     // Callback method to handle repairing deck
     fun repairCollection() {
         Timber.i("Repairing the Collection")
-        TaskManager.launchCollectionTask(RepairCollection(), repairCollectionTask())
+        // TODO: doesn't work on null collection-only on non-openable(is this still relevant with withCol?)
+        launchCatchingTask(resources.getString(R.string.deck_repair_error)) {
+            Timber.d("doInBackgroundRepairCollection")
+            val result = withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
+                withCol {
+                    Timber.i("RepairCollection: Closing collection")
+                    close(false)
+                    BackupManager.repairCollection(this)
+                }
+            }
+            if (!result) {
+                showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
+                showCollectionErrorDialog()
+            }
+        }
     }
 
     // Callback method to handle database integrity check
