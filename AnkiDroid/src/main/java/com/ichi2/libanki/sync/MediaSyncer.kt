@@ -18,7 +18,6 @@ package com.ichi2.libanki.sync
 
 import android.database.SQLException
 import android.text.TextUtils
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.MediaSyncException

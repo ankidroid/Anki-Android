@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.export
 
-import android.util.Pair
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast

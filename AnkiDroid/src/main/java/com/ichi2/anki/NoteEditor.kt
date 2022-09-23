@@ -32,7 +32,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Pair
 import android.view.*
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams

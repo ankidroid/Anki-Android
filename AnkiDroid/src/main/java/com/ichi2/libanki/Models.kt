@@ -19,7 +19,6 @@
 package com.ichi2.libanki
 
 import android.content.ContentValues
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.template.ParsedNode

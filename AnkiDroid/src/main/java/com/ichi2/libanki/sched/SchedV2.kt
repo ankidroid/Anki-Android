@@ -24,7 +24,6 @@ import android.app.Activity
 import android.database.SQLException
 import android.database.sqlite.SQLiteConstraintException
 import android.text.TextUtils
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled

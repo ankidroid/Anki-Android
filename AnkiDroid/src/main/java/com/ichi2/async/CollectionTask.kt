@@ -19,7 +19,6 @@
 package com.ichi2.async
 
 import android.content.Context
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*

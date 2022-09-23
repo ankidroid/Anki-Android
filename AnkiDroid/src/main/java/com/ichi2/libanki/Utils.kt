@@ -27,7 +27,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.StatFs
 import android.text.TextUtils
-import android.util.Pair
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont

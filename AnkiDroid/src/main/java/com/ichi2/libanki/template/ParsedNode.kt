@@ -16,7 +16,6 @@
 package com.ichi2.libanki.template
 
 import android.content.Context
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.libanki.Utils

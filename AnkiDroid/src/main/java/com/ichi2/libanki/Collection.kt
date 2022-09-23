@@ -27,7 +27,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.database.sqlite.SQLiteDatabaseLockedException
 import android.text.TextUtils
-import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode

@@ -19,7 +19,6 @@ package com.ichi2.libanki.sync
 
 import android.database.Cursor
 import android.database.SQLException
-import android.util.Pair
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -474,11 +473,11 @@ class Syncer(
     private fun cursorForTable(table: String): Cursor {
         val limAndArg = usnLim()
         return if ("revlog" == table) {
-            col.db.query("SELECT id, cid, " + mMaxUsn + ", ease, ivl, lastIvl, factor, time, type FROM revlog WHERE " + limAndArg.first, *limAndArg.second!!)
+            col.db.query("SELECT id, cid, " + mMaxUsn + ", ease, ivl, lastIvl, factor, time, type FROM revlog WHERE " + limAndArg.first, *limAndArg.second)
         } else if ("cards" == table) {
-            col.db.query("SELECT id, nid, did, ord, mod, " + mMaxUsn + ", type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE " + limAndArg.first, *limAndArg.second!!)
+            col.db.query("SELECT id, nid, did, ord, mod, " + mMaxUsn + ", type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE " + limAndArg.first, *limAndArg.second)
         } else {
-            col.db.query("SELECT id, guid, mid, mod, " + mMaxUsn + ", tags, flds, '', '', flags, data FROM notes WHERE " + limAndArg.first, *limAndArg.second!!)
+            col.db.query("SELECT id, guid, mid, mod, " + mMaxUsn + ", tags, flds, '', '', flags, data FROM notes WHERE " + limAndArg.first, *limAndArg.second)
         }
     }
 
@@ -782,12 +781,12 @@ class Syncer(
         val lmods: MutableMap<Long, Long> = HashMapInit(
             col.db.queryScalar(
                 "SELECT count() FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND " + limAndArg.first,
-                *limAndArg.second!!
+                *limAndArg.second
             )
         )
         col.db.query(
             "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND " + limAndArg.first,
-            *limAndArg.second!!
+            *limAndArg.second
         ).use { cur ->
             while (cur.moveToNext()) {
                 lmods[cur.getLong(0)] = cur.getLong(1)

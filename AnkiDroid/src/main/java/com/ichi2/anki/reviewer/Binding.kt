@@ -17,7 +17,6 @@ package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.os.Build
-import android.util.Pair
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture

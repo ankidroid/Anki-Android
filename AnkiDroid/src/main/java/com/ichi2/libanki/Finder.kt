@@ -20,7 +20,6 @@ package com.ichi2.libanki
 
 import android.database.SQLException
 import android.text.TextUtils
-import android.util.Pair
 import androidx.annotation.CheckResult
 import com.ichi2.libanki.SortOrder.*
 import com.ichi2.libanki.stats.Stats
@@ -932,7 +931,7 @@ class Finder(private val col: Collection) {
                     }
                     vals[`val`]!!.add(nid)
                     if (vals[`val`]!!.size == 2) {
-                        dupes.add(Pair(`val`, vals[`val`]))
+                        dupes.add(Pair(`val`, vals[`val`]!!))
                     }
                 }
             }

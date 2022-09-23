@@ -23,7 +23,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
-import android.util.Pair
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
@@ -1907,22 +1906,17 @@ open class CardBrowser :
         override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) {
             result ?: return
             val cardsIdsToHide = result.second
-            if (cardsIdsToHide != null) {
-                try {
-                    if (cardsIdsToHide.isNotEmpty()) {
-                        Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
-                        context.removeNotesView(cardsIdsToHide, true)
-                    }
-                } catch (e: Exception) {
-                    Timber.e(e, "failed to hide cards")
+            try {
+                if (cardsIdsToHide.isNotEmpty()) {
+                    Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
+                    context.removeNotesView(cardsIdsToHide, true)
                 }
-                context.hideProgressBar()
-                context.cardsAdapter!!.notifyDataSetChanged()
-                Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
-            } else {
-                // Might want to do something more proactive here like show a message box?
-                Timber.e("doInBackgroundRenderBrowserQA was not successful... continuing anyway")
+            } catch (e: Exception) {
+                Timber.e(e, "failed to hide cards")
             }
+            context.hideProgressBar()
+            context.cardsAdapter!!.notifyDataSetChanged()
+            Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
         }
 
         override fun actualOnCancelled(context: CardBrowser) {

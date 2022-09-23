@@ -15,7 +15,6 @@
 package com.ichi2.widget
 
 import android.content.Context
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.MetaDB

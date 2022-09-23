@@ -18,7 +18,6 @@
 package com.ichi2.libanki.importer
 
 import android.text.TextUtils
-import android.util.Pair
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
