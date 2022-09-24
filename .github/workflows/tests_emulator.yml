@@ -165,5 +165,6 @@ jobs:
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60
+          continue_on_error: true #12501
           max_attempts: 3
           command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh 
