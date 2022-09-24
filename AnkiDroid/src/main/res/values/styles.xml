@@ -154,8 +154,8 @@
     </style>
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorPrimary">#afff</item> <!-- Ripple & other things -->
-        <item name="colorSecondaryContainer">#5fff</item> <!-- Selected item indicator -->
-        <item name="colorOnSecondaryContainer">#fff</item> <!-- Active icon -->
+        <item name="colorSecondaryContainer">#fff</item> <!-- Selected item indicator -->
+        <item name="colorOnSecondaryContainer">?attr/tabLayoutBackgroundColor</item> <!-- Active icon -->
         <item name="colorSurface">?attr/tabLayoutBackgroundColor</item> <!-- Container background -->
         <item name="colorOnSurface">#fff</item> <!-- Active icon -->
         <item name="colorOnSurfaceVariant">#fff</item> <!-- Inactive icon & label -->
