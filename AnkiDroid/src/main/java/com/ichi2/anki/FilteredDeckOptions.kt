@@ -17,6 +17,7 @@ package com.ichi2.anki
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -280,8 +281,9 @@ class FilteredDeckOptions :
                 Timber.e(e)
             }
         }
+        startActivity(Intent(this, DeckPicker::class.java))
         finish()
-        slide(this, ActivityTransitionAnimation.Direction.FADE)
+        slide(this, ActivityTransitionAnimation.Direction.END)
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
