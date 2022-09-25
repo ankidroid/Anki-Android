@@ -243,6 +243,11 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
         <activity
+            android:name=".notetype.ManageNotetypeFields"
+            android:label="@string/model_editor_label"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            />
+        <activity
             android:name="com.ichi2.anki.Reviewer"
             android:exported="true"
             android:theme="@style/Theme_Dark_Compat.Launcher"

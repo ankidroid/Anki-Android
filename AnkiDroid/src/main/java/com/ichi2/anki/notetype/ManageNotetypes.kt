@@ -56,10 +56,10 @@ class ManageNotetypes : AnkiActivity() {
         NotetypesAdapter(
             this@ManageNotetypes,
             onShowFields = {
-                launchForChanges<ModelFieldEditor>(
+                launchForChanges<ManageNotetypeFields>(
                     mapOf(
-                        "title" to it.name,
-                        "noteTypeID" to it.id,
+                        ManageNotetypeFields.EXTRA_TITLE to it.name,
+                        ManageNotetypeFields.EXTRA_NOTETYPE_ID to it.id,
                     )
                 )
             },

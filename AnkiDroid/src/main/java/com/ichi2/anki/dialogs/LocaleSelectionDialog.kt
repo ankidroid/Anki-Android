@@ -28,6 +28,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -43,9 +44,12 @@ import java.util.*
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler  */
 class LocaleSelectionDialog : AnalyticsDialogFragment() {
     private var mDialogHandler: LocaleSelectionDialogHandler? = null
+    private var fieldName: String? = null
 
     interface LocaleSelectionDialogHandler {
+        // TODO after moving to the new backend this method should be deleted
         fun onSelectedLocale(selectedLocale: Locale)
+        fun onSelectedLocale(fieldName: String, selectedLocale: Locale) {}
         fun onLocaleSelectionCancelled()
     }
 
@@ -66,6 +70,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        fieldName = arguments?.getString(FIELD_NAME_KEY, null)
         val activity: Activity = requireActivity()
         val tagsDialogView = LayoutInflater.from(activity)
             .inflate(R.layout.locale_selection_dialog, activity.findViewById(R.id.root_layout), false)
@@ -99,7 +104,11 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 activity
             ) { _, position ->
                 val l = adapter.getLocaleAtPosition(position)
-                mDialogHandler!!.onSelectedLocale(l)
+                if (fieldName != null) {
+                    mDialogHandler?.onSelectedLocale(fieldName!!, l)
+                } else {
+                    mDialogHandler!!.onSelectedLocale(l)
+                }
             }
         )
     }
@@ -173,6 +182,8 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
+        private const val FIELD_NAME_KEY = "field_name_key"
+
         /**
          * @param handler Marker interface to enforce the convention the caller implementing LocaleSelectionDialogHandler
          */
@@ -180,6 +191,16 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             return LocaleSelectionDialog().apply {
                 mDialogHandler = handler
                 arguments = Bundle()
+            }
+        }
+
+        fun newInstance(
+            handler: LocaleSelectionDialogHandler,
+            fieldName: String
+        ): LocaleSelectionDialog {
+            return LocaleSelectionDialog().apply {
+                mDialogHandler = handler
+                arguments = bundleOf(FIELD_NAME_KEY to fieldName)
             }
         }
     }

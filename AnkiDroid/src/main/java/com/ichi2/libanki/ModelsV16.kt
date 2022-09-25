@@ -726,3 +726,7 @@ fun CollectionV16.addNotetypeLegacy(json: ByteString): OpChangesWithId {
 fun CollectionV16.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString {
     return backend.getStockNotetypeLegacy(kind = kind)
 }
+
+fun CollectionV16.getFieldNames(ntid: Long): List<String> {
+    return backend.getFieldNames(ntid = ntid)
+}

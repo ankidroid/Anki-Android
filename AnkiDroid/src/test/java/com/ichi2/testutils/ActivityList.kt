@@ -25,6 +25,7 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.notetype.ManageNotetypeFields
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.preferences.Preferences
@@ -77,6 +78,7 @@ object ActivityList {
             get(LoginActivity::class.java),
             get(IntroductionActivity::class.java),
             get(ManageNotetypes::class.java),
+            get(ManageNotetypeFields::class.java),
         )
     }
 
