@@ -884,7 +884,7 @@ open class CardBrowser :
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
 
-                    // fixed issue #12363
+                    // fixed issue #12363 - Card Browser Search bar now doesn't shows any card on empty search
                     if (mSearchView!!.query.toString().isEmpty()) {
                         cardsListView?.visibility = View.GONE
                     }
