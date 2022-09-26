@@ -44,7 +44,6 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.CollectionUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import java8.util.Optional
@@ -651,7 +650,7 @@ class DecksV16(private val col: CollectionV16) :
     override fun active(): LinkedList<DeckId> {
         val activeDecks: JSONArray = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
-        CollectionUtils.addAll(result, activeDecks.longIterable())
+        result.addAll(activeDecks.longIterable())
         return result
     }
 

@@ -31,7 +31,6 @@ import com.ichi2.libanki.Consts.DECK_STD
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.*
-import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.utils.HashUtil.HashMapInit
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
@@ -831,7 +830,7 @@ class Decks(private val col: Collection) : DeckManager() {
     override fun active(): LinkedList<Long> {
         val activeDecks = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
-        addAll(result, activeDecks.longIterable())
+        result.addAll(activeDecks.longIterable())
         return result
     }
 

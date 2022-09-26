@@ -22,7 +22,6 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
@@ -269,7 +268,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         val keys = media.names()
         if (keys != null) {
             mMediaFiles.ensureCapacity(keys.length())
-            addAll(mMediaFiles, keys.stringIterable())
+            mMediaFiles.addAll(keys.stringIterable())
         }
         Timber.d("Cleanup")
         dst.crt = col.crt
