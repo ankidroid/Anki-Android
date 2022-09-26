@@ -1671,7 +1671,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        return if (isControlBlocked() && which !== ViewerCommand.EXIT) {
+        return if (isControlBlocked && which !== ViewerCommand.EXIT) {
             false
         } else when (which) {
             ViewerCommand.SHOW_ANSWER -> {
