@@ -2562,9 +2562,7 @@ abstract class AbstractFlashcardViewer :
     override val isDisplayingAnswer
         get() = displayAnswer
 
-    override fun isControlBlocked(): Boolean {
-        return controlBlocked !== ControlBlock.UNBLOCKED
-    }
+    override val isControlBlocked: Boolean = controlBlocked !== ControlBlock.UNBLOCKED
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @KotlinCleanup("move to test class as extension")
