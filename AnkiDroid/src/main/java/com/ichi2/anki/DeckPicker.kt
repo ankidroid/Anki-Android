@@ -167,7 +167,8 @@ open class DeckPicker :
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     private var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
-    private lateinit var mRecyclerView: RecyclerView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var recyclerView: RecyclerView
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mDeckListAdapter: DeckAdapter
     private val mSnackbarShowHideCallback = Snackbar.Callback()
@@ -416,7 +417,7 @@ open class DeckPicker :
         title = resources.getString(R.string.app_name)
 
         mDeckPickerContent = findViewById(R.id.deck_picker_content)
-        mRecyclerView = findViewById(R.id.files)
+        recyclerView = findViewById(R.id.files)
         mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
 
         mDeckPickerContent.visibility = View.GONE
@@ -424,13 +425,13 @@ open class DeckPicker :
 
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = LinearLayoutManager(this)
-        mRecyclerView.layoutManager = mRecyclerViewLayoutManager
+        recyclerView.layoutManager = mRecyclerViewLayoutManager
         val ta = this.obtainStyledAttributes(intArrayOf(R.attr.deckDivider))
         val divider = ta.getDrawable(0)
         ta.recycle()
         val dividerDecorator = DividerItemDecoration(this, mRecyclerViewLayoutManager.orientation)
         dividerDecorator.setDrawable(divider!!)
-        mRecyclerView.addItemDecoration(dividerDecorator)
+        recyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
         val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
@@ -454,7 +455,7 @@ open class DeckPicker :
             setDeckLongClickListener(mDeckLongClickListener)
             enablePartialTransparencyForBackground(hasDeckPickerBackground)
         }
-        mRecyclerView.adapter = mDeckListAdapter
+        recyclerView.adapter = mDeckListAdapter
 
         mPullToSyncWrapper = findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
             setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
@@ -665,7 +666,7 @@ open class DeckPicker :
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    val adapter = mRecyclerView.adapter as Filterable?
+                    val adapter = recyclerView.adapter as Filterable?
                     adapter!!.filter.filter(newText)
                     return true
                 }
@@ -2157,7 +2158,7 @@ open class DeckPicker :
      */
     private fun scrollDecklistToDeck(did: DeckId) {
         val position = mDeckListAdapter.findDeckPosition(did)
-        mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, mRecyclerView.height / 2)
+        mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
 
     private fun <T : AbstractDeckTreeNode> updateDeckListListener(): UpdateDeckListListener<T> {
@@ -2182,7 +2183,8 @@ open class DeckPicker :
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
-    internal fun updateDeckList() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun updateDeckList() {
         updateDeckList(false)
     }
 
