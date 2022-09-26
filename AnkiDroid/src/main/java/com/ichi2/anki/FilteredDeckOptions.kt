@@ -281,7 +281,9 @@ class FilteredDeckOptions :
                 Timber.e(e)
             }
         }
-        startActivity(Intent(this, DeckPicker::class.java))
+        val deckPicker = Intent(this, DeckPicker::class.java)
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(deckPicker)
         finish()
         slide(this, ActivityTransitionAnimation.Direction.END)
     }
