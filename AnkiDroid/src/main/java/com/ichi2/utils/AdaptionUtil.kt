@@ -93,7 +93,7 @@ object AdaptionUtil {
 
     private fun isValidBrowser(ri: ResolveInfo?): Boolean {
         // https://stackoverflow.com/a/57223246/
-        return ri != null && ri.activityInfo != null && ri.activityInfo.exported
+        return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
     @Suppress("deprecation") // getPackageInfo
@@ -101,7 +101,7 @@ object AdaptionUtil {
         return if (packageName != null) {
             try {
                 val info = pm.getPackageInfo(packageName, 0)
-                info != null && info.applicationInfo != null &&
+                info?.applicationInfo != null &&
                     info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
