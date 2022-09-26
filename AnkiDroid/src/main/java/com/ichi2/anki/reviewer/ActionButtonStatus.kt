@@ -78,7 +78,7 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
                 }
                 item.setShowAsAction(value)
                 val icon = item.icon
-                item.isEnabled = !reviewerUi.isControlBlocked()
+                item.isEnabled = !reviewerUi.isControlBlocked
                 if (icon != null) {
                     /* Ideally, we want to give feedback to users that
                     buttons are disabled.  However, some actions are
