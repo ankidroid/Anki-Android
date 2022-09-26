@@ -1,4 +1,4 @@
-/****************************************************************************************
+/***************************** ***********************************************************
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
@@ -883,6 +883,12 @@ open class CardBrowser :
             mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
+
+                    // fixed issue #12363
+                    if (mSearchView!!.query.toString().isEmpty()) {
+                        cardsListView?.visibility = View.GONE
+                    }
+
                     if (mSearchView!!.shouldIgnoreValueChange()) {
                         return true
                     }
@@ -892,6 +898,7 @@ open class CardBrowser :
                 }
 
                 override fun onQueryTextSubmit(query: String): Boolean {
+                    cardsListView?.visibility = View.VISIBLE
                     onSearch()
                     mSearchView!!.clearFocus()
                     return true
