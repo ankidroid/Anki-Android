@@ -28,11 +28,7 @@ import org.hamcrest.Matchers
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
+import kotlin.test.*
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("import MatcherAssert/Matchers to simplify assertion methods calls")
@@ -52,97 +48,98 @@ class UndoTest : RobolectricTest() {
     @Test
     @Ignore("We need to figure out how to test save/undo")
     @Throws(Exception::class)
-    @KotlinCleanup("maybe use a scope function(with?) for col property")
     fun test_op() {
         val col = colV2
-        // should have no undo by default
-        assertNull(col.undoType())
-        // let's adjust a study option
-        col.save("studyopts")
-        col.set_config("abc", 5)
-        // it should be listed as undoable
-        assertEquals("studyopts", col.undoName(targetContext.resources))
-        // with about 5 minutes until it's clobbered
-        /* lastSave
-           assertThat(getTime().now() - col._lastSave, lesserThan(1));
-        */
-        // undoing should restore the old value
-        col.undo()
-        assertNull(col.undoType())
-        assertFalse(col.has_config("abc"))
-        // an (auto)save will clear the undo
-        col.save("foo")
-        assertEquals("foo", col.undoName(targetContext.resources))
-        col.save()
-        assertEquals("", col.undoName(targetContext.resources))
-        // and a review will, too
-        col.save("add")
-        val note = col.newNote()
-        note.setItem("Front", "one")
-        col.addNote(note)
-        col.reset()
-        assertEquals("add", col.undoName(targetContext.resources))
-        val c = col.sched.card
-        col.sched.answerCard(c!!, Consts.BUTTON_TWO)
-        assertEquals("Review", col.undoName(targetContext.resources))
+        with(col) {
+            // should have no undo by default
+            assertNull(undoType())
+            // let's adjust a study option
+            save("studyopts")
+            set_config("abc", 5)
+            // it should be listed as undoable
+            assertEquals("studyopts", undoName(targetContext.resources))
+            // with about 5 minutes until it's clobbered
+            /* lastSave
+               assertThat(getTime().now() - col._lastSave, lesserThan(1));
+            */
+            // undoing should restore the old value
+            undo()
+            assertNull(undoType())
+            assertFalse(has_config("abc"))
+            // an (auto)save will clear the undo
+            save("foo")
+            assertEquals("foo", undoName(targetContext.resources))
+            save()
+            assertEquals("", undoName(targetContext.resources))
+            // and a review will, too
+            save("add")
+            val note = newNote()
+            note.setItem("Front", "one")
+            addNote(note)
+            reset()
+            assertEquals("add", undoName(targetContext.resources))
+            val c = sched.card
+            sched.answerCard(c!!, Consts.BUTTON_TWO)
+            assertEquals("Review", undoName(targetContext.resources))
+        }
     }
 
     @Test
     @Throws(Exception::class)
-    @KotlinCleanup("maybe use a scope function(with?) for col property")
     // TODO why is this test ignored if it doesn't have @Ignore(happens for both java and kotlin versions)
     fun test_review() {
         val col = colV2
-        col.set_config("counts", COUNT_REMAINING)
-        var note = col.newNote()
-        note.setItem("Front", "one")
-        col.addNote(note)
-        col.reset()
-        /* TODO:  undo after reset ?
-        assertNotNull(col.undoType());
-
-         */
-        // answer
-        assertEquals(Counts(1, 0, 0), col.sched.counts())
-        var c = col.sched.card
-        assertEquals(QUEUE_TYPE_NEW, c!!.queue)
-        col.sched.answerCard(c, Consts.BUTTON_THREE)
-        assertEquals(1001, c.left)
-        assertEquals(Counts(0, 1, 0), col.sched.counts())
-        assertEquals(QUEUE_TYPE_LRN, c.queue)
-        // undo
-        assertNotNull(col.undoType())
-        col.undo()
-        col.reset()
-        assertEquals(Counts(1, 0, 0), col.sched.counts())
-        c.load()
-        assertEquals(QUEUE_TYPE_NEW, c.queue)
-        assertNotEquals(1001, c.left)
-        assertNull(col.undoType())
-        // we should be able to undo multiple answers too
-        note = col.newNote()
-        note.setItem("Front", "two")
-        col.addNote(note)
-        col.reset()
-        assertEquals(Counts(2, 0, 0), col.sched.counts())
-        c = col.sched.card
-        col.sched.answerCard(c!!, Consts.BUTTON_THREE)
-        c = col.sched.card
-        col.sched.answerCard(c!!, Consts.BUTTON_THREE)
-        assertEquals(Counts(0, 2, 0), col.sched.counts())
-        col.undo()
-        col.reset()
-        assertEquals(Counts(1, 1, 0), col.sched.counts())
-        col.undo()
-        col.reset()
-        assertEquals(Counts(2, 0, 0), col.sched.counts())
-        // performing a normal op will clear the review queue
-        c = col.sched.card
-        col.sched.answerCard(c!!, Consts.BUTTON_THREE)
-        MatcherAssert.assertThat(col.undoType(), Matchers.instanceOf(UndoReview::class.java))
-        col.save("foo")
-        // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
-        assumeThat(col.undoName(targetContext.resources), Matchers.equalTo("foo"))
-        col.undo()
+        with(col) {
+            set_config("counts", COUNT_REMAINING)
+            var note = col.newNote()
+            note.setItem("Front", "one")
+            addNote(note)
+            reset()
+            /* TODO:  undo after reset ?
+               assertNotNull(col.undoType())
+            */
+            // answer
+            assertEquals(Counts(1, 0, 0), sched.counts())
+            var c = sched.card
+            assertEquals(QUEUE_TYPE_NEW, c!!.queue)
+            sched.answerCard(c, Consts.BUTTON_THREE)
+            assertEquals(1001, c.left)
+            assertEquals(Counts(0, 1, 0), sched.counts())
+            assertEquals(QUEUE_TYPE_LRN, c.queue)
+            // undo
+            assertNotNull(undoType())
+            undo()
+            reset()
+            assertEquals(Counts(1, 0, 0), sched.counts())
+            c.load()
+            assertEquals(QUEUE_TYPE_NEW, c.queue)
+            assertNotEquals(1001, c.left)
+            assertNull(undoType())
+            // we should be able to undo multiple answers too
+            note = newNote()
+            note.setItem("Front", "two")
+            addNote(note)
+            reset()
+            assertEquals(Counts(2, 0, 0), sched.counts())
+            c = sched.card
+            sched.answerCard(c!!, Consts.BUTTON_THREE)
+            c = sched.card
+            sched.answerCard(c!!, Consts.BUTTON_THREE)
+            assertEquals(Counts(0, 2, 0), sched.counts())
+            undo()
+            reset()
+            assertEquals(Counts(1, 1, 0), sched.counts())
+            undo()
+            reset()
+            assertEquals(Counts(2, 0, 0), sched.counts())
+            // performing a normal op will clear the review queue
+            c = sched.card
+            sched.answerCard(c!!, Consts.BUTTON_THREE)
+            MatcherAssert.assertThat(undoType(), Matchers.instanceOf(UndoReview::class.java))
+            save("foo")
+            // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
+            assumeThat(undoName(targetContext.resources), Matchers.equalTo("foo"))
+            undo()
+        }
     }
 }
