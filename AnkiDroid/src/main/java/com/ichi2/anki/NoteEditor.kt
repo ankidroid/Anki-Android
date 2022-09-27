@@ -247,6 +247,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
         }
+        // Set up toolbar
+        mToolbar = findViewById(R.id.editor_toolbar)
+        mToolbar!!.formatListener = TextFormatListener { formatter: Toolbar.TextFormatter ->
+            val currentFocus = currentFocus as? FieldEditText ?: return@TextFormatListener
+            modifyCurrentSelection(formatter, currentFocus)
+        }
+        // Sets the background and icon color of toolbar respectively.
+        mToolbar!!.setBackgroundColor(
+            Themes.getColorFromAttr(
+                this@NoteEditor,
+                R.attr.toolbarBackgroundColor
+            )
+        )
+        mToolbar!!.setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+
         startLoadingCollection()
         mOnboarding.onCreate()
     }
@@ -276,27 +291,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         get() = NoteService.getFieldsAsBundleForPreview(mEditFields, shouldReplaceNewlines())
 
     // Finish initializing the activity after the collection has been correctly loaded
-    @KotlinCleanup("move mToolbar to onCreate")
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val intent = intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %d", caller)
         registerExternalStorageListener()
         val mainView = findViewById<View>(android.R.id.content)
-        mToolbar = findViewById(R.id.editor_toolbar)
-        mToolbar!!.formatListener = TextFormatListener { formatter: Toolbar.TextFormatter ->
-            val currentFocus = currentFocus as? FieldEditText ?: return@TextFormatListener
-            modifyCurrentSelection(formatter, currentFocus)
-        }
-
-        // Sets the background and icon color of toolbar respectively.
-        mToolbar!!.setBackgroundColor(
-            Themes.getColorFromAttr(
-                this@NoteEditor,
-                R.attr.toolbarBackgroundColor
-            )
-        )
-        mToolbar!!.setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+        // Enable toolbar
         enableToolbar(mainView)
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         mTagsButton = findViewById(R.id.CardEditorTagButton)
