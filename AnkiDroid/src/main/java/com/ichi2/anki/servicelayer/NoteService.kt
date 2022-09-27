@@ -169,7 +169,7 @@ object NoteService {
                 continue
             }
             val fieldValue = convertToHtmlNewline(e.fieldText!!, replaceNewlines)
-            fields.putString(Integer.toString(e.ord), fieldValue)
+            fields.putString(e.ord.toString(), fieldValue)
         }
         return fields
     }
