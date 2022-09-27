@@ -24,8 +24,7 @@ class MockReviewerUi : ReviewerUi {
     override val controlBlocked: ControlBlock?
         get() = null
 
-    override val isControlBlocked: Boolean
-        get() = false
+    override val isControlBlocked: Boolean = false
 
     companion object {
         fun displayingAnswer(): ReviewerUi {
