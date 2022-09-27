@@ -27,7 +27,6 @@ import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -420,11 +419,10 @@ class FinderTest : RobolectricTest() {
     }
 
     @Test
-    @KotlinCleanup("rename val")
     fun test_deckNameContainingWildcardCanBeSearched() {
-        val `val` = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY"
+        val deck = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY"
         val col = col
-        val currentDid = addDeck(`val`)
+        val currentDid = addDeck(deck)
         col.decks.select(currentDid)
         val note = col.newNote()
         note.setItem("Front", "foo")
