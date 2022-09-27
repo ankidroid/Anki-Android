@@ -1324,9 +1324,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // Use media editor button if not changing note type
                 mediaButton!!.setBackgroundResource(icons[0])
                 setMMButtonListener(mediaButton, i)
-                // toggle sticky button
-                toggleStickyButton!!.setBackgroundResource(icons[2])
-                setToggleStickyButtonListener(toggleStickyButton, i)
+
+                // toggle button
+                // fixed issue #12475 - removed the unnecessary pin
+                if (addNote) {
+                    toggleStickyButton!!.setBackgroundResource(icons[2])
+                    setToggleStickyButtonListener(toggleStickyButton, i)
+                } else {
+                    toggleStickyButton!!.setBackgroundResource(0)
+                }
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
