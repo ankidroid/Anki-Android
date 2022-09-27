@@ -102,13 +102,12 @@ object NoteService {
      */
     fun updateJsonNoteFromMultimediaNote(noteSrc: IMultimediaEditableNote?, editorNoteDst: Note) {
         if (noteSrc is MultimediaEditableNote) {
-            val mmNote = noteSrc
-            if (mmNote.modelId != editorNoteDst.mid) {
+            if (noteSrc.modelId != editorNoteDst.mid) {
                 throw RuntimeException("Source and Destination Note ID do not match.")
             }
-            val totalFields: Int = mmNote.numberOfFields
+            val totalFields: Int = noteSrc.numberOfFields
             for (i in 0 until totalFields) {
-                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue!!
+                editorNoteDst.values()[i] = noteSrc.getField(i)!!.formattedValue!!
             }
         }
     }
