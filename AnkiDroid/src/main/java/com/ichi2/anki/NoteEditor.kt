@@ -1324,13 +1324,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // Use media editor button if not changing note type
                 mediaButton!!.setBackgroundResource(icons[0])
                 setMMButtonListener(mediaButton, i)
-
-                // fixed issue #12475
-                if (addNote) {
-                    toggleStickyButton!!.setBackgroundResource(icons[2])
-                    setToggleStickyButtonListener(toggleStickyButton, i)
-                } else
-                    toggleStickyButton!!.setBackgroundResource(0)
+                // toggle sticky button
+                toggleStickyButton!!.setBackgroundResource(icons[2])
+                setToggleStickyButtonListener(toggleStickyButton, i)
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
