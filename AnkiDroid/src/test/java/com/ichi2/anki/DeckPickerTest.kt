@@ -538,10 +538,9 @@ class DeckPickerTest : RobolectricTest() {
         val collectionDirectory = p.parent
 
         // set collection path
-        @KotlinCleanup("use prefs.edit{}")
-        val preferences = AnkiDroidApp.getSharedPrefs(targetContext)
-        preferences.edit().putString(CollectionHelper.PREF_COLLECTION_PATH, collectionDirectory)
-            .apply()
+        AnkiDroidApp.getSharedPrefs(targetContext).edit {
+            putString(CollectionHelper.PREF_COLLECTION_PATH, collectionDirectory)
+        }
 
         // ensure collection not loaded yet
         assertThat(
