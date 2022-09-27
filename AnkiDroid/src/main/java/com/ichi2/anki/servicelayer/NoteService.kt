@@ -75,8 +75,7 @@ object NoteService {
     fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
-            var field: IField?
-            field = if (value.startsWith("<img")) {
+            val field: IField = if (value.startsWith("<img")) {
                 ImageField()
             } else if (value.startsWith("[sound:") && value.contains("rec")) {
                 AudioRecordingField()
