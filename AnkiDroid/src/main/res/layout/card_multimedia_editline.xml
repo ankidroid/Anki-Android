@@ -41,7 +41,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@id/id_expand_button"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="@drawable/ic_attachment_black_24dp"/>
+        tools:background="@drawable/ic_attachment_black"/>
 
     <ImageButton
         android:id="@+id/id_expand_button"
