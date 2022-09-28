@@ -766,10 +766,10 @@ open class CardBrowser :
         }
         showProgressBar()
         val result = withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) }
-        updateCardsInList(getAllCards(getNotes(result.value.toList())))
+        updateCardsInList(getAllCards(getNotes(result.toList())))
         hideProgressBar()
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (result.value.map { card -> card.id }.contains(reviewerCardId)) {
+        if (result.map { card -> card.id }.contains(reviewerCardId)) {
             mReloadRequired = true
         }
     }
@@ -777,40 +777,34 @@ open class CardBrowser :
     private fun toggleNotesMarkForCardsIds(
         cardIds: List<Long>,
         col: com.ichi2.libanki.Collection
-    ): Computation<Array<Card>> {
+    ): Array<Card> {
         val cards = cardIds.map { col.getCard(it) }.toTypedArray()
-        try {
-            col.db.executeInTransaction {
-                val notes = CardUtils.getNotes(listOf(*cards))
-                // collect undo information
-                val originalMarked: MutableList<Note> = java.util.ArrayList()
-                val originalUnmarked: MutableList<Note> = java.util.ArrayList()
-                for (n in notes) {
-                    if (NoteService.isMarked(n)) {
-                        originalMarked.add(n)
-                    } else {
-                        originalUnmarked.add(n)
-                    }
-                }
-                val hasUnmarked = !originalUnmarked.isEmpty()
-                CardUtils.markAll(java.util.ArrayList(notes), hasUnmarked)
-
-                // mark undo for all at once
-                col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
-
-                // reload cards because they'll be passed back to caller
-                for (c in cards) {
-                    c.load()
+        col.db.executeInTransaction {
+            val notes = CardUtils.getNotes(listOf(*cards))
+            // collect undo information
+            val originalMarked: MutableList<Note> = java.util.ArrayList()
+            val originalUnmarked: MutableList<Note> = java.util.ArrayList()
+            for (n in notes) {
+                if (NoteService.isMarked(n)) {
+                    originalMarked.add(n)
+                } else {
+                    originalUnmarked.add(n)
                 }
             }
-        } catch (e: RuntimeException) {
-            Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-            CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
-            return Computation.err()
+            val hasUnmarked = !originalUnmarked.isEmpty()
+            CardUtils.markAll(java.util.ArrayList(notes), hasUnmarked)
+
+            // mark undo for all at once
+            col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
+
+            // reload cards because they'll be passed back to caller
+            for (c in cards) {
+                c.load()
+            }
         }
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
-        return Computation.ok(cards)
+        return cards
     }
 
     @VisibleForTesting
