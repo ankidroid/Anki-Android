@@ -1241,8 +1241,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @KotlinCleanup("make non-null")
-    protected open fun restorePreferences(): SharedPreferences? {
+    protected open fun restorePreferences(): SharedPreferences {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         typeAnswer = createInstance(preferences)
         // mDeckFilename = preferences.getString("deckFilename", "");
