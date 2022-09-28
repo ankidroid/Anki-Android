@@ -34,6 +34,7 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
@@ -42,6 +43,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
+import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -50,6 +52,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
@@ -480,11 +483,15 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
      * @param resetDecklist Indicates whether to call back to the parent activity in order to
      *                      also refresh the deck list.
      */
+    private var updateValuesFromDeckJob: Job? = null
     private fun refreshInterface(resetSched: Boolean = false, resetDecklist: Boolean = false) {
         Timber.d("Refreshing StudyOptionsFragment")
-        TaskManager.cancelAllTasks(UpdateValuesFromDeck::class.java)
+        updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
-        TaskManager.launchCollectionTask(UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist))
+        updateValuesFromDeckJob = launchCatchingTask {
+            val result = withCol { updateValuesFromDeck(this, resetSched) }
+            rebuildUi(result, resetDecklist)
+        }
     }
 
     class DeckStudyData(
@@ -553,7 +560,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (!mToReviewer) {
             // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
             // deck) cancel counts.
-            TaskManager.cancelAllTasks(UpdateValuesFromDeck::class.java)
+            updateValuesFromDeckJob?.cancel()
         }
     }
 

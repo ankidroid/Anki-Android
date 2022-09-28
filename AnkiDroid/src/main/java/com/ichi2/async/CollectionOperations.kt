@@ -108,6 +108,8 @@ fun deleteMedia(
     return unused.size
 }
 
+// TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
+// are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
 fun updateValuesFromDeck(
     col: Collection,
     reset: Boolean
