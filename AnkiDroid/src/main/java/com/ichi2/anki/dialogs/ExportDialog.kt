@@ -57,6 +57,23 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
         return this
     }
 
+    /**
+     * @param ids A list of longs which specifies the card/note ids to be exported
+     * @param isCardList A boolean which specifies whether the list of ids is a list of card ids or note ids
+     * @param dialogMessage A string which can be used to show a custom message or specify import path
+     */
+    fun withArguments(dialogMessage: String, ids: List<Long>, isCardList: Boolean): ExportDialog {
+        val args = this.arguments ?: Bundle()
+        args.putString("dialogMessage", dialogMessage)
+        if (isCardList) {
+            args.putLongArray("cardIds", ids.toLongArray())
+        } else {
+            args.putLongArray("noteIds", ids.toLongArray())
+        }
+        this.arguments = args
+        return this
+    }
+
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)

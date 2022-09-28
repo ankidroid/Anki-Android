@@ -68,6 +68,16 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did))
     }
 
+    /**
+     * Show the export dialog in the Browser to export selected cards or notes
+     * @param msg the message to show in the dialog
+     * @param ids the selected card/note ids
+     * @param isCardList true if the ids are card ids, false if they are note ids
+     */
+    fun showExportDialog(msg: String, ids: List<Long>, isCardList: Boolean) {
+        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, ids, isCardList))
+    }
+
     private fun getTimeStampSuffix() =
         "-" + run {
             collectionSupplier.get()

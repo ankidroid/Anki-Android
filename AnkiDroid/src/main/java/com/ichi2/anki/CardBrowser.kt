@@ -55,6 +55,7 @@ import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
@@ -153,6 +154,8 @@ open class CardBrowser :
     private var renderBrowserQAJob: Job? = null
 
     private var checkSelectedCardsJob: Job? = null
+
+    private lateinit var mExportingDelegate: ActivityExportingDelegate
 
     /**
      * Boolean that keeps track of whether the browser is working in
@@ -494,6 +497,7 @@ open class CardBrowser :
             return
         }
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
+        mExportingDelegate = ActivityExportingDelegate(this) { col }
         super.onCreate(savedInstanceState)
         Timber.d("onCreate()")
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
@@ -962,6 +966,22 @@ open class CardBrowser :
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
+
+            menu.findItem(R.id.action_export_selected).apply {
+                if (BackendFactory.defaultLegacySchema) {
+                    this.isVisible = false
+                } else {
+                    // Only visible if new backend is being used
+                    this.isVisible = true
+
+                    // TODO: currently forcing plural use. This should be changed to use the correct singular/plural form
+                    this.title = if (inCardsMode) {
+                        resources.getQuantityString(R.plurals.card_browser_export_cards, 10)
+                    } else {
+                        resources.getQuantityString(R.plurals.card_browser_export_notes, 10)
+                    }
+                }
+            }
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = col.undoAvailable()
@@ -1308,6 +1328,9 @@ open class CardBrowser :
             R.id.action_open_options -> {
                 showOptionsDialog()
             }
+            R.id.action_export_selected -> {
+                exportSelected()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -1333,6 +1356,27 @@ open class CardBrowser :
 
         isTruncated = newTruncateValue
         cardsAdapter!!.notifyDataSetChanged()
+    }
+
+    fun exportSelected() {
+        if (BackendFactory.defaultLegacySchema) {
+            return
+        }
+        if (!isInMultiSelectMode) {
+            return
+        }
+
+        if (inCardsMode) {
+            val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size)
+            mExportingDelegate.showExportDialog(msg, selectedCardIds, inCardsMode)
+        } else {
+            val selectedNoteIds = getNotes(
+                selectedCardIds.map { col.getCard(it) }
+            ).map { it.id }
+
+            val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size)
+            mExportingDelegate.showExportDialog(msg, selectedNoteIds, inCardsMode)
+        }
     }
 
     protected suspend fun deleteSelectedNote() {
