@@ -56,6 +56,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
@@ -2733,4 +2734,43 @@ suspend fun searchForCards(
 
 private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
+}
+
+fun markNoteMulti(
+    cardIds: List<Long>,
+    col: com.ichi2.libanki.Collection
+): Computation<Array<Card>> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    try {
+        col.db.executeInTransaction {
+            val notes = CardUtils.getNotes(listOf(*cards))
+            // collect undo information
+            val originalMarked: MutableList<Note> = java.util.ArrayList()
+            val originalUnmarked: MutableList<Note> = java.util.ArrayList()
+            for (n in notes) {
+                if (NoteService.isMarked(n)) {
+                    originalMarked.add(n)
+                } else {
+                    originalUnmarked.add(n)
+                }
+            }
+            val hasUnmarked = !originalUnmarked.isEmpty()
+            CardUtils.markAll(java.util.ArrayList(notes), hasUnmarked)
+
+            // mark undo for all at once
+            col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
+
+            // reload cards because they'll be passed back to caller
+            for (c in cards) {
+                c.load()
+            }
+        }
+    } catch (e: RuntimeException) {
+        Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
+        CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
+        return Computation.err()
+    }
+    // pass cards back so more actions can be performed by the caller
+    // (querying the cards again is unnecessarily expensive)
+    return Computation.ok(cards)
 }
