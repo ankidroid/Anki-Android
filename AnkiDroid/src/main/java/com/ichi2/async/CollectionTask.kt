@@ -409,24 +409,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
     class UpdateValuesFromDeck(private val reset: Boolean) : TaskDelegate<Void, DeckStudyData?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            Timber.d("doInBackgroundUpdateValuesFromDeck")
-            return try {
-                val sched = col.sched
-                if (reset) {
-                    // reset actually required because of counts, which is used in getCollectionTaskListener
-                    sched.resetCounts()
-                }
-                val counts = sched.counts()
-                val totalNewCount = sched.totalNewForCurrentDeck()
-                val totalCount = sched.cardCount()
-                DeckStudyData(
-                    counts.new, counts.lrn, counts.rev, totalNewCount,
-                    totalCount, sched.eta(counts)
-                )
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
-                null
-            }
+            return updateValuesFromDeck(col, reset)
         }
     }
 
@@ -434,7 +417,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
             Timber.d("doInBackgroundRebuildCram")
             col.sched.rebuildDyn(col.decks.selected())
-            return UpdateValuesFromDeck(true).execTask(col, collectionTask)
+            return updateValuesFromDeck(col, true)
         }
     }
 
@@ -442,7 +425,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
             Timber.d("doInBackgroundEmptyCram")
             col.sched.emptyDyn(col.decks.selected())
-            return UpdateValuesFromDeck(true).execTask(col, collectionTask)
+            return updateValuesFromDeck(col, true)
         }
     }
 
