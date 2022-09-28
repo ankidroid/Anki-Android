@@ -159,11 +159,25 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_edit) {
-            editCard()
-            return true
+        when (item.itemId) {
+            R.id.action_edit -> {
+                editCard()
+                return true
+            }
+            R.id.action_delete -> {
+                deleteCard()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteCard() {
+
+        // Arrows are not updated
+        // If the last card is deleted, previewer doesn't switch to previous card
+        // setResult should be called before previewer closes (if any card is deleted)
+        showDeleteNoteDialog()
     }
 
     override fun onBackPressed() {
