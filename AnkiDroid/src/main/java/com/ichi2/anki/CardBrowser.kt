@@ -735,7 +735,7 @@ open class CardBrowser :
             KeyEvent.KEYCODE_K -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+K: Toggle Mark")
-                    toggleMark()
+                    launchCatchingTask { toggleMark() }
                     return true
                 }
             }
@@ -759,21 +759,18 @@ open class CardBrowser :
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked  */
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
-    private fun toggleMark() {
+    private suspend fun toggleMark() {
         if (!hasSelectedCards()) {
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        launchCatchingTask {
-            showProgressBar() // from MarkCardHandler.preExecute()
-            val result = withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) }
-            // from MarkCardHandler.actualOnValidPostExecute()
-            updateCardsInList(getAllCards(getNotes(result.value.toList())))
-            hideProgressBar()
-            invalidateOptionsMenu() // maybe the availability of undo changed
-            if (result.value.map { card -> card.id }.contains(reviewerCardId)) {
-                mReloadRequired = true
-            }
+        showProgressBar()
+        val result = withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) }
+        updateCardsInList(getAllCards(getNotes(result.value.toList())))
+        hideProgressBar()
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        if (result.value.map { card -> card.id }.contains(reviewerCardId)) {
+            mReloadRequired = true
         }
     }
 
@@ -1215,7 +1212,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_mark_card -> {
-                toggleMark()
+                launchCatchingTask { toggleMark() }
                 return true
             }
             R.id.action_suspend_card -> {
