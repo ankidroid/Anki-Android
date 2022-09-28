@@ -565,9 +565,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
      * @param result the new DeckStudyData using which UI is to be rebuilt
      */
     // TODO: Make this a suspend function and move string operations and db-query to a background dispatcher
-    @Suppress("SENSELESS_COMPARISON", "UNNECESSARY_NOT_NULL_ASSERTION")
     private fun rebuildUi(result: DeckStudyData?, refreshDecklist: Boolean) {
-        val activity = requireActivity() // TODO: Remove [activity], was introduced to copy TaskListener.onPostExecute code as it is
         dismissProgressDialog()
         if (result != null) {
 
@@ -626,7 +624,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     mButtonStart!!.visibility = View.GONE
                 }
                 mTextCongratsMessage!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.text = col!!.sched.finishedMsg(activity!!)
+                mTextCongratsMessage!!.text = col!!.sched.finishedMsg(requireActivity())
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 mDeckInfoLayout!!.visibility = View.VISIBLE
