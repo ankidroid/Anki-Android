@@ -215,9 +215,8 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
                 super.controlBlocked = controlBlocked
             }
 
-        override fun isControlBlocked(): Boolean {
-            return controlBlocked !== ControlBlock.UNBLOCKED
-        }
+        override val isControlBlocked: Boolean
+            get() = controlBlocked !== ControlBlock.UNBLOCKED
 
         override fun onFlag(card: Card?, @FlagDef flag: Int) {
             lastFlag = flag

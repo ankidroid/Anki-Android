@@ -1671,7 +1671,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        return if (isControlBlocked() && which !== ViewerCommand.EXIT) {
+        return if (isControlBlocked && which !== ViewerCommand.EXIT) {
             false
         } else when (which) {
             ViewerCommand.SHOW_ANSWER -> {
@@ -2562,9 +2562,8 @@ abstract class AbstractFlashcardViewer :
     override val isDisplayingAnswer
         get() = displayAnswer
 
-    override fun isControlBlocked(): Boolean {
-        return controlBlocked !== ControlBlock.UNBLOCKED
-    }
+    override val isControlBlocked: Boolean
+        get() = controlBlocked !== ControlBlock.UNBLOCKED
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @KotlinCleanup("move to test class as extension")

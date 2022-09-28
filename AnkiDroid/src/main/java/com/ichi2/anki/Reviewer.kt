@@ -1170,7 +1170,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        if (isControlBlocked() && which !== ViewerCommand.EXIT) {
+        if (isControlBlocked && which !== ViewerCommand.EXIT) {
             return false
         }
         when (which) {
@@ -1424,7 +1424,7 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
@@ -1434,7 +1434,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",

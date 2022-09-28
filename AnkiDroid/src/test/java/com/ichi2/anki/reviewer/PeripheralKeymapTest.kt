@@ -51,9 +51,7 @@ class PeripheralKeymapTest {
         override val controlBlocked: ControlBlock?
             get() = null
 
-        override fun isControlBlocked(): Boolean {
-            return false
-        }
+        override val isControlBlocked = false
 
         override val isDisplayingAnswer: Boolean
             get() = false
