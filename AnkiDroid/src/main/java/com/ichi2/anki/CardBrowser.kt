@@ -72,7 +72,6 @@ import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
 import com.ichi2.async.CollectionTask.CheckCardSelection
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
-import com.ichi2.async.CollectionTask.MarkNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.compat.Compat
@@ -763,10 +762,17 @@ open class CardBrowser :
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        TaskManager.launchCollectionTask(
-            MarkNoteMulti(selectedCardIds),
-            markCardHandler()
-        )
+        launchCatchingTask {
+            showProgressBar() // from MarkCardHandler.preExecute()
+            val result = withCol { markNoteMulti(selectedCardIds, this) }
+            // from MarkCardHandler.actualOnValidPostExecute()
+            updateCardsInList(getAllCards(getNotes(result.value.toList())))
+            hideProgressBar()
+            invalidateOptionsMenu() // maybe the availability of undo changed
+            if (result.value.map { card -> card.id }.contains(reviewerCardId)) {
+                mReloadRequired = true
+            }
+        }
     }
 
     @VisibleForTesting
@@ -1795,21 +1801,6 @@ open class CardBrowser :
     private open class SuspendCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
         override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
             browser.updateCardsInList(result!!.value.toList())
-            browser.hideProgressBar()
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
-                browser.mReloadRequired = true
-            }
-        }
-    }
-
-    private fun markCardHandler(): MarkCardHandler {
-        return MarkCardHandler(this)
-    }
-
-    private class MarkCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
-            browser.updateCardsInList(getAllCards(getNotes(result!!.value.toList())))
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
