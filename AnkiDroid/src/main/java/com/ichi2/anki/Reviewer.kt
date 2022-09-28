@@ -220,7 +220,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
     override fun createWebView(): WebView {
-        val ret = super.createWebView()!!
+        val ret = super.createWebView()
         if (isRunningOnTv(this)) {
             ret.isFocusable = false
         }
