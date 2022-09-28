@@ -249,26 +249,41 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class MarkNoteMulti(cardIds: List<Long>) : DismissNotes<Void>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>, cards: Array<Card>): Boolean {
-            val notes = CardUtils.getNotes(listOf(*cards))
-            // collect undo information
-            val originalMarked: MutableList<Note> = ArrayList()
-            val originalUnmarked: MutableList<Note> = ArrayList()
-            for (n in notes) {
-                if (NoteService.isMarked(n)) originalMarked.add(n) else originalUnmarked.add(n)
-            }
-            val hasUnmarked = !originalUnmarked.isEmpty()
-            CardUtils.markAll(ArrayList(notes), hasUnmarked)
+    class MarkNoteMulti(val cardIds: List<Long>) : TaskDelegate<Void, Computation<Array<Card>>>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
+            val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+            try {
+                col.db.executeInTransaction {
+                    val notes = CardUtils.getNotes(listOf(*cards))
+                    // collect undo information
+                    val originalMarked: MutableList<Note> = ArrayList()
+                    val originalUnmarked: MutableList<Note> = ArrayList()
+                    for (n in notes) {
+                        if (NoteService.isMarked(n)) {
+                            originalMarked.add(n)
+                        } else {
+                            originalUnmarked.add(n)
+                        }
+                    }
+                    val hasUnmarked = !originalUnmarked.isEmpty()
+                    CardUtils.markAll(ArrayList(notes), hasUnmarked)
 
-            // mark undo for all at once
-            col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
+                    // mark undo for all at once
+                    col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
 
-            // reload cards because they'll be passed back to caller
-            for (c in cards) {
-                c.load()
+                    // reload cards because they'll be passed back to caller
+                    for (c in cards) {
+                        c.load()
+                    }
+                }
+            } catch (e: RuntimeException) {
+                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
+                return Computation.err()
             }
-            return true
+            // pass cards back so more actions can be performed by the caller
+            // (querying the cards again is unnecessarily expensive)
+            return Computation.ok(cards)
         }
     }
 
