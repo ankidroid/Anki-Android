@@ -249,12 +249,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class MarkNoteMulti(val cardIds: List<Long>) : TaskDelegate<Void, Computation<Array<Card>>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
-            return markNoteMulti(cardIds, col)
-        }
-    }
-
     class DeleteNoteMulti(cardIds: List<Long>) : DismissNotes<Array<Card>>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>, cards: Array<Card>): Boolean {
             val sched = col.sched
