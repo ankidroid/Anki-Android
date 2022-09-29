@@ -15,7 +15,9 @@
  ****************************************************************************************/
 
 package com.ichi2.async
+
 import com.ichi2.anki.StudyOptionsFragment
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
@@ -150,4 +152,24 @@ fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
     val cardCount = models.map { col.models.useCount(it) }
     return Pair(models, cardCount)
+}
+
+fun changeDeckConfiguration(
+    deck: Deck,
+    conf: DeckConfig,
+    col: com.ichi2.libanki.Collection
+): Boolean {
+    val newConfId = conf.getLong("id")
+    // If new config has a different sorting order, reorder the cards
+    val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
+    val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
+    if (oldOrder != newOrder) {
+        when (newOrder) {
+            0 -> col.sched.randomizeCards(deck.getLong("id"))
+            1 -> col.sched.orderCards(deck.getLong("id"))
+        }
+    }
+    col.decks.setConf(deck, newConfId)
+    col.save()
+    return true
 }
