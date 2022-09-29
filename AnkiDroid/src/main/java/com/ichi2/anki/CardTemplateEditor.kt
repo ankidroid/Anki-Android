@@ -17,8 +17,8 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -575,27 +575,25 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             )
         }
 
-        @Suppress("DEPRECATION", "UNNECESSARY_NOT_NULL_ASSERTION")
-        @SuppressLint("VariableNamingDetector")
-        private fun onModelSaved(mProgressDialog: android.app.ProgressDialog?, result: Pair<Boolean, String?>?) {
-            val context = this // TODO: Remove this
+        @Suppress("DEPRECATION")
+        private fun onModelSaved(progressDialog: ProgressDialog?, result: Pair<Boolean, String?>?) {
             Timber.d("saveModelAndExitHandler::postExecute called")
-            val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
+            val button = mTemplateEditor.findViewById<View>(R.id.action_confirm)
             if (button != null) {
                 button.isEnabled = true
             }
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                mProgressDialog!!.dismiss()
+            if (progressDialog != null && progressDialog.isShowing) {
+                progressDialog.dismiss()
             }
-            context.mTemplateEditor.tempModel = null
+            mTemplateEditor.tempModel = null
             if (result!!.first) {
-                context.mTemplateEditor.finishWithAnimation(
+                mTemplateEditor.finishWithAnimation(
                     END
                 )
             } else {
                 Timber.w("CardTemplateFragment:: save model task failed: %s", result.second)
-                UIUtils.showThemedToast(context.mTemplateEditor, context.getString(R.string.card_template_editor_save_error, result.second), false)
-                context.mTemplateEditor.finishWithoutAnimation()
+                UIUtils.showThemedToast(mTemplateEditor, getString(R.string.card_template_editor_save_error, result.second), false)
+                mTemplateEditor.finishWithoutAnimation()
             }
         }
 
