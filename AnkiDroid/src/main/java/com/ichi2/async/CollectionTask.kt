@@ -603,52 +603,12 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
+    /**
+     * Handles everything for a model change at once - template add / deletes as well as content updates
+     */
     class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
-            Timber.d("doInBackgroundSaveModel")
-            val oldModel = col.models.get(model.getLong("id"))!!
-
-            // TODO need to save all the cards that will go away, for undo
-            //  (do I need to remove them from graves during undo also?)
-            //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
-            val newTemplates = model.getJSONArray("tmpls")
-            col.db.database.beginTransaction()
-            try {
-                for (change in templateChanges) {
-                    val oldTemplates = oldModel.getJSONArray("tmpls")
-                    try {
-                        when (change[1] as TemporaryModel.ChangeType) {
-                            TemporaryModel.ChangeType.ADD -> {
-                                Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                                col.models.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
-                            }
-                            TemporaryModel.ChangeType.DELETE -> {
-                                Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                                col.models.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
-                            }
-                        }
-                    } catch (e: Exception) {
-                        Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"))
-                        return Pair(false, e.localizedMessage)
-                    }
-                }
-
-                // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
-                // This could be done better
-                model.put("mod", oldModel!!.getLong("mod"))
-                col.models.save(model, true)
-                col.models.update(model)
-                col.reset()
-                col.save()
-                if (col.db.database.inTransaction()) {
-                    col.db.database.setTransactionSuccessful()
-                } else {
-                    Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.")
-                }
-            } finally {
-                DB.safeEndInTransaction(col.db)
-            }
-            return Pair(true, null)
+            return saveModel(col, model, templateChanges)
         }
     }
 
