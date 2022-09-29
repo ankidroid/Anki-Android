@@ -263,6 +263,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             )
             setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
         }
+        val mainView = findViewById<View>(android.R.id.content)
+        // Enable toolbar
+        enableToolbar(mainView)
         startLoadingCollection()
         mOnboarding.onCreate()
     }
@@ -297,9 +300,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val intent = intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %d", caller)
         registerExternalStorageListener()
-        val mainView = findViewById<View>(android.R.id.content)
-        // Enable toolbar
-        enableToolbar(mainView)
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         mTagsButton = findViewById(R.id.CardEditorTagButton)
         mCardsButton = findViewById(R.id.CardEditorCardsButton)
