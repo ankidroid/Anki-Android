@@ -183,7 +183,7 @@ fun saveModel(
     col: Collection,
     model: Model,
     templateChanges: ArrayList<Array<Any>>
-): Pair<Boolean, String?> {
+) {
     Timber.d("doInBackgroundSaveModel")
     val oldModel = col.models.get(model.getLong("id"))
 
@@ -195,20 +195,15 @@ fun saveModel(
     try {
         for (change in templateChanges) {
             val oldTemplates = oldModel!!.getJSONArray("tmpls")
-            try {
-                when (change[1] as TemporaryModel.ChangeType) {
-                    TemporaryModel.ChangeType.ADD -> {
-                        Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                        col.models.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
-                    }
-                    TemporaryModel.ChangeType.DELETE -> {
-                        Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                        col.models.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
-                    }
+            when (change[1] as TemporaryModel.ChangeType) {
+                TemporaryModel.ChangeType.ADD -> {
+                    Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
+                    col.models.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
                 }
-            } catch (e: Exception) {
-                Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"))
-                return Pair(false, e.localizedMessage)
+                TemporaryModel.ChangeType.DELETE -> {
+                    Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
+                    col.models.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
+                }
             }
         }
 
@@ -227,5 +222,4 @@ fun saveModel(
     } finally {
         DB.safeEndInTransaction(col.db)
     }
-    return Pair(true, null)
 }

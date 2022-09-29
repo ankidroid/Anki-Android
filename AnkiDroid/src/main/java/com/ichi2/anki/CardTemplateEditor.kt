@@ -552,12 +552,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                         confirmButton.isEnabled = false
                                     }
                                     launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
-                                        val result = requireActivity().withProgress(resources.getString(R.string.saving_model)) {
+                                        requireActivity().withProgress(resources.getString(R.string.saving_model)) {
                                             withCol {
                                                 tempModel!!.saveToDatabase(this)
                                             }
                                         }
-                                        onModelSaved(result)
+                                        onModelSaved()
                                     }
                                 } else {
                                     Timber.d("CardTemplateEditor:: model has not changed, exiting")
@@ -580,22 +580,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             )
         }
 
-        private fun onModelSaved(result: Pair<Boolean, String?>?) {
+        private fun onModelSaved() {
             Timber.d("saveModelAndExitHandler::postExecute called")
             val button = mTemplateEditor.findViewById<View>(R.id.action_confirm)
             if (button != null) {
                 button.isEnabled = true
             }
             mTemplateEditor.tempModel = null
-            if (result!!.first) {
-                mTemplateEditor.finishWithAnimation(
-                    END
-                )
-            } else {
-                Timber.w("CardTemplateFragment:: save model task failed: %s", result.second)
-                UIUtils.showThemedToast(mTemplateEditor, getString(R.string.card_template_editor_save_error, result.second), false)
-                mTemplateEditor.finishWithoutAnimation()
-            }
+            mTemplateEditor.finishWithAnimation(END)
         }
 
         fun performPreview() {
