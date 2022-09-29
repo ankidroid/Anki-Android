@@ -603,9 +603,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /**
-     * Handles everything for a model change at once - template add / deletes as well as content updates
-     */
     class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
             Timber.d("doInBackgroundSaveModel")
@@ -619,31 +616,26 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             try {
                 for (change in templateChanges) {
                     val oldTemplates = oldModel.getJSONArray("tmpls")
-                    when (change[1] as TemporaryModel.ChangeType) {
-                        TemporaryModel.ChangeType.ADD -> {
-                            Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                            try {
+                    try {
+                        when (change[1] as TemporaryModel.ChangeType) {
+                            TemporaryModel.ChangeType.ADD -> {
+                                Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
                                 col.models.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
-                            } catch (e: Exception) {
-                                Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"))
-                                return Pair(false, e.localizedMessage)
                             }
-                        }
-                        TemporaryModel.ChangeType.DELETE -> {
-                            Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                            try {
+                            TemporaryModel.ChangeType.DELETE -> {
+                                Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
                                 col.models.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
-                            } catch (e: Exception) {
-                                Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"))
-                                return Pair(false, e.localizedMessage)
                             }
                         }
+                    } catch (e: Exception) {
+                        Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"))
+                        return Pair(false, e.localizedMessage)
                     }
                 }
 
                 // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
                 // This could be done better
-                model.put("mod", oldModel.getLong("mod"))
+                model.put("mod", oldModel!!.getLong("mod"))
                 col.models.save(model, true)
                 col.models.update(model)
                 col.reset()
