@@ -37,6 +37,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
+import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
@@ -226,7 +227,11 @@ class DeckOptions :
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
-                                TaskManager.launchCollectionTask(CollectionTask.ConfChange(deck, mOptions), confChangeHandler())
+                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                    preConfChange()
+                                    withCol { changeDeckConfiguration(deck, mOptions, this) }
+                                    postConfChange()
+                                }
                             }
                             "confRename" -> {
                                 val newName = value as String

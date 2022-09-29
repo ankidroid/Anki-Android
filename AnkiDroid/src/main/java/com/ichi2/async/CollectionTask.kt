@@ -605,18 +605,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ConfChange(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            return try {
-                changeDeckConfiguration(deck, conf, col)
-                return true
-            } catch (e: JSONException) {
-                Timber.w(e)
-                false
-            }
-        }
-    }
-
     @KotlinCleanup("fix `val changed = execTask()!!`")
     class ConfSetSubdecks(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
