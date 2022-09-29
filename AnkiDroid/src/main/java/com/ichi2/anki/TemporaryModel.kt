@@ -95,7 +95,7 @@ class TemporaryModel(model: Model) {
         addTemplateChange(ChangeType.DELETE, ord)
     }
 
-    fun saveToDatabase(collection: com.ichi2.libanki.Collection): Pair<Boolean, String?> {
+    fun saveToDatabase(collection: com.ichi2.libanki.Collection) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
