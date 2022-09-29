@@ -18,9 +18,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.os.Bundle
-import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.SaveModelAndExitHandler
-import com.ichi2.async.CollectionTask.SaveModel
-import com.ichi2.async.TaskManager
+import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.NoteTypeId
@@ -97,16 +95,11 @@ class TemporaryModel(model: Model) {
         addTemplateChange(ChangeType.DELETE, ord)
     }
 
-    fun saveToDatabase(listener: SaveModelAndExitHandler) {
+    fun saveToDatabase(collection: com.ichi2.libanki.Collection): Pair<Boolean, String?> {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
-        TaskManager.launchCollectionTask<Void, Pair<Boolean, String?>?>(
-            SaveModel(
-                model, adjustedTemplateChanges
-            ),
-            listener
-        )
+        return saveModel(collection, model, adjustedTemplateChanges)
     }
 
     /**
