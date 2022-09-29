@@ -157,8 +157,8 @@ fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
 fun changeDeckConfiguration(
     deck: Deck,
     conf: DeckConfig,
-    col: com.ichi2.libanki.Collection
-): Boolean {
+    col: Collection
+) {
     val newConfId = conf.getLong("id")
     // If new config has a different sorting order, reorder the cards
     val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
@@ -171,5 +171,4 @@ fun changeDeckConfiguration(
     }
     col.decks.setConf(deck, newConfId)
     col.save()
-    return true
 }
