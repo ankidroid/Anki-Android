@@ -249,19 +249,20 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         // Set up toolbar
         toolbar = findViewById(R.id.editor_toolbar)
-        toolbar.formatListener = TextFormatListener { formatter: Toolbar.TextFormatter ->
-            val currentFocus = currentFocus as? FieldEditText ?: return@TextFormatListener
-            modifyCurrentSelection(formatter, currentFocus)
-        }
-        // Sets the background and icon color of toolbar respectively.
-        toolbar.setBackgroundColor(
-            Themes.getColorFromAttr(
-                this@NoteEditor,
-                R.attr.toolbarBackgroundColor
+        toolbar.apply {
+            formatListener = TextFormatListener { formatter: Toolbar.TextFormatter ->
+                val currentFocus = currentFocus as? FieldEditText ?: return@TextFormatListener
+                modifyCurrentSelection(formatter, currentFocus)
+            }
+            // Sets the background and icon color of toolbar respectively.
+            setBackgroundColor(
+                Themes.getColorFromAttr(
+                    this@NoteEditor,
+                    R.attr.toolbarBackgroundColor
+                )
             )
-        )
-        toolbar.setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-
+            setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+        }
         startLoadingCollection()
         mOnboarding.onCreate()
     }
