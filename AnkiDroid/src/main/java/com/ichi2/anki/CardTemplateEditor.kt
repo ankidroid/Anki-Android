@@ -17,6 +17,7 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Build
@@ -574,6 +575,30 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             )
         }
 
+        @Suppress("DEPRECATION", "UNNECESSARY_NOT_NULL_ASSERTION")
+        @SuppressLint("VariableNamingDetector")
+        private fun onModelSaved(mProgressDialog: android.app.ProgressDialog?, result: Pair<Boolean, String?>?) {
+            val context = this // TODO: Remove this
+            Timber.d("saveModelAndExitHandler::postExecute called")
+            val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
+            if (button != null) {
+                button.isEnabled = true
+            }
+            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+                mProgressDialog!!.dismiss()
+            }
+            context.mTemplateEditor.tempModel = null
+            if (result!!.first) {
+                context.mTemplateEditor.finishWithAnimation(
+                    END
+                )
+            } else {
+                Timber.w("CardTemplateFragment:: save model task failed: %s", result.second)
+                UIUtils.showThemedToast(context.mTemplateEditor, context.getString(R.string.card_template_editor_save_error, result.second), false)
+                context.mTemplateEditor.finishWithoutAnimation()
+            }
+        }
+
         fun performPreview() {
             val col = mTemplateEditor.col
             val tempModel = mTemplateEditor.tempModel
@@ -722,26 +747,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.appResources.getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
             }
 
-            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>?) {
-                Timber.d("saveModelAndExitHandler::postExecute called")
-                val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
-                if (button != null) {
-                    button.isEnabled = true
-                }
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
-                }
-                context.mTemplateEditor.tempModel = null
-                if (result!!.first) {
-                    context.mTemplateEditor.finishWithAnimation(
-                        END
-                    )
-                } else {
-                    Timber.w("CardTemplateFragment:: save model task failed: %s", result.second)
-                    UIUtils.showThemedToast(context.mTemplateEditor, context.getString(R.string.card_template_editor_save_error, result.second), false)
-                    context.mTemplateEditor.finishWithoutAnimation()
-                }
-            }
+            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>?) = context.onModelSaved(mProgressDialog, result)
         }
 
         private fun modelHasChanged(): Boolean {
