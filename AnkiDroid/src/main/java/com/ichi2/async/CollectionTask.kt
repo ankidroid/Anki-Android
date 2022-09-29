@@ -607,21 +607,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
     class ConfChange(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundConfChange")
             return try {
-                val newConfId = conf.getLong("id")
-                // If new config has a different sorting order, reorder the cards
-                val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
-                val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
-                if (oldOrder != newOrder) {
-                    when (newOrder) {
-                        0 -> col.sched.randomizeCards(deck.getLong("id"))
-                        1 -> col.sched.orderCards(deck.getLong("id"))
-                    }
-                }
-                col.decks.setConf(deck, newConfId)
-                col.save()
-                true
+                changeDeckConfiguration(deck, conf, col)
             } catch (e: JSONException) {
                 Timber.w(e)
                 false
@@ -640,7 +627,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     if (child.isDyn) {
                         continue
                     }
-                    val changed = ConfChange(child, conf).execTask(col, collectionTask)
+                    val changed = changeDeckConfiguration(deck, conf, col)
                     if (!changed) {
                         return false
                     }
