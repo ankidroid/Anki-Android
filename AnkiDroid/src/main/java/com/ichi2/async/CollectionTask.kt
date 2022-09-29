@@ -604,15 +604,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * Handles everything for a model change at once - template add / deletes as well as content updates
-     */
-    class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
-            return saveModel(col, model, templateChanges)
-        }
-    }
-
-    /**
      * Deletes the given field in the given model
      */
     class DeleteField(private val model: Model, private val field: JSONObject) : TaskDelegate<Void, Boolean>() {
