@@ -609,6 +609,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
             return try {
                 changeDeckConfiguration(deck, conf, col)
+                return true
             } catch (e: JSONException) {
                 Timber.w(e)
                 false
@@ -627,10 +628,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     if (child.isDyn) {
                         continue
                     }
-                    val changed = changeDeckConfiguration(deck, conf, col)
-                    if (!changed) {
-                        return false
-                    }
+                    changeDeckConfiguration(deck, conf, col)
                 }
                 true
             } catch (e: JSONException) {
