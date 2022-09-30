@@ -28,6 +28,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
 import android.os.Vibrator
@@ -90,6 +91,19 @@ open class CompatV21 : Compat {
         } catch (e: IOException) {
             Timber.e(e, "copyFile() error copying source %s", source)
             throw e
+        }
+    }
+
+    override fun <T : Serializable?> getSerializable(
+        bundle: Bundle,
+        name: String,
+        clazz: Class<T>
+    ): T? {
+        return try {
+            @Suppress("UNCHECKED_CAST")
+            bundle.getSerializable(name) as? T?
+        } catch (e: Exception) {
+            null
         }
     }
 
