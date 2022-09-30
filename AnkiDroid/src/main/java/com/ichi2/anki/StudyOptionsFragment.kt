@@ -34,6 +34,7 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
@@ -42,6 +43,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
+import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -50,6 +52,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
@@ -480,11 +483,15 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
      * @param resetDecklist Indicates whether to call back to the parent activity in order to
      *                      also refresh the deck list.
      */
+    private var updateValuesFromDeckJob: Job? = null
     private fun refreshInterface(resetSched: Boolean = false, resetDecklist: Boolean = false) {
         Timber.d("Refreshing StudyOptionsFragment")
-        TaskManager.cancelAllTasks(UpdateValuesFromDeck::class.java)
+        updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
-        TaskManager.launchCollectionTask(UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist))
+        updateValuesFromDeckJob = launchCatchingTask {
+            val result = withCol { updateValuesFromDeck(this, resetSched) }
+            rebuildUi(result, resetDecklist)
+        }
     }
 
     class DeckStudyData(
@@ -523,137 +530,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun getCollectionTaskListener(refreshDecklist: Boolean): TaskListener<Void?, DeckStudyData?> {
         return object : TaskListener<Void?, DeckStudyData?>() {
             override fun onPreExecute() {}
-            override fun onPostExecute(result: DeckStudyData?) {
-                dismissProgressDialog()
-                if (result != null) {
-
-                    // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
-                    if (activity == null) {
-                        Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
-                        return
-                    }
-
-                    // #5506 If we have no view, short circuit all UI logic
-                    if (mStudyOptionsView == null) {
-                        tryOpenCramDeckOptions()
-                        return
-                    }
-
-                    // Reinitialize controls in case changed to filtered deck
-                    initAllContentViews(mStudyOptionsView!!)
-                    // Set the deck name
-                    val deck = col!!.decks.current()
-                    // Main deck name
-                    val fullName = deck.getString("name")
-                    val name = Decks.path(fullName)
-                    val nameBuilder = StringBuilder()
-                    if (name.isNotEmpty()) {
-                        nameBuilder.append(name[0])
-                    }
-                    if (name.size > 1) {
-                        nameBuilder.append("\n").append(name[1])
-                    }
-                    if (name.size > 3) {
-                        nameBuilder.append("...")
-                    }
-                    if (name.size > 2) {
-                        nameBuilder.append("\n").append(name[name.size - 1])
-                    }
-                    mTextDeckName!!.text = nameBuilder.toString()
-                    if (tryOpenCramDeckOptions()) {
-                        return
-                    }
-
-                    // Switch between the empty view, the ordinary view, and the "congratulations" view
-                    val isDynamic = deck.isDyn
-                    if (result.numberOfCardsInDeck == 0 && !isDynamic) {
-                        mCurrentContentView = CONTENT_EMPTY
-                        mDeckInfoLayout!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
-                        mButtonStart!!.visibility = View.GONE
-                    } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
-                        mCurrentContentView = CONTENT_CONGRATS
-                        if (!isDynamic) {
-                            mDeckInfoLayout!!.visibility = View.GONE
-                            mButtonStart!!.visibility = View.VISIBLE
-                            mButtonStart!!.setText(R.string.custom_study)
-                        } else {
-                            mButtonStart!!.visibility = View.GONE
-                        }
-                        mTextCongratsMessage!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.text = col!!.sched.finishedMsg(activity!!)
-                    } else {
-                        mCurrentContentView = CONTENT_STUDY_OPTIONS
-                        mDeckInfoLayout!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.visibility = View.GONE
-                        mButtonStart!!.visibility = View.VISIBLE
-                        mButtonStart!!.setText(R.string.studyoptions_start)
-                    }
-
-                    // Set deck description
-                    val desc: String = if (isDynamic) {
-                        resources.getString(R.string.dyn_deck_desc)
-                    } else {
-                        col!!.decks.getActualDescription()
-                    }
-                    if (desc.isNotEmpty()) {
-                        mTextDeckDescription!!.text = formatDescription(desc)
-                        mTextDeckDescription!!.visibility = View.VISIBLE
-                    } else {
-                        mTextDeckDescription!!.visibility = View.GONE
-                    }
-
-                    // Set new/learn/review card counts
-                    mTextTodayNew!!.text = result.newCardsToday.toString()
-                    mTextTodayLrn!!.text = result.lrnCardsToday.toString()
-                    mTextTodayRev!!.text = result.revCardsToday.toString()
-
-                    // Set the total number of new cards in deck
-                    if (result.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
-                        // if it hasn't been truncated by libanki then just set it usually
-                        mTextNewTotal!!.text = result.numberOfNewCardsInDeck.toString()
-                    } else {
-                        // if truncated then make a thread to allow full count to load
-                        mTextNewTotal!!.text = ">1000"
-                        if (mFullNewCountThread != null) {
-                            // a thread was previously made -- interrupt it
-                            mFullNewCountThread!!.interrupt()
-                        }
-                        mFullNewCountThread = Thread {
-                            val collection = col
-                            // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                            val query = "SELECT count(*) FROM cards WHERE did IN " +
-                                Utils.ids2str(collection!!.decks.active()) +
-                                " AND queue = " + Consts.QUEUE_TYPE_NEW
-                            val fullNewCount = collection.db.queryScalar(query)
-                            if (fullNewCount > 0) {
-                                val setNewTotalText = Runnable { mTextNewTotal!!.text = fullNewCount.toString() }
-                                if (!Thread.currentThread().isInterrupted) {
-                                    mTextNewTotal!!.post(setNewTotalText)
-                                }
-                            }
-                        }
-                        mFullNewCountThread!!.start()
-                    }
-
-                    // Set total number of cards
-                    mTextTotal!!.text = result.numberOfCardsInDeck.toString()
-                    // Set estimated time remaining
-                    if (result.eta != -1) {
-                        mTextETA!!.text = result.eta.toString()
-                    } else {
-                        mTextETA!!.text = "-"
-                    }
-                    // Rebuild the options menu
-                    configureToolbar()
-                }
-
-                // If in fragmented mode, refresh the deck list
-                if (mFragmented && refreshDecklist) {
-                    mListener!!.onRequireDeckListUpdate()
-                }
-            }
+            override fun onPostExecute(result: DeckStudyData?) = rebuildUi(result, refreshDecklist)
         }
     }
 
@@ -683,7 +560,147 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (!mToReviewer) {
             // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
             // deck) cancel counts.
-            TaskManager.cancelAllTasks(UpdateValuesFromDeck::class.java)
+            updateValuesFromDeckJob?.cancel()
+        }
+    }
+
+    /**
+     * Rebuilds the interface.
+     *
+     * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
+     *                        to reflect the latest values.
+     * @param result the new DeckStudyData using which UI is to be rebuilt
+     */
+    // TODO: Make this a suspend function and move string operations and db-query to a background dispatcher
+    private fun rebuildUi(result: DeckStudyData?, refreshDecklist: Boolean) {
+        dismissProgressDialog()
+        if (result != null) {
+
+            // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
+            if (activity == null) {
+                Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
+                return
+            }
+
+            // #5506 If we have no view, short circuit all UI logic
+            if (mStudyOptionsView == null) {
+                tryOpenCramDeckOptions()
+                return
+            }
+
+            // Reinitialize controls in case changed to filtered deck
+            initAllContentViews(mStudyOptionsView!!)
+            // Set the deck name
+            val deck = col!!.decks.current()
+            // Main deck name
+            val fullName = deck.getString("name")
+            val name = Decks.path(fullName)
+            val nameBuilder = StringBuilder()
+            if (name.isNotEmpty()) {
+                nameBuilder.append(name[0])
+            }
+            if (name.size > 1) {
+                nameBuilder.append("\n").append(name[1])
+            }
+            if (name.size > 3) {
+                nameBuilder.append("...")
+            }
+            if (name.size > 2) {
+                nameBuilder.append("\n").append(name[name.size - 1])
+            }
+            mTextDeckName!!.text = nameBuilder.toString()
+            if (tryOpenCramDeckOptions()) {
+                return
+            }
+
+            // Switch between the empty view, the ordinary view, and the "congratulations" view
+            val isDynamic = deck.isDyn
+            if (result.numberOfCardsInDeck == 0 && !isDynamic) {
+                mCurrentContentView = CONTENT_EMPTY
+                mDeckInfoLayout!!.visibility = View.VISIBLE
+                mTextCongratsMessage!!.visibility = View.VISIBLE
+                mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
+                mButtonStart!!.visibility = View.GONE
+            } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
+                mCurrentContentView = CONTENT_CONGRATS
+                if (!isDynamic) {
+                    mDeckInfoLayout!!.visibility = View.GONE
+                    mButtonStart!!.visibility = View.VISIBLE
+                    mButtonStart!!.setText(R.string.custom_study)
+                } else {
+                    mButtonStart!!.visibility = View.GONE
+                }
+                mTextCongratsMessage!!.visibility = View.VISIBLE
+                mTextCongratsMessage!!.text = col!!.sched.finishedMsg(requireActivity())
+            } else {
+                mCurrentContentView = CONTENT_STUDY_OPTIONS
+                mDeckInfoLayout!!.visibility = View.VISIBLE
+                mTextCongratsMessage!!.visibility = View.GONE
+                mButtonStart!!.visibility = View.VISIBLE
+                mButtonStart!!.setText(R.string.studyoptions_start)
+            }
+
+            // Set deck description
+            val desc: String = if (isDynamic) {
+                resources.getString(R.string.dyn_deck_desc)
+            } else {
+                col!!.decks.getActualDescription()
+            }
+            if (desc.isNotEmpty()) {
+                mTextDeckDescription!!.text = formatDescription(desc)
+                mTextDeckDescription!!.visibility = View.VISIBLE
+            } else {
+                mTextDeckDescription!!.visibility = View.GONE
+            }
+
+            // Set new/learn/review card counts
+            mTextTodayNew!!.text = result.newCardsToday.toString()
+            mTextTodayLrn!!.text = result.lrnCardsToday.toString()
+            mTextTodayRev!!.text = result.revCardsToday.toString()
+
+            // Set the total number of new cards in deck
+            if (result.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
+                // if it hasn't been truncated by libanki then just set it usually
+                mTextNewTotal!!.text = result.numberOfNewCardsInDeck.toString()
+            } else {
+                // if truncated then make a thread to allow full count to load
+                mTextNewTotal!!.text = ">1000"
+                if (mFullNewCountThread != null) {
+                    // a thread was previously made -- interrupt it
+                    mFullNewCountThread!!.interrupt()
+                }
+                mFullNewCountThread = Thread {
+                    val collection = col
+                    // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
+                    val query = "SELECT count(*) FROM cards WHERE did IN " +
+                        Utils.ids2str(collection!!.decks.active()) +
+                        " AND queue = " + Consts.QUEUE_TYPE_NEW
+                    val fullNewCount = collection.db.queryScalar(query)
+                    if (fullNewCount > 0) {
+                        val setNewTotalText = Runnable { mTextNewTotal!!.text = fullNewCount.toString() }
+                        if (!Thread.currentThread().isInterrupted) {
+                            mTextNewTotal!!.post(setNewTotalText)
+                        }
+                    }
+                }
+                mFullNewCountThread!!.start()
+            }
+
+            // Set total number of cards
+            mTextTotal!!.text = result.numberOfCardsInDeck.toString()
+            // Set estimated time remaining
+            if (result.eta != -1) {
+                mTextETA!!.text = result.eta.toString()
+            } else {
+                mTextETA!!.text = "-"
+            }
+            // Rebuild the options menu
+            configureToolbar()
+        }
+
+        // If in fragmented mode, refresh the deck list
+        if (mFragmented && refreshDecklist) {
+            mListener!!.onRequireDeckListUpdate()
         }
     }
 

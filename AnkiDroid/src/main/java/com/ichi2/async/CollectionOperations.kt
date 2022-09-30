@@ -15,6 +15,7 @@
  ****************************************************************************************/
 
 package com.ichi2.async
+import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
@@ -105,4 +106,30 @@ fun deleteMedia(
         }
     }
     return unused.size
+}
+
+// TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
+// are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
+fun updateValuesFromDeck(
+    col: Collection,
+    reset: Boolean
+): StudyOptionsFragment.DeckStudyData? {
+    Timber.d("doInBackgroundUpdateValuesFromDeck")
+    return try {
+        val sched = col.sched
+        if (reset) {
+            // reset actually required because of counts, which is used in getCollectionTaskListener
+            sched.resetCounts()
+        }
+        val counts = sched.counts()
+        val totalNewCount = sched.totalNewForCurrentDeck()
+        val totalCount = sched.cardCount()
+        StudyOptionsFragment.DeckStudyData(
+            counts.new, counts.lrn, counts.rev, totalNewCount,
+            totalCount, sched.eta(counts)
+        )
+    } catch (e: RuntimeException) {
+        Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
+        null
+    }
 }
