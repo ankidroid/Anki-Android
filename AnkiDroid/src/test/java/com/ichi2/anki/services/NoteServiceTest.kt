@@ -218,7 +218,7 @@ class NoteServiceTest : RobolectricTest() {
 
         val field = MediaClipField()
         field.audioPath = file.absolutePath
-        field.setHasTemporaryMedia(true)
+        field.hasTemporaryMedia = true
 
         NoteService.importMediaToDirectory(testCol!!, field)
 
@@ -232,7 +232,7 @@ class NoteServiceTest : RobolectricTest() {
 
         val field = ImageField()
         field.extraImagePathRef = file.absolutePath
-        field.setHasTemporaryMedia(true)
+        field.hasTemporaryMedia = true
 
         NoteService.importMediaToDirectory(testCol!!, field)
 

@@ -70,7 +70,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
                 // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
                 // FIXME is this okay if it is still null?
                 mField.audioPath = mTempAudioPath
-                mField.setHasTemporaryMedia(true)
+                mField.hasTemporaryMedia = true
             }
         })
         layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT)

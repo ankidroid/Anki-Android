@@ -11,14 +11,6 @@ class AudioRecordingField : AudioField() {
     override val isModified: Boolean
         get() = thisModified
 
-    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
-        currentHasTemporaryMedia = hasTemporaryMedia
-    }
-
-    override fun hasTemporaryMedia(): Boolean {
-        return currentHasTemporaryMedia
-    }
-
     override var name: String?
         get() = currentName
         set(value) {

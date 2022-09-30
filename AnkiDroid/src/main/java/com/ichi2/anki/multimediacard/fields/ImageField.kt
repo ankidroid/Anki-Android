@@ -53,13 +53,11 @@ class ImageField : FieldBase(), IField {
 
     override var text: String? = null
 
-    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
-        mHasTemporaryMedia = hasTemporaryMedia
-    }
-
-    override fun hasTemporaryMedia(): Boolean {
-        return mHasTemporaryMedia
-    }
+    override var hasTemporaryMedia: Boolean
+        get() = mHasTemporaryMedia
+        set(value) {
+            mHasTemporaryMedia = value
+        }
 
     override var name: String?
         get() = mName
