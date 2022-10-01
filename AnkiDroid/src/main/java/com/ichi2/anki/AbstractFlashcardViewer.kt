@@ -28,7 +28,10 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
+import android.os.SystemClock
 import android.text.TextUtils
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -107,7 +110,6 @@ import timber.log.Timber
 import java.io.*
 import java.lang.ref.WeakReference
 import java.net.URLDecoder
-import java.util.*
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReadWriteLock
 import java.util.concurrent.locks.ReentrantReadWriteLock
@@ -134,7 +136,7 @@ abstract class AbstractFlashcardViewer :
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private var mTagsDialogFactory: TagsDialogFactory? = null
+    private lateinit var mTagsDialogFactory: TagsDialogFactory
 
     /**
      * Variables to hold preferences
@@ -189,7 +191,7 @@ abstract class AbstractFlashcardViewer :
     internal var easeButton4: EaseButton? = null
     protected var topBarLayout: RelativeLayout? = null
     private val mClipboard: ClipboardManager? = null
-    private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
+    private lateinit var mPreviousAnswerIndicator: PreviousAnswerIndicator
 
     /** set when [currentCard] is */
     private var mCardSoundConfig: CardSoundConfig? = null
@@ -1215,13 +1217,13 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun switchTopBarVisibility(visible: Int) {
-        mPreviousAnswerIndicator!!.setVisibility(visible)
+        mPreviousAnswerIndicator.setVisibility(visible)
     }
 
     @KotlinCleanup("collapse _ variables")
     protected open fun initControls() {
         mCardFrame!!.visibility = View.VISIBLE
-        mPreviousAnswerIndicator!!.setVisibility(View.VISIBLE)
+        mPreviousAnswerIndicator.setVisibility(View.VISIBLE)
         flipCardLayout!!.visibility = View.VISIBLE
         answerField!!.visibility = if (typeAnswer!!.validForEditText()) View.VISIBLE else View.GONE
         answerField!!.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
@@ -1866,7 +1868,7 @@ abstract class AbstractFlashcardViewer :
 
     protected open fun closeReviewer(result: Int, saveDeck: Boolean) {
         automaticAnswer.disable()
-        mPreviousAnswerIndicator!!.stopAutomaticHide()
+        mPreviousAnswerIndicator.stopAutomaticHide()
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
@@ -2572,7 +2574,7 @@ abstract class AbstractFlashcardViewer :
     internal fun showTagsDialog() {
         val tags = ArrayList(col.tags.all())
         val selTags = ArrayList(currentCard!!.note().tags)
-        val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
+        val dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
 
