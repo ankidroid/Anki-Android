@@ -48,13 +48,12 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
 import timber.log.Timber
-import java.util.ArrayList
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
 @NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
 class ModelBrowser : AnkiActivity() {
     private var modelDisplayAdapter: DisplayPairAdapter? = null
-    private var mModelListView: ListView? = null
+    private lateinit var mModelListView: ListView
 
     // Of the currently selected model
     private var mCurrentID: Long = 0
@@ -68,7 +67,7 @@ class ModelBrowser : AnkiActivity() {
     private var mNewModelLabels: ArrayList<String>? = null
     private var mExistingModelNames: ArrayList<String>? = null
     private lateinit var mCol: Collection
-    private var mActionBar: ActionBar? = null
+    private lateinit var mActionBar: ActionBar
 
     // Dialogue used in renaming
     private var modelNameInput: EditText? = null
@@ -200,8 +199,8 @@ class ModelBrowser : AnkiActivity() {
             mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i].toInt()))
         }
         modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
-        mModelListView!!.adapter = modelDisplayAdapter
-        mModelListView!!.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+        mModelListView.adapter = modelDisplayAdapter
+        mModelListView.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val noteTypeID = mModelIds!![position]
             mModelListPosition = position
             val noteOpenIntent = Intent(this@ModelBrowser, ModelFieldEditor::class.java)
@@ -209,7 +208,7 @@ class ModelBrowser : AnkiActivity() {
             noteOpenIntent.putExtra("noteTypeID", noteTypeID)
             startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.Direction.START)
         }
-        mModelListView!!.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+        mModelListView.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val cardName = mModelDisplayList!![position].name
             mCurrentID = mModelIds!![position]
             mModelListPosition = position
@@ -225,7 +224,7 @@ class ModelBrowser : AnkiActivity() {
      */
     private fun updateSubtitleText() {
         val count = mModelIds!!.size
-        mActionBar!!.subtitle = resources.getQuantityString(R.plurals.model_browser_types_available, count, count)
+        mActionBar.subtitle = resources.getQuantityString(R.plurals.model_browser_types_available, count, count)
     }
 
     /*
