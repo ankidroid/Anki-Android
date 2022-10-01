@@ -36,7 +36,7 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.countModels
+import com.ichi2.async.getAllModelsAndNotesCount
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.StdModels
@@ -187,7 +187,7 @@ class ModelBrowser : AnkiActivity() {
             Timber.d("doInBackgroundLoadModels: Started")
             val allModelsAndNotesCount = withProgress {
                 withCol {
-                    countModels(this)
+                    getAllModelsAndNotesCount(this)
                 }
             }
             Timber.d("doInBackgroundLoadModels: Completed, refreshing UI")

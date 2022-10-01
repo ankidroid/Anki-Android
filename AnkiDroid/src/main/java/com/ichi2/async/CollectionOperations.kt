@@ -144,7 +144,7 @@ fun updateValuesFromDeck(
  *
  * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
  */
-fun countModels(col: Collection,): Pair<List<Model>, ArrayList<Int>> {
+fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, ArrayList<Int>> {
     Timber.d("doInBackgroundLoadModels")
     val models = col.models.all()
     val cardCount = ArrayList<Int>()

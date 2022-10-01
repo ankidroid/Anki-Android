@@ -35,5 +35,5 @@ class CountModelsTest : RobolectricTest() {
     }
 
     /** Returns the number of models in the collection */
-    private val modelCount get() = countModels(col).first.size
+    private val modelCount get() = getAllModelsAndNotesCount(col).first.size
 }
