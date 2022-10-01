@@ -41,7 +41,7 @@ import timber.log.Timber
 class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private var mAlwaysReportCheckBox: CheckBox? = null
     private var mUserComment: EditText? = null
-    private var mHelper: CrashReportDialogHelper? = null
+    private lateinit var mHelper: CrashReportDialogHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
@@ -96,14 +96,14 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
                 CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)
             }
             // Send the crash report
-            mHelper!!.sendCrash(mUserComment!!.text.toString(), "")
+            mHelper.sendCrash(mUserComment!!.text.toString(), "")
         } else {
             // If the user got to the dialog, they were not limited.
             // The limiter persists it's limit info *before* the user cancels.
             // Therefore, on cancel, purge limits to make sure the user may actually send in future.
             // Better to maybe send to many reports than definitely too few.
             CrashReportService.deleteACRALimiterData(this)
-            mHelper!!.cancelReports()
+            mHelper.cancelReports()
         }
         finish()
     }
