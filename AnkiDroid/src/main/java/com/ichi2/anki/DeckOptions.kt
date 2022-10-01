@@ -402,7 +402,29 @@ class DeckOptions :
                 // Remove options group, asking user to confirm full sync if necessary
                 col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
-                TaskManager.launchCollectionTask(CollectionTask.ConfRemove(mOptions), confChangeHandler())
+                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                    preConfChange()
+                    val conf = mOptions
+                    try {
+                        withCol {
+                            // Note: We do the actual removing of the options group in the main thread so that we
+                            // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+
+                            // When a conf is deleted, all decks using it revert to the default conf.
+                            // Cards must be reordered according to the default conf.
+                            val order = conf.getJSONObject("new").getInt("order")
+                            val defaultOrder =
+                                col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
+                            if (order != defaultOrder) {
+                                conf.getJSONObject("new").put("order", defaultOrder)
+                                col.sched.resortConf(conf)
+                            }
+                            col.save()
+                        }
+                    } finally {
+                        postConfChange()
+                    }
+                }
                 deck.put("conf", 1)
             }
 

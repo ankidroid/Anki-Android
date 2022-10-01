@@ -637,30 +637,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ConfRemove(private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundConfRemove")
-            return try {
-                // Note: We do the actual removing of the options group in the main thread so that we
-                // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
-
-                // When a conf is deleted, all decks using it revert to the default conf.
-                // Cards must be reordered according to the default conf.
-                val order = conf.getJSONObject("new").getInt("order")
-                val defaultOrder = col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
-                if (order != defaultOrder) {
-                    conf.getJSONObject("new").put("order", defaultOrder)
-                    col.sched.resortConf(conf)
-                }
-                col.save()
-                true
-            } catch (e: JSONException) {
-                Timber.w(e)
-                false
-            }
-        }
-    }
-
     @KotlinCleanup("fix `val changed = execTask()!!`")
     class ConfSetSubdecks(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
