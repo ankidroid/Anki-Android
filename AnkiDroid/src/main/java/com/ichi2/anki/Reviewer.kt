@@ -26,11 +26,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.os.Parcelable
+import android.os.*
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
@@ -103,7 +99,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
-    private var mColorPalette: LinearLayout? = null
+    private lateinit var mColorPalette: LinearLayout
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -440,10 +436,10 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
-                if (mColorPalette!!.visibility == View.GONE) {
-                    mColorPalette!!.visibility = View.VISIBLE
+                if (mColorPalette.visibility == View.GONE) {
+                    mColorPalette.visibility = View.VISIBLE
                 } else {
-                    mColorPalette!!.visibility = View.GONE
+                    mColorPalette.visibility = View.GONE
                 }
             }
             R.id.action_save_whiteboard -> {
@@ -535,7 +531,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         setWhiteboardEnabledState(prefWhiteboard)
         setWhiteboardVisibility(prefWhiteboard)
         if (!prefWhiteboard) {
-            mColorPalette!!.visibility = View.GONE
+            mColorPalette.visibility = View.GONE
         }
         refreshActionBar()
     }
@@ -835,7 +831,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 change_pen_color_icon.isEnabled = false
                 change_pen_color_icon.icon = whiteboardColorPaletteIcon
-                mColorPalette!!.visibility = View.GONE
+                mColorPalette.visibility = View.GONE
             }
         } else {
             toggle_whiteboard_icon.setTitle(R.string.enable_whiteboard)
