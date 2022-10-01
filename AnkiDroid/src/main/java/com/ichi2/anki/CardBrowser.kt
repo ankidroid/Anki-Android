@@ -145,7 +145,7 @@ open class CardBrowser :
     private var mSearchTerms: String = ""
     private var mRestrictOnDeck: String? = null
     private var mCurrentFlag = 0
-    private var mTagsDialogFactory: TagsDialogFactory? = null
+    private lateinit var mTagsDialogFactory: TagsDialogFactory
     private var mSearchItem: MenuItem? = null
     private var mSaveSearchItem: MenuItem? = null
     private var mMySearchesItem: MenuItem? = null
@@ -1450,7 +1450,7 @@ open class CardBrowser :
         if (selectedNotes.size == 1) {
             Timber.d("showEditTagsDialog: edit tags for one note")
             mTagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-            val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, allTags)
+            val dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, allTags)
             showDialogFragment(dialog)
             return
         }
@@ -1461,7 +1461,7 @@ open class CardBrowser :
             }
         Timber.d("showEditTagsDialog: edit tags for multiple note")
         mTagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-        val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
+        val dialog = mTagsDialogFactory.newTagsDialog().withArguments(
             TagsDialog.DialogType.EDIT_TAGS,
             checkedTags, uncheckedTags, allTags
         )
@@ -1470,7 +1470,7 @@ open class CardBrowser :
 
     private fun showFilterByTagsDialog() {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
+        val dialog = mTagsDialogFactory.newTagsDialog().withArguments(
             TagsDialog.DialogType.FILTER_BY_TAG, ArrayList(0), col.tags.all()
         )
         showDialogFragment(dialog)
