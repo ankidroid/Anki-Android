@@ -28,7 +28,8 @@ import com.ichi2.utils.contentNullable
 
 class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialogFragment() {
     interface ExportDialogListener {
-        fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean)
+        fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean)
+        fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean)
         fun dismissAllDialogFragments()
     }
 
@@ -73,7 +74,11 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
             title(R.string.export)
             contentNullable(requireArguments().getString("dialogMessage"))
             positiveButton(android.R.string.ok) {
-                listener.exportApkg(null, did, mIncludeSched, mIncludeMedia)
+                if (did != null) {
+                    listener.exportDeckAsApkg(null, did, mIncludeSched, mIncludeMedia)
+                } else {
+                    listener.exportColAsApkg(null, mIncludeSched, mIncludeMedia)
+                }
                 dismissAllDialogFragments()
             }
             negativeButton(android.R.string.cancel) {
