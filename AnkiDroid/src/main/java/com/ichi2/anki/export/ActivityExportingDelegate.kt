@@ -24,6 +24,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
+import anki.generic.Empty
+import anki.import_export.ExportLimit
+import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -98,7 +101,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     activity.showAsyncDialogFragment(dialog)
                 }
             } else {
-                exportNewBackendApkg(exportPath, false, includeMedia, null)
+                val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
+                exportNewBackendApkg(exportPath, false, includeMedia, limit)
             }
         }
     }
@@ -119,7 +123,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         if (BackendFactory.defaultLegacySchema) {
             exportApkgLegacy(exportPath, did, includeSched, includeMedia)
         } else {
-            exportNewBackendApkg(exportPath, includeSched, includeMedia, did)
+            val limit = exportLimit { this.deckId = did }
+            exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
         }
     }
 
@@ -137,9 +142,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     // Only for new backend schema
-    private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, did: DeckId?) {
+    private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, limit: ExportLimit) {
         activity.launchCatchingTask {
-            activity.exportApkg(exportPath.path, includeSched, includeMedia, did)
+            activity.exportApkg(exportPath.path, includeSched, includeMedia, limit)
             val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
             activity.showAsyncDialogFragment(dialog)
         }

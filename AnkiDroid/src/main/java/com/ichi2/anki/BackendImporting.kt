@@ -18,12 +18,12 @@
 
 package com.ichi2.anki
 
+import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.libanki.CollectionV16
-import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
@@ -98,7 +98,7 @@ suspend fun AnkiActivity.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: DeckId?
+    limit: ExportLimit
 ) {
     withProgress(
         extractProgress = {
@@ -108,7 +108,7 @@ suspend fun AnkiActivity.exportApkg(
         },
     ) {
         withCol {
-            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
         }
     }
 }
