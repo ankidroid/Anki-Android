@@ -121,8 +121,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
     private var mFieldsLayoutContainer: LinearLayout? = null
-    private var mMediaRegistration: MediaRegistration? = null
-    private var mTagsDialogFactory: TagsDialogFactory? = null
+    private lateinit var mMediaRegistration: MediaRegistration
+    private lateinit var mTagsDialogFactory: TagsDialogFactory
     private var mTagsButton: AppCompatButton? = null
     private var mCardsButton: AppCompatButton? = null
     private var mNoteTypeSpinner: Spinner? = null
@@ -1095,7 +1095,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         val tags = ArrayList(col.tags.all())
         val selTags = ArrayList(mSelectedTags!!)
-        val dialog = mTagsDialogFactory!!.newTagsDialog()
+        val dialog = mTagsDialogFactory.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
@@ -1345,7 +1345,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
-        val imageTag = mMediaRegistration!!.onImagePaste(uri) ?: return false
+        val imageTag = mMediaRegistration.onImagePaste(uri) ?: return false
         insertStringInField(editText, imageTag)
         return true
     }
