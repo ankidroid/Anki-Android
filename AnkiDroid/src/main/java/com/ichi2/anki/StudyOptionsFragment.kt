@@ -307,11 +307,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
-                mProgressDialog = show(
-                    requireActivity(), null,
-                    resources.getString(R.string.empty_filtered_deck), false
-                )
-                TaskManager.launchCollectionTask(EmptyCram(), getCollectionTaskListener(true))
+                launchCatchingTask { emptyCram() }
                 return true
             }
             R.id.action_rename -> {
@@ -328,6 +324,18 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             else -> return false
         }
+    }
+
+    @VisibleForTesting
+    suspend fun emptyCram() {
+        val result = requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
+            withCol {
+                Timber.d("doInBackgroundEmptyCram")
+                sched.emptyDyn(decks.selected())
+                updateValuesFromDeck(this, true)
+            }
+        }
+        rebuildUi(result, true)
     }
 
     fun configureToolbar() {

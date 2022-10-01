@@ -2473,7 +2473,17 @@ open class DeckPicker :
 
     fun emptyFiltered(did: DeckId) {
         col.decks.select(did)
-        TaskManager.launchCollectionTask(EmptyCram(), simpleProgressListener())
+        launchCatchingTask {
+            withProgress {
+                withCol {
+                    Timber.d("doInBackgroundEmptyCram")
+                    sched.emptyDyn(decks.selected())
+                    updateValuesFromDeck(this, true)
+                }
+            }
+            updateDeckList()
+            if (fragmented) loadStudyOptionsFragment(false)
+        }
     }
 
     override fun onAttachedToWindow() {

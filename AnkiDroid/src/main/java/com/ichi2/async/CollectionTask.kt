@@ -415,14 +415,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class EmptyCram : TaskDelegate<Void, DeckStudyData?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            Timber.d("doInBackgroundEmptyCram")
-            col.sched.emptyDyn(col.decks.selected())
-            return updateValuesFromDeck(col, true)
-        }
-    }
-
     @KotlinCleanup("Use StringBuilder to concatenate the strings")
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
