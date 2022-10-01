@@ -407,12 +407,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class UpdateValuesFromDeck(private val reset: Boolean) : TaskDelegate<Void, DeckStudyData?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            return updateValuesFromDeck(col, reset)
-        }
-    }
-
     class RebuildCram : TaskDelegate<Void, DeckStudyData?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
             Timber.d("doInBackgroundRebuildCram")
