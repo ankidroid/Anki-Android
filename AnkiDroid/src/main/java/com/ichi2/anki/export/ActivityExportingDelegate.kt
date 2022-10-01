@@ -65,14 +65,17 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did))
     }
 
+    private fun getTimeStampSuffix() =
+        "-" + run {
+            collectionSupplier.get()
+            TimeUtils.getTimestamp(TimeManager.time)
+        }
+
     override fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
         val exportPath: File
-        val timeStampSuffix = "-" + run {
-            collectionSupplier.get()
-            TimeUtils.getTimestamp(TimeManager.time)
-        }
+        val timeStampSuffix = getTimeStampSuffix()
         exportPath = if (path != null) {
             // filename has been explicitly specified
             File(exportDir, path)
