@@ -34,7 +34,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
-import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.utils.CheckCameraPermission
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -79,14 +78,15 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
         val intent = this.intent
-        mField = getFieldFromIntent(intent)
-        mNote = intent.getSerializableExtraCompat<IMultimediaEditableNote>(EXTRA_WHOLE_NOTE)
-        mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0)
-        if (mField == null) {
+        val extras = getFieldFromIntent(intent)
+        if (extras == null) {
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)
             finishCancel()
             return
         }
+        mFieldIndex = extras.first
+        mField = extras.second
+        mNote = extras.third
         recreateEditingUi(ChangeUIRequest.init(mField!!), controllerBundle)
     }
 
@@ -448,18 +448,16 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     companion object {
         const val EXTRA_RESULT_FIELD = "edit.field.result.field"
         const val EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index"
-        const val EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index"
-        const val EXTRA_FIELD = "multim.card.ed.extra.field"
-        const val EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note"
+        const val EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY = "multim.card.ed.extra"
         private const val BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off"
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val REQUEST_CAMERA_PERMISSION = 1
         const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
         @KotlinCleanup("see if we can make this non-null")
         @VisibleForTesting
-        @Suppress("deprecation") // getSerializable
-        fun getFieldFromIntent(intent: Intent): IField? {
-            return intent.extras!!.getSerializable(EXTRA_FIELD) as IField?
-        }
+        @Suppress("deprecation", "UNCHECKED_CAST") // getSerializable
+        fun getFieldFromIntent(intent: Intent) = intent.extras!!.getSerializable(EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY) as MultimediaEditFieldActivityExtra?
     }
 }
+
+typealias MultimediaEditFieldActivityExtra = Triple<Int, IField, IMultimediaEditableNote>
