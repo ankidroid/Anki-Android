@@ -220,7 +220,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
     override fun createWebView(): WebView {
-        val ret = super.createWebView()!!
+        val ret = super.createWebView()
         if (isRunningOnTv(this)) {
             ret.isFocusable = false
         }
@@ -1054,7 +1054,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun restorePreferences(): SharedPreferences {
-        val preferences = super.restorePreferences()!!
+        val preferences = super.restorePreferences()
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false)
         mPrefShowETA = preferences.getBoolean("showETA", true)
         mProcessor.setup()

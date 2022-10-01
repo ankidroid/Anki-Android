@@ -1044,8 +1044,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
-    @KotlinCleanup("return non-null")
-    protected open fun createWebView(): WebView? {
+    protected open fun createWebView(): WebView {
         val webView: WebView = MyWebView(this)
         webView.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
         webView.settings.displayZoomControls = false
@@ -1242,8 +1241,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @KotlinCleanup("make non-null")
-    protected open fun restorePreferences(): SharedPreferences? {
+    protected open fun restorePreferences(): SharedPreferences {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         typeAnswer = createInstance(preferences)
         // mDeckFilename = preferences.getString("deckFilename", "");
