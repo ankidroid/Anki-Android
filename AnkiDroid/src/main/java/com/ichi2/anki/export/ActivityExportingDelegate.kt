@@ -91,17 +91,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             val newFileName = colPath.name.replace(".anki2", "$timeStampSuffix.colpkg")
             File(exportDir, newFileName)
         }
-        val exportListener = ExportListener(activity, mDialogsFactory)
         if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(
-                ExportApkg(
-                    exportPath.path,
-                    did,
-                    includeSched,
-                    includeMedia
-                ),
-                exportListener
-            )
+            exportApkgLegacy(exportPath, did, includeSched, includeMedia)
         } else {
             activity.launchCatchingTask {
                 if (did == null && includeSched) {
@@ -113,6 +104,19 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 activity.showAsyncDialogFragment(dialog)
             }
         }
+    }
+
+    private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
+        val exportListener = ExportListener(activity, mDialogsFactory)
+        TaskManager.launchCollectionTask(
+            ExportApkg(
+                exportPath.path,
+                did,
+                includeSched,
+                includeMedia
+            ),
+            exportListener
+        )
     }
 
     override fun dismissAllDialogFragments() {
