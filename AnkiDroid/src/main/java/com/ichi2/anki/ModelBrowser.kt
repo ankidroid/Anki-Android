@@ -96,7 +96,7 @@ class ModelBrowser : AnkiActivity() {
 
         @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
         override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model>, ArrayList<Int>>?) {
-            return context.onModelsLoaded(context, result)
+            return context.onModelsLoaded(result)
         }
     }
 
@@ -183,16 +183,14 @@ class ModelBrowser : AnkiActivity() {
      * Runs after all models and corresponding details are fetched from DB
      * initializes mModels and mCardCounts and refreshes UI with new data
      */
-    private fun onModelsLoaded(context: ModelBrowser, result: Pair<List<Model>, ArrayList<Int>>?) {
+    private fun onModelsLoaded(result: Pair<List<Model>, ArrayList<Int>>?) {
         if (result == null) {
             throw RuntimeException()
         }
-        context.let {
-            it.hideProgressBar()
-            it.mModels = ArrayList(result.first)
-            it.mCardCounts = result.second
-            it.fillModelList()
-        }
+        hideProgressBar()
+        mModels = ArrayList(result.first)
+        mCardCounts = ArrayList(result.second)
+        fillModelList()
     }
 
     /*
