@@ -71,7 +71,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             TimeUtils.getTimestamp(TimeManager.time)
         }
 
-    override fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
+    override fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
         val exportPath: File
@@ -79,9 +79,6 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         exportPath = if (path != null) {
             // filename has been explicitly specified
             File(exportDir, path)
-        } else if (did != null) {
-            // filename not explicitly specified, but a deck has been specified so use deck name
-            File(exportDir, collectionSupplier.get().decks.get(did).getString("name").replace("\\W+".toRegex(), "_") + timeStampSuffix + ".apkg")
         } else if (!includeSched) {
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
             File(exportDir, "All Decks$timeStampSuffix.apkg")
@@ -92,17 +89,37 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             File(exportDir, newFileName)
         }
         if (BackendFactory.defaultLegacySchema) {
-            exportApkgLegacy(exportPath, did, includeSched, includeMedia)
+            exportApkgLegacy(exportPath, null, includeSched, includeMedia)
         } else {
-            if (did == null && includeSched) {
+            if (includeSched) {
                 activity.launchCatchingTask {
                     activity.exportColpkg(exportPath.path, includeMedia)
                     val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
                     activity.showAsyncDialogFragment(dialog)
                 }
             } else {
-                exportNewBackendApkg(exportPath, includeSched, includeMedia, did)
+                exportNewBackendApkg(exportPath, false, includeMedia, null)
             }
+        }
+    }
+
+    override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
+        val exportDir = File(activity.externalCacheDir, "export")
+        exportDir.mkdirs()
+        val exportPath: File
+        val timeStampSuffix = getTimeStampSuffix()
+
+        exportPath = if (path != null) {
+            // filename has been explicitly mentioned
+            File(exportDir, path)
+        } else {
+            // filename not explicitly specified, but a deck has been specified so use deck name
+            File(exportDir, collectionSupplier.get().decks.get(did).getString("name").replace("\\W+".toRegex(), "_") + timeStampSuffix + ".apkg")
+        }
+        if (BackendFactory.defaultLegacySchema) {
+            exportApkgLegacy(exportPath, did, includeSched, includeMedia)
+        } else {
+            exportNewBackendApkg(exportPath, includeSched, includeMedia, did)
         }
     }
 
