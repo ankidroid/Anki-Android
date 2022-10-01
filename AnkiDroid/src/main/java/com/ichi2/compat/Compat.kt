@@ -91,12 +91,23 @@ interface Compat {
      */
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
+    /**
+     * Copy file at path [source] to path [target]
+     */
     @Throws(IOException::class)
     fun copyFile(source: String, target: String)
 
+    /**
+     * Copy file at path [source] to [target]
+     * @return the number of bytes read or written
+     */
     @Throws(IOException::class)
     fun copyFile(source: String, target: OutputStream): Long
 
+    /**
+     * Copy file at path [source] to path [target]
+     * @return the number of bytes read or written
+     */
     @Throws(IOException::class)
     fun copyFile(source: InputStream, target: String): Long
 
