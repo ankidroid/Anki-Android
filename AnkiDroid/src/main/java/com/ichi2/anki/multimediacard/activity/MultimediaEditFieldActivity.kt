@@ -223,10 +223,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 }
             }
         }
-        if (bChangeToText) {
-            mField = null
-        }
-        saveAndExit()
+        saveAndExit(bChangeToText)
     }
 
     protected fun toAudioRecordingField() {
@@ -328,9 +325,9 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     @KotlinCleanup("scope function")
-    private fun saveAndExit() {
+    private fun saveAndExit(ignoreField: Boolean = false) {
         val resultData = Intent()
-        resultData.putExtra(EXTRA_RESULT_FIELD, mField)
+        resultData.putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
         resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
         setResult(RESULT_OK, resultData)
         finishWithoutAnimation()
