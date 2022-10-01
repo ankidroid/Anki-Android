@@ -163,11 +163,6 @@ class ModelBrowser : AnkiActivity() {
         }
     }
 
-    public override fun onDestroy() {
-        loadModelsJob?.cancel()
-        super.onDestroy()
-    }
-
     // ----------------------------------------------------------------------------
     // ANKI METHODS
     // ----------------------------------------------------------------------------
