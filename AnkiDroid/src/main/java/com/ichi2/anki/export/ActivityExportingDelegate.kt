@@ -94,14 +94,14 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         if (BackendFactory.defaultLegacySchema) {
             exportApkgLegacy(exportPath, did, includeSched, includeMedia)
         } else {
-            activity.launchCatchingTask {
-                if (did == null && includeSched) {
+            if (did == null && includeSched) {
+                activity.launchCatchingTask {
                     activity.exportColpkg(exportPath.path, includeMedia)
-                } else {
-                    activity.exportApkg(exportPath.path, includeSched, includeMedia, did)
+                    val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+                    activity.showAsyncDialogFragment(dialog)
                 }
-                val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
-                activity.showAsyncDialogFragment(dialog)
+            } else {
+                exportNewBackendApkg(exportPath, includeSched, includeMedia, did)
             }
         }
     }
@@ -117,6 +117,15 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             ),
             exportListener
         )
+    }
+
+    // Only for new backend schema
+    private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, did: DeckId?) {
+        activity.launchCatchingTask {
+            activity.exportApkg(exportPath.path, includeSched, includeMedia, did)
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+            activity.showAsyncDialogFragment(dialog)
+        }
     }
 
     override fun dismissAllDialogFragments() {
