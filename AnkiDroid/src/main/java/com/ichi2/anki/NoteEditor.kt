@@ -60,6 +60,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
@@ -1499,11 +1500,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?) {
-        val field = note!!.getField(index)
+        val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, index)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, note)
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
         startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT)
     }
 
