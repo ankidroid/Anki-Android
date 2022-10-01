@@ -38,7 +38,7 @@ import timber.log.Timber
  * Shows an about box, which is a small HTML page.
  */
 class Info : AnkiActivity() {
-    private var mWebView: WebView? = null
+    private lateinit var mWebView: WebView
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -59,7 +59,7 @@ class Info : AnkiActivity() {
         findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
         mWebView = findViewById(R.id.info)
-        mWebView!!.webChromeClient = object : WebChromeClient() {
+        mWebView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
@@ -85,7 +85,7 @@ class Info : AnkiActivity() {
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor = String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
-        mWebView!!.setBackgroundColor(backgroundColor)
+        mWebView.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
@@ -94,15 +94,15 @@ class Info : AnkiActivity() {
                     setOnClickListener { close() }
                 }
                 val background = String.format("#%06X", 0xFFFFFF and backgroundColor)
-                mWebView!!.loadUrl("file:///android_asset/changelog.html")
-                mWebView!!.settings.javaScriptEnabled = true
-                mWebView!!.webViewClient = object : WebViewClient() {
+                mWebView.loadUrl("file:///android_asset/changelog.html")
+                mWebView.settings.javaScriptEnabled = true
+                mWebView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
 
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */
-                        mWebView!!.loadUrl(
+                        mWebView.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
@@ -136,8 +136,8 @@ class Info : AnkiActivity() {
 
     @Suppress("deprecation") // onBackPressed
     override fun onBackPressed() {
-        if (mWebView!!.canGoBack()) {
-            mWebView!!.goBack()
+        if (mWebView.canGoBack()) {
+            mWebView.goBack()
         } else {
             super.onBackPressed()
         }
