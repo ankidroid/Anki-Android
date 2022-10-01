@@ -51,8 +51,8 @@ class TagsDialog : AnalyticsDialogFragment {
         CUSTOM_STUDY_TAGS
     }
 
-    private var mType: DialogType? = null
-    private var mTags: TagsList? = null
+    private lateinit var mType: DialogType
+    private lateinit var mTags: TagsList
     private var mPositiveText: String? = null
     private var mDialogTitle: String? = null
     private var mTagsArrayAdapter: TagsArrayAdapter? = null
@@ -143,11 +143,11 @@ class TagsDialog : AnalyticsDialogFragment {
         tagsListRecyclerView?.requestFocus()
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         tagsListRecyclerView?.layoutManager = tagsListLayout
-        mTagsArrayAdapter = TagsArrayAdapter(mTags!!, resources)
+        mTagsArrayAdapter = TagsArrayAdapter(mTags, resources)
         tagsListRecyclerView?.adapter = mTagsArrayAdapter
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
         val noTagsTextView: TextView? = mNoTagsTextView
-        if (mTags!!.isEmpty) {
+        if (mTags.isEmpty) {
             noTagsTextView?.visibility = View.VISIBLE
         }
         val optionsGroup = tagsDialogView.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
@@ -174,8 +174,8 @@ class TagsDialog : AnalyticsDialogFragment {
         mDialog = MaterialDialog(requireActivity())
             .positiveButton(text = mPositiveText!!) {
                 tagsDialogListener.onSelectedTags(
-                    mTags!!.copyOfCheckedTagList(),
-                    mTags!!.copyOfIndeterminateTagList(), mSelectedOption
+                    mTags.copyOfCheckedTagList(),
+                    mTags.copyOfIndeterminateTagList(), mSelectedOption
                 )
             }
             .negativeButton(R.string.dialog_cancel)
@@ -221,7 +221,7 @@ class TagsDialog : AnalyticsDialogFragment {
         })
         val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
         checkAllItem.setOnMenuItemClickListener {
-            val didChange = mTags!!.toggleAllCheckedStatuses()
+            val didChange = mTags.toggleAllCheckedStatuses()
             if (didChange) {
                 mTagsArrayAdapter!!.notifyDataSetChanged()
             }
@@ -271,16 +271,16 @@ class TagsDialog : AnalyticsDialogFragment {
         if (!rawTag.isNullOrEmpty()) {
             val tag = TagsUtil.getUniformedTag(rawTag)
             val feedbackText: String
-            if (mTags!!.add(tag)) {
+            if (mTags.add(tag)) {
                 if (mNoTagsTextView!!.visibility == View.VISIBLE) {
                     mNoTagsTextView!!.visibility = View.GONE
                 }
-                mTags!!.add(tag)
+                mTags.add(tag)
                 feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText)
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag)
             }
-            mTags!!.check(tag)
+            mTags.check(tag)
             mTagsArrayAdapter!!.sortData()
             mTagsArrayAdapter!!.notifyDataSetChanged()
             // Expand to reveal the newly added tag.
