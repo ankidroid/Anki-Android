@@ -18,11 +18,14 @@
 package com.ichi2.anki
 
 import android.app.DownloadManager
-import android.content.*
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.*
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -90,23 +93,34 @@ class SharedDecksActivity : AnkiActivity() {
 
         webviewToolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.close_icon)
 
-        mWebView = findViewById(R.id.web_view)
-
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
-        mWebView.settings.javaScriptEnabled = true
-        mWebView.loadUrl(resources.getString(R.string.shared_decks_url))
-        mWebView.webViewClient = WebViewClient()
-        mWebView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
-            val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
-            sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
+        mWebView = findViewById<WebView>(R.id.web_view).apply {
 
-            supportFragmentManager.commit {
-                add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT)
+            settings.javaScriptEnabled = true
+            loadUrl(resources.getString(R.string.shared_decks_url))
+            webViewClient = WebViewClient()
+            setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
+                val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
+                sharedDecksDownloadFragment.arguments = bundleOf(
+                    DOWNLOAD_FILE to DownloadFile(
+                        url,
+                        userAgent,
+                        contentDisposition,
+                        mimetype
+                    )
+                )
+
+                supportFragmentManager.commit {
+                    add(
+                        R.id.shared_decks_fragment_container,
+                        sharedDecksDownloadFragment,
+                        SHARED_DECKS_DOWNLOAD_FRAGMENT
+                    )
+                }
             }
+            webViewClient = mWebViewClient
         }
-
-        mWebView.webViewClient = mWebViewClient
     }
 
     /**
