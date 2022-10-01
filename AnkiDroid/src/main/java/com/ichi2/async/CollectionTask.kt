@@ -719,19 +719,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /*
-     * Async task for the ModelBrowser Class
-     * Returns an ArrayList of all models alphabetically ordered and the number of notes
-     * associated with each model.
-     *
-     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
-     */
-    class CountModels : TaskDelegate<Void, Pair<List<Model>, ArrayList<Int>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<List<Model>, ArrayList<Int>>? {
-            return countModels(col, collectionTask)
-        }
-    }
-
     /**
      * Deletes the given field in the given model
      */

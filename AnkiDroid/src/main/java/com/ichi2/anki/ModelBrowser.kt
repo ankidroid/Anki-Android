@@ -35,9 +35,8 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenu
 import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.CountModels
 import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
+import com.ichi2.async.countModels
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.StdModels
@@ -47,6 +46,7 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
+import kotlinx.coroutines.Job
 import timber.log.Timber
 import java.util.ArrayList
 
@@ -73,6 +73,8 @@ class ModelBrowser : AnkiActivity() {
     // Dialogue used in renaming
     private var modelNameInput: EditText? = null
     private var mNewModelNames: ArrayList<String>? = null
+
+    private var loadModelsJob: Job? = null
 
     // ----------------------------------------------------------------------------
     // AsyncTask methods
@@ -162,7 +164,7 @@ class ModelBrowser : AnkiActivity() {
     }
 
     public override fun onDestroy() {
-        TaskManager.cancelAllTasks(CountModels::class.java)
+        loadModelsJob?.cancel()
         super.onDestroy()
     }
 
@@ -172,12 +174,31 @@ class ModelBrowser : AnkiActivity() {
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         mCol = col
-        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+        loadModels()
     }
 
     // ----------------------------------------------------------------------------
     // HELPER METHODS
     // ----------------------------------------------------------------------------
+
+    /**
+     * Schedules a job to load all models and note count associated with each of model
+     * displays a progress dialog till the completion of job
+     */
+    private fun loadModels() {
+        loadModelsJob?.cancel() // cancel if any previous task was scheduled, ideally only one job should exist
+        loadModelsJob = launchCatchingTask {
+            // Pair of list of models and corresponding notesCount
+            Timber.d("doInBackgroundLoadModels: Started")
+            val allModelsAndNotesCount = withProgress {
+                withCol {
+                    countModels(this)
+                }
+            }
+            Timber.d("doInBackgroundLoadModels: Completed, refreshing UI")
+            onModelsLoaded(allModelsAndNotesCount)
+        }
+    }
 
     /**
      * Runs after all models and corresponding details are fetched from DB
@@ -187,7 +208,6 @@ class ModelBrowser : AnkiActivity() {
         if (result == null) {
             throw RuntimeException()
         }
-        hideProgressBar()
         mModels = ArrayList(result.first)
         mCardCounts = ArrayList(result.second)
         fillModelList()
@@ -428,7 +448,7 @@ class ModelBrowser : AnkiActivity() {
      * Reloads everything
      */
     private fun fullRefresh() {
-        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+        loadModels()
     }
 
     /**
@@ -501,7 +521,7 @@ class ModelBrowser : AnkiActivity() {
 
     private val mEditTemplateResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+            loadModels()
         }
     }
 }
