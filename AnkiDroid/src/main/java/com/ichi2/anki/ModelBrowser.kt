@@ -35,7 +35,6 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenu
 import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.getAllModelsAndNotesCount
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
@@ -79,28 +78,6 @@ class ModelBrowser : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // AsyncTask methods
     // ----------------------------------------------------------------------------
-    /*
-     * Displays the loading bar when loading the mModels and displaying them
-     * loading bar is necessary because card count per model is not cached *
-     */
-    private fun loadingModelsHandler(): LoadingModelsHandler {
-        return LoadingModelsHandler(this)
-    }
-
-    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model>, ArrayList<Int>>?>(browser) {
-        override fun actualOnCancelled(context: ModelBrowser) {
-            context.hideProgressBar()
-        }
-
-        override fun actualOnPreExecute(context: ModelBrowser) {
-            context.showProgressBar()
-        }
-
-        @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
-        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model>, ArrayList<Int>>?) {
-            return context.onModelsLoaded(result)
-        }
-    }
 
     /**
      * Handle the actions that can be done on  a note type from the list.
@@ -179,6 +156,8 @@ class ModelBrowser : AnkiActivity() {
     /**
      * Schedules a job to load all models and note count associated with each of model
      * displays a progress dialog till the completion of job
+     *
+     * After completion, initializes mModels and mCardCounts and refreshes UI with new data
      */
     private fun loadModels() {
         loadModelsJob?.cancel() // cancel if any previous task was scheduled, ideally only one job should exist
@@ -191,21 +170,10 @@ class ModelBrowser : AnkiActivity() {
                 }
             }
             Timber.d("doInBackgroundLoadModels: Completed, refreshing UI")
-            onModelsLoaded(allModelsAndNotesCount)
+            mModels = ArrayList(allModelsAndNotesCount.first)
+            mCardCounts = ArrayList(allModelsAndNotesCount.second)
+            fillModelList()
         }
-    }
-
-    /**
-     * Runs after all models and corresponding details are fetched from DB
-     * initializes mModels and mCardCounts and refreshes UI with new data
-     */
-    private fun onModelsLoaded(result: Pair<List<Model>, ArrayList<Int>>?) {
-        if (result == null) {
-            throw RuntimeException()
-        }
-        mModels = ArrayList(result.first)
-        mCardCounts = ArrayList(result.second)
-        fillModelList()
     }
 
     /*

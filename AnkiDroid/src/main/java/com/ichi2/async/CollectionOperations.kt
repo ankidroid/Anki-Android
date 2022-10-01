@@ -144,13 +144,10 @@ fun updateValuesFromDeck(
  *
  * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
  */
-fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, ArrayList<Int>> {
+fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
     Timber.d("doInBackgroundLoadModels")
     val models = col.models.all()
-    val cardCount = ArrayList<Int>()
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
-    for (n in models) {
-        cardCount.add(col.models.useCount(n))
-    }
+    val cardCount = models.map { col.models.useCount(it) }
     return Pair(models, cardCount)
 }
