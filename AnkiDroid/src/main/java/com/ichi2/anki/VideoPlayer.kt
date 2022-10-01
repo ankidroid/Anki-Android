@@ -31,7 +31,7 @@ import timber.log.Timber
 class VideoPlayer : Activity(), SurfaceHolder.Callback {
     private lateinit var mVideoView: VideoView
     private val mSoundPlayer: Sound = Sound()
-    private var mPath: String? = null
+    private lateinit var mPath: String
 
     /** Called when the activity is first created.  */
     @Suppress("DEPRECATION") // #9332: UI Visibility -> Insets
@@ -40,7 +40,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
         super.onCreate(savedInstanceState)
         Themes.disableXiaomiForceDarkMode(this)
         setContentView(R.layout.video_player)
-        mPath = intent.getStringExtra("path")
+        mPath = intent.getStringExtra("path")!!
         Timber.i("Video Player intent had path: %s", mPath)
         window.setFlags(
             LayoutParams.FLAG_FULLSCREEN,
@@ -61,7 +61,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             finish()
             return
         }
-        mSoundPlayer.playSound(mPath!!, { mp: MediaPlayer? ->
+        mSoundPlayer.playSound(mPath, { mp: MediaPlayer? ->
             finish()
 
             val originalListener = Sound.mediaCompletionListener
