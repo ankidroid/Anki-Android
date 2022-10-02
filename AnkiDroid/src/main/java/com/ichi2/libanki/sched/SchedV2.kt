@@ -25,10 +25,9 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteConstraintException
 import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
-import com.ichi2.async.CollectionTask.Reset
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -44,6 +43,9 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONArray
@@ -145,7 +147,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
             if (!mHaveCounts) {
                 // Need to reset queues once counts are reset
-                TaskManager.launchCollectionTask(Reset())
+                @OptIn(DelicateCoroutinesApi::class)
+                GlobalScope.launch { CollectionManager.withCol { sched.reset() } }
             }
             return card
         }

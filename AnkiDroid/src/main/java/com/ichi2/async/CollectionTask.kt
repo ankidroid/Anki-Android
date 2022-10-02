@@ -496,13 +496,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class Reset : TaskDelegate<Void, Void?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
-            col.sched.reset()
-            return null
-        }
-    }
-
     companion object {
         @JvmStatic
         @VisibleForTesting
