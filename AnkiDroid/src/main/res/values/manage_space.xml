@@ -16,4 +16,5 @@
   -->
 <resources>
     <string name="delete_collection_key">deleteCollectionManageSpace</string>
+    <string name="check_media_key">checkMediaManageSpace</string>
 </resources>

@@ -20,11 +20,13 @@ package com.ichi2.libanki
 import android.database.SQLException
 import android.net.Uri
 import android.text.TextUtils
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -293,6 +295,23 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
       Rebuilding DB
       ***********************************************************
      */
+
+    /**
+     * Finds missing, unused and invalid media files
+     *
+     * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
+     */
+    @VisibleForTesting
+    fun fullCheck(): MediaCheckResult {
+        if (BackendFactory.defaultLegacySchema) {
+            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+            rebuildIfInvalid()
+            // A media check on AnkiDroid will also update the media db
+            findChanges(true)
+        }
+        return check()
+    }
+
     /**
      * Finds missing, unused and invalid media files
      *
