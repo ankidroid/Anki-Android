@@ -18,10 +18,13 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import anki.import_export.ExportLimit
+import anki.import_export.exportLimit
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.getNullableLong
 import com.ichi2.utils.contentNullable
@@ -30,6 +33,7 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
     interface ExportDialogListener {
         fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean)
         fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean)
+        fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean)
         fun dismissAllDialogFragments()
     }
 
@@ -58,8 +62,11 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
         super.onCreate(savedInstanceState)
         val res = resources
         val did = getNullableLong(arguments, "did")
+        val cardIds = arguments?.getLongArray("cardIds")?.toList()
+        val noteIds = arguments?.getLongArray("noteIds")?.toList()
         val checked: Array<Int>
-        if (did != null) {
+        @NeedsTest("Test that correct options are checked given different arguments")
+        if (did != null || cardIds == null || noteIds == null) {
             mIncludeSched = false
             checked = arrayOf()
         } else {
@@ -76,6 +83,15 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
             positiveButton(android.R.string.ok) {
                 if (did != null) {
                     listener.exportDeckAsApkg(null, did, mIncludeSched, mIncludeMedia)
+                } else if (cardIds != null || noteIds != null) {
+                    val limit = exportLimit {
+                        if (cardIds != null) {
+                            this.cardIds = this.cardIds.toBuilder().addAllCids(cardIds).build()
+                        } else {
+                            this.noteIds = this.noteIds.toBuilder().addAllNoteIds(noteIds).build()
+                        }
+                    }
+                    listener.exportSelectedAsApkg(null, limit, mIncludeSched, mIncludeMedia)
                 } else {
                     listener.exportColAsApkg(null, mIncludeSched, mIncludeMedia)
                 }
