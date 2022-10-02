@@ -54,13 +54,8 @@ object HelpDialog {
             ItemHeader(
                 R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
                 FunctionItem(
-                    R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL,
-                    object : ActivityConsumer {
-                        override fun consume(activity: AnkiActivity) {
-                            openManual(activity)
-                        }
-                    }
-                ),
+                    R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL
+                ) { activity -> openManual(activity) },
                 LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_MANUAL, R.string.link_anki_manual),
                 LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_FAQ, R.string.link_ankidroid_faq)
             ),
@@ -68,13 +63,8 @@ object HelpDialog {
                 R.string.help_title_get_help, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_GET_HELP,
                 LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
                 FunctionItem(
-                    R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG,
-                    object : ActivityConsumer {
-                        override fun consume(activity: AnkiActivity) {
-                            openFeedback(activity)
-                        }
-                    }
-                ),
+                    R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG
+                ) { activity -> openFeedback(activity) },
                 exceptionReportItem
             ),
             ItemHeader(
@@ -106,13 +96,8 @@ object HelpDialog {
             rateAppItem,
             LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
             FunctionItem(
-                R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK,
-                object : ActivityConsumer {
-                    override fun consume(activity: AnkiActivity) {
-                        openFeedback(activity)
-                    }
-                }
-            )
+                R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK
+            ) { activity -> openFeedback(activity) }
         )
         val itemList = ArrayList(listOf(*allItems))
         if (!canOpenIntent(context!!, AnkiDroidApp.getMarketIntent(context))) {
