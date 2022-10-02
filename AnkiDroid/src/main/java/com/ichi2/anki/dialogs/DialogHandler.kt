@@ -21,6 +21,7 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.NetworkUtils
@@ -61,10 +62,12 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             // Media check results
             val id = msgData.getInt("dialogType")
             if (id != MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                val checkList: MutableList<List<String>> = ArrayList(3)
-                checkList.add(msgData.getStringArrayList("nohave")!!)
-                checkList.add(msgData.getStringArrayList("unused")!!)
-                checkList.add(msgData.getStringArrayList("invalid")!!)
+                val checkList =
+                    MediaCheckResult(
+                        msgData.getStringArrayList("nohave")!!,
+                        msgData.getStringArrayList("unused")!!,
+                        msgData.getStringArrayList("invalid")!!
+                    )
                 deckPicker.showMediaCheckDialog(id, checkList)
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
