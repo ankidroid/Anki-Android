@@ -798,7 +798,7 @@ open class DeckPicker :
             }
             R.id.action_check_media -> {
                 Timber.i("DeckPicker:: Check media button pressed")
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog(DialogMediaCheckResults())
                 return true
             }
             R.id.action_empty_cards -> {
@@ -1339,12 +1339,12 @@ open class DeckPicker :
         showAsyncDialogFragment(newFragment)
     }
 
-    override fun showMediaCheckDialog(dialogType: Int) {
-        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
+    override fun showMediaCheckDialog(dialog: MediaCheckDialog) {
+        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialog))
     }
 
-    override fun showMediaCheckDialog(dialogType: Int, checkList: List<List<String>>) {
-        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
+    override fun showMediaCheckDialog(dialog: MediaCheckDialog, checkList: List<List<String>>) {
+        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialog, checkList))
     }
 
     /**
@@ -1488,7 +1488,7 @@ open class DeckPicker :
         if (hasStorageAccessPermission(this)) {
             launchCatchingTask {
                 val result = withProgress(resources.getString(R.string.check_media_message)) { checkMedia() }
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
+                showMediaCheckDialog(DialogMediaCheckResults(), result)
             }
         } else {
             requestStoragePermission()

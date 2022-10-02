@@ -65,7 +65,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
                 checkList.add(msgData.getStringArrayList("nohave")!!)
                 checkList.add(msgData.getStringArrayList("unused")!!)
                 checkList.add(msgData.getStringArrayList("invalid")!!)
-                deckPicker.showMediaCheckDialog(id, checkList)
+                deckPicker.showMediaCheckDialog(DialogMediaCheckResults(), checkList)
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
             // Database error dialog

@@ -15,8 +15,8 @@ import com.ichi2.anki.R
 
 abstract class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {
-        fun showMediaCheckDialog(dialogType: Int)
-        fun showMediaCheckDialog(dialogType: Int, checkList: List<List<String>>)
+        fun showMediaCheckDialog(dialog: MediaCheckDialog)
+        fun showMediaCheckDialog(dialog: MediaCheckDialog, checkList: List<List<String>>)
         fun mediaCheck()
         fun deleteUnused(unused: List<String>)
         fun dismissAllDialogFragments()
@@ -50,22 +50,14 @@ abstract class MediaCheckDialog : AsyncDialogFragment() {
 
     companion object {
         const val DIALOG_CONFIRM_MEDIA_CHECK = 0
-        const val DIALOG_MEDIA_CHECK_RESULTS = 1
 
-        private fun mediaCheckDialog(dialogType: Int) =
-            when (dialogType) {
-                DIALOG_CONFIRM_MEDIA_CHECK -> DialogConfirmMediaCheck()
-                DIALOG_MEDIA_CHECK_RESULTS -> DialogMediaCheckResults()
-                else -> throw java.lang.RuntimeException("$dialogType is not a Media Check type")
-            }
-
-        fun newInstance(dialogType: Int) =
-            mediaCheckDialog(dialogType).apply {
+        fun newInstance(dialog: MediaCheckDialog) =
+            dialog.apply {
                 arguments = Bundle()
             }
 
-        fun newInstance(dialogType: Int, checkList: List<List<String?>?>) =
-            mediaCheckDialog(dialogType).apply {
+        fun newInstance(dialog: MediaCheckDialog, checkList: List<List<String?>?>) =
+            dialog.apply {
                 arguments = Bundle().apply {
                     putStringArrayList("nohave", ArrayList(checkList[0]!!.toMutableList()))
                     putStringArrayList("unused", ArrayList(checkList[1]!!.toMutableList()))
@@ -85,12 +77,12 @@ class DialogConfirmMediaCheck() : MediaCheckDialog() {
         return dialog.show {
             message(text = notificationMessage)
             positiveButton(R.string.dialog_ok) {
-                (activity as MediaCheckDialog.MediaCheckDialogListener).mediaCheck()
-                (activity as MediaCheckDialog.MediaCheckDialogListener?)
+                (activity as MediaCheckDialogListener).mediaCheck()
+                (activity as MediaCheckDialogListener?)
                     ?.dismissAllDialogFragments()
             }
             negativeButton(R.string.dialog_cancel) {
-                (activity as MediaCheckDialog.MediaCheckDialogListener?)
+                (activity as MediaCheckDialogListener?)
                     ?.dismissAllDialogFragments()
             }
             cancelable(true)
