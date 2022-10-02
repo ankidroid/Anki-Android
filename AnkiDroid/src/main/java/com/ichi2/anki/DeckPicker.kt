@@ -1343,7 +1343,7 @@ open class DeckPicker :
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
     }
 
-    override fun showMediaCheckDialog(dialogType: Int, checkList: List<List<String>>) {
+    override fun showMediaCheckDialog(dialogType: Int, checkList: MediaCheckResult) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
     }
 
