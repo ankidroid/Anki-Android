@@ -1501,13 +1501,7 @@ open class DeckPicker :
      */
     @VisibleForTesting
     suspend fun checkMedia() = withCol {
-        if (BackendFactory.defaultLegacySchema) {
-            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-            media.rebuildIfInvalid()
-            // A media check on AnkiDroid will also update the media db
-            media.findChanges(true)
-        }
-        media.check()
+        media.fullCheck()
     }
 
     override fun deleteUnused(unused: List<String>) {
