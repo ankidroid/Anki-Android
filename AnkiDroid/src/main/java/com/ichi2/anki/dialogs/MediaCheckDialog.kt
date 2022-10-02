@@ -51,11 +51,6 @@ abstract class MediaCheckDialog : AsyncDialogFragment() {
     companion object {
         const val DIALOG_CONFIRM_MEDIA_CHECK = 0
 
-        fun newInstance(dialog: MediaCheckDialog) =
-            dialog.apply {
-                arguments = Bundle()
-            }
-
         fun newInstance(dialog: MediaCheckDialog, checkList: List<List<String?>?>) =
             dialog.apply {
                 arguments = Bundle().apply {
