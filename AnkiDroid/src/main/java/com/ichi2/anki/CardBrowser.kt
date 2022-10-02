@@ -1968,30 +1968,8 @@ open class CardBrowser :
     private val mCheckSelectedCardsHandler = CheckSelectedCardsHandler(this)
 
     private class CheckSelectedCardsHandler(browser: CardBrowser) : ListenerWithProgressBar<Void?, Pair<Boolean, Boolean>?>(browser) {
-        override fun actualOnPostExecute(context: CardBrowser, result: Pair<Boolean, Boolean>?) {
-            context.hideProgressBar()
-            if (context.mActionBarMenu != null && result != null) {
-                val hasUnsuspended = result.first
-                val hasUnmarked = result.second
-                setMenuIcons(context, hasUnsuspended, hasUnmarked, context.mActionBarMenu!!)
-            }
-        }
-
-        private fun setMenuIcons(browser: Context, hasUnsuspended: Boolean, hasUnmarked: Boolean, actionBarMenu: Menu) {
-            val suspendTitle = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card
-            val suspendIcon = if (hasUnsuspended) R.drawable.ic_pause_circle_outline else R.drawable.ic_pause_circle_filled
-            actionBarMenu.findItem(R.id.action_suspend_card).apply {
-                title = browser.getString(suspendTitle)
-                setIcon(suspendIcon)
-            }
-
-            val markTitle = if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card
-            val markIcon = if (hasUnmarked) R.drawable.ic_star_border_white else R.drawable.ic_star_white
-            actionBarMenu.findItem(R.id.action_mark_card).apply {
-                title = browser.getString(markTitle)
-                setIcon(markIcon)
-            }
-        }
+        override fun actualOnPostExecute(context: CardBrowser, result: Pair<Boolean, Boolean>?) =
+            context.onSelectedCardsChecked(context, result, context.mActionBarMenu!!, context)
 
         override fun actualOnCancelled(context: CardBrowser) {
             super.actualOnCancelled(context)
@@ -2068,6 +2046,31 @@ open class CardBrowser :
 
     protected fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>): RenderBrowserQA {
         return RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index)
+    }
+
+    // TODO: Clean parameter list, remove [context], [browser] and actionBarMenu
+    // function copied from CheckSelectedCardsHandler::actualOnPostExecute and CheckSelectedCardsHandler::setMenuIcons
+    private fun onSelectedCardsChecked(context: CardBrowser, result: Pair<Boolean, Boolean>?, actionBarMenu: Menu, browser: CardBrowser) {
+        context.hideProgressBar()
+        if (context.mActionBarMenu != null && result != null) {
+            val hasUnsuspended = result.first
+            val hasUnmarked = result.second
+
+            // this part is directly copied from CheckSelectedCardsHandler::setMenuIcons
+            val suspendTitle = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card
+            val suspendIcon = if (hasUnsuspended) R.drawable.ic_pause_circle_outline else R.drawable.ic_pause_circle_filled
+            actionBarMenu.findItem(R.id.action_suspend_card).apply {
+                title = browser.getString(suspendTitle)
+                setIcon(suspendIcon)
+            }
+
+            val markTitle = if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card
+            val markIcon = if (hasUnmarked) R.drawable.ic_star_border_white else R.drawable.ic_star_white
+            actionBarMenu.findItem(R.id.action_mark_card).apply {
+                title = browser.getString(markTitle)
+                setIcon(markIcon)
+            }
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
