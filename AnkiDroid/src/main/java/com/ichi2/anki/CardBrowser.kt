@@ -70,7 +70,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
-import com.ichi2.async.CollectionTask.CheckCardSelection
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
@@ -88,6 +87,7 @@ import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
+import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -151,6 +151,8 @@ open class CardBrowser :
     private var mMySearchesItem: MenuItem? = null
     private var mPreviewItem: MenuItem? = null
     private var mUndoSnackbar: Snackbar? = null
+
+    private var checkSelectedCardsJob: Job? = null
 
     /**
      * Boolean that keeps track of whether the browser is working in
@@ -1010,11 +1012,11 @@ open class CardBrowser :
             return
         }
         if (mCheckedCards.isNotEmpty()) {
-            TaskManager.cancelAllTasks(CheckCardSelection::class.java)
-            TaskManager.launchCollectionTask(
-                CheckCardSelection(mCheckedCards),
-                mCheckSelectedCardsHandler
-            )
+            checkSelectedCardsJob?.cancel()
+            checkSelectedCardsJob = launchCatchingTask {
+                val result = withProgress { checkCardSelection(mCheckedCards) }
+                onSelectedCardsChecked(result)
+            }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
@@ -1547,8 +1549,8 @@ open class CardBrowser :
     }
 
     private fun invalidate() {
+        checkSelectedCardsJob?.cancel()
         TaskManager.cancelAllTasks(RenderBrowserQA::class.java)
-        TaskManager.cancelAllTasks(CheckCardSelection::class.java)
         mCards.clear()
         mCheckedCards.clear()
     }
@@ -1965,18 +1967,6 @@ open class CardBrowser :
         }
     }
 
-    private val mCheckSelectedCardsHandler = CheckSelectedCardsHandler(this)
-
-    private class CheckSelectedCardsHandler(browser: CardBrowser) : ListenerWithProgressBar<Void?, Pair<Boolean, Boolean>?>(browser) {
-        override fun actualOnPostExecute(context: CardBrowser, result: Pair<Boolean, Boolean>?) =
-            context.onSelectedCardsChecked(result)
-
-        override fun actualOnCancelled(context: CardBrowser) {
-            super.actualOnCancelled(context)
-            context.hideProgressBar()
-        }
-    }
-
     private fun closeCardBrowser(result: Int, data: Intent? = null) {
         // Set result and finish
         setResult(result, data)
@@ -2049,7 +2039,6 @@ open class CardBrowser :
     }
 
     private fun onSelectedCardsChecked(result: Pair<Boolean, Boolean>?) {
-        hideProgressBar()
         if (mActionBarMenu != null && result != null) {
             val (hasUnsuspended, hasUnmarked) = result
             val suspendTitle = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card

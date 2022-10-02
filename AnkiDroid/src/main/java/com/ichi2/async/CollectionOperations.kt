@@ -16,14 +16,19 @@
 
 package com.ichi2.async
 
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.TemporaryModel
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.utils.JSONObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
@@ -173,6 +178,23 @@ fun changeDeckConfiguration(
     }
     col.decks.setConf(deck, newConfId)
     col.save()
+}
+
+/**
+ * Goes through selected cards and checks selected and marked attribute
+ * @return If there are unselected cards, if there are unmarked cards
+ */
+suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<Boolean, Boolean> = withContext(Dispatchers.IO) {
+    var hasUnsuspended = false
+    var hasUnmarked = false
+    for (c in checkedCards) {
+        ensureActive() // check if job is not cancelled
+        val card = c.card
+        hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
+        hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
+        if (hasUnsuspended && hasUnmarked) break
+    }
+    Pair(hasUnsuspended, hasUnmarked)
 }
 
 /**
