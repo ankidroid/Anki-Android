@@ -165,6 +165,9 @@ suspend fun <T> Backend.withProgress(
 /**
  * Run the provided operation, showing a progress window until it completes.
  * Progress info is polled from the backend.
+ *
+ * Starts the progress dialog after 600ms so that quick operations don't just show
+ * flashes of a dialog.
  */
 suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
@@ -192,6 +195,9 @@ suspend fun <T> FragmentActivity.withProgress(
 /**
  * Run the provided operation, showing a progress window with the provided
  * message until the operation completes.
+ *
+ * Starts the progress dialog after 600ms so that quick operations don't just show
+ * flashes of a dialog.
  */
 suspend fun <T> FragmentActivity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
