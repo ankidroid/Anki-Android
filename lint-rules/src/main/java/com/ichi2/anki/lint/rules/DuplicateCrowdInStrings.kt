@@ -133,7 +133,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
                     firstLocation = location
                 } else {
                     prevLocation.secondary = location
-                    location.message = String.format("Duplicates value in `%s`. Add a `comment` attribute on both strings to explain this duplication", names[0])
+                    location.message = "Duplicates value in `${names[0]}`. Add a `comment` attribute on both strings to explain this duplication"
                     location.setSelfExplanatory(false)
                     if (string != prevString) {
                         caseVaries = true
@@ -147,11 +147,11 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             }
             val nameValues: MutableList<String> = ArrayList()
             for (name in names) {
-                nameValues.add(String.format("`%s`", name))
+                nameValues.add("`$name`")
             }
             val nameList = formatList(nameValues, nameValues.size, sort = true, useConjunction = false)
             // we use both quotes and code styling here so it appears in the console quoted
-            var message = String.format("Duplicate string value \"`%s`\", used in %s", prevString, nameList)
+            var message = "Duplicate string value \"`$prevString`\", used in $nameList"
             if (caseVaries) {
                 message += ". Use `android:inputType` or `android:capitalize` " +
                     "to treat these as the same and avoid string duplication."

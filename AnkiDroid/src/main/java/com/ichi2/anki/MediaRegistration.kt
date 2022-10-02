@@ -50,7 +50,7 @@ class MediaRegistration(private val context: Context) {
         val fd = openInputStreamWithURI(uri)
         val fileNameAndExtension = getFileNameAndExtension(filename)
         fileName = if (checkFilename(fileNameAndExtension!!)) {
-            String.format("%s-name", fileNameAndExtension.key)
+            "${fileNameAndExtension.key}-name"
         } else {
             fileNameAndExtension.key
         }

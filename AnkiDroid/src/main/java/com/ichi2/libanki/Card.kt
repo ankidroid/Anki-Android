@@ -392,11 +392,11 @@ open class Card : Cloneable {
                 if (SKIP_PRINT.contains(f.name)) {
                     continue
                 }
-                members.add(String.format("'%s': %s", f.name, f[this]))
+                members.add("'${f.name}': ${f[this]}")
             } catch (e: IllegalAccessException) {
-                members.add(String.format("'%s': %s", f.name, "N/A"))
+                members.add("'${f.name}': N/A")
             } catch (e: IllegalArgumentException) {
-                members.add(String.format("'%s': %s", f.name, "N/A"))
+                members.add("'${f.name}': N/A")
             }
         }
         return TextUtils.join(",  ", members)
