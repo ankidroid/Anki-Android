@@ -143,6 +143,15 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
+    /**
+     * Export selected cards or notes using the new backend
+     * TODO: Once new backend is default, exportColAsApkg and exportDeckAsApkg can be merged into this function
+     */
+    override fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean) {
+        val exportPath = getExportFileName(limit, path, includeSched)
+        exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
+    }
+
     private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         val exportListener = ExportListener(activity, mDialogsFactory)
         TaskManager.launchCollectionTask(
