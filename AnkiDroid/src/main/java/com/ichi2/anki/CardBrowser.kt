@@ -763,10 +763,8 @@ open class CardBrowser :
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        showProgressBar()
-        val result = withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) }
+        val result = withProgress { withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) } }
         updateCardsInList(getAllCards(getNotes(result.toList())))
-        hideProgressBar()
         invalidateOptionsMenu() // maybe the availability of undo changed
         // reload if updated cards contain review card
         mReloadRequired = result.map { card -> card.id }.contains(reviewerCardId)
