@@ -84,7 +84,7 @@ class Info : AnkiActivity() {
         // Apply Theme colors
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
-        val textColor = String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
+        val textColor = String.format("#%06X".format(0xFFFFFF and typedArray.getColor(1, -1)), ) // Color to hex string
         mWebView!!.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
         when (type) {

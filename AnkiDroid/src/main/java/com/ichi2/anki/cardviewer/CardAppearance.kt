@@ -28,12 +28,12 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     fun appendCssStyle(style: StringBuilder) {
         // Zoom cards
         if (cardZoom != 100) {
-            style.append(String.format("body { zoom: %s }\n", cardZoom / 100.0))
+            style.append("body { zoom: ${cardZoom / 100.0} }\n")
         }
 
         // Zoom images
         if (imageZoom != 100) {
-            style.append(String.format("img { zoom: %s }\n", imageZoom / 100.0))
+            style.append("img { zoom: ${imageZoom / 100.0} }\n")
         }
     }
 

@@ -67,7 +67,7 @@ object NoteFieldDecorator {
         for (huevo in huevoOpciones) {
             if (huevo.equals(revuelto, ignoreCase = true)) {
                 val decoration = huevoDecorations[getRandomIndex(huevoDecorations.size)]
-                return String.format("%s%s %s %s%s", decoration, decoration, fieldText, decoration, decoration)
+                return "$decoration$decoration $fieldText $decoration$decoration"
             }
         }
         return fieldText
