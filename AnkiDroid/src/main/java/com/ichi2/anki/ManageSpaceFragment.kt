@@ -19,8 +19,10 @@ package com.ichi2.anki
 import androidx.preference.Preference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.deleteCollectionDirectory
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
+import com.ichi2.async.deleteMedia
 import com.ichi2.themes.StyledProgressDialog
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -55,13 +57,68 @@ class ManageSpaceFragment : SettingsFragment() {
             }
             true
         }
+        requirePreference<Preference>(R.string.check_media_key).setOnPreferenceClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.check_media)
+                message(R.string.check_media_warning)
+                positiveButton(R.string.dialog_ok) {
+                    val progressDialog = StyledProgressDialog.show(requireContext(), getString(R.string.delete_data_ongoing), null)
+                    launchCatchingTask {
+                        // TODO: Uses withProgress if we move to FragmentActivity
+                        val checkLists = withCol { media.fullCheck() }
+                        val unused = checkLists.unused
+                        if (unused.isEmpty()) {
+                            // Let the user know there is nothing to do
+                            return@launchCatchingTask
+                        }
+                        MainScope().launch {
+                            progressDialog.dismiss()
+                            confirmDelete(unused)
+                        }
+                    }
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
+            true
+        }
+    }
+
+    /**
+     * Asks the user whether they want to delete the N unused medias.
+     */
+    // TODO: give a list of media, as in DeckPicker.
+    private fun confirmDelete(
+        unused: List<String>
+    ) {
+        val numberOfUnusedMedias = unused.size
+        MaterialDialog(requireContext()).show {
+            title(R.string.check_media)
+            message(text = context.resources.getQuantityString(R.string.check_media_summary, numberOfUnusedMedias))
+            positiveButton(R.string.dialog_ok) {
+                val progressDialog = StyledProgressDialog.show(
+                    context,
+                    resources.getString(R.string.delete_media_message),
+                    null
+                )
+                launchCatchingTask {
+                    // TODO: Uses withProgress if we move to FragmentActivity
+                    withCol { deleteMedia(this, unused) }
+                    MainScope().launch {
+                        progressDialog.dismiss()
+                    }
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     fun noCollection() {
-        requirePreference<Preference>(R.string.delete_collection_key).apply {
-            shouldDisableView = true
-            isEnabled = false
-            isSelectable = false
+        for (key in listOf(R.string.delete_collection_key, R.string.check_media_key)) {
+            requirePreference<Preference>(key).apply {
+                shouldDisableView = true
+                isEnabled = false
+                isSelectable = false
+            }
         }
     }
 }
