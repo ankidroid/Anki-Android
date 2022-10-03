@@ -1947,26 +1947,26 @@ open class CardBrowser :
         }
 
         override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) =
-            context.onPostExecuteRenderBrowserQA(context, result)
+            context.onPostExecuteRenderBrowserQA(result)
 
         override fun actualOnCancelled(context: CardBrowser) {
             context.hideProgressBar()
         }
     }
 
-    private fun onPostExecuteRenderBrowserQA(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) {
+    private fun onPostExecuteRenderBrowserQA(result: Pair<CardCollection<CardCache>, List<Long>>?) {
         result ?: return
         val cardsIdsToHide = result.second
         try {
             if (cardsIdsToHide.isNotEmpty()) {
                 Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
-                context.removeNotesView(cardsIdsToHide, true)
+                removeNotesView(cardsIdsToHide, true)
             }
         } catch (e: Exception) {
             Timber.e(e, "failed to hide cards")
         }
-        context.hideProgressBar()
-        context.cardsAdapter!!.notifyDataSetChanged()
+        hideProgressBar()
+        cardsAdapter!!.notifyDataSetChanged()
         Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
     }
 
