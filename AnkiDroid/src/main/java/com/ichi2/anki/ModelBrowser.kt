@@ -188,7 +188,7 @@ class ModelBrowser : AnkiActivity() {
         mModelIds = ArrayList(mModels!!.size)
         for (i in mModels!!.indices) {
             mModelIds!!.add(mModels!![i].getLong("id"))
-            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i].toInt()))
+            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i]))
         }
         modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
         mModelListView!!.adapter = modelDisplayAdapter
@@ -373,7 +373,7 @@ class ModelBrowser : AnkiActivity() {
                         mModels!![mModelListPosition].put("name", deckName)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),
-                            mCardCounts!![mModelListPosition].toInt()
+                            mCardCounts!![mModelListPosition]
                         )
                         refreshList()
                     } else {
