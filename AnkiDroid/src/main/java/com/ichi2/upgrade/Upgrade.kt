@@ -5,23 +5,23 @@ import com.ichi2.libanki.Collection
 import com.ichi2.utils.JSONException
 import timber.log.Timber
 
-object Upgrade {
-    @JvmStatic // tests fail if removed: CardBrowserTest
-    fun upgradeJSONIfNecessary(col: Collection, name: String, defaultValue: Boolean): Boolean {
-        var value = defaultValue
+/**
+ * Ensure the configuration [name] is set to a value that can be cast to a Boolean.
+ * @param name the configuration key's name
+ * @return current value if it exists and can be cast to Boolean, or default value
+ */
+fun Collection.upgradeJSONIfNecessary(name: String, defaultValue: Boolean) =
+    try {
+        get_config_boolean(name)
+    } catch (e: JSONException) {
+        Timber.w(e)
+        // workaround to repair wrong values from older libanki versions
         try {
-            value = col.get_config_boolean(name)
-        } catch (e: JSONException) {
-            Timber.w(e)
-            // workaround to repair wrong values from older libanki versions
-            try {
-                col.set_config(name, value)
-            } catch (e1: JSONException) {
-                Timber.w(e1)
-                // do nothing
-            }
-            col.save()
+            set_config(name, defaultValue)
+        } catch (e1: JSONException) {
+            Timber.w(e1)
+            // do nothing
         }
-        return value
+        save()
+        defaultValue
     }
-}
