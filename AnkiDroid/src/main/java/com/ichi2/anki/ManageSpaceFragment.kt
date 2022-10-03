@@ -113,7 +113,7 @@ class ManageSpaceFragment : SettingsFragment() {
     }
 
     fun noCollection() {
-        for (key in listOf(R.string.delete_collection_key, R.string.check_media_key)) {
+        for (key in listOf(R.string.delete_collection_key, R.string.check_media_key, R.string.pref_backup_max_key)) {
             requirePreference<Preference>(key).apply {
                 shouldDisableView = true
                 isEnabled = false
