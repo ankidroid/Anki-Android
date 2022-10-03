@@ -118,16 +118,17 @@ class ModelBrowser : AnkiActivity() {
         return true
     }
 
-    @KotlinCleanup("Replace with when")
     @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        } else if (itemId == R.id.action_add_new_note_type) {
-            addNewNoteTypeDialog()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.action_add_new_note_type -> {
+                addNewNoteTypeDialog()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
