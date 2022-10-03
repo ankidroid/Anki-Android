@@ -15,10 +15,10 @@
  */
 package com.ichi2.anki.preferences
 
-import android.app.AlertDialog
 import android.webkit.URLUtil
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.web.CustomSyncServer
 
@@ -37,10 +37,10 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.custom_sync_server_collection_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
             val newUrl = newValue.toString()
             if (newUrl.isNotEmpty() && !URLUtil.isValidUrl(newUrl)) {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.custom_sync_server_base_url_invalid)
-                    .setPositiveButton(R.string.dialog_ok, null)
-                    .show()
+                MaterialDialog(requireContext()).show {
+                    title(R.string.custom_sync_server_base_url_invalid)
+                    positiveButton(R.string.dialog_ok)
+                }
                 return@setOnPreferenceChangeListener false
             }
             CustomSyncServer.handleSyncServerPreferenceChange(requireContext())
@@ -50,10 +50,10 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.custom_sync_server_media_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
             val newUrl = newValue.toString()
             if (newUrl.isNotEmpty() && !URLUtil.isValidUrl(newUrl)) {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.custom_sync_server_media_url_invalid)
-                    .setPositiveButton(R.string.dialog_ok, null)
-                    .show()
+                MaterialDialog(requireContext()).show {
+                    title(R.string.custom_sync_server_media_url_invalid)
+                    positiveButton(R.string.dialog_ok)
+                }
                 return@setOnPreferenceChangeListener false
             }
             CustomSyncServer.handleSyncServerPreferenceChange(requireContext())
