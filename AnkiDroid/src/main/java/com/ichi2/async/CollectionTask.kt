@@ -719,31 +719,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /*
-     * Async task for the ModelBrowser Class
-     * Returns an ArrayList of all models alphabetically ordered and the number of notes
-     * associated with each model.
-     *
-     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
-     */
-    class CountModels : TaskDelegate<Void, Pair<List<Model>, ArrayList<Int>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<List<Model>, ArrayList<Int>>? {
-            Timber.d("doInBackgroundLoadModels")
-            val models = col.models.all()
-            val cardCount = ArrayList<Int>()
-            Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as Comparator<JSONObject>)
-            for (n in models) {
-                if (collectionTask.isCancelled()) {
-                    Timber.e("doInBackgroundLoadModels :: Cancelled")
-                    // onPostExecute not executed if cancelled. Return value not used.
-                    return null
-                }
-                cardCount.add(col.models.useCount(n))
-            }
-            return Pair(models, cardCount)
-        }
-    }
-
     /**
      * Deletes the given field in the given model
      */

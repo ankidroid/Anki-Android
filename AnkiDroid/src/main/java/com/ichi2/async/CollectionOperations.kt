@@ -18,9 +18,13 @@ package com.ichi2.async
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
+import java.util.*
+import kotlin.Comparator
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
@@ -132,4 +136,18 @@ fun updateValuesFromDeck(
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
         null
     }
+}
+
+/**
+ * Returns an ArrayList of all models alphabetically ordered and the number of notes
+ * associated with each model.
+ *
+ * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+ */
+fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
+    Timber.d("doInBackgroundLoadModels")
+    val models = col.models.all()
+    Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
+    val cardCount = models.map { col.models.useCount(it) }
+    return Pair(models, cardCount)
 }
