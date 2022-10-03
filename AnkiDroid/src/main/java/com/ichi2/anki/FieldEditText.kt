@@ -292,6 +292,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     companion object {
-        val NEW_LINE: String = Objects.requireNonNull(System.getProperty("line.separator"))
+        val NEW_LINE: String = System.getProperty("line.separator")!!
     }
 }

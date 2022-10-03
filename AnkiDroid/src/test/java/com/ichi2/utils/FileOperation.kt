@@ -22,7 +22,7 @@ import java.util.*
 class FileOperation {
     companion object {
         fun getFileResource(name: String): String {
-            val resource = Objects.requireNonNull(FileOperation::class.java.classLoader).getResource(name)
+            val resource = FileOperation::class.java.classLoader!!.getResource(name)
             return (File(resource.path).path)
         }
 

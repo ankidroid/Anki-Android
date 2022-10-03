@@ -23,7 +23,6 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.StringUtil
 import timber.log.Timber
-import java.util.*
 
 class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: Int?, val unicodeCharacter: Char?, val gesture: Gesture?) {
     constructor(gesture: Gesture?) : this(null, null, null, gesture)
@@ -48,7 +47,7 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
             keycode != null -> {
                 string.append(getKeyCodePrefix())
                 string.append(' ')
-                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(modifierKeys!!.toString())
                 val keyCodeString = KeyEvent.keyCodeToString(keycode)
                 // replace "Button" as we use the gamepad icon
                 string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace("BUTTON_", "").replace('_', ' ')))
@@ -56,7 +55,7 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
             unicodeCharacter != null -> {
                 string.append(KEY_PREFIX)
                 string.append(' ')
-                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(modifierKeys!!.toString())
                 string.append(unicodeCharacter)
             }
             gesture != null -> {
@@ -71,12 +70,12 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
         when {
             keycode != null -> {
                 string.append(KEY_PREFIX)
-                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(modifierKeys!!.toString())
                 string.append(keycode)
             }
             unicodeCharacter != null -> {
                 string.append(UNICODE_PREFIX)
-                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(modifierKeys!!.toString())
                 string.append(unicodeCharacter)
             }
             gesture != null -> {
