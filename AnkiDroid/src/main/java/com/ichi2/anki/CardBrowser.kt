@@ -82,7 +82,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
-import com.ichi2.upgrade.Upgrade.upgradeJSONIfNecessary
+import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
@@ -550,7 +550,7 @@ open class CardBrowser :
         // setConf. However older version of AnkiDroid didn't call
         // upgradeJSONIfNecessary during setConf, which means the
         // conf saved may still have this bug.
-        mOrderAsc = upgradeJSONIfNecessary(col, "sortBackwards", false)
+        mOrderAsc = col.upgradeJSONIfNecessary("sortBackwards", false)
         mCards.reset()
         cardsListView = findViewById(R.id.card_browser_list)
         // Create a spinner for column 1

@@ -54,7 +54,7 @@ import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.upgrade.Upgrade
+import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
@@ -2254,7 +2254,7 @@ open class Collection(
             // bug #5523. This bug should occur only for people using anki
             // prior to version 2.16 and has been corrected with
             // dae/anki#347
-            Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false)
+            upgradeJSONIfNecessary("sortBackwards", false)
             config!!.json = conf
         }
 
