@@ -632,8 +632,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
             Timber.d("doInBackgroundSaveModel")
-            val oldModel = col.models.get(model.getLong("id"))
-            Objects.requireNonNull(oldModel)
+            val oldModel = col.models.get(model.getLong("id"))!!
 
             // TODO need to save all the cards that will go away, for undo
             //  (do I need to remove them from graves during undo also?)
@@ -642,7 +641,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             col.db.database.beginTransaction()
             try {
                 for (change in templateChanges) {
-                    val oldTemplates = oldModel!!.getJSONArray("tmpls")
+                    val oldTemplates = oldModel.getJSONArray("tmpls")
                     when (change[1] as TemporaryModel.ChangeType) {
                         TemporaryModel.ChangeType.ADD -> {
                             Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
@@ -667,7 +666,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
                 // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
                 // This could be done better
-                model.put("mod", oldModel!!.getLong("mod"))
+                model.put("mod", oldModel.getLong("mod"))
                 col.models.save(model, true)
                 col.models.update(model)
                 col.reset()
