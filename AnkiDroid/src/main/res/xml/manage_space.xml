@@ -16,6 +16,8 @@
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/pref_cat_dev_options"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     android:key="@string/pref_dev_options_screen_key">
   <Preference
       android:key="@string/delete_collection_key"
@@ -25,4 +27,11 @@
       android:key="@string/check_media_key"
       android:summary="@string/check_media_summary"
       android:title="@string/check_media"/>
+  <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+      android:defaultValue="8"
+      android:key="@string/pref_backup_max_key"
+      android:title="@string/pref_backup_max"
+      app1:useSimpleSummaryProvider="true"
+      app:min="0"
+      app:max="99" />
 </PreferenceScreen>
