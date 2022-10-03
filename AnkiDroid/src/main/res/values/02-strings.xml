@@ -143,7 +143,6 @@
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Deleting deck…</string>
 
-    <string name="show_hint">Show %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
