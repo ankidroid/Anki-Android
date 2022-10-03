@@ -70,15 +70,9 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
     }
 
-    @KotlinCleanup("Remove try-catch")
     private fun shouldDisableExtendedTextUi(): Boolean {
-        return try {
-            val sp = AnkiDroidApp.getSharedPrefs(this.context)
-            sp.getBoolean("disableExtendedTextUi", false)
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to get extended UI preference")
-            false
-        }
+        val sp = AnkiDroidApp.getSharedPrefs(this.context)
+        return sp.getBoolean("disableExtendedTextUi", false)
     }
 
     @KotlinCleanup("Simplify")
