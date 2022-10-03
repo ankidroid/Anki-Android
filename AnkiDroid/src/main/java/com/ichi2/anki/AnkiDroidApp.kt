@@ -39,12 +39,13 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
-import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
+import com.ichi2.utils.LanguageUtil.getCurrentLanguage
+import com.ichi2.utils.LanguageUtil.getLanguage
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -407,7 +408,7 @@ open class AnkiDroidApp : Application() {
             prefs: SharedPreferences
         ): Configuration {
             val newConfig = Configuration(remoteConfig)
-            val newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs)
+            val newLocale = LanguageUtil.getLocale(prefs.getLanguage(), prefs)
             Timber.d("AnkiDroidApp::getLanguageConfig - setting locale to %s", newLocale)
             // API level >=24
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -442,14 +443,11 @@ open class AnkiDroidApp : Application() {
         val feedbackUrl: String
             get() = // TODO actually this can be done by translating "link_help" string for each language when the App is
                 // properly translated
-                if (isCurrentLanguage("ja")) {
-                    appResources.getString(R.string.link_help_ja)
-                } else if (isCurrentLanguage("zh")) {
-                    appResources.getString(R.string.link_help_zh)
-                } else if (isCurrentLanguage("ar")) {
-                    appResources.getString(R.string.link_help_ar)
-                } else {
-                    appResources.getString(R.string.link_help)
+                when (getSharedPrefs(instance).getCurrentLanguage()) {
+                    "ja" -> appResources.getString(R.string.link_help_ja)
+                    "zh" -> appResources.getString(R.string.link_help_zh)
+                    "ar" -> appResources.getString(R.string.link_help_ar)
+                    else -> appResources.getString(R.string.link_help)
                 } // TODO actually this can be done by translating "link_manual" string for each language when the App is
         // properly translated
         /**
@@ -459,25 +457,12 @@ open class AnkiDroidApp : Application() {
         val manualUrl: String
             get() = // TODO actually this can be done by translating "link_manual" string for each language when the App is
                 // properly translated
-                if (isCurrentLanguage("ja")) {
-                    appResources.getString(R.string.link_manual_ja)
-                } else if (isCurrentLanguage("zh")) {
-                    appResources.getString(R.string.link_manual_zh)
-                } else if (isCurrentLanguage("ar")) {
-                    appResources.getString(R.string.link_manual_ar)
-                } else {
-                    appResources.getString(R.string.link_manual)
+                when (getSharedPrefs(instance).getCurrentLanguage()) {
+                    "ja" -> appResources.getString(R.string.link_manual_ja)
+                    "zh" -> appResources.getString(R.string.link_manual_zh)
+                    "ar" -> appResources.getString(R.string.link_manual_ar)
+                    else -> appResources.getString(R.string.link_manual)
                 }
-
-        /**
-         * Check whether l is the currently set language code
-         * @param l ISO2 language code
-         * @return
-         */
-        private fun isCurrentLanguage(l: String): Boolean {
-            val pref = getSharedPrefs(instance).getString(Preferences.LANGUAGE, "")
-            return pref == l || "" == pref && Locale.getDefault().language == l
-        }
 
         fun webViewFailedToLoad(): Boolean {
             return instance.mWebViewError != null
