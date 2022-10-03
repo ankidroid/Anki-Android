@@ -1946,25 +1946,28 @@ open class CardBrowser :
             Timber.d("Starting Q&A background rendering")
         }
 
-        override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) {
-            result ?: return
-            val cardsIdsToHide = result.second
-            try {
-                if (cardsIdsToHide.isNotEmpty()) {
-                    Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
-                    context.removeNotesView(cardsIdsToHide, true)
-                }
-            } catch (e: Exception) {
-                Timber.e(e, "failed to hide cards")
-            }
-            context.hideProgressBar()
-            context.cardsAdapter!!.notifyDataSetChanged()
-            Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
-        }
+        override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) =
+            context.onPostExecuteRenderBrowserQA(context, result)
 
         override fun actualOnCancelled(context: CardBrowser) {
             context.hideProgressBar()
         }
+    }
+
+    private fun onPostExecuteRenderBrowserQA(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) {
+        result ?: return
+        val cardsIdsToHide = result.second
+        try {
+            if (cardsIdsToHide.isNotEmpty()) {
+                Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
+                context.removeNotesView(cardsIdsToHide, true)
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "failed to hide cards")
+        }
+        context.hideProgressBar()
+        context.cardsAdapter!!.notifyDataSetChanged()
+        Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
     }
 
     private fun closeCardBrowser(result: Int, data: Intent? = null) {
