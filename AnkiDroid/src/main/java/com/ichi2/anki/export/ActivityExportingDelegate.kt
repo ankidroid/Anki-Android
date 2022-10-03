@@ -84,48 +84,28 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             TimeUtils.getTimestamp(TimeManager.time)
         }
 
-    private fun getColExportFileName(exportDir: File, includeSched: Boolean) =
-        if (!includeSched) {
-            // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
-            File(exportDir, "All Decks${getTimeStampSuffix()}.apkg")
-        } else {
-            // full collection export -- use "collection.colpkg"
-            val colPath = File(collectionSupplier.get().path)
-            val newFileName = colPath.name.replace(".anki2", "${getTimeStampSuffix()}.colpkg")
-            File(exportDir, newFileName)
-        }
+    private fun getColpkgExportName(exportDir: File): File {
+        // full collection export -- use "collection.colpkg"
+        val colPath = File(collectionSupplier.get().path)
+        val newFileName = colPath.name.replace(".anki2", "${getTimeStampSuffix()}.colpkg")
+        return File(exportDir, newFileName)
+    }
 
-    private fun getDeckExportFileName(exportDir: File) =
-        File(exportDir, "${collectionSupplier.get().decks.current().getString("name")}${getTimeStampSuffix()}.apkg")
-
-    private fun getCardExportFileName(exportDir: File) =
-        File(exportDir, "Cards${getTimeStampSuffix()}.apkg")
-
-    private fun getNoteExportFileName(exportDir: File) =
-        File(exportDir, "Notes${getTimeStampSuffix()}.apkg")
-
-    private fun getExportFileName(limit: ExportLimit, path: String?, includeSched: Boolean = false): File {
+    private fun getExportFileName(path: String?, prefix: String, includeSched: Boolean): File {
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
 
         return if (path != null) {
             File(exportDir, path)
-        } else if (limit.hasWholeCollection()) {
-            getColExportFileName(exportDir, includeSched)
-        } else if (limit.hasDeckId()) {
-            getDeckExportFileName(exportDir)
-        } else if (limit.hasCardIds()) {
-            getCardExportFileName(exportDir)
-        } else if (limit.hasNoteIds()) {
-            getNoteExportFileName(exportDir)
+        } else if (prefix == "All Decks" && includeSched) { // full collection export as .colpkg
+            getColpkgExportName(exportDir)
         } else {
-            throw IllegalArgumentException("Invalid export limit: $limit")
+            File(exportDir, "$prefix${getTimeStampSuffix()}.apkg")
         }
     }
 
     override fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
-        val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
-        val exportPath = getExportFileName(limit, path, includeSched)
+        val exportPath = getExportFileName(path, "All Decks", includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
             exportApkgLegacy(exportPath, null, includeSched, includeMedia)
@@ -137,18 +117,20 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     activity.showAsyncDialogFragment(dialog)
                 }
             } else {
+                val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
                 exportNewBackendApkg(exportPath, false, includeMedia, limit)
             }
         }
     }
 
     override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
-        val limit = exportLimit { this.deckId = did }
-        val exportPath = getExportFileName(limit, path, includeSched)
+        val deckName = collectionSupplier.get().decks.current().getString("name")
+        val exportPath = getExportFileName(path, deckName, includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
             exportApkgLegacy(exportPath, did, includeSched, includeMedia)
         } else {
+            val limit = exportLimit { this.deckId = did }
             exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
         }
     }
@@ -158,7 +140,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
      * TODO: Once new backend is default, exportColAsApkg and exportDeckAsApkg can be merged into this function
      */
     override fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean) {
-        val exportPath = getExportFileName(limit, path, includeSched)
+        val prefix = if (limit.hasCardIds()) "Cards" else "Notes"
+        val exportPath = getExportFileName(path, prefix, includeSched)
         exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
     }
 
