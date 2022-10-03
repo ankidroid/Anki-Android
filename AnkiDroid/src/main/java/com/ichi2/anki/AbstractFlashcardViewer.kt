@@ -418,7 +418,7 @@ abstract class AbstractFlashcardViewer :
             showProgressBar()
             closeReviewer(RESULT_NO_MORE_CARDS, true)
         }
-        onCardEdited(currentCard)
+        onCardEdited(currentCard!!)
         if (displayAnswer) {
             mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
             mAnswerSoundsAdded = false // causes answer sounds to be reloaded
@@ -430,9 +430,8 @@ abstract class AbstractFlashcardViewer :
         hideProgressBar()
     }
 
-    @KotlinCleanup("nullability")
     /** Operation after a card has been updated due to being edited. Called before display[Question/Answer]  */
-    protected open fun onCardEdited(card: Card?) {
+    protected open fun onCardEdited(card: Card) {
         // intentionally blank
     }
 

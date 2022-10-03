@@ -1251,7 +1251,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun onCardEdited(card: Card?) {
+    override fun onCardEdited(card: Card) {
         super.onCardEdited(card)
         if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
@@ -1259,7 +1259,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (!isDisplayingAnswer) {
             // Editing the card may reuse mCurrentCard. If so, the scheduler won't call startTimer() to reset the timer
             // QUESTIONABLE(legacy code): Only perform this if editing the question
-            card!!.startTimer()
+            card.startTimer()
         }
     }
 
