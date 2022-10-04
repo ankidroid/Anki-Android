@@ -46,6 +46,7 @@ import com.ichi2.libanki.utils.*
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.deepClone
 import java8.util.Optional
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException

@@ -23,6 +23,7 @@ import com.ichi2.libanki.template.TemplateError
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.deepClonedInto
 import timber.log.Timber
 
 /**
@@ -58,7 +59,7 @@ class Model : JSONObject {
     constructor(json: String?) : super(json!!) {}
 
     @CheckResult
-    override fun deepClone(): Model {
+    fun deepClone(): Model {
         val clone = Model()
         return deepClonedInto(clone)
     }
