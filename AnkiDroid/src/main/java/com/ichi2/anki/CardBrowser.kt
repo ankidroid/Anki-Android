@@ -1330,7 +1330,6 @@ open class CardBrowser :
         if (!isInMultiSelectMode) {
             return
         }
-        val browser = this // TODO: Remove, was introduced to copy code as-it-is from mDeleteNoteHandler
         // storing selected card ids because call to invalidated() will clear the checked cards list
         val selectedIds = selectedCardIds
         invalidate() // from mDeleteNoteHandler.preExecute()
@@ -1339,17 +1338,17 @@ open class CardBrowser :
                 deleteNoteMulti(this, selectedIds)
             }
         }
-        // from mDeleteNoteHandler.preExecute()
+
         if (result.succeeded()) {
             val value = result.value
-            browser.removeNotesView(value.map { it.id }, false)
-            browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            val deletedMessage = browser.resources.getQuantityString(R.plurals.card_browser_cards_deleted, value.size, value.size)
-            browser.showUndoSnackbar(deletedMessage)
-            browser.searchCards()
+            removeNotesView(value.map { it.id }, false)
+            mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            invalidateOptionsMenu() // maybe the availability of undo changed
+            val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, value.size, value.size)
+            showUndoSnackbar(deletedMessage)
+            searchCards()
         } else {
-            browser.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
         }
 
         mCheckedCards.clear()
