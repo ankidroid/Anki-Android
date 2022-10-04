@@ -39,11 +39,12 @@ import java.io.*
  * A set of implementations for the supported platforms are available.
  *
  *
- * Each implementation ends with a `V<n>` prefix, identifying the minimum API version on which this implementation
+ * Each implementation ends with a `V<n>` suffix, identifying the minimum API version on which this implementation
  * can be used. For example, see [CompatV21].
  *
  *
- * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that></n>`CompatVm` exists. E.g. as of July 2021 `CompatV23` extends `CompatV21` because there is no `CompatV22`.
+ * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that `CompatVm`
+ * exists. E.g. as of July 2021 `CompatV23` extends `CompatV21` because there is no `CompatV22`.
  * If `CompatV22` were to be created one day, it will extends `CompatV22` and be extended by `CompatV23`.
  *
  *
@@ -62,7 +63,7 @@ import java.io.*
  * Example: `CompatV26` extends `CompatV23` which extends `CompatV21`. The method `vibrate` is
  * defined in `CompatV21` where only the number of seconds of vibration is taken into consideration, and is
  * redefined in `CompatV26` - using `@Override` - where the style of vibration is also taken into
- * consideration. It meas that  on devices using APIs 21 to 25 included, the implementation of `CompatV21` is
+ * consideration. It means that  on devices using APIs 21 to 25 included, the implementation of `CompatV21` is
  * used, and on devices using API 26 and higher, the implementation of `CompatV26` is used.
  * On the other hand a method like `setTime` that got defined in `CompatV21` and redefined in
  * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
