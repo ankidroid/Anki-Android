@@ -27,11 +27,11 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
+import org.json.JSONObject
 import timber.log.Timber
-import java.util.*
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>
@@ -164,7 +164,7 @@ class TemplateManager {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
-                val fields = _note.items().map { Pair(it[0], it[1]) }.toMap().toMutableMap()
+                val fields = _note.items().map { Pair(it[0]!!, it[1]!!) }.toMap().toMutableMap()
 
                 // add (most) special fields
                 fields["Tags"] = _note.stringTags().trim()
@@ -250,7 +250,7 @@ class TemplateManager {
                     backend.renderUncommittedCardLegacy(
                         _note.toBackendNote(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template!!)),
+                        BackendUtils.to_json_bytes(_template!!.deepClone()),
                         _fill_empty,
                     )
                 } else {
@@ -292,7 +292,7 @@ class TemplateManager {
             q = q ?: template.getString("qfmt")
             a = a ?: template.getString("afmt")
 
-            return Pair(q, a)
+            return Pair(q!!, a!!)
         }
 
         /** Complete rendering by applying any pending custom filters. */

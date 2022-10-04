@@ -25,6 +25,8 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.util.*

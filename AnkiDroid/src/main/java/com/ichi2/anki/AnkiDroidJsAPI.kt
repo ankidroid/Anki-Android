@@ -36,10 +36,10 @@ import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.runBlocking
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
@@ -174,7 +174,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             if (requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)) {
                 enableJsApi()
             }
-            apiStatusJson = JSONObject(mJsApiListMap).toString()
+            apiStatusJson = JSONObject(mJsApiListMap as Map<String, Boolean>).toString()
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {

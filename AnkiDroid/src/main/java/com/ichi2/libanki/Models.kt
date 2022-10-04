@@ -26,6 +26,11 @@ import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.stringIterable
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern

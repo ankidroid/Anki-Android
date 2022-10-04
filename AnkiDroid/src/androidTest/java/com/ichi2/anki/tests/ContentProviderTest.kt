@@ -33,11 +33,11 @@ import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.async.TaskManager.Companion.waitToFinish
 import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
+import org.json.JSONObject
 import org.junit.*
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals

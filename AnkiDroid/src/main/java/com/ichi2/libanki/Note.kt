@@ -20,10 +20,10 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.BlocksSchemaUpgrade
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern

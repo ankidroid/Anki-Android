@@ -52,8 +52,12 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
-import com.ichi2.utils.*
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 

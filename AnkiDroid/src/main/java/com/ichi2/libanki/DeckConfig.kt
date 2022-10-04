@@ -16,8 +16,8 @@
  */
 package com.ichi2.libanki
 
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.deepClonedInto
+import org.json.JSONObject
 import timber.log.Timber
 
 class DeckConfig : JSONObject {
@@ -36,8 +36,9 @@ class DeckConfig : JSONObject {
      * This function will perform deepCopy on the passed object
      *
      */
-    constructor(json: JSONObject, source: Source) : super(json) {
+    constructor(json: JSONObject, source: Source) {
         this.source = source
+        json.deepClonedInto(this)
     }
 
     /**

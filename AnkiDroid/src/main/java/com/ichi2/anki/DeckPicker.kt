@@ -115,6 +115,7 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs

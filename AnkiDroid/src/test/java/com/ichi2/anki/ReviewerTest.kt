@@ -31,10 +31,10 @@ import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.assertThrowsSubclass
-import com.ichi2.utils.JSONArray
 import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

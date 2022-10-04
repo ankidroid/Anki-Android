@@ -46,7 +46,6 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
-import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
@@ -55,6 +54,7 @@ import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONException
 import org.junit.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows

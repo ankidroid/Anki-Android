@@ -34,9 +34,9 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.CollectionUtils.average
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException

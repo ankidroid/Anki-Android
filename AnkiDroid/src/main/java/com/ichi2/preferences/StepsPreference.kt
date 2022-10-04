@@ -24,9 +24,9 @@ import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
 import com.ichi2.utils.stringIterable
+import org.json.JSONArray
+import org.json.JSONException
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019

@@ -25,10 +25,10 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.importer.Anki2Importer
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.importer.Importer
-import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.Matchers.equalTo
+import org.json.JSONException
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

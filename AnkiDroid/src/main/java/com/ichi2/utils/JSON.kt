@@ -17,7 +17,7 @@
 
 package com.ichi2.utils
 
-import kotlin.Throws
+import org.json.JSONException
 
 object JSON {
     /**

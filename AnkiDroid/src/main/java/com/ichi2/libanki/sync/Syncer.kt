@@ -33,6 +33,9 @@ import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 import java.util.*

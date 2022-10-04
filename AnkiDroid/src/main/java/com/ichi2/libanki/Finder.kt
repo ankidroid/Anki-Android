@@ -25,10 +25,10 @@ import com.ichi2.libanki.SortOrder.*
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.text.Normalizer
 import java.util.*

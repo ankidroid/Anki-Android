@@ -21,6 +21,7 @@ import androidx.annotation.CheckResult
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.utils.*
+import org.json.JSONObject
 import timber.log.Timber
 
 /**
@@ -37,7 +38,7 @@ class Model : JSONObject {
     /**
      * Creates a new empty model object
      */
-    constructor() : super() {}
+    constructor() : super()
 
     /**
      * Creates a copy from [JSONObject] and use it as a string
@@ -47,8 +48,9 @@ class Model : JSONObject {
      * @see Model.from
      */
     @KotlinCleanup("non-null")
-    constructor(json: JSONObject?) : super(json!!) {}
-
+    constructor(json: JSONObject) : super() {
+        json.deepClonedInto(this)
+    }
     /**
      * Creates a model object form json string
      */

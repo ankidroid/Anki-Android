@@ -21,7 +21,7 @@ import android.content.ContentValues
 import android.text.TextUtils
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.JSONObject
+import org.json.JSONObject
 import java.util.*
 import java.util.regex.Pattern
 
@@ -45,7 +45,7 @@ class Tags
     private var mChanged = false
     override fun load(json: String) {
         val tags = JSONObject(json)
-        for (t in tags) {
+        for (t in tags.keys()) {
             mTags[t] = tags.getInt(t)
         }
         mChanged = false
