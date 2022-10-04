@@ -301,6 +301,10 @@ fun saveModel(
     }
 }
 
+/**
+ * Deletes all the card with given ids
+ * @return Array<Cards> list of all deleted cards
+ */
 fun deleteNoteMulti(
     col: Collection,
     cardIds: List<Long>,

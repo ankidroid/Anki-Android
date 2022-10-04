@@ -246,12 +246,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteNoteMulti(private val cardIds: List<Long>) : TaskDelegate<Array<Card>, Computation<Array<Card>>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>): Computation<Array<Card>> {
-            return deleteNoteMulti(col, cardIds)
-        }
-    }
-
     class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
