@@ -60,6 +60,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
@@ -152,7 +153,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mEditFields: LinkedList<FieldEditText?>? = null
     private var sourceText: Array<String?>? = null
     private val mFieldState = FieldState.fromEditor(this)
-    private var mToolbar: Toolbar? = null
+    private lateinit var toolbar: Toolbar
 
     // Use the same HTML if the same image is pasted multiple times.
     private var mPastedImageCache: HashMap<String, String> = HashMap()
@@ -247,6 +248,25 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
         }
+        // Set up toolbar
+        toolbar = findViewById(R.id.editor_toolbar)
+        toolbar.apply {
+            formatListener = TextFormatListener { formatter: Toolbar.TextFormatter ->
+                val currentFocus = currentFocus as? FieldEditText ?: return@TextFormatListener
+                modifyCurrentSelection(formatter, currentFocus)
+            }
+            // Sets the background and icon color of toolbar respectively.
+            setBackgroundColor(
+                Themes.getColorFromAttr(
+                    this@NoteEditor,
+                    R.attr.toolbarBackgroundColor
+                )
+            )
+            setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+        }
+        val mainView = findViewById<View>(android.R.id.content)
+        // Enable toolbar
+        enableToolbar(mainView)
         startLoadingCollection()
         mOnboarding.onCreate()
     }
@@ -276,28 +296,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         get() = NoteService.getFieldsAsBundleForPreview(mEditFields, shouldReplaceNewlines())
 
     // Finish initializing the activity after the collection has been correctly loaded
-    @KotlinCleanup("move mToolbar to onCreate")
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val intent = intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %d", caller)
         registerExternalStorageListener()
-        val mainView = findViewById<View>(android.R.id.content)
-        mToolbar = findViewById(R.id.editor_toolbar)
-        mToolbar!!.formatListener = TextFormatListener { formatter: Toolbar.TextFormatter ->
-            val currentFocus = currentFocus as? FieldEditText ?: return@TextFormatListener
-            modifyCurrentSelection(formatter, currentFocus)
-        }
-
-        // Sets the background and icon color of toolbar respectively.
-        mToolbar!!.setBackgroundColor(
-            Themes.getColorFromAttr(
-                this@NoteEditor,
-                R.attr.toolbarBackgroundColor
-            )
-        )
-        mToolbar!!.setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-        enableToolbar(mainView)
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         mTagsButton = findViewById(R.id.CardEditorTagButton)
         mCardsButton = findViewById(R.id.CardEditorCardsButton)
@@ -464,7 +467,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     @KotlinCleanup("convert KeyUtils to extension functions")
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        if (mToolbar != null && mToolbar!!.onKeyUp(keyCode, event)) {
+        if (toolbar.onKeyUp(keyCode, event)) {
             return true
         }
         when (keyCode) {
@@ -1323,9 +1326,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // Use media editor button if not changing note type
                 mediaButton!!.setBackgroundResource(icons[0])
                 setMMButtonListener(mediaButton, i)
-                // toggle sticky button
-                toggleStickyButton!!.setBackgroundResource(icons[2])
-                setToggleStickyButtonListener(toggleStickyButton, i)
+                if (addNote) {
+                    // toggle sticky button
+                    toggleStickyButton!!.setBackgroundResource(icons[2])
+                    setToggleStickyButtonListener(toggleStickyButton, i)
+                } else {
+                    toggleStickyButton!!.setBackgroundResource(0)
+                }
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
@@ -1493,11 +1500,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?) {
-        val field = note!!.getField(index)
+        val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, index)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, note)
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
         startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT)
     }
 
@@ -1664,9 +1669,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun updateToolbar() {
-        if (mToolbar == null) {
-            return
-        }
         val editorLayout = findViewById<View>(R.id.note_editor_layout)
         val bottomMargin =
             if (shouldHideToolbar()) 0 else resources.getDimension(R.dimen.note_editor_toolbar_height)
@@ -1675,13 +1677,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         params.bottomMargin = bottomMargin
         editorLayout.layoutParams = params
         if (shouldHideToolbar()) {
-            mToolbar!!.visibility = View.GONE
+            toolbar.visibility = View.GONE
             return
         } else {
-            mToolbar!!.visibility = View.VISIBLE
+            toolbar.visibility = View.VISIBLE
         }
-        mToolbar!!.clearCustomItems()
-        val clozeIcon = mToolbar!!.clozeIcon
+        toolbar.clearCustomItems()
+        val clozeIcon = toolbar.clozeIcon
         if (mEditorNote!!.model().isCloze) {
             val clozeFormatter = Toolbar.TextFormatter { s: String ->
                 val stringFormat = Toolbar.StringFormat()
@@ -1696,7 +1698,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 stringFormat
             }
-            clozeIcon!!.setOnClickListener { mToolbar!!.onFormat(clozeFormatter) }
+            clozeIcon!!.setOnClickListener { toolbar.onFormat(clozeFormatter) }
             clozeIcon.visibility = View.VISIBLE
         } else {
             clozeIcon!!.visibility = View.GONE
@@ -1710,8 +1712,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (b.buttonText.isNotEmpty()) {
                 text = b.buttonText
             }
-            val bmp = mToolbar!!.createDrawableForString(text)
-            val v = mToolbar!!.insertItem(0, bmp, b.toFormatter())
+            val bmp = toolbar.createDrawableForString(text)
+            val v = toolbar.insertItem(0, bmp, b.toFormatter())
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.
             v.tag = (visualIndex % 10).toString()
@@ -1725,7 +1727,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-        mToolbar!!.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
     }
 
     private val toolbarButtons: ArrayList<CustomToolbarButton>

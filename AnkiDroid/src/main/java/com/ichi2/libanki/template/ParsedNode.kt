@@ -38,7 +38,7 @@ abstract class ParsedNode {
     // Used only fot testing
     @VisibleForTesting
     fun template_is_empty(vararg nonempty_fields: String?): Boolean {
-        return template_is_empty(HashSet(Arrays.asList(*nonempty_fields)))
+        return template_is_empty(nonempty_fields.map { it!! }.toSet())
     }
 
     @Throws(TemplateError::class)

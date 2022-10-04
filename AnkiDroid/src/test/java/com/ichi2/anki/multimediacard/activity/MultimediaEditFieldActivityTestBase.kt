@@ -45,11 +45,9 @@ abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
         app.grantPermissions(Manifest.permission.RECORD_AUDIO)
     }
 
-    protected fun getControllerForField(field: IField?, note: IMultimediaEditableNote?, fieldIndex: Int): IFieldController {
+    protected fun getControllerForField(field: IField, note: IMultimediaEditableNote, fieldIndex: Int): IFieldController {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, fieldIndex)
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field)
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, note)
+        intent.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(fieldIndex, field, note))
         return getControllerForIntent(intent)
     }
 

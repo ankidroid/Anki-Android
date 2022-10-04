@@ -39,12 +39,13 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
-import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
+import com.ichi2.utils.LanguageUtil.getCurrentLanguage
+import com.ichi2.utils.LanguageUtil.getLanguage
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -83,7 +84,7 @@ open class AnkiDroidApp : Application() {
             if (BuildConfig.DEBUG) {
                 Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false)
             }
-        } catch (exc: Exception) {
+        } catch (_: Exception) {
         }
         // Uncomment the following lines to see a log of all SQL statements
         // executed by the backend. The log may be delayed by 100ms, so you should not
@@ -228,7 +229,7 @@ open class AnkiDroidApp : Application() {
          *
          * Note: This will not be called if an API with a manual tag was called with a non-null tag
          */
-        fun createStackElementTag(element: StackTraceElement): String? {
+        fun createStackElementTag(element: StackTraceElement): String {
             var tag = element.className
             val m = ANONYMOUS_CLASS.matcher(tag)
             if (m.find()) {
@@ -243,7 +244,7 @@ open class AnkiDroidApp : Application() {
         // --- end of alteration from upstream Timber.DebugTree.getTag ---
         // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
         // because Robolectric runs them on the JVM but on Android the elements are different.
-        val tag: String?
+        val tag: String
             get() {
                 // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
                 // because Robolectric runs them on the JVM but on Android the elements are different.
@@ -252,7 +253,7 @@ open class AnkiDroidApp : Application() {
 
                     // --- this is not present in the Timber.DebugTree copy/paste ---
                     // We are in production and should not crash the app for a logging failure
-                    TAG + " unknown class"
+                    "$TAG unknown class"
                     // throw new IllegalStateException(
                     //        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
                     // --- end of alteration from upstream Timber.DebugTree.getTag ---
@@ -260,7 +261,7 @@ open class AnkiDroidApp : Application() {
             }
 
         // ----  END copied from Timber.DebugTree because DebugTree.getTag() is package private ----
-        protected override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             when (priority) {
                 Log.VERBOSE, Log.DEBUG -> {}
                 Log.INFO -> Log.i(TAG, message, t)
@@ -306,16 +307,11 @@ open class AnkiDroidApp : Application() {
         // Tag for logging messages.
         const val TAG = "AnkiDroid"
 
-        // Singleton instance of this class.
-        // Note: this may not be initialized if AnkiDroid is run via BackupManager
-        @KotlinCleanup("replace comment with javadoc")
+        /** Singleton instance of this class.
+         * Note: this may not be initialized if AnkiDroid is run via BackupManager
+         */
         lateinit var instance: AnkiDroidApp
             private set
-
-        @KotlinCleanup("remove")
-        // Constants for gestures
-        var swipeMinDistance = -1
-        var swipeThresholdVelocity = -1
 
         /**
          * The latest package version number that included important changes to the database integrity check routine. All
@@ -382,11 +378,10 @@ open class AnkiDroidApp : Application() {
          */
         fun updateContextWithLanguage(remoteContext: Context): Context {
             return try {
-                val preferences: SharedPreferences
                 // sInstance (returned by getInstance() ) set during application OnCreate()
                 // if getInstance() is null, the method is called during applications attachBaseContext()
                 // and preferences need mBase directly (is provided by remoteContext during attachBaseContext())
-                preferences = if (isInitialized) {
+                val preferences = if (isInitialized) {
                     getSharedPrefs(instance.baseContext)
                 } else {
                     getSharedPrefs(remoteContext)
@@ -413,7 +408,7 @@ open class AnkiDroidApp : Application() {
             prefs: SharedPreferences
         ): Configuration {
             val newConfig = Configuration(remoteConfig)
-            val newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs)
+            val newLocale = LanguageUtil.getLocale(prefs.getLanguage(), prefs)
             Timber.d("AnkiDroidApp::getLanguageConfig - setting locale to %s", newLocale)
             // API level >=24
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -448,14 +443,11 @@ open class AnkiDroidApp : Application() {
         val feedbackUrl: String
             get() = // TODO actually this can be done by translating "link_help" string for each language when the App is
                 // properly translated
-                if (isCurrentLanguage("ja")) {
-                    appResources.getString(R.string.link_help_ja)
-                } else if (isCurrentLanguage("zh")) {
-                    appResources.getString(R.string.link_help_zh)
-                } else if (isCurrentLanguage("ar")) {
-                    appResources.getString(R.string.link_help_ar)
-                } else {
-                    appResources.getString(R.string.link_help)
+                when (getSharedPrefs(instance).getCurrentLanguage()) {
+                    "ja" -> appResources.getString(R.string.link_help_ja)
+                    "zh" -> appResources.getString(R.string.link_help_zh)
+                    "ar" -> appResources.getString(R.string.link_help_ar)
+                    else -> appResources.getString(R.string.link_help)
                 } // TODO actually this can be done by translating "link_manual" string for each language when the App is
         // properly translated
         /**
@@ -465,25 +457,12 @@ open class AnkiDroidApp : Application() {
         val manualUrl: String
             get() = // TODO actually this can be done by translating "link_manual" string for each language when the App is
                 // properly translated
-                if (isCurrentLanguage("ja")) {
-                    appResources.getString(R.string.link_manual_ja)
-                } else if (isCurrentLanguage("zh")) {
-                    appResources.getString(R.string.link_manual_zh)
-                } else if (isCurrentLanguage("ar")) {
-                    appResources.getString(R.string.link_manual_ar)
-                } else {
-                    appResources.getString(R.string.link_manual)
+                when (getSharedPrefs(instance).getCurrentLanguage()) {
+                    "ja" -> appResources.getString(R.string.link_manual_ja)
+                    "zh" -> appResources.getString(R.string.link_manual_zh)
+                    "ar" -> appResources.getString(R.string.link_manual_ar)
+                    else -> appResources.getString(R.string.link_manual)
                 }
-
-        /**
-         * Check whether l is the currently set language code
-         * @param l ISO2 language code
-         * @return
-         */
-        private fun isCurrentLanguage(l: String): Boolean {
-            val pref = getSharedPrefs(instance).getString(Preferences.LANGUAGE, "")
-            return pref == l || "" == pref && Locale.getDefault().language == l
-        }
 
         fun webViewFailedToLoad(): Boolean {
             return instance.mWebViewError != null

@@ -982,7 +982,7 @@ object Utils {
         if (dir.exists() && dir.isDirectory) {
             val deckList =
                 dir.listFiles { pathname: File -> pathname.isFile && isValidPackageName(pathname.name) }!!
-            decks.addAll(Arrays.asList(*deckList).subList(0, deckList.size))
+            decks.addAll(listOf(*deckList).subList(0, deckList.size))
         }
         return decks
     }

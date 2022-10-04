@@ -82,7 +82,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
-import com.ichi2.upgrade.Upgrade.upgradeJSONIfNecessary
+import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
@@ -550,7 +550,7 @@ open class CardBrowser :
         // setConf. However older version of AnkiDroid didn't call
         // upgradeJSONIfNecessary during setConf, which means the
         // conf saved may still have this bug.
-        mOrderAsc = upgradeJSONIfNecessary(col, "sortBackwards", false)
+        mOrderAsc = col.upgradeJSONIfNecessary("sortBackwards", false)
         mCards.reset()
         cardsListView = findViewById(R.id.card_browser_list)
         // Create a spinner for column 1
@@ -994,12 +994,37 @@ open class CardBrowser :
         return checkedCardCount() >= cardCount // must handle 0.
     }
 
+    private fun flagTask(flag: Int) {
+        launchCatchingTask { updateSelectedCardsFlag(flag) }
+    }
+
+    /**
+     * Sets the flag for selected cards, default norm of flags are as:
+     *
+     * 0: No Flag, 1: RED, 2: ORANGE, 3: GREEN
+     * 4: BLUE, 5: PINK, 6: Turquoise, 7: PURPLE
+     *
+     */
     @VisibleForTesting
-    fun flagTask(flag: Int) {
-        TaskManager.launchCollectionTask(
-            CollectionTask.Flag(selectedCardIds, flag),
-            flagCardHandler()
-        )
+    suspend fun updateSelectedCardsFlag(flag: Int) {
+        // list of cards with updated flags
+        val updatedCards = withProgress {
+            withCol {
+                db.executeInTransaction {
+                    setUserFlag(flag, selectedCardIds)
+                    selectedCardIds
+                        .map { getCard(it) }
+                        .onEach { load() }
+                }
+            }
+        }
+        // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
+        // otherwise it could hang the main thread
+        updateCardsInList(updatedCards)
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        if (updatedCards.map { card -> card.id }.contains(reviewerCardId)) {
+            mReloadRequired = true
+        }
     }
 
     /** Updates flag icon color and cards shown with given color  */
@@ -1776,12 +1801,6 @@ open class CardBrowser :
             }
         }
     }
-
-    private fun flagCardHandler(): FlagCardHandler {
-        return FlagCardHandler(this)
-    }
-
-    private class FlagCardHandler(browser: CardBrowser) : SuspendCardHandler(browser)
 
     private fun markCardHandler(): MarkCardHandler {
         return MarkCardHandler(this)

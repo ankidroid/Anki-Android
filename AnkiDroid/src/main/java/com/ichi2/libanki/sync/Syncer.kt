@@ -483,18 +483,18 @@ class Syncer(
 
     private fun columnTypesForQuery(table: String): List<Int> {
         return if ("revlog" == table) {
-            Arrays.asList(
+            listOf(
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER
             )
         } else if ("cards" == table) {
-            Arrays.asList(
+            listOf(
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING
             )
         } else {
-            Arrays.asList(
+            listOf(
                 TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING,
                 TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_INTEGER, TYPE_STRING
             )

@@ -22,19 +22,24 @@ import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.Shared
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.importer.*
+import com.ichi2.libanki.importer.Anki2Importer
+import com.ichi2.libanki.importer.AnkiPackageImporter
+import com.ichi2.libanki.importer.Importer
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.Matchers.*
-import org.junit.*
-import org.junit.Assert.*
-import org.junit.Assume.*
+import org.hamcrest.Matchers.`is`
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeThat
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 @KotlinCleanup("is -> equalTo")
 @KotlinCleanup("IDE Lint")
@@ -91,8 +96,8 @@ class ImportTest : InstrumentedTest() {
         val empty = emptyCol
         var imp: Importer = Anki2Importer(empty, mTestCol!!.path)
         imp.run()
-        var expected: List<String?> = listOf("foo.mp3")
-        var actual = Arrays.asList(*File(empty.media.dir()).list()!!)
+        var expected = listOf("foo.mp3")
+        var actual = File(empty.media.dir()).list()!!.toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         // and importing again will not duplicate, as the file content matches
@@ -100,7 +105,7 @@ class ImportTest : InstrumentedTest() {
         imp = Anki2Importer(empty, mTestCol!!.path)
         imp.run()
         expected = listOf("foo.mp3")
-        actual = Arrays.asList(*File(empty.media.dir()).list()!!)
+        actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
@@ -112,8 +117,8 @@ class ImportTest : InstrumentedTest() {
         os.close()
         imp = Anki2Importer(empty, mTestCol!!.path)
         imp.run()
-        expected = Arrays.asList("foo.mp3", String.format("foo_%s.mp3", mid))
-        actual = Arrays.asList(*File(empty.media.dir()).list()!!)
+        expected = listOf("foo.mp3", String.format("foo_%s.mp3", mid))
+        actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
@@ -125,8 +130,8 @@ class ImportTest : InstrumentedTest() {
         os.close()
         imp = Anki2Importer(empty, mTestCol!!.path)
         imp.run()
-        expected = Arrays.asList("foo.mp3", String.format("foo_%s.mp3", mid))
-        actual = Arrays.asList(*File(empty.media.dir()).list()!!)
+        expected = listOf("foo.mp3", String.format("foo_%s.mp3", mid))
+        actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
@@ -140,7 +145,7 @@ class ImportTest : InstrumentedTest() {
         val apkg = Shared.getTestFilePath(testContext, "media.apkg")
         var imp: Importer = AnkiPackageImporter(mTestCol, apkg)
         var expected: List<String?> = emptyList<String>()
-        var actual = Arrays.asList(
+        var actual = mutableListOf(
             *File(
                 mTestCol!!.media.dir()
             ).list()!!
@@ -149,7 +154,7 @@ class ImportTest : InstrumentedTest() {
         assertEquals(actual.size.toLong(), expected.size.toLong())
         imp.run()
         expected = listOf("foo.wav")
-        actual = Arrays.asList(*File(mTestCol!!.media.dir()).list()!!)
+        actual = mutableListOf(*File(mTestCol!!.media.dir()).list()!!)
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         // import again should be idempotent in terms of media
@@ -157,7 +162,7 @@ class ImportTest : InstrumentedTest() {
         imp = AnkiPackageImporter(mTestCol, apkg)
         imp.run()
         expected = listOf("foo.wav")
-        actual = Arrays.asList(*File(mTestCol!!.media.dir()).list()!!)
+        actual = mutableListOf(*File(mTestCol!!.media.dir()).list()!!)
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         // but if the local file has different data, it will rename

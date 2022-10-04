@@ -15,11 +15,18 @@
  ****************************************************************************************/
 
 package com.ichi2.async
+
+import com.ichi2.anki.StudyOptionsFragment
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
+import java.util.*
+import kotlin.Comparator
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
@@ -105,4 +112,63 @@ fun deleteMedia(
         }
     }
     return unused.size
+}
+
+// TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
+// are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
+fun updateValuesFromDeck(
+    col: Collection,
+    reset: Boolean
+): StudyOptionsFragment.DeckStudyData? {
+    Timber.d("doInBackgroundUpdateValuesFromDeck")
+    return try {
+        val sched = col.sched
+        if (reset) {
+            // reset actually required because of counts, which is used in getCollectionTaskListener
+            sched.resetCounts()
+        }
+        val counts = sched.counts()
+        val totalNewCount = sched.totalNewForCurrentDeck()
+        val totalCount = sched.cardCount()
+        StudyOptionsFragment.DeckStudyData(
+            counts.new, counts.lrn, counts.rev, totalNewCount,
+            totalCount, sched.eta(counts)
+        )
+    } catch (e: RuntimeException) {
+        Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
+        null
+    }
+}
+
+/**
+ * Returns an ArrayList of all models alphabetically ordered and the number of notes
+ * associated with each model.
+ *
+ * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+ */
+fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
+    Timber.d("doInBackgroundLoadModels")
+    val models = col.models.all()
+    Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
+    val cardCount = models.map { col.models.useCount(it) }
+    return Pair(models, cardCount)
+}
+
+fun changeDeckConfiguration(
+    deck: Deck,
+    conf: DeckConfig,
+    col: Collection
+) {
+    val newConfId = conf.getLong("id")
+    // If new config has a different sorting order, reorder the cards
+    val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
+    val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
+    if (oldOrder != newOrder) {
+        when (newOrder) {
+            0 -> col.sched.randomizeCards(deck.getLong("id"))
+            1 -> col.sched.orderCards(deck.getLong("id"))
+        }
+    }
+    col.decks.setConf(deck, newConfId)
+    col.save()
 }

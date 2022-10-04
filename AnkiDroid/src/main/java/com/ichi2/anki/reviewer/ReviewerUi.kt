@@ -16,8 +16,6 @@
 
 package com.ichi2.anki.reviewer
 
-import com.ichi2.utils.KotlinCleanup
-
 interface ReviewerUi {
     /** How to block UI buttons.  */
     enum class ControlBlock {
@@ -36,7 +34,6 @@ interface ReviewerUi {
     }
 
     val controlBlocked: ControlBlock?
-    @KotlinCleanup("Convert to Property")
-    fun isControlBlocked(): Boolean
+    val isControlBlocked: Boolean
     val isDisplayingAnswer: Boolean
 }

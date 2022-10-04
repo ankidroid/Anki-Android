@@ -48,19 +48,18 @@ suspend fun <T> FragmentActivity.runCatchingTask(
     errorMessage: String? = null,
     block: suspend () -> T?
 ): T? {
-    val extraInfo = errorMessage ?: ""
     try {
         return block()
     } catch (cancellationException: CancellationException) {
         throw cancellationException // CancellationException should be re-thrown to propagate it to the parent coroutine
     } catch (exc: BackendInterruptedException) {
-        Timber.e(exc, extraInfo)
+        Timber.e(exc, errorMessage)
         exc.localizedMessage?.let { showSnackbar(it) }
     } catch (exc: BackendException) {
-        Timber.e(exc, extraInfo)
+        Timber.e(exc, errorMessage)
         showError(this, exc.localizedMessage!!, exc)
     } catch (exc: Exception) {
-        Timber.e(exc, extraInfo)
+        Timber.e(exc, errorMessage)
         showError(this, exc.toString(), exc)
     }
     return null
@@ -79,19 +78,18 @@ suspend fun <T> FragmentActivity.runCatchingTask(
  */
 fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = null) =
     CoroutineExceptionHandler { _, throwable ->
-        val extraInfo = errorMessage ?: ""
         // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
         when (throwable) {
             is BackendInterruptedException -> {
-                Timber.e(throwable, extraInfo)
+                Timber.e(throwable, errorMessage)
                 throwable.localizedMessage?.let { activity.showSnackbar(it) }
             }
             is BackendException -> {
-                Timber.e(throwable, extraInfo)
+                Timber.e(throwable, errorMessage)
                 showError(activity, throwable.localizedMessage!!, throwable)
             }
             else -> {
-                Timber.e(throwable, extraInfo)
+                Timber.e(throwable, errorMessage)
                 showError(activity, throwable.toString(), throwable)
             }
         }

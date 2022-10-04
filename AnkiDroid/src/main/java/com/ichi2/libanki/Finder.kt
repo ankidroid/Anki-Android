@@ -446,7 +446,7 @@ class Finder(private val col: Collection) {
         // ease
         var ease = ""
         if (r.size > 1) {
-            if (!Arrays.asList("1", "2", "3", "4").contains(r[1])) {
+            if (!listOf("1", "2", "3", "4").contains(r[1])) {
                 return null
             }
             ease = "and ease=" + r[1]
@@ -490,7 +490,7 @@ class Finder(private val col: Collection) {
             return null
         }
         // is prop valid?
-        if (!Arrays.asList("due", "ivl", "reps", "lapses", "ease").contains(prop)) {
+        if (!listOf("due", "ivl", "reps", "lapses", "ease").contains(prop)) {
             return null
         }
         // query

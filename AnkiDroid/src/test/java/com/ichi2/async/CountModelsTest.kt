@@ -17,25 +17,23 @@ package com.ichi2.async
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.async.CollectionTask.CountModels
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
 class CountModelsTest : RobolectricTest() {
 
     @Test
-    fun testModelsCount() {
-        val initialCount = getModelCount()
+    fun testModelsCount() = runTest {
+        val initialCount = modelCount
 
         addNonClozeModel("testModel", arrayOf("front", "back"), qfmt = "{{front}}", afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n{{ back }}")
 
-        val finalCount = getModelCount()
+        val finalCount = modelCount
         assertEquals(initialCount + 1, finalCount)
     }
 
     /** Returns the number of models in the collection */
-    private fun getModelCount() = CountModels().execTask(col, mock())!!.first.size
+    private val modelCount get() = getAllModelsAndNotesCount(col).first.size
 }

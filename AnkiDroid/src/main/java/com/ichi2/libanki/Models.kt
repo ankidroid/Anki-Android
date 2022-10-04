@@ -356,7 +356,7 @@ class Models(col: Collection) : ModelManager(col) {
     internal class TransformFieldDelete(private val idx: Int) : TransformFieldVisitor {
         @KotlinCleanup("simplify fun with array.toMutableList().filterIndexed")
         override fun transform(fields: Array<String>): Array<String> {
-            val fl = ArrayList(Arrays.asList(*fields))
+            val fl = ArrayList(listOf(*fields))
             fl.removeAt(idx)
             return fl.toTypedArray()
         }
@@ -401,7 +401,7 @@ class Models(col: Collection) : ModelManager(col) {
         @KotlinCleanup("simplify with array.toMutableList and maybe scope function")
         override fun transform(fields: Array<String>): Array<String> {
             val `val` = fields[oldidx]
-            val fl = ArrayList(Arrays.asList(*fields))
+            val fl = ArrayList(listOf(*fields))
             fl.removeAt(oldidx)
             fl.add(idx, `val`)
             return fl.toTypedArray()

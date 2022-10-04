@@ -147,7 +147,7 @@ object TemplateFilters {
                 m.group(2)
             }
             if ("c" == m.group(1)) {
-                buf = String.format("<span class=cloze>%s</span>", buf)
+                buf = "<span class=cloze>$buf</span>"
             }
             m.appendReplacement(repl, Matcher.quoteReplacement(buf!!))
         }

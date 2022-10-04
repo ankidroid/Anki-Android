@@ -276,7 +276,7 @@ open class SchedV2Test : RobolectricTest() {
         // a delay of 0 crashed the app (step of 0.01).
         addNoteUsingBasicModel("Hello", "World")
         col.decks.allConf()[0].getJSONObject("new")
-            .put("delays", JSONArray(Arrays.asList(0.01, 10)))
+            .put("delays", JSONArray(listOf(0.01, 10)))
         val c = col.sched.card
         MatcherAssert.assertThat(c, Matchers.notNullValue())
         col.sched.answerCard(c!!, BUTTON_ONE)

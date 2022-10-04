@@ -168,90 +168,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
-     * otherwise the action was "Unsuspend")
-     */
-    protected class UndoSuspendCardMulti(
-        private val cards: Array<Card>,
-        private val originalSuspended: BooleanArray,
-        hasUnsuspended: Boolean
-    ) : UndoAction(if (hasUnsuspended) R.string.menu_suspend_card else R.string.card_browser_unsuspend_card) {
-        override fun undo(col: Collection): Card? {
-            Timber.i("Undo: Suspend multiple cards")
-            val nbOfCards = cards.size
-            val toSuspendIds: MutableList<Long> = ArrayList(nbOfCards)
-            val toUnsuspendIds: MutableList<Long> = ArrayList(nbOfCards)
-            for (i in 0 until nbOfCards) {
-                val card = cards[i]
-                if (originalSuspended[i]) {
-                    toSuspendIds.add(card.id)
-                } else {
-                    toUnsuspendIds.add(card.id)
-                }
-            }
-
-            // unboxing
-            val toSuspendIdsArray = LongArray(toSuspendIds.size)
-            val toUnsuspendIdsArray = LongArray(toUnsuspendIds.size)
-            for (i in toSuspendIds.indices) {
-                toSuspendIdsArray[i] = toSuspendIds[i]
-            }
-            for (i in toUnsuspendIds.indices) {
-                toUnsuspendIdsArray[i] = toUnsuspendIds[i]
-            }
-            col.sched.suspendCards(toSuspendIdsArray)
-            col.sched.unsuspendCards(toUnsuspendIdsArray)
-            return null // don't fetch new card
-        }
-    }
-
-    private class UndoDeleteNoteMulti(private val notesArr: Array<Note>, private val allCards: List<Card>) : UndoAction(R.string.card_browser_delete_card) {
-        override fun undo(col: Collection): Card? {
-            Timber.i("Undo: Delete notes")
-            // undo all of these at once instead of one-by-one
-            val ids = ArrayList<Long>(notesArr.size + allCards.size)
-            for (n in notesArr) {
-                n.flush(n.mod, false)
-                ids.add(n.id)
-            }
-            for (c in allCards) {
-                c.flush(false)
-                ids.add(c.id)
-            }
-            col.db.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids))
-            return null // don't fetch new card
-        }
-    }
-
-    private class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDids: LongArray) : UndoAction(R.string.undo_action_change_deck_multi) {
-        override fun undo(col: Collection): Card? {
-            Timber.i("Undo: Change Decks")
-            // move cards to original deck
-            for (i in cards.indices) {
-                val card = cards[i]
-                card.load()
-                card.did = originalDids[i]
-                val note = card.note()
-                note.flush()
-                card.flush()
-            }
-            return null // don't fetch new card
-        }
-    }
-
-    /** @param hasUnmarked whether there were any unmarked card (in which card the action was "mark",
-     * otherwise the action was "Unmark")
-     */
-    private class UndoMarkNoteMulti
-    (private val originalMarked: List<Note>, private val originalUnmarked: List<Note>, hasUnmarked: Boolean) : UndoAction(if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card) {
-        override fun undo(col: Collection): Card? {
-            Timber.i("Undo: Mark notes")
-            CardUtils.markAll(originalMarked, true)
-            CardUtils.markAll(originalUnmarked, false)
-            return null // don't fetch new card
-        }
-    }
-
     abstract class DismissNotes<Progress>(protected val cardIds: List<Long>) : TaskDelegate<Progress, Computation<Array<Card>>>() {
         /**
          * @param col
@@ -333,19 +249,9 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class Flag(cardIds: List<Long>, private val flag: Int) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            col.setUserFlag(flag, cardIds)
-            for (c in cards) {
-                c.load()
-            }
-            return true
-        }
-    }
-
     class MarkNoteMulti(cardIds: List<Long>) : DismissNotes<Void>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>, cards: Array<Card>): Boolean {
-            val notes = CardUtils.getNotes(Arrays.asList(*cards))
+            val notes = CardUtils.getNotes(listOf(*cards))
             // collect undo information
             val originalMarked: MutableList<Note> = ArrayList()
             val originalUnmarked: MutableList<Note> = ArrayList()
@@ -371,7 +277,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val sched = col.sched
             // list of all ids to pass to remNotes method.
             // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-            val notes = CardUtils.getNotes(Arrays.asList(*cards))
+            val notes = CardUtils.getNotes(listOf(*cards))
             val allCards = CardUtils.getAllCards(notes)
             // delete note
             val uniqueNoteIds = LongArray(notes.size)
@@ -501,52 +407,11 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("doesn't work on null collection - only on non-openable")
-    class RepairCollection : UnsafeTaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundRepairCollection")
-            Timber.i("RepairCollection: Closing collection")
-            col.close(false)
-            return BackupManager.repairCollection(col)
-        }
-    }
-
-    class UpdateValuesFromDeck(private val reset: Boolean) : TaskDelegate<Void, DeckStudyData?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            Timber.d("doInBackgroundUpdateValuesFromDeck")
-            return try {
-                val sched = col.sched
-                if (reset) {
-                    // reset actually required because of counts, which is used in getCollectionTaskListener
-                    sched.resetCounts()
-                }
-                val counts = sched.counts()
-                val totalNewCount = sched.totalNewForCurrentDeck()
-                val totalCount = sched.cardCount()
-                DeckStudyData(
-                    counts.new, counts.lrn, counts.rev, totalNewCount,
-                    totalCount, sched.eta(counts)
-                )
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
-                null
-            }
-        }
-    }
-
     class RebuildCram : TaskDelegate<Void, DeckStudyData?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
             Timber.d("doInBackgroundRebuildCram")
             col.sched.rebuildDyn(col.decks.selected())
-            return UpdateValuesFromDeck(true).execTask(col, collectionTask)
-        }
-    }
-
-    class EmptyCram : TaskDelegate<Void, DeckStudyData?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            Timber.d("doInBackgroundEmptyCram")
-            col.sched.emptyDyn(col.decks.selected())
-            return UpdateValuesFromDeck(true).execTask(col, collectionTask)
+            return updateValuesFromDeck(col, true)
         }
     }
 
@@ -740,54 +605,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ConfChange(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundConfChange")
-            return try {
-                val newConfId = conf.getLong("id")
-                // If new config has a different sorting order, reorder the cards
-                val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
-                val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
-                if (oldOrder != newOrder) {
-                    when (newOrder) {
-                        0 -> col.sched.randomizeCards(deck.getLong("id"))
-                        1 -> col.sched.orderCards(deck.getLong("id"))
-                    }
-                }
-                col.decks.setConf(deck, newConfId)
-                col.save()
-                true
-            } catch (e: JSONException) {
-                Timber.w(e)
-                false
-            }
-        }
-    }
-
-    class ConfRemove(private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundConfRemove")
-            return try {
-                // Note: We do the actual removing of the options group in the main thread so that we
-                // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
-
-                // When a conf is deleted, all decks using it revert to the default conf.
-                // Cards must be reordered according to the default conf.
-                val order = conf.getJSONObject("new").getInt("order")
-                val defaultOrder = col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
-                if (order != defaultOrder) {
-                    conf.getJSONObject("new").put("order", defaultOrder)
-                    col.sched.resortConf(conf)
-                }
-                col.save()
-                true
-            } catch (e: JSONException) {
-                Timber.w(e)
-                false
-            }
-        }
-    }
-
     @KotlinCleanup("fix `val changed = execTask()!!`")
     class ConfSetSubdecks(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
@@ -799,10 +616,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     if (child.isDyn) {
                         continue
                     }
-                    val changed = ConfChange(child, conf).execTask(col, collectionTask)
-                    if (!changed) {
-                        return false
-                    }
+                    changeDeckConfiguration(deck, conf, col)
                 }
                 true
             } catch (e: JSONException) {
@@ -818,8 +632,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
             Timber.d("doInBackgroundSaveModel")
-            val oldModel = col.models.get(model.getLong("id"))
-            Objects.requireNonNull(oldModel)
+            val oldModel = col.models.get(model.getLong("id"))!!
 
             // TODO need to save all the cards that will go away, for undo
             //  (do I need to remove them from graves during undo also?)
@@ -828,7 +641,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             col.db.database.beginTransaction()
             try {
                 for (change in templateChanges) {
-                    val oldTemplates = oldModel!!.getJSONArray("tmpls")
+                    val oldTemplates = oldModel.getJSONArray("tmpls")
                     when (change[1] as TemporaryModel.ChangeType) {
                         TemporaryModel.ChangeType.ADD -> {
                             Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
@@ -853,7 +666,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
                 // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
                 // This could be done better
-                model.put("mod", oldModel!!.getLong("mod"))
+                model.put("mod", oldModel.getLong("mod"))
                 col.models.save(model, true)
                 col.models.update(model)
                 col.reset()
@@ -867,31 +680,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 DB.safeEndInTransaction(col.db)
             }
             return Pair(true, null)
-        }
-    }
-
-    /*
-     * Async task for the ModelBrowser Class
-     * Returns an ArrayList of all models alphabetically ordered and the number of notes
-     * associated with each model.
-     *
-     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
-     */
-    class CountModels : TaskDelegate<Void, Pair<List<Model>, ArrayList<Int>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<List<Model>, ArrayList<Int>>? {
-            Timber.d("doInBackgroundLoadModels")
-            val models = col.models.all()
-            val cardCount = ArrayList<Int>()
-            Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as Comparator<JSONObject>)
-            for (n in models) {
-                if (collectionTask.isCancelled()) {
-                    Timber.e("doInBackgroundLoadModels :: Cancelled")
-                    // onPostExecute not executed if cancelled. Return value not used.
-                    return null
-                }
-                cardCount.add(col.models.useCount(n))
-            }
-            return Pair(models, cardCount)
         }
     }
 

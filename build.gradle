@@ -6,14 +6,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.7.20'
     ext.lint_version = '30.3.0'
     ext.acra_version = '5.7.0'
     ext.ankidroid_backend_version = '0.1.15-anki2.1.54' // this is parsed in tools/setup-anki-backend.sh
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.9.0'
+    ext.junit_version = '5.9.1'
     ext.coroutines_version = '1.6.4'
-    ext.fragments_version = "1.5.2"
+    ext.fragments_version = "1.5.3"
 
     repositories {
         google()

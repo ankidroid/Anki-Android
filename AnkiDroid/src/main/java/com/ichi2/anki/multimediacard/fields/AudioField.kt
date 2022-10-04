@@ -54,7 +54,7 @@ abstract class AudioField : FieldBase(), IField {
                 return ""
             }
             val file = File(audioPath!!)
-            return if (file.exists()) String.format("[sound:%s]", file.name) else ""
+            return if (file.exists()) "[sound:${file.name}]" else ""
         }
 
     override fun setFormattedString(col: Collection, value: String) {

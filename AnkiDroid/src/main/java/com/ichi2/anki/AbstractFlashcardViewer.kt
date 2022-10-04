@@ -418,7 +418,7 @@ abstract class AbstractFlashcardViewer :
             showProgressBar()
             closeReviewer(RESULT_NO_MORE_CARDS, true)
         }
-        onCardEdited(currentCard)
+        onCardEdited(currentCard!!)
         if (displayAnswer) {
             mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
             mAnswerSoundsAdded = false // causes answer sounds to be reloaded
@@ -430,9 +430,8 @@ abstract class AbstractFlashcardViewer :
         hideProgressBar()
     }
 
-    @KotlinCleanup("nullability")
     /** Operation after a card has been updated due to being edited. Called before display[Question/Answer]  */
-    protected open fun onCardEdited(card: Card?) {
+    protected open fun onCardEdited(card: Card) {
         // intentionally blank
     }
 
@@ -1044,8 +1043,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
-    @KotlinCleanup("return non-null")
-    protected open fun createWebView(): WebView? {
+    protected open fun createWebView(): WebView {
         val webView: WebView = MyWebView(this)
         webView.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
         webView.settings.displayZoomControls = false
@@ -1242,8 +1240,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @KotlinCleanup("make non-null")
-    protected open fun restorePreferences(): SharedPreferences? {
+    protected open fun restorePreferences(): SharedPreferences {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         typeAnswer = createInstance(preferences)
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -1671,7 +1668,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        return if (isControlBlocked() && which !== ViewerCommand.EXIT) {
+        return if (isControlBlocked && which !== ViewerCommand.EXIT) {
             false
         } else when (which) {
             ViewerCommand.SHOW_ANSWER -> {
@@ -2562,9 +2559,8 @@ abstract class AbstractFlashcardViewer :
     override val isDisplayingAnswer
         get() = displayAnswer
 
-    override fun isControlBlocked(): Boolean {
-        return controlBlocked !== ControlBlock.UNBLOCKED
-    }
+    override val isControlBlocked: Boolean
+        get() = controlBlocked !== ControlBlock.UNBLOCKED
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @KotlinCleanup("move to test class as extension")

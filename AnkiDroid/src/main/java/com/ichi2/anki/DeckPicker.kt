@@ -167,7 +167,8 @@ open class DeckPicker :
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     private var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
-    private lateinit var mRecyclerView: RecyclerView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var recyclerView: RecyclerView
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mDeckListAdapter: DeckAdapter
     private val mSnackbarShowHideCallback = Snackbar.Callback()
@@ -416,7 +417,7 @@ open class DeckPicker :
         title = resources.getString(R.string.app_name)
 
         mDeckPickerContent = findViewById(R.id.deck_picker_content)
-        mRecyclerView = findViewById(R.id.files)
+        recyclerView = findViewById(R.id.files)
         mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
 
         mDeckPickerContent.visibility = View.GONE
@@ -424,13 +425,13 @@ open class DeckPicker :
 
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = LinearLayoutManager(this)
-        mRecyclerView.layoutManager = mRecyclerViewLayoutManager
+        recyclerView.layoutManager = mRecyclerViewLayoutManager
         val ta = this.obtainStyledAttributes(intArrayOf(R.attr.deckDivider))
         val divider = ta.getDrawable(0)
         ta.recycle()
         val dividerDecorator = DividerItemDecoration(this, mRecyclerViewLayoutManager.orientation)
         dividerDecorator.setDrawable(divider!!)
-        mRecyclerView.addItemDecoration(dividerDecorator)
+        recyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
         val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
@@ -454,7 +455,7 @@ open class DeckPicker :
             setDeckLongClickListener(mDeckLongClickListener)
             enablePartialTransparencyForBackground(hasDeckPickerBackground)
         }
-        mRecyclerView.adapter = mDeckListAdapter
+        recyclerView.adapter = mDeckListAdapter
 
         mPullToSyncWrapper = findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
             setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
@@ -665,7 +666,7 @@ open class DeckPicker :
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    val adapter = mRecyclerView.adapter as Filterable?
+                    val adapter = recyclerView.adapter as Filterable?
                     adapter!!.filter.filter(newText)
                     return true
                 }
@@ -1424,33 +1425,24 @@ open class DeckPicker :
         CrashReportService.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
     }
 
-    private fun repairCollectionTask(): RepairCollectionTask {
-        return RepairCollectionTask(this)
-    }
-
-    private class RepairCollectionTask(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, Boolean?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context, null,
-                context.resources.getString(R.string.backup_repair_deck_progress), false
-            )
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: Boolean?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            if (!result!!) {
-                showThemedToast(context, context.resources.getString(R.string.deck_repair_error), true)
-                context.showCollectionErrorDialog()
-            }
-        }
-    }
-
     // Callback method to handle repairing deck
     fun repairCollection() {
         Timber.i("Repairing the Collection")
-        TaskManager.launchCollectionTask(RepairCollection(), repairCollectionTask())
+        // TODO: doesn't work on null collection-only on non-openable(is this still relevant with withCol?)
+        launchCatchingTask(resources.getString(R.string.deck_repair_error)) {
+            Timber.d("doInBackgroundRepairCollection")
+            val result = withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
+                withCol {
+                    Timber.i("RepairCollection: Closing collection")
+                    close(false)
+                    BackupManager.repairCollection(this)
+                }
+            }
+            if (!result) {
+                showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
+                showCollectionErrorDialog()
+            }
+        }
     }
 
     // Callback method to handle database integrity check
@@ -2157,7 +2149,7 @@ open class DeckPicker :
      */
     private fun scrollDecklistToDeck(did: DeckId) {
         val position = mDeckListAdapter.findDeckPosition(did)
-        mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, mRecyclerView.height / 2)
+        mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
 
     private fun <T : AbstractDeckTreeNode> updateDeckListListener(): UpdateDeckListListener<T> {
@@ -2182,7 +2174,8 @@ open class DeckPicker :
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
-    internal fun updateDeckList() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun updateDeckList() {
         updateDeckList(false)
     }
 
@@ -2480,7 +2473,17 @@ open class DeckPicker :
 
     fun emptyFiltered(did: DeckId) {
         col.decks.select(did)
-        TaskManager.launchCollectionTask(EmptyCram(), simpleProgressListener())
+        launchCatchingTask {
+            withProgress {
+                withCol {
+                    Timber.d("doInBackgroundEmptyCram")
+                    sched.emptyDyn(decks.selected())
+                    updateValuesFromDeck(this, true)
+                }
+            }
+            updateDeckList()
+            if (fragmented) loadStudyOptionsFragment(false)
+        }
     }
 
     override fun onAttachedToWindow() {

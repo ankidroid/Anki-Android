@@ -215,7 +215,7 @@ object LanguageUtil {
     fun getLocale(localeCode: String?, prefs: SharedPreferences): Locale {
         var tempLocaleCode = localeCode
         if (tempLocaleCode == null || TextUtils.isEmpty(tempLocaleCode)) {
-            tempLocaleCode = prefs.getString(Preferences.LANGUAGE, "")
+            tempLocaleCode = prefs.getLanguage()
             // If no code provided use the app language.
         }
         if (TextUtils.isEmpty(tempLocaleCode)) {
@@ -267,4 +267,13 @@ object LanguageUtil {
             else -> locale.toLanguageTag()
         }
     }
+
+    /**
+     * @return the language defined by the preferences, or the empty string.
+     */
+    fun SharedPreferences.getLanguage() = getString(Preferences.LANGUAGE, "")
+    /**
+     * @return the language defined by the preferences, or otherwise the default locale
+     */
+    fun SharedPreferences.getCurrentLanguage(): String = getString(Preferences.LANGUAGE, null) ?: Locale.getDefault().language
 }

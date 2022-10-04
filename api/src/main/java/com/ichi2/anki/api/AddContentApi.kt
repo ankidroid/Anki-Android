@@ -616,7 +616,7 @@ public class AddContentApi(context: Context) {
             val modelFieldList = getFieldList(modelId) ?: return null
             val duplicates = SparseArray<MutableList<NoteInfo?>>()
             // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
-            val queryFormat = String.format("%s:\"%%s\" note:\"%s\"", modelFieldList[0], modelName)
+            val queryFormat = "${modelFieldList[0]}:\"%%s\" note:\"$modelName\""
             for (outputPos in keys.indices) {
                 val selection = String.format(queryFormat, keys[outputPos])
                 val query = mResolver.query(

@@ -58,7 +58,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
         val unzipDirectory = temp.absolutePath + "/unzipped"
 
         // Storing paths of unzipped files in a list
-        val files = Arrays.asList(*File(unzipDirectory).list()!!)
+        val files = listOf(*File(unzipDirectory).list()!!)
         val file_names = arrayOfNulls<File>(2)
         var i = 0
         for (x in files) {
@@ -89,7 +89,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
         val unzipDirectory = temp.absolutePath + "/unzipped"
 
         // Storing paths of unzipped files in a list
-        val files = Arrays.asList(*File(unzipDirectory).list()!!)
+        val files = listOf(*File(unzipDirectory).list()!!)
         val fileNames = arrayOfNulls<File>(3)
         var i = 0
         for (x in files) {
@@ -125,7 +125,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
             if ("media" != f!!.name) {
                 continue
             }
-            val lines = Arrays.asList(
+            val lines = listOf(
                 *getFileContents(
                     f
                 ).split("\n").toTypedArray()

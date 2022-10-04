@@ -220,7 +220,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
     override fun createWebView(): WebView {
-        val ret = super.createWebView()!!
+        val ret = super.createWebView()
         if (isRunningOnTv(this)) {
             ret.isFocusable = false
         }
@@ -1054,7 +1054,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun restorePreferences(): SharedPreferences {
-        val preferences = super.restorePreferences()!!
+        val preferences = super.restorePreferences()
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false)
         mPrefShowETA = preferences.getBoolean("showETA", true)
         mProcessor.setup()
@@ -1170,7 +1170,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        if (isControlBlocked() && which !== ViewerCommand.EXIT) {
+        if (isControlBlocked && which !== ViewerCommand.EXIT) {
             return false
         }
         when (which) {
@@ -1251,7 +1251,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun onCardEdited(card: Card?) {
+    override fun onCardEdited(card: Card) {
         super.onCardEdited(card)
         if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
@@ -1259,7 +1259,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (!isDisplayingAnswer) {
             // Editing the card may reuse mCurrentCard. If so, the scheduler won't call startTimer() to reset the timer
             // QUESTIONABLE(legacy code): Only perform this if editing the question
-            card!!.startTimer()
+            card.startTimer()
         }
     }
 
@@ -1424,7 +1424,7 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
@@ -1434,7 +1434,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked()) {
+        return if (currentCard == null || isControlBlocked) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
