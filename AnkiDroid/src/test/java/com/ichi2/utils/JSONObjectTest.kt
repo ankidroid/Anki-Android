@@ -979,7 +979,7 @@ class JSONObjectTest {
 
     @Test
     fun fromMapTest() {
-        val fromMapJsonObject = JSONObject.fromMap(booleanMap)
+        val fromMapJsonObject = JSONObject(booleanMap)
         for (i in 0..9) {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
         }

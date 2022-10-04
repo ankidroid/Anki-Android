@@ -355,9 +355,5 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
         } catch (e: org.json.JSONException) {
             throw JSONException(e)
         }
-
-        fun fromMap(map: Map<String, Boolean>): JSONObject = JSONObject().apply {
-            map.forEach { (k, v) -> put(k, v) }
-        }
     }
 }
