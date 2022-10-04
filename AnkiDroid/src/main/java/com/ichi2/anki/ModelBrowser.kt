@@ -118,16 +118,17 @@ class ModelBrowser : AnkiActivity() {
         return true
     }
 
-    @KotlinCleanup("Replace with when")
     @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        } else if (itemId == R.id.action_add_new_note_type) {
-            addNewNoteTypeDialog()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.action_add_new_note_type -> {
+                addNewNoteTypeDialog()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -187,7 +188,7 @@ class ModelBrowser : AnkiActivity() {
         mModelIds = ArrayList(mModels!!.size)
         for (i in mModels!!.indices) {
             mModelIds!!.add(mModels!![i].getLong("id"))
-            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i].toInt()))
+            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i]))
         }
         modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
         mModelListView!!.adapter = modelDisplayAdapter
@@ -372,7 +373,7 @@ class ModelBrowser : AnkiActivity() {
                         mModels!![mModelListPosition].put("name", deckName)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),
-                            mCardCounts!![mModelListPosition].toInt()
+                            mCardCounts!![mModelListPosition]
                         )
                         refreshList()
                     } else {
