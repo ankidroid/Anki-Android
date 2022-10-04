@@ -1844,10 +1844,10 @@ open class CardBrowser :
 
     private val mDeleteNoteHandler = DeleteNoteHandler(this)
 
-    private class DeleteNoteHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Array<Card>, Computation<*>?>(browser) {
+    private class DeleteNoteHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Array<Card>, Computation<*>?>(browser) {
         private var mCardsDeleted = -1
         override fun actualOnPreExecute(context: CardBrowser) {
-            super.actualOnPreExecute(context)
+            context.showProgressBar()
             context.invalidate()
         }
 
@@ -1857,15 +1857,20 @@ open class CardBrowser :
             mCardsDeleted = value.size
         }
 
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
+        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+        override fun actualOnPostExecute(browser: CardBrowser, result: Computation<*>?) {
             browser.hideProgressBar()
-            browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
+            if (result!!.succeeded()) {
+                browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
+                browser.invalidateOptionsMenu() // maybe the availability of undo changed
 
-            val deletedMessage = browser.resources.getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted)
-            browser.showUndoSnackbar(deletedMessage)
+                val deletedMessage = browser.resources.getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted)
+                browser.showUndoSnackbar(deletedMessage)
 
-            browser.searchCards()
+                browser.searchCards()
+            } else {
+                browser.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            }
         }
     }
 
