@@ -1330,25 +1330,26 @@ open class CardBrowser :
         if (!isInMultiSelectMode) {
             return
         }
-        // storing selected card ids because call to invalidated() will clear the checked cards list
-        val selectedIds = selectedCardIds
-        invalidate() // from mDeleteNoteHandler.preExecute()
+
         val result = withProgress("Deleting selected notes") {
-            withCol {
-                deleteNoteMulti(this, selectedIds)
-            }
+            // storing selected card ids because call to invalidated() will clear the checked cards list
+            val selectedIds = selectedCardIds
+            invalidate() // from mDeleteNoteHandler.preExecute()
+            val result = withCol { deleteNoteMulti(this, selectedIds) }
+            removeNotesView(result.map { it.id }, false)
+            mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            invalidateOptionsMenu() // maybe the availability of undo changed
+
+            searchCards()
+
+            mCheckedCards.clear()
+            endMultiSelectMode()
+            cardsAdapter!!.notifyDataSetChanged()
+            result
         }
 
-        removeNotesView(result.map { it.id }, false)
-        mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
-        invalidateOptionsMenu() // maybe the availability of undo changed
         val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, result.size, result.size)
         showUndoSnackbar(deletedMessage)
-        searchCards()
-
-        mCheckedCards.clear()
-        endMultiSelectMode()
-        cardsAdapter!!.notifyDataSetChanged()
     }
 
     @VisibleForTesting
