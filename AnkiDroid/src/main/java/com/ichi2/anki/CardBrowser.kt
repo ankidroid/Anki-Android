@@ -57,6 +57,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
@@ -1370,10 +1371,7 @@ open class CardBrowser :
             val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size)
             mExportingDelegate.showExportDialog(msg, selectedCardIds, inCardsMode)
         } else {
-            val selectedNoteIds = getNotes(
-                selectedCardIds.map { col.getCard(it) }
-            ).map { it.id }
-
+            val selectedNoteIds = selectedNoteIds(selectedCardIds, col)
             val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size)
             mExportingDelegate.showExportDialog(msg, selectedNoteIds, inCardsMode)
         }
