@@ -259,21 +259,6 @@ class JSONArray : org.json.JSONArray {
         }
     }
 
-    @KotlinCleanup("simplify with when")
-    fun deepClone(): JSONArray {
-        val clone = JSONArray()
-        for (i in 0 until length()) {
-            if (get(i) is JSONObject) {
-                clone.put(getJSONObject(i).deepClone())
-            } else if (get(i) is JSONArray) {
-                clone.put(getJSONArray(i).deepClone())
-            } else {
-                clone.put(get(i))
-            }
-        }
-        return clone
-    }
-
     fun jsonArrayIterable(): Iterable<JSONArray> {
         return Iterable { jsonArrayIterator() }
     }
@@ -425,4 +410,18 @@ class JSONArray : org.json.JSONArray {
             return ar as? JSONArray
         }
     }
+}
+
+fun JSONArray.deepClone(): JSONArray {
+    val clone = JSONArray()
+    for (i in 0 until length()) {
+        clone.put(
+            when (get(i)) {
+                is JSONObject -> getJSONObject(i).deepClone()
+                is JSONArray -> getJSONArray(i).deepClone()
+                else -> get(i)
+            }
+        )
+    }
+    return clone
 }

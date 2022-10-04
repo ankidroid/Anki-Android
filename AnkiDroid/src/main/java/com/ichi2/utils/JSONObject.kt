@@ -301,31 +301,6 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
     override fun optJSONObject(name: String?): JSONObject? =
         super.optJSONObject(name)?.let { objectToObject(it) }
 
-    @CheckResult
-    open fun deepClone(): JSONObject = deepClonedInto(JSONObject())
-
-    /** deep clone this into clone.
-     *
-     * Given a subtype [T] of JSONObject, and a JSONObject [clone], we could do
-     * ```
-     * T t = new T();
-     * clone.deepClonedInto(t);
-     * ```
-     * in order to obtain a deep clone of [clone] of type [T].  */
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    fun <T : JSONObject> deepClonedInto(clone: T): T {
-        for (key in this) {
-            if (get(key) is JSONObject) {
-                clone.put(key, getJSONObject(key).deepClone())
-            } else if (get(key) is JSONArray) {
-                clone.put(key, getJSONArray(key).deepClone())
-            } else {
-                clone.put(key, get(key))
-            }
-        }
-        return clone
-    }
-
     override fun toString(indentSpace: Int): String = try {
         super.toString(indentSpace)
     } catch (e: org.json.JSONException) {
@@ -356,4 +331,28 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
             throw JSONException(e)
         }
     }
+}
+
+@CheckResult
+fun JSONObject.deepClone(): JSONObject = deepClonedInto(JSONObject())
+
+/** deep clone [this] into clone.
+ *
+ * Given a subtype [T] of JSONObject, and a JSONObject [clone], we could do
+ * ```
+ * T t = new T();
+ * clone.deepClonedInto(t);
+ * ```
+ * in order to obtain a deep clone of [clone] of type [T].  */
+@VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+fun <T : JSONObject> JSONObject.deepClonedInto(clone: T): T {
+    for (key in this.keys()) {
+        val value = when (get(key)) {
+            is JSONObject -> getJSONObject(key).deepClone()
+            is JSONArray -> getJSONArray(key).deepClone()
+            else -> get(key)
+        }
+        clone.put(key, value)
+    }
+    return clone
 }

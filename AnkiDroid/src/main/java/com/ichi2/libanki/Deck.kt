@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.deepClonedInto
 
 class Deck : JSONObject {
     /**
@@ -41,7 +42,7 @@ class Deck : JSONObject {
     constructor() : super()
 
     @CheckResult
-    override fun deepClone(): Deck {
+    fun deepClone(): Deck {
         val clone = Deck()
         return deepClonedInto(clone)
     }

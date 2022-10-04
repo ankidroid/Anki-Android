@@ -32,18 +32,14 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
+import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.empty
-import org.hamcrest.Matchers.emptyString
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
-import java.lang.Exception
-import java.util.*
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)

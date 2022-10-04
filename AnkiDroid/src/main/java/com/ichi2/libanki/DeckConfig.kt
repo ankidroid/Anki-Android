@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.deepClonedInto
 import timber.log.Timber
 
 class DeckConfig : JSONObject {
@@ -51,7 +52,7 @@ class DeckConfig : JSONObject {
     val isStd: Boolean
         get() = getInt("dyn") == Consts.DECK_STD
 
-    override fun deepClone(): DeckConfig {
+    fun deepClone(): DeckConfig {
         val dc = DeckConfig(source)
         return deepClonedInto(dc)
     }
