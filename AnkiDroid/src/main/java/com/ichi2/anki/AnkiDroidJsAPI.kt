@@ -174,7 +174,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             if (requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)) {
                 enableJsApi()
             }
-            apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString()
+            apiStatusJson = JSONObject(mJsApiListMap).toString()
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {
