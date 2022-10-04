@@ -259,123 +259,6 @@ class JSONArray : org.json.JSONArray {
         }
     }
 
-    fun jsonArrayIterable(): Iterable<JSONArray> {
-        return Iterable { jsonArrayIterator() }
-    }
-
-    fun jsonArrayIterator(): Iterator<JSONArray> {
-        return object : Iterator<JSONArray> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): JSONArray {
-                val array = getJSONArray(mIndex)
-                mIndex++
-                return array
-            }
-        }
-    }
-
-    fun jsonObjectIterable(): Iterable<JSONObject> {
-        return Iterable { jsonObjectIterator() }
-    }
-
-    @KotlinCleanup("see if jsonObject/string/longIterator() methods can be combined into one")
-    fun jsonObjectIterator(): Iterator<JSONObject> {
-        return object : Iterator<JSONObject> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): JSONObject {
-                val `object` = getJSONObject(mIndex)
-                mIndex++
-                return `object`
-            }
-        }
-    }
-
-    fun stringIterable(): Iterable<String> {
-        return Iterable { stringIterator() }
-    }
-
-    fun stringIterator(): Iterator<String> {
-        return object : Iterator<String> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): String {
-                val string = getString(mIndex)
-                mIndex++
-                return string
-            }
-        }
-    }
-
-    fun longIterable(): Iterable<Long> {
-        return Iterable { longIterator() }
-    }
-
-    fun longIterator(): Iterator<Long> {
-        return object : Iterator<Long> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): Long {
-                val long_ = getLong(mIndex)
-                mIndex++
-                return long_
-            }
-        }
-    }
-
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toJSONObjectList(): List<JSONObject> {
-        val l: MutableList<JSONObject> = ArrayList(length())
-        for (`object` in jsonObjectIterable()) {
-            l.add(`object`)
-        }
-        return l
-    }
-
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toLongList(): List<Long> {
-        val l: MutableList<Long> = ArrayList(length())
-        for (`object` in longIterable()) {
-            l.add(`object`)
-        }
-        return l
-    }
-
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toStringList(): List<String> {
-        val l: MutableList<String> = ArrayList(length())
-        for (`object` in stringIterable()) {
-            l.add(`object`)
-        }
-        return l
-    }
-
-    /**
-     * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
-     * E.g. templates, fields are a JSONArray whose objects have name
-     */
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toStringList(key: String?): List<String> {
-        val l: MutableList<String> = ArrayList(length())
-        for (`object` in jsonObjectIterable()) {
-            l.add(`object`.getString(key!!))
-        }
-        return l
-    }
-
     /**
      * Returns a new object whose values are the values in this array, and whose
      * names are the values in `names`. Names and values are paired up by
@@ -424,4 +307,121 @@ fun JSONArray.deepClone(): JSONArray {
         )
     }
     return clone
+}
+
+fun JSONArray.jsonArrayIterable(): Iterable<JSONArray> {
+    return Iterable { jsonArrayIterator() }
+}
+
+fun JSONArray.jsonArrayIterator(): Iterator<JSONArray> {
+    return object : Iterator<JSONArray> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): JSONArray {
+            val array = getJSONArray(mIndex)
+            mIndex++
+            return array
+        }
+    }
+}
+
+fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> {
+    return Iterable { jsonObjectIterator() }
+}
+
+@KotlinCleanup("see if jsonObject/string/longIterator() methods can be combined into one")
+fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> {
+    return object : Iterator<JSONObject> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): JSONObject {
+            val `object` = getJSONObject(mIndex)
+            mIndex++
+            return `object`
+        }
+    }
+}
+
+fun JSONArray.stringIterable(): Iterable<String> {
+    return Iterable { stringIterator() }
+}
+
+fun JSONArray.stringIterator(): Iterator<String> {
+    return object : Iterator<String> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): String {
+            val string = getString(mIndex)
+            mIndex++
+            return string
+        }
+    }
+}
+
+fun JSONArray.longIterable(): Iterable<Long> {
+    return Iterable { longIterator() }
+}
+
+fun JSONArray.longIterator(): Iterator<Long> {
+    return object : Iterator<Long> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): Long {
+            val long_ = getLong(mIndex)
+            mIndex++
+            return long_
+        }
+    }
+}
+
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toJSONObjectList(): List<JSONObject> {
+    val l: MutableList<JSONObject> = ArrayList(length())
+    for (`object` in jsonObjectIterable()) {
+        l.add(`object`)
+    }
+    return l
+}
+
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toLongList(): List<Long> {
+    val l: MutableList<Long> = ArrayList(length())
+    for (`object` in longIterable()) {
+        l.add(`object`)
+    }
+    return l
+}
+
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toStringList(): List<String> {
+    val l: MutableList<String> = ArrayList(length())
+    for (`object` in stringIterable()) {
+        l.add(`object`)
+    }
+    return l
+}
+
+/**
+ * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
+ * E.g. templates, fields are a JSONArray whose objects have name
+ */
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toStringList(key: String?): List<String> {
+    val l: MutableList<String> = ArrayList(length())
+    for (`object` in jsonObjectIterable()) {
+        l.add(`object`.getString(key!!))
+    }
+    return l
 }

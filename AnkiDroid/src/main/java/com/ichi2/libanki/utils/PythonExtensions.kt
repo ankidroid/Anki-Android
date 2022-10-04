@@ -19,6 +19,7 @@ package com.ichi2.libanki.utils
 import android.text.TextUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.jsonObjectIterable
 import java.util.*
 
 fun <T> MutableList<T>.append(value: T) {

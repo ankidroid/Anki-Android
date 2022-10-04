@@ -27,6 +27,7 @@ import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
 import com.ichi2.utils.JSONArray
+import com.ichi2.utils.jsonObjectIterable
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.regex.Matcher

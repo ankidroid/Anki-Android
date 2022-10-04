@@ -24,10 +24,8 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern

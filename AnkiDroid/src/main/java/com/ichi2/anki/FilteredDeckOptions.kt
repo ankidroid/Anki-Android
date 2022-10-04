@@ -33,10 +33,7 @@ import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.*
 import timber.log.Timber
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
