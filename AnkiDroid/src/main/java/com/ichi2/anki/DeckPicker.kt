@@ -2010,7 +2010,7 @@ open class DeckPicker :
         } else {
             val intent = Intent()
             intent.putExtra("withDeckOptions", withDeckOptions)
-            intent.setClass(this, StudyOptionsActivity::class.java)
+            intent.setClass(this, FilteredDeckOptions::class.java)
             startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
         }
     }

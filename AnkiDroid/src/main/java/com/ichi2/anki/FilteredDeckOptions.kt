@@ -17,7 +17,6 @@ package com.ichi2.anki
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -281,9 +280,6 @@ class FilteredDeckOptions :
                 Timber.e(e)
             }
         }
-        val deckPicker = Intent(this, DeckPicker::class.java)
-        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(deckPicker)
         finish()
         slide(this, ActivityTransitionAnimation.Direction.END)
     }
