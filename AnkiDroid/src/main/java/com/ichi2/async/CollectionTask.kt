@@ -248,34 +248,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
     class DeleteNoteMulti(private val cardIds: List<Long>) : TaskDelegate<Array<Card>, Computation<Array<Card>>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>): Computation<Array<Card>> {
-            val cards = cardIds.map { col.getCard(it) }.toTypedArray()
-            try {
-                col.db.executeInTransaction {
-                    val sched = col.sched
-                    // list of all ids to pass to remNotes method.
-                    // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-                    val notes = CardUtils.getNotes(listOf(*cards))
-                    val allCards = CardUtils.getAllCards(notes)
-                    // delete note
-                    val uniqueNoteIds = LongArray(notes.size)
-                    val notesArr = notes.toTypedArray()
-                    var count = 0
-                    for (note in notes) {
-                        uniqueNoteIds[count] = note.id
-                        count++
-                    }
-                    col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
-                    col.remNotes(uniqueNoteIds)
-                    sched.deferReset()
-                    // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-                    collectionTask.doProgress(allCards.toTypedArray())
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
-                return Computation.err()
-            }
-            return Computation.ok(cards)
+            return deleteNoteMulti(col, cardIds) { collectionTask.doProgress(it) }
         }
     }
 

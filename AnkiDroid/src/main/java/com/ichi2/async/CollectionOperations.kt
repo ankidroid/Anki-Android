@@ -17,6 +17,8 @@
 package com.ichi2.async
 
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CardUtils
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.TemporaryModel
 import com.ichi2.anki.servicelayer.NoteService
@@ -25,6 +27,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.utils.Computation
 import com.ichi2.utils.JSONObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
@@ -296,4 +299,39 @@ fun saveModel(
     } finally {
         DB.safeEndInTransaction(col.db)
     }
+}
+
+fun deleteNoteMulti(
+    col: Collection,
+    cardIds: List<Long>,
+    onProgressUpdate: (Array<Card>) -> Unit
+): Computation<Array<Card>> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    try {
+        col.db.executeInTransaction {
+            val sched = col.sched
+            // list of all ids to pass to remNotes method.
+            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+            val notes = CardUtils.getNotes(listOf(*cards))
+            val allCards = CardUtils.getAllCards(notes)
+            // delete note
+            val uniqueNoteIds = LongArray(notes.size)
+            val notesArr = notes.toTypedArray()
+            var count = 0
+            for (note in notes) {
+                uniqueNoteIds[count] = note.id
+                count++
+            }
+            col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
+            col.remNotes(uniqueNoteIds)
+            sched.deferReset()
+            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+            onProgressUpdate(allCards.toTypedArray())
+        }
+    } catch (e: RuntimeException) {
+        Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
+        CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
+        return Computation.err()
+    }
+    return Computation.ok(cards)
 }
