@@ -20,10 +20,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.assertThrows
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers
+import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals

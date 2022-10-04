@@ -44,14 +44,14 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.libanki.CollectionAssert
 import com.ichi2.testutils.libanki.FilteredDeckUtil
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONArray
+import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test

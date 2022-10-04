@@ -19,8 +19,8 @@ package com.ichi2.libanki
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.utils.Assert
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONObject
 import timber.log.Timber
 
 abstract class ModelManager(protected val col: Collection) {

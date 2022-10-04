@@ -33,8 +33,12 @@ import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.libanki.sched.Counts.Queue
 import com.ichi2.libanki.sched.Counts.Queue.*
 import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
-import com.ichi2.utils.*
+import com.ichi2.utils.Assert
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 

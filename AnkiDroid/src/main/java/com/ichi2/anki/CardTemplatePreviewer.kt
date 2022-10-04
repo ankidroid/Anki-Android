@@ -27,8 +27,8 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 import java.util.*

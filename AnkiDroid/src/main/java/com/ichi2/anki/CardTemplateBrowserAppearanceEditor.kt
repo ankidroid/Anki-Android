@@ -24,8 +24,8 @@ import android.widget.EditText
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.utils.JSONObject
 import org.jetbrains.annotations.Contract
+import org.json.JSONObject
 import timber.log.Timber
 
 /** Allows specification of the Question and Answer format of a card template in the Card Browser

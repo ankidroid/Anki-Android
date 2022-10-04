@@ -38,12 +38,17 @@ import com.ichi2.libanki.Consts.NEW_CARD_ORDER
 import com.ichi2.libanki.Consts.REVLOG_TYPE
 import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.libanki.sched.Counts.Queue.*
+import com.ichi2.libanki.sched.SchedV2.CountMethod
+import com.ichi2.libanki.sched.SchedV2.LimitMethod
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*

@@ -25,6 +25,10 @@ package com.ichi2.utils
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONTokener
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,7 +36,6 @@ import org.robolectric.annotation.Config
 import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
 import java.lang.Double.*
-import java.util.*
 import kotlin.test.assertNull
 
 /**
@@ -256,7 +259,7 @@ class JSONArrayTest {
         assertEquals("null & \"\\\"\" & 5 & true", array.join(" & "))
         array.put(JSONArray(mutableListOf(true, false)))
         assertEquals("null & \"\\\"\" & 5 & true & [true,false]", array.join(" & "))
-        array.put(JSONObject(Collections.singletonMap("x", 6)))
+        array.put(JSONObject().apply { put("x", 6) })
         assertEquals("null & \"\\\"\" & 5 & true & [true,false] & {\"x\":6}", array.join(" & "))
     }
 

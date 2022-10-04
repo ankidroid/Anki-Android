@@ -2,7 +2,7 @@
 package com.ichi2.upgrade
 
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.JSONException
+import org.json.JSONException
 import timber.log.Timber
 
 /**

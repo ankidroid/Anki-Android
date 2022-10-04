@@ -30,7 +30,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.utils.JSONObject
+import org.json.JSONObject
 import timber.log.Timber
 
 class ReminderService : BroadcastReceiver() {

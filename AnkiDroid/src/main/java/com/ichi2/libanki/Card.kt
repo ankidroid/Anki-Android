@@ -32,9 +32,9 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException

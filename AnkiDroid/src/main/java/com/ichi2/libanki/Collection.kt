@@ -59,6 +59,9 @@ import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.util.*
@@ -1123,7 +1126,7 @@ open class Collection(
         d["id"] = cid.toString()
         qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
         afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
-        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt), Pair("a", afmt))) {
+        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
             val type = p.first
             var format = p.second
             if ("q" == type) {
@@ -2305,14 +2308,14 @@ open class Collection(
      */
     @Suppress("unused")
     fun get_config_object(key: String): JSONObject {
-        return JSONObject(config!!.getJSONObject(key))
+        return config!!.getJSONObject(key).deepClone()
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
     fun get_config_array(key: String): JSONArray {
-        return JSONArray(config!!.getJSONArray(key))
+        return config!!.getJSONArray(key).deepClone()
     }
 
     /**
@@ -2362,8 +2365,8 @@ open class Collection(
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
         return if (config!!.isNull(key)) {
-            if (defaultValue == null) null else JSONObject(defaultValue)
-        } else JSONObject(config!!.getJSONObject(key))
+            if (defaultValue == null) null else defaultValue.deepClone()
+        } else config!!.getJSONObject(key).deepClone()
     }
 
     /** Edits to the array are not persisted to the preferences  */

@@ -44,6 +44,10 @@ import com.ichi2.testutils.assertThrowsSubclass
 import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONTokener
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -51,7 +55,6 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.*
 
 /**
  * This black box test was written without inspecting the non-free org.json sourcecode.
@@ -578,13 +581,6 @@ class JSONObjectTest {
     }
 
     @Test
-    fun testToStringWithUnsupportedNumbers() {
-        // when the object contains an unsupported number, toString returns null!
-        val testObject = JSONObject(Collections.singletonMap("foo", Double.NaN))
-        assertEquals(null, testObject.toString())
-    }
-
-    @Test
     fun testMapConstructorCopiesContents() {
         val contents: MutableMap<String, Any?> = HashMap()
         contents["foo"] = 5
@@ -830,7 +826,7 @@ class JSONObjectTest {
 
     @Test
     fun testQuoteNull() {
-        assertEquals("\"\"", org.json.JSONObject.quote(null))
+        assertEquals("\"\"", JSONObject.quote(null))
     }
 
     @Test
@@ -908,21 +904,14 @@ class JSONObjectTest {
         Assert.assertThrows(JSONException::class.java) { JSONObject(mExtraOpeningBracket) }
         Assert.assertThrows(JSONException::class.java) { JSONObject(mNoClosingBracket) }
         Assert.assertThrows(JSONException::class.java) { JSONObject(mWrongKeyValueSeparator) }
-        Assert.assertThrows(JSONException::class.java) { JSONObject(mDuplicateKey) }
+        // Assert.assertThrows(JSONException::class.java) { JSONObject(mDuplicateKey) }
     }
 
     @Test
     fun copyJsonTest() {
-        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject(mCorrectJsonObjectBasic!!).toString())
-        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject(mCorrectJsonObjectNested!!).toString())
-        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), JSONObject(mCorrectJsonObjectWithArray!!).toString())
-    }
-
-    @Test
-    fun objectToObjectTest() {
-        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject.objectToObject(mCorrectJsonObjectBasic).toString())
-        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectNested).toString())
-        Assert.assertNotEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectWithArray).toString())
+        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), mCorrectJsonObjectBasic!!.deepClone().toString())
+        Assert.assertEquals(mCorrectJsonObjectNested.toString(), mCorrectJsonObjectNested!!.deepClone().toString())
+        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), mCorrectJsonObjectWithArray!!.deepClone().toString())
     }
 
     fun getTest() {
@@ -979,7 +968,7 @@ class JSONObjectTest {
 
     @Test
     fun fromMapTest() {
-        val fromMapJsonObject = JSONObject(booleanMap)
+        val fromMapJsonObject = fromMap(booleanMap)
         for (i in 0..9) {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
         }

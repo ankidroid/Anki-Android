@@ -39,12 +39,12 @@ import com.ichi2.libanki.sync.RemoteMediaServer
 import com.ichi2.libanki.sync.RemoteServer
 import com.ichi2.libanki.sync.Syncer
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import okhttp3.Response
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 import java.util.Arrays

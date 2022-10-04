@@ -17,8 +17,8 @@
 package com.ichi2.libanki
 
 import com.ichi2.libanki.backend.RustConfigBackend
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import org.json.JSONArray
+import org.json.JSONObject
 
 class ConfigV16(val backend: RustConfigBackend) : ConfigManager() {
 

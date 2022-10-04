@@ -24,9 +24,9 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.regex.Pattern
 

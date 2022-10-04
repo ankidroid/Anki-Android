@@ -20,19 +20,14 @@ import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.Note
-import com.ichi2.utils.JSONObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import java.util.ArrayList
-import kotlin.Comparator
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
