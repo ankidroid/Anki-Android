@@ -1339,17 +1339,12 @@ open class CardBrowser :
             }
         }
 
-        if (result.succeeded()) {
-            val value = result.value
-            removeNotesView(value.map { it.id }, false)
-            mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
-            invalidateOptionsMenu() // maybe the availability of undo changed
-            val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, value.size, value.size)
-            showUndoSnackbar(deletedMessage)
-            searchCards()
-        } else {
-            closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-        }
+        removeNotesView(result.map { it.id }, false)
+        mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, result.size, result.size)
+        showUndoSnackbar(deletedMessage)
+        searchCards()
 
         mCheckedCards.clear()
         endMultiSelectMode()
