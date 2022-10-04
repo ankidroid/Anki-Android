@@ -26,6 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
+import com.ichi2.utils.stringIterable
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019

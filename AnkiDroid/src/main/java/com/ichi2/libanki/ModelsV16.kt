@@ -29,11 +29,12 @@ import anki.notetypes.StockNotetype
 import com.ichi2.anki.R
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
-import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber

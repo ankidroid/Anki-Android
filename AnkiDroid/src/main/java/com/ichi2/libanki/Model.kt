@@ -20,10 +20,7 @@ import android.text.TextUtils
 import androidx.annotation.CheckResult
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
-import com.ichi2.utils.HashUtil
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.deepClonedInto
+import com.ichi2.utils.*
 import timber.log.Timber
 
 /**
