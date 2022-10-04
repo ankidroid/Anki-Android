@@ -304,11 +304,10 @@ fun saveModel(
 fun deleteNoteMulti(
     col: Collection,
     cardIds: List<Long>,
-    onProgressUpdate: (Array<Card>) -> Unit
 ): Computation<Array<Card>> {
     val cards = cardIds.map { col.getCard(it) }.toTypedArray()
     try {
-        col.db.executeInTransaction {
+        val result = col.db.executeInTransaction {
             val sched = col.sched
             // list of all ids to pass to remNotes method.
             // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
@@ -326,12 +325,12 @@ fun deleteNoteMulti(
             col.remNotes(uniqueNoteIds)
             sched.deferReset()
             // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-            onProgressUpdate(allCards.toTypedArray())
+            allCards.toTypedArray()
         }
+        return Computation.ok(result)
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
         CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
         return Computation.err()
     }
-    return Computation.ok(cards)
 }

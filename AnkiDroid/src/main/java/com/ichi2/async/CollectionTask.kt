@@ -248,7 +248,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
     class DeleteNoteMulti(private val cardIds: List<Long>) : TaskDelegate<Array<Card>, Computation<Array<Card>>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>): Computation<Array<Card>> {
-            return deleteNoteMulti(col, cardIds) { collectionTask.doProgress(it) }
+            return deleteNoteMulti(col, cardIds)
         }
     }
 

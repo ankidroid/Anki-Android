@@ -1844,23 +1844,22 @@ open class CardBrowser :
 
     private val mDeleteNoteHandler = DeleteNoteHandler(this)
 
-    private class DeleteNoteHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Array<Card>, Computation<*>?>(browser) {
+    private class DeleteNoteHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Array<Card>, Computation<Array<Card>>?>(browser) {
         private var mCardsDeleted = -1
         override fun actualOnPreExecute(context: CardBrowser) {
             context.showProgressBar()
             context.invalidate()
         }
 
-        override fun actualOnProgressUpdate(context: CardBrowser, value: Array<Card>) {
-            // we don't need to reorder cards here as we've already deselected all notes,
-            context.removeNotesView(value.map { it.id }, false)
-            mCardsDeleted = value.size
-        }
-
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-        override fun actualOnPostExecute(browser: CardBrowser, result: Computation<*>?) {
+        override fun actualOnPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
             browser.hideProgressBar()
             if (result!!.succeeded()) {
+                // we don't need to reorder cards here as we've already deselected all notes,
+                val value = result.value
+                browser.removeNotesView(value.map { it.id }, false)
+
+                mCardsDeleted = value.size
                 browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
                 browser.invalidateOptionsMenu() // maybe the availability of undo changed
 
