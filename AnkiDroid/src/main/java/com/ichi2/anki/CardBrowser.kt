@@ -71,7 +71,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
-import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
@@ -151,6 +150,8 @@ open class CardBrowser :
     private var mMySearchesItem: MenuItem? = null
     private var mPreviewItem: MenuItem? = null
     private var mUndoSnackbar: Snackbar? = null
+
+    private var renderBrowserQAJob: Job? = null
 
     private var checkSelectedCardsJob: Job? = null
 
@@ -1550,7 +1551,7 @@ open class CardBrowser :
 
     private fun invalidate() {
         checkSelectedCardsJob?.cancel()
-        TaskManager.cancelAllTasks(RenderBrowserQA::class.java)
+        renderBrowserQAJob?.cancel()
         mCards.clear()
         mCheckedCards.clear()
     }
@@ -1933,29 +1934,8 @@ open class CardBrowser :
             Timber.w(e, "Unable to get selected deck name")
             getString(R.string.card_browser_unknown_deck_name)
         }
-    private val mRenderQAHandler = RenderQAHandler(this)
 
-    private class RenderQAHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Int, Pair<CardCollection<CardCache>, List<Long>>?>(browser) {
-        override fun actualOnProgressUpdate(context: CardBrowser, value: Int) {
-            // Note: This is called every time a card is rendered.
-            // It blocks the long-click callback while the task is running, so usage of the task should be minimized
-            context.cardsAdapter!!.notifyDataSetChanged()
-        }
-
-        override fun actualOnPreExecute(context: CardBrowser) {
-            Timber.d("Starting Q&A background rendering")
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) =
-            context.onPostExecuteRenderBrowserQA(result)
-
-        override fun actualOnCancelled(context: CardBrowser) {
-            context.hideProgressBar()
-        }
-    }
-
-    private fun onPostExecuteRenderBrowserQA(result: Pair<CardCollection<CardCache>, List<Long>>?) {
-        result ?: return
+    private fun onPostExecuteRenderBrowserQA(result: Pair<CardCollection<CardCache>, List<Long>>) {
         val cardsIdsToHide = result.second
         try {
             if (cardsIdsToHide.isNotEmpty()) {
@@ -1965,7 +1945,7 @@ open class CardBrowser :
         } catch (e: Exception) {
             Timber.e(e, "failed to hide cards")
         }
-        hideProgressBar()
+        hideProgressBar() // Some places progressbar is launched explicitly, so hide it
         cardsAdapter!!.notifyDataSetChanged()
         Timber.d("Completed doInBackgroundRenderBrowserQA Successfully")
     }
@@ -2017,8 +1997,8 @@ open class CardBrowser :
                 val currentTime = SystemClock.elapsedRealtime()
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
-                    TaskManager.cancelAllTasks(RenderBrowserQA::class.java)
-                    TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler)
+                    renderBrowserQAJob?.cancel()
+                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards) }
                 }
             }
         }
@@ -2032,13 +2012,23 @@ open class CardBrowser :
             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 val startIdx = listView.firstVisiblePosition
                 val numVisible = listView.lastVisiblePosition - startIdx
-                TaskManager.launchCollectionTask(renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards), mRenderQAHandler)
+                launchCatchingTask { renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards) }
             }
         }
     }
 
-    protected fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>): RenderBrowserQA {
-        return RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index)
+    // TODO: Improve progress bar handling in places where this function is used
+    protected suspend fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>) {
+        Timber.d("Starting Q&A background rendering")
+        val result = renderBrowserQA(
+            cards, firstVisibleItem, visibleItemCount,
+            mColumn1Index, mColumn2Index
+        ) {
+            // Note: This is called every time a card is rendered.
+            // It blocks the long-click callback while the task is running, so usage of the task should be minimized
+            cardsAdapter!!.notifyDataSetChanged()
+        }
+        onPostExecuteRenderBrowserQA(result)
     }
 
     private fun onSelectedCardsChecked(result: Pair<Boolean, Boolean>) {
@@ -2564,8 +2554,8 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun rerenderAllCards() {
-        TaskManager.launchCollectionTask(renderBrowserQAParams(0, mCards.size() - 1, mCards), mRenderQAHandler)
+    suspend fun rerenderAllCards() {
+        renderBrowserQAParams(0, mCards.size() - 1, mCards)
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)

@@ -23,8 +23,6 @@ import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.CardBrowser.CardCache
-import com.ichi2.anki.CardBrowser.CardCollection
 import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
@@ -315,12 +313,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             // mark undo for all at once
             col.markUndo(changeDeckMulti)
             return true
-        }
-    }
-
-    class RenderBrowserQA(private val cards: CardCollection<CardCache>, private val startPos: Int, private val n: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<Int, Pair<CardCollection<CardCache>, List<Long>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Pair<CardCollection<CardCache>, List<Long>>? {
-            return renderBrowserQA(cards, startPos, n, column1Index, column2Index, collectionTask)
         }
     }
 

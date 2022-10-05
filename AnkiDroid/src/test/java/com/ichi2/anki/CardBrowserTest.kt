@@ -29,6 +29,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
@@ -131,7 +132,7 @@ class CardBrowserTest : RobolectricTest() {
         val browser = getBrowserWithNotes(6)
         // Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
         deleteCardAtPosition(browser, 0)
-        assertDoesNotThrow { browser.rerenderAllCards() }
+        assertDoesNotThrowSuspend { browser.rerenderAllCards() }
         assertThat(browser.cardCount(), equalTo(5L))
     }
 
