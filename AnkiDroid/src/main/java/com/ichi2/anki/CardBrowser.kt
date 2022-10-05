@@ -1843,9 +1843,8 @@ open class CardBrowser :
         }
         updateCardsInList(result.toList())
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (result.map { card -> card.id }.contains(reviewerCardId)) {
-            mReloadRequired = true
-        }
+        val isUpdatedContainsReviewCard = result.map { card -> card.id }.contains(reviewerCardId)
+        if (isUpdatedContainsReviewCard) mReloadRequired = true
     }
 
     private fun showUndoSnackbar(message: CharSequence) {
