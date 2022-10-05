@@ -249,29 +249,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class MarkNoteMulti(cardIds: List<Long>) : DismissNotes<Void>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>, cards: Array<Card>): Boolean {
-            val notes = CardUtils.getNotes(listOf(*cards))
-            // collect undo information
-            val originalMarked: MutableList<Note> = ArrayList()
-            val originalUnmarked: MutableList<Note> = ArrayList()
-            for (n in notes) {
-                if (NoteService.isMarked(n)) originalMarked.add(n) else originalUnmarked.add(n)
-            }
-            val hasUnmarked = !originalUnmarked.isEmpty()
-            CardUtils.markAll(ArrayList(notes), hasUnmarked)
-
-            // mark undo for all at once
-            col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
-
-            // reload cards because they'll be passed back to caller
-            for (c in cards) {
-                c.load()
-            }
-            return true
-        }
-    }
-
     class DeleteNoteMulti(cardIds: List<Long>) : DismissNotes<Array<Card>>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>, cards: Array<Card>): Boolean {
             val sched = col.sched
@@ -623,63 +600,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Timber.w(e)
                 false
             }
-        }
-    }
-
-    /**
-     * Handles everything for a model change at once - template add / deletes as well as content updates
-     */
-    class SaveModel(private val model: Model, private val templateChanges: ArrayList<Array<Any>>) : TaskDelegate<Void, Pair<Boolean, String?>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
-            Timber.d("doInBackgroundSaveModel")
-            val oldModel = col.models.get(model.getLong("id"))!!
-
-            // TODO need to save all the cards that will go away, for undo
-            //  (do I need to remove them from graves during undo also?)
-            //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
-            val newTemplates = model.getJSONArray("tmpls")
-            col.db.database.beginTransaction()
-            try {
-                for (change in templateChanges) {
-                    val oldTemplates = oldModel.getJSONArray("tmpls")
-                    when (change[1] as TemporaryModel.ChangeType) {
-                        TemporaryModel.ChangeType.ADD -> {
-                            Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                            try {
-                                col.models.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
-                            } catch (e: Exception) {
-                                Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"))
-                                return Pair(false, e.localizedMessage)
-                            }
-                        }
-                        TemporaryModel.ChangeType.DELETE -> {
-                            Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                            try {
-                                col.models.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
-                            } catch (e: Exception) {
-                                Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"))
-                                return Pair(false, e.localizedMessage)
-                            }
-                        }
-                    }
-                }
-
-                // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
-                // This could be done better
-                model.put("mod", oldModel.getLong("mod"))
-                col.models.save(model, true)
-                col.models.update(model)
-                col.reset()
-                col.save()
-                if (col.db.database.inTransaction()) {
-                    col.db.database.setTransactionSuccessful()
-                } else {
-                    Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.")
-                }
-            } finally {
-                DB.safeEndInTransaction(col.db)
-            }
-            return Pair(true, null)
         }
     }
 

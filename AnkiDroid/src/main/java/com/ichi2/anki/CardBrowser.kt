@@ -67,11 +67,11 @@ import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
 import com.ichi2.async.CollectionTask.CheckCardSelection
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
-import com.ichi2.async.CollectionTask.MarkNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.compat.Compat
@@ -734,7 +734,7 @@ open class CardBrowser :
             KeyEvent.KEYCODE_K -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+K: Toggle Mark")
-                    toggleMark()
+                    launchCatchingTask { toggleMark() }
                     return true
                 }
             }
@@ -757,15 +757,52 @@ open class CardBrowser :
     /** All the notes of the selected cards will be marked
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked  */
-    private fun toggleMark() {
+    @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
+    private suspend fun toggleMark() {
         if (!hasSelectedCards()) {
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        TaskManager.launchCollectionTask(
-            MarkNoteMulti(selectedCardIds),
-            markCardHandler()
-        )
+        val result = withProgress { withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) } }
+        updateCardsInList(getAllCards(getNotes(result.toList())))
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        // reload if updated cards contain review card
+        mReloadRequired = result.map { card -> card.id }.contains(reviewerCardId)
+    }
+
+    private fun toggleNotesMarkForCardsIds(
+        cardIds: List<Long>,
+        col: com.ichi2.libanki.Collection
+    ): Array<Card> {
+        val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+        col.db.executeInTransaction {
+            // TODO: get note directly without loading cards,
+            //  We can create a db query that directly fetch the nids from the cards without loading all data from card table
+            val notes = getNotes(listOf(*cards))
+            // collect undo information
+            val originalMarked: MutableList<Note> = mutableListOf()
+            val originalUnmarked: MutableList<Note> = mutableListOf()
+            for (n in notes) {
+                if (isMarked(n)) {
+                    originalMarked.add(n)
+                } else {
+                    originalUnmarked.add(n)
+                }
+            }
+            val hasUnmarked = originalUnmarked.isNotEmpty()
+            CardUtils.markAll(java.util.ArrayList(notes), hasUnmarked)
+
+            // mark undo for all at once
+            col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
+
+            // reload cards because they'll be passed back to caller
+            for (c in cards) {
+                c.load()
+            }
+        }
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        return cards
     }
 
     @VisibleForTesting
@@ -1167,7 +1204,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_mark_card -> {
-                toggleMark()
+                launchCatchingTask { toggleMark() }
                 return true
             }
             R.id.action_suspend_card -> {
@@ -1794,21 +1831,6 @@ open class CardBrowser :
     private open class SuspendCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
         override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
             browser.updateCardsInList(result!!.value.toList())
-            browser.hideProgressBar()
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
-                browser.mReloadRequired = true
-            }
-        }
-    }
-
-    private fun markCardHandler(): MarkCardHandler {
-        return MarkCardHandler(this)
-    }
-
-    private class MarkCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
-            browser.updateCardsInList(getAllCards(getNotes(result!!.value.toList())))
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
