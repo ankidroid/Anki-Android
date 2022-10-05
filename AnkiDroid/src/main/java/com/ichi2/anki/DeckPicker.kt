@@ -41,7 +41,6 @@ import android.view.WindowManager.BadTokenException
 import android.widget.*
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -2004,29 +2003,26 @@ open class DeckPicker :
     }
 
     private fun promptUserToUpdateScheduler() {
-        val builder = AlertDialog.Builder(this)
-            .setMessage(col.tr.schedulingUpdateRequired())
-            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+        MaterialDialog(this).show {
+            message(text = col.tr.schedulingUpdateRequired())
+            positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
                     if (!userAcceptsSchemaChange(col)) {
                         return@launchCatchingTask
                     }
-                    withProgress {
-                        CollectionManager.updateScheduler()
-                    }
+                    withProgress { CollectionManager.updateScheduler() }
                     showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
                     refreshState()
                 }
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                // nothing to do
-            }
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            builder.setNeutralButton(col.tr.schedulingUpdateMoreInfoButton()) { _, _ ->
-                this.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+            negativeButton(R.string.dialog_cancel)
+            if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
+                @Suppress("DEPRECATION")
+                neutralButton(text = col.tr.schedulingUpdateMoreInfoButton()) {
+                    this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+                }
             }
         }
-        builder.show()
     }
 
     private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
