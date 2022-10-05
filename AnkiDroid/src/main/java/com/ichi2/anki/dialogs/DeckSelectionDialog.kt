@@ -95,7 +95,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
         val args = requireArguments()
-        if (args.containsKey("currentDeckId")) {
+        if (args.containsKey("cuwrrentDeckId")) {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }

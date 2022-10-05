@@ -1,6 +1,4 @@
 import org.gradle.internal.jvm.Jvm
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
@@ -22,7 +20,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
@@ -102,7 +100,7 @@ subprojects {
 ext {
 
     jvmVersion = Jvm.current().javaVersion.majorVersion
-    if (jvmVersion != "11" && jvmVersion != "14" && jvmVersion != "16") {
+    if (jvmVersion != "11" && jvmVersion != "14" && jvmVersion != "16" && jvmVersion !="18") {
         println "\n\n\n"
         println "**************************************************************************************************************"
         println "\n\n\n"

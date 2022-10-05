@@ -23,11 +23,14 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.NavigationDrawerActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.servicelayer.DeckService.deckExists
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -40,7 +43,7 @@ import java.util.function.Consumer
 
 // TODO: Use snackbars instead of toasts: https://github.com/ankidroid/Anki-Android/pull/12139#issuecomment-1224963182
 @NeedsTest("Ensure a toast is shown on a successful action")
-class CreateDeckDialog(private val context: Context, private val title: Int, private val deckDialogType: DeckDialogType, private val parentId: Long?) {
+class CreateDeckDialog(private val context: Context, private val title: Int, private val deckDialogType: DeckDialogType, private val parentId: Long?) : NavigationDrawerActivity() {
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null
     private var mInitialDeckName = ""
@@ -50,7 +53,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
     }
 
-    private val col
+    private val col_
         get() = CollectionHelper.instance.getCol(context)!!
 
     suspend fun showFilteredDeckDialog() {
@@ -96,7 +99,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                     return@input
                 }
 
-                if (deckExists(col, fullyQualifiedDeckName!!)) {
+                if (deckExists(col_, fullyQualifiedDeckName!!)) {
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
                     dialog.getInputField().error = context.getString(R.string.validation_deck_already_exists)
                     return@input
@@ -118,7 +121,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     private fun fullyQualifyDeckName(dialogText: CharSequence) =
         when (deckDialogType) {
             DeckDialogType.DECK, DeckDialogType.FILTERED_DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
-            DeckDialogType.SUB_DECK -> col.decks.getSubdeckName(parentId!!, dialogText.toString())
+            DeckDialogType.SUB_DECK -> col_.decks.getSubdeckName(parentId!!, dialogText.toString())
         }
 
     fun closeDialog() {
@@ -126,7 +129,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     }
 
     fun createSubDeck(did: DeckId, deckName: String?) {
-        val deckNameWithParentName = col.decks.getSubdeckName(did, deckName)
+        val deckNameWithParentName = col_.decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }
 
@@ -134,10 +137,13 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
             // 11668: Display feedback if a deck is created
-            showThemedToast(context, R.string.deck_created, true)
+
+            (context as NavigationDrawerActivity).showSnackbar(R.string.deck_created, Snackbar.LENGTH_LONG)
+//            showThemedToast(context, R.string.deck_created, true)
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
-            showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
+//            showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
+            (context as NavigationDrawerActivity).showSnackbar(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         }
         closeDialog()
     }
@@ -146,7 +152,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = col.decks.newDyn(deckName)
+            val newDeckId = col_.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
         } catch (ex: DeckRenameException) {
             showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
@@ -159,7 +165,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         try {
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
-            val newDeckId = col.decks.id(deckName)
+            val newDeckId = col_.decks.id(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
         } catch (filteredAncestor: DeckRenameException) {
             Timber.w(filteredAncestor)
@@ -200,12 +206,13 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
         } else if (newName != mPreviousDeckName) {
             try {
-                val decks = col.decks
+                val decks = col_.decks
                 val deckId = decks.id(mPreviousDeckName!!)
                 decks.rename(decks.get(deckId), newName)
                 mOnNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
-                showThemedToast(context, R.string.deck_renamed, true)
+                (context as NavigationDrawerActivity).showSnackbar(R.string.deck_renamed, Snackbar.LENGTH_LONG)
+//                showThemedToast(context, R.string.deck_renamed, true)
             } catch (e: DeckRenameException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error

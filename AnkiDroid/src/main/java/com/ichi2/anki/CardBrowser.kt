@@ -290,7 +290,7 @@ open class CardBrowser :
         return RepositionCardHandler(this)
     }
 
-    private class RepositionCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
+    private inner class RepositionCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
         override fun actualOnPreExecute(context: CardBrowser) {
             Timber.d("CardBrowser::RepositionCardHandler() onPreExecute")
         }
@@ -299,10 +299,11 @@ open class CardBrowser :
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute")
             context.mReloadRequired = true
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                context,
-                context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true
-            )
+            showSnackbar(context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), Snackbar.LENGTH_LONG)
+//            showThemedToast(
+//                 context,
+//                 context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true
+//            )
             context.reloadCards(result.value.result)
             context.invalidateOptionsMenu()
         }
@@ -312,7 +313,7 @@ open class CardBrowser :
         return ResetProgressCardHandler(this)
     }
 
-    private class ResetProgressCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
+    private inner class ResetProgressCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
         override fun actualOnPreExecute(context: CardBrowser) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute")
         }
@@ -321,10 +322,11 @@ open class CardBrowser :
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute")
             context.mReloadRequired = true
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                context,
-                context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true
-            )
+            showSnackbar(context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), Snackbar.LENGTH_LONG)
+//            showThemedToast(
+//                context,
+//                context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true
+//            )
             context.reloadCards(result.value.result)
             context.invalidateOptionsMenu()
         }
@@ -334,7 +336,7 @@ open class CardBrowser :
         return RescheduleCardHandler(this)
     }
 
-    private class RescheduleCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
+    private inner class RescheduleCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
         override fun actualOnPreExecute(context: CardBrowser) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute")
         }
@@ -343,10 +345,11 @@ open class CardBrowser :
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute")
             context.mReloadRequired = true
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                context,
-                context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true
-            )
+            showSnackbar(context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), Toast.LENGTH_LONG)
+//            showThemedToast(
+//                context,
+//                context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true
+//            )
             context.reloadCards(result.value.result)
             context.invalidateOptionsMenu()
         }
@@ -1035,6 +1038,7 @@ open class CardBrowser :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when {
+
             drawerToggle.onOptionsItemSelected(item) -> return true
 
             // dismiss undo-snackbar if shown to avoid race condition
@@ -1497,6 +1501,7 @@ open class CardBrowser :
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+
         mSearchTerms = savedInstanceState.getString("mSearchTerms", "")
         mOldCardId = savedInstanceState.getLong("mOldCardId")
         mOldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset")

@@ -26,14 +26,13 @@
         android:id="@+id/deck_picker_dialog_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:theme="@style/ActionBarStyle"
         android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ActionBarStyle"
         app:popupTheme="@style/ActionBar.Popup"
-        tools:title="@string/search_deck"
-        tools:menu="@menu/deck_picker_dialog_menu">
-    </androidx.appcompat.widget.Toolbar>
+        tools:menu="@menu/deck_picker_dialog_menu"
+        tools:title="@string/search_deck"></androidx.appcompat.widget.Toolbar>
 
     <com.ichi2.ui.FixedTextView android:id="@+id/deck_picker_dialog_summary"
         android:layout_width="wrap_content"
