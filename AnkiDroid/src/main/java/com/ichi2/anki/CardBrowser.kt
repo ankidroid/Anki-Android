@@ -1841,9 +1841,9 @@ open class CardBrowser :
                 suspendCardMulti(this, cardIds)
             }
         }
-        updateCardsInList(result.value.toList())
+        updateCardsInList(result.toList())
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (result.value.map { card -> card.id }.contains(reviewerCardId)) {
+        if (result.map { card -> card.id }.contains(reviewerCardId)) {
             mReloadRequired = true
         }
     }

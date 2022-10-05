@@ -23,7 +23,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
-import com.ichi2.utils.Computation
 import com.ichi2.utils.JSONObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
@@ -328,50 +327,43 @@ fun deleteMultipleNotes(
     }
 }
 
-fun suspendCardMulti(col: Collection, cardIds: List<Long>): Computation<Array<Card>> {
+fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
     val cards = cardIds.map { col.getCard(it) }.toTypedArray()
-
-    return try {
-        col.db.executeInTransaction {
-            val sched = col.sched
-            // collect undo information
-            val cids = LongArray(cards.size)
-            val originalSuspended = BooleanArray(cards.size)
-            var hasUnsuspended = false
-            for (i in cards.indices) {
-                val card = cards[i]
-                cids[i] = card.id
-                if (card.queue != Consts.QUEUE_TYPE_SUSPENDED) {
-                    hasUnsuspended = true
-                    originalSuspended[i] = false
-                } else {
-                    originalSuspended[i] = true
-                }
-            }
-
-            // if at least one card is unsuspended -> suspend all
-            // otherwise unsuspend all
-            if (hasUnsuspended) {
-                sched.suspendCards(cids)
+    return col.db.executeInTransaction {
+        val sched = col.sched
+        // collect undo information
+        val cids = LongArray(cards.size)
+        val originalSuspended = BooleanArray(cards.size)
+        var hasUnsuspended = false
+        for (i in cards.indices) {
+            val card = cards[i]
+            cids[i] = card.id
+            if (card.queue != Consts.QUEUE_TYPE_SUSPENDED) {
+                hasUnsuspended = true
+                originalSuspended[i] = false
             } else {
-                sched.unsuspendCards(cids)
+                originalSuspended[i] = true
             }
-
-            // mark undo for all at once
-            col.markUndo(UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended))
-
-            // reload cards because they'll be passed back to caller
-            for (c in cards) {
-                c.load()
-            }
-            sched.deferReset()
         }
+
+        // if at least one card is unsuspended -> suspend all
+        // otherwise unsuspend all
+        if (hasUnsuspended) {
+            sched.suspendCards(cids)
+        } else {
+            sched.unsuspendCards(cids)
+        }
+
+        // mark undo for all at once
+        col.markUndo(UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended))
+
+        // reload cards because they'll be passed back to caller
+        for (c in cards) {
+            c.load()
+        }
+        sched.deferReset()
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
-        Computation.ok(cards)
-    } catch (e: RuntimeException) {
-        Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-        CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
-        Computation.err()
+        cards
     }
 }
