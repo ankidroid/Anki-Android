@@ -208,10 +208,22 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
     }
 
-    class SuspendCardMulti(cardIds: List<Long>) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            suspendCardMulti(col, cards)
-            return true
+    class SuspendCardMulti(private val cardIds: List<Long>) : TaskDelegate<Void, Computation<Array<Card>>>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
+            val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+            return try {
+                col.db.executeInTransaction {
+                    suspendCardMulti(col, cards)
+                }
+
+                // pass cards back so more actions can be performed by the caller
+                // (querying the cards again is unnecessarily expensive)
+                Computation.ok(cards)
+            } catch (e: RuntimeException) {
+                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
+                Computation.err()
+            }
         }
     }
 
