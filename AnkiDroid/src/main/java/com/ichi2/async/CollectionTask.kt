@@ -23,7 +23,6 @@ import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.*
@@ -305,14 +304,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 CollectionHelper.instance.closeCollection(true, "Check Database Completed")
                 Pair(true, result)
             }
-        }
-    }
-
-    class RebuildCram : TaskDelegate<Void, DeckStudyData?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            Timber.d("doInBackgroundRebuildCram")
-            col.sched.rebuildDyn(col.decks.selected())
-            return updateValuesFromDeck(col, true)
         }
     }
 

@@ -43,8 +43,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfigura
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.async.CollectionTask.RebuildCram
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
@@ -59,6 +57,7 @@ import timber.log.Timber
 import java.util.*
 
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
+
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
@@ -476,8 +475,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        TaskManager.launchCollectionTask(RebuildCram(), createCustomStudySessionListener())
-
+        launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }
@@ -489,10 +487,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             customStudyListener?.onExtendStudyLimits()
         }
         customStudyListener?.dismissAllDialogFragments()
-    }
-
-    private fun createCustomStudySessionListener(): CreateCustomStudySessionListener {
-        return CreateCustomStudySessionListener(customStudyListener)
     }
 
     /**
