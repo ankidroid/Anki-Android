@@ -208,12 +208,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
     }
 
-    class SuspendCardMulti(private val cardIds: List<Long>) : TaskDelegate<Void, Computation<Array<Card>>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
-            return suspendCardMulti(col, cardIds)
-        }
-    }
-
     class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
