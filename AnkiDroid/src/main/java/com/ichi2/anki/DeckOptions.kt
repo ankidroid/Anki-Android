@@ -306,7 +306,14 @@ class DeckOptions :
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(CollectionTask.ConfSetSubdecks(deck, mOptions), confChangeHandler())
+                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                    preConfChange()
+                                    try {
+                                        withCol { confSetSubdecks(this, deck, mOptions) }
+                                    } finally {
+                                        postConfChange()
+                                    }
+                                }
                             }
                             "reminderEnabled" -> {
                                 val reminder = JSONObject()

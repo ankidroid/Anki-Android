@@ -573,13 +573,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("fix `val changed = execTask()!!`")
-    class ConfSetSubdecks(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            return confSetSubdecks(col, deck, conf)
-        }
-    }
-
     /**
      * Deletes the given field in the given model
      */
