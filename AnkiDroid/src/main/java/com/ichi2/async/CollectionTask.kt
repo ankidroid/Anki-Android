@@ -28,7 +28,6 @@ import com.ichi2.anki.CardBrowser.CardCollection
 import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
-import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
@@ -642,28 +641,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
             return col.emptyCids(collectionTask)
-        }
-    }
-
-    /**
-     * Goes through selected cards and checks selected and marked attribute
-     * @return If there are unselected cards, if there are unmarked cards
-     */
-    class CheckCardSelection(private val checkedCards: Set<CardCache>) : TaskDelegate<Void, Pair<Boolean, Boolean>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, Boolean>? {
-            var hasUnsuspended = false
-            var hasUnmarked = false
-            for (c in checkedCards) {
-                if (collectionTask.isCancelled()) {
-                    Timber.v("doInBackgroundCheckCardSelection: cancelled.")
-                    return null
-                }
-                val card = c.card
-                hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-                hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
-                if (hasUnsuspended && hasUnmarked) break
-            }
-            return Pair(hasUnsuspended, hasUnmarked)
         }
     }
 
