@@ -2038,18 +2038,18 @@ open class CardBrowser :
         return RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index)
     }
 
-    private fun onSelectedCardsChecked(result: Pair<Boolean, Boolean>?) {
-        if (mActionBarMenu != null && result != null) {
+    private fun onSelectedCardsChecked(result: Pair<Boolean, Boolean>) {
+        mActionBarMenu?.let { actionBarMenu ->
             val (hasUnsuspended, hasUnmarked) = result
             val suspendTitle = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card
             val suspendIcon = if (hasUnsuspended) R.drawable.ic_pause_circle_outline else R.drawable.ic_pause_circle_filled
-            mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
+            actionBarMenu.findItem(R.id.action_suspend_card).apply {
                 title = getString(suspendTitle)
                 setIcon(suspendIcon)
             }
             val markTitle = if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card
             val markIcon = if (hasUnmarked) R.drawable.ic_star_border_white else R.drawable.ic_star_white
-            mActionBarMenu!!.findItem(R.id.action_mark_card).apply {
+            actionBarMenu.findItem(R.id.action_mark_card).apply {
                 title = getString(markTitle)
                 setIcon(markIcon)
             }
