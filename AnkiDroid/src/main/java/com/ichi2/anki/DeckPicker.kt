@@ -2450,8 +2450,8 @@ open class DeckPicker :
             withCol {
                 Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                 decks.select(did)
-                col.sched.rebuildDyn(col.decks.selected())
-                updateValuesFromDeck(col, true)
+                sched.rebuildDyn(decks.selected())
+                updateValuesFromDeck(this, true)
             }
             updateDeckList()
             if (fragmented) loadStudyOptionsFragment(false)

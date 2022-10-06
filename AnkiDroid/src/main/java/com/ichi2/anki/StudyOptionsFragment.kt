@@ -325,8 +325,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
-                sched.rebuildDyn(col.decks.selected())
-                updateValuesFromDeck(col, true)
+                sched.rebuildDyn(decks.selected())
+                updateValuesFromDeck(this, true)
             }
         }
         rebuildUi(result, true)
@@ -530,19 +530,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          */
         val eta: Int
     )
-
-    /**
-     * Returns a listener that rebuilds the interface after execute.
-     *
-     * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
-     *                        to reflect the latest values.
-     */
-    private fun getCollectionTaskListener(refreshDecklist: Boolean): TaskListener<Void?, DeckStudyData?> {
-        return object : TaskListener<Void?, DeckStudyData?>() {
-            override fun onPreExecute() {}
-            override fun onPostExecute(result: DeckStudyData?) = rebuildUi(result, refreshDecklist)
-        }
-    }
 
     /** Open cram deck option if deck is opened for the first time
      * @return Whether we opened the deck options */

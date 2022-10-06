@@ -40,9 +40,9 @@ class CreateCustomStudySessionListener(val callback: Callback) {
 suspend fun rebuildCram(listener: CreateCustomStudySessionListener) {
     listener.onPreExecute()
     CollectionManager.withCol {
-        Timber.d("doInBackgroundRebuildCram")
-        col.sched.rebuildDyn(col.decks.selected())
-        updateValuesFromDeck(col, true)
+        Timber.d("doInBackground - rebuildCram()")
+        sched.rebuildDyn(decks.selected())
+        updateValuesFromDeck(this, true)
     }
     listener.onPostExecute()
 }
