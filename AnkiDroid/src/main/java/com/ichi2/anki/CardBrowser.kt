@@ -147,7 +147,7 @@ open class CardBrowser :
     private var mCurrentFlag = 0
     private var mTagsDialogFactory: TagsDialogFactory? = null
     private var mSearchItem: MenuItem? = null
-    private var mSaveSearchItem: MenuItem? = null
+    private lateinit var mSaveSearchItem: MenuItem
     private var mMySearchesItem: MenuItem? = null
     private var mPreviewItem: MenuItem? = null
     private var mUndoSnackbar: Snackbar? = null
@@ -852,7 +852,6 @@ open class CardBrowser :
         selectNavigationItem(R.id.nav_browser)
     }
 
-    @KotlinCleanup("Add a few variables to get rid of the !!")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         mActionBarMenu = menu
@@ -861,7 +860,7 @@ open class CardBrowser :
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
             mSaveSearchItem = menu.findItem(R.id.action_save_search)
-            mSaveSearchItem!!.isVisible = false // the searchview's query always starts empty.
+            mSaveSearchItem.isVisible = false // the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches)
             val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
             mMySearchesItem!!.isVisible = savedFiltersObj != null && savedFiltersObj.length() > 0
