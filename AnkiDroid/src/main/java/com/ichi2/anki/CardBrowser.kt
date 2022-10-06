@@ -2066,15 +2066,13 @@ open class CardBrowser :
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
-        @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
             val card = mCards[position]
             (v.tag as Array<*>)
                 .forEachIndexed { i, col ->
                     setFont(col as TextView) // set font for column
-                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                    col.text = card.getColumnHeaderText(fromKeys[i]) // st text for column
                 }
             // set card's background color
             val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)
@@ -2204,7 +2202,7 @@ open class CardBrowser :
     /**
      * Reloads the data of the cards, taking on their current values from the database.
      */
-    @KotlinCleanup("cards.isNullOrEmpty()")
+
     protected fun reloadCards(cards: Array<Card>?) {
         if (cards.isNullOrEmpty()) return
 
