@@ -135,9 +135,8 @@ open class CardBrowser :
     val mCards = CardCollection<CardCache>()
     var deckSpinnerSelection: DeckSpinnerSelection? = null
 
-    @KotlinCleanup("move to onCreate and make lateinit")
     @VisibleForTesting
-    var cardsListView: ListView? = null
+    lateinit var cardsListView: ListView
     private var mSearchView: CardBrowserSearchView? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -490,6 +489,9 @@ open class CardBrowser :
             return
         }
         setContentView(R.layout.card_browser)
+
+        cardsListView = findViewById(R.id.card_browser_list)
+
         initNavigationDrawer(findViewById(android.R.id.content))
         startLoadingCollection()
 
@@ -553,7 +555,7 @@ open class CardBrowser :
         // conf saved may still have this bug.
         mOrderAsc = upgradeJSONIfNecessary(col, "sortBackwards", false)
         mCards.reset()
-        cardsListView = findViewById(R.id.card_browser_list)
+
         // Create a spinner for column 1
         val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
         val column1Adapter = ArrayAdapter.createFromResource(
