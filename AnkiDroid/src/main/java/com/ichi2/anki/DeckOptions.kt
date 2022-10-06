@@ -19,7 +19,9 @@
 package com.ichi2.anki
 
 import android.app.AlarmManager
-import android.content.*
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.CheckBoxPreference
@@ -34,13 +36,10 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask
 import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
 import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -235,6 +234,7 @@ class DeckOptions :
                             }
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
+                            // TODO: Extract out deckConf, confReset, remConf and confSetSubdecks to a function. They are overall similar.
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
@@ -309,7 +309,15 @@ class DeckOptions :
                                 launch(getCoroutineExceptionHandler(this@DeckOptions)) {
                                     preConfChange()
                                     try {
-                                        withCol { confSetSubdecks(this, deck, mOptions) }
+                                        withCol {
+                                            Timber.d("confSetSubdecks")
+                                            val children = col.decks.children(deck.getLong("id"))
+                                            for (childDid in children.values) {
+                                                val child = col.decks.get(childDid)
+                                                if (child.isDyn) continue
+                                                changeDeckConfiguration(deck, mOptions, col)
+                                            }
+                                        }
                                     } finally {
                                         postConfChange()
                                     }
@@ -704,21 +712,4 @@ class DeckOptions :
             return calendar
         }
     }
-}
-
-fun confSetSubdecks(
-    col: com.ichi2.libanki.Collection,
-    deck: Deck,
-    conf: DeckConfig
-): Boolean {
-    Timber.d("confSetSubdecks")
-    val children = col.decks.children(deck.getLong("id"))
-    for (childDid in children.values) {
-        val child = col.decks.get(childDid)
-        if (child.isDyn) {
-            continue
-        }
-        changeDeckConfiguration(deck, conf, col)
-    }
-    return true
 }
