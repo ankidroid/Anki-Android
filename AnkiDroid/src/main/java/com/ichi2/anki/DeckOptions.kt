@@ -40,6 +40,7 @@ import com.ichi2.async.TaskManager
 import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -695,5 +696,27 @@ class DeckOptions :
             calendar[Calendar.SECOND] = 0
             return calendar
         }
+    }
+}
+
+fun confSetSubdecks(
+    col: com.ichi2.libanki.Collection,
+    deck: Deck,
+    conf: DeckConfig
+): Boolean {
+    Timber.d("doInBackgroundConfSetSubdecks")
+    return try {
+        val children = col.decks.children(deck.getLong("id"))
+        for (childDid in children.values) {
+            val child = col.decks.get(childDid)
+            if (child.isDyn) {
+                continue
+            }
+            changeDeckConfiguration(deck, conf, col)
+        }
+        true
+    } catch (e: JSONException) {
+        Timber.w(e)
+        false
     }
 }
