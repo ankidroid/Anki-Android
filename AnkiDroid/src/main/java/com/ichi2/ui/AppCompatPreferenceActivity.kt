@@ -65,7 +65,6 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         val mSummaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
         abstract fun cacheValues()
 
@@ -138,15 +137,15 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         }
 
         override fun getFloat(key: String, defValue: Float): Float {
-            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
+            return this.getString(key, defValue.toString())!!.toFloat()
         }
 
         override fun getInt(key: String, defValue: Int): Int {
-            return this.getString(key, Integer.toString(defValue))!!.toInt()
+            return this.getString(key, defValue.toString())!!.toInt()
         }
 
         override fun getLong(key: String, defValue: Long): Long {
-            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
+            return this.getString(key, defValue.toString())!!.toLong()
         }
 
         override fun getString(key: String, defValue: String?): String? {
