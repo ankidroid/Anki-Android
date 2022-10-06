@@ -180,7 +180,17 @@ class DeckOptions :
                                 val oldOrder = mOptions.getJSONObject("new").getInt("order")
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder)
-                                    TaskManager.launchCollectionTask(CollectionTask.Reorder(mOptions), confChangeHandler())
+                                    launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                        preConfChange()
+                                        try {
+                                            withCol {
+                                                Timber.d("doInBackground - reorder")
+                                                sched.resortConf(mOptions)
+                                            }
+                                        } finally {
+                                            postConfChange()
+                                        }
+                                    }
                                 }
                                 mOptions.getJSONObject("new").put("order", value.toInt())
                             }
