@@ -1060,7 +1060,6 @@ abstract class AbstractFlashcardViewer :
         webView.settings.allowFileAccess = true
 
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
-        webView.isFocusableInTouchMode = typeAnswer!!.useInputTag
         webView.isScrollbarFadingEnabled = true
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable, webView.isFocusableInTouchMode)
         webView.webViewClient = CardViewerWebClient(mAssetLoader, this)
