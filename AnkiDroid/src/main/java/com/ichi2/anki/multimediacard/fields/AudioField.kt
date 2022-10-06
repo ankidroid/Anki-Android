@@ -27,11 +27,8 @@ import java.util.regex.Pattern
 /**
  * Implementation of Audio field types
  */
-@KotlinCleanup("want name & hasTemporaryMedia to be a property in the interface rather than a getter/setter")
 abstract class AudioField : FieldBase(), IField {
     private var mAudioPath: String? = null
-    protected var currentName: String? = null
-    private var currentHasTemporaryMedia = false
 
     override var imagePath: String? = null
 
@@ -44,11 +41,7 @@ abstract class AudioField : FieldBase(), IField {
 
     override var text: String? = null
 
-    override var hasTemporaryMedia: Boolean
-        get() = currentHasTemporaryMedia
-        set(value) {
-            currentHasTemporaryMedia = value
-        }
+    override var hasTemporaryMedia: Boolean = false
 
     @KotlinCleanup("get() can be simplified with a scope function")
     override val formattedValue: String
