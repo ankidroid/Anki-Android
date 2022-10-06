@@ -711,19 +711,14 @@ fun confSetSubdecks(
     deck: Deck,
     conf: DeckConfig
 ): Boolean {
-    Timber.d("doInBackgroundConfSetSubdecks")
-    return try {
-        val children = col.decks.children(deck.getLong("id"))
-        for (childDid in children.values) {
-            val child = col.decks.get(childDid)
-            if (child.isDyn) {
-                continue
-            }
-            changeDeckConfiguration(deck, conf, col)
+    Timber.d("confSetSubdecks")
+    val children = col.decks.children(deck.getLong("id"))
+    for (childDid in children.values) {
+        val child = col.decks.get(childDid)
+        if (child.isDyn) {
+            continue
         }
-        true
-    } catch (e: JSONException) {
-        Timber.w(e)
-        false
+        changeDeckConfiguration(deck, conf, col)
     }
+    return true
 }
