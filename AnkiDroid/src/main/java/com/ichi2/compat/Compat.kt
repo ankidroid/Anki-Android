@@ -79,7 +79,7 @@ interface Compat {
      * Retrieve extended data from the intent.
      * @param name – The name of the desired item.
      * @param className – The type of the object expected.
-     * @return: the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
+     * @return the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
      */
     fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
 
