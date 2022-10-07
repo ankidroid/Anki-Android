@@ -111,7 +111,7 @@ class Finder(private val col: Collection) {
             if ("" == first) {
                 "1"
             } else {
-                "(${first})"
+                "($first)"
             }
         } ?: return res
         val sql: String = if (returnCid) {
