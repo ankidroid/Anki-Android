@@ -114,8 +114,7 @@ class Finder(private val col: Collection) {
                 "(${first})"
             }
         } ?: return res
-        val sql: String
-        sql = if (returnCid) {
+        val sql: String = if (returnCid) {
             "select min(c.id) from cards c, notes n where c.nid=n.id and $preds group by n.id"
         } else {
             "select distinct(n.id) from cards c, notes n where c.nid=n.id and $preds"
