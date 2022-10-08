@@ -128,6 +128,7 @@ fi  #API30
 #fi  #API30
 
 # Now build the universal release also
+./gradlew --stop
 echo "Running 'assemblePlayRelease' target with universal APK flag"
 if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
 then
@@ -166,6 +167,7 @@ for ABI in $ABIS; do
 done
 
 if [ "$PUBLIC" = "public" ]; then
+  ./gradlew --stop
   echo "Running 'assembleAmazonRelease' gradle target with universal APK flag"
   ./gradlew assembleAmazonRelease  -Duniversal-apk=true
   echo "Running 'publishToAmazonAppStore' gradle target"
@@ -175,6 +177,7 @@ fi
 
 # Now that Git is clean and the main release is done, run the parallel release script and upload them
 echo "Running parallel package build"
+./gradlew --stop
 ./tools/parallel-package-release.sh "$VERSION"
 if [ "$PUBLIC" = "public" ]; then
   BUILDNAMES='A B C D E' # For public builds we will post all parallels
