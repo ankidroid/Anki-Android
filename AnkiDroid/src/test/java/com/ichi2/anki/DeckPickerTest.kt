@@ -271,9 +271,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
-    @Ignore("Flaky. Try to unflak when AsyncTask is entirely removed.")
-    fun databaseLockedNoPermissionIntegrationTest() {
+    fun databaseLockedNoPermissionIntegrationTest() = runTest {
         // no permissions -> grant permissions -> db locked
         try {
             InitialActivityWithConflictTest.setupForDefault()
