@@ -123,7 +123,6 @@
     <string name="save">Захаваць</string>
     <string name="close">Закрыць</string>
     <string name="select">Выбраць</string>
-    <string name="saving_changes">Захаванне змен&#8230;</string>
     <string name="reordering_cards">Перамешванне картак&#8230;</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдаленыя. Калі запіс не мае ніводнай карткі, то ён будзе згублены. Працягнуць?</string>

@@ -123,7 +123,6 @@
     <string name="save">I-save</string>
     <string name="close">Isara</string>
     <string name="select">Pumili</string>
-    <string name="saving_changes">Isina-save ang mga pagbabago&#8230;</string>
     <string name="reordering_cards">Isinasaayos and pagkakasunod-sunod ng mga baraha&#8230;</string>
     <string name="field_remapping">%1$s (mula “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Ang anumang mga baraha na hindi naka-map ay tatanggalin. Kung ang isang paalala ay walang natitirang mga baraha, mawawala ito. Sigurado ka bang gusto mong magpatuloy?</string>

@@ -100,8 +100,8 @@
         <item>已修改筆記</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">套用</string>
+    <string name="filter_by_flags">標籤</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今日新卡片上限</string>
     <string name="custom_study_increase_review_limit">修改今日複習卡片上限</string>
@@ -123,7 +123,6 @@
     <string name="save">存儲</string>
     <string name="close">關閉</string>
     <string name="select">選擇</string>
-    <string name="saving_changes">正在儲存設定&#8230;</string>
     <string name="reordering_cards">正在重新排列卡片...</string>
     <string name="field_remapping">%1$s (來自 \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
@@ -161,7 +160,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">確定要匯入「%s」？可能會花很久的時間</item>
     </plurals>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
     <string name="import_title_error" comment="Title of error dialog">錯誤</string>
@@ -172,14 +171,14 @@
     <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
     <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
     <string name="import_error_corrupt_zip">此 apkg 檔案已損毀。請刪除它再重新下載\n\n根本原因：%s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">無法匯入檔案\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">無法快取檔案（可能是儲存空間不夠）</string>
     <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_colpkg_apkg">無法同時選擇 apkg &amp; 和 colpkg 檔。</string>
+    <string name="import_stats_error">匯入檔案時發生錯誤：\n「%s」</string>
     <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_include_schedule">包含進度</string>
@@ -193,7 +192,7 @@
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
     <string name="export_successful">檔案 “%s” 匯出完畢，您想用其它應用程式發送它嗎？</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">以...傳送Anki牌組包</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
     <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>
@@ -314,7 +313,7 @@
     <string name="after_text">選取內容後的 HTML</string>
     <string name="add_toolbar_item">建立工具列項目</string>
     <string name="edit_toolbar_item">編輯工具列項目</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">請在選取文字的前後出入要添加的HTML碼\n\n長按工具列項目以編輯或移除</string>
     <string name="remove_toolbar_item">是否移除工具列項目？</string>
     <string name="note_editor_paste_too_large">此圖像太大，無法貼上，請手動插入</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android 備份進行中。請再試一次</string>
@@ -370,16 +369,16 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s 不是一個有效的 JavaScript addon package</string>
     <string name="could_not_create_dir">無法建立目錄 %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="malicious_archive_entry_outside">發現惡意檔案：內含目標網址外的入侵：%s</string>
+    <string name="malicious_archive_exceeds_limit">發現惡意檔案：檔案大小超過%1$s，或內含超過%2$d個檔案</string>
+    <string name="file_extract_exceeds_storage_space">解壓縮的檔案大小超出可用儲存空間</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">展開標籤「%s」</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">無法存取牌組，請再試一次</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_ankidroid_tagline_one">少學習一點</string>
+    <string name="intro_ankidroid_tagline_two">多記一點</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>

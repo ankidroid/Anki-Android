@@ -101,10 +101,10 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Aplicar</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Cambiar el límite de tarjetas nuevas para hoy</string>
-    <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
+    <string name="custom_study_increase_review_limit">Cambiar el límite de repasos para hoy</string>
     <string name="custom_study_review_forgotten">Revisar tarjetas olvidadas</string>
     <string name="custom_study_review_ahead">Revisar por adelantado</string>
     <string name="custom_study_random_selection">Estudiar una selección al azar de tarjetas</string>
@@ -116,14 +116,13 @@
     <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
     <string name="note_editor_no_first_field">El primer campo está vacío</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener huecos</string>
-    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haga clic en \"Tarjetas\" y añade un sustituto de campo</string>
+    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haz clic en \"Tarjetas\" y añade un sustituto de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Las preguntas anidadas sólo funcionarán en un tipo de nota de Pregunta anidada (Cloze)</string>
     <string name="saving_facts">Guardando nota</string>
     <string name="saving_model">Guardando tipo de nota</string>
     <string name="save">Guardar</string>
     <string name="close">Cerrar</string>
     <string name="select">Seleccionar</string>
-    <string name="saving_changes">Guardando modificaciones...</string>
     <string name="reordering_cards">Reordenando tarjetas...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta sin asignación. Si una nota no posee tarjetas restantes se perderá. ¿Está seguro de que desea continuar?</string>
@@ -171,9 +170,9 @@
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
-    <string name="import_log_failed_validate">falló la validación apkg</string>
+    <string name="import_log_failed_validate">Falló la validación apkg</string>
     <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
-    <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
+    <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se haya borrado la cache durante el procesamiento.\nPor favor, inténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
@@ -197,7 +196,7 @@
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_successful">El archivo \"%s\" fue exportado. ¿Desea enviarlo con otra aplicación?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarjetas exportadas por AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        ¡Hola!
         <br/><br/>

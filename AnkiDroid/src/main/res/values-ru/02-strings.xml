@@ -90,7 +90,7 @@
         <item>Тип записи</item>
         <item>Вопрос</item>
         <item>Метки</item>
-        <item>Забытых</item>
+        <item>Ошибки</item>
         <item>Повторения</item>
         <item>Интервал</item>
         <item>Лёгкость</item>
@@ -101,7 +101,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Применить</string>
-    <string name="filter_by_flags">Флаги</string>
+    <string name="filter_by_flags">Флажки</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
     <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
@@ -123,7 +123,6 @@
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
-    <string name="saving_changes">Изменения сохраняются&#8230;</string>
     <string name="reordering_cards">Карточки перемешиваются&#8230;</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
@@ -205,7 +204,7 @@
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Отправить пакет Anki с помощью</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[        Привет!
         <br/><br/>
@@ -355,7 +354,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели инструментов</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -372,7 +371,7 @@
     <string name="cancel_download_question_title">Отменить загрузку?</string>
     <string name="downloading_file">Загружается %s</string>
     <string name="import_deck">Импортировать колоду</string>
-    <string name="something_wrong">Что-то пошло не так, попробуйте еще раз</string>
+    <string name="something_wrong">Что-то пошло не так. Попробуйте ещё раз</string>
     <string name="download_failed">Загрузка не удалась</string>
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
@@ -385,7 +384,7 @@
     <string name="suspended_card">Карточка исключена</string>
     <string name="suspended_note">Запись исключена</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Сделать поле %s липким</string>
+    <string name="note_editor_toggle_sticky">Закрепить поле %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Перенос хранилища</string>
     <string name="scoped_storage_initial_message">AnkiDroid должен перенести данные, чтобы соответствовать новым правилам конфиденциальности Android
@@ -422,10 +421,10 @@
     <string name="deck_created">Колода создана</string>
     <string name="deck_renamed">Колода переименована</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kiitos спасибо </string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Яблокь</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
     <string name="toggle_cards_notes">Переключить карточки/заметки</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
+    <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
     <string name="browser_options_dialog_heading">Настройки браузера</string>
 </resources>

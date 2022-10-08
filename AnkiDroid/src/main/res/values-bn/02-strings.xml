@@ -50,101 +50,100 @@
     <string name="CardEditorCardDeck">কার্ড ডেক:</string>
     <string name="CardEditorNoteDeck">ডেক:</string>
     <string name="CardEditorModel">ধরন:</string>
-    <string name="CardEditorTags">ট্যাগ: %1$s</string>
-    <string name="CardEditorCards">তাস: %1$s</string>
-    <string name="tag_name">ট্যাগ নাম</string>
+    <string name="CardEditorTags">ট্যাগসমূহ: %1$s</string>
+    <string name="CardEditorCards">কার্ড: %1$s</string>
+    <string name="tag_name">ট্যাগের নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
     <string name="add_tag">ট্যাগ যোগ করুন</string>
-    <string name="check_all_tags">সমস্ত ট্যাগ চেক/আনচেক করুন</string>
+    <string name="check_all_tags">সবগুলো বাছাই/অবাছাই করুন </string>
     <string name="filter_tags">ট্যাগ ফিল্টার করুন</string>
     <string name="no_tags">আপনি এখনো কোন ট্যাগ যুক্ত করেননি</string>
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">হোয়াইটবোর্ডে রাখো</string>
+    <string name="save_whiteboard">হোয়াইটবোর্ড সংরক্ষণ করুন</string>
     <string name="enable_whiteboard">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>
     <string name="hide_whiteboard">হোয়াইটবোর্ড আড়াল করুন</string>
     <string name="clear_whiteboard">হোয়াইটবোর্ড পরিষ্কার করুন</string>
     <string name="replay_audio">অডিও আবার চালান</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-    <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Corrupt font file %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="leech_suspend_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে এবং স্থগিত  হয়েছে</string>
+    <string name="leech_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে</string>
+    <string name="corrupt_font">ত্রুটিপূর্ণ ফন্ট ফাইল %s</string>
+    <string name="webview_crash_unknown">অজানা সমস্যা</string>
+    <string name="webview_crash_unknwon_detailed">ওয়েবভিউ-এর কোনো অভ্যন্তরীণ ত্রুটির কারণে এমনটি হচ্ছে</string>
+    <string name="webview_crash_oom">যথেষ্ট মেমরি নেই</string>
+    <string name="webview_crash_oom_details">ওয়েবভিউ সিস্টেম কর্তৃক থামিয়ে দেয়া হয়েছে। সাধারণত যখন অ্যাপ মেমরি সংকটে পড়ে কিংবা বড় ফন্ট, বড় মিডিয়া ইত্যাদি কারণে এমনটি হয়।</string>
+    <string name="webview_crash_nonfatal">ওযেবভিউ রেন্ডারার ক্র্যাশ করেছে। কারণ: %s</string>
+    <string name="webview_crash_fatal">মারাত্মক ত্রুটি: ওয়েবভিউ রেনডারার ক্র্যাশ করেছে। কারণ: %s</string>
+    <string name="webview_crash_loop_dialog_title">সিস্টেম ওয়েবভিউ রেন্ডারিং ব্যর্থ</string>
+    <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>প্রশ্ন</item>
-        <item>ভুক্তি সাজাও</item>
+        <item>ফিল্ড সাজান</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>উত্তর</item>
-        <item>তাস</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Tags</item>
-        <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>কার্ড</item>
+        <item>ডেক</item>
+        <item>নোট</item>
+        <item>প্রশ্ন</item>
+        <item>টেগসমূহ</item>
+        <item>ভুলে যাওয়া</item>
+        <item>পরিদর্শন</item>
+        <item>বিরামকাল</item>
+        <item>সহজতা</item>
+        <item>ডিউ</item>
+        <item>কার্ড পরিবর্তন</item>
+        <item>রচিত</item>
+        <item>নোট পরিবর্তিত</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">প্রয়োগ কর</string>
+    <string name="filter_by_flags">নিশান</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
-    <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>
+    <string name="custom_study_increase_review_limit">আজকের পরিদর্শন কার্ড সীমা বদল</string>
+    <string name="custom_study_review_forgotten">ভুলে যাওয়া কার্ড পরিদর্শন</string>
+    <string name="custom_study_review_ahead">আগাম পরিদর্শন</string>
+    <string name="custom_study_random_selection">এলোমেলোভাবে নির্বাচিত কার্ড অধ্যয়ন</string>
+    <string name="custom_study_preview_new">নতুন কার্ড অধ্যয়ন</string>
+    <string name="custom_study_limit_tags">নির্দিষ্ট ট্যাগে সীমিতকরণ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
-    <string name="saving_facts">Saving note</string>
-    <string name="saving_model">Saving note type</string>
-    <string name="save">Save</string>
-    <string name="close">Close</string>
-    <string name="select">Select</string>
-    <string name="saving_changes">Saving changes&#8230;</string>
-    <string name="reordering_cards">Reordering cards&#8230;</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="cardeditor_title_edit_card">নোট সম্পাদন</string>
+    <string name="discard_unsaved_changes">লেখাগুলো বাতিল করে বন্ধ করতে চান?</string>
+    <string name="note_editor_no_cards_created">কোনও কার্ড বানানো যায়নি। আরো ক\'টি ফিল্ডে লিখুন।</string>
+    <string name="note_editor_no_first_field">প্রথম ফিল্ডটি খালি</string>
+    <string name="note_editor_no_cloze_delations">এই ধরনের নোটে অবশ্যই ক্লোজ ডিলিশন থাকতে হবে</string>
+    <string name="note_editor_no_cards_created_all_fields">এই নোট টাইপ অনুসারে কোনও কার্ড তৈরি করা যায়নি। \nঅন্য নোটটাইপ দিয়ে করুন অথবা  ‘কার্ডসমূহ’ তে ক্লিক করে প্রতিস্থাপন ফিল্ড যোগ করুন</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">ক্লোজ ডিলিশন শুধু ক্লোজ নোটটাইপ এ-ই কাজ করে</string>
+    <string name="saving_facts">নোট সংরক্ষিত হচ্ছে</string>
+    <string name="saving_model">নোটটাইপ সংরক্ষিত হচ্ছে</string>
+    <string name="save">সংরক্ষন কর</string>
+    <string name="close">বন্ধ কর</string>
+    <string name="select">বেছে নাও</string>
+    <string name="reordering_cards">কার্ডগুলো পুনঃবিন্যাস করছি&#8230;</string>
+    <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
+    <string name="confirm_map_cards_to_nothing">ম্যাপিং বিহীন কার্ডগুলি মুছে ফেলা হবে। কোনও নোটে যদি আর কার্ড বাকি না থাকে তবে সেটাও মুছে যাবে। আপনি কি চালিয়ে যেতে চান?</string>
+    <string name="timebox_reached_title">সময়সীমা অতিক্রান্ত হয়েছে</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%1$d card studied in %2$s</item>
-        <item quantity="other">%1$d cards studied in %2$s</item>
+        <item quantity="one">%1$d টি কার্ড অধ্যয়িত হয়েছে %2$s মিনিটে</item>
+        <item quantity="other">%1$d টি কার্ড অধ্যয়িত হয়েছে %2$s এ</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d মিনিট</item>
+        <item quantity="other">%1$d মিনিট</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid card</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card">Reposition</string>
-    <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">আনকি-ড্রয়েড</string>
+    <string name="note_editor_copy_note">নোট কপি কর</string>
+    <string name="card_editor_reposition_card">পুনঃস্থাপন</string>
+    <string name="card_editor_reset_card">অগ্রগতি পুনঃস্থাপন কর</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">সময় পুনঃনির্ধারণ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">একটু দেখাও</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d -র মধ্যে %1$d</string>
+    <string name="error_insufficient_memory">আপনার ডিভাইসে পর্যাপ্ত মেমোরি না থাকায় কাজটি সম্ভব হয়নি</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Rename</string>
     <string name="default_conf_delete_error">The default options group can’t be removed</string>
     <plurals name="factadder_cards_added">
@@ -402,8 +401,8 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="toggle_cards_notes">কার্ড নাকি নোট?</string>
+    <string name="toggle_browser_mode_help">ব্রাউজার এ কার্ড নাকি নোট দেখাবে?</string>
+    <string name="truncate_content_help">ব্রাউজারের প্রতি সারীর উচ্চতা প্রথম ৩ লাইনে সীমাবদ্ধ করুন</string>
+    <string name="browser_options_dialog_heading">ব্রাউজার অপশন</string>
 </resources>

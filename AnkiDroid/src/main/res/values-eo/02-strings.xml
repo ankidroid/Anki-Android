@@ -123,7 +123,6 @@
     <string name="save">Konservi</string>
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
-    <string name="saving_changes">Konservado de ŝanĝoj&#8230;</string>
     <string name="reordering_cards">Reordigado de kartoj&#8230;</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>

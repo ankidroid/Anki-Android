@@ -43,9 +43,9 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Всегда сообщать</string>
-    <string name="error_reporting_choice_never_report">Никогда не сообщать</string>
-    <string name="error_reporting_choice_ask_user">Спрашивать меня</string>
+    <string name="error_reporting_choice_always_report">Всегда</string>
+    <string name="error_reporting_choice_never_report">Никогда</string>
+    <string name="error_reporting_choice_ask_user">Спрашивать</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <string name="leech_action_tag_only">Добавить метку</string>

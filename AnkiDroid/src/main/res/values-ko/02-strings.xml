@@ -124,7 +124,6 @@
     <string name="save">저장</string>
     <string name="close">닫기</string>
     <string name="select">선택</string>
-    <string name="saving_changes">변경 내용 저장 중...</string>
     <string name="reordering_cards">카드 순서 다시 정리중...</string>
     <string name="field_remapping">%1$s (\'%2$s\'에서)</string>
     <string name="confirm_map_cards_to_nothing">연결되지 않은 모든 카드는 삭제됩니다. 만약 노트에 남아있는 카드가 없다면 버려질 것입니다. 계속 진행할까요?</string>
