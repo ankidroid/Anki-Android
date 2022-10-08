@@ -21,6 +21,7 @@ PUBLIC=$1
 export PATH="~/bin:$PATH"
 
 # Check basic expectations
+echo "Checking basic utility installation status..."
 for UTILITY in sed gawk github-release asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
 done
@@ -48,6 +49,7 @@ if [ "$PUBLIC" = "public" ]; then
   read -r
 
   # Render the new changelog
+  echo "Rendering changelog..."
   if ! asciidoctor ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
   then
     echo "Failed to render changelog?"
@@ -93,6 +95,7 @@ fi
 # Worst case this burns a version number despite a failure later, and we have a version/tag
 # that never launched. That's better than having to manually patch up build.gradle and push a tag
 # for a release that did launch, but the push failed
+echo "Committing changelog and version bump via git"
 git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
@@ -111,6 +114,7 @@ fi
 
 # Build signed APK using Gradle and publish to Play
 # Configuration for pushing to Play specified in build.gradle 'play' task
+echo "Running 'publishPlayReleaseApk' gradle target"
 if ! ./gradlew publishPlayReleaseApk
 then
   # APK contains problems
@@ -124,6 +128,7 @@ fi  #API30
 #fi  #API30
 
 # Now build the universal release also
+echo "Running 'assemblePlayRelease' target with universal APK flag"
 if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
 then
   # APK contains problems, abort release
@@ -149,22 +154,27 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
+echo "Creating new Github release"
 github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "**For regular users:**<br/><br/>Install the main APK below, trying the 'universal' build first for new installs. If it refuses to install and run correctly or you have previously installed from the Play Store, you must pick the APK that matches CPU instruction set for your device.<br/><br/>This will be arm64-v8a for most phones from the last few years but [here is a guide to help you choose](https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/)<br/><br/><br/>**For testers and multiple profiles users:**<br/><br/>The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences" $PRE_RELEASE
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
 
 for ABI in $ABIS; do
+  echo "Adding APK for $ABI to Github release"
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
 done
 
 if [ "$PUBLIC" = "public" ]; then
+  echo "Running 'assembleAmazonRelease' gradle target with universal APK flag"
   ./gradlew assembleAmazonRelease  -Duniversal-apk=true
+  echo "Running 'publishToAmazonAppStore' gradle target"
   ./gradlew publishToAmazonAppStore
   echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
 fi
 
 # Now that Git is clean and the main release is done, run the parallel release script and upload them
+echo "Running parallel package build"
 ./tools/parallel-package-release.sh "$VERSION"
 if [ "$PUBLIC" = "public" ]; then
   BUILDNAMES='A B C D E' # For public builds we will post all parallels
@@ -172,5 +182,6 @@ else
   BUILDNAMES='A B' # For alpha releases just post a couple parallel builds
 fi
 for BUILD in $BUILDNAMES; do
+  echo "Adding parallel build $BUILD to Github release"
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
 done
