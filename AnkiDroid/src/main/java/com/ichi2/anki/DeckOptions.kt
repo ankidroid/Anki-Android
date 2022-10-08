@@ -143,14 +143,17 @@ class DeckOptions :
             return DeckConfig.parseTimerOpt(options, true)
         }
 
-        suspend fun confChangeHandler(block: Collection.() -> Unit) {
-            preConfChange()
-            try {
-                withCol(block)
-            } finally {
-                // need to call postConfChange in finally because if withCol{} throws an exception,
-                // postConfChange would never get called and progress-bar will never get dismissed
-                postConfChange()
+        fun confChangeHandler(timbering: String, block: Collection.() -> Unit) {
+            launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                preConfChange()
+                Timber.d(timbering)
+                try {
+                    withCol(block)
+                } finally {
+                    // need to call postConfChange in finally because if withCol{} throws an exception,
+                    // postConfChange would never get called and progress-bar will never get dismissed
+                    postConfChange()
+                }
             }
         }
 
@@ -188,11 +191,8 @@ class DeckOptions :
                                 val oldOrder = mOptions.getJSONObject("new").getInt("order")
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder)
-                                    launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                                        confChangeHandler {
-                                            Timber.d("doInBackground - reorder")
-                                            sched.resortConf(mOptions)
-                                        }
+                                    confChangeHandler("doInBackground - reorder") {
+                                        sched.resortConf(mOptions)
                                     }
                                 }
                                 mOptions.getJSONObject("new").put("order", value.toInt())
@@ -241,10 +241,8 @@ class DeckOptions :
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
-                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                                    confChangeHandler {
-                                        changeDeckConfiguration(deck, mOptions, this)
-                                    }
+                                confChangeHandler("change Deck configuration") {
+                                    changeDeckConfiguration(deck, mOptions, this)
                                 }
                             }
                             "confRename" -> {
@@ -254,13 +252,10 @@ class DeckOptions :
                                 }
                             }
                             "confReset" -> if (value as Boolean) {
-                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                                    // reset configuration
-                                    confChangeHandler {
-                                        Timber.d("doInBackgroundConfReset")
-                                        decks.restoreToDefault(mOptions)
-                                        save()
-                                    }
+                                // reset configuration
+                                confChangeHandler("doInBackgroundConfReset") {
+                                    decks.restoreToDefault(mOptions)
+                                    save()
                                 }
                             }
                             "confAdd" -> {
@@ -429,23 +424,21 @@ class DeckOptions :
                 // Remove options group, asking user to confirm full sync if necessary
                 col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
-                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                    val conf = mOptions
-                    confChangeHandler {
-                        // Note: We do the actual removing of the options group in the main thread so that we
-                        // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+                val conf = mOptions
+                confChangeHandler("Remove configuration") {
+                    // Note: We do the actual removing of the options group in the main thread so that we
+                    // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
 
-                        // When a conf is deleted, all decks using it revert to the default conf.
-                        // Cards must be reordered according to the default conf.
-                        val order = conf.getJSONObject("new").getInt("order")
-                        val defaultOrder =
-                            col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
-                        if (order != defaultOrder) {
-                            conf.getJSONObject("new").put("order", defaultOrder)
-                            col.sched.resortConf(conf)
-                        }
-                        col.save()
+                    // When a conf is deleted, all decks using it revert to the default conf.
+                    // Cards must be reordered according to the default conf.
+                    val order = conf.getJSONObject("new").getInt("order")
+                    val defaultOrder =
+                        col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
+                    if (order != defaultOrder) {
+                        conf.getJSONObject("new").put("order", defaultOrder)
+                        col.sched.resortConf(conf)
                     }
+                    col.save()
                 }
                 deck.put("conf", 1)
             }
