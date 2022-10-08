@@ -123,7 +123,6 @@
     <string name="save">محفوظ کریں</string>
     <string name="close">بند کریں</string>
     <string name="select">منتخب کریں</string>
-    <string name="saving_changes">Saving changes&#8230;</string>
     <string name="reordering_cards">Reordering cards&#8230;</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>

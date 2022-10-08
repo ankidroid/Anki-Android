@@ -123,7 +123,6 @@
     <string name="save">രക്ഷിക്കും</string>
     <string name="close">അടയ്‌ക്കുക</string>
     <string name="select">തിരഞ്ഞെടുക്കുക</string>
-    <string name="saving_changes">മാറ്റങ്ങൾ സംരക്ഷിക്കുന്നു&#8230;</string>
     <string name="reordering_cards">കാർഡുകൾ പുന  ക്രമീകരിക്കുന്നു&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ൽ നിന്ന്)</string>
     <string name="confirm_map_cards_to_nothing">ഒന്നുമില്ലാതെ മാപ്പുചെയ്ത ഏത് കാർഡുകളും ഇല്ലാതാക്കപ്പെടും. ഒരു കുറിപ്പിന് ശേഷിക്കുന്ന കാർഡുകളില്ലെങ്കിൽ, അത് നഷ്‌ടപ്പെടും. തുടരണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>

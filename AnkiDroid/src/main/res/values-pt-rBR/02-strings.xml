@@ -123,7 +123,6 @@
     <string name="save">Salvar</string>
     <string name="close">Fechar</string>
     <string name="select">Selecionar</string>
-    <string name="saving_changes">Salvando alterações&#8230;</string>
     <string name="reordering_cards">Reordenando cards...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Quaisquer cards não-mapeados serão removidos. Se não houverem cards para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>

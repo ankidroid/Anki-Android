@@ -123,7 +123,6 @@
     <string name="save">Зачувај</string>
     <string name="close">Затвори</string>
     <string name="select">Избери</string>
-    <string name="saving_changes">Податоците се зачуваат&#8230;</string>
     <string name="reordering_cards">Преуредување картички&#8230;</string>
     <string name="field_remapping">%1$s (од “%2$s“)</string>
     <string name="confirm_map_cards_to_nothing">Сите неодбележани картички да бидат избришани. Ако белешката нема преостанати картички, таа ќе биде изгубена. Дали сте сигурни дека сакате да продолжите?</string>

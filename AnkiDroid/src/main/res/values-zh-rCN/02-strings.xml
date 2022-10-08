@@ -123,7 +123,6 @@
     <string name="save">保存</string>
     <string name="close">关闭</string>
     <string name="select">选择</string>
-    <string name="saving_changes">正在保存设置&#8230;</string>
     <string name="reordering_cards">重新排列卡片中...</string>
     <string name="field_remapping">%1$s （从“%2$s”）</string>
     <string name="confirm_map_cards_to_nothing">在笔记类型中没有相应模板的卡片将被删除。如果该笔记没有生成其他的卡片，则该笔记将会丢失。你确定要继续吗？</string>
@@ -193,7 +192,7 @@
     <string name="export_save_apkg_successful">已成功保存 Anki 包</string>
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
     <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">选择如何发送 Anki 软件包</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
         <br/><br/>

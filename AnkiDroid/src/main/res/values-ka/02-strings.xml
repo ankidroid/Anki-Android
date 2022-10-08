@@ -123,7 +123,6 @@
     <string name="save">შენახვა</string>
     <string name="close">დახურვა</string>
     <string name="select">არჩევა</string>
-    <string name="saving_changes">ცვლილებების შენახვა&#8230;</string>
     <string name="reordering_cards">ბარათები ლაგდება&#8230;</string>
     <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
     <string name="confirm_map_cards_to_nothing">ყველა ბარათი რომელიც არაფერთანაა დაკავშირებული წაიშლება. თუ შენიშვნას არ აქვს შერჩენილი ბარათები ის დაიკარგება. დარწმუნებული ხართ, რომ გსურთ გაგრძელება?</string>
@@ -183,12 +182,12 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">მრავალი COLPKG ფაილი მოინიშნა.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_stats_error">ჩამოთვლილი ფაილების იმპორტირებისას რამდენიმე შეცდომა მოხდა:\n%s</string>
     <string name="import_replacing">კოლექციის ჩანაცვლება...</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
     <string name="export_include_media">მედია ფაილების მოცვა</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">გსურთ კოლექციის Anki-პაკეტად ექსპორტირება?</string>
     <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
     <string name="export_in_progress">მიმდინარეობს Аnki-პაკეტის ფაილის ექსპორტი&#8230;</string>
     <string name="export_successful_title">გაიგზავნოს Anki-პაკეტი?</string>

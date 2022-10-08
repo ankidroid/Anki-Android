@@ -52,10 +52,10 @@
         <item quantity="other">%d карт показано</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="few">%d notes shown</item>
-        <item quantity="many">%d notes shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d Запис показано </item>
+        <item quantity="few">%d Записів показано </item>
+        <item quantity="many">%d карт показано</item>
+        <item quantity="other">%d карт показано</item>
     </plurals>
     <string name="card_browser_all_decks">Всі колоди</string>
     <string name="card_browser_delete_card">Видалити записи</string>

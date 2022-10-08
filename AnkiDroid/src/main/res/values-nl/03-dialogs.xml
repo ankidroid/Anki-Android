@@ -77,7 +77,7 @@
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
         <item quantity="one">Herplannen %d kaart</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">Plannen %d kaarten</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Huidige interval: %d dag</item>
@@ -112,8 +112,8 @@
     <string name="import_update_details">%1$d van de %2$d bestaande memo\'s bijgewerkt.</string>
     <string name="import_update_ignored">Sommige veranderingen zijn genegeerd omdat het memotype is veranderd</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Kaarten geïmporteerd: %2$d</item>
+        <item quantity="other">Geïmporteerde bestanden: %1$d\nTotaal kaarten: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD-kaart vol</string>
     <string name="sd_card_almost_full_title">SD-kaart bijna vol</string>
@@ -258,5 +258,5 @@
     <string name="import_collection_package">Verzamelingspakket (.colpkg)</string>
     <string name="import_csv">Tekstbestand (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">U kunt geen subset maken voor alle sets</string>
 </resources>

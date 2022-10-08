@@ -53,8 +53,8 @@
     <string name="pref_search_no_results">Nessun risultato</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Generale</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Studio</string>
+    <string name="pref_cat_system_wide" maxLength="41">A livello di sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizzazione</string>
     <string name="pref_cat_scheduling" maxLength="41">Ripianifica</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>
     <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Consenti sincronizzazione con connessione a consumo.</string>
+    <string name="metered_sync_summary">Se disabilitato, verrai avvisato se provi a sincronizzare quando usi una connessione a consumo</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema di giorno</string>
     <string name="night_theme" maxLength="41">Tema notturno</string>
@@ -203,7 +203,7 @@
     <string name="html_javascript_debugging" maxLength="41">Debug HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abilita connessioni WebView remote e salva l\'HTML della carta nella cartella AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
     <string name="accessibility" maxLength="41">Accessibilità</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla le immagini degli appunti in PNG</string>
@@ -345,10 +345,10 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Sperimentale</string>
     <string name="experimental_pref_confirmation" maxLength="41">Abilita ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_title" maxLength="41">Usa il nuovo backend</string>
+    <string name="use_rust_backend_summary">Abilita le funzionalità Anki più recenti, come lo scheduler v3 \nINSTABILE. Non usare su una collezione che ritieni importante. NON viene ripristinato alla chiusura dell\'app</string>
     <string name="use_rust_backend_warning">C\'è la possibilità che questo possa corrompere completamente la tua installazione, rendendo necessaria la disinstallazione dell\'app e il cancellamento della cartella AnkiDroid, e ha la possibilità di propagare la corruzione ad AnkiWeb tramite la sincronizzazione.\n\nAccogliamo con favore i test, ma assicurati di avere un backup non AnkiWeb valido.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Usa lo scheduler v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opzioni sviluppatore</string>
     <string name="dev_options_enabled_pref" maxLength="41">Abilita le opzioni sviluppatore</string>

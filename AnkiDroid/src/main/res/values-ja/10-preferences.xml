@@ -50,10 +50,10 @@
     <string name="pref_summary_seconds">%s秒</string>
     <string name="pref_summary_minutes">%s分</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">該当なし</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_studying" maxLength="41">学習</string>
     <string name="pref_cat_system_wide" maxLength="41">Androidシステム全般</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同期</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">従量制課金接続時の同期を許可</string>
+    <string name="metered_sync_summary">この設定を無効にすると、通信データ量に応じて課金する方式でネット接続しているときに同期しようとすると、確認メッセージが表示されます</string>
     <string name="app_theme" maxLength="41">テーマ</string>
     <string name="day_theme" maxLength="41">通常モードのテーマ</string>
     <string name="night_theme" maxLength="41">ナイトモードのテーマ</string>
@@ -325,7 +325,7 @@
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">寄付</a>することでAnkiDroidの開発を支援することができます。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ジェスチャーを追加</string>
-    <string name="binding_replace_gesture">ジェスチャーを置き換える</string>
+    <string name="binding_replace_gesture">ジェスチャーを置換</string>
     <string name="binding_add_key">キーを追加</string>
     <string name="binding_replace_key">キーを置き換える</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
@@ -339,12 +339,12 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
-    <string name="bindings_already_bound">このキーには既に %s の操作を割り当て済みです</string>
+    <string name="bindings_already_bound">既に「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">試験運用機能</string>
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_summary">V3スケジューラなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません。</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
     <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->

@@ -125,7 +125,6 @@
     <string name="save">Sarva</string>
     <string name="close">Serra</string>
     <string name="select">Seletziona</string>
-    <string name="saving_changes">Sarvende sas modìficas&#8230;</string>
     <string name="reordering_cards">Torrende a ordinare sas cartas&#8230;</string>
     <string name="field_remapping">%1$s (dae “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Sas cartas chene connessiones s\'ant a iscantzellare. Si una nota non tenet prus cartas s\'at a pèrdere. Ses seguru de chèrrere sighire?</string>

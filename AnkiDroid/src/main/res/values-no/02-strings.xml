@@ -123,7 +123,6 @@
     <string name="save">Lagre</string>
     <string name="close">Lukk</string>
     <string name="select">Velg</string>
-    <string name="saving_changes">Lagrer endringer...</string>
     <string name="reordering_cards">Stokker om kortene&#8230;</string>
     <string name="field_remapping">%1$s (fra “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Alle kort som ikke er tilordnet noe vil slettes. Hvis et notat ikke har kort igjen, vil det gå tapt. Er du sikker du vil fortsette?</string>

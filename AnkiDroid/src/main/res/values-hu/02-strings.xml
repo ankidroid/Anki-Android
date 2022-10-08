@@ -123,7 +123,6 @@
     <string name="save">Mentés</string>
     <string name="close">Bezárás</string>
     <string name="select">Kiválasztás</string>
-    <string name="saving_changes">Módosítások mentése...</string>
     <string name="reordering_cards">Újrarendelési kártyák...</string>
     <string name="field_remapping">%1$s (az “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Az összes üres kártyát töröljük. Ha a jegyzet összes kártyája törlődik, akkor ez is eltávolításra kerül. Folytatod?</string>

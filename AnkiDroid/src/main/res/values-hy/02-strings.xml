@@ -123,7 +123,6 @@
     <string name="save">Պահել</string>
     <string name="close">Փակել</string>
     <string name="select">Ընտրել</string>
-    <string name="saving_changes">Փոփոխությունների պահում&#8230;</string>
     <string name="reordering_cards">Քարտերի վերադասավորում&#8230;</string>
     <string name="field_remapping">%1$s («%2$s»-ից)</string>
     <string name="confirm_map_cards_to_nothing">Բոլոր չարտապատկերված քարտերը ջնջվելու են: Եթե գրառումը քարտ չունի, ապա այն կվերանա: Վստա՞հ եք, որ ուզում եք շարունակել:</string>

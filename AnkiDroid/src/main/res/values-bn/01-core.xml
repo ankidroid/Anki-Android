@@ -51,7 +51,7 @@
     <string name="statistics">পরিসংখ্যান</string>
     <string name="settings">সেটিংস</string>
     <string name="help">সাহায্য</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">অঙ্কন</string>
     <string name="send_feedback">মতামত পাঠান</string>
     <string name="studyoptions_due_today">আজ বাকি:</string>
     <string name="studyoptions_new_total">মোট নতুন কার্ড:</string>
@@ -71,12 +71,12 @@
         <item quantity="other">%d মিনিট বাকি আছে</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
+        <item quantity="other">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d দিন %2$d ঘন্টা বাকি</item>
+        <item quantity="other">%1$d দিন %2$d ঘন্টা বাকি</item>
     </plurals>
     <string name="no_cards_placeholder_title">সংগ্রহ টি খালি</string>
     <string name="no_cards_placeholder_description">কার্ড অ্যাড করা শুরু করুন\n+ আইকন চেপে</string>
@@ -102,13 +102,13 @@
     <string name="unbury">বাতিল স্থগিত করুন</string>
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
     <string name="create_shortcut">শর্টকাট তৈরী করুন</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">কার্ড খুঁজুন</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">যোগ করুন</string>
     <string name="menu_add_note">নোট যোগ করুন</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">হিসাব সিঙ্ক করুন</string>
     <string name="menu_dismiss_note">গোপন / মুছে ফেলুন</string>
-    <string name="menu_bury_card">কার্ড বাতিল</string>
-    <string name="menu_bury_note">নোট বাতিল</string>
+    <string name="menu_bury_card">কার্ড দাফন</string>
+    <string name="menu_bury_note">নোট দাফন</string>
     <string name="menu_suspend_card">কার্ড স্থগিত</string>
     <string name="menu_suspend_note">নোট স্থগিত</string>
     <string name="menu_bury">বাতিল</string>
@@ -121,9 +121,9 @@
     <string name="menu_flag_card_two">কমলা ফ্ল্যাগ</string>
     <string name="menu_flag_card_three">সবুজ ফ্ল্যাগ</string>
     <string name="menu_flag_card_four">নীল ফ্ল্যাগ</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">গোলাপি নিশান</string>
+    <string name="menu_flag_card_six">ফিরোজা নিশান</string>
+    <string name="menu_flag_card_seven">রক্ত-বেগুনী নিশান</string>
     <string name="menu_edit_tags">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
     <string name="menu_search">অনুসন্ধান করুন %1$s</string>
@@ -163,7 +163,7 @@
     <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
     <string name="search_deck" comment="Deck search for selecting it">ডেক অনুসন্ধান</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ডেক অনুসন্ধান</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
     <string name="studyoptions_empty">এই ডেক খালি আছে। প্রেস + বাটন নতুন উপাদান যোগ করতে।</string>
     <string name="studyoptions_limit_reached">প্রতিদিনের পড়াশোনা সীমায় পৌঁছে গিয়েছে</string>
@@ -191,51 +191,51 @@
     <string name="card_template_editor_styling">স্টাইলিং</string>
     <string name="card_template_editor_menu_card_browser_appearance">কার্ড ব্রাউজারের চেহারা</string>
     <string name="card_template_editor_deck_override">ডেকের অগ্রাহ্য</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">ফিল্ড যোগ-করুন</string>
+    <string name="card_template_editor_select_field">ফিল্ভ বেছে নিন</string>
     <string name="card_template_editor_cant_delete">কমপক্ষে একটি কার্ড টাইপ প্রয়োজন</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">এর ফলে %1$d টি কার্ড তৈরি হবে। চালিয়ে যেতে চান?</item>
+        <item quantity="other">এর ফলে %1$d টি কার্ড তৈরি হবে। চালিয়ে যেতে চান?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
         <item quantity="other">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
     </plurals>
     <string name="invalid_template">কার্ড তৈরি করা যায় নি</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_would_delete_note">এই কার্ড-টাইপ টি মুছে ফেলা হলে এক ব একাধিক নোট মুছে যেতে পারে। দয়া করে প্রথমে একটি নতুন কার্ড-টাইপ তৈরি করে সংরক্ষণ করে রাখুন।</string>
+    <string name="card_template_editor_save_error">কার্ড-টেমপ্লেট এর পরিবর্তন সংরক্ষণ করা সম্ভব হচ্ছেনা: %s</string>
+    <string name="template_for_current_card_deleted">এই কার্ড সংশ্লিষ্ট কার্ড-টেমপ্লেট মুছে ফেলা হয়েছে।</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">ব্রাউজারের চেহারা</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">কার্ডের বিবরণী</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>
     <string name="read_write_permission_description">বিদ্যমান নোট, কার্ড, নোটের ধরন এবং ডেক এ প্রবেশের পাশাপাশি নতুন একটি তৈরি করুন</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">কার্ড ব্রাউজার</string>
+    <string name="context_menu_anki_card_label">Anki কার্ড</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s এ একটি সমস্যা আছে:<br/>%2$s</string>
+    <string name="more_information">আরও তথ্য</string>
+    <string name="no_field">\'{{%1$s}}\' পাওয়া গেছে, কিন্তু \'%1$s\' বলে কোনও ফিল্ড নেই।</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' পাওয়া গেছে, কিন্তু \'{{#%1$s}}\' অথবা \'{{^%1$s}}\' অনুপস্থিত।</string>
+    <string name="missing_closing_bracket">\'%s\' এ \'}}\' অনুপস্থিত</string>
+    <string name="open_tag_not_closed">{{%s}}\' অনুপস্থিত।</string>
+    <string name="wrong_tag_closed">পাওয়া গেছে \'{{/%1$s}}\', কিন্তু হওয়ার কথা ছিলো \'{{/%2$s}}\'</string>
+    <string name="filter_error">ফিল্টার %s এ ত্রুটি</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_message_new">সংকলনগুলি সমন্বয় করা যাচ্ছেনা। কোন সংকলনটি আপনি রাখতে চান?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">আনকি-ড্রয়েড</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">আনকি-ওয়েব</string>
+    <string name="sync_conflict_remote_confirm_new">আনকি-ড্রয়েড এর সংকলন টি কে কি আনকি-ওয়েব এর সংকলন দ্বারা প্রতিস্থাপন করতে চাইছেন?</string>
+    <string name="sync_conflict_local_confirm_new">আনকি-ওয়েব এর সংকলন টি কে কি আনকি-ড্রয়েড এর সংকলন দ্বারা প্রতিস্থাপন করতে চাইছেন?</string>
+    <string name="sync_conflict_title_new">কোন সংকলন টি রাখতে চান?</string>
+    <string name="sync_conflict_replace_title">সংকলন প্রতিস্থাপন করুন</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d টি কার্ড (বাকি 0)</item>
+        <item quantity="other">%1$d টি কার্ড (বাকি 0)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s কপি</string>
 </resources>

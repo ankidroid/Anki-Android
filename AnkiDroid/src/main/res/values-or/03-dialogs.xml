@@ -238,7 +238,7 @@
     <string name="help_title_privacy">ଗୋପନୀୟତା</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid ଗୋପନୀୟତା ନୀତି</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb ଗୋପନୀୟତା ନୀତି</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତିନାମା ଓ ସର୍ତ୍ତାବଳୀ</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତିନାମା ଓ ସର୍ତ୍ତାଵଳୀ</string>
     <string name="help_title_send_exception">ତ୍ରୁଟି ନିବାରଣ ରିପୋର୍ଟ ପଠାନ୍ତୁ</string>
     <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
     <!--Sync-->

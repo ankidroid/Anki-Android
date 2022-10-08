@@ -70,7 +70,7 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
-    <string name="use_input_tag_summ">在卡片中使用一个文本框里输入答案</string>
+    <string name="use_input_tag_summ">在卡片里使用文本框输入答案</string>
     <string name="reset_languages" maxLength="41">重设语言</string>
     <string name="reset_languages_summ">重置指定牌组语言(TTS和字典)</string>
     <string name="reset_languages_question">要重置所有牌组指定的语言吗？</string>
@@ -203,16 +203,16 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
     <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">查看器</string>
+    <string name="pref_cat_reviewer" maxLength="41">复习界面</string>
     <string name="accessibility" maxLength="41">无障碍功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
     <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
     <string name="exit_via_double_tap_back" maxLength="41">按两次返回键返回/退出</string>
-    <string name="exit_via_double_tap_back_summ">避免意外离开审核者或应用程序</string>
+    <string name="exit_via_double_tap_back_summ">避免意外离开复习界面或应用程序</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">允许媒体导入中的所有文件</string>
-    <string name="media_import_allow_all_files_summ">如果安卓系统不识别媒体文件</string>
+    <string name="media_import_allow_all_files" maxLength="41">导入所有媒体文件</string>
+    <string name="media_import_allow_all_files_summ">假如系统不识别媒体文件</string>
     <!-- Statistics settings -->
     <string name="stats_default_deck_title" maxLength="41">打开统计数据时默认牌组</string>
     <string name="stats_default_deck_current">显示最近牌组的统计数据</string>
@@ -319,7 +319,7 @@
     <string name="open_changelog">打开更新日志</string>
     <string name="pref_cat_about_title" maxLength="41">关于</string>
     <string name="contributors_title">贡献者</string>
-    <string name="about_contributors_description"><![CDATA[这些是我们非常棒的 <a href=\"%1$s\">贡献者</a>。您也可以通过编程、翻译、捐赠和 <a href=\"%2$s\">更多</a> 来帮助AnkiDroid！]]></string>
+    <string name="about_contributors_description"><![CDATA[这些是我们非常棒的 <a href=\"%1$s\">贡献者</a>。您也可以通过贡献代码、翻译、捐赠和 <a href=\"%2$s\">更多</a> 来帮助AnkiDroid！]]></string>
     <string name="license">许可证</string>
     <string name="license_description"><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>许可证下发布，源代码位于 <a href=\"%3$s\">Github 上</a>]]></string>
     <string name="donate_description"><![CDATA[您可以通过 <a href=\"%1$s\"> 捐赠 </a > 支持 AnkiDroid\ 的开发。我们感谢任何数额的捐赠。]]></string>
@@ -328,7 +328,7 @@
     <string name="binding_replace_gesture">替换手势</string>
     <string name="binding_add_key">添加按键</string>
     <string name="binding_replace_key">替换按键</string>
-    <string name="key_picker_default_press_key">按一个键</string>
+    <string name="key_picker_default_press_key">按下按键</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">选择卡片正/反面</string>
     <string name="card_side_question">问题</string>
