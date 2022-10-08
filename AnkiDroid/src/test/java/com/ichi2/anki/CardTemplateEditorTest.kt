@@ -312,7 +312,7 @@ class CardTemplateEditorTest : RobolectricTest() {
      * Normal template deletion - with no selective generation should of course work
      */
     @Test
-    fun testDeleteTemplateWithGeneratedCards() {
+    fun testDeleteTemplateWithGeneratedCards() = runTest {
         val modelName = "Basic (and reversed card)"
         var collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
 
