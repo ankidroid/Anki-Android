@@ -132,8 +132,7 @@ fi  #API30
 echo "Running 'assemblePlayRelease' target with universal APK flag"
 if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
 then
-  # APK contains problems, abort release
-  git checkout -- $GRADLEFILE # Revert version change
+  echo "unable to build universal APK for play release"
   exit 1
 fi
 
@@ -169,9 +168,17 @@ done
 if [ "$PUBLIC" = "public" ]; then
   ./gradlew --stop
   echo "Running 'assembleAmazonRelease' gradle target with universal APK flag"
-  ./gradlew assembleAmazonRelease  -Duniversal-apk=true
+  if ! ./gradlew assembleAmazonRelease  -Duniversal-apk=true
+  then
+    echo "Unable to build amazon release"
+    exit 1
+  fi
   echo "Running 'publishToAmazonAppStore' gradle target"
-  ./gradlew publishToAmazonAppStore
+  if ! ./gradlew publishToAmazonAppStore
+  then
+    echo "Unable to publish to amazon app store"
+    exit 1
+  fi
   echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
 fi
 
