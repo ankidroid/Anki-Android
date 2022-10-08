@@ -486,7 +486,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    fun checkDisplayOfStudyOptionsOnTable() {
+    fun checkDisplayOfStudyOptionsOnTablet() {
         assumeTrue("We are running on a tablet", mQualifiers!!.contains("xlarge"))
         val deckPickerEx = super.startActivityNormallyOpenCollectionWithIntent(
             DeckPickerEx::class.java, Intent()
