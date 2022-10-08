@@ -39,6 +39,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
@@ -142,6 +143,17 @@ class DeckOptions :
             return DeckConfig.parseTimerOpt(options, true)
         }
 
+        suspend fun confChangeHandler(block: Collection.() -> Unit) {
+            preConfChange()
+            try {
+                withCol(block)
+            } finally {
+                // need to call postConfChange in finally because if withCol{} throws an exception,
+                // postConfChange would never get called and progress-bar will never get dismissed
+                postConfChange()
+            }
+        }
+
         fun preConfChange() {
             val res = deckOptionsActivity.resources
             progressDialog = StyledProgressDialog.show(
@@ -177,14 +189,9 @@ class DeckOptions :
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder)
                                     launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                                        preConfChange()
-                                        try {
-                                            withCol {
-                                                Timber.d("doInBackground - reorder")
-                                                sched.resortConf(mOptions)
-                                            }
-                                        } finally {
-                                            postConfChange()
+                                        confChangeHandler {
+                                            Timber.d("doInBackground - reorder")
+                                            sched.resortConf(mOptions)
                                         }
                                     }
                                 }
@@ -235,9 +242,9 @@ class DeckOptions :
                                 val newConfId: Long = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
                                 launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                                    preConfChange()
-                                    withCol { changeDeckConfiguration(deck, mOptions, this) }
-                                    postConfChange()
+                                    confChangeHandler {
+                                        changeDeckConfiguration(deck, mOptions, this)
+                                    }
                                 }
                             }
                             "confRename" -> {
@@ -248,18 +255,11 @@ class DeckOptions :
                             }
                             "confReset" -> if (value as Boolean) {
                                 launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                                    preConfChange()
                                     // reset configuration
-                                    try {
-                                        withCol {
-                                            Timber.d("doInBackgroundConfReset")
-                                            decks.restoreToDefault(mOptions)
-                                            save()
-                                        }
-                                    } finally {
-                                        // need to call postConfChange in finally because if withCol{} throws an exception,
-                                        // postConfChange would never get called and progress-bar will never get dismissed
-                                        postConfChange()
+                                    confChangeHandler {
+                                        Timber.d("doInBackgroundConfReset")
+                                        decks.restoreToDefault(mOptions)
+                                        save()
                                     }
                                 }
                             }
@@ -430,26 +430,21 @@ class DeckOptions :
                 col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
                 launch(getCoroutineExceptionHandler(this@DeckOptions)) {
-                    preConfChange()
                     val conf = mOptions
-                    try {
-                        withCol {
-                            // Note: We do the actual removing of the options group in the main thread so that we
-                            // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+                    confChangeHandler {
+                        // Note: We do the actual removing of the options group in the main thread so that we
+                        // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
 
-                            // When a conf is deleted, all decks using it revert to the default conf.
-                            // Cards must be reordered according to the default conf.
-                            val order = conf.getJSONObject("new").getInt("order")
-                            val defaultOrder =
-                                col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
-                            if (order != defaultOrder) {
-                                conf.getJSONObject("new").put("order", defaultOrder)
-                                col.sched.resortConf(conf)
-                            }
-                            col.save()
+                        // When a conf is deleted, all decks using it revert to the default conf.
+                        // Cards must be reordered according to the default conf.
+                        val order = conf.getJSONObject("new").getInt("order")
+                        val defaultOrder =
+                            col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
+                        if (order != defaultOrder) {
+                            conf.getJSONObject("new").put("order", defaultOrder)
+                            col.sched.resortConf(conf)
                         }
-                    } finally {
-                        postConfChange()
+                        col.save()
                     }
                 }
                 deck.put("conf", 1)
