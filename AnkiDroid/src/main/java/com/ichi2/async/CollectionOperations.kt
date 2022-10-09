@@ -180,6 +180,58 @@ fun changeDeckConfiguration(
     col.save()
 }
 
+suspend fun renderBrowserQA(
+    cards: CardBrowser.CardCollection<CardBrowser.CardCache>,
+    startPos: Int,
+    n: Int,
+    column1Index: Int,
+    column2Index: Int,
+    onProgressUpdate: (Int) -> Unit
+): Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
+    Timber.d("doInBackgroundRenderBrowserQA")
+    val invalidCardIds: MutableList<Long> = ArrayList()
+    // for each specified card in the browser list
+    for (i in startPos until startPos + n) {
+        // Stop if cancelled, throw cancellationException
+        ensureActive()
+
+        if (i < 0 || i >= cards.size()) {
+            continue
+        }
+        var card: CardBrowser.CardCache
+        card = try {
+            cards[i]
+        } catch (e: IndexOutOfBoundsException) {
+            // even though we test against card.size() above, there's still a race condition
+            // We might be able to optimise this to return here. Logically if we're past the end of the collection,
+            // we won't reach any more cards.
+            continue
+        }
+        if (card.isLoaded) {
+            // We've already rendered the answer, we don't need to do it again.
+            continue
+        }
+        // Extract card item
+        try {
+            // Ensure that card still exists.
+            card.card
+        } catch (e: WrongId) {
+            // #5891 - card can be inconsistent between the deck browser screen and the collection.
+            // Realistically, we can skip any exception as it's a rendering task which should not kill the
+            // process
+            val cardId = card.id
+            Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
+            invalidCardIds.add(cardId)
+            continue
+        }
+        // Update item
+        card.load(false, column1Index, column2Index)
+        val progress = i.toFloat() / n * 100
+        withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
+    }
+    Pair(cards, invalidCardIds)
+}
+
 /**
  * Goes through selected cards and checks selected and marked attribute
  * @return If there are unselected cards, if there are unmarked cards

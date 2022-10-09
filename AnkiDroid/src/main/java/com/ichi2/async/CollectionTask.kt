@@ -23,8 +23,6 @@ import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.CardBrowser.CardCache
-import com.ichi2.anki.CardBrowser.CardCollection
 import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
@@ -315,55 +313,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             // mark undo for all at once
             col.markUndo(changeDeckMulti)
             return true
-        }
-    }
-
-    class RenderBrowserQA(private val cards: CardCollection<CardCache>, private val startPos: Int, private val n: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<Int, Pair<CardCollection<CardCache>, List<Long>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Pair<CardCollection<CardCache>, List<Long>>? {
-            Timber.d("doInBackgroundRenderBrowserQA")
-            val invalidCardIds: MutableList<Long> = ArrayList()
-            // for each specified card in the browser list
-            for (i in startPos until startPos + n) {
-                // Stop if cancelled
-                if (collectionTask.isCancelled()) {
-                    Timber.d("doInBackgroundRenderBrowserQA was aborted")
-                    return null
-                }
-                if (i < 0 || i >= cards.size()) {
-                    continue
-                }
-                var card: CardCache
-                card = try {
-                    cards[i]
-                } catch (e: IndexOutOfBoundsException) {
-                    // even though we test against card.size() above, there's still a race condition
-                    // We might be able to optimise this to return here. Logically if we're past the end of the collection,
-                    // we won't reach any more cards.
-                    continue
-                }
-                if (card.isLoaded) {
-                    // We've already rendered the answer, we don't need to do it again.
-                    continue
-                }
-                // Extract card item
-                try {
-                    // Ensure that card still exists.
-                    card.card
-                } catch (e: WrongId) {
-                    // #5891 - card can be inconsistent between the deck browser screen and the collection.
-                    // Realistically, we can skip any exception as it's a rendering task which should not kill the
-                    // process
-                    val cardId = card.id
-                    Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
-                    invalidCardIds.add(cardId)
-                    continue
-                }
-                // Update item
-                card.load(false, column1Index, column2Index)
-                val progress = i.toFloat() / n * 100
-                collectionTask.doProgress(progress.toInt())
-            }
-            return Pair(cards, invalidCardIds)
         }
     }
 
