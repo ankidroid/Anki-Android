@@ -15,7 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.compat
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
@@ -94,5 +98,27 @@ class CompatHelper private constructor() {
         inline fun <reified T> Parcel.readSparseArrayCompat(loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
             return compat.readSparseArray(this, loader, clazz)
         }
+
+        /**
+         * Retrieve overall information about an application package that is
+         * installed on the system.
+         *
+         * @see PackageManager.getPackageInfo
+         * @throws NameNotFoundException if no such package is available to the caller.
+         */
+        @Throws(NameNotFoundException::class)
+        fun Context.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+            this.packageManager.getPackageInfoCompat(packageName, flags)
+
+        /**
+         * Retrieve overall information about an application package that is
+         * installed on the system.
+         *
+         * @see PackageManager.getPackageInfo
+         * @throws NameNotFoundException if no such package is available to the caller.
+         */
+        @Throws(NameNotFoundException::class)
+        fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+            compat.getPackageInfo(this, packageName, flags)
     }
 }
