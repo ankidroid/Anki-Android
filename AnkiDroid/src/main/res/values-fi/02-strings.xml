@@ -123,7 +123,6 @@
     <string name="save">Tallenna</string>
     <string name="close">Sulje</string>
     <string name="select">Valitse</string>
-    <string name="saving_changes">Tallennetaan muutoksia&#8230;</string>
     <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
     <string name="field_remapping">%1$s (”%2$s”:sta)</string>
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>

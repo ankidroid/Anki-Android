@@ -13,12 +13,12 @@ import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
-import java.util.*
+import com.ichi2.libanki.MediaCheckResult
 
 class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {
         fun showMediaCheckDialog(dialogType: Int)
-        fun showMediaCheckDialog(dialogType: Int, checkList: List<List<String>>)
+        fun showMediaCheckDialog(dialogType: Int, checkList: MediaCheckResult)
         fun mediaCheck()
         fun deleteUnused(unused: List<String>)
         fun dismissAllDialogFragments()
@@ -152,12 +152,12 @@ class MediaCheckDialog : AsyncDialogFragment() {
             return f
         }
 
-        fun newInstance(dialogType: Int, checkList: List<List<String?>?>): MediaCheckDialog {
+        fun newInstance(dialogType: Int, checkList: MediaCheckResult): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
-            args.putStringArrayList("nohave", ArrayList(checkList[0]!!.toMutableList()))
-            args.putStringArrayList("unused", ArrayList(checkList[1]!!.toMutableList()))
-            args.putStringArrayList("invalid", ArrayList(checkList[2]!!.toMutableList()))
+            args.putStringArrayList("nohave", ArrayList(checkList.noHave.toMutableList()))
+            args.putStringArrayList("unused", ArrayList(checkList.unused.toMutableList()))
+            args.putStringArrayList("invalid", ArrayList(checkList.invalid.toMutableList()))
             args.putInt("dialogType", dialogType)
             f.arguments = args
             return f

@@ -123,7 +123,6 @@
     <string name="save">ସଞ୍ଚୟ</string>
     <string name="close">ବନ୍ଦ</string>
     <string name="select">ବାଛନ୍ତୁ</string>
-    <string name="saving_changes">ପରିବର୍ତ୍ତନ ସଂରକ୍ଷିତ ହେଉଛି&#8230;</string>
     <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ନହୋଇ ଥିବା ପତ୍ରସବୁ ବିଲୋପ ହେବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନଥାଏ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>

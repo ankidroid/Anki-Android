@@ -123,7 +123,6 @@
     <string name="save">Speichern</string>
     <string name="close">Schließen</string>
     <string name="select">Auswählen</string>
-    <string name="saving_changes">Änderungen werden gespeichert&#8230;</string>
     <string name="reordering_cards">Sortiere Karten&#8230;</string>
     <string name="field_remapping">%1$s (von »%2$s«)</string>
     <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>

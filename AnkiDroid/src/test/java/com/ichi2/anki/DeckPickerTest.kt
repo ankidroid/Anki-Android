@@ -20,10 +20,11 @@ import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -32,8 +33,6 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import java.io.File
-import java.lang.Exception
-import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -273,6 +272,7 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Ignore("Flaky. Try to unflak when AsyncTask is entirely removed.")
     fun databaseLockedNoPermissionIntegrationTest() {
         // no permissions -> grant permissions -> db locked
         try {

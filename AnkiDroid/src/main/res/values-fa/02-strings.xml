@@ -123,7 +123,6 @@
     <string name="save">ذخیره</string>
     <string name="close">بستن</string>
     <string name="select">انتخاب</string>
-    <string name="saving_changes">در حال ذخیره تغییرات...</string>
     <string name="reordering_cards">مرتب سازی مجدد کارتها...</string>
     <string name="field_remapping">%1$s (از \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>

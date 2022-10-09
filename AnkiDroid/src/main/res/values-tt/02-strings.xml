@@ -123,7 +123,6 @@
     <string name="save">Саклау</string>
     <string name="close">Ябу</string>
     <string name="select">Сайлау</string>
-    <string name="saving_changes">Үзгәртүләр саклана...</string>
     <string name="reordering_cards">Кәртләр чираты үзгәртелә...</string>
     <string name="field_remapping">%1$s (\"%2$s\"дан)</string>
     <string name="confirm_map_cards_to_nothing">Бернәрсәгә дә бәйләнмәгән кәртләр сөртелер. Кәртсез калган язулар югалыр. Дәвам итәргә телисезме?</string>

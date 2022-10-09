@@ -123,7 +123,6 @@
     <string name="save">Shrani</string>
     <string name="close">Zapri</string>
     <string name="select">Izberi</string>
-    <string name="saving_changes">Shranjevanje sprememb &#8230;</string>
     <string name="reordering_cards">Prerazvrščanje kartic &#8230;</string>
     <string name="field_remapping">%1$s (od \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Vse kartice, ki so preslikane v nič, bodo izbrisane. Če zapisek nima preostalih kartic, bo izgubljen. Ali res želite nadaljevati?</string>

@@ -123,7 +123,6 @@
     <string name="save">Gardar</string>
     <string name="close">Pechar</string>
     <string name="select">Seleccionar</string>
-    <string name="saving_changes">Gardando cambios...</string>
     <string name="reordering_cards">Reordenando os cartóns&#8230;</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Eliminaranse os cartóns asignados a ren. Se unha nota non ten cartóns restantes, perderase. Tes a certeza de querer continuar?</string>

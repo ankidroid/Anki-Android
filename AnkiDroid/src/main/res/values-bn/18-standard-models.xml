@@ -26,17 +26,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name">সামনে</string>
+    <string name="back_field_name">পিছনে</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">লেখা</string>
+    <string name="extra_field_name_new">পিছনের অন্যান্য</string>
+    <string name="field_to_ask_front_name">উল্টো কার্ড যোগ করুন</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">কার্ড %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
+    <string name="basic_model_name">মৌলিক</string>
     <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_typing_model_name">মৌলিক (উত্তরটি লিখুন)</string>
+    <string name="forward_reverse_model_name">মৌলিক (এবং উল্টানো কার্ড)</string>
+    <string name="forward_optional_reverse_model_name">মৌলিক (এবং ঐচ্ছিক উল্টানো কার্ড)</string>
 </resources>

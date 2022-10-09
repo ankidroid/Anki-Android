@@ -82,8 +82,8 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Остался %1$d день %2$d</item>
-        <item quantity="few">Остался %1$d дня %2$d</item>
-        <item quantity="many">Остался %1$d дней %2$d</item>
+        <item quantity="few">Осталось %1$d дня %2$d</item>
+        <item quantity="many">Осталось %1$d дней %2$d</item>
         <item quantity="other">Осталось %1$d дней %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>

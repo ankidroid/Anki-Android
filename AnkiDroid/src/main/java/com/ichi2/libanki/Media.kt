@@ -296,11 +296,11 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    open fun check(): List<List<String>> {
+    open fun check(): MediaCheckResult {
         return check(null)
     }
 
-    private fun check(local: Array<File>?): List<List<String>> {
+    private fun check(local: Array<File>?): MediaCheckResult {
         val mdir = File(dir())
         // gather all media references in NFC form
         val allRefs: MutableSet<String> = HashSet()
@@ -383,12 +383,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             Timber.w(ignored)
             _deleteDB()
         }
-        @KotlinCleanup("return listOf")
-        val result: MutableList<List<String>> = ArrayList(3)
-        result.add(noHave)
-        result.add(unused)
-        result.add(invalid)
-        return result
+        return MediaCheckResult(noHave, unused, invalid)
     }
 
     private fun _normalizeNoteRefs(nid: Long) {
@@ -1002,3 +997,5 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         }
     }
 }
+
+data class MediaCheckResult(val noHave: List<String>, val unused: List<String>, val invalid: List<String>)

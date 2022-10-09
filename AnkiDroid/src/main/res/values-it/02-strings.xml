@@ -123,7 +123,6 @@
     <string name="save">Salva</string>
     <string name="close">Chiudi</string>
     <string name="select">Seleziona</string>
-    <string name="saving_changes">Salvataggio delle modifiche ...</string>
     <string name="reordering_cards">Riordino le carte...</string>
     <string name="field_remapping">%1$s (di \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro/a di voler continuare?</string>
@@ -197,7 +196,7 @@
     <string name="export_save_apkg_successful">Pacchetto di Anki salvato con successo</string>
     <string name="export_save_apkg_unsuccessful">Salvataggio pacchetto di Anki fallito</string>
     <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Invia pacchetto Anki usando</string>
     <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
     <string name="export_email_text"><![CDATA[        Ciao!
         <br/><br/>

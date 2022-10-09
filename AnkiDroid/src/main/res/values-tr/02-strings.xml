@@ -123,7 +123,6 @@
     <string name="save">Kaydet</string>
     <string name="close">Kapat</string>
     <string name="select">Seç</string>
-    <string name="saving_changes">Değişiklikler kaydediliyor...</string>
     <string name="reordering_cards">Kartların sırası değiştiriliyor...</string>
     <string name="field_remapping">%1$s (\'%2$s\')\'dan/den</string>
     <string name="confirm_map_cards_to_nothing">Hiçbiriyle eşlemeyen herhangi bir kart silinecek. Geriye kalan kartları olmayan not varsa, kaybolur. Devam etmek istediğinizden emin misiniz?</string>
@@ -197,7 +196,7 @@
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Anki paketini göndermek için kullan</string>
     <string name="export_email_subject">AnkiDroid\'den aktarılan bilgi kartları: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
         <br/><br/>

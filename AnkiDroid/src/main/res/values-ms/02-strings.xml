@@ -123,7 +123,6 @@
     <string name="save">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
-    <string name="saving_changes">Menyimpan perubahan&#8230;</string>
     <string name="reordering_cards">Penyusunan semula Kad&#8230;</string>
     <string name="field_remapping">%1$s (daripada \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Apa kad dipetakan untuk tiada apa-apa akan dihapuskan. Jika nota tidak mempunyai baki kad, ia akan hilang. Adakah anda pasti anda mahu untuk terus?</string>
