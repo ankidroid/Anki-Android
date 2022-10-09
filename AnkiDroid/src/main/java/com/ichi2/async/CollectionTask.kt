@@ -573,27 +573,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("fix `val changed = execTask()!!`")
-    class ConfSetSubdecks(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundConfSetSubdecks")
-            return try {
-                val children = col.decks.children(deck.getLong("id"))
-                for (childDid in children.values) {
-                    val child = col.decks.get(childDid)
-                    if (child.isDyn) {
-                        continue
-                    }
-                    changeDeckConfiguration(deck, conf, col)
-                }
-                true
-            } catch (e: JSONException) {
-                Timber.w(e)
-                false
-            }
-        }
-    }
-
     /**
      * Deletes the given field in the given model
      */
