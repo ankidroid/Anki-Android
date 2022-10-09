@@ -20,6 +20,8 @@ package com.ichi2.compat
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager.NameNotFoundException
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -91,6 +93,15 @@ interface Compat {
      * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
      */
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
+
+    /**
+     * Retrieve overall information about an application package that is
+     * installed on the system.
+     *
+     * @see PackageManager.getPackageInfo
+     */
+    @Throws(NameNotFoundException::class)
+    fun getPackageInfoCompat(context: Context, packageName: String, flags: Int): PackageInfo
 
     /**
      * Copy file at path [source] to path [target]

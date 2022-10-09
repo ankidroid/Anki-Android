@@ -17,7 +17,10 @@
 package com.ichi2.compat
 
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Parcelable
 import java.io.Serializable
 
@@ -29,5 +32,9 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T? {
         return intent.getParcelableExtra(name, clazz)
+    }
+
+    override fun getPackageInfoCompat(context: Context, packageName: String, flags: Int): PackageInfo {
+        return context.packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.toLong()))
     }
 }
