@@ -176,10 +176,10 @@ class CheckBoxTriStates : AppCompatCheckBox {
         var cycleIndeterminateToChecked = false
 
         constructor(superState: Parcelable?) : super(superState) {}
-        private constructor(`in`: Parcel) : super(`in`) {
-            state = State.values()[`in`.readInt()]
-            cycleCheckedToIndeterminate = `in`.readInt() != 0
-            cycleIndeterminateToChecked = `in`.readInt() != 0
+        private constructor(source: Parcel) : super(source) {
+            state = State.values()[source.readInt()]
+            cycleCheckedToIndeterminate = source.readInt() != 0
+            cycleIndeterminateToChecked = source.readInt() != 0
         }
 
         override fun writeToParcel(out: Parcel, flags: Int) {
@@ -202,8 +202,8 @@ class CheckBoxTriStates : AppCompatCheckBox {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
-                override fun createFromParcel(`in`: Parcel): SavedState {
-                    return SavedState(`in`)
+                override fun createFromParcel(source: Parcel): SavedState {
+                    return SavedState(source)
                 }
 
                 override fun newArray(size: Int): Array<SavedState?> {

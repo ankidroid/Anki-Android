@@ -264,8 +264,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             out.writeInt(ord)
         }
 
-        private constructor(`in`: Parcel) : super(`in`) {
-            ord = `in`.readInt()
+        private constructor(source: Parcel) : super(source) {
+            ord = source.readInt()
         }
 
         companion object {
