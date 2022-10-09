@@ -28,6 +28,7 @@ import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf
 import timber.log.Timber
@@ -260,43 +261,6 @@ object ScopedStorageService {
         // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
         // directories, then it must be in a legacy storage directory
         return true
-    }
-
-    /**
-     * Preferences relating to whether a user data scoped storage migration is taking place
-     * This refers to the [MigrateUserData] operation of copying media which can take a long time.
-     *
-     * @param source The path of the source directory. Check [migrationInProgress] before use.
-     * @param destination The path of the destination directory. Check [migrationInProgress] before use.
-     */
-    class UserDataMigrationPreferences private constructor(val source: String, val destination: String) {
-        /**  Whether a scoped storage migration is in progress */
-        val migrationInProgress = source.isNotEmpty()
-        val sourceFile get() = File(source)
-        val destinationFile get() = File(destination)
-        companion object {
-            /**
-             * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
-             * It is a logic bug if only one is set
-             */
-            fun createInstance(preferences: SharedPreferences): UserDataMigrationPreferences {
-                fun getValue(key: String) = preferences.getString(key, "")!!
-
-                return UserDataMigrationPreferences(
-                    source = getValue(PREF_MIGRATION_SOURCE),
-                    destination = getValue(PREF_MIGRATION_DESTINATION)
-                ).also {
-                    // ensure that both are set, or both are empty
-                    if (it.source.isEmpty() != it.destination.isEmpty()) {
-                        // throw if there's a mismatch + list the key -> value pairs
-                        val message =
-                            "'$PREF_MIGRATION_SOURCE': '${getValue(PREF_MIGRATION_SOURCE)}'; " +
-                                "'$PREF_MIGRATION_DESTINATION': '${getValue(PREF_MIGRATION_DESTINATION)}'"
-                        throw IllegalStateException("Expected either all or no migration directories set. $message")
-                    }
-                }
-            }
-        }
     }
 
     private data class DirectoryToExternalDirectory(val ancestorDirectory: File, val externalDirectory: File)

@@ -21,7 +21,6 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
-import com.ichi2.anki.servicelayer.ScopedStorageService.UserDataMigrationPreferences
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
