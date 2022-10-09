@@ -18,16 +18,19 @@ package com.ichi2.utils
 
 import android.content.Context
 import android.content.pm.PackageManager
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.lang.Exception
 import java.util.*
 
 object CheckCameraPermission {
-    @Suppress("deprecation") // getPackageInfo
     fun manifestContainsPermission(context: Context): Boolean {
         try {
-            val requestedPermissions = context.packageManager
-                .getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions
+            val requestedPermissions = context.getPackageInfoCompat(
+                context.packageName,
+                PackageInfoFlagsCompat.of(PackageManager.GET_PERMISSIONS.toLong())
+            ).requestedPermissions
             if (Arrays.toString(requestedPermissions).contains("android.permission.CAMERA")) {
                 return true
             }

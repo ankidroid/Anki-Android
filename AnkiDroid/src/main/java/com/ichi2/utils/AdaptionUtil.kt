@@ -26,6 +26,8 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.util.*
 
@@ -95,12 +97,11 @@ object AdaptionUtil {
         return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
-    @Suppress("deprecation") // getPackageInfo
     private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
         return if (packageName != null) {
             try {
-                val info = pm.getPackageInfo(packageName, 0)
-                info?.applicationInfo != null &&
+                val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY)
+                info.applicationInfo != null &&
                     info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)

@@ -18,6 +18,8 @@ package com.ichi2.compat
 
 import android.annotation.TargetApi
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
@@ -45,4 +47,7 @@ open class CompatV33 : CompatV31(), Compat {
     ): SparseArray<T>? {
         return parcel.readSparseArray(loader, clazz)
     }
+
+    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+        packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.value))
 }
