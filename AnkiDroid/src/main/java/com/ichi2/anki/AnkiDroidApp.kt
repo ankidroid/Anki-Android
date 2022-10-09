@@ -32,6 +32,7 @@ import android.system.Os
 import android.util.Log
 import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -143,7 +144,7 @@ open class AnkiDroidApp : Application() {
 
         // make default HTML / JS debugging true for debug build and disable for unit/android tests
         if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest) {
-            preferences.edit().putBoolean("html_javascript_debugging", true).apply()
+            preferences.edit { putBoolean("html_javascript_debugging", true) }
         }
         CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(
             this,

@@ -107,7 +107,7 @@ enum class ViewerCommand(val resourceId: Int) {
         val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
         performAdd.apply(bindings, binding)
         val newValue: String = bindings.toPreferenceString()
-        preferences.edit().putString(preferenceKey, newValue).apply()
+        preferences.edit { putString(preferenceKey, newValue) }
     }
 
     fun removeBinding(prefs: SharedPreferences, binding: MappableBinding) {

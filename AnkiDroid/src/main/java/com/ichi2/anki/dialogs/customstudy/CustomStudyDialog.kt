@@ -30,6 +30,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -207,7 +208,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
                 when (contextMenuOption) {
                     STUDY_NEW -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply()
+                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
@@ -215,7 +216,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply()
+                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
