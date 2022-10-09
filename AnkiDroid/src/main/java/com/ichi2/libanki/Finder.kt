@@ -105,19 +105,16 @@ class Finder(private val col: Collection) {
     fun findNotes(query: String, returnCid: Boolean): List<Long> {
         val tokens = _tokenize(query)
         val res1 = _where(tokens)
-        var preds = res1.first
         val args = res1.second
         val res: MutableList<Long> = ArrayList()
-        if (preds == null) {
-            return res
-        }
-        preds = if ("" == preds) {
-            "1"
-        } else {
-            "($preds)"
-        }
-        val sql: String
-        sql = if (returnCid) {
+        val preds = res1.first?.let { first ->
+            if ("" == first) {
+                "1"
+            } else {
+                "($first)"
+            }
+        } ?: return res
+        val sql: String = if (returnCid) {
             "select min(c.id) from cards c, notes n where c.nid=n.id and $preds group by n.id"
         } else {
             "select distinct(n.id) from cards c, notes n where c.nid=n.id and $preds"
