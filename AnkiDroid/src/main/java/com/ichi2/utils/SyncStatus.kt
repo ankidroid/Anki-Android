@@ -16,20 +16,29 @@
 
 package com.ichi2.utils
 
+import android.content.Context
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.libanki.Collection
 import net.ankiweb.rsdroid.BackendFactory
 
 enum class SyncStatus {
-    INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED;
+    INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED,
+    /**
+     * Scope storage migration is ongoing. Sync should be disabled.
+     */
+    ONGOING_MIGRATION;
 
     companion object {
         private var sPauseCheckingDatabase = false
         private var sMarkedInMemory = false
 
-        fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus {
+        fun getSyncStatus(col: Collection, context: Context, auth: SyncAuth?): SyncStatus {
+            if (userMigrationIsInProgress(context)) {
+                return ONGOING_MIGRATION
+            }
             if (isDisabled) {
                 return BADGE_DISABLED
             }

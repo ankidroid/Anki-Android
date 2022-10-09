@@ -107,6 +107,7 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
+import com.ichi2.themes.Themes
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
@@ -682,6 +683,7 @@ open class DeckPicker :
                 SyncIconState.PendingChanges -> R.string.button_sync
                 SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
                 SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+                SyncIconState.Disabled -> R.string.button_sync_disabled
             }
         )
         when (syncIcon) {
@@ -699,7 +701,11 @@ open class DeckPicker :
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
                     .replaceBadge(menuItem)
             }
+            SyncIconState.Disabled -> {
+                BadgeDrawableBuilder.removeBadge(menuItem)
+            }
         }
+        menuItem.iconAlpha = if (syncIcon == SyncIconState.Disabled) Themes.ALPHA_ICON_DISABLED_LIGHT else Themes.ALPHA_ICON_ENABLED_LIGHT
     }
 
     @VisibleForTesting
@@ -720,10 +726,13 @@ open class DeckPicker :
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
         val auth = syncAuth()
-        val syncStatus = SyncStatus.getSyncStatus(col, auth)
+        val syncStatus = SyncStatus.getSyncStatus(col, this, auth)
         return when (syncStatus) {
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
                 SyncIconState.Normal
+            }
+            SyncStatus.ONGOING_MIGRATION -> {
+                SyncIconState.Disabled
             }
             SyncStatus.HAS_CHANGES -> {
                 SyncIconState.PendingChanges
@@ -2748,5 +2757,9 @@ enum class SyncIconState {
     Normal,
     PendingChanges,
     FullSync,
-    NotLoggedIn
+    NotLoggedIn,
+    /**
+     * The icon should appear as disabled. Currently only occurs during scoped storage migration.
+     */
+    Disabled,
 }
