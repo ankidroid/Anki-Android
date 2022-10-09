@@ -98,6 +98,7 @@ object VersionUtils {
      * Return whether the package version code is set to that for release version
      * @return whether build number in manifest version code is '3'
      */
+    @KotlinCleanup("Replace toString with Kotlin method.")
     val isReleaseVersion: Boolean
         get() {
             val versionCode = java.lang.Long.toString(pkgVersionCode)
