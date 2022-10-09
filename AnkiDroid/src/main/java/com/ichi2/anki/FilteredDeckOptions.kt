@@ -281,7 +281,7 @@ class FilteredDeckOptions :
             }
         }
         finish()
-        slide(this, ActivityTransitionAnimation.Direction.END)
+        slide(this, ActivityTransitionAnimation.Direction.FADE)
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019

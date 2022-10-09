@@ -2001,9 +2001,14 @@ open class DeckPicker :
             loadStudyOptionsFragment(withDeckOptions)
         } else {
             val intent = Intent()
-            intent.putExtra("withDeckOptions", withDeckOptions)
-            intent.setClass(this, FilteredDeckOptions::class.java)
-            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
+            if (withDeckOptions) {
+                intent.putExtra("withDeckOptions", withDeckOptions)
+                intent.setClass(this, FilteredDeckOptions::class.java)
+                startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
+            } else {
+                intent.setClass(this, StudyOptionsActivity::class.java)
+                startActivityWithAnimation(intent, START)
+            }
         }
     }
 
