@@ -15,6 +15,6 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="delete_collection_key">deleteCollectionManageSpace</string>
-    <string name="check_media_key">checkMediaManageSpace</string>
+    <string name="delete_collection_key">delete_collection</string>
+    <string name="check_media_key">check_media</string>
 </resources>

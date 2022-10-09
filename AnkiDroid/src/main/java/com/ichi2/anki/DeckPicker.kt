@@ -1500,7 +1500,7 @@ open class DeckPicker :
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
     @VisibleForTesting
-    suspend fun checkMedia() = withCol {
+    suspend inline fun checkMedia() = withCol {
         media.fullCheck()
     }
 

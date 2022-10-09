@@ -27,10 +27,10 @@ class ManageSpaceActivity : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_space)
 
-        val mainFragment = ManageSpaceFragment()
+        val manageSpaceFragment = ManageSpaceFragment()
 
         supportFragmentManager.commit {
-            replace(R.id.manage_space_layout, mainFragment, mainFragment::class.java.simpleName)
+            replace(R.id.manage_space_layout, manageSpaceFragment, null)
         }
     }
 }

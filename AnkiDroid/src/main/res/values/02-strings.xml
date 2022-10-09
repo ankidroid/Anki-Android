@@ -455,9 +455,9 @@
     <!-- Manage Space -->
     <!--- Collection deletion -->
     <string name="delete_collection">Delete collection</string>
-    <string name="delete_collection_summary">Permanently erases your AnkiDroid collection and media.</string>
-    <string name="delete_data_confirmation">Are you sure you want to delete your whole collection and media?\n\nThis can\'t be undone.</string>
-    <string name="delete_data_ongoing">Your AnkiDroid collection, medias and back-ups are currently being deleted.</string>
+    <string name="delete_collection_summary">Permanently erases your AnkiDroid collection and media</string>
+    <string name="delete_collection_confirmation">Are you sure you want to delete your whole collection and media?\n\nThis can\'t be undone.</string>
+    <string name="delete_collection_ongoing">Your AnkiDroid data are currently being deleted.</string>
     <!--- Check media -->
     <string name="check_media_summary">Delete unused medias from your collection.</string>
 </resources>
