@@ -58,6 +58,7 @@ import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -122,6 +123,8 @@ import java.io.File
 import kotlin.math.abs
 import kotlin.math.roundToLong
 
+const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
+const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
  *
@@ -883,6 +886,7 @@ open class DeckPicker :
         Timber.d("onResume()")
         super.onResume()
         refreshState()
+        // Migration
     }
 
     fun refreshState() {
@@ -2736,8 +2740,29 @@ open class DeckPicker :
             updateDeckList()
         }
     }
-}
 
+    /**
+     * Last time the user had chosen to postpone migration. Or 0 if never.
+     */
+    var migrationWasLastPostponedAt: Long
+        get() = getSharedPrefs(baseContext).getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
+        set(timeInSecond) = getSharedPrefs(baseContext)
+            .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
+
+    // Scoped Storage migration
+    fun setMigrationWasLastPostponedAtToNow() {
+        migrationWasLastPostponedAt = TimeManager.time.intTime()
+    }
+
+    /**
+     * Whether we can offer the migration at current time.
+     * That is, the last time the user postponed was longer than our postpone time.
+     */
+    fun shouldNotWaitMoreToOfferToMigrate(): Boolean {
+        val timeSinceLastPostponed = TimeManager.time.intTime() - migrationWasLastPostponedAt
+        return timeSinceLastPostponed > POSTPONE_MIGRATION_INTERVAL_DAYS * 24 * 60 * 60
+    }
+}
 /** Android's onCreateOptionsMenu does not play well with coroutines, as
  * it expects the menu to have been fully configured by the time the routine
  * returns. This results in flicker, as the menu gets blanked out, and then
