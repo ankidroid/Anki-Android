@@ -24,33 +24,26 @@ import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.async.deleteMedia
 import com.ichi2.themes.StyledProgressDialog
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 class ManageSpaceFragment : SettingsFragment() {
-    override val preferenceResource: Int
-        get() = R.xml.manage_space
-    override val analyticsScreenNameConstant: String
-        get() = "manageSpace"
+    override val preferenceResource = R.xml.manage_space
+    override val analyticsScreenNameConstant = "manageSpace"
 
     override fun initSubscreen() {
-        if (!CollectionManager.isThereACollectionDirectory()) {
-            noCollection()
+        if (!CollectionManager.collectionDirectoryExists()) {
+            disableMenuEntries()
         }
         requirePreference<Preference>(R.string.delete_collection_key).setOnPreferenceClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.delete_collection)
-                message(R.string.delete_data_confirmation)
+                message(R.string.delete_collection_confirmation)
                 positiveButton(R.string.dialog_positive_delete) {
-                    val progressDialog = StyledProgressDialog.show(requireContext(), getString(R.string.delete_data_ongoing), null)
                     launchCatchingTask {
+                        withStyledProgressDialogShowing(R.string.delete_collection_ongoing) {}
                         // TODO: close main ankidroid activity
                         // TODO: Uses withProgress if we move to FragmentActivity
                         deleteCollectionDirectory()
-                        MainScope().launch {
-                            progressDialog.dismiss()
-                            noCollection()
-                        }
+                        disableMenuEntries()
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
@@ -62,19 +55,17 @@ class ManageSpaceFragment : SettingsFragment() {
                 title(R.string.check_media)
                 message(R.string.check_media_warning)
                 positiveButton(R.string.dialog_ok) {
-                    val progressDialog = StyledProgressDialog.show(requireContext(), getString(R.string.delete_data_ongoing), null)
+                    val progressDialog = StyledProgressDialog.show(requireContext(), getString(R.string.delete_collection_ongoing), null)
                     launchCatchingTask {
                         // TODO: Uses withProgress if we move to FragmentActivity
-                        val checkLists = withCol { media.fullCheck() }
-                        val unused = checkLists.unused
+                        val mediaCheckResult = withCol { media.fullCheck() }
+                        val unused = mediaCheckResult.unused
                         if (unused.isEmpty()) {
-                            // Let the user know there is nothing to do
+                            // TODO: Let the user know there is nothing to do
                             return@launchCatchingTask
                         }
-                        MainScope().launch {
-                            progressDialog.dismiss()
-                            confirmDelete(unused)
-                        }
+                        progressDialog.dismiss()
+                        askUserToConfirmUnusedMediaDeletionAndPerformDeletion(unused)
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
@@ -83,28 +74,34 @@ class ManageSpaceFragment : SettingsFragment() {
         }
     }
 
+    suspend fun <T> MaterialDialog.withStyledProgressDialogShowing(title: Int, block: suspend () -> T): T {
+        val progressDialog = StyledProgressDialog.show(
+            context,
+            resources.getString(title),
+            null
+        )
+        val v = block()
+        progressDialog.dismiss()
+        return v
+    }
+
     /**
      * Asks the user whether they want to delete the N unused medias.
      */
-    // TODO: give a list of media, as in DeckPicker.
-    private fun confirmDelete(
-        unused: List<String>
+    // TODO: Show the content of [unused] to the user and ask them to confirm they are okay with
+    // deleting those files. Instead of just asking "are you okay to deleting unused files"
+    private fun askUserToConfirmUnusedMediaDeletionAndPerformDeletion(
+        unusedFiles: List<String>
     ) {
-        val numberOfUnusedMedias = unused.size
+        val numberOfUnusedMedias = unusedFiles.size
         MaterialDialog(requireContext()).show {
             title(R.string.check_media)
             message(text = context.resources.getQuantityString(R.string.check_media_summary, numberOfUnusedMedias))
             positiveButton(R.string.dialog_ok) {
-                val progressDialog = StyledProgressDialog.show(
-                    context,
-                    resources.getString(R.string.delete_media_message),
-                    null
-                )
                 launchCatchingTask {
-                    // TODO: Uses withProgress if we move to FragmentActivity
-                    withCol { deleteMedia(this, unused) }
-                    MainScope().launch {
-                        progressDialog.dismiss()
+                    withStyledProgressDialogShowing(R.string.delete_media_message) {
+                        // TODO: Uses withProgress if we move to FragmentActivity
+                        withCol { deleteMedia(this, unusedFiles) }
                     }
                 }
             }
@@ -112,10 +109,9 @@ class ManageSpaceFragment : SettingsFragment() {
         }
     }
 
-    fun noCollection() {
+    private fun disableMenuEntries() {
         for (key in listOf(R.string.delete_collection_key, R.string.check_media_key, R.string.pref_backup_max_key)) {
             requirePreference<Preference>(key).apply {
-                shouldDisableView = true
                 isEnabled = false
                 isSelectable = false
             }
