@@ -18,7 +18,10 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.onRetryExecute
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
@@ -31,8 +34,8 @@ import java.io.File
  *
  */
 
-data class MoveDirectory(val source: Directory, val destination: File) : MigrateUserData.Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
+data class MoveDirectory(val source: Directory, val destination: File) : Operation() {
+    override fun execute(context: MigrationContext): List<Operation> {
 
         // This seems unlikely to happen. Both paths need to be on the same mount point
         // We use directory.exists() to ensure that this operation doesn't occur twice. renameTo
@@ -60,7 +63,7 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
      * Create an empty directory at destination.
      * Return whether it was successful.
      */
-    internal fun createDirectory(context: MigrateUserData.MigrationContext): Boolean {
+    internal fun createDirectory(context: MigrationContext): Boolean {
         Timber.d("creating directory '$destination'")
         createDirectory(destination)
 

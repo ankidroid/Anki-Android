@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.servicelayer.scopedstorage
+package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
@@ -22,8 +22,11 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.UserDataMigrationPreferences
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.SingleRetryDecorator
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
+import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
+import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
 import com.ichi2.async.ProgressSenderAndCancelListener
 import com.ichi2.async.TaskDelegate
 import com.ichi2.compat.CompatHelper

@@ -17,7 +17,8 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
@@ -215,7 +216,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
                     return@doAnswer object : Operation() {
                         // Create a file in `source` and then execute the original operation.
                         // It ensures a file is added after some files where already copied.
-                        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+                        override fun execute(context: MigrationContext): List<Operation> {
                             new_file_name = toDoBetweenTwoFilesMove(source).name
                             return operation.execute()
                         }

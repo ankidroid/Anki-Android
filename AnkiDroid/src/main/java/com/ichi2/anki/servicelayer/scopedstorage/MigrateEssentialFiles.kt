@@ -27,7 +27,11 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.Companion.PRIORITY_FILES
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.Companion.SAFETY_MARGIN_BYTES
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.Companion.migrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActionRequiredException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
