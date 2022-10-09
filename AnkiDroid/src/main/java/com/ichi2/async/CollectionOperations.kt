@@ -17,6 +17,7 @@
 package com.ichi2.async
 
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CardUtils
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.TemporaryModel
 import com.ichi2.anki.servicelayer.NoteService
@@ -295,5 +296,36 @@ fun saveModel(
         }
     } finally {
         DB.safeEndInTransaction(col.db)
+    }
+}
+
+/**
+ * Deletes all the card with given ids
+ * @return Array<Cards> list of all deleted cards
+ */
+fun deleteMultipleNotes(
+    col: Collection,
+    cardIds: List<Long>,
+): Array<Card> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    return col.db.executeInTransaction {
+        val sched = col.sched
+        // list of all ids to pass to remNotes method.
+        // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+        val notes = CardUtils.getNotes(listOf(*cards))
+        val allCards = CardUtils.getAllCards(notes)
+        // delete note
+        val uniqueNoteIds = LongArray(notes.size)
+        val notesArr = notes.toTypedArray()
+        var count = 0
+        for (note in notes) {
+            uniqueNoteIds[count] = note.id
+            count++
+        }
+        col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
+        col.remNotes(uniqueNoteIds)
+        sched.deferReset()
+        // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+        allCards.toTypedArray()
     }
 }

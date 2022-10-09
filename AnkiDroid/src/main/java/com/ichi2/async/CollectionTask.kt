@@ -246,30 +246,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteNoteMulti(cardIds: List<Long>) : DismissNotes<Array<Card>>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>, cards: Array<Card>): Boolean {
-            val sched = col.sched
-            // list of all ids to pass to remNotes method.
-            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-            val notes = CardUtils.getNotes(listOf(*cards))
-            val allCards = CardUtils.getAllCards(notes)
-            // delete note
-            val uniqueNoteIds = LongArray(notes.size)
-            val notesArr = notes.toTypedArray()
-            var count = 0
-            for (note in notes) {
-                uniqueNoteIds[count] = note.id
-                count++
-            }
-            col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
-            col.remNotes(uniqueNoteIds)
-            sched.deferReset()
-            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-            collectionTask.doProgress(allCards.toTypedArray())
-            return true
-        }
-    }
-
     class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)

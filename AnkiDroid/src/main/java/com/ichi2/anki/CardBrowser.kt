@@ -70,7 +70,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
-import com.ichi2.async.CollectionTask.DeleteNoteMulti
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
@@ -723,7 +722,7 @@ open class CardBrowser :
                 // Ctrl+Shift+E: Export (TODO)
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+E: Add Note")
-                    addNoteFromCardBrowser()
+                    launchCatchingTask { addNoteFromCardBrowser() }
                     return true
                 }
             }
@@ -750,7 +749,7 @@ open class CardBrowser :
             }
             KeyEvent.KEYCODE_FORWARD_DEL -> {
                 Timber.i("Delete pressed - Delete Selected Note")
-                deleteSelectedNote()
+                launchCatchingTask { deleteSelectedNote() }
                 return true
             }
         }
@@ -1203,7 +1202,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_delete_card -> {
-                deleteSelectedNote()
+                launchCatchingTask { deleteSelectedNote() }
                 return true
             }
             R.id.action_mark_card -> {
@@ -1327,17 +1326,30 @@ open class CardBrowser :
         cardsAdapter!!.notifyDataSetChanged()
     }
 
-    protected fun deleteSelectedNote() {
+    protected suspend fun deleteSelectedNote() {
         if (!isInMultiSelectMode) {
             return
         }
-        TaskManager.launchCollectionTask(
-            DeleteNoteMulti(selectedCardIds),
-            mDeleteNoteHandler
-        )
-        mCheckedCards.clear()
-        endMultiSelectMode()
-        cardsAdapter!!.notifyDataSetChanged()
+
+        val result = withProgress("Deleting selected notes") {
+            // storing selected card ids because call to invalidated() will clear the checked cards list
+            val selectedIds = selectedCardIds
+            invalidate()
+            val deletedCards = withCol { deleteMultipleNotes(this, selectedIds) }
+            removeNotesView(deletedCards.map { it.id }, false)
+            mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            invalidateOptionsMenu() // maybe the availability of undo changed
+
+            searchCards()
+
+            mCheckedCards.clear()
+            endMultiSelectMode()
+            cardsAdapter!!.notifyDataSetChanged()
+            deletedCards
+        }
+
+        val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, result.size, result.size)
+        showUndoSnackbar(deletedMessage)
     }
 
     @VisibleForTesting
@@ -1839,33 +1851,6 @@ open class CardBrowser :
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
                 browser.mReloadRequired = true
             }
-        }
-    }
-
-    private val mDeleteNoteHandler = DeleteNoteHandler(this)
-
-    private class DeleteNoteHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Array<Card>, Computation<*>?>(browser) {
-        private var mCardsDeleted = -1
-        override fun actualOnPreExecute(context: CardBrowser) {
-            super.actualOnPreExecute(context)
-            context.invalidate()
-        }
-
-        override fun actualOnProgressUpdate(context: CardBrowser, value: Array<Card>) {
-            // we don't need to reorder cards here as we've already deselected all notes,
-            context.removeNotesView(value.map { it.id }, false)
-            mCardsDeleted = value.size
-        }
-
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
-            browser.hideProgressBar()
-            browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-
-            val deletedMessage = browser.resources.getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted)
-            browser.showUndoSnackbar(deletedMessage)
-
-            browser.searchCards()
         }
     }
 
