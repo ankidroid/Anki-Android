@@ -18,6 +18,9 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.FileStream
 import java.io.File
@@ -30,7 +33,7 @@ import java.io.IOException
  * This is different than [MoveFile], [MoveDirectory] and [MoveFileOrDirectory] where destination is the new path of the copied element.
  * Because in this case, there is not a single destination path.
  */
-class MoveDirectoryContent private constructor(val source: FileStream, val destination: File) : MigrateUserData.Operation() {
+class MoveDirectoryContent private constructor(val source: FileStream, val destination: File) : Operation() {
     companion object {
         /**
          * Return a [MoveDirectoryContent], moving the content of [source] to [destination].
@@ -48,7 +51,7 @@ class MoveDirectoryContent private constructor(val source: FileStream, val desti
             MoveDirectoryContent(CompatHelper.compat.contentOfDirectory(source.directory), destination)
     }
 
-    override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
+    override fun execute(context: MigrationContext): List<Operation> {
         try {
             val hasNext = source.hasNext() // can throw an IOException
             if (!hasNext) {
@@ -69,7 +72,7 @@ class MoveDirectoryContent private constructor(val source: FileStream, val desti
      * @returns An operation to move file or directory [sourceFile] to [destination]
      */
     @VisibleForTesting
-    internal fun toMoveOperation(sourceFile: File): MigrateUserData.Operation {
+    internal fun toMoveOperation(sourceFile: File): Operation {
         return MoveFileOrDirectory(sourceFile, File(destination, sourceFile.name))
     }
 }
