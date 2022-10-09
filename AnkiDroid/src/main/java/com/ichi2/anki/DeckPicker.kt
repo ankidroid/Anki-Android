@@ -696,7 +696,7 @@ open class DeckPicker :
 
     private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
         when (syncIcon) {
-            SyncIconState.Normal -> {
+            SyncIconState.NoBadge -> {
                 BadgeDrawableBuilder.removeBadge(menuItem)
                 menuItem.setTitle(R.string.button_sync)
             }
@@ -731,17 +731,20 @@ open class DeckPicker :
                     it
                 }
             }
-            val syncIcon = fetchSyncStatus(col)
+            val syncIcon = syncIconState(col)
             OptionsMenuState(searchIcon, undoIcon, syncIcon)
         }
     }
 
-    private fun fetchSyncStatus(col: Collection): SyncIconState {
+    /**
+     * @returnBadge which should be displayed abouve the sync icon.
+     */
+    private fun syncIconState(col: Collection): SyncIconState {
         val auth = syncAuth()
         val syncStatus = SyncStatus.getSyncStatus(col, auth)
         return when (syncStatus) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
-                SyncIconState.Normal
+            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES -> {
+                SyncIconState.NoBadge
             }
             SyncStatus.HAS_CHANGES -> {
                 SyncIconState.PendingChanges
@@ -1771,7 +1774,7 @@ open class DeckPicker :
                         ConnectionResultType.FULL_SYNC -> if (col.isEmpty) {
                             // don't prompt user to resolve sync conflict if local collection empty
                             sync(ConflictResolution.FULL_DOWNLOAD)
-                            // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
+                            // TODO: Also do reverse check to see if the sync server collection is empty if Anki Desktop
                             // implements it
                         } else {
                             // If can't be resolved then automatically then show conflict resolution dialog
@@ -2771,8 +2774,27 @@ data class OptionsMenuState(
 )
 
 enum class SyncIconState {
-    Normal,
+    /**
+     * User is not logged-in. The icon should invite user to sign-in.
+     */
+    NotLoggedIn,
+    /**
+     * There has been local changes since last update.
+     * We invite the user to upload it to the sync server. (This action may potentially leads to download
+     * or requiring a full sync).
+     */
     PendingChanges,
+    /**
+     * Next sync must be a full sync. Either because user did breaking change, or because, since last full sync, the sync server
+     * told the user they need to do a full sync. This should show more emergencies to act than [PendingChanges].
+     */
     FullSync,
-    NotLoggedIn
+    /**
+     * No badge should appear, and the icon should still appear of normal color.
+     * It can occur either:
+     * * if the user setting forbid to put a badge or
+     * * Sync is possible, and should only leads to downloading update. Nothing to upload, and we have no reason
+     * to expect that a full sync will be required. No badge should be shown in this case.
+     */
+    NoBadge,
 }

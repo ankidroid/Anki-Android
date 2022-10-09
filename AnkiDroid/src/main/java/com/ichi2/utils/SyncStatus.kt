@@ -23,32 +23,58 @@ import com.ichi2.libanki.Collection
 import net.ankiweb.rsdroid.BackendFactory
 
 enum class SyncStatus {
-    INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED;
+    /**
+     * Whether the user has not logged-in with an account.
+     */
+    NO_ACCOUNT,
+
+    /**
+     * There has been no change on this device since the last sync.
+     * Hence a sync would only serves to download more data (or do a full sync if requested by the sync server)
+     */
+    NO_CHANGES,
+
+    /**
+     * There has been local change since the latest sync. Those changes don't require a full sync.
+     * So we expect next sync to upload some data (unless the sync server requires a full sync)
+     */
+    HAS_CHANGES,
+
+    /**
+     * Next sync will be a full sync. This can occur either:
+     * * the user did changes on this device that requires a full sync
+     * * since last sync, the sync server let the user know a full sync was required.
+     */
+    FULL_SYNC,
+
+    /**
+     * Whether the user settings ask not to show badge on top of the sync icon
+     */
+    BADGE_DISABLED;
 
     companion object {
         private var sPauseCheckingDatabase = false
         private var sMarkedInMemory = false
 
-        fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus {
-            if (isDisabled) {
-                return BADGE_DISABLED
-            }
-            if (auth == null) {
-                return NO_ACCOUNT
-            }
-            if (!BackendFactory.defaultLegacySchema) {
-                return syncStatusFromRequired(col.newBackend.backend.syncStatus(auth).required)
-            }
-            if (col.schemaChanged()) {
-                return FULL_SYNC
-            }
-            return if (hasDatabaseChanges()) {
+        fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus =
+            if (syncIconBadgeIsDisabledInPreferences) {
+                BADGE_DISABLED
+            } else if (auth == null) {
+                NO_ACCOUNT
+            } else if (!BackendFactory.defaultLegacySchema) {
+                syncStatusFromRequired(col.newBackend.backend.syncStatus(auth).required)
+            } else if (col.schemaChanged()) {
+                FULL_SYNC
+            } else if (hasDatabaseChanges()) {
                 HAS_CHANGES
             } else {
                 NO_CHANGES
             }
-        }
 
+        /**
+         * @return What will the next sync upload will need to do.
+         * This assumes that the user is signed-in.
+         */
         private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus {
             return when (required) {
                 SyncStatusResponse.Required.NO_CHANGES -> NO_CHANGES
@@ -58,16 +84,17 @@ enum class SyncStatus {
             }
         }
 
-        private val isDisabled: Boolean
+        private val syncIconBadgeIsDisabledInPreferences: Boolean
             get() {
                 val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
+
         val isLoggedIn: Boolean
             get() {
                 val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 val hkey = preferences.getString("hkey", "")
-                return hkey != null && hkey.length != 0
+                return hkey != null && hkey.isNotEmpty()
             }
 
         /** Whether data has been changed - to be converted to Rust  */
