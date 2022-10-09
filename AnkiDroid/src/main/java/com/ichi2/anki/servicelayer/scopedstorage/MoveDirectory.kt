@@ -14,14 +14,14 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.servicelayer.scopedstorage
+package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.servicelayer.scopedstorage.DeleteEmptyDirectory
+import com.ichi2.anki.servicelayer.scopedstorage.MoveDirectoryContent
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.onRetryExecute
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
