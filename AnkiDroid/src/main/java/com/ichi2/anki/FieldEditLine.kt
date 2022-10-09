@@ -222,7 +222,6 @@ class FieldEditLine : FrameLayout {
         mExpansionState = state.expansionState ?: ExpansionState.EXPANDED
     }
 
-    @KotlinCleanup("fix usage of `in`")
     @KotlinCleanup("convert to parcelable")
     internal class SavedState : BaseSavedState {
         var childrenStates: SparseArray<Parcelable>? = null
@@ -245,20 +244,20 @@ class FieldEditLine : FrameLayout {
         }
 
         @Suppress("deprecation") // readSparseArray readSerializable
-        private constructor(`in`: Parcel, loader: ClassLoader) : super(`in`) {
-            childrenStates = `in`.readSparseArray(loader)
-            editTextId = `in`.readInt()
-            toggleStickyId = `in`.readInt()
-            mediaButtonId = `in`.readInt()
-            expandButtonId = `in`.readInt()
-            expansionState = `in`.readSerializable() as ExpansionState?
+        private constructor(source: Parcel, loader: ClassLoader) : super(source) {
+            childrenStates = source.readSparseArray(loader)
+            editTextId = source.readInt()
+            toggleStickyId = source.readInt()
+            mediaButtonId = source.readInt()
+            expandButtonId = source.readInt()
+            expansionState = source.readSerializable() as ExpansionState?
         }
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<SavedState> = object : ClassLoaderCreator<SavedState> {
-                override fun createFromParcel(`in`: Parcel, loader: ClassLoader): SavedState {
-                    return SavedState(`in`, loader)
+                override fun createFromParcel(source: Parcel, loader: ClassLoader): SavedState {
+                    return SavedState(source, loader)
                 }
 
                 override fun createFromParcel(source: Parcel): SavedState {
