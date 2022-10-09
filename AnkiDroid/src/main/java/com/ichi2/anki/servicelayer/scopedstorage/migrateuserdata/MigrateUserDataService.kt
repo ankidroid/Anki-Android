@@ -16,10 +16,12 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
+import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.servicelayer.ScopedStorageService
+import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
+import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 
 class MigrateUserDataService : android.app.Service() {
 
@@ -30,8 +32,8 @@ class MigrateUserDataService : android.app.Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        val source = intent!!.getStringExtra(ScopedStorageService.PREF_MIGRATION_SOURCE)
-        val destination = intent.getStringExtra(ScopedStorageService.PREF_MIGRATION_DESTINATION)
+        val source = intent!!.getStringExtra(PREF_MIGRATION_SOURCE)
+        val destination = intent.getStringExtra(PREF_MIGRATION_DESTINATION)
         val migrateUserData = MigrateUserData.createInstance(
             UserDataMigrationPreferences.createInstance(
                 source!!,
@@ -53,3 +55,11 @@ class MigrateUserDataService : android.app.Service() {
         showThemedToast(this, getString(R.string.migration_done), shortLength = false)
     }
 }
+
+fun Context.startMigrateUserDataService(source: String, destination: String) =
+    this.startActivity(
+        Intent(this, MigrateUserDataService::class.java).apply {
+            putExtra(PREF_MIGRATION_SOURCE, source)
+            putExtra(PREF_MIGRATION_DESTINATION, destination)
+        }
+    )
