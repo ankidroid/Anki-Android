@@ -211,25 +211,21 @@ object CollectionManager {
     }
 
     /**
-     * Delete the collection directory. Do nothing if it does not exists.
-     * @return whether deletion succeeded.
+     * Delete the collection directory. Do nothing if it does not exist.
      */
-    suspend fun deleteCollectionDirectory(): Boolean {
-        if (!isThereACollectionDirectory()) return true
-        ensureClosed(false)
-        return withQueue {
+    suspend fun deleteCollectionDirectory() {
+        if (!collectionDirectoryExists()) return
+        ensureClosed(save = false)
+        withQueue {
             File(expectedCollectionPath()).deleteRecursively()
         }
     }
 
-    /**
-     * @return whether the collection directory currently exists (at the expected path).
-     */
-    fun isThereACollectionDirectory() =
+    fun collectionDirectoryExists() =
         File(expectedCollectionPath()).exists()
 
     /**
-     * Expected path of the AnkiDroid collection. There may be no collection there.
+     * @return Expected path of the AnkiDroid collection. There may be no collection there.
      */
     private fun expectedCollectionPath() =
         CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance)
