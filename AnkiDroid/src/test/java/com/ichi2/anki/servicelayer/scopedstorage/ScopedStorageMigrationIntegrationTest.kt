@@ -22,7 +22,6 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
-import com.ichi2.async.ProgressSenderAndCancelListener
 import com.ichi2.exceptions.AggregateException
 import com.ichi2.testutils.*
 import net.ankiweb.rsdroid.BackendFactory
@@ -31,8 +30,8 @@ import org.hamcrest.Matchers.*
 import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.junit.After
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 import timber.log.Timber
 import java.io.File
 import kotlin.io.path.Path
@@ -72,9 +71,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         MigrateEssentialFiles.migrateEssentialFiles(targetContext, validDestination)
 
         underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
-        val result = underTest.execTask()
-
-        assertThat("execution of user data should succeed", result, equalTo(true))
+        assertDoesNotThrow { underTest.execTask() }
 
         // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
         underTest.integrationAssertOnlyIntendedFilesRemain()
@@ -124,9 +121,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     fun `Empty migration passes`() {
         underTest = MigrateUserDataTester.create(createTransientDirectory(), createTransientDirectory())
 
-        val result = underTest.execTask()
-
-        assertThat("migrating empty folder should succeed", result, equalTo(true))
+        assertDoesNotThrow { underTest.execTask() }
     }
 
     /**
@@ -139,14 +134,12 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         underTest = MigrateUserDataTester.create()
         underTest.destination.directory.addTempFile("maybeConflicted.log", "bar")
 
-        val result = underTest.execTask()
+        assertDoesNotThrow { underTest.execTask() }
 
         assertThat("all files should be in the destination", underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
         assertThat("one file is conflicted", underTest.conflictedFilesCount, equalTo(1))
         assertThat("expect to have conflict/maybeConflicted.log in source (file & folder)", underTest.sourceFilesCount, equalTo(2))
         assertThat(underTest.conflictedFilePaths.single(), anyOf(endsWith("/conflict/maybeConflicted.log"), endsWith("\\conflict\\maybeConflicted.log")))
-
-        assertThat("even with a conflict, the operation should succeed", result, equalTo(true))
     }
 
     @Test
@@ -200,14 +193,13 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         }
         underTest.executor = executorWithNonEmpty
 
-        val result = underTest.execTask()
+        assertDoesNotThrow { underTest.run() }
 
-        assertThat("operation should succeed", result, equalTo(true))
         assertThat("an external retry occurred", underTest.externalRetries, equalTo(1))
     }
 
-    private fun MigrateUserDataTester.execTask(): Boolean {
-        return this.execTask(mock(), mock())
+    private fun MigrateUserDataTester.execTask() {
+        return this.run()
     }
 }
 
@@ -218,8 +210,8 @@ private class MigrateUserDataTester
 private constructor(source: Directory, destination: Directory, val filesToMigrateCount: Int) :
     MigrateUserData(source, destination) {
 
-    override fun initializeContext(collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): UserDataMigrationContext {
-        return super.initializeContext(collectionTask).apply {
+    override fun initializeContext(doProgress: (NumberOfBytes) -> Unit): UserDataMigrationContext {
+        return super.initializeContext {}.apply {
             attemptRename = false
         }
     }

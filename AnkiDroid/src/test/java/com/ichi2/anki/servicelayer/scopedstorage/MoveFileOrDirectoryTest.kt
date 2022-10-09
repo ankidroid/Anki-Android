@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MoveDirectory
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.equalTo
@@ -49,7 +50,12 @@ class MoveFileOrDirectoryTest : OperationTest {
         val nextOperations = moveFromAndExecute(directory)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
         val nextOperation = nextOperations[0]
-        assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveDirectory::class.java))
+        assertThat(
+            "A file as input should return a file operation", nextOperation,
+            instanceOf(
+                MoveDirectory::class.java
+            )
+        )
         val moveDirectory = nextOperation as MoveDirectory
         assertThat("Move file source should be file", moveDirectory.source.directory, equalTo(directory))
         assertThat("Destination file source should be file", moveDirectory.destination, equalTo(File(destinationDir, directory.name)))

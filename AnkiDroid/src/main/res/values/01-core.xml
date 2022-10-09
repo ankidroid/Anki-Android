@@ -226,4 +226,5 @@
     </plurals>
 
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="migration_done">Update is done. You can sync again.</string>
 </resources>

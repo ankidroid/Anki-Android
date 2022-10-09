@@ -408,6 +408,10 @@
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+        <!-- Service to move user data (i.e. media) to scoped storage -->
+        <service android:name="com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData"
+            android:exported="false"
+            android:permission=""/>
 
         <!-- small widget -->
         <receiver
