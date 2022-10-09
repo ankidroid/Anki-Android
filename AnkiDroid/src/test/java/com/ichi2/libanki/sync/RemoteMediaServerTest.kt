@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.sync
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.utils.KotlinCleanup
@@ -91,19 +92,17 @@ class RemoteMediaServerTest {
         assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
     }
 
-    @KotlinCleanup("use edit{} extension function")
     private fun setCustomServerWithNoUrl() {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply()
+        userPreferences.edit { putBoolean("useCustomSyncServer", true) }
     }
 
-    @KotlinCleanup("use edit{} extension function")
     private fun setCustomMediaServer(s: String) {
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-        val e = userPreferences.edit()
-        e.putBoolean("useCustomSyncServer", true)
-        e.putString("syncMediaUrl", s)
-        e.apply()
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            .edit {
+                putBoolean("useCustomSyncServer", true)
+                putString("syncMediaUrl", s)
+            }
     }
 
     private fun getServerWithHostNum(hostNum: Int?): RemoteMediaServer {

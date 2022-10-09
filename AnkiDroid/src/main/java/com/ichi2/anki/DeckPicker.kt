@@ -1128,8 +1128,7 @@ open class DeckPicker :
                 // Fresh install
                 current
             }
-            preferences.edit().putLong(UPGRADE_VERSION_KEY, current).apply()
-
+            preferences.edit { putLong(UPGRADE_VERSION_KEY, current) }
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {

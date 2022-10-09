@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
@@ -85,7 +86,7 @@ open class BackupManager {
         // Abort backup if not enough free space
         if (!hasFreeDiscSpace(colFile)) {
             Timber.e("performBackup: Not enough space on sd card to backup.")
-            prefs.edit().putBoolean("noSpaceLeft", true).apply()
+            prefs.edit { putBoolean("noSpaceLeft", true) }
             return false
         }
 

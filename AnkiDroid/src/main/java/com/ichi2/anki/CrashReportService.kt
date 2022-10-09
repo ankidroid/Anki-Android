@@ -168,24 +168,24 @@ object CrashReportService {
      * @param value value of FEEDBACK_REPORT_KEY preference
      */
     fun setAcraReportingMode(value: String) {
-        val editor = AnkiDroidApp.getSharedPrefs(mApplication).edit()
-        // Set the ACRA disable value
-        if (value == FEEDBACK_REPORT_NEVER) {
-            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, true)
-        } else {
-            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false)
-            // Switch between auto-report via toast and manual report via dialog
-            if (value == FEEDBACK_REPORT_ALWAYS) {
-                dialogEnabled = false
-                toastText = mApplication.getString(R.string.feedback_auto_toast_text)
-            } else if (value == FEEDBACK_REPORT_ASK) {
+        AnkiDroidApp.getSharedPrefs(mApplication).edit {
+            // Set the ACRA disable value
+            if (value == FEEDBACK_REPORT_NEVER) {
+                putBoolean(ACRA.PREF_DISABLE_ACRA, true)
+            } else {
+                putBoolean(ACRA.PREF_DISABLE_ACRA, false)
+                // Switch between auto-report via toast and manual report via dialog
+                if (value == FEEDBACK_REPORT_ALWAYS) {
+                    dialogEnabled = false
+                    toastText = mApplication.getString(R.string.feedback_auto_toast_text)
+                } else if (value == FEEDBACK_REPORT_ASK) {
+                    createAcraCoreConfigBuilder()
+                    dialogEnabled = true
+                    toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
+                }
                 createAcraCoreConfigBuilder()
-                dialogEnabled = true
-                toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
             }
-            createAcraCoreConfigBuilder()
         }
-        editor.apply()
     }
 
     /**

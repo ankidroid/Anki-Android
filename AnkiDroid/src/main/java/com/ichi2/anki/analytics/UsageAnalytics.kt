@@ -21,6 +21,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.WebSettings
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import com.brsanthu.googleanalytics.GoogleAnalytics
 import com.brsanthu.googleanalytics.GoogleAnalyticsConfig
 import com.brsanthu.googleanalytics.httpclient.OkHttpClientImpl
@@ -34,7 +35,6 @@ import com.ichi2.utils.WebViewDebugging.hasSetDataDirectory
 import org.acra.ACRA
 import org.acra.util.Installation
 import timber.log.Timber
-import java.lang.RuntimeException
 
 @KotlinCleanup("see if we can make variables lazy, or properties without the `s` prefix")
 object UsageAnalytics {
@@ -296,9 +296,9 @@ object UsageAnalytics {
         }
         set(value) {
             // A listener on this preference handles the rest
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit()
-                .putBoolean(ANALYTICS_OPTIN_KEY, value)
-                .apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit {
+                putBoolean(ANALYTICS_OPTIN_KEY, value)
+            }
         }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
