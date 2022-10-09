@@ -34,6 +34,18 @@ class UserDataMigrationPreferences private constructor(val source: String, val d
     val migrationInProgress = source.isNotEmpty()
     val sourceFile get() = File(source)
     val destinationFile get() = File(destination)
+    // Throws if migration can't occur as expected.
+    fun check() {
+        // ensure that both are set, or both are empty
+        if (source.isEmpty() != destination.isEmpty()) {
+            // throw if there's a mismatch + list the key -> value pairs
+            val message =
+                "'$PREF_MIGRATION_SOURCE': '$source'; " +
+                    "'$PREF_MIGRATION_DESTINATION': '$destination'"
+            throw IllegalStateException("Expected either all or no migration directories set. $message")
+        }
+    }
+
     companion object {
         /**
          * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
@@ -45,18 +57,7 @@ class UserDataMigrationPreferences private constructor(val source: String, val d
             return UserDataMigrationPreferences(
                 source = getValue(PREF_MIGRATION_SOURCE),
                 destination = getValue(PREF_MIGRATION_DESTINATION)
-            ).also {
-                // ensure that both are set, or both are empty
-                if (it.source.isEmpty() != it.destination.isEmpty()) {
-                    // throw if there's a mismatch + list the key -> value pairs
-                    val message =
-                        "'$PREF_MIGRATION_SOURCE': '${getValue(PREF_MIGRATION_SOURCE)}'; " +
-                            "'$PREF_MIGRATION_DESTINATION': '${getValue(
-                                PREF_MIGRATION_DESTINATION
-                            )}'"
-                    throw IllegalStateException("Expected either all or no migration directories set. $message")
-                }
-            }
+            ).also { it.check() }
         }
     }
 }
