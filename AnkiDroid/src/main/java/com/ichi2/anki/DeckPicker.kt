@@ -65,7 +65,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
-import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -2446,29 +2445,17 @@ open class DeckPicker :
         }
     }
 
-    /**
-     * Show progress bars and rebuild deck list on completion
-     */
-    private fun simpleProgressListener(): SimpleProgressListener {
-        return SimpleProgressListener(this)
-    }
-
-    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData?) {
-            context.updateDeckList()
-            if (context.fragmented) {
-                context.loadStudyOptionsFragment(false)
+    suspend fun rebuildFiltered(did: DeckId) {
+        withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+            withCol {
+                Timber.d("rebuildFiltered: doInBackground - RebuildCram")
+                decks.select(did)
+                sched.rebuildDyn(decks.selected())
+                updateValuesFromDeck(this, true)
             }
+            updateDeckList()
+            if (fragmented) loadStudyOptionsFragment(false)
         }
-    }
-
-    fun rebuildFiltered(did: DeckId) {
-        col.decks.select(did)
-        TaskManager.launchCollectionTask(RebuildCram(), simpleProgressListener())
     }
 
     fun emptyFiltered(did: DeckId) {
