@@ -22,6 +22,7 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import timber.log.Timber
 import java.util.*
@@ -32,9 +33,9 @@ class Note : Cloneable {
     val col: Collection
 
     /**
-     * @return the mId
+     * Should only be mutated by addNote()
      */
-    val id: Long
+    var id: Long
 
     @get:VisibleForTesting
     var guId: String? = null
@@ -65,7 +66,11 @@ class Note : Cloneable {
 
     constructor(col: Collection, model: Model) {
         this.col = col
-        this.id = time.timestampID(col.db, "notes")
+        this.id = if (BackendFactory.defaultLegacySchema) {
+            time.timestampID(col.db, "notes")
+        } else {
+            0
+        }
         guId = Utils.guid64()
         mModel = model
         mid = model.getLong("id")

@@ -613,7 +613,7 @@ open class Collection(
      * @return Number of card added
      * @return Number of card added.
      */
-    fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
+    open fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
         val cms = findTemplates(note, allowEmpty)
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid

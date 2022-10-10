@@ -28,6 +28,7 @@ import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
@@ -336,6 +337,12 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_cloze() {
+        fun clearId(note: Note) {
+            if (!BackendFactory.defaultLegacySchema) {
+                // backend protects against adding the same note twice
+                note.id = 0
+            }
+        }
         val col = col
         col.models.setCurrent(col.models.byName("Cloze")!!)
         var note = col.newNote()
@@ -343,16 +350,24 @@ class ModelTest : RobolectricTest() {
         // a cloze model with no clozes is not empty
         note.setItem("Text", "nothing")
         assertEquals(1, col.addNote(note))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
-        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
+        if (BackendFactory.defaultLegacySchema) {
+            assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
+        }
         // try with one cloze
         note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
         assertEquals(1, col.addNote(note))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        if (BackendFactory.defaultLegacySchema) {
+            assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        }
         assertThat(
             note.cards()[0].q(),
             containsString("hello <span class=cloze>[...]</span>")
@@ -365,8 +380,11 @@ class ModelTest : RobolectricTest() {
         note = col.newNote()
         note.setItem("Text", "hello {{c1::world::typical}}")
         assertEquals(1, col.addNote(note))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
         assertThat(
             note.cards()[0].q(),
@@ -403,9 +421,13 @@ class ModelTest : RobolectricTest() {
         // if there are multiple answers for a single cloze, they are given in a
         // list
         note.setItem("Text", "a {{c1::b}} {{c1::c}}")
+        clearId(note)
         assertEquals(1, col.addNote(note))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
         assertThat(
             note.cards()[0].a(),
@@ -413,16 +435,25 @@ class ModelTest : RobolectricTest() {
         )
         // if we add another cloze, a card should be generated
         note.setItem("Text", "{{c2::hello}} {{c1::foo}}")
+        clearId(note)
         assertEquals(2, col.addNote(note))
+        clearId(note)
         assertEquals(2, col.addNote(note, Models.AllowEmpty.TRUE))
+        clearId(note)
         assertEquals(2, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        clearId(note)
         assertEquals(2, col.addNote(note, Models.AllowEmpty.FALSE))
         // 0 or negative indices are not supported
         note.setItem("Text", "{{c0::zero}} {{c-1:foo}}")
+        clearId(note)
         assertEquals(1, col.addNote(note))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
-        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
+        if (BackendFactory.defaultLegacySchema) {
+            assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
+        }
 
         note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
@@ -690,7 +721,11 @@ class ModelTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
+    @RustCleanup("remove")
     fun regression_test_pipe() {
+        if (!BackendFactory.defaultLegacySchema) {
+            return
+        }
         val col = col
         val mm = col.models
         val basic = mm.byName("Basic")
