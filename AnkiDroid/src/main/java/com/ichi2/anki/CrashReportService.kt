@@ -35,7 +35,6 @@ import org.acra.config.*
 import org.acra.sender.HttpSender
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
 
 object CrashReportService {
 
@@ -340,28 +339,9 @@ object CrashReportService {
      * @param activity the Activity used for Context access when interrogating ACRA reports
      * @return the timestamp of the most recent report, or -1 if no reports at all
      */
-    // Upstream issue for access to field/method: https://github.com/ACRA/acra/issues/843
     private fun getTimestampOfLastReport(activity: AnkiActivity): Long {
-        try {
-            // The ACRA LimiterData holds a timestamp for every generated report
-            val limiterData = LimiterData.load(activity)
-            val limiterDataListField = limiterData.javaClass.getDeclaredField("list")
-            limiterDataListField.isAccessible = true
-            @Suppress("UNCHECKED_CAST")
-            val limiterDataList = limiterDataListField[limiterData] as List<LimiterData.ReportMetadata>
-            for (report in limiterDataList) {
-                if (report.exceptionClass != UserSubmittedException::class.java.name) {
-                    continue
-                }
-                val timestampMethod = report.javaClass.getDeclaredMethod("getTimestamp")
-                timestampMethod.isAccessible = true
-                val timestamp = timestampMethod.invoke(report) as Calendar
-                // Limiter ensures there is only one report for the class, so if we found it, return it
-                return timestamp.timeInMillis
-            }
-        } catch (e: Exception) {
-            Timber.w(e, "Unexpected exception checking for recent reports")
-        }
-        return -1
+        return LimiterData.load(activity).reportMetadata
+            .filter { it.exceptionClass == UserSubmittedException::class.java.name }
+            .maxOfOrNull { it.timestamp?.timeInMillis ?: -1L } ?: -1L
     }
 }
