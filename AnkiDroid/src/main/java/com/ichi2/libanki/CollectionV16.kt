@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import android.content.Context
 import android.content.res.Resources
+import anki.collection.OpChanges
 import anki.config.ConfigKey
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toBackendNote
@@ -242,5 +243,18 @@ class CollectionV16(
     /** Change the flag color of the specified cards. flag=0 removes flag. */
     fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
         backend.setFlag(cardIds = cids, flag = flag)
+    }
+
+    fun addNote(note: Note, deckId: DeckId): OpChanges {
+        val resp = backend.addNote(note.toBackendNote(), deckId)
+        note.id = resp.noteId
+        return resp.changes
+    }
+
+    /** allowEmpty is ignored in the new schema */
+    @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
+    override fun addNote(note: Note, allowEmpty: Models.AllowEmpty): Int {
+        addNote(note, note.model().did)
+        return note.numberOfCards()
     }
 }

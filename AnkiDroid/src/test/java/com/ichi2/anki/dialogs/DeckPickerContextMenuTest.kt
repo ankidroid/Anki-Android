@@ -28,6 +28,7 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
@@ -144,6 +145,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun testUnbury() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            TimeManager.reset()
             val deckId = addDeck("Deck 1")
             col.models.byName("Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard()

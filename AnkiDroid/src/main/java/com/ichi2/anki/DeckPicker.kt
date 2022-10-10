@@ -2152,7 +2152,7 @@ open class DeckPicker :
 
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
-        if (!BackendFactory.defaultLegacySchema) {
+        if (!BackendFactory.defaultLegacySchema && Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
             // actually happens
             performBackupInBackground()
