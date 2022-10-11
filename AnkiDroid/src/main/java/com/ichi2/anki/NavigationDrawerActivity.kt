@@ -281,8 +281,7 @@ abstract class NavigationDrawerActivity :
          */
         mPendingRunnable = Runnable {
             // Take action if a different item selected
-            val itemId = item.itemId
-            when (itemId) {
+            when (item.itemId) {
                 R.id.nav_decks -> {
                     Timber.i("Navigating to decks")
                     val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
