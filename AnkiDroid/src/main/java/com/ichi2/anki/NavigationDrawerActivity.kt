@@ -50,7 +50,6 @@ import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.util.*
 
 @KotlinCleanup("lateinit if possible")
 @KotlinCleanup("IDE-lint")
