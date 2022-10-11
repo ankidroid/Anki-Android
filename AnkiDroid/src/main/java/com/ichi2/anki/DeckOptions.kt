@@ -588,11 +588,10 @@ class DeckOptions :
                 this.pref.mSummaries[key] = if (pref.summary != null) pref.summary.toString() else null
             }
             val summ = this.pref.mSummaries[key]
-            @KotlinCleanup("pref.summary = if ...")
-            if (summ != null && summ.contains("XXX")) {
-                pref.summary = summ.replace("XXX", value!!)
+            pref.summary = if (summ != null && summ.contains("XXX")) {
+                summ.replace("XXX", value!!)
             } else {
-                pref.summary = value
+                value
             }
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
