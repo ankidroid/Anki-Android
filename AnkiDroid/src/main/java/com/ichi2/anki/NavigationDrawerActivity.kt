@@ -62,7 +62,7 @@ abstract class NavigationDrawerActivity :
     protected var fragmented = false
     private var mNavButtonGoesBack = false
     // Navigation drawer list item entries
-    private var mDrawerLayout: DrawerLayout? = null
+    private lateinit var mDrawerLayout: DrawerLayout
     private var mNavigationView: NavigationView? = null
     lateinit var drawerToggle: ActionBarDrawerToggle
         private set
@@ -110,12 +110,12 @@ abstract class NavigationDrawerActivity :
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout)
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout!!.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-        mDrawerLayout!!.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimary))
+        mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimary))
         // Setup toolbar and hamburger
-        mNavigationView = mDrawerLayout!!.findViewById(R.id.navdrawer_items_container)
+        mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container)
         mNavigationView!!.setNavigationItemSelectedListener(this)
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
@@ -156,7 +156,7 @@ abstract class NavigationDrawerActivity :
             Timber.w("Unexpected Drawer layout - could not modify navigation animation")
         }
         drawerToggle.isDrawerSlideAnimationEnabled = animationEnabled()
-        mDrawerLayout!!.addDrawerListener(drawerToggle)
+        mDrawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
     }
@@ -216,9 +216,7 @@ abstract class NavigationDrawerActivity :
      * function in a noop if the drawer hasn't been initialized.
      */
     protected fun disableDrawerSwipe() {
-        if (mDrawerLayout != null) {
-            mDrawerLayout!!.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        }
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     /**
@@ -226,9 +224,7 @@ abstract class NavigationDrawerActivity :
      * function in a noop if the drawer hasn't been initialized.
      */
     protected fun enableDrawerSwipe() {
-        if (mDrawerLayout != null) {
-            mDrawerLayout!!.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        }
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     private val mPreferencesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -355,7 +351,7 @@ abstract class NavigationDrawerActivity :
     }
 
     val isDrawerOpen: Boolean
-        get() = mDrawerLayout!!.isDrawerOpen(GravityCompat.START)
+        get() = mDrawerLayout.isDrawerOpen(GravityCompat.START)
 
     /**
      * Restart the activity and discard old backstack, creating it new from the hierarchy in the manifest
@@ -379,11 +375,11 @@ abstract class NavigationDrawerActivity :
     }
 
     private fun openDrawer() {
-        mDrawerLayout!!.openDrawer(GravityCompat.START, animationEnabled())
+        mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled())
     }
 
     private fun closeDrawer() {
-        mDrawerLayout!!.closeDrawer(GravityCompat.START, animationEnabled())
+        mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled())
     }
 
     fun focusNavigation() {
