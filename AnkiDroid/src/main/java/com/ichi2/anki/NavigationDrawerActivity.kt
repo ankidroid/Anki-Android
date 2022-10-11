@@ -51,7 +51,6 @@ import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
-@KotlinCleanup("lateinit if possible")
 @KotlinCleanup("IDE-lint")
 abstract class NavigationDrawerActivity :
     AnkiActivity(),
@@ -63,7 +62,7 @@ abstract class NavigationDrawerActivity :
     private var mNavButtonGoesBack = false
     // Navigation drawer list item entries
     private lateinit var mDrawerLayout: DrawerLayout
-    private var mNavigationView: NavigationView? = null
+    private lateinit var mNavigationView: NavigationView
     lateinit var drawerToggle: ActionBarDrawerToggle
         private set
 
@@ -116,7 +115,7 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimary))
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container)
-        mNavigationView!!.setNavigationItemSelectedListener(this)
+        mNavigationView.setNavigationItemSelectedListener(this)
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -165,11 +164,7 @@ abstract class NavigationDrawerActivity :
      * Sets selected navigation drawer item
      */
     protected fun selectNavigationItem(itemId: Int) {
-        if (mNavigationView == null) {
-            Timber.e("Could not select item in navigation drawer as NavigationView null")
-            return
-        }
-        val menu = mNavigationView!!.menu
+        val menu = mNavigationView.menu
         if (itemId == -1) {
             for (i in 0 until menu.size()) {
                 menu.getItem(i).isChecked = false
@@ -385,7 +380,7 @@ abstract class NavigationDrawerActivity :
     fun focusNavigation() {
         // mNavigationView.getMenu().getItem(0).setChecked(true);
         selectNavigationItem(R.id.nav_decks)
-        mNavigationView!!.requestFocus()
+        mNavigationView.requestFocus()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
