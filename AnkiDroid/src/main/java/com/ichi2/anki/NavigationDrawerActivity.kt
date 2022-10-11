@@ -330,10 +330,8 @@ abstract class NavigationDrawerActivity :
         return true
     }
 
-    @KotlinCleanup("Remove redundant `val currentCardId`")
     protected fun openCardBrowser() {
         val intent = Intent(this@NavigationDrawerActivity, CardBrowser::class.java)
-        val currentCardId = currentCardId
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId)
         }
