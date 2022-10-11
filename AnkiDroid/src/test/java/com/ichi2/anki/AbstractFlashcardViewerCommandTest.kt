@@ -29,7 +29,6 @@ import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_TURQUOISE
 import com.ichi2.anki.reviewer.CardMarker.FlagDef
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.libanki.Card
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -37,16 +36,13 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.*
 import org.mockito.invocation.InvocationOnMock
+import org.mockito.kotlin.whenever
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup(
-    "is -> equalTo" +
-        "when -> whenever"
-)
 class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     @Test
     fun doubleTapSetsNone() {
-        val viewer = viewer
+        val viewer = createViewer()
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
@@ -55,7 +51,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun noneDoesNothing() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(UNSET_FLAG)
 
@@ -64,7 +60,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun doubleNoneDoesNothing() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(UNSET_FLAG)
         viewer.executeCommand(UNSET_FLAG)
@@ -74,7 +70,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun flagCanBeChanged() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
@@ -84,7 +80,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun unsetUnsets() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(UNSET_FLAG)
@@ -94,7 +90,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapRedFlagSetsRed() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
@@ -103,7 +99,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapOrangeFlagSetsOrange() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_ORANGE)
 
@@ -112,7 +108,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapGreenFlagSesGreen() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_GREEN)
 
@@ -121,7 +117,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapBlueFlagSetsBlue() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
@@ -130,7 +126,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapPinkFlagSetsPink() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_PINK)
 
@@ -139,7 +135,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapTurquoiseFlagSetsTurquoise() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_TURQUOISE)
 
@@ -148,7 +144,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
     @Test
     fun tapPurpleFlagSetsPurple() {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(TOGGLE_FLAG_PURPLE)
 
@@ -167,7 +163,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     }
 
     private fun testDoubleTapUnsets(command: ViewerCommand) {
-        val viewer = viewer
+        val viewer = createViewer()
 
         viewer.executeCommand(command)
         viewer.executeCommand(command)
@@ -175,18 +171,18 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         assertThat(command.toString(), viewer.lastFlag, equalTo(FLAG_NONE))
     }
 
-    @KotlinCleanup("rename the getter method to createViewer(), remove val")
-    private val viewer: CommandTestCardViewer
-        get() = CommandTestCardViewer(cardWith(FLAG_NONE))
+    private fun createViewer(): CommandTestCardViewer {
+        return CommandTestCardViewer(cardWith(FLAG_NONE))
+    }
 
     private fun cardWith(@Suppress("SameParameterValue") @FlagDef flag: Int): Card {
         val c = mock(Card::class.java)
         val flags = intArrayOf(flag)
-        `when`(c.userFlag()).then { flags[0] }
+        whenever(c.userFlag()).then { flags[0] }
         doAnswer { invocation: InvocationOnMock ->
             flags[0] = invocation.getArgument(0)
             null
-        }.`when`(c).setUserFlag(anyInt())
+        }.whenever(c).setUserFlag(anyInt())
         return c
     }
 
