@@ -188,7 +188,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testDynRebuildAndEmpty() {
+    fun testDynRebuildAndEmpty() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val cardIds = (0..3)
                 .map { addNoteUsingBasicModel("$it", "").firstCard().id }
