@@ -133,9 +133,7 @@ class DeckOptions :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                @KotlinCleanup("Remove `val r` and access resources directly")
-                val r = this@DeckOptions.resources
-                UIUtils.showThemedToast(this@DeckOptions, r.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
+                UIUtils.showThemedToast(this@DeckOptions, this@DeckOptions.resources.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
                 finish()
             }
         }
