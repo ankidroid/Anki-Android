@@ -155,7 +155,7 @@ abstract class NavigationDrawerActivity :
         } else {
             Timber.w("Unexpected Drawer layout - could not modify navigation animation")
         }
-        drawerToggle.setDrawerSlideAnimationEnabled(animationEnabled())
+        drawerToggle.isDrawerSlideAnimationEnabled = animationEnabled()
         mDrawerLayout!!.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
