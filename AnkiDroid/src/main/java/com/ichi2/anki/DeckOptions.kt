@@ -59,7 +59,6 @@ import java.util.*
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
 @KotlinCleanup("IDE lint")
-@KotlinCleanup("All java.lang. methods")
 class DeckOptions :
     AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
@@ -72,7 +71,6 @@ class DeckOptions :
         val deckOptionsActivity: DeckOptions // TODO: rename the class to DeckOptionsActivity
             get() = this@DeckOptions
 
-        @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
         override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
@@ -84,18 +82,18 @@ class DeckOptions :
                 mValues["deckConf"] = deck.getString("conf")
                 // general
                 mValues["maxAnswerTime"] = mOptions.getString("maxTaken")
-                mValues["showAnswerTimer"] = java.lang.Boolean.toString(parseTimerValue(mOptions))
-                mValues["autoPlayAudio"] = java.lang.Boolean.toString(mOptions.getBoolean("autoplay"))
-                mValues["replayQuestion"] = java.lang.Boolean.toString(mOptions.optBoolean("replayq", true))
+                mValues["showAnswerTimer"] = parseTimerValue(mOptions).toString()
+                mValues["autoPlayAudio"] = mOptions.getBoolean("autoplay").toString()
+                mValues["replayQuestion"] = mOptions.optBoolean("replayq", true).toString()
                 // new
                 val newOptions = mOptions.getJSONObject("new")
                 mValues["newSteps"] = StepsPreference.convertFromJSON(newOptions.getJSONArray("delays"))
                 mValues["newGradIvl"] = newOptions.getJSONArray("ints").getString(0)
                 mValues["newEasy"] = newOptions.getJSONArray("ints").getString(1)
-                mValues["newFactor"] = Integer.toString(newOptions.getInt("initialFactor") / 10)
+                mValues["newFactor"] = (newOptions.getInt("initialFactor") / 10).toString()
                 mValues["newOrder"] = newOptions.getString("order")
                 mValues["newPerDay"] = newOptions.getString("perDay")
-                mValues["newBury"] = java.lang.Boolean.toString(newOptions.optBoolean("bury", true))
+                mValues["newBury"] = newOptions.optBoolean("bury", true).toString()
                 // rev
                 val revOptions = mOptions.getJSONObject("rev")
                 mValues["revPerDay"] = revOptions.getString("perDay")
@@ -103,12 +101,12 @@ class DeckOptions :
                 mValues["hardFactor"] = String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100)
                 mValues["revIvlFct"] = String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100)
                 mValues["revMaxIvl"] = revOptions.getString("maxIvl")
-                mValues["revBury"] = java.lang.Boolean.toString(revOptions.optBoolean("bury", true))
+                mValues["revBury"] = revOptions.optBoolean("bury", true).toString()
 
-                mValues["revUseGeneralTimeoutSettings"] = java.lang.Boolean.toString(revOptions.optBoolean("useGeneralTimeoutSettings", true))
-                mValues["revTimeoutAnswer"] = java.lang.Boolean.toString(revOptions.optBoolean("timeoutAnswer", false))
-                mValues["revTimeoutAnswerSeconds"] = Integer.toString(revOptions.optInt("timeoutAnswerSeconds", 6))
-                mValues["revTimeoutQuestionSeconds"] = Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60))
+                mValues["revUseGeneralTimeoutSettings"] = revOptions.optBoolean("useGeneralTimeoutSettings", true).toString()
+                mValues["revTimeoutAnswer"] = revOptions.optBoolean("timeoutAnswer", false).toString()
+                mValues["revTimeoutAnswerSeconds"] = revOptions.optInt("timeoutAnswerSeconds", 6).toString()
+                mValues["revTimeoutQuestionSeconds"] = revOptions.optInt("timeoutQuestionSeconds", 60).toString()
 
                 // lapse
                 val lapOptions = mOptions.getJSONObject("lapse")
@@ -124,7 +122,7 @@ class DeckOptions :
                     val reminder = mOptions.getJSONObject("reminder")
                     val reminderTime = reminder.getJSONArray("time")
 
-                    mValues["reminderEnabled"] = java.lang.Boolean.toString(reminder.getBoolean("enabled"))
+                    mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
                     mValues["reminderTime"] = String.format(
                         "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
                     )
@@ -135,9 +133,7 @@ class DeckOptions :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                @KotlinCleanup("Remove `val r` and access resources directly")
-                val r = this@DeckOptions.resources
-                UIUtils.showThemedToast(this@DeckOptions, r.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
+                UIUtils.showThemedToast(this@DeckOptions, this@DeckOptions.resources.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
                 finish()
             }
         }
@@ -588,17 +584,14 @@ class DeckOptions :
                 this.pref.getString(key, "")
             }
             // update summary
-            @KotlinCleanup("Remove `val s` and use pref.summary?.toString()")
             if (!this.pref.mSummaries.containsKey(key)) {
-                val s = pref.summary
-                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = pref.summary?.toString()
             }
             val summ = this.pref.mSummaries[key]
-            @KotlinCleanup("pref.summary = if ...")
-            if (summ != null && summ.contains("XXX")) {
-                pref.summary = summ.replace("XXX", value!!)
+            pref.summary = if (summ != null && summ.contains("XXX")) {
+                summ.replace("XXX", value!!)
             } else {
-                pref.summary = value
+                value
             }
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
@@ -614,11 +607,9 @@ class DeckOptions :
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
         val confValues = arrayOfNulls<String>(confs.size)
         val confLabels = arrayOfNulls<String>(confs.size)
-        @KotlinCleanup(".forEachIndexed")
-        for (i in confs.indices) {
-            val o = confs[i]
-            confValues[i] = o.getString("id")
-            confLabels[i] = o.getString("name")
+        confs.forEachIndexed { index, deckConfig ->
+            confValues[index] = deckConfig.getString("id")
+            confLabels[index] = deckConfig.getString("name")
         }
         deckConfPref.entries = confLabels
         deckConfPref.entryValues = confValues
@@ -634,7 +625,7 @@ class DeckOptions :
         leechActPref.setEntryValues(R.array.leech_action_values)
         leechActPref.value = pref.getString(
             "lapLeechAct",
-            Integer.toString(Consts.LEECH_SUSPEND)
+            Consts.LEECH_SUSPEND.toString()
         )
     }
 
