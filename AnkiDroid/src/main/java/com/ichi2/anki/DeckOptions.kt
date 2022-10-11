@@ -59,7 +59,6 @@ import java.util.*
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
 @KotlinCleanup("IDE lint")
-@KotlinCleanup("All java.lang. methods")
 class DeckOptions :
     AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
@@ -83,9 +82,9 @@ class DeckOptions :
                 mValues["deckConf"] = deck.getString("conf")
                 // general
                 mValues["maxAnswerTime"] = mOptions.getString("maxTaken")
-                mValues["showAnswerTimer"] = java.lang.Boolean.toString(parseTimerValue(mOptions))
-                mValues["autoPlayAudio"] = java.lang.Boolean.toString(mOptions.getBoolean("autoplay"))
-                mValues["replayQuestion"] = java.lang.Boolean.toString(mOptions.optBoolean("replayq", true))
+                mValues["showAnswerTimer"] = parseTimerValue(mOptions).toString()
+                mValues["autoPlayAudio"] = mOptions.getBoolean("autoplay").toString()
+                mValues["replayQuestion"] = mOptions.optBoolean("replayq", true).toString()
                 // new
                 val newOptions = mOptions.getJSONObject("new")
                 mValues["newSteps"] = StepsPreference.convertFromJSON(newOptions.getJSONArray("delays"))
@@ -94,7 +93,7 @@ class DeckOptions :
                 mValues["newFactor"] = (newOptions.getInt("initialFactor") / 10).toString()
                 mValues["newOrder"] = newOptions.getString("order")
                 mValues["newPerDay"] = newOptions.getString("perDay")
-                mValues["newBury"] = java.lang.Boolean.toString(newOptions.optBoolean("bury", true))
+                mValues["newBury"] = newOptions.optBoolean("bury", true).toString()
                 // rev
                 val revOptions = mOptions.getJSONObject("rev")
                 mValues["revPerDay"] = revOptions.getString("perDay")
@@ -102,10 +101,10 @@ class DeckOptions :
                 mValues["hardFactor"] = String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100)
                 mValues["revIvlFct"] = String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100)
                 mValues["revMaxIvl"] = revOptions.getString("maxIvl")
-                mValues["revBury"] = java.lang.Boolean.toString(revOptions.optBoolean("bury", true))
+                mValues["revBury"] = revOptions.optBoolean("bury", true).toString()
 
-                mValues["revUseGeneralTimeoutSettings"] = java.lang.Boolean.toString(revOptions.optBoolean("useGeneralTimeoutSettings", true))
-                mValues["revTimeoutAnswer"] = java.lang.Boolean.toString(revOptions.optBoolean("timeoutAnswer", false))
+                mValues["revUseGeneralTimeoutSettings"] = revOptions.optBoolean("useGeneralTimeoutSettings", true).toString()
+                mValues["revTimeoutAnswer"] = revOptions.optBoolean("timeoutAnswer", false).toString()
                 mValues["revTimeoutAnswerSeconds"] = revOptions.optInt("timeoutAnswerSeconds", 6).toString()
                 mValues["revTimeoutQuestionSeconds"] = revOptions.optInt("timeoutQuestionSeconds", 60).toString()
 
@@ -123,7 +122,7 @@ class DeckOptions :
                     val reminder = mOptions.getJSONObject("reminder")
                     val reminderTime = reminder.getJSONArray("time")
 
-                    mValues["reminderEnabled"] = java.lang.Boolean.toString(reminder.getBoolean("enabled"))
+                    mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
                     mValues["reminderTime"] = String.format(
                         "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
                     )
