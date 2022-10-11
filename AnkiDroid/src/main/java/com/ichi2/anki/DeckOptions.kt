@@ -607,11 +607,9 @@ class DeckOptions :
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
         val confValues = arrayOfNulls<String>(confs.size)
         val confLabels = arrayOfNulls<String>(confs.size)
-        @KotlinCleanup(".forEachIndexed")
-        for (i in confs.indices) {
-            val o = confs[i]
-            confValues[i] = o.getString("id")
-            confLabels[i] = o.getString("name")
+        confs.forEachIndexed { index, deckConfig ->
+            confValues[index] = deckConfig.getString("id")
+            confLabels[index] = deckConfig.getString("name")
         }
         deckConfPref.entries = confLabels
         deckConfPref.entryValues = confValues
