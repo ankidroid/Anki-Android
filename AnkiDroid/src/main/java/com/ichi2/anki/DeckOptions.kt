@@ -585,7 +585,7 @@ class DeckOptions :
             }
             // update summary
             if (!this.pref.mSummaries.containsKey(key)) {
-                this.pref.mSummaries[key] = if (pref.summary != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = pref.summary?.toString()
             }
             val summ = this.pref.mSummaries[key]
             pref.summary = if (summ != null && summ.contains("XXX")) {
