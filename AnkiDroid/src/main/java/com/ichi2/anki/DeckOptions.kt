@@ -584,10 +584,8 @@ class DeckOptions :
                 this.pref.getString(key, "")
             }
             // update summary
-            @KotlinCleanup("Remove `val s` and use pref.summary?.toString()")
             if (!this.pref.mSummaries.containsKey(key)) {
-                val s = pref.summary
-                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = if (pref.summary != null) pref.summary.toString() else null
             }
             val summ = this.pref.mSummaries[key]
             @KotlinCleanup("pref.summary = if ...")
