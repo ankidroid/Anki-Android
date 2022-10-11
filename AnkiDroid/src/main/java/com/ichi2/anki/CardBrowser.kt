@@ -70,7 +70,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
-import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -1210,10 +1209,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_suspend_card -> {
-                TaskManager.launchCollectionTask(
-                    SuspendCardMulti(selectedCardIds),
-                    suspendCardHandler()
-                )
+                launchCatchingTask { suspendCards(selectedCardIds) }
                 return true
             }
             R.id.action_change_deck -> {
@@ -1839,19 +1835,16 @@ open class CardBrowser :
         updateList()
     }
 
-    private fun suspendCardHandler(): SuspendCardHandler {
-        return SuspendCardHandler(this)
-    }
-
-    private open class SuspendCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
-            browser.updateCardsInList(result!!.value.toList())
-            browser.hideProgressBar()
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
-                browser.mReloadRequired = true
+    private suspend fun suspendCards(cardIds: List<Long>) {
+        val result = withProgress {
+            withCol {
+                suspendCardMulti(this, cardIds)
             }
         }
+        updateCardsInList(result.toList())
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        val isUpdatedContainsReviewCard = result.map { card -> card.id }.contains(reviewerCardId)
+        if (isUpdatedContainsReviewCard) mReloadRequired = true
     }
 
     private fun showUndoSnackbar(message: CharSequence) {

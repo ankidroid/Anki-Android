@@ -207,44 +207,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
     }
 
-    class SuspendCardMulti(cardIds: List<Long>) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            val sched = col.sched
-            // collect undo information
-            val cids = LongArray(cards.size)
-            val originalSuspended = BooleanArray(cards.size)
-            var hasUnsuspended = false
-            for (i in cards.indices) {
-                val card = cards[i]
-                cids[i] = card.id
-                if (card.queue != Consts.QUEUE_TYPE_SUSPENDED) {
-                    hasUnsuspended = true
-                    originalSuspended[i] = false
-                } else {
-                    originalSuspended[i] = true
-                }
-            }
-
-            // if at least one card is unsuspended -> suspend all
-            // otherwise unsuspend all
-            if (hasUnsuspended) {
-                sched.suspendCards(cids)
-            } else {
-                sched.unsuspendCards(cids)
-            }
-
-            // mark undo for all at once
-            col.markUndo(UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended))
-
-            // reload cards because they'll be passed back to caller
-            for (c in cards) {
-                c.load()
-            }
-            sched.deferReset()
-            return true
-        }
-    }
-
     class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
