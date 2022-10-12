@@ -178,7 +178,7 @@ abstract class AbstractFlashcardViewer :
     private var mTouchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
     protected var flipCardLayout: LinearLayout? = null
-    protected var easeButtonsLayout: LinearLayout? = null
+    private var easeButtonsLayout: LinearLayout? = null
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton1: EaseButton? = null
     @KotlinCleanup("internal for AnkiDroidJsApi")
@@ -2471,8 +2471,7 @@ abstract class AbstractFlashcardViewer :
             val replacedUrl = if (BackendFactory.defaultLegacySchema) {
                 url.replaceFirst("playsound:".toRegex(), "")
             } else {
-                val tag = currentCard?.let { getAvTag(it, url) }
-                val filename = when (tag) {
+                val filename = when (val tag = currentCard?.let { getAvTag(it, url) }) {
                     is SoundOrVideoTag -> tag.filename
                     // not currently supported
                     is TTSTag -> null
