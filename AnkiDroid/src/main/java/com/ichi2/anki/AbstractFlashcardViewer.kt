@@ -539,8 +539,7 @@ abstract class AbstractFlashcardViewer :
         mGestureDetectorImpl = LinkDetectingGestureDetector()
     }
 
-    @KotlinCleanup("non-null")
-    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode?): Int {
+    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
         return R.layout.reviewer
     }
 
