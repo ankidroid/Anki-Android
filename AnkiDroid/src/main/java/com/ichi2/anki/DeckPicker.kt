@@ -1556,11 +1556,6 @@ open class DeckPicker :
         return false
     }
 
-    // Sync with Anki Web
-    override fun sync() {
-        sync(null)
-    }
-
     /**
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
