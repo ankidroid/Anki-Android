@@ -17,6 +17,7 @@
 package com.ichi2.async
 
 import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Card
@@ -151,12 +152,15 @@ fun updateValuesFromDeck(
  *
  * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
  */
-fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
+suspend fun getAllModelsAndNotesCount(): Pair<List<Model>, List<Int>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundLoadModels")
-    val models = col.models.all()
+    val models = withCol { models.all() }
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
-    val cardCount = models.map { col.models.useCount(it) }
-    return Pair(models, cardCount)
+    val cardCount = models.map {
+        ensureActive()
+        withCol { this.models.useCount(it) }
+    }
+    Pair(models, cardCount)
 }
 
 fun changeDeckConfiguration(

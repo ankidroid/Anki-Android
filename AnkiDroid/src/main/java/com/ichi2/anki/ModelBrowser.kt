@@ -47,7 +47,7 @@ import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
 import kotlinx.coroutines.Job
 import timber.log.Timber
-import java.util.ArrayList
+import java.util.*
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
 @NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
@@ -166,9 +166,7 @@ class ModelBrowser : AnkiActivity() {
             // Pair of list of models and corresponding notesCount
             Timber.d("doInBackgroundLoadModels: Started")
             val allModelsAndNotesCount = withProgress {
-                withCol {
-                    getAllModelsAndNotesCount(this)
-                }
+                getAllModelsAndNotesCount()
             }
             Timber.d("doInBackgroundLoadModels: Completed, refreshing UI")
             mModels = ArrayList(allModelsAndNotesCount.first)
