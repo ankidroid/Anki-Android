@@ -612,36 +612,35 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    @KotlinCleanup("maybe scope function")
     private fun toggleMicToolBar() {
-        if (audioView != null) {
-            // It exists swap visibility status
-            if (audioView!!.visibility != View.VISIBLE) {
-                audioView!!.visibility = View.VISIBLE
-            } else {
-                audioView!!.visibility = View.GONE
-            }
-        } else {
-            // Record mic tool bar does not exist yet
-            tempAudioPath = generateTempAudioFile(this)
-            if (tempAudioPath == null) {
-                return
-            }
-            audioView = createRecorderInstance(
-                this, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
-                R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, tempAudioPath!!
-            )
-            if (audioView == null) {
-                tempAudioPath = null
-                return
-            }
-            val lp2 = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            audioView!!.layoutParams = lp2
-            val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
-            micToolBarLayer.addView(audioView)
+        audioView?.let {
+            it.visibility = if (it.visibility != View.VISIBLE) View.VISIBLE else View.GONE
+            return
         }
+        // Record mic tool bar does not exist yet
+        tempAudioPath = generateTempAudioFile(this)
+        if (tempAudioPath == null) {
+            return
+        }
+        audioView = createRecorderInstance(
+            this,
+            R.drawable.ic_play_arrow_white_24dp,
+            R.drawable.ic_pause_white_24dp,
+            R.drawable.ic_stop_white_24dp,
+            R.drawable.ic_rec,
+            R.drawable.ic_rec_stop,
+            tempAudioPath!!
+        )
+        if (audioView == null) {
+            tempAudioPath = null
+            return
+        }
+        val lp2 = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        audioView!!.layoutParams = lp2
+        val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
+        micToolBarLayer.addView(audioView)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
