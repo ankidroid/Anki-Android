@@ -183,13 +183,13 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     fun setContent(content: String?, replaceNewLine: Boolean) {
-        var _content = content
+        var text = content
         if (content == null) {
-            _content = ""
+            text = ""
         } else if (replaceNewLine) {
-            _content = content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            text = content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
         }
-        setText(_content)
+        setText(text)
     }
 
     override fun onSaveInstanceState(): Parcelable? {
@@ -225,7 +225,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     @KotlinCleanup("Make param non-null")
-    protected fun onImagePaste(imageUri: Uri?): Boolean {
+    private fun onImagePaste(imageUri: Uri?): Boolean {
         return if (imageUri == null) {
             false
         } else mImageListener!!.onImagePaste(this, imageUri)
@@ -236,9 +236,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             super.onRestoreInstanceState(state)
             return
         }
-        val ss = state
-        super.onRestoreInstanceState(ss.superState)
-        ord = ss.ord
+        super.onRestoreInstanceState(state.superState)
+        ord = state.ord
     }
 
     fun setCapitalize(value: Boolean) {
