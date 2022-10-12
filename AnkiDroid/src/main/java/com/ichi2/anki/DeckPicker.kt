@@ -87,6 +87,7 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
+import com.ichi2.anki.servicelayer.ScopedStorageService.migrateEssentialFiles
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
@@ -118,7 +119,9 @@ import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
@@ -2763,6 +2766,35 @@ open class DeckPicker :
     }
 
     /**
+     * Do the whole migration.
+     * Blocks the UI until essential files are migrated.
+     * Change the preferences related to storage
+     * Migrate the user data in a service
+     */
+    fun migrate() {
+        if (userMigrationIsInProgress(this) || !isLegacyStorage(this)) {
+            // This should not ever occurs.
+            return
+        }
+        launchCatchingTask {
+            withProgress(getString(R.string.start_migration_progress_message)) {
+                withContext(Dispatchers.IO) {
+                    migrateEssentialFiles(baseContext)
+                }
+            }
+            showSnackbar(R.string.migration_part_1_done_resume)
+            startMigrateUserDataService()
+        }
+    }
+
+    /**
+     * Start migrating the user data. Assumes that
+     */
+    fun startMigrateUserDataService() {
+        // TODO
+    }
+
+    /**
      * Show a dialog that explains no sync can occur during migration.
      */
     private fun warnNoSyncDuringMigration() {
@@ -2821,10 +2853,6 @@ open class DeckPicker :
             ) { _, _ ->
                 setMigrationWasLastPostponedAtToNow()
             }.addScopedStorageLearnMoreLinkAndShow(message)
-    }
-
-    fun migrate() {
-        // TODO: Implement
     }
 
     // Scoped Storage migration
