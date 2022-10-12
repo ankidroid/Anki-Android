@@ -446,15 +446,13 @@ abstract class AbstractFlashcardViewer :
             dealWithTimeBox()
         }
 
-        @KotlinCleanup("remove _ variables")
         private fun dealWithTimeBox() {
-            val res = resources
             val elapsed = col.timeboxReached()
             if (elapsed != null) {
                 val nCards = elapsed.second
                 val nMins = elapsed.first / 60
-                val mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-                val timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+                val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
+                val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
                 MaterialDialog(this@AbstractFlashcardViewer).show {
                     title(R.string.timebox_reached_title)
                     message(text = timeboxMessage)
@@ -867,14 +865,12 @@ abstract class AbstractFlashcardViewer :
         mSoundPlayer.addSounds(mBaseUrl!!, tags, SoundSide.QUESTION)
     }
 
-    @KotlinCleanup("remove _ variables")
     protected fun showDeleteNoteDialog() {
-        val res = resources
         MaterialDialog(this).show {
             title(R.string.delete_card_title)
             iconAttr(R.attr.dialogErrorIcon)
             message(
-                text = res.getString(
+                text = resources.getString(
                     R.string.delete_note_message,
                     Utils.stripHTML(currentCard!!.q(true))
                 )
