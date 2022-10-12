@@ -63,7 +63,7 @@ object CrashReportService {
 
     private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
         val builder = CoreConfigurationBuilder()
-            .withBuildConfigClass(org.acra.dialog.BuildConfig::class.java)
+            .withBuildConfigClass(com.ichi2.anki.BuildConfig::class.java) // AnkiDroid BuildConfig - Acrarium#319
             .withExcludeMatchingSharedPreferencesKeys("username", "hkey")
             .withSharedPreferencesName("acra")
             .withReportContent(
