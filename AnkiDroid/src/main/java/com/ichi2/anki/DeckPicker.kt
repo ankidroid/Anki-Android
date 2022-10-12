@@ -1350,8 +1350,8 @@ open class DeckPicker :
      * Show a specific sync error dialog
      * @param dialogType id of dialog to show
      */
-    override fun showSyncErrorDialog(dialogType: Int) {
-        showSyncErrorDialog(dialogType, "")
+    override fun showSyncErrorDialog(dialogType: Int, syncCallback: SyncCallback?) {
+        showSyncErrorDialog(dialogType, "", syncCallback)
     }
 
     /**
@@ -1359,8 +1359,8 @@ open class DeckPicker :
      * @param dialogType id of dialog to show
      * @param message text to show
      */
-    override fun showSyncErrorDialog(dialogType: Int, message: String?) {
-        val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
+    override fun showSyncErrorDialog(dialogType: Int, message: String?, syncCallback: SyncCallback?) {
+        val newFragment: AsyncDialogFragment = newInstance(dialogType, message, syncCallback)
         showAsyncDialogFragment(newFragment, NotificationChannels.Channel.SYNC)
     }
 
@@ -1559,14 +1559,15 @@ open class DeckPicker :
     /**
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
+     * @param syncCallback a function called after successful sync.
      */
-    override fun sync(conflict: ConflictResolution?) {
+    override fun sync(conflict: ConflictResolution?, syncCallback: SyncCallback?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         val hkey = preferences.getString("hkey", "")
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             mPullToSyncWrapper.isRefreshing = false
-            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
+            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC, syncCallback)
             return
         }
         /** Nested function that makes the connection to
@@ -1574,10 +1575,11 @@ open class DeckPicker :
         fun doSync() {
             val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, syncMedia)
+                handleNewSync(conflict, syncMedia, syncCallback)
             } else {
                 val data = arrayOf(hkey, syncMedia, conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(mSyncListener, Connection.Payload(data))
+                val payload = Connection.Payload(data, syncCallback)
+                Connection.sync(mSyncListener, payload)
             }
         }
         // Warn the user in case the connection is metered
@@ -1732,7 +1734,7 @@ open class DeckPicker :
                                 putString("hkey", "")
                             }
                             // then show not logged in dialog
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC, data.syncCallback)
                         }
                         ConnectionResultType.NO_CHANGES -> {
                             SyncStatus.markSyncCompleted()
@@ -1765,18 +1767,18 @@ open class DeckPicker :
                         }
                         ConnectionResultType.FULL_SYNC -> if (col.isEmpty) {
                             // don't prompt user to resolve sync conflict if local collection empty
-                            sync(ConflictResolution.FULL_DOWNLOAD)
+                            sync(ConflictResolution.FULL_DOWNLOAD, data.syncCallback)
                             // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
                             // implements it
                         } else {
                             // If can't be resolved then automatically then show conflict resolution dialog
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION)
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION, data.syncCallback)
                         }
                         ConnectionResultType.BASIC_CHECK_FAILED -> {
                             dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db))
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_BASIC_CHECK_ERROR, joinSyncMessages(dialogMessage, syncMessage))
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_BASIC_CHECK_ERROR, joinSyncMessages(dialogMessage, syncMessage), data.syncCallback)
                         }
-                        ConnectionResultType.DB_ERROR -> showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage)
+                        ConnectionResultType.DB_ERROR -> showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage, data.syncCallback)
                         ConnectionResultType.OVERWRITE_ERROR -> {
                             dialogMessage = res.getString(R.string.sync_overwrite_error)
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
@@ -1817,7 +1819,8 @@ open class DeckPicker :
                             dialogMessage = res.getString(R.string.sync_sanity_failed)
                             showSyncErrorDialog(
                                 SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage)
+                                joinSyncMessages(dialogMessage, syncMessage),
+                                data.syncCallback
                             )
                         }
                         ConnectionResultType.SERVER_ABORT -> // syncMsg has already been set above, no need to fetch it here.
@@ -1826,7 +1829,8 @@ open class DeckPicker :
                             dialogMessage = res.getString(R.string.sync_media_error_check)
                             showSyncErrorDialog(
                                 SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage)
+                                joinSyncMessages(dialogMessage, syncMessage),
+                                data.syncCallback
                             )
                         }
                         ConnectionResultType.CUSTOM_SYNC_SERVER_URL -> {

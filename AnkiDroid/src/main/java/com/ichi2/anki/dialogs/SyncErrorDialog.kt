@@ -23,17 +23,21 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.SyncCallback
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.utils.contentNullable
 import com.ichi2.utils.iconAttr
 
-class SyncErrorDialog : AsyncDialogFragment() {
+class SyncErrorDialog(private val syncCallback: SyncCallback? = null) : AsyncDialogFragment() {
     interface SyncErrorDialogListener : CollectionGetter {
-        fun showSyncErrorDialog(dialogType: Int)
-        fun showSyncErrorDialog(dialogType: Int, message: String?)
+        fun showSyncErrorDialog(dialogType: Int, syncCallback: SyncCallback? = null)
+        fun showSyncErrorDialog(dialogType: Int, message: String?, syncCallback: SyncCallback? = null)
         fun loginToSyncServer()
-        fun sync(conflict: ConflictResolution? = null)
+        /**
+         * @param syncCallback a function called after successful sync.
+         */
+        fun sync(conflict: ConflictResolution? = null, syncCallback: SyncCallback? = null)
         fun mediaCheck()
         fun dismissAllDialogFragments()
         fun integrityCheck()
@@ -64,7 +68,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.retry) {
-                        (activity as SyncErrorDialogListener).sync()
+                        (activity as SyncErrorDialogListener).sync(syncCallback = syncCallback)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel) {
@@ -79,11 +83,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.sync_conflict_keep_local_new) {
                         (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
+                            ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, syncCallback)
                     }
                     negativeButton(R.string.sync_conflict_keep_remote_new) {
                         (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
+                            ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE, syncCallback)
                     }
                     neutralButton(R.string.dialog_cancel) {
                         dismissAllDialogFragments()
@@ -97,7 +101,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.dialog_positive_replace) {
                         val activity = activity as SyncErrorDialogListener?
-                        activity!!.sync(ConflictResolution.FULL_UPLOAD)
+                        activity!!.sync(ConflictResolution.FULL_UPLOAD, syncCallback)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -110,7 +114,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     iconAttr(R.attr.dialogSyncErrorIcon)
                     positiveButton(R.string.dialog_positive_replace) {
                         val activity = activity as SyncErrorDialogListener?
-                        activity!!.sync(ConflictResolution.FULL_DOWNLOAD)
+                        activity!!.sync(ConflictResolution.FULL_DOWNLOAD, syncCallback)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -122,11 +126,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     positiveButton(R.string.sync_sanity_local) {
                         (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL)
+                            ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL, syncCallback)
                     }
                     neutralButton(R.string.sync_sanity_remote) {
                         (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE)
+                            ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE, syncCallback)
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -136,7 +140,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Confirmation before pushing local collection to server after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
-                        (activity as SyncErrorDialogListener).sync(ConflictResolution.FULL_UPLOAD)
+                        (activity as SyncErrorDialogListener).sync(ConflictResolution.FULL_UPLOAD, syncCallback)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -147,7 +151,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Confirmation before overwriting local collection with server collection after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
-                        (activity as SyncErrorDialogListener).sync(ConflictResolution.FULL_DOWNLOAD)
+                        (activity as SyncErrorDialogListener).sync(ConflictResolution.FULL_DOWNLOAD, syncCallback)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -267,8 +271,8 @@ class SyncErrorDialog : AsyncDialogFragment() {
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param dialogMessage A string which can be optionally used to set the dialog message
          */
-        fun newInstance(dialogType: Int, dialogMessage: String?): SyncErrorDialog {
-            val f = SyncErrorDialog()
+        fun newInstance(dialogType: Int, dialogMessage: String?, syncCallback: SyncCallback? = null): SyncErrorDialog {
+            val f = SyncErrorDialog(syncCallback)
             val args = Bundle()
             args.putInt("dialogType", dialogType)
             args.putString("dialogMessage", dialogMessage)

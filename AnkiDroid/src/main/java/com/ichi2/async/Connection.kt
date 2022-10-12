@@ -22,32 +22,19 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.PowerManager
 import android.os.PowerManager.WakeLock
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
+import com.ichi2.anki.*
 import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
-import com.ichi2.async.Connection.ConflictResolution.*
+import com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD
+import com.ichi2.async.Connection.ConflictResolution.FULL_UPLOAD
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.sync.CustomSyncServerUrlException
-import com.ichi2.libanki.sync.FullSyncer
-import com.ichi2.libanki.sync.HostNum
-import com.ichi2.libanki.sync.HttpSyncer
-import com.ichi2.libanki.sync.MediaSyncer
-import com.ichi2.libanki.sync.RemoteMediaServer
-import com.ichi2.libanki.sync.RemoteServer
-import com.ichi2.libanki.sync.Syncer
+import com.ichi2.libanki.sync.*
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.NetworkUtils
-import com.ichi2.utils.Permissions
+import com.ichi2.utils.*
 import okhttp3.Response
 import timber.log.Timber
 import java.io.IOException
-import java.util.Arrays
+import java.util.*
 
 @Suppress("DEPRECATION") // #7108: AsyncTask
 @KotlinCleanup("Simplify null comparison, !! -> ?.")
@@ -104,6 +91,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         if (mListener != null) {
             mListener!!.onPostExecute(result)
         }
+        result.syncCallback?.invoke()
     }
 
     /*
@@ -479,7 +467,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         fun onCancelled()
     }
 
-    class Payload(var data: Array<Any?>) {
+    class Payload(var data: Array<Any?>, val syncCallback: SyncCallback? = null) {
         var taskType = 0
         var resultType: Syncer.ConnectionResultType? = null
         var result: Array<Any?> = arrayOf()
@@ -500,6 +488,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 ", success=" + success +
                 ", returnType=" + returnType +
                 ", exception=" + exception +
+                ", callback=" + syncCallback +
                 ", message='" + message + '\'' +
                 '}'
         }

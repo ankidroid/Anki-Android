@@ -38,6 +38,8 @@ import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
@@ -54,18 +56,22 @@ fun DeckPicker.syncAuth(): SyncAuth? {
     }
 }
 
+/**
+* @param syncCallback a function called after successful sync.
+*/
 fun DeckPicker.handleNewSync(
     conflict: Connection.ConflictResolution?,
     syncMedia: Boolean,
+    syncCallback: SyncCallback?
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
     launchCatchingTask {
         try {
             when (conflict) {
-                Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, syncMedia)
-                Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, syncMedia)
-                null -> handleNormalSync(deckPicker, auth, syncMedia)
+                Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, syncMedia, syncCallback)
+                Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, syncMedia, syncCallback)
+                null -> handleNormalSync(deckPicker, auth, syncMedia, syncCallback)
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out
@@ -107,10 +113,14 @@ private fun cancelSync(backend: Backend) {
     backend.abortSync()
 }
 
+/**
+* @param syncCallback a function called after successful sync.
+*/
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     syncMedia: Boolean,
+    syncCallback: SyncCallback?,
 ) {
     val output = deckPicker.withProgress(
         extractProgress = {
@@ -120,7 +130,9 @@ private suspend fun handleNormalSync(
         },
         onCancel = ::cancelSync
     ) {
-        withCol { newBackend.syncCollection(auth) }
+        withCol {
+            newBackend.syncCollection(auth)
+        }
     }
 
     // Save current host number
@@ -136,18 +148,19 @@ private suspend fun handleNormalSync(
             // kick off media sync - future implementations may want to run this in the
             // background instead
             if (syncMedia) handleMediaSync(deckPicker, auth)
+            syncCallback.invokeOnMain()
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth, syncMedia)
+            handleDownload(deckPicker, auth, syncMedia, syncCallback)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth, syncMedia)
+            handleUpload(deckPicker, auth, syncMedia, syncCallback)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
-            deckPicker.showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION)
+            deckPicker.showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION, syncCallback)
         }
 
         SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
@@ -167,10 +180,14 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
     }
 }
 
+/**
+* @param syncCallback a function called after successful sync.
+*/
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     syncMedia: Boolean,
+    syncCallback: SyncCallback?,
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
@@ -195,12 +212,17 @@ private suspend fun handleDownload(
 
     Timber.i("Full Download Completed")
     deckPicker.showSyncLogMessage(R.string.backup_full_sync_from_server, "")
+    syncCallback.invokeOnMain()
 }
 
+/**
+* @param syncCallback a function called after successful sync.
+*/
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     syncMedia: Boolean,
+    syncCallback: SyncCallback?,
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
@@ -219,6 +241,8 @@ private suspend fun handleUpload(
     }
     Timber.i("Full Upload Completed")
     deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
+
+    syncCallback.invokeOnMain()
 }
 
 // TODO: this needs a dedicated UI for media syncing, and needs to expose
@@ -259,5 +283,13 @@ private suspend fun handleMediaSync(
         }
     } finally {
         dialog.dismiss()
+    }
+}
+
+typealias SyncCallback = (() -> Unit)
+fun SyncCallback?.invoke() = this?.invoke()
+suspend fun SyncCallback?.invokeOnMain() {
+    withContext(Dispatchers.Main) {
+        this@invokeOnMain.invoke()
     }
 }
