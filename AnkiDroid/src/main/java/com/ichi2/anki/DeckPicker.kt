@@ -676,27 +676,28 @@ open class DeckPicker :
     }
 
     private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
+        menuItem.setTitle(
+            when (syncIcon) {
+                SyncIconState.Normal -> R.string.button_sync
+                SyncIconState.PendingChanges -> R.string.button_sync
+                SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
+                SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+            }
+        )
         when (syncIcon) {
             SyncIconState.Normal -> {
                 BadgeDrawableBuilder.removeBadge(menuItem)
-                menuItem.setTitle(R.string.button_sync)
             }
             SyncIconState.PendingChanges -> {
                 BadgeDrawableBuilder(resources)
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
                     .replaceBadge(menuItem)
-                menuItem.setTitle(R.string.button_sync)
             }
             SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
                 BadgeDrawableBuilder(resources)
                     .withText('!')
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
                     .replaceBadge(menuItem)
-                if (syncIcon == SyncIconState.FullSync) {
-                    menuItem.setTitle(R.string.sync_menu_title_full_sync)
-                } else {
-                    menuItem.setTitle(R.string.sync_menu_title_no_account)
-                }
             }
         }
     }
