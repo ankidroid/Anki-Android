@@ -127,6 +127,12 @@
         <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
         <item name="filterHeaderDivider">@color/white</item>
 
+        <!-- Notification Preference-->
+        <item name="notificationPreferenceProgressbarColor">@color/white</item>
+        <item name="notificationPreferenceSheetBackground">@color/theme_black_primary</item>
+        <item name="notificationPreferenceTimePickerHeaderColor">@color/theme_black_primary</item>
+        <item name="notificationPreferenceCheckboxColor">@color/theme_black_primary_dark</item>
+
         <!-- Snackbar -->
         <item name="snackbarTextViewStyle">@style/SnackbarTextStyleBlack</item>
         <item name="snackbarBackgroundTintColor">#ff303030</item>

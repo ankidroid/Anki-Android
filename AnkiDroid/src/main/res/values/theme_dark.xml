@@ -138,6 +138,12 @@
         <item name="filterItemTextColorSelected">?attr/colorAccent</item>
         <item name="filterHeaderDivider">@color/white</item>
 
+        <!-- Notification Preference-->
+        <item name="notificationPreferenceProgressbarColor">@color/white</item>
+        <item name="notificationPreferenceSheetBackground">@color/material_theme_grey</item>
+        <item name="notificationPreferenceTimePickerHeaderColor">@color/theme_dark_primary</item>
+        <item name="notificationPreferenceCheckboxColor">@color/theme_dark_primary_dark</item>
+
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
              must be *all* present in a theme (or its parent) in order for the snackbar
              to pick up the proper layout that uses these attributes. -->

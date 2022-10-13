@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/notification_bottom_sheet_background">
+
+    <TextView
+        android:id="@+id/notification_sheet_deck_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/card_info_deck_name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Deck Name" />
+
+    <TimePicker
+        android:id="@+id/sheet_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:headerBackground="?attr/notificationPreferenceTimePickerHeaderColor"
+        android:numbersSelectorColor="?attr/notificationPreferenceTimePickerHeaderColor"
+        app:layout_constraintTop_toBottomOf="@+id/notification_sheet_divider"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <View
+        android:id="@+id/notification_sheet_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_blue_grey_600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notification_sheet_deck_name" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/notification_sheet_cancel_deck"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/material_blue_500"
+        android:text="@string/dialog_cancel"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notification_sheet_sticky" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/notification_sheet_save_deck"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/material_blue_500"
+        android:text="@string/save_settings"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/notification_sheet_sticky" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/notification_sheet_subdeck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:buttonTint="?attr/notificationPreferenceCheckboxColor"
+        android:text="@string/notification_sheet_subdeck"
+        app:layout_constraintTop_toBottomOf="@+id/sheet_time_picker" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/notification_sheet_sticky"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:buttonTint="?attr/notificationPreferenceCheckboxColor"
+        android:text="@string/notification_sheet_sticky"
+        app:layout_constraintTop_toBottomOf="@+id/notification_sheet_subdeck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

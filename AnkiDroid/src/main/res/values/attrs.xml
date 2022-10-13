@@ -144,6 +144,12 @@
     <!-- Introduction -->
     <attr name="introductionLogoTransparent" format="color"/>
 
+    <!-- Deck Notification UI-->
+    <attr name="notificationPreferenceProgressbarColor" format="color" />
+    <attr name="notificationPreferenceSheetBackground" format="color" />
+    <attr name="notificationPreferenceTimePickerHeaderColor" format="color" />
+    <attr name="notificationPreferenceCheckboxColor" format="color" />
+
     <!-- FAB -->
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
     <attr name="fab_pressed" format="color"/>

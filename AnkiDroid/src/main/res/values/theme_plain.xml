@@ -74,6 +74,12 @@
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#99FFFFFF</item>
 
+        <!-- Notification Preference-->
+        <item name="notificationPreferenceProgressbarColor">@color/material_blue_500</item>
+        <item name="notificationPreferenceSheetBackground">@color/white</item>
+        <item name="notificationPreferenceTimePickerHeaderColor">@color/theme_plain_primary</item>
+        <item name="notificationPreferenceCheckboxColor">@color/theme_plain_primary_dark</item>
+
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
     </style>

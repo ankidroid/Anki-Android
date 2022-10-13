@@ -152,6 +152,12 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
         <item name="filterHeaderDivider">@color/black</item>
 
+        <!-- Notification Preference-->
+        <item name="notificationPreferenceProgressbarColor">@color/material_blue_500</item>
+        <item name="notificationPreferenceSheetBackground">@android:color/white</item>
+        <item name="notificationPreferenceTimePickerHeaderColor">@color/theme_light_primary</item>
+        <item name="notificationPreferenceCheckboxColor">@color/theme_light_primary_dark</item>
+
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
              must be *all* present in a theme (or its parent) in order for the snackbar
              to pick up the proper layout that uses these attributes. -->

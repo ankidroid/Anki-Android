@@ -121,9 +121,6 @@
     <string name="language_system">System language</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
-    <string name="never_notify">Never notify</string>
-    <string name="notify_when_pending">Pending messages available</string>
-    <string name="notification_minimum_cards_due">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
