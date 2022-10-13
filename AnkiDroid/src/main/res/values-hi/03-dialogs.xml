@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">मल्टीमीडिया संपादक खोलने में विफल</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ऑडियो रिकॉर्डिंग की अनुमति से इनकार किया</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid में आपका स्वागत है!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid को storage permission की आवश्यकता होती है, जिसका उपयोग हम विशेष रूप से आपके AnkiDroid संग्रह, फ्लैशकार्ड मीडिया और बैकअप को संग्रहीत करने के लिए करते हैं। हमारा कोड open-source है, जो स्वयंसेवकों द्वारा लिखा गया है, और लाखों लोगों द्वारा भरोसेमंद है। \n \n यदि आपके कोई प्रश्न हैं, तो कृपया हमारे इन-ऐप मैनुअल का उपयोग करें या हमारे support forums पर जाएं। \n \n आप को AnkiDroid की इस्तेमाल करने के लिए धन्यवाद! \n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Advanced Editor प्रदर्शित करने में अज्ञात त्रुटि हुई</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid अपग्रेड किया गया</string>

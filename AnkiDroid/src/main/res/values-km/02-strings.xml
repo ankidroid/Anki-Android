@@ -154,7 +154,6 @@
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="show_hint">Show %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ថែម</string>
@@ -185,13 +184,18 @@
     <string name="export_include_media">Include media</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -202,6 +206,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Error exporting apkg file</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

@@ -157,7 +157,6 @@
     <string name="empty_card_warning">ಈ ಕಾರ್ಡ್ ಖಾಲಿಯಾಗಿದೆ. ಡೆಕ್ ಪಟ್ಟಿ ಪರದೆಯಲ್ಲಿರುವ ಮೆನುವಿನಿಂದ “ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು” ಆಯ್ಕೆಯನ್ನು ಬಳಸಿ.</string>
     <string name="unknown_type_field_warning">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ: ಅಜ್ಞಾತ ಕ್ಷೇತ್ರ %s</string>
     <string name="delete_deck">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
-    <string name="show_hint">%s ತೋರಿಸು</string>
     <string name="info_rate">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ರೇಟ್ ಮಾಡಿ</string>
     <string name="import_title">ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ಸೇರಿಸಿ</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">ಮಾಧ್ಯಮವನ್ನು ಸೇರಿಸಿ</string>
     <string name="confirm_apkg_export">ಸಂಗ್ರಹವನ್ನು ಆಂಕಿ ಪ್ಯಾಕೇಜ್‌ನಂತೆ ರಫ್ತು ಮಾಡುವುದೇ?</string>
     <string name="confirm_apkg_export_deck">“%s” ಅನ್ನು apkg ಫೈಲ್ ಆಗಿ ರಫ್ತು ಮಾಡುವುದೇ?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
-    <string name="export_successful_title">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಕಳುಹಿಸುವುದೇ?</string>
-    <string name="export_send_button">ಕಳುಹಿಸು</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">ಎಪಿಕೆಜಿ ನಿರ್ವಹಿಸಲು ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ. ಉಳಿಸಲಾಗುತ್ತಿದೆ ...</string>
     <string name="export_save_apkg_successful">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="export_save_apkg_unsuccessful">ಉಳಿಸಿ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ವಿಫಲವಾಗಿದೆ</string>
-    <string name="export_successful">“%s” ಫೈಲ್ ಅನ್ನು ರಫ್ತು ಮಾಡಲಾಗಿದೆ. ನೀವು ಅದನ್ನು ಇನ್ನೊಂದು ಅಪ್ಲಿಕೇಶನ್‌ನೊಂದಿಗೆ ಕಳುಹಿಸಲು ಬಯಸುವಿರಾ?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">ಆಂಕಿಡ್ರಾಯ್ಡ್ ರಫ್ತು ಮಾಡಿದ ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್‌ಗಳು:%s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -206,6 +212,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">ಎಪಿಕೆಜಿ ಫೈಲ್ ರಫ್ತು ಮಾಡುವಲ್ಲಿ ದೋಷ</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>
     <string name="menu__deck_options">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>

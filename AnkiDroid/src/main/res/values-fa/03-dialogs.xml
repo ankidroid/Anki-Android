@@ -174,9 +174,6 @@
     <string name="multimedia_editor_failed">باز کردن ویرایشگر رسانه انجام نشد</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">به آنکی‌دروید خوش آمدید!</string>
-    <string name="collection_load_welcome_request_permissions_details">آنکی‌دروید نیازمند به دسترسی به حافظه می‌باشد. از این دسترسی صرفاً برای ذخیرۀ مجموعۀ، فلش‌کارت‌ها و فایل‌های پشتیبان شما استفاده می‌شود. آنکی نرم‌افزاری اوپن سورس است که توسط افراد داوطلب نوشته شده است و میلیون‌ها نفر به آن اعتماد دارند.\n\n اگر سوالی دارید می‌توانید به راهنمای داخل نرم‌افزار یا انجمن‌های ما مراجعه کنید.\n\از اینکه از آنکی‌دروید استفاده می‌کنید متشکریم!\n--تیم توسعه‌دهندۀ آنکی‌دروید</string>
     <string name="mutimedia_editor_assertion_failed">در هنگام نمایش ویرایشگر پیشرفته خطایی رخ داد</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>

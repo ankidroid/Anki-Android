@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
     <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
-    <string name="show_hint">%s göster</string>
     <string name="info_rate">AnkiDroid\'e Oy Ver</string>
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Medya dâhil</string>
     <string name="confirm_apkg_export">Koleksiyon Anki paketi hâlinde dışarı aktarılsın mı?</string>
     <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Anki paketi dosyası dışarı aktarılıyor&#8230;</string>
-    <string name="export_successful_title">Anki paketi gönderilsin mi?</string>
-    <string name="export_send_button">Gönder</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
-    <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Anki paketini göndermek için kullan</string>
     <string name="export_email_subject">AnkiDroid\'den aktarılan bilgi kartları: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
@@ -206,6 +212,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Apkg dosyasını kaydederken hata</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Seçenekler</string>
     <string name="menu__deck_options">Deste seçenekleri</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>

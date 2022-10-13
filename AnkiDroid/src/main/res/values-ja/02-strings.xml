@@ -154,7 +154,6 @@
     <string name="empty_card_warning">このカードは白紙カード（表側に表示する内容がないカード）です。このような白紙カードを一括削除するには、デッキリスト画面のメニューから「白紙カードをチェック」を選択してください。</string>
     <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
     <string name="delete_deck">デッキを削除しています...</string>
-    <string name="show_hint">%s を表示</string>
     <string name="info_rate">このアプリを評価</string>
     <string name="import_title">インポート</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
@@ -185,13 +184,18 @@
     <string name="export_include_media">メディアファイルを含める</string>
     <string name="confirm_apkg_export">コレクション（全デッキ）のデータの控え（Ankiパッケージ）を作成しますか？</string>
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Ankiパッケージを作成しています...</string>
-    <string name="export_successful_title">Ankiパッケージを送信しますか？</string>
-    <string name="export_send_button">送信</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">apkgファイルに対応した他のアプリがありません。保存します...</string>
     <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
-    <string name="export_successful">Ankiパッケージファイル “%s” を作成しました。他のアプリに送信しますか？　それともこの端末や自分のGoogleドライブに保存しますか？</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[        こんにちは！
@@ -202,6 +206,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
     <string name="menu__deck_options">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>

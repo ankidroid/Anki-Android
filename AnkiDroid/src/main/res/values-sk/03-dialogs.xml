@@ -188,9 +188,6 @@
     <string name="multimedia_editor_failed">Nepodarilo sa otvoriť editor multimédií</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Povolenie pre audio nahrávanie bolo zamietnuté</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Vitajte v AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid vyžaduje povolenie pre prístup k úložisku, ktoré výlučne používame na uloženie vašej AnkiDroid kolekcie, médií pre kartičky a zálohy. Náš kód je open-source, napísaný dobrovoľníkmi, ktorému dôverujú milióny.\n\nAk máte nejaké otázky, použijte prosím náš manuál v aplikácii alebo navštívte naše fórum.\n\nĎakujeme, že ste sa rozhodli vyskúšať AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Nastala neznáma chyba pri zobrazení rozšíreného editora</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizovaný</string>
