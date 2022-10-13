@@ -66,10 +66,10 @@
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d枚のカードの表示順序が変更されました</item>
     </plurals>
-    <string name="reset_card_dialog_title">カードの回答履歴をリセット</string>
+    <string name="reset_card_dialog_title">カードの学習履歴をリセット</string>
     <string name="reset_card_dialog_message">新規カードの最後に配置します</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d枚のカードの回答履歴をリセットしました</item>
+        <item quantity="other">%d枚のカードの学習履歴をリセットしました</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
@@ -240,7 +240,7 @@
     <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
-    <string name="deck_picker_lrn">このデッキ内の、学習中カードの数。</string>
+    <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
@@ -249,5 +249,5 @@
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
     <string name="import_csv">テキストファイル (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
 </resources>

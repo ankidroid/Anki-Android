@@ -174,12 +174,12 @@
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
-    <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再基本学習、緑: 復習）</string>
+    <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
     <string name="show_eta" maxLength="41">推定学習時間を表示</string>
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">先取り学習の限度</string>
+    <string name="learn_cutoff" maxLength="41">習得ステップの前倒しの限度</string>
     <string name="time_limit" maxLength="41">タイムボックスの時間枠</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
@@ -245,12 +245,12 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">新規カードと基本学習</string>
+    <string name="deck_conf_new_cards" maxLength="41">新規カードと習得</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘却と再基本学習</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
-    <string name="deck_conf_steps" maxLength="41">学習ステップ（分）</string>
+    <string name="deck_conf_steps" maxLength="41">習得ステップ（分）</string>
     <string name="deck_conf_order" maxLength="41">順序</string>
     <string name="deck_conf_new_cards_day" maxLength="41">一日あたりの新規カード出題枚数の上限</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">最終ステップから復習開始までの間隔</string>
@@ -270,9 +270,9 @@
     <string name="deck_conf_max_ivl" maxLength="41">復習間隔の上限</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">新しい復習間隔（前回比）</string>
     <string name="deck_conf_min_ivl" maxLength="41">復習間隔の下限</string>
-    <string name="deck_conf_leech_thres" maxLength="41">無駄（定着困難）カードと判定する基準</string>
+    <string name="deck_conf_leech_thres" maxLength="41">無駄（習得困難）カードと判定する基準</string>
     <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
-    <string name="deck_conf_leech_action" maxLength="41">無駄（定着困難）カードへの処置</string>
+    <string name="deck_conf_leech_action" maxLength="41">無駄（習得困難）カードへの処置</string>
     <string name="deck_conf_max_time" maxLength="41">統計に利用する解答時間の最大値</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer" maxLength="41">タイマーを表示</string>
@@ -302,7 +302,7 @@
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
     <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の学習ステップを設定</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">このグループのデッキをリマインダー通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">リマインダー通知時刻</string>
     <!-- analytics options -->

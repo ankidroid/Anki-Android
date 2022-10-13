@@ -174,7 +174,7 @@
     <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se haya borrado la cache durante el procesamiento.\nPor favor, inténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
-    <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
+    <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borrelo y vuelva a descargarlo.\n\nCausa original: %s</string>
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
@@ -337,7 +337,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
+    <string name="email_id_empty">La dirección de correo electrónico es obligatoria</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
@@ -373,7 +373,7 @@
     <string name="scoped_storage_term_1_ankiweb">He sincronizado con AnkiWeb recientemente</string>
     <string name="scoped_storage_term_2">No desinstalaré la aplicación mientras se mueven los datos</string>
     <string name="scoped_storage_select_all_terms">Acepta nuestros términos para continuar</string>
-    <string name="scoped_storage_learn_more">Aprende más</string>
+    <string name="scoped_storage_learn_more">Más información</string>
     <string name="scoped_storage_postpone">Posponer</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">La búsqueda no ha devuelto resultados</string>
@@ -393,7 +393,7 @@
     <string name="intro_short_ankidroid_explanation">El planificador de tarjetas Anki ahorra tiempo fortaleciendo tus recuerdos más débiles y preservando los más fuertes</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Empieza</string>
     <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
-    <string name="already_logged_in">Ya has iniciado sesión</string>
+    <string name="already_logged_in">Ya iniciaste sesión</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">El mazo ya existe</string>
     <string name="deck_created">Mazo creado</string>

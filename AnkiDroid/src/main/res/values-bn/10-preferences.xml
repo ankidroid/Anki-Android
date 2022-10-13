@@ -260,10 +260,10 @@
     <string name="deck_conf_easy_ivl" maxLength="41">Easy interval</string>
     <string name="deck_conf_start_ease" maxLength="41">Starting ease</string>
     <string name="deck_conf_max_rev" maxLength="41">Maximum reviews/day</string>
-    <string name="deck_conf_new_bury" maxLength="41">Bury related new cards</string>
-    <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Bury related reviews</string>
-    <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
+    <string name="deck_conf_new_bury" maxLength="41">সম্পর্কিত নতুন কার্ডগুলি দাফন</string>
+    <string name="deck_conf_new_bury_summ">সম্পর্কিত নতুন কার্ডগুলি পরদিন পর্যন্ত দাফনকৃত থাকবে</string>
+    <string name="deck_conf_rev_bury" maxLength="41">সম্পর্কিত রিভিউগুলি দাফন</string>
+    <string name="deck_conf_rev_bury_summ">সম্পর্কিত রিভিউগুলি পরদিন পর্যন্ত দাফনকৃত থাকবে</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Easy bonus</string>
