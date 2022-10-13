@@ -104,7 +104,7 @@
     <string name="filter_by_flags">নিশান</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>
-    <string name="custom_study_increase_review_limit">আজকের পরিদর্শন কার্ড সীমা বদল</string>
+    <string name="custom_study_increase_review_limit">আজকের রিভিউ কার্ড সীমা পরিবর্তন</string>
     <string name="custom_study_review_forgotten">ভুলে যাওয়া কার্ড পরিদর্শন</string>
     <string name="custom_study_review_ahead">আগাম পরিদর্শন</string>
     <string name="custom_study_random_selection">এলোমেলোভাবে নির্বাচিত কার্ড অধ্যয়ন</string>
@@ -216,7 +216,7 @@
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
     <string name="sched_end">(end)</string>
-    <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+    <string name="sched_unbury_action">সেগুলো দেখতে চাইলে মেনুতে আইটেম \"অদাফন\" এ চাপুন</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

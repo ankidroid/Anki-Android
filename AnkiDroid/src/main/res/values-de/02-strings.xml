@@ -196,7 +196,7 @@
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Anki-Paket senden mit</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
     <string name="export_email_text"><![CDATA[        Hallo!
         <br/><br/>

@@ -231,7 +231,7 @@
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">¿Reemplazar tu colección en AnkiDroid con tu colección de AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">¿Reemplazar tu colección en AnkiWeb con tu colección de AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Selecciona la colección a mantener</string>
+    <string name="sync_conflict_title_new">Seleccionar colección a mantener</string>
     <string name="sync_conflict_replace_title">Reemplazar colección</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d tarjeta (0 pendiente)</item>
