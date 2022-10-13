@@ -36,7 +36,7 @@ object InitialActivity {
         }
 
         // If we're OK, return null
-        if (CollectionHelper.instance.getColSafe(context) != null) {
+        if (CollectionHelper.instance.getColSafe(context, reportException = false) != null) {
             return null
         }
         if (!AnkiDroidApp.isSdCardMounted) {
