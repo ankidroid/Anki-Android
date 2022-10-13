@@ -112,13 +112,15 @@ open class CollectionHelper {
     }
 
     /**
-     * Call getCol(context) inside try / catch statement.
-     * Send exception report and return null if there was an exception.
+     * Calls [getCol] inside a try / catch statement.
+     * Send exception report if [reportException] is set and return null if there was an exception.
      * @param context
-     * @return
+     * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
+     * [BackendDbLockedException] and [BackendDbFileTooNewException]).
+     * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun getColSafe(context: Context?): Collection? {
+    fun getColSafe(context: Context?, reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
             getCol(context)
@@ -133,7 +135,9 @@ open class CollectionHelper {
         } catch (e: Exception) {
             lastOpenFailure = CollectionOpenFailure.CORRUPT
             Timber.w(e)
-            CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe")
+            if (reportException) {
+                CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe")
+            }
             null
         }
     }
