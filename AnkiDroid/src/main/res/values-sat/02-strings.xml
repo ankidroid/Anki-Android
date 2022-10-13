@@ -157,7 +157,6 @@
     <string name="empty_card_warning">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱩᱬᱤ ᱜᱮᱭᱟ ᱾ \"ᱱᱩᱬᱤ ᱠᱟᱰ\" ᱰᱮᱠ ᱥᱠᱨᱤᱱ ᱛᱟᱞᱠᱟ ᱢᱮᱱᱩ ᱠᱷᱚᱱ ᱪᱚᱭᱚᱱ ᱢᱮ ᱾</string>
     <string name="unknown_type_field_warning">ᱨᱚᱲ ᱴᱟᱭᱤᱯ ᱢᱮᱺ ᱵᱚᱭ ᱵᱟᱰᱟᱭᱠᱟᱱ ᱡᱟᱭᱜᱟ %s</string>
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">ᱢᱮᱰᱤᱭᱟ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
     <string name="confirm_apkg_export">ᱴᱩᱢᱟᱹᱞ Anki ᱯᱮᱠᱮᱡ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ ?</string>
     <string name="confirm_apkg_export_deck">“%s” apkg ᱨᱮᱫ ᱞᱮᱠᱷᱟ ᱛᱮ ᱵᱷᱮᱡᱟᱭ ᱢᱮ?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Anki ᱯᱮᱠᱮᱡ ᱨᱮᱫ&#8230; ᱵᱷᱟᱡᱟᱜ ᱠᱟᱱᱟ </string>
-    <string name="export_successful_title">Anki ᱯᱮᱠᱮᱡ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
-    <string name="export_send_button">ᱵᱷᱮᱡᱟ</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ...</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
-    <string name="export_successful">ᱨᱮᱫ “%s” ᱵᱷᱮᱡᱟᱭ ᱮᱱᱟ ᱾ ᱚᱞᱜᱟ ᱮᱯᱯ ᱛᱮ ᱵᱷᱮᱡᱟ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -206,6 +212,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱵᱷᱩᱞ</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>

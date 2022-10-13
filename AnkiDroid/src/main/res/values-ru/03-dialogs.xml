@@ -189,9 +189,6 @@
     <string name="multimedia_editor_failed">Не удалось открыть редактор мультимедиа</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Не удалось получить разрешение на запись звука</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid приветствует вас!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid необходимо разрешение на доступ к хранилищу, которое используется для хранения вашей коллекции, медиафайлов и резервных копий. Код приложения открыт и создаётся волонтёрами, поэтому ему доверяют.\n\nЕсли у вас есть вопросы, обратитесь к руководству или форуму поддержки.\n\nСпасибо, что используете AnkiDroid!\n— Разработчики AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Произошла неизвестная ошибка при отображении расширенного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid обновлён</string>

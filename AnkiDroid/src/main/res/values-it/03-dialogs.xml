@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">Apertura dell\'editore multimediale fallita</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permesso registrazione audio negato</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Benvenuto/a ad AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid richiede l\'autorizzazione di archiviazione, che utilizziamo esclusivamente per memorizzare la tua collezione AnkiDroid, supporti di carte mnemoniche e backup. Il nostro codice è open-source, scritto da volontari, e di fiducia da milioni.\n\nSe hai domande, accedi al nostro manuale in-app o visita i nostri forum di aiuto.\n\nGrazie per aver provato AnkiDroid!\n — Squadra di sviluppo di AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Si è verificato un errore sconosciuto durante la visualizzazione dell\'editore avanzato</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aggiornato</string>

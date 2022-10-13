@@ -164,9 +164,6 @@
     <string name="multimedia_editor_failed">Gagal membuka Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Izin merekam audio ditolak</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Selamat Datang di AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid memerlukan izin penyimpanan, yang kami gunakan hanya untuk koleksi AnkiDroidmu, media kartu flash dan cadangan. Kode sumber kami open-source, ditulis oleh relawan, dan dipercayai jutaan orang.\n\nJika kamu punya pertanyaan, harap mengakses manual dalam aplikasi atau kunjungi forum dukungan kami.\n\nTerimakasih telah mencoba AnkiDroid!\n—Tim Pengembang AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Galat tidak diketahui terjadi saat menampilkan Editor Lanjutan</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Diperbarui</string>

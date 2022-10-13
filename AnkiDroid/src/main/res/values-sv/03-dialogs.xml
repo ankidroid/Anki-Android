@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">Det gick inte att öppna Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Behörighet för ljudinspelning nekad</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Välkommen till AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid kräver lagringstillstånd, som vi använder exklusivt för att lagra din AnkiDroid-insamling, flashcard media och säkerhetskopior. Vår kod är öppen källkod, skriven av volontärer och betrodd av miljoner.\n\nOm du har några frågor, vänligen gå till vår användarhandledning i appen eller besök vårt supportforum.\n\nTack för att du provar AnkiDroid!\n—AnkiDroids utvecklingsteam</string>
     <string name="mutimedia_editor_assertion_failed">Okänt fel uppstod vid visning av Avancerad redigerare</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid uppgraderat</string>

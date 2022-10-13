@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">ᱢᱟᱹᱞᱴᱤᱢᱤᱰᱤᱭᱟ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ᱟᱧᱡᱚᱢ ᱨᱮᱠᱚᱰᱤᱝ ᱪᱷᱟᱰ ᱵᱟᱰ</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ᱫᱚ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱫᱚᱨᱠᱟᱨ, ᱚᱠᱟ ᱫᱚ ᱟᱢᱟᱜ AnkiDroid ᱴᱩᱢᱟᱹᱞ, flashcard ᱢᱮᱰᱤᱭᱟ, ᱟᱨ ᱵᱮᱠᱚᱯ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱢᱤᱨᱮ ᱦᱩᱭᱩᱜ ᱟ ᱾ ᱟᱞᱮᱭᱟᱜ ᱞᱚᱰ ᱫᱚ open-source ᱜᱮᱭᱚ, volunteers ᱠᱚ ᱚᱞ ᱟᱠᱟᱫᱟ ᱚᱨ millions ᱠᱚᱣᱟᱜ ᱵᱷᱚᱨᱥᱟ ᱢᱮᱱᱟᱜᱼᱟ.\n\n ᱟᱢ ᱴᱷᱮᱱ ᱠᱩᱠᱞᱤ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱱ ᱫᱚ, ᱟᱞᱮᱭᱟᱜ ᱮᱯᱯ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱥᱟᱯᱚᱴ ᱯᱷᱚᱨᱩᱢ ᱛᱮ ᱪᱟᱞᱟᱜᱢᱮ.\n\nAnkiDroid ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱟᱹᱰᱤ ᱥᱟᱨᱷᱣ !\n—AnkiDroid ᱞᱟᱦᱟ ᱨᱟᱠᱟᱵ ᱫᱚᱞ</string>
     <string name="mutimedia_editor_assertion_failed">ᱵᱚᱝ ᱵᱟᱥᱟᱭᱟᱠᱟᱱ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ ᱮᱰᱵᱷᱟᱱᱥ ᱮᱰᱤᱴᱚᱨ ᱨᱮ ᱫᱮᱠᱷᱟᱣᱮᱫ ᱟᱭ</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ᱦᱟᱹᱞᱤ ᱦᱚᱪᱚᱭᱮᱱᱟ</string>

@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">Multimedia-Editor konnte nicht geöffnet werden</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Berechtigung für Audioaufnahme verweigert</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Willkommen bei AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid benötigt eine Zugriffsberechtigung für den Speicher, die wir ausschließlich zur Speicherung Ihrer AnkiDroid-Sammlung, Flashcard-Medien und Sicherungen verwenden. Unser Code ist quelloffen, geschrieben von Freiwilligen, und Millionen Menschen vertrauen ihm.\n\nFalls Sie Fragen haben, schauen Sie bitte in unser In-App-Handbuch oder besuchen Sie unsere Supportforen.\n\nVielen Dank, dass Sie AnkiDroid ausprobieren!\n—AnkiDroid-Entwicklerteam</string>
     <string name="mutimedia_editor_assertion_failed">Unbekannter Fehler beim Anzeigen des Erweiterten Editors</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualisiert</string>

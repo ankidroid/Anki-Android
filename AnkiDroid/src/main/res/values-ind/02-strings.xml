@@ -154,7 +154,6 @@
     <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di halaman daftar dek.</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
     <string name="delete_deck">Menghapus dek&#8230;</string>
-    <string name="show_hint">Tampilkan %s</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
     <string name="import_title">Mengimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
@@ -185,13 +184,18 @@
     <string name="export_include_media">Sertakan media</string>
     <string name="confirm_apkg_export">Ekspor koleksi sebagai paket Anki?</string>
     <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai berkas apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Mengekspor berkas paket Anki&#8230;</string>
-    <string name="export_successful_title">Kirim paket Anki</string>
-    <string name="export_send_button">Kirim</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
-    <string name="export_successful">Berkas \"%s\" diekspor. Apakah kamu ingin mengirimnya dengan aplikasi lain?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">Flashcard AnkiDroid terekspor: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -202,6 +206,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Galat mengekspor berkas apkg</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
     <string name="menu__deck_options">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>

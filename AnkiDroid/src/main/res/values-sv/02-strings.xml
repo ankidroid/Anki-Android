@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Detta kort är tomt. Använd alternativet \"Tomma kort\" i menyn på kortleksväljaren.</string>
     <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
     <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
-    <string name="show_hint">Visa %s</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
     <string name="import_title">Importera</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lägg till</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Inkludera media</string>
     <string name="confirm_apkg_export">Exportera samling som Anki-paket?</string>
     <string name="confirm_apkg_export_deck">Exportera \"%s\" som APKG-fil?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Exportera Anki-paketfil&#8230;</string>
-    <string name="export_successful_title">Skicka Anki-paket?</string>
-    <string name="export_send_button">Skicka</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Inga program tillgängliga för att hantera apkg. Sparar...</string>
     <string name="export_save_apkg_successful">Anki-paketet sparades</string>
     <string name="export_save_apkg_unsuccessful">Anki-paketet kunde inte sparas</string>
-    <string name="export_successful">Filen ”%s” har exporterats. Vill du skicka den med en annan app?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Skicka Anki-paketet med</string>
     <string name="export_email_subject">AnkiDroid exporterade flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -206,6 +212,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Fel vid export apkg-fil</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
     <string name="menu__deck_options">Kortleksalternativ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>

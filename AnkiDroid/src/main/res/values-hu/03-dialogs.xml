@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">A Multimédia Szerkesztő megnyitása sikertelen</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audió felvétel engedély megtagadva</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Üdvözöljük az AnkiDroidnál!</string>
-    <string name="collection_load_welcome_request_permissions_details">Az AnkiDroidnak szüksége van tárhely engedélyre, amit csak az AnkiDroid gyűjtemények, szókártyák és biztonsági mentések tárolására használunk. A kódunk nyílt forráskódú, önkéntesek által írva, amiben milliók megbíznak.\n\n.Ha bármilyen kérdések van, kérjük olvassa el az alkalmazáson belüli útmutatót vagy látogassa meg a támogatói fórumainkat.\n\n.Köszönjük, hogy kipróbálta az AnkiDroidot!\n-AnkiDroid Fejlesztői Csapat</string>
     <string name="mutimedia_editor_assertion_failed">Ismeretlen hiba történt a Bővített Szerkesztő megnyitása során</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Frissített AnkiDroid</string>

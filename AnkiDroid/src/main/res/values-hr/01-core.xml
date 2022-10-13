@@ -181,6 +181,7 @@
     <string name="sd_card_not_mounted">Pohrana uređaja nije montirana</string>
     <string name="empty_cloze_warning">Uredi bilješku i dodaj cloze brisanja (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinkroniziraj</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
     <string name="cancel_sync_confirm">Želite li prekinuti sinkronizaciju?</string>
     <string name="continue_sync">Nastavi sinkronizaciju</string>
     <string name="sync_cancelled">Sinkronizacija je otkazana</string>

@@ -163,7 +163,6 @@
     <string name="empty_card_warning">Táto kartička je prázdna. Použite možnosť \"Prázdne kartičky\" v menu na obrazovke, kde je zobrazený zoznam balíčkov.</string>
     <string name="unknown_type_field_warning">Typ odpovede: neznáme pole %s</string>
     <string name="delete_deck">Balíček sa odstraňuje&#8230;</string>
-    <string name="show_hint">Zobraziť %s</string>
     <string name="info_rate">Ohodnotiť AnkiDroid</string>
     <string name="import_title">Importuje sa</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridať</string>
@@ -197,13 +196,24 @@
     <string name="export_include_media">Zahrnúť multimédia</string>
     <string name="confirm_apkg_export">Exportovať kolekciu ako Anki balík?</string>
     <string name="confirm_apkg_export_deck">Exportovať “%s” ako apkg súbor?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="few">Export %d selected cards as apkg file?</item>
+        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="few">Export %d selected notes as apkg file?</item>
+        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Exportovanie súboru balíka Anki&#8230;</string>
-    <string name="export_successful_title">Odoslať Anki balík?</string>
-    <string name="export_send_button">Odoslať</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie...</string>
     <string name="export_save_apkg_successful">Balík Anki úspešne uložený</string>
     <string name="export_save_apkg_unsuccessful">Uloženie Anki balíka zlyhalo</string>
-    <string name="export_successful">Súbor “%s” bol exportovaný. Chcete ho odoslať s ďalšou aplikáciou?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid exportoval kartičky: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -214,6 +224,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Chyba pri exportovaní apkg súboru</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Možnosti balíčka</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti štúdia</string>

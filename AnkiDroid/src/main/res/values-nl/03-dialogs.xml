@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">Openen van de multimedia-editor is mislukt</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Toestemming voor audio-opname geweigerd</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welkom bij AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid vereist toestemming voor opslag, die uitsluitend wordt gebruikt voor het opslaan van uw AnkiDroid collectie, flashcardmedia en back-ups. Onze code is open-source, geschreven door vrijwilligers en wordt vertrouwd door miljoenen mensen.\n\nAls u vragen heeft, raadpleeg onze in-app handleiding of bezoek onze supportforums.\n\nBedankt dat u AnkiDroid heeft geprobeerd!\n—AnkiDroid ontwikkelteam</string>
     <string name="mutimedia_editor_assertion_failed">Onbekende fout opgetreden bij de weergave van de geavanceerde editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid geüpgraded</string>

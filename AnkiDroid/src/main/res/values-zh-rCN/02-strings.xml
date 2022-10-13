@@ -154,7 +154,6 @@
     <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的“空白卡片”选项来查找空白卡片。</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
-    <string name="show_hint">显示%s</string>
     <string name="info_rate">给AnkiDroid评分</string>
     <string name="import_title">正在导入……</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
@@ -185,13 +184,18 @@
     <string name="export_include_media">包括媒体文件</string>
     <string name="confirm_apkg_export">要将记忆库集合导出为 Anki 包吗？</string>
     <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">正在导出 Anki 软件包文件&#8230;</string>
-    <string name="export_successful_title">发送 Anki 包？</string>
-    <string name="export_send_button">发送</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
     <string name="export_save_apkg_successful">已成功保存 Anki 包</string>
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
-    <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">选择如何发送 Anki 软件包</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
@@ -202,6 +206,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">导出apkg文件时出错</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>

@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">മൾട്ടിമീഡിയ എഡിറ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ഓഡിയോ റെക്കോർഡിംഗ് അനുമതി നിരസിച്ചു</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid- ലേക്ക് സ്വാഗതം!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">വിപുലമായ എഡിറ്റർ പ്രദർശിപ്പിക്കുന്നതിൽ അജ്ഞാത പിശക് സംഭവിച്ചു</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു</string>

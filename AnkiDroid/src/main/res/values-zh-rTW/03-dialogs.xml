@@ -164,9 +164,6 @@
     <string name="multimedia_editor_failed">無法開啟多媒體編輯器</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">歡迎使用 AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要儲存空間權限，我們僅用於儲存你的 AnkiDroid 集合，單字卡媒體和備份。我們的原始碼完全開放，由志願者寫成，且被眾人信賴。\n\n如果你有任何問題，請查閱我們的程式內用戶手冊或訪問我們的支援論壇。\n\n感謝您使用 AnkiDroid！\n— AnkiDroid 開發團隊</string>
     <string name="mutimedia_editor_assertion_failed">展示進階編輯器時發生未知錯誤</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid 已更新</string>

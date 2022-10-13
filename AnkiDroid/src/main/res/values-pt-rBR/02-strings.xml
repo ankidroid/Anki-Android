@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Este card está vazio. Use a opção \"Cards vazios\" do menu da lista de baralhos.</string>
     <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
     <string name="delete_deck">Excluindo baralho&#8230;</string>
-    <string name="show_hint">Mostrar %s</string>
     <string name="info_rate">Avalie o AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Incluir mídia</string>
     <string name="confirm_apkg_export">Exportar a coleção como arquivo Anki (.apkg)?</string>
     <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Exportando arquivo Anki (.apkg)&#8230;</string>
-    <string name="export_successful_title">Enviar arquivo Anki (.apkg)?</string>
-    <string name="export_send_button">Enviar</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando...</string>
     <string name="export_save_apkg_successful">Arquivo Anki (.apkg) salvo com sucesso</string>
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
-    <string name="export_successful">Arquivo \"%s\" foi exportado. Deseja enviá-lo com um outro app?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
     <string name="export_email_text"><![CDATA[        Olá!
@@ -206,6 +212,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Erro ao exportar arquivo apkg</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
