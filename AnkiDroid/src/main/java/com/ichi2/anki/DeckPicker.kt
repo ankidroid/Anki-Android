@@ -84,6 +84,7 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
@@ -665,6 +666,7 @@ open class DeckPicker :
             menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
             updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), syncIcon)
+            menu.findItem(R.id.action_scoped_storage_migrate).isVisible = offerToMigrate
         }
     }
 
@@ -723,7 +725,8 @@ open class DeckPicker :
                 }
             }
             val syncIcon = fetchSyncStatus(col)
-            OptionsMenuState(searchIcon, undoIcon, syncIcon)
+            val offerToUpgrade = isLegacyStorage(context) && !userMigrationIsInProgress(context)
+            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
         }
     }
 
@@ -763,6 +766,11 @@ open class DeckPicker :
             R.id.action_sync -> {
                 Timber.i("DeckPicker:: Sync button pressed")
                 sync()
+                return true
+            }
+            R.id.action_scoped_storage_migrate -> {
+                Timber.i("DeckPicker:: migrate button pressed")
+                offerToMigrate()
                 return true
             }
             R.id.action_import -> {
@@ -2761,6 +2769,13 @@ open class DeckPicker :
     }
 
     /**
+     * Show a window offering the user to migrate, postpone or learn mose.
+     */
+    fun offerToMigrate() {
+        // TODO: Implements
+    }
+
+    /**
      * Last time the user had chosen to postpone migration. Or 0 if never.
      */
     var migrationWasLastPostponedAt: Long
@@ -2789,10 +2804,11 @@ open class DeckPicker :
  * the current state is stored in the deck picker so that we can redraw the
  * menu immediately. */
 data class OptionsMenuState(
-    var searchIcon: Boolean,
+    val searchIcon: Boolean,
     /** If undo is available, a string describing the action. */
-    var undoIcon: String?,
-    var syncIcon: SyncIconState
+    val undoIcon: String?,
+    val syncIcon: SyncIconState,
+    val offerToMigrate: Boolean,
 )
 
 enum class SyncIconState {
