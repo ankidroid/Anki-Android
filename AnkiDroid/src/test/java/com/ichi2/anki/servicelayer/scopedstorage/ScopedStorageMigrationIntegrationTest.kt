@@ -22,7 +22,6 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.DirectoryNotEmptyException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Executor
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationProgressListener
 import com.ichi2.exceptions.AggregateException

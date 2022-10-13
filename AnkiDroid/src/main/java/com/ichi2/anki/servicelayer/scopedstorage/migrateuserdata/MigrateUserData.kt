@@ -27,7 +27,6 @@ import com.ichi2.async.TaskDelegate
 import com.ichi2.compat.CompatHelper
 import com.ichi2.exceptions.AggregateException
 import com.ichi2.libanki.Collection
-import timber.log.Timber
 import java.io.File
 
 typealias NumberOfBytes = Long
@@ -90,92 +89,6 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
                 source = sourceDirectory,
                 destination = destinationDirectory
             )
-        }
-    }
-
-    /**
-     * An Executor allows execution of a list of tasks, provides progress reporting via a [MigrationContext]
-     * and allows tasks to be preempted (for example: copying an image used in the Reviewer
-     * should take priority over a background migration
-     * of a random file)
-     */
-    open class Executor(private val operations: ArrayDeque<Operation>) {
-        /** Whether [terminate] was called. Once this is called, a new instance should be used */
-        private var terminated: Boolean = false
-        /**
-         * A list of operations to be executed before [operations]
-         * [operations] should only be executed if this list is clear
-         */
-        private val preempted: ArrayDeque<Operation> = ArrayDeque()
-
-        /**
-         * Executes operations from both [operations] and [preempted]
-         * Any operation is [preempted] takes priority
-         * Completes when:
-         * * [MigrationContext] determines too many failures have occurred or a critical failure has occurred (via `reportError`)
-         * * [operations] and [preempted] are empty
-         * * [terminated] is set via [terminate]
-         */
-        fun execute(context: MigrationContext) {
-            while (operations.any() || preempted.any()) {
-                clearPreemptedQueue(context)
-                if (terminated) {
-                    return
-                }
-                val operation = operations.removeFirstOrNull() ?: return
-
-                context.execSafe(operation) {
-                    val replacements = executeOperationInternal(it, context)
-                    operations.addAll(0, replacements)
-                }
-            }
-        }
-
-        @VisibleForTesting
-        internal open fun executeOperationInternal(
-            it: Operation,
-            context: MigrationContext
-        ) = it.execute(context)
-
-        /**
-         * Executes all items in the preempted queue
-         *
-         * After this has completed either: [preempted] is empty, OR [terminated] is true
-         */
-        private fun clearPreemptedQueue(context: MigrationContext) {
-            while (true) {
-                if (terminated) return
-
-                // exit if we've got no more items
-                val nextItem = getNextPreemptedItem() ?: return
-                Timber.d("executing preempted operation: %s", nextItem)
-                context.execSafe(nextItem) {
-                    val replacements = it.execute(context)
-                    addPreempted(replacements)
-                }
-            }
-        }
-
-        fun prepend(operation: Operation) = operations.addFirst(operation)
-        fun append(operation: Operation) = operations.add(operation)
-        fun appendAll(operations: List<Operation>) = this.operations.addAll(operations)
-
-        // region preemption (synchronized)
-
-        private fun addPreempted(replacements: List<Operation>) {
-            // insert all at the start of the queue
-            synchronized(preempted) { preempted.addAll(0, replacements) }
-        }
-        private fun getNextPreemptedItem() = synchronized(preempted) {
-            return@synchronized preempted.removeFirstOrNull()
-        }
-        fun preempt(operation: Operation) = synchronized(preempted) { preempted.add(operation) }
-
-        // endregion
-
-        /** Stops execution of [execute] */
-        fun terminate() {
-            this.terminated = true
         }
     }
 

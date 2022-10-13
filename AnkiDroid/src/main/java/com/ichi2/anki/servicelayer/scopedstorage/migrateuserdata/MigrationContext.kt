@@ -56,7 +56,7 @@ abstract class MigrationContext {
  * Abstracts the decision of what to do when an exception occurs when migrating a file.
  * Provides progress notifications
  */
-open class UserDataMigrationContext(private val executor: MigrateUserData.Executor, val source: Directory, val progressReportParam: ((NumberOfBytes) -> Unit)) : MigrationContext() {
+open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: ((NumberOfBytes) -> Unit)) : MigrationContext() {
     val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty()
 
     /**
