@@ -24,8 +24,6 @@ import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
 import com.ichi2.async.ProgressSenderAndCancelListener
 import com.ichi2.async.TaskDelegate
 import com.ichi2.compat.CompatHelper
@@ -128,43 +126,6 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
                 reportError(operation, e)
             }
         }
-    }
-
-    /**
-     * Represents an arbitrary operation that we may want to execute.
-     *
-     * This operation should be doable as a sequence of atomic steps. In a single-threaded context,
-     * it allows the thread and its resources to be preempted with minimal delay.
-     *
-     * For example, if an image is requested by the reviewer, I/O is guaranteed to rapidly get access to the image.
-     */
-    abstract class Operation {
-        /**
-         * Starts to execute the current operation. Only do as little non-trivial work as possible to start the operation, such as listing a directory content or moving a single file.
-         * Returns the list of operations remaining to end this operation.
-         *
-         * E.g. for "move a directory", this method would simply compute the directory content and then returns the following list of operations:
-         * * creating the destination directory
-         * * moving each file and subdirectory individually
-         * * deleting the original directory.
-         */
-        abstract fun execute(context: MigrationContext): List<Operation>
-
-        /** A list of operations to perform if the operation should be retried */
-        open val retryOperations get() = emptyList<Operation>()
-    }
-
-    /**
-     * A decorator for [Operation] which executes [standardOperation].
-     * When retried, executes [retryOperation].
-     * Ignores [retryOperations] defined in [standardOperation]
-     */
-    class SingleRetryDecorator(
-        internal val standardOperation: Operation,
-        private val retryOperation: Operation
-    ) : Operation() {
-        override fun execute(context: MigrationContext) = standardOperation.execute(context)
-        override val retryOperations get() = listOf(retryOperation)
     }
 
     /**
@@ -455,24 +416,3 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         return true
     }
 }
-
-/**
- * Wraps an [Operation] with functionality to allow for retries
- *
- * Useful if you want to call a different operation when an operation is being retried.
- *
- * Example: call MoveDirectory again if DeleteEmptyDirectory fails
- *
- * @receiver The operation to be decorated with a retry action
- * @param operationOnRetry The action to perform is [Operation.retryOperations] is called
- */
-internal fun Operation.onRetryExecute(operationOnRetry: Operation): Operation {
-    val operationToBeDecorated = this
-    return SingleRetryDecorator(
-        standardOperation = operationToBeDecorated,
-        retryOperation = operationOnRetry
-    )
-}
-
-/** The operation was completed (not necessarily successfully) and no additional operations are required */
-internal fun operationCompleted() = emptyList<Operation>()

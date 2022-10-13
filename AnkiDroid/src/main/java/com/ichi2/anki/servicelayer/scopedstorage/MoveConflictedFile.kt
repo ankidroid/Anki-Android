@@ -23,7 +23,6 @@ import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import java.io.File
 

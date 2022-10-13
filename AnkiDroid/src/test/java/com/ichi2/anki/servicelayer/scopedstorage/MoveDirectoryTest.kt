@@ -18,8 +18,8 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MoveDirectory
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo

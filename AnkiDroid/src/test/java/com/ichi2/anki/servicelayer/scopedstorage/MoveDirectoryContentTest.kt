@@ -19,7 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat

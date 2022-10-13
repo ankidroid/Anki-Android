@@ -21,7 +21,6 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.DeleteEmptyDirectory
 import com.ichi2.anki.servicelayer.scopedstorage.MoveDirectoryContent
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File

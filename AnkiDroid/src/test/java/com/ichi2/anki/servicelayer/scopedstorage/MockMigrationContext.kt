@@ -16,10 +16,9 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.Operation
 
 open class MockMigrationContext : MigrationContext() {
     /** set [logExceptions] to populate this property */
