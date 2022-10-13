@@ -41,6 +41,7 @@ import android.view.WindowManager.BadTokenException
 import android.widget.*
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -119,6 +120,7 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -2782,6 +2784,42 @@ open class DeckPicker :
         get() = getSharedPrefs(baseContext).getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
         set(timeInSecond) = getSharedPrefs(baseContext)
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
+    /**
+     * Show a dialog offering to migrate, postpone or learn more.
+     */
+    fun showDialogThatOffersToMigrateStorage() {
+        if (userMigrationIsInProgress(baseContext)) {
+            // This should not occur. We should have not called the function in this case.
+            return
+        }
+
+        val ifYouUninstallMessageId = when {
+            isLoggedIn() -> R.string.migration_warning_risk_of_data_loss_if_no_update
+            else -> R.string.migration_update_request_dialog_download_warning
+        }
+
+        @Language("HTML") val message = """${getString(R.string.migration_update_request)}
+            <br>
+            <br>${getString(ifYouUninstallMessageId)}"""
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.scoped_storage_title)
+            .setMessage(message)
+            .setPositiveButton(
+                getString(R.string.scoped_storage_migrate)
+            ) { _, _ ->
+                migrate()
+            }
+            .setNegativeButton(
+                getString(R.string.scoped_storage_postpone)
+            ) { _, _ ->
+                setMigrationWasLastPostponedAtToNow()
+            }.addScopedStorageLearnMoreLinkAndShow(message)
+    }
+
+    fun migrate() {
+        // TODO: Implement
+    }
 
     // Scoped Storage migration
     fun setMigrationWasLastPostponedAtToNow() {
