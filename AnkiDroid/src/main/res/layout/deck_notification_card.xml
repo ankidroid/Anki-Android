@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout android:id="@+id/card_deck_notification"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingEnd="@dimen/deck_picker_right_padding"
+    android:paddingStart="@dimen/deck_picker_left_padding"
+    tools:background="@android:color/holo_orange_light">
+
+    <LinearLayout
+        android:id="@+id/card_deck_notification_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/deckpicker_indent"
+        android:layout_toStartOf="@+id/time_layout"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/card_deck_notification_indent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp" />
+
+        <ImageButton
+            android:id="@+id/card_deck_notification_expander"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:minWidth="48dp"
+            android:padding="12dp" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_deck_notification_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="start|center_vertical"
+            android:maxLines="2"
+            android:minHeight="48dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="Deck name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/time_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:contentDescription="@string/deck_picker_counts"
+        android:focusable="true"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:minWidth="70dp">
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_deck_notification_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:contentDescription="@string/deck_picker_lrn"
+            android:gravity="center"
+            android:paddingEnd="5dip"
+            android:textSize="14sp"
+            tools:text="HH:MM" />
+    </LinearLayout>
+</RelativeLayout>
