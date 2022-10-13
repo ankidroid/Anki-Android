@@ -50,8 +50,8 @@ import com.ichi2.anki.dialogs.CardBrowserOrderDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleMultipleCards
-import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleSingleCard
+import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleMultipleCards
+import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener

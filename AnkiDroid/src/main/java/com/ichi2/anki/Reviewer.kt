@@ -60,7 +60,7 @@ import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleSingleCard
+import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
 import com.ichi2.anki.multimediacard.AudioView.Companion.generateTempAudioFile
