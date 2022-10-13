@@ -49,14 +49,14 @@ import java.io.File
  */
 class DirectoryValidator {
     /** Only valid if [tryCreate] returned null */
-    val exceptionOnNullResult: MigrateUserData.MissingDirectoryException
-        get() = MigrateUserData.MissingDirectoryException(failedFiles)
+    val exceptionOnNullResult: MissingDirectoryException
+        get() = MissingDirectoryException(failedFiles)
 
     /**
      * A list of files which failed to be created
      * Only valid if [tryCreate] returned null
      */
-    private val failedFiles = mutableListOf<MigrateUserData.MissingDirectoryException.MissingFile>()
+    private val failedFiles = mutableListOf<MissingDirectoryException.MissingFile>()
 
     /**
      * Tries to create a [Directory] object.
@@ -71,7 +71,7 @@ class DirectoryValidator {
     fun tryCreate(context: String, file: File): Directory? {
         val ret = Directory.createInstance(file)
         if (ret == null) {
-            failedFiles.add(MigrateUserData.MissingDirectoryException.MissingFile(context, file))
+            failedFiles.add(MissingDirectoryException.MissingFile(context, file))
         }
         return ret
     }
@@ -82,7 +82,7 @@ class DirectoryValidator {
      */
     fun throwIfNecessary() {
         if (failedFiles.any()) {
-            throw MigrateUserData.MissingDirectoryException(failedFiles)
+            throw MissingDirectoryException(failedFiles)
         }
     }
 }

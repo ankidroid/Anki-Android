@@ -19,7 +19,6 @@ package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 import android.content.SharedPreferences
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Companion.createInstance
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MissingDirectoryException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserDataJvmTest.SourceType.*
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory

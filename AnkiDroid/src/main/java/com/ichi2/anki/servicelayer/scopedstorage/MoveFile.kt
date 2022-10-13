@@ -19,10 +19,9 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.DirectoryValidator
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
@@ -45,7 +44,7 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
         if (destinationExists && destinationFile.isDirectory) {
             context.reportError(
                 this,
-                MigrateUserData.FileDirectoryConflictException(
+                FileDirectoryConflictException(
                     sourceFile,
                     Directory.createInstanceUnsafe(destinationFile)
                 )
@@ -67,7 +66,7 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
             if (sourceFile.file.exists()) {
                 context.reportError(
                     this,
-                    MigrateUserData.FileConflictException(
+                    FileConflictException(
                         sourceFile,
                         DiskFile.createInstance(destinationFile)!!
                     )

@@ -98,58 +98,6 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
     }
 
     /**
-     * Exceptions that are expected to occur during migration, and that we can deal with.
-     */
-    open class MigrationException(message: String) : RuntimeException(message)
-
-    /**
-     * If a file exists in [destination] with different content than [source]
-     *
-     * If a file named `filename` exists in [destination] and in [source] with different content, move `source/filename` to `source/conflict/filename`.
-     */
-    class FileConflictException(val source: DiskFile, val destination: DiskFile) : MigrationException("File $source can not be copied to $destination, destination exists and differs.")
-
-    /**
-     * If [destination] is a directory. In this case, move `source/filename` to `source/conflict/filename`.
-     */
-    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : MigrationException("File $source can not be copied to $destination, as destination is a directory.")
-
-    /**
-     * If one or more required directories were missing
-     */
-    class MissingDirectoryException(val directories: List<MissingFile>) : MigrationException("Directories $directories are missing.") {
-        init {
-            if (directories.isEmpty()) {
-                throw IllegalArgumentException("directories should not be empty")
-            }
-        }
-
-        /**
-         * A file which should exist, but did not
-         * @param source The variable name/identifier of the file
-         * @param file A [File] reference to the missing file
-         */
-        data class MissingFile(val source: String, val file: File)
-    }
-
-    /**
-     * If during a file move, two files refer to the same path
-     * This implies that the file move should be cancelled
-     */
-    class EquivalentFileException(val source: File, val destination: File) : MigrationException("Source and destination path are the same")
-
-    /**
-     * If a directory could not be deleted as it still contained files.
-     */
-    class DirectoryNotEmptyException(val directory: Directory) : MigrationException("directory was not empty: $directory")
-
-    /**
-     * If the number of retries was exceeded when resolving a file conflict via moving it to the
-     * /conflict/ folder.
-     */
-    class FileConflictResolutionFailedException(val sourceFile: DiskFile, val attemptedDestination: File) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
-
-    /**
      * Context for an [Operation], allowing a change of execution behavior and
      * allowing progress and exception reporting logic when executing
      * a large mutable queue of tasks

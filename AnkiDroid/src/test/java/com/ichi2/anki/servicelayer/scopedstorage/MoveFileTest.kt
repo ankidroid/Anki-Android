@@ -18,8 +18,10 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MissingDirectoryException.MissingFile
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.EquivalentFileException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.FileConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.FileDirectoryConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MissingDirectoryException
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -231,8 +233,24 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
 
         assertThat("2 missing directories expected", exception.directories, hasSize(2))
-        assertThat("source was logged", exception.directories[0], equalTo(MissingFile("source - parent dir", sourceDirectoryToDelete)))
-        assertThat("destination was logged", exception.directories[1], equalTo(MissingFile("destination - parent dir", destinationDirectoryToDelete)))
+        assertThat(
+            "source was logged", exception.directories[0],
+            equalTo(
+                MissingDirectoryException.MissingFile(
+                    "source - parent dir",
+                    sourceDirectoryToDelete
+                )
+            )
+        )
+        assertThat(
+            "destination was logged", exception.directories[1],
+            equalTo(
+                MissingDirectoryException.MissingFile(
+                    "destination - parent dir",
+                    destinationDirectoryToDelete
+                )
+            )
+        )
     }
 
     @Test
@@ -276,7 +294,12 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         assertThat("An exception should be logged", executionContext.exceptions, hasSize(1))
         val exception = executionContext.exceptions[0]
-        assertThat("An exception should be of the correct type", exception, instanceOf(FileDirectoryConflictException::class.java))
+        assertThat(
+            "An exception should be of the correct type", exception,
+            instanceOf(
+                FileDirectoryConflictException::class.java
+            )
+        )
 
         assertThat("source file should still exist", source.file.exists(), equalTo(true))
         assertThat("destination file should exist", destination.exists(), equalTo(true))
