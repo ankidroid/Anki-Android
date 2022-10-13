@@ -15,64 +15,138 @@
  */
 package com.ichi2.anki.preferences
 
-import android.app.AlarmManager
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
-import androidx.preference.ListPreference
-import androidx.preference.SwitchPreference
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
-import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.anki.services.NotificationService
-import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.AdaptionUtil
+import com.ichi2.anki.UIUtils
+import com.ichi2.anki.widgets.NotificationPreferenceAdapter
+import com.ichi2.async.CollectionTask
+import com.ichi2.async.TaskListenerWithContext
+import com.ichi2.async.TaskManager
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.sched.AbstractDeckTreeNode
+import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.findInDeckTree
+import timber.log.Timber
 
 /**
  * Fragment with preferences related to notifications
  */
-class NotificationsSettingsFragment : SettingsFragment() {
-    override val preferenceResource: Int
-        get() = R.xml.preferences_notifications
-    override val analyticsScreenNameConstant: String
-        get() = "prefs.notifications"
+class NotificationsSettingsFragment : Fragment() {
 
-    override fun initSubscreen() {
-        if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
-            /** These preferences should be searchable or not based
-             * on this same condition at [Preferences.configureSearchBar] */
-            preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_vibrate_key))
-            preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_blink_key))
+    private lateinit var mDeckListAdapter: NotificationPreferenceAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mProgressBar: ProgressBar
+    var dueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
+    val col: Collection
+        get() = CollectionHelper.instance.getCol(requireContext())!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_preference_notification, container, false)
+        initViews(view)
+
+        // create and set an adapter for the RecyclerView
+        mDeckListAdapter = NotificationPreferenceAdapter(layoutInflater, requireContext()).apply {
+            setTimeClickListener(mOnTimeClickListener)
+            setDeckExpanderClickListener(mDeckExpanderClickListener)
         }
-        // Minimum cards due
-        // The number of cards that should be due today in a deck to justify adding a notification.
-        requirePreference<ListPreference>(R.string.pref_notifications_minimum_cards_due_key).apply {
-            updateNotificationPreference(this)
-            setOnPreferenceChangeListener { preference, newValue ->
-                updateNotificationPreference(preference as ListPreference)
-                if ((newValue as String).toInt() < Preferences.PENDING_NOTIFICATIONS_ONLY) {
-                    scheduleNotification(TimeManager.time, requireContext())
-                } else {
-                    val intent = CompatHelper.compat.getImmutableBroadcastIntent(
-                        requireContext(), 0,
-                        Intent(requireContext(), NotificationService::class.java), 0
-                    )
-                    val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
-                    alarmManager.cancel(intent)
-                }
-                true
+        mRecyclerView.apply {
+            adapter = mDeckListAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
+        // Fetch Deck Data
+        TaskManager.launchCollectionTask(
+            CollectionTask.LoadDeckCounts(),
+            UpdateDeckListListener(this)
+        )
+
+        return view
+    }
+
+    private val mOnTimeClickListener = View.OnClickListener {
+        TODO("Open Time picker bottom sheet.")
+    }
+
+    private val mDeckExpanderClickListener = View.OnClickListener { view ->
+        toggleDeckExpand(view.tag as Long)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun toggleDeckExpand(did: DeckId) {
+        if (!col.decks.children(did).isEmpty()) {
+            // update DB
+            col.decks.collapse(did)
+            // update stored state
+            val deck: List<TreeNode<DeckDueTreeNode>> = dueTree!! as List<TreeNode<DeckDueTreeNode>>
+            Timber.d(dueTree!!.toString() + " " + did)
+            findInDeckTree(deck, did)?.run {
+                collapsed = !collapsed
             }
+            mDeckListAdapter.buildDeckList(dueTree!!, col)
         }
     }
 
-    private fun updateNotificationPreference(listPreference: ListPreference) {
-        val entries = listPreference.entries
-        val values = listPreference.entryValues
-        for (i in entries.indices) {
-            val value = values[i].toString().toInt()
-            if (entries[i].toString().contains("%d")) {
-                entries[i] = String.format(entries[i].toString(), value)
-            }
+    private fun initViews(view: View) {
+        mRecyclerView = view.findViewById(R.id.preference_notification_rv)
+        mProgressBar = view.findViewById(R.id.preference_notification_progressbar)
+    }
+
+    fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
+        Timber.i("Updating deck list UI")
+        // Make sure the fragment is visible
+
+        if (result == null) {
+            Timber.e("null result loading deck counts")
+            showCollectionErrorMessage()
+            return
         }
-        listPreference.entries = entries
+        dueTree = result.map { x -> x.unsafeCastToType() }
+        mDeckListAdapter.buildDeckList(dueTree!!, col)
+        hideProgressBar()
+        Timber.d("Startup - Deck List UI Completed")
+    }
+
+    private fun showProgressBar() {
+        mRecyclerView.visibility = View.GONE
+        mProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        mRecyclerView.visibility = View.VISIBLE
+        mProgressBar.visibility = View.GONE
+    }
+
+    private fun showCollectionErrorMessage() {
+        UIUtils.showThemedToast(context, "Unable to Access Collection", true)
+    }
+
+    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(context: NotificationsSettingsFragment) :
+        TaskListenerWithContext<NotificationsSettingsFragment, Void, List<TreeNode<T>>?>(context) {
+        override fun actualOnPreExecute(context: NotificationsSettingsFragment) {
+
+            if (!CollectionHelper.instance.colIsOpen()) {
+                context.showProgressBar()
+            }
+            Timber.d("Refreshing deck list")
+        }
+
+        override fun actualOnPostExecute(
+            context: NotificationsSettingsFragment,
+            result: List<TreeNode<T>>?
+        ) = context.onDecksLoaded(result)
     }
 }
