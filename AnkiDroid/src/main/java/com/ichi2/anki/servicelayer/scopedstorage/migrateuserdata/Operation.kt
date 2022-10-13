@@ -34,7 +34,7 @@ abstract class Operation {
      * * moving each file and subdirectory individually
      * * deleting the original directory.
      */
-    abstract fun execute(context: MigrateUserData.MigrationContext): List<Operation>
+    abstract fun execute(context: MigrationContext): List<Operation>
 
     /** A list of operations to perform if the operation should be retried */
     open val retryOperations get() = emptyList<Operation>()
@@ -49,7 +49,7 @@ class SingleRetryDecorator(
     internal val standardOperation: Operation,
     private val retryOperation: Operation
 ) : Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext) = standardOperation.execute(context)
+    override fun execute(context: MigrationContext) = standardOperation.execute(context)
     override val retryOperations get() = listOf(retryOperation)
 }
 

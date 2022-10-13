@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.Operation
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows

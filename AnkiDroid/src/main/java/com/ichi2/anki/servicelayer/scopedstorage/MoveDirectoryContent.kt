@@ -19,7 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MoveDirectoryContent.Companion.createInstance
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
