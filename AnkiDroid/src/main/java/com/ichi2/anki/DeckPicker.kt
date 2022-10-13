@@ -587,36 +587,17 @@ open class DeckPicker :
         }
     }
 
+    /**
+     * precondition: [hasStorageAccessPermission] should return false
+     */
     fun requestStoragePermission() {
-        fun showStoragePermissionDialog() {
-            val storagePermissions = arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
-        }
-
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
-        val welcomeDialogDismissed = sharedPrefs.getBoolean("welcomeDialogDismissed", false)
-        if (welcomeDialogDismissed) {
-            // DEFECT #5847: This fails if the activity is killed.
-            // Even if the dialog is showing, we want to show it again.
-            showStoragePermissionDialog()
-            return
-        }
-
-        Timber.i("Displaying initial permission request dialog")
-        // Request storage permission if we don't have it (e.g. on Android 6.0+)
-        MaterialDialog(this).show {
-            title(R.string.collection_load_welcome_request_permissions_title)
-            message(R.string.collection_load_welcome_request_permissions_details)
-            positiveButton(R.string.dialog_ok) {
-                sharedPrefs.edit { putBoolean("welcomeDialogDismissed", true) }
-                showStoragePermissionDialog()
-            }
-            cancelable(false)
-            cancelOnTouchOutside(false)
-        }
+        // DEFECT #5847: This fails if the activity is killed.
+        // Even if the dialog is showing, we want to show it again.
+        val storagePermissions = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
