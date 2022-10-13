@@ -467,7 +467,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): Boolean {
 
-        val context = initializeContext(collectionTask)
+        val context = initializeContext(collectionTask::doProgress)
 
         // define the function here, so we can execute it on retry
         fun moveRemainingFiles() {
@@ -498,8 +498,8 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
     }
 
     @VisibleForTesting
-    internal open fun initializeContext(collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>) =
-        UserDataMigrationContext(executor, source, collectionTask::doProgress)
+    internal open fun initializeContext(progress: ((NumberOfBytes) -> Unit)) =
+        UserDataMigrationContext(executor, source, progress)
 
     /**
      * Returns migration operations for the top level items in /AnkiDroid/
