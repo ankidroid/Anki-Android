@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.NotificationSheetDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.widgets.NotificationPreferenceAdapter
@@ -41,7 +42,9 @@ import timber.log.Timber
 /**
  * Fragment with preferences related to notifications
  */
-class NotificationsSettingsFragment : Fragment() {
+class NotificationsSettingsFragment :
+    Fragment(),
+    NotificationSheetDialog.OnDialogueDismissListener {
 
     private lateinit var mDeckListAdapter: NotificationPreferenceAdapter
     private lateinit var mRecyclerView: RecyclerView
@@ -77,8 +80,11 @@ class NotificationsSettingsFragment : Fragment() {
         return view
     }
 
+    @Suppress("UNCHECKED_CAST")
     private val mOnTimeClickListener = View.OnClickListener {
-        TODO("Open Time picker bottom sheet.")
+        val deckData = it.tag as Triple<DeckId, String, Int>
+        val notificationSheetDialog = NotificationSheetDialog(deckData.first, deckData.second, deckData.third, this)
+        notificationSheetDialog.show(parentFragmentManager, "ModalSheet")
     }
 
     private val mDeckExpanderClickListener = View.OnClickListener { view ->
@@ -148,5 +154,9 @@ class NotificationsSettingsFragment : Fragment() {
             context: NotificationsSettingsFragment,
             result: List<TreeNode<T>>?
         ) = context.onDecksLoaded(result)
+    }
+
+    override fun onDialogueDismiss(position: Int) {
+        mDeckListAdapter.notifyItemChanged(position)
     }
 }
