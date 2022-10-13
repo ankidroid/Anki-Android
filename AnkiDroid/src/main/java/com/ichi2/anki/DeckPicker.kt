@@ -782,7 +782,7 @@ open class DeckPicker :
                 val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
                 createFilteredDeckDialog.setOnNewDeckCreated {
                     // a filtered deck was created
-                    openStudyOptions(true)
+                    openFilteredDeckOptions()
                 }
                 launchCatchingTask {
                     withProgress {
@@ -1995,20 +1995,21 @@ open class DeckPicker :
         startActivityWithoutAnimation(intent)
     }
 
+    private fun openFilteredDeckOptions() {
+        val intent = Intent()
+        intent.setClass(this, FilteredDeckOptions::class.java)
+        startActivityWithAnimation(intent, START)
+    }
+
     private fun openStudyOptions(withDeckOptions: Boolean) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
         } else {
             val intent = Intent()
-            if (withDeckOptions) {
-                intent.setClass(this, FilteredDeckOptions::class.java)
-                startActivityWithAnimation(intent, START)
-            } else {
-                intent.putExtra("withDeckOptions", withDeckOptions)
-                intent.setClass(this, StudyOptionsActivity::class.java)
-                startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
-            }
+            intent.putExtra("withDeckOptions", withDeckOptions)
+            intent.setClass(this, StudyOptionsActivity::class.java)
+            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
         }
     }
 
