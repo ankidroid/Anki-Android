@@ -22,6 +22,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import timber.log.Timber
@@ -46,6 +47,7 @@ object NotificationChannels {
         for (channel in Channel.values()) {
             val id = channel.id
             val name = channel.getName(res)
+            val importance = channel.importance()
             Timber.i("Creating notification channel with id/name: %s/%s", id, name)
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel = NotificationChannel(id, name, importance)
@@ -55,6 +57,14 @@ object NotificationChannels {
         }
     }
 }
+
+/**
+ * The importance of this channel.
+ */
+// Not in the enum, as otherwise the enum values could only be accessed starting at API N.
+@TargetApi(Build.VERSION_CODES.N)
+fun Channel.importance() =
+    if (this == Channel.SCOPED_STORAGE_MIGRATION) NotificationManager.IMPORTANCE_LOW else NotificationManager.IMPORTANCE_DEFAULT
 
 enum class Channel(val id: String, @StringRes val nameId: Int) {
     GENERAL("General Notifications", R.string.app_name),
