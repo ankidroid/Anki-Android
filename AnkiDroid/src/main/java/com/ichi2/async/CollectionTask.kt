@@ -181,15 +181,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("Use StringBuilder to concatenate the strings")
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, ImporterData>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): ImporterData {
             Timber.d("doInBackgroundImportAdd")
             val res = AnkiDroidApp.instance.baseContext.resources
 
             var impList = arrayListOf<AnkiPackageImporter>()
-            var errFlag = false
-            var errList: String? = null
+            val errBuilder = StringBuilder()
 
             for (path in pathList) {
                 val imp = AnkiPackageImporter(col, path)
@@ -199,12 +197,12 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     impList.add(imp)
                 } catch (e: ImportExportException) {
                     Timber.w(e)
-                    errFlag = true
-                    errList += File(path).name + "\n" + e.message + "\n"
+                    errBuilder.append(File(path).name, "\n", e.message, "\n")
                 }
             }
 
-            return ImporterData(if (impList.isEmpty()) null else impList, errFlag, errList)
+            val errList = if (errBuilder.isEmpty()) null else errBuilder.toString()
+            return ImporterData(if (impList.isEmpty()) null else impList, errList)
         }
     }
 
