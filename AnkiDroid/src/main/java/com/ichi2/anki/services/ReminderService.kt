@@ -22,9 +22,9 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
-import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -103,7 +103,7 @@ class ReminderService : BroadcastReceiver() {
             Timber.v("onReceive - deck '%s' due count %d", deckDue.fullDeckName, total)
             val notification = NotificationCompat.Builder(
                 context,
-                NotificationChannels.Channel.DECK_REMINDERS.id
+                Channel.DECK_REMINDERS.id
             )
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentTitle(context.getString(R.string.reminder_title))

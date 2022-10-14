@@ -156,7 +156,7 @@ open class AnkiDroidApp : Application() {
             this,
             preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true)
         )
-        NotificationChannels.setup(applicationContext)
+        CompatHelper.compat.setupNotificationChannel(applicationContext)
 
         // Configure WebView to allow file scheme pages to access cookies.
         if (!acceptFileSchemeCookies()) {

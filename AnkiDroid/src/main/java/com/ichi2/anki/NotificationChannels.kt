@@ -17,24 +17,41 @@
 
 package com.ichi2.anki
 
+import android.annotation.TargetApi
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.StringRes
-import com.ichi2.compat.CompatHelper
+import androidx.core.app.NotificationCompat
+import timber.log.Timber
 
 object NotificationChannels {
 
     /**
      * Create or update all the notification channels for the app
      *
+     * In Oreo and higher, you must create a channel for all notifications.
+     * This will create the channel if it doesn't exist, or if it exists it will update the name.
+     *
+     * Note that once a channel is created, only the name may be changed as long as the application
+     * is installed on the user device. All other settings are fully under user control.
+
      * TODO should be called in response to {@link android.content.Intent#ACTION_LOCALE_CHANGED}
      * @param context the context for access to localized strings for channel names
      */
+    @TargetApi(26)
     fun setup(context: Context) {
         val res = context.resources
-        val compat = CompatHelper.compat
         for (channel in Channel.values()) {
-            compat.setupNotificationChannel(context, channel.id, channel.getName(res))
+            val id = channel.id
+            val name = channel.getName(res)
+            Timber.i("Creating notification channel with id/name: %s/%s", id, name)
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationChannel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT)
+            notificationChannel.setShowBadge(true)
+            notificationChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+            manager.createNotificationChannel(notificationChannel)
         }
     }
 }
