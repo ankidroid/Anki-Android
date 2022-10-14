@@ -103,7 +103,7 @@ class ReminderService : BroadcastReceiver() {
             Timber.v("onReceive - deck '%s' due count %d", deckDue.fullDeckName, total)
             val notification = NotificationCompat.Builder(
                 context,
-                NotificationChannels.getId(NotificationChannels.Channel.DECK_REMINDERS)
+                NotificationChannels.Channel.DECK_REMINDERS.id
             )
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentTitle(context.getString(R.string.reminder_title))

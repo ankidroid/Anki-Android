@@ -25,7 +25,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NotificationChannels
-import com.ichi2.anki.NotificationChannels.getId
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertEquals
@@ -92,7 +91,7 @@ class NotificationChannelTest : InstrumentedTest() {
         for (channel in NotificationChannels.Channel.values()) {
             assertNotNull(
                 "There should be a reminder channel",
-                mManager!!.getNotificationChannel(getId(channel))
+                mManager!!.getNotificationChannel(channel.id)
             )
         }
     }

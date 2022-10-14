@@ -51,7 +51,7 @@ class NotificationService : BroadcastReceiver() {
                 // The NotificationCompat code uses setSound() no matter what we do and triggers it.
                 val builder = NotificationCompat.Builder(
                     context,
-                    NotificationChannels.getId(NotificationChannels.Channel.GENERAL)
+                    NotificationChannels.Channel.GENERAL.id
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_stat_notify)
