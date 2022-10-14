@@ -22,7 +22,8 @@ import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.themes.StyledProgressDialog
 import timber.log.Timber
 
-internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>?>(activity) {
+internal class ExportListener(activity: AnkiActivity, private val dialogsFactory: ExportDialogsFactory) :
+    TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>?>(activity) {
     @Suppress("Deprecation")
     private var mProgressDialog: android.app.ProgressDialog? = null
     override fun actualOnPreExecute(context: AnkiActivity) {
