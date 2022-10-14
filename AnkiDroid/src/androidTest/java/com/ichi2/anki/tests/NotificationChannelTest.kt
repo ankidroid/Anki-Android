@@ -27,7 +27,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NotificationChannels
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.assertEquals
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -83,10 +84,10 @@ class NotificationChannelTest : InstrumentedTest() {
                 expectedChannels += 1
             }
         }
-        assertEquals(
-            "Incorrect channel count",
+        assertThat(
+            "Not as many channels as expected.",
             expectedChannels,
-            channels.size
+            greaterThanOrEqualTo(channels.size)
         )
         for (channel in NotificationChannels.Channel.values()) {
             assertNotNull(
