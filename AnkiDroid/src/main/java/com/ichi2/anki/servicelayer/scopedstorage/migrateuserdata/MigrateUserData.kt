@@ -35,6 +35,12 @@ import timber.log.Timber
 import java.io.File
 
 typealias NumberOfBytes = Long
+/**
+ * Function that is executed when one file is migrated, with the number of bytes moved.
+ * Called with 0 when the file is already present in destination (i.e. successful move with no byte copied)
+ * Not called for directories.
+ */
+typealias MigrationProgressListener = (NumberOfBytes) -> Unit
 
 /**
  * Migrating user data (images, backups etc..) to scoped storage
@@ -150,6 +156,11 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     abstract class MigrationContext {
         abstract fun reportError(throwingOperation: Operation, ex: Exception)
+
+        /**
+         * Called on each successful file migrated
+         * @param transferred The number of bytes of the transferred file
+         */
         abstract fun reportProgress(transferred: NumberOfBytes)
         /**
          * Whether [File#renameTo] should be attempted
@@ -364,9 +375,11 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
     /**
      * Abstracts the decision of what to do when an exception occurs when migrating a file.
-     * Provides progress notifications
+     * Provides progress notifications.
+     * @param executor The executor that will do the migration.
+     * @param progressReportParam A function, called for each file that is migrated, with the number of bytes of the file.
      */
-    open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: ((NumberOfBytes) -> Unit)) : MigrationContext() {
+    open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: MigrationProgressListener) : MigrationContext() {
         val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty()
 
         /**
@@ -467,7 +480,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): Boolean {
 
-        val context = initializeContext(collectionTask)
+        val context = initializeContext(collectionTask::doProgress)
 
         // define the function here, so we can execute it on retry
         fun moveRemainingFiles() {
@@ -498,8 +511,12 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
     }
 
     @VisibleForTesting
-    internal open fun initializeContext(collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>) =
-        UserDataMigrationContext(executor, source, collectionTask::doProgress)
+    /**
+     * @return A User data migration context, executing the migration of [source] on [executor].
+     * Calling [collectionTask::doProgress] on each migrated file, with the number of bytes migrated.
+     */
+    internal open fun initializeContext(progress: (MigrationProgressListener)) =
+        UserDataMigrationContext(executor, source, progress)
 
     /**
      * Returns migration operations for the top level items in /AnkiDroid/

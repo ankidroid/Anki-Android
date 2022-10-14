@@ -21,8 +21,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
-import com.ichi2.async.ProgressSenderAndCancelListener
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationProgressListener
 import com.ichi2.exceptions.AggregateException
 import com.ichi2.testutils.*
 import net.ankiweb.rsdroid.BackendFactory
@@ -218,8 +217,8 @@ private class MigrateUserDataTester
 private constructor(source: Directory, destination: Directory, val filesToMigrateCount: Int) :
     MigrateUserData(source, destination) {
 
-    override fun initializeContext(collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): UserDataMigrationContext {
-        return super.initializeContext(collectionTask).apply {
+    override fun initializeContext(progress: MigrationProgressListener): UserDataMigrationContext {
+        return super.initializeContext(progress).apply {
             attemptRename = false
         }
     }
