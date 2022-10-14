@@ -19,28 +19,10 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.res.Resources
+import androidx.annotation.StringRes
 import com.ichi2.compat.CompatHelper
 
 object NotificationChannels {
-    fun getId(channel: Channel?): String {
-        return when (channel) {
-            Channel.SYNC -> "Synchronization"
-            Channel.GLOBAL_REMINDERS -> "Global Reminders"
-            Channel.DECK_REMINDERS -> "Deck Reminders"
-            Channel.GENERAL -> "General Notifications"
-            else -> "General Notifications"
-        }
-    }
-
-    private fun getName(channel: Channel?, res: Resources): String {
-        return when (channel) {
-            Channel.SYNC -> res.getString(R.string.sync_title)
-            Channel.GLOBAL_REMINDERS -> res.getString(R.string.widget_minimum_cards_due_notification_ticker_title)
-            Channel.DECK_REMINDERS -> res.getString(R.string.deck_conf_reminders)
-            Channel.GENERAL -> res.getString(R.string.app_name)
-            else -> res.getString(R.string.app_name)
-        }
-    }
 
     /**
      * Create or update all the notification channels for the app
@@ -52,11 +34,16 @@ object NotificationChannels {
         val res = context.resources
         val compat = CompatHelper.compat
         for (channel in Channel.values()) {
-            compat.setupNotificationChannel(context, getId(channel), getName(channel, res))
+            compat.setupNotificationChannel(context, channel.id, channel.getName(res))
         }
     }
 
-    enum class Channel {
-        GENERAL, SYNC, GLOBAL_REMINDERS, DECK_REMINDERS
+    enum class Channel(val id: String, @StringRes val nameId: Int) {
+        GENERAL("General Notifications", R.string.app_name),
+        SYNC("Synchronization", R.string.sync_title),
+        GLOBAL_REMINDERS("Global Reminders", R.string.widget_minimum_cards_due_notification_ticker_title),
+        DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders);
+
+        fun getName(res: Resources) = res.getString(nameId)
     }
 }
