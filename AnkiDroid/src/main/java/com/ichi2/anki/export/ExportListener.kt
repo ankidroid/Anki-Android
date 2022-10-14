@@ -20,10 +20,15 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.themes.StyledProgressDialog
+import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-internal class ExportListener(activity: AnkiActivity, private val dialogsFactory: ExportDialogsFactory) :
-    TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>>(activity) {
+sealed class ExportResult
+class ExportPath(val path: String) : ExportResult()
+class ExportError(val message: String?) : ExportResult()
+object ExportException : ExportResult()
+
+internal class ExportListener(activity: AnkiActivity, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void, ExportResult>(activity) {
     @Suppress("Deprecation")
     private var mProgressDialog: android.app.ProgressDialog? = null
     override fun actualOnPreExecute(context: AnkiActivity) {
@@ -33,24 +38,40 @@ internal class ExportListener(activity: AnkiActivity, private val dialogsFactory
         )
     }
 
-    override fun actualOnPostExecute(context: AnkiActivity, result: Pair<Boolean, String?>) {
+    @KotlinCleanup("Decide what to do with this code. Clearly, Timbers are wrong")
+    override fun actualOnPostExecute(context: AnkiActivity, result: ExportResult) {
         if (mProgressDialog != null && mProgressDialog!!.isShowing) {
             mProgressDialog!!.dismiss()
         }
 
         // If boolean and string are both set, we are signalling an error message
         // instead of a successful result.
-        if (result.first && result.second != null) {
-            Timber.w("Export Failed: %s", result.second)
-            context.showSimpleMessageDialog(result.second)
-        } else {
-            Timber.i("Export successful")
-            val exportPath = result.second
-            if (exportPath != null) {
-                val dialog = dialogsFactory.newExportCompleteDialog().withArguments(exportPath)
+        when (result) {
+            is ExportError -> {
+                if (result.message != null) {
+                    Timber.w("Export Failed: %s", result.message)
+                    context.showSimpleMessageDialog(result.message)
+                } else {
+                    Timber.i("Export successful")
+                    showThemedToast(
+                        context,
+                        context.resources.getString(R.string.export_unsuccessful),
+                        true
+                    )
+                }
+            }
+            is ExportException -> {
+                Timber.i("Export successful")
+                showThemedToast(
+                    context,
+                    context.resources.getString(R.string.export_unsuccessful),
+                    true
+                )
+            }
+            is ExportPath -> {
+                Timber.i("Export successful")
+                val dialog = dialogsFactory.newExportCompleteDialog().withArguments(result.path)
                 context.showAsyncDialogFragment(dialog)
-            } else {
-                showThemedToast(context, context.resources.getString(R.string.export_unsuccessful), true)
             }
         }
     }

@@ -25,6 +25,10 @@ import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.anki.export.ExportError
+import com.ichi2.anki.export.ExportException
+import com.ichi2.anki.export.ExportPath
+import com.ichi2.anki.export.ExportResult
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
@@ -40,7 +44,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.util.*
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
 
@@ -427,8 +430,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
+    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, ExportResult>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): ExportResult {
             Timber.d("doInBackgroundExportApkg")
             try {
                 val exporter = if (did == null) {
@@ -439,18 +442,18 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 exporter.exportInto(apkgPath, col.context)
             } catch (e: FileNotFoundException) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg")
-                return Pair(false, null)
+                return ExportException
             } catch (e: IOException) {
                 Timber.e(e, "IOException in doInBackgroundExportApkg")
-                return Pair(false, null)
+                return ExportException
             } catch (e: JSONException) {
                 Timber.e(e, "JSOnException in doInBackgroundExportApkg")
-                return Pair(false, null)
+                return ExportException
             } catch (e: ImportExportException) {
                 Timber.e(e, "ImportExportException in doInBackgroundExportApkg")
-                return Pair(true, e.message)
+                return ExportError(e.message)
             }
-            return Pair(false, apkgPath)
+            return ExportPath(apkgPath)
         }
     }
 
