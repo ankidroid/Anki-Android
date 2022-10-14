@@ -1352,7 +1352,7 @@ open class DeckPicker :
      */
     override fun showSyncErrorDialog(dialogType: Int, message: String?) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
-        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.SYNC)
+        showAsyncDialogFragment(newFragment, Channel.SYNC)
     }
 
     /**
@@ -1374,7 +1374,7 @@ open class DeckPicker :
             showSimpleNotification(
                 res.getString(R.string.app_name),
                 res.getString(messageResource),
-                NotificationChannels.Channel.SYNC
+                Channel.SYNC
             )
         } else {
             if (syncMessage.isNullOrEmpty()) {
