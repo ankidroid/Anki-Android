@@ -48,7 +48,7 @@ object NotificationChannels {
             val name = channel.getName(res)
             Timber.i("Creating notification channel with id/name: %s/%s", id, name)
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val notificationChannel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT)
+            val notificationChannel = NotificationChannel(id, name, importance)
             notificationChannel.setShowBadge(true)
             notificationChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
             manager.createNotificationChannel(notificationChannel)
@@ -60,7 +60,7 @@ enum class Channel(val id: String, @StringRes val nameId: Int) {
     GENERAL("General Notifications", R.string.app_name),
     SYNC("Synchronization", R.string.sync_title),
     GLOBAL_REMINDERS("Global Reminders", R.string.widget_minimum_cards_due_notification_ticker_title),
-    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders);
-
+    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders),
+    SCOPED_STORAGE_MIGRATION("Scoped Storage", R.string.scoped_storage_title) ;
     fun getName(res: Resources) = res.getString(nameId)
 }
