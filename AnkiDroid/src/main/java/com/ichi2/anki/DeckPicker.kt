@@ -278,19 +278,18 @@ open class DeckPicker :
         get() = BackupManager()
     private val mImportAddListener = ImportAddListener(this)
 
-    @KotlinCleanup("Migrate from Triple to Kotlin class")
-    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Triple<List<AnkiPackageImporter>?, Boolean, String?>?) {
+    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
+        override fun actualOnPostExecute(context: DeckPicker, result: ImporterData?) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
             }
-            // If result.second and result are both set, we are signalling
+            // If result.errFlag and result are both set, we are signalling
             // some files were imported successfully & some errors occurred.
-            // If result.first is null & result.second & result.third is set
+            // If result.impList is null & result.errList is set
             // we are signalling all the files which were selected threw error
-            if (result!!.first == null && result.second && result.third != null) {
-                Timber.w("Import: Add Failed: %s", result.third)
-                context.showSimpleMessageDialog(result.third)
+            if (result!!.impList == null && result.errFlag) {
+                Timber.w("Import: Add Failed: %s", result.errList)
+                context.showSimpleMessageDialog(result.errList)
             } else {
                 Timber.i("Import: Add succeeded")
 
@@ -299,7 +298,7 @@ open class DeckPicker :
 
                 var errorMsg = ""
 
-                for (data in result.first!!) {
+                for (data in result.impList!!) {
                     // Check if mLog is not null or empty
                     // If mLog is not null or empty that indicates an error has occurred.
                     if (data.log.isNullOrEmpty()) {
@@ -309,8 +308,8 @@ open class DeckPicker :
                 }
 
                 var dialogMsg = context.resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
-                if (result.third != null) {
-                    errorMsg += result.third
+                if (result.errList != null) {
+                    errorMsg += result.errList
                 }
                 if (errorMsg.isNotEmpty()) {
                     dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
@@ -2806,3 +2805,5 @@ enum class SyncIconState {
      */
     Disabled,
 }
+
+data class ImporterData(val impList: List<AnkiPackageImporter>?, val errFlag: Boolean, val errList: String?)

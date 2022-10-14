@@ -39,7 +39,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.util.*
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
 
@@ -183,8 +182,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     @KotlinCleanup("Use StringBuilder to concatenate the strings")
-    class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
+    class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, ImporterData>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): ImporterData {
             Timber.d("doInBackgroundImportAdd")
             val res = AnkiDroidApp.instance.baseContext.resources
 
@@ -205,7 +204,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             }
 
-            return Triple(if (impList.isEmpty()) null else impList, errFlag, errList)
+            return ImporterData(if (impList.isEmpty()) null else impList, errFlag, errList)
         }
     }
 
