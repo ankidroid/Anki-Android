@@ -287,7 +287,7 @@ open class DeckPicker :
             // some files were imported successfully & some errors occurred.
             // If result.impList is null & result.errList is set
             // we are signalling all the files which were selected threw error
-            if (result!!.impList == null && result.errFlag) {
+            if (result!!.impList == null && result.errList != null) {
                 Timber.w("Import: Add Failed: %s", result.errList)
                 context.showSimpleMessageDialog(result.errList)
             } else {
@@ -2806,4 +2806,8 @@ enum class SyncIconState {
     Disabled,
 }
 
-data class ImporterData(val impList: List<AnkiPackageImporter>?, val errFlag: Boolean, val errList: String?)
+/**
+ * @param impList: List of packages to import
+ * @param errList: a string describing the errors. Null if no error.
+ */
+data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)
