@@ -275,7 +275,7 @@ open class DeckPicker :
     private val mImportAddListener = ImportAddListener(this)
 
     @KotlinCleanup("Migrate from Triple to Kotlin class")
-    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
+    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
         override fun actualOnPostExecute(context: DeckPicker, result: Triple<List<AnkiPackageImporter>?, Boolean, String?>?) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
@@ -336,7 +336,7 @@ open class DeckPicker :
         return ImportReplaceListener(this)
     }
 
-    private class ImportReplaceListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
+    private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
         override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
             Timber.i("Import: Replace Task Completed")
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
@@ -1286,7 +1286,7 @@ open class DeckPicker :
         return UndoTaskListener(isReview, this)
     }
 
-    private class UndoTaskListener(private val isReview: Boolean, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Unit, Computation<NextCard<*>>?>(deckPicker) {
+    private class UndoTaskListener(private val isReview: Boolean, deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Unit, Computation<NextCard<*>>?>(deckPicker) {
         override fun actualOnCancelled(context: DeckPicker) {
             context.hideProgressBar()
         }
@@ -2138,7 +2138,7 @@ open class DeckPicker :
         return UpdateDeckListListener(this)
     }
 
-    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(private val deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
+    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             if (!context.colIsOpen()) {
                 context.showProgressBar()
