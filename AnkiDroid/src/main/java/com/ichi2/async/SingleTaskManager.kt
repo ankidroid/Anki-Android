@@ -82,7 +82,7 @@ class SingleTaskManager : TaskManager() {
     @Suppress("DEPRECATION")
     override fun <Progress, Result> launchCollectionTaskConcrete(
         task: TaskDelegateBase<Progress, Result>,
-        listener: TaskListener<in Progress, in Result?>?
+        listener: TaskListener<in Progress, in Result>?
     ): Cancellable {
         // Start new task
         return CollectionTask(task, listener, mLatestInstance).apply {

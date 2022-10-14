@@ -36,7 +36,7 @@ abstract class TaskManager {
     protected abstract fun setLatestInstanceConcrete(task: CollectionTask<*, *>)
     abstract fun <Progress, Result> launchCollectionTaskConcrete(
         task: TaskDelegateBase<Progress, Result>,
-        listener: TaskListener<in Progress, in Result?>?
+        listener: TaskListener<in Progress, in Result>?
     ): Cancellable
 
     abstract fun waitToFinishConcrete()
@@ -117,7 +117,7 @@ abstract class TaskManager {
          */
         fun <Progress, Result> launchCollectionTask(
             task: TaskDelegateBase<Progress, Result>,
-            listener: TaskListener<in Progress, in Result?>?
+            listener: TaskListener<in Progress, in Result>?
         ): Cancellable {
             return sTaskManager.launchCollectionTaskConcrete(task, listener)
         }

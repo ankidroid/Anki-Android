@@ -32,7 +32,7 @@ class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManag
     protected override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {}
     override fun <Progress, Result> launchCollectionTaskConcrete(
         task: TaskDelegateBase<Progress, Result>,
-        listener: TaskListener<in Progress, in Result?>?
+        listener: TaskListener<in Progress, in Result>?
     ): Cancellable {
         return executeTaskWithListener(task, listener, colGetter)
     }
@@ -62,7 +62,7 @@ class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManag
 
     class EmptyTask<Progress, Result>(
         task: TaskDelegateBase<Progress, Result>?,
-        listener: TaskListener<in Progress, in Result?>?
+        listener: TaskListener<in Progress, in Result>?
     ) : CollectionTask<Progress, Result>(
         task!!, listener, null
     )
@@ -71,7 +71,7 @@ class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManag
         @KotlinCleanup("getCol should be allowed to return null: maybe getColSafe here?")
         fun <Progress, Result> executeTaskWithListener(
             task: TaskDelegateBase<Progress, Result>,
-            listener: TaskListener<in Progress, in Result?>?,
+            listener: TaskListener<in Progress, in Result>?,
             colGetter: CollectionGetter
         ): Cancellable {
             listener?.onPreExecute()
