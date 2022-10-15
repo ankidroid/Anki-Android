@@ -105,11 +105,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
-    override fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
+    override fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
         val exportPath = getExportFileName(path, "All Decks", includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
-            exportApkgLegacy(exportPath, null, includeSched, includeMedia)
+            exportApkgOrColpkgLegacy(exportPath, null, includeSched, includeMedia)
         } else {
             if (includeSched) {
                 activity.launchCatchingTask {
@@ -129,7 +129,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val exportPath = getExportFileName(path, deckName, includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
-            exportApkgLegacy(exportPath, did, includeSched, includeMedia)
+            exportApkgOrColpkgLegacy(exportPath, did, includeSched, includeMedia)
         } else {
             val limit = exportLimit { this.deckId = did }
             exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
@@ -146,9 +146,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
     }
 
-    private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
+    private fun exportApkgOrColpkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         activity.launchCatchingTask {
-            val apkgPath = exportPath.path
+            val exportPkgPath = exportPath.path
             activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
                 withCol {
                     val exporter = if (did == null) {
@@ -156,10 +156,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     } else {
                         AnkiPackageExporter(this, did, includeSched, includeMedia)
                     }
-                    exporter.exportInto(apkgPath, context)
+                    exporter.exportInto(exportPkgPath, context)
                 }
             }
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(apkgPath)
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPkgPath)
             activity.showAsyncDialogFragment(dialog)
         }
     }
