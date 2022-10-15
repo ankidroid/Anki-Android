@@ -59,6 +59,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun verifyCodeMessages() {
         HashMap<Int, String>().let {
+            // HashMap object will now be referenced by "it"
             val context = targetContext
             it[407] = context.getString(R.string.sync_error_407_proxy_required)
             it[409] = context.getString(R.string.sync_error_409)
