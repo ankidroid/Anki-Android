@@ -58,7 +58,6 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun verifyCodeMessages() {
-        // Scope function:
         HashMap<Int, String>().let {
             val context = targetContext
             it[407] = context.getString(R.string.sync_error_407_proxy_required)
