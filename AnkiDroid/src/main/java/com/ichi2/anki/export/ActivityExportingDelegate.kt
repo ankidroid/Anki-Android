@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.edit
 import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
@@ -214,6 +215,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivityWithoutAnimation(shareFileIntent)
+            // TODO: find if there is a way to check whether the activity successfully shared the collection.
+            saveSuccessfulCollectionExportIfRelevant()
         } else {
             // Try to save it?
             activity.showSnackbar(R.string.export_send_no_handlers)
@@ -248,6 +251,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
         if (isSuccessful) {
             activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
+            saveSuccessfulCollectionExportIfRelevant()
         } else {
             activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
         }
@@ -297,4 +301,27 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             }
         }
     }
+
+    /**
+     * If we exported a collection (hence [mExportFileName] ends with ".colpkg"), save in the preferences
+     * the mod of the collection and the time at which it occurred.
+     * This will allow to check whether a recent export was made, hence scoped storage migration is safe.
+     */
+    private fun saveSuccessfulCollectionExportIfRelevant() {
+        if (::mExportFileName.isInitialized && !mExportFileName.endsWith(".colpkg")) return
+        AnkiDroidApp.getSharedPrefs(activity).edit {
+            putLong(
+                LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY, TimeManager.time.intTime()
+            )
+        }
+        val col = collectionSupplier.get()
+        AnkiDroidApp.getSharedPrefs(activity).edit {
+            putLong(
+                LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY, col.mod
+            )
+        }
+    }
 }
+
+const val LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY = "last_successful_export_mod"
+const val LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY = "last_successful_export_second"
