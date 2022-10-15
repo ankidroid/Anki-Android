@@ -185,17 +185,17 @@
     <string name="confirm_apkg_export">要将记忆库集合导出为 Anki 包吗？</string>
     <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">导出 %d 张选定卡片为 apkg 文件？</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
     </plurals>
     <string name="export_in_progress">正在导出 Anki 软件包文件&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_success_title">成功导出牌组集</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
     <string name="export_save_apkg_successful">已成功保存 Anki 包</string>
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
+    <string name="export_success_message">您可以选择一个文件位置来保存它，或者与其他应用共享。</string>
     <string name="export_share_title">选择如何发送 Anki 软件包</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
@@ -206,8 +206,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">导出apkg文件时出错</string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_select_save_app">选择文件保存位置</string>
+    <string name="export_select_share_app">选择分享应用</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>

@@ -144,33 +144,33 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">একটু দেখাও</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d -র মধ্যে %1$d</string>
     <string name="error_insufficient_memory">আপনার ডিভাইসে পর্যাপ্ত মেমোরি না থাকায় কাজটি সম্ভব হয়নি</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Rename</string>
-    <string name="default_conf_delete_error">The default options group can’t be removed</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">পুনঃনামকরণ</string>
+    <string name="default_conf_delete_error">ডিফল্ট অপশন গ্রুপ সরিয়ে ফেলা যাবে না</string>
     <plurals name="factadder_cards_added">
-        <item quantity="one">%d card added</item>
-        <item quantity="other">%d cards added</item>
+        <item quantity="one">%dটি কার্ড যোগ করা হয়েছে</item>
+        <item quantity="other">%dটি কার্ড যোগ করা হয়েছে</item>
     </plurals>
-    <string name="check_db">Check database</string>
-    <string name="check_media">Check media</string>
-    <string name="empty_cards">Empty cards</string>
-    <string name="check_db_message">Checking database&#8230;</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
-    <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+    <string name="check_db">ডেটাবেজ চেক</string>
+    <string name="check_media">মিডিয়া চেক</string>
+    <string name="empty_cards">খালি কার্ডসমূহ</string>
+    <string name="check_db_message">ডেটাবেজ চেক করছি...</string>
+    <string name="empty_card_warning">এই কার্ডটি খালি। \"ডেক তালিকা\" স্ক্রিন থেকে \"খালি কার্ডসমূহ\" অপশনটি ব্যবহার করুন।</string>
+    <string name="unknown_type_field_warning">উত্তর টাইপ করুন: অজানা ফিল্ড %s</string>
+    <string name="delete_deck">ডেক মুছছি...</string>
+    <string name="info_rate">আনকি-ড্রয়েডকে রেটিং দিন</string>
+    <string name="import_title">আমদানি হচ্ছে</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">যোগ কর</string>
+    <string name="import_message_replace_confirm">এর ফলে আপনার বর্তমান সংগ্রহ মুছে যাবে এবং %s ফাইলের ডেটা দ্বারা প্রতিস্থাপিত হবে।</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">\"%s\"কে সংগ্রহে যোগ করবেন? অনেক সময় লাগতে পারে</item>
+        <item quantity="other">আপনি কি এই ফাইলগুলো আমদানি করতে চান:\n%s\nএতে অনেক সময় লাগতে পারে</item>
     </plurals>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_no_apkg">এটি কোন বৈধ আনকি প্যাকেজ ফাইল নয়</string>
+    <string name="import_title_error" comment="Title of error dialog">ত্রুটি</string>
+    <string name="import_log_failed_unzip">আনজিপ করতে ব্যর্থ - apkg: %s</string>
+    <string name="import_log_failed_copy_to">apkg %sতে কপি করতে ব্যর্থ</string>
+    <string name="import_log_failed_validate">apkg ভ্যালিডেশন ব্যর্থ</string>
+    <string name="import_log_insufficient_space_error">প্যাকেজ আমদানি করার মত যথেষ্ট জায়গা নেই।\n প্রয়োজন - %1$s \nআছে - %2$s।\n\nসমস্যা হচ্ছে? আপনার ফোনের জায়গা খালি করার চেষ্টা করুন। বিকল্প হিসেবে, সিনক্রোনাইজেশন আমদানি করার তুলনায় কম জায়গা নেয়। আপনি বেশি জায়গা সমৃদ্ধ কোন ডিভাইসে এটি আমদানি করার চেষ্টা করতে পারেন। (যেমন: আনকি ডেস্কটপ) অতঃপর সেটি এই ডিভাইসের সাথে সিনক্রোনাইজ করতে পারেন।</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
@@ -220,7 +220,7 @@
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Custom study</string>
     <string name="more_options">More</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+    <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
     <string name="sched_end">(end)</string>
