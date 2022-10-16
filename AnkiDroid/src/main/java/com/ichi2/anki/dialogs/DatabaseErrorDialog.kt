@@ -369,7 +369,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help))
             }
             DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)
-            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX)
+            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
             DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore_no_backups)
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)

@@ -61,14 +61,14 @@ open class BackupManager {
             return false
         }
         val colFile = File(colPath)
-        val deckBackups = getBackups(colFile)
-        if (isBackupUnnecessary(colFile, deckBackups)) {
+        val colBackups = getBackups(colFile)
+        if (isBackupUnnecessary(colFile, colBackups)) {
             Timber.d("performBackup: No backup necessary due to no collection changes")
             return false
         }
 
         // Abort backup if one was already made less than [interval] hours ago (default: 5 hours - BACKUP_INTERVAL)
-        val lastBackupDate = getLastBackupDate(deckBackups)
+        val lastBackupDate = getLastBackupDate(colBackups)
         if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS()) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
             return false
@@ -105,13 +105,13 @@ open class BackupManager {
         return true
     }
 
-    fun isBackupUnnecessary(colFile: File, deckBackups: Array<File>): Boolean {
-        val len = deckBackups.size
+    fun isBackupUnnecessary(colFile: File, colBackups: Array<File>): Boolean {
+        val len = colBackups.size
 
         // If have no backups, then a backup is necessary
         return if (len <= 0) {
             false
-        } else deckBackups[len - 1].lastModified() == colFile.lastModified()
+        } else colBackups[len - 1].lastModified() == colFile.lastModified()
 
         // no collection changes means we don't need a backup
     }
@@ -151,7 +151,7 @@ open class BackupManager {
             zos.close()
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
-            deleteDeckBackups(colPath, prefs.getInt("backupMax", 8))
+            deleteColBackups(colPath, prefs.getInt("backupMax", 8))
             // set timestamp of file in order to avoid creating a new backup unless its changed
             if (!backupFile.setLastModified(colFile.lastModified())) {
                 Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.name)
@@ -185,7 +185,7 @@ open class BackupManager {
         private const val MIN_FREE_SPACE = 10
         private const val MIN_BACKUP_COL_SIZE = 10000 // threshold in bytes to backup a col file
         private const val BACKUP_SUFFIX = "backup"
-        const val BROKEN_DECKS_SUFFIX = "broken"
+        const val BROKEN_COLLECTIONS_SUFFIX = "broken"
         private val backupNameRegex: Regex by lazy {
             Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
         }
@@ -210,7 +210,7 @@ open class BackupManager {
         }
 
         private fun getBrokenDirectory(ankidroidDir: File): File {
-            val directory = File(ankidroidDir, BROKEN_DECKS_SUFFIX)
+            val directory = File(ankidroidDir, BROKEN_COLLECTIONS_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBrokenDirectory() mkdirs on %s failed", ankidroidDir)
             }
@@ -253,30 +253,30 @@ open class BackupManager {
          * @return whether the repair was successful
          */
         fun repairCollection(col: Collection): Boolean {
-            val deckPath = col.path
-            val deckFile = File(deckPath)
+            val colPath = col.path
+            val colFile = File(colPath)
             val time = TimeManager.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
             col.close()
 
             // repair file
-            val execString = "sqlite3 $deckPath .dump | sqlite3 $deckPath.tmp"
+            val execString = "sqlite3 $colPath .dump | sqlite3 $colPath.tmp"
             Timber.i("repairCollection - Execute: %s", execString)
             try {
                 val cmd = arrayOf("/system/bin/sh", "-c", execString)
                 val process = Runtime.getRuntime().exec(cmd)
                 process.waitFor()
-                if (!File("$deckPath.tmp").exists()) {
-                    Timber.e("repairCollection - dump to %s.tmp failed", deckPath)
+                if (!File("$colPath.tmp").exists()) {
+                    Timber.e("repairCollection - dump to %s.tmp failed", colPath)
                     return false
                 }
-                if (!moveDatabaseToBrokenDirectory(deckPath, false, time)) {
+                if (!moveDatabaseToBrokenDirectory(colPath, false, time)) {
                     Timber.e("repairCollection - could not move corrupt file to broken directory")
                     return false
                 }
                 Timber.i("repairCollection - moved corrupt file to broken directory")
-                val repairedFile = File("$deckPath.tmp")
-                return repairedFile.renameTo(deckFile)
+                val repairedFile = File("$colPath.tmp")
+                return repairedFile.renameTo(colFile)
             } catch (e: IOException) {
                 Timber.e(e, "repairCollection - error")
             } catch (e: InterruptedException) {
@@ -314,11 +314,11 @@ open class BackupManager {
             }
             if (moveConnectedFilesToo) {
                 // move all connected files (like journals, directories...) too
-                val deckName = colFile.name
+                val colName = colFile.name
                 val directory = File(colFile.parent!!)
                 for (f in directory.listFiles()!!) {
-                    if (f.name.startsWith(deckName) &&
-                        !f.renameTo(File(getBrokenDirectory(colFile.parentFile!!), f.name.replace(deckName, movedFilename)))
+                    if (f.name.startsWith(colName) &&
+                        !f.renameTo(File(getBrokenDirectory(colFile.parentFile!!), f.name.replace(colName, movedFilename)))
                     ) {
                         return false
                     }
@@ -403,16 +403,16 @@ open class BackupManager {
          * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep
          */
-        fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
-            return deleteDeckBackups(getBackups(File(colPath)), keepNumber)
+        fun deleteColBackups(colPath: String, keepNumber: Int): Boolean {
+            return deleteColBackups(getBackups(File(colPath)), keepNumber)
         }
 
-        private fun deleteDeckBackups(backups: Array<File>, keepNumber: Int): Boolean {
+        private fun deleteColBackups(backups: Array<File>, keepNumber: Int): Boolean {
             for (i in 0 until backups.size - keepNumber) {
                 if (!backups[i].delete()) {
-                    Timber.e("deleteDeckBackups() failed to delete %s", backups[i].absolutePath)
+                    Timber.e("deleteColBackups() failed to delete %s", backups[i].absolutePath)
                 } else {
-                    Timber.i("deleteDeckBackups: backup file %s deleted.", backups[i].absolutePath)
+                    Timber.i("deleteColBackups: backup file %s deleted.", backups[i].absolutePath)
                 }
             }
             return true
