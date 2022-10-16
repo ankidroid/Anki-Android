@@ -112,7 +112,7 @@ class IntentHandler : Activity() {
     }
 
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
-        Timber.i("Handling file import")
+        Timber.i("Handling file import ")
         val importResult = handleFileImport(this, intent)
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
