@@ -3,6 +3,13 @@
     android:layoutDirection="locale">
 
     <item
+        android:id="@+id/action_undo"
+        android:enabled="false"
+        android:icon="@drawable/ic_undo_white"
+        android:title="@string/undo"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
         android:icon="@drawable/ic_clear_white"
@@ -21,12 +28,16 @@
         android:visible="false"
         ankidroid:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_undo"
-        android:enabled="false"
-        android:icon="@drawable/ic_undo_white"
-        android:title="@string/undo"
-        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
-        ankidroid:showAsAction="always"/>
+        android:id="@+id/action_save_whiteboard"
+        android:title="@string/save_whiteboard"
+        android:icon="@drawable/ic_save_white"
+        android:visible="false"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_toggle_whiteboard"
+        android:title="@string/enable_whiteboard"
+        android:icon="@drawable/ic_gesture_white"
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_flag"
         android:title="@string/menu_flag_card"
@@ -66,17 +77,6 @@
                 android:icon="@drawable/ic_flag_purple"/>
         </menu>
     </item>
-    <item
-        android:id="@+id/action_save_whiteboard"
-        android:title="@string/save_whiteboard"
-        android:icon="@drawable/ic_save_white"
-        android:visible="false"
-        ankidroid:showAsAction="never"/>
-    <item
-        android:id="@+id/action_toggle_whiteboard"
-        android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white"
-        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white"
