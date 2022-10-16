@@ -16,7 +16,7 @@
 package com.ichi2.testutils
 
 import android.content.Context
-import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
+import com.ichi2.anki.BackupManager.Companion.enoughFreeSpaceToUseAnkiDroid
 import com.ichi2.anki.CollectionHelper
 import org.junit.Assert.assertTrue
 import java.io.File
@@ -30,7 +30,7 @@ object BackupManagerTestUtilities {
             ?: throw IllegalStateException("currentAnkiDroidDirectory had no parent")
         ShadowStatFs.markAsNonEmpty(path)
 
-        val enoughDiscSpace = enoughDiscSpace(currentAnkiDroidDirectory)
+        val enoughDiscSpace = enoughFreeSpaceToUseAnkiDroid(currentAnkiDroidDirectory)
         assertNotNull(enoughDiscSpace)
         assertTrue(enoughDiscSpace)
     }

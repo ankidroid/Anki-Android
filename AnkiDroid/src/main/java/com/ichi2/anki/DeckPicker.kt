@@ -1049,7 +1049,7 @@ open class DeckPicker :
     private fun onFinishedStartup() {
         // create backup in background if needed
         if (BackendFactory.defaultLegacySchema) {
-            BackupManager.performBackupInBackground(col.path, TimeManager.time)
+            BackupManager().performBackupInBackground(col.path)
         } else {
             // new code triggers backup in updateDeckList()
         }
@@ -1123,7 +1123,7 @@ open class DeckPicker :
             }
         }
         // If we can't measure free space, let the user use the app.
-        val enoughDiscSpace = BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this)) ?: true
+        val enoughDiscSpace = BackupManager.enoughFreeSpaceToUseAnkiDroid(CollectionHelper.getCurrentAnkiDroidDirectory(this)) ?: true
         if (!enoughDiscSpace) {
             Timber.i("Not enough space to do backup")
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance())

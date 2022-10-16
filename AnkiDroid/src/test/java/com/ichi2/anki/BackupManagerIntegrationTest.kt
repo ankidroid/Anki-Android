@@ -18,11 +18,10 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.async.CollectionTask.ImportReplace
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.BackupManagerTestUtilities
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -52,9 +51,8 @@ class BackupManagerIntegrationTest : RobolectricTest() {
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
             assertThat(
                 "Backup should work",
-                BackupManager.performBackupInBackground(
-                    col.path,
-                    TimeManager.time
+                BackupManager().performBackupInBackground(
+                    col.path
                 ),
                 equalTo(true)
             )

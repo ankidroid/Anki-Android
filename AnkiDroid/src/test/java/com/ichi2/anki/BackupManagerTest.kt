@@ -104,7 +104,7 @@ open class BackupManagerTest {
     /** Returns a spy of BackupManager which would pass  */
     private fun getPassingBackupManagerSpy(backupFileMock: File?): BackupManager {
         val spy = spy(BackupManager.createInstance())
-        doReturn(true).whenever(spy).hasFreeDiscSpace(any())
+        doReturn(true).whenever(spy).hasFreeDiscSpaceForDatabaseBackup(any())
         doReturn(false).whenever(spy).collectionIsTooSmallToBeValid(any())
         doNothing().whenever(spy).performBackupInNewThread(any(), any())
         doReturn(null).whenever(spy).getLastBackupDate(any())

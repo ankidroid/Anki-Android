@@ -28,7 +28,9 @@ import java.io.InputStream
 import java.util.*
 
 object FileUtil {
-    /** Gets the free disk space given a file  */
+    /**
+     * @param defaultValue: value to return if free space can not be measured.
+     * @return the free disk space of the system containing [file]  */
     fun getFreeDiskSpace(file: File): Long? {
         return try {
             StatFs(file.parentFile?.path).availableBytes

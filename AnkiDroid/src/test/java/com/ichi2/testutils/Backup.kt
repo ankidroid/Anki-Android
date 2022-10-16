@@ -19,7 +19,6 @@ package com.ichi2.testutils
 import android.annotation.SuppressLint
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.utils.TimeManager
 import java.io.File
 
 @Suppress("unused")
@@ -37,7 +36,6 @@ object Backup {
     fun create(col: com.ichi2.libanki.Collection) {
         BackupManagerTestUtilities.setupSpaceForBackup(col.context)
         val path = col.path
-        val time = TimeManager.time
         col.close()
 
         val originalBackupCount = getBackupCount(path)
@@ -48,7 +46,7 @@ object Backup {
 
         val backupManager = BackupManager.createInstance()
 
-        if (!backupManager.performBackupInBackground(path, 0, time)) {
+        if (!backupManager.performBackupInBackground(path, 0)) {
             throw IllegalStateException("failed to create backup")
         }
 

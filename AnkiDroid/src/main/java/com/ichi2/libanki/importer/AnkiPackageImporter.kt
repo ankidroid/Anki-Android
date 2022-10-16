@@ -19,7 +19,7 @@ package com.ichi2.libanki.importer
 import android.text.format.Formatter
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.BackupManager.Companion.removeDir
+import com.ichi2.anki.BackupManager.Companion.removeDirOrFile
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
@@ -160,7 +160,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
 
             // Clean up our temporary files
             if (tempDir.exists()) {
-                removeDir(tempDir)
+                removeDirOrFile(tempDir)
             }
         }
         publishProgress(100, 100, 100)

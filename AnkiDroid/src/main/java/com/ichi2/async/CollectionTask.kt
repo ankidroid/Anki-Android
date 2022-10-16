@@ -216,7 +216,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             // extract the deck from the zip file
             val dir = File(File(colPath).parentFile, "tmpzip")
             if (dir.exists()) {
-                BackupManager.removeDir(dir)
+                BackupManager.removeDirOrFile(dir)
             }
             // from anki2.py
             var colname = "collection.anki21"
@@ -314,7 +314,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     }
                     zip.close()
                     // delete tmp dir
-                    BackupManager.removeDir(dir)
+                    BackupManager.removeDirOrFile(dir)
                     Computation.OK
                 } catch (e: RuntimeException) {
                     Timber.e(e, "doInBackgroundImportReplace - RuntimeException")

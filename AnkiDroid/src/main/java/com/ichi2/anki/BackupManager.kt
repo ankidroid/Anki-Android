@@ -55,7 +55,7 @@ open class BackupManager {
      * @return Whether a thread was started to create a backup
      */
     @Suppress("PMD.NPathComplexity")
-    fun performBackupInBackground(colPath: String, interval: Int, time: Time): Boolean {
+    fun performBackupInBackground(colPath: String, interval: Int = BACKUP_INTERVAL, time: Time = TimeManager.time): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
@@ -84,7 +84,7 @@ open class BackupManager {
         }
 
         // Abort backup if we are not certain there is enough free space
-        val hasFreeDiscSpace = hasFreeDiscSpace(colFile) ?: false
+        val hasFreeDiscSpace = hasFreeDiscSpaceForDatabaseBackup(colFile) ?: false
         if (!hasFreeDiscSpace) {
             Timber.e("performBackup: Not enough space on sd card to backup.")
             prefs.edit { putBoolean("noSpaceLeft", true) }
@@ -107,6 +107,9 @@ open class BackupManager {
         return true
     }
 
+    /**
+     * Whether it's relevant to create a back-up. That is, there was change since last one.
+     */
     fun isBackupUnnecessary(colFile: File, colBackups: Array<File>): Boolean {
         val len = colBackups.size
 
@@ -128,6 +131,10 @@ open class BackupManager {
         }
     }
 
+    /**
+     * File [backupFilename] in the back-up directory. That is
+     * "AnkiDroidRootDirectory/backup/backupFilename"
+     */
     fun getBackupFile(colFile: File, backupFilename: String): File {
         return File(getBackupDirectory(colFile.parentFile!!), backupFilename)
     }
@@ -174,9 +181,16 @@ open class BackupManager {
             )
     }
 
-    fun hasFreeDiscSpace(colFile: File) =
+    /**
+     * Whether there is enough place for a standard automated back-up.
+     * Note that this does not take media into consideration.
+     */
+    fun hasFreeDiscSpaceForDatabaseBackup(colFile: File) =
         getFreeDiscSpace(colFile)?.let { it >= getRequiredFreeSpace(colFile) }
 
+    /**
+     * Whether user has disabled backups in their preference.
+     */
     @VisibleForTesting
     fun hasDisabledBackups(prefs: SharedPreferences): Boolean {
         return prefs.getInt("backupMax", 8) == 0
@@ -184,12 +198,16 @@ open class BackupManager {
 
     companion object {
         /**
-         * Number of MB of
+         * Number of MB on top of the database size we consider we need for a back-up.
          */
         private const val MIN_FREE_SPACE = 10
         private const val MIN_BACKUP_COL_SIZE = 10000 // threshold in bytes to backup a col file
-        private const val BACKUP_SUFFIX = "backup"
-        const val BROKEN_COLLECTIONS_SUFFIX = "broken"
+        private const val BACKUP_DIRECTORY_NAME = "backup"
+
+        /**
+         * Directory in which a copy of the collection is made before trying to repair it.
+         */
+        const val BROKEN_COLLECTIONS_DIRECTORY = "broken"
         private val backupNameRegex: Regex by lazy {
             Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
         }
@@ -201,47 +219,67 @@ open class BackupManager {
         val isActivated: Boolean
             get() = true
 
+        /**
+         * @param ankidroidDir The directory containing all ankidroid files of this collection.
+         * @return Directory containing automated back-ups that AnkiDroid automatically do.
+         * It is at AnkidroidRootDirectory/backup
+         */
         fun getBackupDirectory(ankidroidDir: File): File {
-            val directory = File(ankidroidDir, BACKUP_SUFFIX)
+            val directory = File(ankidroidDir, BACKUP_DIRECTORY_NAME)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir)
             }
             return directory
         }
 
+        /**
+         * @param colPath The path of the collection.anki2 file
+         * @return Directory containing automated back-ups that AnkiDroid automatically do.
+         * It is at AnkidroidRootDirectory/backup
+         */
         fun getBackupDirectoryFromCollection(colPath: String): String {
             return getBackupDirectory(File(colPath).parentFile!!).absolutePath
         }
 
+        /**
+         * @param ankidroidDir The directory containing all ankidroid files of this collection.
+         * @return Directory containing copy of broken collection.anki2, to restore it if the restoration fails.
+         */
         private fun getBrokenDirectory(ankidroidDir: File): File {
-            val directory = File(ankidroidDir, BROKEN_COLLECTIONS_SUFFIX)
+            val directory = File(ankidroidDir, BROKEN_COLLECTIONS_DIRECTORY)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBrokenDirectory() mkdirs on %s failed", ankidroidDir)
             }
             return directory
         }
 
-        fun performBackupInBackground(path: String, time: Time): Boolean {
-            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
-        }
-
         /**
          * @param colFile The current collection file to backup
          * @return the amount of free space required for a backup.
+         * Note that we don't back-up medias, only the collection.anki2
          */
         fun getRequiredFreeSpace(colFile: File): Long {
             // We add a minimum amount of free space to ensure against
             return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
-        fun enoughDiscSpace(path: String) =
+        /**
+         * @param path: root directory containing ankidroid files.
+         * @return Whether there is enough space on the device to use the application.
+         */
+        fun enoughFreeSpaceToUseAnkiDroid(path: String) =
             getFreeDiscSpace(path)?.let { it >= MIN_FREE_SPACE * 1024 * 1024 }
 
+        /**
+         * @param path: root directory containing ankidroid files.
+         * @return free disc space in bytes from path to Collection
+         */
         fun getFreeDiscSpace(path: String) =
             getFreeDiscSpace(File(path))
 
         /**
-         * Get free disc space in bytes from path to Collection
+         * @param file: root directory containing ankidroid files.
+         * @return free disc space in bytes from path to Collection
          */
         private fun getFreeDiscSpace(file: File) =
             FileUtil.getFreeDiskSpace(file)
@@ -338,7 +376,7 @@ open class BackupManager {
         }
 
         /**
-         * @return date in string if it matches backup naming pattern or null if not
+         * @return date in [timeString] if it matches backup naming pattern or null if not
          */
         fun parseBackupTimeString(timeString: String): Date? {
             return try {
@@ -400,14 +438,22 @@ open class BackupManager {
         fun getLatestBackup(colFile: File): File? = getBackups(colFile).lastOrNull()
 
         /**
-         * Deletes the first files until only the given number of files remain
+         * Ensure at most keepNumber back-ups are kept.
+         * Delete the oldest one if there are too many.
          * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep
          */
+        // This relies upon the fact, with our back-up name pattern, alphabetical order reflects creation time order.
         fun deleteColBackups(colPath: String, keepNumber: Int) {
             deleteColBackups(getBackups(File(colPath)), keepNumber)
         }
 
+        /**
+         * Ensure at most keepNumber back-ups are kept.
+         * Delete the ones in front of [backups] if there are too many.
+         * @param backups The backups files. Assumed to be from oldest to newest.
+         * @param keepNumber How many files to keep
+         */
         private fun deleteColBackups(backups: Array<File>, keepNumber: Int) {
             for (i in 0 until backups.size - keepNumber) {
                 if (!backups[i].delete()) {
@@ -418,11 +464,14 @@ open class BackupManager {
             }
         }
 
-        fun removeDir(dir: File): Boolean {
+        /**
+         * Recursively remove the content of [dir], then delete [dir] itself.
+         */
+        fun removeDirOrFile(dir: File): Boolean {
             if (dir.isDirectory) {
                 val files = dir.listFiles()
                 for (aktFile in files!!) {
-                    removeDir(aktFile)
+                    removeDirOrFile(aktFile)
                 }
             }
             return dir.delete()

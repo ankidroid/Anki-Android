@@ -61,7 +61,7 @@ class MediaTest : InstrumentedTest() {
     fun testAdd() {
         // open new empty collection
         val dir = testDir
-        BackupManager.removeDir(dir)
+        BackupManager.removeDirOrFile(dir)
         assertTrue(dir.mkdirs())
         val path = File(dir, "foo.jpg")
         var os = FileOutputStream(path, false)
@@ -84,7 +84,7 @@ class MediaTest : InstrumentedTest() {
     fun testAddEmptyFails() {
         // open new empty collection
         val dir = testDir
-        BackupManager.removeDir(dir)
+        BackupManager.removeDirOrFile(dir)
         assertTrue(dir.mkdirs())
         val path = File(dir, "foo.jpg")
         assertTrue(path.createNewFile())
