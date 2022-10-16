@@ -19,10 +19,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 
 /**
- * Render the alert dialog constructed clickable and show it.
+ * Render the alert dialog constructed clickable.
+ * @return The dialog
  */
 /* As far as understood, making links clickable should be done on the Alert before being shown.
-So it must be the last call on the builder.
+ * So it must be the last call on the builder.
  */
 fun AlertDialog.Builder.makeLinksClickable() =
     create().makeLinksClickable()
