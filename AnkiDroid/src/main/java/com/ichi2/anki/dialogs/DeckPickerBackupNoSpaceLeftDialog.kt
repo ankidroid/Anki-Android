@@ -28,10 +28,15 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val res = resources
+        // If we show this dialog, we assume we are able to measure the free space
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
+        val message = if (space != null)
+            res.getString(R.string.sd_space_warning, space / 1024 / 1024)
+        else
+            res.getString(R.string.sd_space_warning_unknown)
         return MaterialDialog(requireActivity()).show {
             title(R.string.sd_card_almost_full_title)
-            message(text = res.getString(R.string.sd_space_warning, space / 1024 / 1024))
+            message(text = message)
             positiveButton(R.string.dialog_ok) {
                 (activity as DeckPicker).finishWithoutAnimation()
             }

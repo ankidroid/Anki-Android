@@ -20,7 +20,7 @@ import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
 import com.ichi2.anki.CollectionHelper
 import org.junit.Assert.assertTrue
 import java.io.File
-import java.lang.IllegalStateException
+import kotlin.test.assertNotNull
 
 object BackupManagerTestUtilities {
     fun setupSpaceForBackup(context: Context) {
@@ -30,7 +30,9 @@ object BackupManagerTestUtilities {
             ?: throw IllegalStateException("currentAnkiDroidDirectory had no parent")
         ShadowStatFs.markAsNonEmpty(path)
 
-        assertTrue(enoughDiscSpace(currentAnkiDroidDirectory))
+        val enoughDiscSpace = enoughDiscSpace(currentAnkiDroidDirectory)
+        assertNotNull(enoughDiscSpace)
+        assertTrue(enoughDiscSpace)
     }
 
     fun reset() {

@@ -1122,7 +1122,9 @@ open class DeckPicker :
                 Timber.i("Android 8/8.1 detected, software render preference already exists.")
             }
         }
-        if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
+        // If we can't measure free space, let the user use the app.
+        val enoughDiscSpace = BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this)) ?: true
+        if (!enoughDiscSpace) {
             Timber.i("Not enough space to do backup")
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance())
         } else if (preferences.getBoolean("noSpaceLeft", false)) {

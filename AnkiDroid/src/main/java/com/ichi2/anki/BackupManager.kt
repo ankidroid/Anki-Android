@@ -25,7 +25,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.Time.Companion.utcOffset
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.FileUtil.getFreeDiskSpace
+import com.ichi2.utils.FileUtil
 import timber.log.Timber
 import java.io.BufferedOutputStream
 import java.io.File
@@ -83,8 +83,9 @@ open class BackupManager {
             return false
         }
 
-        // Abort backup if not enough free space
-        if (!hasFreeDiscSpace(colFile)) {
+        // Abort backup if we are not certain there is enough free space
+        val hasFreeDiscSpace = hasFreeDiscSpace(colFile) ?: false
+        if (!hasFreeDiscSpace) {
             Timber.e("performBackup: Not enough space on sd card to backup.")
             prefs.edit { putBoolean("noSpaceLeft", true) }
             return false
@@ -173,9 +174,8 @@ open class BackupManager {
             )
     }
 
-    fun hasFreeDiscSpace(colFile: File): Boolean {
-        return getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile)
-    }
+    fun hasFreeDiscSpace(colFile: File) =
+        getFreeDiscSpace(colFile)?.let { it >= getRequiredFreeSpace(colFile) }
 
     @VisibleForTesting
     fun hasDisabledBackups(prefs: SharedPreferences): Boolean {
@@ -234,20 +234,17 @@ open class BackupManager {
             return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
-        fun enoughDiscSpace(path: String): Boolean {
-            return getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
-        }
+        fun enoughDiscSpace(path: String) =
+            getFreeDiscSpace(path)?.let { it >= MIN_FREE_SPACE * 1024 * 1024 }
+
+        fun getFreeDiscSpace(path: String) =
+            getFreeDiscSpace(File(path))
 
         /**
          * Get free disc space in bytes from path to Collection
          */
-        fun getFreeDiscSpace(path: String): Long {
-            return getFreeDiscSpace(File(path))
-        }
-
-        private fun getFreeDiscSpace(file: File): Long {
-            return getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
-        }
+        private fun getFreeDiscSpace(file: File) =
+            FileUtil.getFreeDiskSpace(file)
 
         /**
          * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file

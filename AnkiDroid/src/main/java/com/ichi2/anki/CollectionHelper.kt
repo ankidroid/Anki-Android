@@ -260,8 +260,8 @@ open class CollectionHelper {
 
                 // We currently use the same directory as the collection for VACUUM/ANALYZE due to the SQLite APIs
                 val collectionFile = File(getCollectionPath(context))
-                val freeSpace = FileUtil.getFreeDiskSpace(collectionFile, -1)
-                if (freeSpace == -1L) {
+                val freeSpace = FileUtil.getFreeDiskSpace(collectionFile)
+                if (freeSpace == null) {
                     Timber.w("Error obtaining free space for '%s'", collectionFile.path)
                     val readableFileSize = Formatter.formatFileSize(context, requiredSpaceInBytes)
                     return fromError(

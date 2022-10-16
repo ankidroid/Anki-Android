@@ -29,12 +29,12 @@ import java.util.*
 
 object FileUtil {
     /** Gets the free disk space given a file  */
-    fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
+    fun getFreeDiskSpace(file: File): Long? {
         return try {
             StatFs(file.parentFile?.path).availableBytes
         } catch (e: IllegalArgumentException) {
             Timber.e(e, "Free space could not be retrieved")
-            defaultValue
+            null
         }
     }
     /** Returns the current download Directory */
