@@ -234,15 +234,15 @@ open class BackupManager {
             return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
-        fun enoughDiscSpace(path: String?): Boolean {
+        fun enoughDiscSpace(path: String): Boolean {
             return getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
         }
 
         /**
          * Get free disc space in bytes from path to Collection
          */
-        fun getFreeDiscSpace(path: String?): Long {
-            return getFreeDiscSpace(File(path!!))
+        fun getFreeDiscSpace(path: String): Long {
+            return getFreeDiscSpace(File(path))
         }
 
         private fun getFreeDiscSpace(file: File): Long {
