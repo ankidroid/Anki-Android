@@ -112,7 +112,7 @@ class IntentHandler : Activity() {
     }
 
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
-        Timber.i("Handling file import ")
+        Timber.i("Handling file import")
         val importResult = handleFileImport(this, intent)
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
@@ -126,7 +126,7 @@ class IntentHandler : Activity() {
             }
             try {
                 contentResolver.delete(fileUri!!, null, null)
-                Timber.d("onCreate() import successful and downloaded file deleted")
+                Timber.d("onCreate() import successful and downloaded file deleted ")
             } catch (e: SecurityException) {
                 Timber.d("onCreate() import successful and cannot delete file $e")
             }
