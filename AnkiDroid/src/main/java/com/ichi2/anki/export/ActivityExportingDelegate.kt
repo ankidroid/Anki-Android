@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.export
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.net.Uri
@@ -283,6 +284,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         fragmentManager.fragmentFactory = mDialogsFactory
         mSaveFileLauncher = activity.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult -> saveFileCallback(result) }
+        ) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                saveFileCallback(result)
+            } else {
+                Timber.i("The file selection for the exported collection was cancelled")
+            }
+        }
     }
 }
