@@ -953,13 +953,12 @@ open class DeckPicker :
 
         // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
-        val isLoggedIn = preferences.getString("hkey", "")!!.isNotEmpty()
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
         val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
 
-        if (isLoggedIn && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
+        if (SyncStatus.isLoggedIn && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
