@@ -31,7 +31,6 @@ import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
 import com.ichi2.utils.iconAttr
@@ -53,7 +52,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         val type = requireArguments().getInt("dialogType")
         val res = resources
         val dialog = MaterialDialog(requireActivity())
-        val isLoggedIn = SyncStatus.isLoggedIn
+        val isLoggedIn = isLoggedIn()
         dialog.cancelable(true)
             .title(text = title)
             .cancelOnTouchOutside(false)

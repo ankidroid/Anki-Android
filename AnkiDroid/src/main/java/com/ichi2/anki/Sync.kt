@@ -54,6 +54,13 @@ fun DeckPicker.syncAuth(): SyncAuth? {
     }
 }
 
+/**
+ * Whether the user has a sync account.
+ * Returning true does not guarantee that the user actually synced recently,
+ * or even that the ankiweb account is still valid.
+ */
+fun isLoggedIn() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getString("hkey", "")!!.isNotEmpty()
+
 fun DeckPicker.handleNewSync(
     conflict: Connection.ConflictResolution?,
     syncMedia: Boolean,
