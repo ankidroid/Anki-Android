@@ -57,6 +57,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -86,6 +87,7 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.servicelayer.ScopedStorageService.getBestDefaultRootDirectory
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.migrateEssentialFiles
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
@@ -2816,6 +2818,30 @@ open class DeckPicker :
     }
 
     /**
+     * Last warning, asking the user whether they accept risk of data loss.
+     */
+    fun warnAboutBackup() {
+        val currentDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
+        val newDirectory = getBestDefaultRootDirectory(this, File(currentDirectory))
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.manual_backup)
+            .setMessage(getString(R.string.scoped_storage_require_user_to_accept_risk, currentDirectory, newDirectory.absolutePath))
+            .setPositiveButton(
+                R.string.dialog_confirm
+            ) { _, _ ->
+                AnkiDroidApp.getSharedPrefs(this).edit {
+                    putBoolean(USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP, true)
+                }
+            }
+            .setNegativeButton(
+                R.string.remind_me_later
+            ) { _, _ ->
+                setMigrationWasLastPostponedAtToNow()
+            }
+            .show()
+    }
+
+    /**
      * Last time the user had chosen to postpone migration. Or 0 if never.
      */
     var migrationWasLastPostponedAt: Long
@@ -2869,6 +2895,9 @@ open class DeckPicker :
         return timeSinceLastPostponed > POSTPONE_MIGRATION_INTERVAL_DAYS * 24 * 60 * 60
     }
 }
+
+const val USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP = "user accept the risk of migration without a backup"
+
 /** Android's onCreateOptionsMenu does not play well with coroutines, as
  * it expects the menu to have been fully configured by the time the routine
  * returns. This results in flicker, as the menu gets blanked out, and then
