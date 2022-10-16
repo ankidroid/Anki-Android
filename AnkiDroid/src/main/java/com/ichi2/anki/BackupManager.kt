@@ -407,11 +407,11 @@ open class BackupManager {
          * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep
          */
-        fun deleteColBackups(colPath: String, keepNumber: Int): Boolean {
-            return deleteColBackups(getBackups(File(colPath)), keepNumber)
+        fun deleteColBackups(colPath: String, keepNumber: Int) {
+            deleteColBackups(getBackups(File(colPath)), keepNumber)
         }
 
-        private fun deleteColBackups(backups: Array<File>, keepNumber: Int): Boolean {
+        private fun deleteColBackups(backups: Array<File>, keepNumber: Int) {
             for (i in 0 until backups.size - keepNumber) {
                 if (!backups[i].delete()) {
                     Timber.e("deleteColBackups() failed to delete %s", backups[i].absolutePath)
@@ -419,7 +419,6 @@ open class BackupManager {
                     Timber.i("deleteColBackups: backup file %s deleted.", backups[i].absolutePath)
                 }
             }
-            return true
         }
 
         fun removeDir(dir: File): Boolean {
