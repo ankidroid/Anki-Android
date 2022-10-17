@@ -189,9 +189,6 @@
     <string name="multimedia_editor_failed">נכשל בפתיחת עורך מדיה.</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">הרשאת הקלטת שמע נדחתה</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">ברוך בואך ל־AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid דורש הרשאת אחסון, שבה הוא משתמש באופן בלעדי כדי לאחסן את אוסף ה-AnkiDroid שלך, מדיה של כרטיסי פלאש וגיבויים. הקוד שלנו הוא קוד פתוח, נכתב על ידי מתנדבים ומיליונים מהימנים בו.\n\nאם יש לך שאלות, אנא גש למדריך שלנו בתוך האפליקציה או בקר בפורומי התמיכה שלנו.\n\nתודה שניסית את AnkiDroid!\n— צוות הפיתוח של AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">אירעה שגיאה לא ידועה בהצגת העורך המתקדם</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">שדרוג ל־AnkiDroid</string>

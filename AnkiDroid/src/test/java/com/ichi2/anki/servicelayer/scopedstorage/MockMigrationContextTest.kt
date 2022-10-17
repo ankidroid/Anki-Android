@@ -16,7 +16,8 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.equalTo
@@ -40,7 +41,7 @@ class MockMigrationContextTest {
     }
 
     class OperationWhichThrowsIfUsed : Operation() {
-        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> =
+        override fun execute(context: MigrationContext): List<Operation> =
             throw TestException("should not be called")
 
         override val retryOperations: List<Operation>

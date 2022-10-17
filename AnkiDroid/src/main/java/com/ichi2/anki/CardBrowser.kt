@@ -55,7 +55,9 @@ import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
@@ -153,6 +155,8 @@ open class CardBrowser :
     private var renderBrowserQAJob: Job? = null
 
     private var checkSelectedCardsJob: Job? = null
+
+    private lateinit var mExportingDelegate: ActivityExportingDelegate
 
     /**
      * Boolean that keeps track of whether the browser is working in
@@ -266,14 +270,14 @@ open class CardBrowser :
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
                 col.set_config("sortType", fSortTypes[1])
-                AnkiDroidApp.getSharedPrefs(baseContext).edit()
-                    .putBoolean("cardBrowserNoSorting", true)
-                    .apply()
+                AnkiDroidApp.getSharedPrefs(baseContext).edit {
+                    putBoolean("cardBrowserNoSorting", true)
+                }
             } else {
                 col.set_config("sortType", fSortTypes[mOrder])
-                AnkiDroidApp.getSharedPrefs(baseContext).edit()
-                    .putBoolean("cardBrowserNoSorting", false)
-                    .apply()
+                AnkiDroidApp.getSharedPrefs(baseContext).edit {
+                    putBoolean("cardBrowserNoSorting", false)
+                }
             }
             col.set_config("sortBackwards", mOrderAsc)
             searchCards()
@@ -486,7 +490,9 @@ open class CardBrowser :
             clearLastDeckId()
             return
         }
-        getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().putLong(LAST_DECK_ID_KEY, id).apply()
+        getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
+            putLong(LAST_DECK_ID_KEY, id)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -494,6 +500,7 @@ open class CardBrowser :
             return
         }
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
+        mExportingDelegate = ActivityExportingDelegate(this) { col }
         super.onCreate(savedInstanceState)
         Timber.d("onCreate()")
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
@@ -581,8 +588,9 @@ open class CardBrowser :
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit()
-                        .putInt("cardBrowserColumn1", mColumn1Index).apply()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit {
+                        putInt("cardBrowserColumn1", mColumn1Index)
+                    }
                     val fromMap = cardsAdapter!!.fromMapping
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index]
                     cardsAdapter!!.fromMapping = fromMap
@@ -610,8 +618,9 @@ open class CardBrowser :
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit()
-                        .putInt("cardBrowserColumn2", mColumn2Index).apply()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit {
+                        putInt("cardBrowserColumn2", mColumn2Index)
+                    }
                     val fromMap = cardsAdapter!!.fromMapping
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index]
                     cardsAdapter!!.fromMapping = fromMap
@@ -962,6 +971,23 @@ open class CardBrowser :
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
+            increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+
+            menu.findItem(R.id.action_export_selected).apply {
+                if (BackendFactory.defaultLegacySchema) {
+                    this.isVisible = false
+                } else {
+                    // Only visible if new backend is being used
+                    this.isVisible = true
+
+                    // TODO: currently forcing plural use. This should be changed to use the correct singular/plural form
+                    this.title = if (inCardsMode) {
+                        resources.getQuantityString(R.plurals.card_browser_export_cards, 10)
+                    } else {
+                        resources.getQuantityString(R.plurals.card_browser_export_notes, 10)
+                    }
+                }
+            }
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = col.undoAvailable()
@@ -1308,6 +1334,9 @@ open class CardBrowser :
             R.id.action_open_options -> {
                 showOptionsDialog()
             }
+            R.id.action_export_selected -> {
+                exportSelected()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -1333,6 +1362,24 @@ open class CardBrowser :
 
         isTruncated = newTruncateValue
         cardsAdapter!!.notifyDataSetChanged()
+    }
+
+    fun exportSelected() {
+        if (BackendFactory.defaultLegacySchema) {
+            return
+        }
+        if (!isInMultiSelectMode) {
+            return
+        }
+
+        if (inCardsMode) {
+            val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size)
+            mExportingDelegate.showExportDialog(msg, selectedCardIds, inCardsMode)
+        } else {
+            val selectedNoteIds = selectedNoteIds(selectedCardIds, col)
+            val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size)
+            mExportingDelegate.showExportDialog(msg, selectedNoteIds, inCardsMode)
+        }
     }
 
     protected suspend fun deleteSelectedNote() {
@@ -2674,7 +2721,9 @@ open class CardBrowser :
         @KotlinCleanup(".edit { }")
         fun clearLastDeckId() {
             val context: Context = AnkiDroidApp.instance
-            context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().remove(LAST_DECK_ID_KEY).apply()
+            context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
+                remove(LAST_DECK_ID_KEY)
+            }
         }
 
         private fun getPositionMap(cards: CardCollection<CardCache>): Map<Long, Int> {

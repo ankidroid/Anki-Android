@@ -16,9 +16,8 @@
 
 package com.ichi2.libanki
 
-import anki.generic.Empty
+import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
-import anki.import_export.exportLimit
 import net.ankiweb.rsdroid.Backend
 
 /**
@@ -108,15 +107,8 @@ fun CollectionV16.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: DeckId?,
+    limit: ExportLimit,
     legacy: Boolean = true,
 ) {
-    val limit = exportLimit {
-        if (deckId != null) {
-            this.deckId = deckId
-        } else {
-            this.wholeCollection = Empty.getDefaultInstance()
-        }
-    }
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
 }

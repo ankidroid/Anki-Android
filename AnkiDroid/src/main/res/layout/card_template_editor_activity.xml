@@ -20,12 +20,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <com.google.android.material.tabs.TabLayout
+                style="@style/TabLayoutStyle"
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:tabTextColor="@color/material_grey_700"
-                app:tabSelectedTextColor="@color/white"
                 app:tabGravity="start"
                 app:tabMode="scrollable" />
             <androidx.viewpager2.widget.ViewPager2

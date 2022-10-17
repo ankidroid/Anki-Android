@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -97,7 +98,7 @@ object InitialActivity {
     /** Sets the preference stating that the latest version has been applied  */
     fun setUpgradedToLatestVersion(preferences: SharedPreferences) {
         Timber.i("Marked prefs as upgraded to latest version: %s", pkgVersionName)
-        preferences.edit().putString("lastVersion", pkgVersionName).apply()
+        preferences.edit { putString("lastVersion", pkgVersionName) }
     }
 
     /** @return false: The app has been upgraded since the last launch OR the app was launched for the first time.

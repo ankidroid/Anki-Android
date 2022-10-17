@@ -20,7 +20,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.FileConflictResolutionFailedException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
@@ -31,7 +31,6 @@ import org.junit.Test
 import org.mockito.kotlin.*
 import java.io.File
 import java.io.IOException
-import java.lang.IllegalStateException
 
 class MoveConflictedFileTest : Test21And26(), OperationTest {
 
@@ -165,8 +164,8 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
 
         var op = params.createOperation()
         op = spy(op) {
-            doAnswer<List<MigrateUserData.Operation>> { answer ->
-                val context = answer.arguments[1] as MigrateUserData.MigrationContext
+            doAnswer<List<Operation>> { answer ->
+                val context = answer.arguments[1] as MigrationContext
                 context.reportError(this.mock, TestException("testing"))
                 emptyList()
             }.whenever(it).moveFile(any(), any())

@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">Не може да отвори редактор на мультимедия</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Разрешението за аудиозапис е отменено</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Добре дошли в AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid трябва разрешението за достъп до хранилището, което ми исползваме само за съхраняване AnkiDroid коллекция ви, медийни файлове и резервни копии. Нашият код е отворен за всички и го написаха доброволци, на които доверяват милиони хора.\n\nАко имате въпроси, моля, погледайте вградено ръководство или посетете нашите форуми за поддържане.\n\nБлагодаря ви за изпробване AnkiDroid!\n–Разработчици на AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid е обновен</string>

@@ -157,7 +157,6 @@
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Kustutan kaardipakki&#8230;</string>
-    <string name="show_hint">Kuva %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importimine</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lisa</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Koos meediaga</string>
     <string name="confirm_apkg_export">Ekspordi kogu Anki pakina?</string>
     <string name="confirm_apkg_export_deck">Ekspordi \"%s\" apkg failina?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Anki pakifaili eksportimine...</string>
-    <string name="export_successful_title">Saada Anki pakk?</string>
-    <string name="export_send_button">Saada</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Puudub rakendus apkg käsitsemiseks. Salvestamine...</string>
     <string name="export_save_apkg_successful">Anki paki salvestamine õnnestus</string>
     <string name="export_save_apkg_unsuccessful">Anki paki salvestamine ebaõnnestus</string>
-    <string name="export_successful">Fail \"%s\" eksporditi. Kas soovid selle mõne teise rakendusega saata?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroidist eksporditud mõistekaardid: %s</string>
     <string name="export_email_text"><![CDATA[        Hei!
@@ -206,6 +212,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Viga apkg eksportimisel</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valikud</string>
     <string name="menu__deck_options">Kaardipaki valikud</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Õppimise valikud</string>

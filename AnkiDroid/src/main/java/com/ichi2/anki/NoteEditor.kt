@@ -41,8 +41,10 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -73,9 +75,8 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.NoteTypeSpinnerUtils
+import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.anki.widgets.PopupMenuWithIcons
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
@@ -140,7 +141,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @get:VisibleForTesting
     var deckId: DeckId = 0
         private set
-    private var mAllModelIds: ArrayList<Long>? = null
+    private var mAllModelIds: List<Long>? = null
     @KotlinCleanup("this ideally should be Int, Int?")
     private var mModelChangeFieldMap: MutableMap<Int, Int>? = null
     private var mModelChangeCardMap: HashMap<Int, Int?>? = null
@@ -356,7 +357,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner)
-        mAllModelIds = NoteTypeSpinnerUtils.setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
+        mAllModelIds = setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
 
         // Deck Selector
         val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)
@@ -917,8 +918,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_show_toolbar -> {
                 item.isChecked = !item.isChecked
-                AnkiDroidApp.getSharedPrefs(this).edit()
-                    .putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked).apply()
+                AnkiDroidApp.getSharedPrefs(this).edit {
+                    putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked)
+                }
                 updateToolbar()
             }
             R.id.action_capitalize -> {
@@ -929,8 +931,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_scroll_toolbar -> {
                 item.isChecked = !item.isChecked
-                AnkiDroidApp.getSharedPrefs(this).edit()
-                    .putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked).apply()
+                AnkiDroidApp.getSharedPrefs(this).edit {
+                    putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked)
+                }
                 updateToolbar()
             }
         }
@@ -938,7 +941,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun toggleCapitalize(value: Boolean) {
-        AnkiDroidApp.getSharedPrefs(this).edit().putBoolean(PREF_NOTE_EDITOR_CAPITALIZE, value).apply()
+        AnkiDroidApp.getSharedPrefs(this).edit {
+            putBoolean(PREF_NOTE_EDITOR_CAPITALIZE, value)
+        }
         for (f in mEditFields!!) {
             f!!.setCapitalize(value)
         }
@@ -949,7 +954,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         Timber.i("Setting font size to %d", fontSizeSp)
-        AnkiDroidApp.getSharedPrefs(this).edit().putInt(PREF_NOTE_EDITOR_FONT_SIZE, fontSizeSp).apply()
+        AnkiDroidApp.getSharedPrefs(this).edit { putInt(PREF_NOTE_EDITOR_FONT_SIZE, fontSizeSp) }
         for (f in mEditFields!!) {
             f!!.textSize = fontSizeSp.toFloat()
         }
@@ -1354,7 +1359,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setMMButtonListener(mediaButton: ImageButton?, index: Int) {
-        mediaButton!!.setOnClickListener { v: View? ->
+        mediaButton!!.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
                 val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
@@ -1364,10 +1369,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 startMultimediaFieldEditor(index, note)
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
-                // TODO: Update the icons for dark material theme, then can set 3rd argument to true
-                val popup = PopupMenuWithIcons(this@NoteEditor, v, true)
+                val popup = PopupMenu(this@NoteEditor, v)
                 val inflater = popup.menuInflater
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.menu)
+
+                (popup.menu as? MenuBuilder)?.let { menu ->
+                    menu.setOptionalIconsVisible(true)
+                    increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+                    tintOverflowMenuIcons(menu)
+                }
+
                 popup.setOnMenuItemClickListener { item: MenuItem ->
                     when (item.itemId) {
                         R.id.menu_multimedia_audio -> {
@@ -1740,9 +1751,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
 
     private fun saveToolbarButtons(buttons: ArrayList<CustomToolbarButton>) {
-        AnkiDroidApp.getSharedPrefs(this).edit()
-            .putStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, CustomToolbarButton.toStringSet(buttons))
-            .apply()
+        AnkiDroidApp.getSharedPrefs(this).edit {
+            putStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, CustomToolbarButton.toStringSet(buttons))
+        }
     }
 
     private fun addToolbarButton(buttonText: String, prefix: String, suffix: String) {

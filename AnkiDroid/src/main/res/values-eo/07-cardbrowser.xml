@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">Serĉi en ĉiuj kartaroj</string>
     <string name="card_browser_unknown_deck_name">Nekonata</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">Forigis %d karton</item>
         <item quantity="other">Forigis %d kartojn</item>

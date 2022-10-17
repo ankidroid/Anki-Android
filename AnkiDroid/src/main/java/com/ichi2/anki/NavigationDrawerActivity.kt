@@ -44,13 +44,13 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.util.*
 
 @KotlinCleanup("lateinit if possible")
 @KotlinCleanup("IDE-lint")
@@ -235,7 +235,7 @@ abstract class NavigationDrawerActivity :
     private val mPreferencesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val preferences = preferences
         Timber.i("Handling Activity Result: %d. Result: %d", REQUEST_PREFERENCES_UPDATE, result.resultCode)
-        NotificationChannels.setup(applicationContext)
+        CompatHelper.compat.setupNotificationChannel(applicationContext)
         // Restart the activity on preference change
         // collection path hasn't been changed so just restart the current activity
         if (this is Reviewer && preferences.getBoolean("tts", false)) {

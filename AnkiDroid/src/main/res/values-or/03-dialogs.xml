@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid କୁ ସ୍ୱାଗତ </string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ଷ୍ଟୋରେଜ୍ ଅନୁମତି ଆବଶ୍ୟକ କରେ, ଯାହାକୁ ଆମେ ଆପଣଙ୍କର AnkiDroid ସଂଗ୍ରହ, ଫ୍ଲାସକାର୍ଡ ମିଡ଼ିଆ ଏବଂ ବ୍ୟାକଅପ୍ ଗଚ୍ଛିତ କରିବା ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ବ୍ୟବହାର କରୁ। ଆମର କୋଡ୍ ଖୋଲା-ଉତ୍ସ ଅଟେ, ସ୍ୱେଚ୍ଛାସେବୀମାନଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏବଂ ଲକ୍ଷ ଲକ୍ଷ ଲୋକଙ୍କ ଦ୍ୱାରା ବିଶ୍ୱାସ କରାଯାଏ।\n\n ଯଦି ଆପଣଙ୍କର କିଛି ପ୍ରଶ୍ନ ଅଛି, ଦୟାକରି ଆମର ଇନ୍-ଆପ୍ ମାନୁଆଲକୁ ପ୍ରବେଶ କରନ୍ତୁ କିମ୍ବା ଆମର ସମର୍ଥନ ଫୋରମ୍ ପରିଦର୍ଶନ କରନ୍ତୁ।\n\n AnkiDroid ଚେଷ୍ଟା କରିଥିବାରୁ ଧନ୍ୟବାଦ!\n—AnkiDroid ବିକାଶ ଦଳ</string>
     <string name="mutimedia_editor_assertion_failed">ଉନ୍ନତ ସମ୍ପାଦକ ପ୍ରଦର୍ଶନ କଲାବେଳେ ଅଜଣା ତ୍ରୁଟି ଘଟିଲା</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid  ଅପଗ୍ରେଡ୍ ହୋଇଛି</string>

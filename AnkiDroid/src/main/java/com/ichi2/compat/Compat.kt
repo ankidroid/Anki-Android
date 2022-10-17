@@ -69,7 +69,7 @@ import java.io.*
  * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
  */
 interface Compat {
-    fun setupNotificationChannel(context: Context, id: String, name: String)
+    fun setupNotificationChannel(context: Context)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int

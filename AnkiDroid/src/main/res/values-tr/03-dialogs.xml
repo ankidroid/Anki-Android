@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid\'e Hoşgeldiniz!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid, yalnızca AnkiDroid koleksiyonunuzu, flash kart ortamınızı ve yedeklerinizi depolamak için depolama izni gerektirir. Kodumuz açık kaynaklıdır, gönüllüler tarafından yazılmıştır ve milyonlarca kişi tarafından güvenilmektedir.\n\nHerhangi bir sorunuz varsa, lütfen uygulama içi kılavuzumuza erişin veya destek forumlarımızı ziyaret edin.\n\nAnkiDroid\'i denediğiniz için teşekkür ederiz!\n— AnkiDroid Geliştirme Ekibi</string>
     <string name="mutimedia_editor_assertion_failed">Gelişmiş Düzenleyici görüntülenirken bilinmeyen bir hata oluştu</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>

@@ -188,9 +188,6 @@
     <string name="multimedia_editor_failed">Nie udało się otworzyć edytora multimediów</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Nie uzyskano uprawnienia do nagrywania dźwięków</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Witamy w AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid wymaga uprawnienia \"Pamięć\" które jest używane wyłącznie do przechowywania twojej kolekcji AnkiDroid, multimediów i kopii zapasowych. Nasz kod jest otwarto-źródłowy i napisany przez wolontariuszy.\n\nJeśli masz jakiekolwiek pytania, sprawdź nasz podręcznik lub odwiedź nasze fora wsparcia.\n\nDziękujemy za wypróbowanie AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Wystąpił nieznany błąd podczas wyświetlania zaawansowanego edytora</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid został zaktualizowany</string>

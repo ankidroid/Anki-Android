@@ -97,6 +97,12 @@
     <string name="card_browser_search_all_decks">Tìm kiếm tất cả các bộ thẻ</string>
     <string name="card_browser_unknown_deck_name">không xác định</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d thẻ đã bị xóa</item>
     </plurals>

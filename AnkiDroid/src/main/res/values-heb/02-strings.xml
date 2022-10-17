@@ -163,7 +163,6 @@
     <string name="empty_card_warning">הקלף הזה ריק. יש להשתמש באפשרות „קלפים ריקים” מהתפריט במסך רשימת החפיסות.</string>
     <string name="unknown_type_field_warning">הקלד תשובה: שדה אינו מוכר %s</string>
     <string name="delete_deck">מוחק חפיסה&#8230;</string>
-    <string name="show_hint">הצגת %s</string>
     <string name="info_rate">דירוג AnkiDroid</string>
     <string name="import_title">מתבצע ייבוא</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
@@ -199,13 +198,24 @@
     <string name="export_include_media">כולל מדיה</string>
     <string name="confirm_apkg_export">לייצא את האוסף כחבילת Anki?</string>
     <string name="confirm_apkg_export_deck">יצא \"%s\" כקובץ apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="two">Export %d selected cards as apkg file?</item>
+        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="two">Export %d selected notes as apkg file?</item>
+        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">קובץ חבילה של Anki מיוצא&#8230;</string>
-    <string name="export_successful_title">לשלוח חבילת Anki?</string>
-    <string name="export_send_button">שלח</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>
     <string name="export_save_apkg_successful">חבילת ה־Anki נשמרה בהצלחה</string>
     <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
-    <string name="export_successful">הקובץ %s יוּצא. לשלוח אותו בעזרת אפליקציה אחרת?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
     <string name="export_email_text"><![CDATA[         היי!
@@ -216,6 +226,8 @@
          [2] %2$s
          ]]></string>
     <string name="export_unsuccessful">שגיאה בייצוא קובץ apkg</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
     <string name="menu__deck_options">אפשרויות חפיסה</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>

@@ -180,14 +180,6 @@
     <string name="multimedia_editor_failed">Abertura de s\'Editore Multimediale fallida</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permissu de registratzione àudio negadu</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Bene bènnidu in AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid tenet bisòngiu de su permissu de archiviatzione, chi impreamus petzi pro sarvare sa colletzione de AnkiDroid tua, sos elementos multimediales de sas cartas mnemònicas e sas còpias de seguresa. Su còdighe nostru est a flashcard media and backups. Su còdighe nostru est a mitza aberta, iscritu dae voluntàrios, e cunsideradu degnu de fide dae milliones de persones.\n
-                                                \n
-                                                Si tenes cale si siat pregunta aberi su manuale integradu in s\'aplicatzione o bìsita sos forums de suportu nostros.\n
-                                                \n
-                                                Ti torramus gràtzias pro àere isseberadu de proare AnkiDroid!\n
-                                                — Iscuadra de isvilupu de AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">B\'at àpidu una faddina disconnota in sa visualizatzione de s\'editore avantzadu</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid est istadu atualizadu</string>

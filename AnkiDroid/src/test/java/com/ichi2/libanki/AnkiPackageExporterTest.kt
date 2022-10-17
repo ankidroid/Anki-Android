@@ -31,7 +31,6 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import java.io.PrintWriter
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE Lint")
@@ -59,17 +58,16 @@ class AnkiPackageExporterTest : RobolectricTest() {
 
         // Storing paths of unzipped files in a list
         val files = listOf(*File(unzipDirectory).list()!!)
-        val file_names = arrayOfNulls<File>(2)
-        var i = 0
-        for (x in files) {
+        val fileNames = arrayOfNulls<File>(2)
+        for ((i, x) in files.withIndex()) {
             val f = File("$unzipDirectory/$x")
-            file_names[i++] = f
+            fileNames[i] = f
         }
 
         // Checking the unzipped files
         assertThat(files, containsInAnyOrder("collection.anki2", "media"))
         assertThat("Only two files should exist", files, hasSize(2))
-        checkMediaExportStringIs(file_names, "{}")
+        checkMediaExportStringIs(fileNames, "{}")
     }
 
     @Test
@@ -91,10 +89,9 @@ class AnkiPackageExporterTest : RobolectricTest() {
         // Storing paths of unzipped files in a list
         val files = listOf(*File(unzipDirectory).list()!!)
         val fileNames = arrayOfNulls<File>(3)
-        var i = 0
-        for (x in files) {
+        for ((i, x) in files.withIndex()) {
             val f = File("$unzipDirectory/$x")
-            fileNames[i++] = f
+            fileNames[i] = f
         }
         // Checking the unzipped files
         assertThat(
@@ -137,7 +134,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
     }
 
     private val exporterForDeckWithMedia: AnkiPackageExporter
-        get() = AnkiPackageExporter(col, 1L, true, true)
+        get() = AnkiPackageExporter(col, 1L, includeSched = true, includeMedia = true)
 
     @Throws(IOException::class)
     private fun addTempFileToMediaAndNote(): File {

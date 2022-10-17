@@ -158,7 +158,6 @@
     <string name="empty_card_warning">Картичка е празна. Користете ја опција \"Празни картички\" од менито на екранот на листата на палуби.</string>
     <string name="unknown_type_field_warning">Тип на одговор: непознато поле %s</string>
     <string name="delete_deck">Бришење на полото&#8230;</string>
-    <string name="show_hint">Покажи %s</string>
     <string name="info_rate">Гласај AnkiDroid</string>
     <string name="import_title">Увоз</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додај</string>
@@ -190,13 +189,20 @@
     <string name="export_include_media">Вклучете ги медиумите</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Извози “%s“ како apkg додатек?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">Датотекот\"%s\" беше извезен. Дали сакате да го испратите со друга апликација?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid извезувани флеширани картички:%s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -207,6 +213,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Грешка при извоз на apkg датотека</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

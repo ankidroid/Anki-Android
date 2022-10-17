@@ -163,7 +163,6 @@
     <string name="empty_card_warning">Гэта картка пустая. Скарыстайцеся параметрам \"Пустыя карткі\" ў меню на экране спіса калод.</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
-    <string name="show_hint">Паказаць %s</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>
     <string name="import_title">Імпартаванне</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Дадаць</string>
@@ -197,13 +196,24 @@
     <string name="export_include_media">Разам з медыяфайламі</string>
     <string name="confirm_apkg_export">Экспартаваць калекцыю ў пакет Anki?</string>
     <string name="confirm_apkg_export_deck">Экспартаваць \"%s\" у файл apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="few">Export %d selected cards as apkg file?</item>
+        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="few">Export %d selected notes as apkg file?</item>
+        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Ідзе экспартаванне пакета Anki&#8230;</string>
-    <string name="export_successful_title">Адправіць пакет Anki?</string>
-    <string name="export_send_button">Адправіць</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне...</string>
     <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
-    <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
     <string name="export_email_text"><![CDATA[        Добры дзень!
@@ -214,6 +224,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры калоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>

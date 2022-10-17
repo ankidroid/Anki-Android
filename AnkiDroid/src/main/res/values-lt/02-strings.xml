@@ -163,7 +163,6 @@
     <string name="empty_card_warning">Ši kortelė yra tuščia. Naudokite parinktį „Tuščios kortelės“, esančią rinkinių sąrašo meniu.</string>
     <string name="unknown_type_field_warning">Atsakymo tipas: nežinomas laukelis %s</string>
     <string name="delete_deck">Rinkinys trinamas&#8230;</string>
-    <string name="show_hint">Rodyti %s</string>
     <string name="info_rate">Įvertinkite „AnkiDroid“</string>
     <string name="import_title">Importuojama</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridėti</string>
@@ -197,13 +196,24 @@
     <string name="export_include_media">Įtraukti laikmenas</string>
     <string name="confirm_apkg_export">Eksportuoti rinkinį kaip „Anki“ paketą?</string>
     <string name="confirm_apkg_export_deck">Eksportuoti „%s“ kaip apkg failą?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="few">Export %d selected cards as apkg file?</item>
+        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="few">Export %d selected notes as apkg file?</item>
+        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Eksportuojamas „Anki“ paketo failas&#8230;</string>
-    <string name="export_successful_title">Siųsti „Anki“ paketą?</string>
-    <string name="export_send_button">Siųsti</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma...</string>
     <string name="export_save_apkg_successful">„Anki“ paketas sėkmingai išsaugotas</string>
     <string name="export_save_apkg_unsuccessful">Išsaugoti „Anki“ paketo nepavyko</string>
-    <string name="export_successful">Failas „%s“ buvo eksportuotas. Ar norite jį siųsti kita programa?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">Eksportuota „AnkiDroid“ kortelių: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -214,6 +224,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Eksportuoti apkg failo nepavyko</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Parinktys</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

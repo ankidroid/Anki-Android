@@ -169,7 +169,6 @@
     <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
     <string name="delete_deck">يجري حذف الرزمة...</string>
-    <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
@@ -205,13 +204,28 @@
     <string name="export_include_media">تضمين الوسائط</string>
     <string name="confirm_apkg_export">هل تريد تصدير المجموعة كحزمة أنكي؟</string>
     <string name="confirm_apkg_export_deck">هل تريد تصدير “%s” كملف apkg؟</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="zero">Export %d selected cards as apkg file?</item>
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="two">Export %d selected cards as apkg file?</item>
+        <item quantity="few">Export %d selected cards as apkg file?</item>
+        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="zero">Export %d selected notes as apkg file?</item>
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="two">Export %d selected notes as apkg file?</item>
+        <item quantity="few">Export %d selected notes as apkg file?</item>
+        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
-    <string name="export_successful_title">هل تريد إرسال حزمة أنكي؟</string>
-    <string name="export_send_button">إرسال</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
-    <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
     <string name="export_email_text"><![CDATA[        مرحبًا
@@ -222,6 +236,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>

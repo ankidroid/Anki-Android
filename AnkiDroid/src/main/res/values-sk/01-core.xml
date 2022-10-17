@@ -186,6 +186,7 @@
     <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
     <string name="empty_cloze_warning">Upraviť túto poznámku a pridať doplňovačku. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizácia</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
     <string name="cancel_sync_confirm">Chcete prerušiť synchronizáciu?</string>
     <string name="continue_sync">Pokračovať v synchronizácii</string>
     <string name="sync_cancelled">Synchronizácia zrušená</string>
