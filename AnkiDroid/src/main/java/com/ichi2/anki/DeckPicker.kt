@@ -2753,7 +2753,7 @@ open class DeckPicker :
     private fun warnNoSyncDuringMigration() {
         // TODO: Fetch and display real numbers
         MaterialDialog(this).show {
-            message(text = resources.getString(R.string.sync_impossible_during_migration, 5, 10))
+            message(text = resources.getString(R.string.sync_impossible_during_migration, 5))
             positiveButton(res = R.string.dialog_ok)
             negativeButton(res = R.string.scoped_storage_learn_more) {
                 openUrl(R.string.link_scoped_storage_faq)
