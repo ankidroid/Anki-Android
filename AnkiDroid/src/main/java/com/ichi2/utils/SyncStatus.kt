@@ -17,6 +17,7 @@
 package com.ichi2.utils
 
 import android.content.Context
+import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
@@ -90,14 +91,14 @@ enum class SyncStatus {
                 return
             }
             sMarkedInMemory = true
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", true).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit { putBoolean("changesSinceLastSync", true) }
         }
 
         /** To be converted to Rust  */
         @KotlinCleanup("Convert these to @RustCleanup")
         fun markSyncCompleted() {
             sMarkedInMemory = false
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", false).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit { putBoolean("changesSinceLastSync", false) }
         }
 
         fun ignoreDatabaseModification(runnable: Runnable) {

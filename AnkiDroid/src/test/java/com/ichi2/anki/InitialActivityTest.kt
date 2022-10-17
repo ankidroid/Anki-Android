@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
@@ -64,7 +65,7 @@ class InitialActivityTest : RobolectricTest() {
 
     @Test
     fun not_latest_version_with_valid_value() {
-        mSharedPreferences.edit().putString("lastVersion", "0.1").apply()
+        mSharedPreferences.edit { putString("lastVersion", "0.1") }
         assertThat(InitialActivity.isLatestVersion(mSharedPreferences), equalTo(false))
     }
 

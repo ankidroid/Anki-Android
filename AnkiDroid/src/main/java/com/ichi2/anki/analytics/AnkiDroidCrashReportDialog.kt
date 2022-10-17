@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
@@ -85,10 +86,10 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
             // Next time don't tick the auto-report checkbox by default
             val autoReport = mAlwaysReportCheckBox!!.isChecked
             val preferences = AnkiDroidApp.getSharedPrefs(this)
-            preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).apply()
+            preferences.edit { putBoolean("autoreportCheckboxValue", autoReport) }
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit().putString(CrashReportService.FEEDBACK_REPORT_KEY, CrashReportService.FEEDBACK_REPORT_ALWAYS).apply()
+                preferences.edit { putString(CrashReportService.FEEDBACK_REPORT_KEY, CrashReportService.FEEDBACK_REPORT_ALWAYS) }
                 CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)
             }
             // Send the crash report

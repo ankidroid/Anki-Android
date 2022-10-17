@@ -23,8 +23,8 @@ import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.Channel
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.compat.CompatHelper
@@ -51,7 +51,7 @@ class NotificationService : BroadcastReceiver() {
                 // The NotificationCompat code uses setSound() no matter what we do and triggers it.
                 val builder = NotificationCompat.Builder(
                     context,
-                    NotificationChannels.Channel.GENERAL.id
+                    Channel.GENERAL.id
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_stat_notify)
