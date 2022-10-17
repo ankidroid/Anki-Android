@@ -2154,10 +2154,8 @@ open class Collection(
                 args[i] = Arrays.toString(args[i] as LongArray?)
             }
         }
-        val s = String.format(
-            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
-            TextUtils.join(",  ", args)
-        )
+        val s = "[${TimeManager.time.intTime()}] ${trace.fileName}:${trace.methodName}(): " +
+                "${TextUtils.join(",  ", args)}"
         writeLog(s)
     }
 
