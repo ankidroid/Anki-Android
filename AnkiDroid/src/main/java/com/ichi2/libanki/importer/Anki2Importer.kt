@@ -256,11 +256,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                                     dirty.add(nid)
                                 } else {
                                     dupesIgnored.add(
-                                        String.format(
-                                            "%s: %s",
-                                            mCol.models.get(oldMid)!!.getString("name"),
-                                            flds.replace('\u001f', ',')
-                                        )
+                                            "${mCol.models.get(oldMid)!!.getString("name")}: " +
+                                                    "${flds.replace('\u001f', ',')}"
                                     )
                                     mIgnoredGuids!!.add(guid)
                                 }
