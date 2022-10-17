@@ -42,7 +42,7 @@ import java.io.*
 @Suppress("Deprecation")
 open class CompatV21 : Compat {
     // Until API26, ignore notification channels
-    override fun setupNotificationChannel(context: Context, id: String, name: String) { /* pre-API26, do nothing */
+    override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
     }
 
     // Until API 23 the methods have "current" in the name

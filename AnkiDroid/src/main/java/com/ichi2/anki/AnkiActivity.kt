@@ -481,12 +481,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     /**
      * Calls [.showAsyncDialogFragment] internally, using the channel
-     * [NotificationChannels.Channel.GENERAL]
+     * [Channel.GENERAL]
      *
      * @param newFragment  the AsyncDialogFragment you want to show
      */
     open fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
-        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.GENERAL)
+        showAsyncDialogFragment(newFragment, Channel.GENERAL)
     }
 
     /**
@@ -495,11 +495,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * AsyncTask completed
      *
      * @param newFragment  the AsyncDialogFragment you want to show
-     * @param channel the NotificationChannels.Channel to use for the notification
+     * @param channel the Channel to use for the notification
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: NotificationChannels.Channel
+        channel: Channel
     ) {
         try {
             showDialogFragment(newFragment)
@@ -532,7 +532,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     fun showSimpleNotification(
         title: String,
         message: String?,
-        channel: NotificationChannels.Channel
+        channel: Channel
     ) {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
         // Show a notification unless all notifications have been totally disabled

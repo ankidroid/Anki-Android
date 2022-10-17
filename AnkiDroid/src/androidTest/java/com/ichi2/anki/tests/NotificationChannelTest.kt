@@ -24,7 +24,7 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.NotificationChannels
+import com.ichi2.anki.Channel
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
@@ -72,7 +72,7 @@ class NotificationChannelTest : InstrumentedTest() {
         for (i in channels.indices) {
             Timber.d("Found channel with id %s", channels[i].id)
         }
-        var expectedChannels = NotificationChannels.Channel.values().size
+        var expectedChannels = Channel.values().size
         // If we have channels but have *targeted* pre-26, there is a "miscellaneous" channel auto-defined
         if (mTargetAPI < 26) {
             expectedChannels += 1
@@ -89,7 +89,7 @@ class NotificationChannelTest : InstrumentedTest() {
             expectedChannels,
             greaterThanOrEqualTo(channels.size)
         )
-        for (channel in NotificationChannels.Channel.values()) {
+        for (channel in Channel.values()) {
             assertNotNull(
                 "There should be a reminder channel",
                 mManager!!.getNotificationChannel(channel.id)
