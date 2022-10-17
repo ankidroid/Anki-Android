@@ -197,23 +197,23 @@
     <string name="confirm_apkg_export">Экспортировать коллекцию в пакет Anki?</string>
     <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="one">Экспортировать выбранную карточку в apkg файл?</item>
         <item quantity="few">Export %d selected cards as apkg file?</item>
         <item quantity="many">Export %d selected cards as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
         <item quantity="few">Export %d selected notes as apkg file?</item>
         <item quantity="many">Export %d selected notes as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
     </plurals>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_success_title">Коллекция успешно экспортирована</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
+    <string name="export_success_message">Вы можете выбрать папку для сохранения или поделиться через другое приложение.</string>
     <string name="export_share_title">Отправить пакет Anki с помощью</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[        Привет!
@@ -224,8 +224,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_select_save_app">Выберите место сохранения</string>
+    <string name="export_select_share_app">Выберите, как поделиться</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
