@@ -116,19 +116,19 @@ class IntentHandler : Activity() {
         val importResult = handleFileImport(this, intent)
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
-            val file = File(intent.data!!.path!!)
-            val fileUri = applicationContext?.let {
-                FileProvider.getUriForFile(
-                    it,
-                    it.applicationContext?.packageName + ".apkgfileprovider",
-                    File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), file.name)
-                )
-            }
             try {
+                val file = File(intent.data!!.path!!)
+                val fileUri = applicationContext?.let {
+                    FileProvider.getUriForFile(
+                        it,
+                        it.applicationContext?.packageName + ".apkgfileprovider",
+                        File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), file.name)
+                    )
+                }
                 contentResolver.delete(fileUri!!, null, null)
-                Timber.d("onCreate() import successful and downloaded file deleted ")
-            } catch (e: SecurityException) {
-                Timber.d("onCreate() import successful and cannot delete file $e")
+                Timber.i("onCreate() import successful and downloaded file deleted")
+            } catch (e: Exception) {
+                Timber.w("onCreate() import successful and cannot delete file $e")
             }
 
             reloadIntent.action = action
