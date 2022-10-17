@@ -20,7 +20,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -31,6 +30,7 @@ import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
@@ -122,7 +122,7 @@ class IntentHandler : Activity() {
                     FileProvider.getUriForFile(
                         it,
                         it.applicationContext?.packageName + ".apkgfileprovider",
-                        File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), file.name)
+                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
                     )
                 }
                 contentResolver.delete(fileUri!!, null, null)
