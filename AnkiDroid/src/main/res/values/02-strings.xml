@@ -408,7 +408,7 @@
 
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <string name="sync_impossible_during_migration">You can not sync your collection until the update is done.\n
-        %1$d/%2$d media remain to migrate.</string>
+        %1$d media files left to migrate.</string>
 
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
