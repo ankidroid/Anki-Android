@@ -1129,7 +1129,7 @@ open class DeckPicker :
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance())
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
             Timber.i("No space left")
-            showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance())
+            showDialogFragment(DeckPickerBackupNoSpaceLeftDialog())
             preferences.edit { remove("noSpaceLeft") }
         } else if (InitialActivity.performSetupFromFreshInstallOrClearedPreferences(preferences)) {
             onFinishedStartup()

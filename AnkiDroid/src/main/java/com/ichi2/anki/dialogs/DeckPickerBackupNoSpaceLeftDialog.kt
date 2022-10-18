@@ -44,10 +44,4 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
             setOnCancelListener { (activity as DeckPicker).finishWithoutAnimation() }
         }
     }
-
-    companion object {
-        fun newInstance(): DeckPickerBackupNoSpaceLeftDialog {
-            return DeckPickerBackupNoSpaceLeftDialog()
-        }
-    }
 }
