@@ -76,7 +76,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                     // At the end the Image is changed to Add Note Icon
                     mFabMain.setImageResource(addNoteIcon)
                     // Shrink back FAB
-                    mFabMain.animate().rotation(360f).setDuration(70).scaleX(1f).scaleY(1f)
+                    mFabMain.animate().rotation(180f).setDuration(70).scaleX(1f).scaleY(1f)
                         .start()
                 }.start()
             }
