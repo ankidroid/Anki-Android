@@ -155,7 +155,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
             }
-        } else if (!applyRiseAndShrinkAnimation) {
+        } else {
             mLinearLayout.alpha = 1f
             mStudyOptionsFrame?.let { it.alpha = 1f }
             isFABOpen = false
