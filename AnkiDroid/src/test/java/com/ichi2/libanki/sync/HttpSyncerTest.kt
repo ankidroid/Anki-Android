@@ -97,14 +97,14 @@ class HttpSyncerTest {
     private fun setCustomServerWithNoUrl() {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         userPreferences.edit {
-            putBoolean(CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
+            putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, true)
         }
     }
 
     private fun setCustomServer(s: String) {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         userPreferences.edit {
-            putBoolean(CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
+            putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, true)
             putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, s)
         }
     }

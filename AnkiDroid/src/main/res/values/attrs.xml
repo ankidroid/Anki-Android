@@ -42,6 +42,12 @@
         <attr name="summaryFormat" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="HtmlHelpPreference">
+        <attr name="substitution1" format="string" />
+        <attr name="substitution2" format="string" />
+        <attr name="substitution3" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="HeaderPreference">
         <!-- String array of entries to join in order to build the preference summary -->
         <attr name="summaryEntries" format="reference"/>

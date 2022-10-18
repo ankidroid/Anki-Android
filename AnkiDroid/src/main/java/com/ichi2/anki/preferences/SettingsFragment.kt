@@ -19,14 +19,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.XmlRes
+import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.libanki.Collection
-import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-import com.ichi2.preferences.NumberRangePreferenceCompat
-import com.ichi2.preferences.SeekBarPreferenceCompat
+import com.ichi2.preferences.DialogFragmentProvider
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -64,14 +63,9 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
     // `getTargetFragment()`, which throws if `setTargetFragment()` isn't used before.
     // While this isn't fixed on upstream, suppress the deprecation warning
     override fun onDisplayPreferenceDialog(preference: Preference) {
-        val dialogFragment = when (preference) {
-            is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-            is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-            is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
-            else -> null
-        }
-
-        if (dialogFragment != null) {
+        if (preference is DialogFragmentProvider) {
+            val dialogFragment = preference.makeDialogFragment()
+            dialogFragment.arguments = bundleOf("key" to preference.key)
             dialogFragment.setTargetFragment(this, 0)
             dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
         } else {

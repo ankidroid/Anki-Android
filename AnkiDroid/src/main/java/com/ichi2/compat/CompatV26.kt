@@ -113,29 +113,23 @@ open class CompatV26 : CompatV23(), Compat {
      * Hence this method, hasNext and next should be constant in time and space.
      */
     @Throws(IOException::class)
-    @KotlinCleanup("fix IDE lint issues")
     override fun contentOfDirectory(directory: File): FileStream {
-        val paths_stream: DirectoryStream<Path>
-        paths_stream = try {
+        val pathsStream: DirectoryStream<Path> = try {
             newDirectoryStream(directory.toPath())
-        } catch (e: IOException) {
-            if (e is NoSuchFileException) {
-                val nsfe = e
-                throw FileNotFoundException(
-                    """
-                    ${nsfe.file}
-                    ${nsfe.cause}
-                    ${nsfe.stackTrace}
-                    """.trimIndent()
-                )
-            }
-            throw e
+        } catch (noSuchFileException: NoSuchFileException) {
+            throw FileNotFoundException(
+                """
+                    ${noSuchFileException.file}
+                    ${noSuchFileException.cause}
+                    ${noSuchFileException.stackTrace}
+                """.trimIndent()
+            )
         }
-        val paths: Iterator<Path> = paths_stream.iterator()
+        val paths: Iterator<Path> = pathsStream.iterator()
         return object : FileStream {
             @Throws(IOException::class)
             override fun close() {
-                paths_stream.close()
+                pathsStream.close()
             }
 
             @Throws(IOException::class)
