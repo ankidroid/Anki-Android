@@ -446,7 +446,6 @@ abstract class AbstractFlashcardViewer :
             dealWithTimeBox()
         }
 
-        @KotlinCleanup("remove _ variables")
         private fun dealWithTimeBox() {
             val res = resources
             val elapsed = col.timeboxReached()
@@ -541,8 +540,7 @@ abstract class AbstractFlashcardViewer :
         mGestureDetectorImpl = LinkDetectingGestureDetector()
     }
 
-    @KotlinCleanup("non-null")
-    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode?): Int {
+    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
         return R.layout.reviewer
     }
 
@@ -659,11 +657,8 @@ abstract class AbstractFlashcardViewer :
         } else super.onKeyDown(keyCode, event)
     }
 
-    @KotlinCleanup("Use ?:")
     public override val currentCardId: CardId?
-        get() = if (currentCard == null) {
-            null
-        } else currentCard!!.id
+        get() = currentCard?.id
 
     private fun processHardwareButtonScroll(keyCode: Int, card: WebView?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
@@ -867,7 +862,6 @@ abstract class AbstractFlashcardViewer :
         mSoundPlayer.addSounds(mBaseUrl!!, tags, SoundSide.QUESTION)
     }
 
-    @KotlinCleanup("remove _ variables")
     protected fun showDeleteNoteDialog() {
         val res = resources
         MaterialDialog(this).show {
@@ -958,21 +952,16 @@ abstract class AbstractFlashcardViewer :
         topBarLayout = findViewById(R.id.top_bar)
         mCardFrame = findViewById(R.id.flashcard)
         mCardFrameParent = mCardFrame!!.parent as ViewGroup
-        mTouchLayer = findViewById(R.id.touch_layer)
-        mTouchLayer!!.setOnTouchListener(mGestureListener)
+        mTouchLayer = findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(mGestureListener) }
         mCardFrame!!.removeAllViews()
 
         // Initialize swipe
         gestureDetector = GestureDetector(this, mGestureDetectorImpl)
         easeButtonsLayout = findViewById(R.id.ease_buttons)
-        easeButton1 = EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1))
-        easeButton1!!.setListeners(mEaseHandler)
-        easeButton2 = EaseButton(EASE_2, findViewById(R.id.flashcard_layout_ease2), findViewById(R.id.ease2), findViewById(R.id.nextTime2))
-        easeButton2!!.setListeners(mEaseHandler)
-        easeButton3 = EaseButton(EASE_3, findViewById(R.id.flashcard_layout_ease3), findViewById(R.id.ease3), findViewById(R.id.nextTime3))
-        easeButton3!!.setListeners(mEaseHandler)
-        easeButton4 = EaseButton(EASE_4, findViewById(R.id.flashcard_layout_ease4), findViewById(R.id.ease4), findViewById(R.id.nextTime4))
-        easeButton4!!.setListeners(mEaseHandler)
+        easeButton1 = EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1)).apply { setListeners(mEaseHandler) }
+        easeButton2 = EaseButton(EASE_2, findViewById(R.id.flashcard_layout_ease2), findViewById(R.id.ease2), findViewById(R.id.nextTime2)).apply { setListeners(mEaseHandler) }
+        easeButton3 = EaseButton(EASE_3, findViewById(R.id.flashcard_layout_ease3), findViewById(R.id.ease3), findViewById(R.id.nextTime3)).apply { setListeners(mEaseHandler) }
+        easeButton4 = EaseButton(EASE_4, findViewById(R.id.flashcard_layout_ease4), findViewById(R.id.ease4), findViewById(R.id.nextTime4)).apply { setListeners(mEaseHandler) }
         if (!mShowNextReviewTime) {
             easeButton1!!.hideNextReviewTime()
             easeButton2!!.hideNextReviewTime()
@@ -980,8 +969,7 @@ abstract class AbstractFlashcardViewer :
             easeButton4!!.hideNextReviewTime()
         }
         val flipCard = findViewById<Button>(R.id.flip_card)
-        flipCardLayout = findViewById(R.id.flashcard_layout_flip)
-        flipCardLayout!!.setOnClickListener(mFlipCardListener)
+        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip).apply { setOnClickListener(mFlipCardListener) }
         if (animationEnabled()) {
             flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
         }
@@ -1216,20 +1204,19 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator!!.setVisibility(visible)
     }
 
-    @KotlinCleanup("collapse _ variables")
     protected open fun initControls() {
         mCardFrame!!.visibility = View.VISIBLE
         mPreviousAnswerIndicator!!.setVisibility(View.VISIBLE)
         flipCardLayout!!.visibility = View.VISIBLE
         answerField!!.visibility = if (typeAnswer!!.validForEditText()) View.VISIBLE else View.GONE
-        answerField!!.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
+        answerField!!.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 displayCardAnswer()
                 return@setOnEditorActionListener true
             }
             false
         }
-        answerField!!.setOnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
+        answerField!!.setOnKeyListener { _, keyCode: Int, event: KeyEvent ->
             if (event.action == KeyEvent.ACTION_UP &&
                 (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)
             ) {

@@ -320,7 +320,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         supportActionBar!!.setSubtitle("")
     }
 
-    override fun getContentViewAttr(fullscreenMode: FullScreenMode?): Int {
+    override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
         return when (fullscreenMode) {
             FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
             FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
