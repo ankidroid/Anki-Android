@@ -68,23 +68,25 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 mFabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
                 // Rotates FAB to 90 degrees
                 rotationBy(90f)
-                duration = 50
+                duration = 30
                 // Rise FAB animation
-                scaleX(1.2f)
-                scaleY(1.2f)
+                scaleX(1.3f)
+                scaleY(1.3f)
                 withEndAction {
                     // At the end the Image is changed to Add Note Icon
                     mFabMain.setImageResource(addNoteIcon)
                     // Shrink back FAB
-                    mFabMain.animate().rotation(180f).setDuration(50).scaleX(1f).scaleY(1f)
+                    mFabMain.animate().rotation(360f).setDuration(70).scaleX(1f).scaleY(1f)
                         .start()
                 }.start()
             }
 
-            mAddSharedLayout.animate().translationY(0f).duration = 30
-            mAddDeckLayout.animate().translationY(0f).duration = 50
-            mAddDeckLayout.animate().alpha(1f).duration = 50
-            mAddSharedLayout.animate().alpha(1f).duration = 30
+            addNoteLabel.animate().translationX(0f).duration = 70
+            mAddSharedLayout.animate().translationY(0f).duration = 70
+            mAddDeckLayout.animate().translationY(0f).duration = 100
+            addNoteLabel.animate().alpha(1f).duration = 70
+            mAddSharedLayout.animate().alpha(1f).duration = 70
+            mAddDeckLayout.animate().alpha(1f).duration = 100
         } else {
             // Show without animation
             mAddSharedLayout.visibility = View.VISIBLE
@@ -92,8 +94,10 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mFabBGLayout.visibility = View.VISIBLE
             mAddSharedLayout.alpha = 1f
             mAddDeckLayout.alpha = 1f
+            addNoteLabel.alpha = 1f
             mAddSharedLayout.translationY = 0f
             mAddDeckLayout.translationY = 0f
+            addNoteLabel.translationY = 0f
         }
     }
 
@@ -120,23 +124,25 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 // Close with animation
                 mFabMain.animate().apply {
                     // Rotates FAB to 180 degrees
-                    rotation(90f)
-                    duration = 50
+                    rotation(-90f)
+                    duration = 40
                     // Rise FAB animation
-                    scaleX(1.2f)
-                    scaleY(1.2f)
+                    scaleX(1.3f)
+                    scaleY(1.3f)
                     withEndAction {
                         // At the end the image is changed to Add White Icon
                         mFabMain.setImageResource(addWhiteIcon)
                         // Shrink back FAB
-                        mFabMain.animate().rotation(90f).setDuration(50).scaleX(1f).scaleY(1f)
+                        mFabMain.animate().rotation(-90f).setDuration(60).scaleX(1f).scaleY(1f)
                             .start()
                     }.start()
                 }
 
-                mAddSharedLayout.animate().translationY(200f).duration = 30
-                mAddDeckLayout.animate().alpha(0f).duration = 50
-                mAddSharedLayout.animate().alpha(0f).duration = 30
+                mAddSharedLayout.animate().alpha(0f).duration = 50
+                addNoteLabel.animate().alpha(0f).duration = 70
+                mAddDeckLayout.animate().alpha(0f).duration = 100
+                mAddSharedLayout.animate().translationY(300f).duration = 50
+                addNoteLabel.animate().translationX(180f).duration = 70
                 mAddDeckLayout.animate().translationY(400f).setDuration(100)
                     .setListener(object : Animator.AnimatorListener {
                         override fun onAnimationStart(animator: Animator) {}
@@ -167,18 +173,20 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 // Close with animation
                 mFabMain.animate().apply {
                     // Rotates FAB to 90 degrees
-                    rotation(90f)
-                    duration = 50
+                    rotation(-90f)
+                    duration = 90
                     withEndAction {
                         // At the end the image is changed to Add White Icon
                         mFabMain.setImageResource(addWhiteIcon)
                     }.start()
                 }
 
-                mAddSharedLayout.animate().translationY(200f).duration = 30
+                mAddSharedLayout.animate().alpha(0f).duration = 70
                 mAddDeckLayout.animate().alpha(0f).duration = 50
-                mAddSharedLayout.animate().alpha(0f).duration = 30
-                mAddDeckLayout.animate().translationY(400f).setDuration(100)
+                addNoteLabel.animate().alpha(0f).duration = 50
+                addNoteLabel.animate().translationX(180f).duration = 70
+                mAddSharedLayout.animate().translationY(400f).duration = 50
+                mAddDeckLayout.animate().translationY(600f).setDuration(100)
                     .setListener(object : Animator.AnimatorListener {
                         override fun onAnimationStart(animator: Animator) {}
                         override fun onAnimationEnd(animator: Animator) {

@@ -73,7 +73,7 @@
             android:layout_gravity="bottom|end"
             android:visibility="gone"
             android:alpha="0"
-            android:translationY="200px"
+            android:translationY="300px"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -104,7 +104,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_gravity="bottom|end" >
+            android:layout_gravity="bottom|end"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:background="@color/material_grey_600"
@@ -118,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/menu_add"
                 android:visibility="gone"
+                android:translationX="180px"
                 />
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_main"
