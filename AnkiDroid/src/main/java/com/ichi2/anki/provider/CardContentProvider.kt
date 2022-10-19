@@ -41,10 +41,10 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException

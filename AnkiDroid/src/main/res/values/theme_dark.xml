@@ -23,6 +23,10 @@
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
+        <!-- Menu -->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
         <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
@@ -39,6 +43,8 @@
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">@color/theme_dark_primary</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
@@ -117,10 +123,16 @@
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_color_button_text">@color/white</item>
+        <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
+        <item name="md_corner_radius">@dimen/dialog_corner_radius</item>
+        <item name="textAllCaps">false</item>
+        <item name="md_button_casing">literal</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
+        <item name="overflowAndPopupMenuIconColor">#9effffff</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>

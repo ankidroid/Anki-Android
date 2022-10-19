@@ -204,9 +204,6 @@
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">مرحبًا بك مع أنكيدرويد!</string>
-    <string name="collection_load_welcome_request_permissions_details">يتطلب أنكيدرويد إذن التخزين، والذي يستخدم حصرًا لتخزين مجموعتك، والوسائط، والنسخ الاحتياطية. التطبيق مفتوح المصدر، ومكتوب من قبل متطوعين، ومستخدم من قبل الملايين.\n\nإذا كان لديك أي أسئلة، الرجاء الاطلاع على الدليل الموجود في التطبيق أو زيارة منتديات الدعم.\n\nشكرًا لك على تجربة أنكيدرويد!\n—فريق تطوير أنكيدرويد</string>
     <string name="mutimedia_editor_assertion_failed">حدث خطأ غير معروف عند عرض المحرر المتقدم</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث أنكيدرويد</string>

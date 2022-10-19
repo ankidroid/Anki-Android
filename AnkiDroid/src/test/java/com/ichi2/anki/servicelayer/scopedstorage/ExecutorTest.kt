@@ -16,8 +16,9 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Executor
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Executor
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -172,7 +173,7 @@ class ExecutorTest {
         val isBlocked = Semaphore(1).apply { acquire() }
         // Semaphore that can be acquired after operation start executing
         var isExecuting = Semaphore(1).apply { acquire() }
-        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+        override fun execute(context: MigrationContext): List<Operation> {
             isExecuting.release()
             isBlocked.acquireInTwoSeconds()
             return emptyList()

@@ -172,9 +172,6 @@
     <string name="multimedia_editor_failed">No s\'ha pogut obrir l\'editor multimèdia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">S\'ha denegat el permís de gravació d\'àudio</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Benvingut a AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requereix permís d\'emmagatzematge. Aquest permís s\'usa exclusivament per emmagatzemar la vostra col·lecció, el multimèdia de les cartes i còpies de seguretat d\'AnkiDroid. El nostre codi és de codi obert, escrit per voluntaris i confien en ell milions de persones.\n\nSi teniu alguna pregunta, accediu al nostre manual integrat a l\'aplicació o visiteu els nostres fòrums d\'assistència.\n\nGràcies per provar AnkiDroid! \n— Equip de desenvolupament d\'AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">S\'ha produït un error desconegut al mostrar l\'editor avançat</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">S\'ha actualitzat l\'Ankidroid</string>

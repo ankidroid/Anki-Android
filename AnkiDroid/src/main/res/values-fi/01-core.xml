@@ -176,6 +176,7 @@
     <string name="sd_card_not_mounted">Laitteen muistia ei ole asennettu</string>
     <string name="empty_cloze_warning">Muokkaa tätä merkintää ja lisää täydennystehtäviä. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkronoi</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
     <string name="cancel_sync_confirm">Haluatko peruuttaa synkronoinnin?</string>
     <string name="continue_sync">Jatka synkronointia</string>
     <string name="sync_cancelled">Synkronointi peruutettu</string>

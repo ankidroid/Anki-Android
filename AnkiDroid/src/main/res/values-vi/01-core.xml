@@ -171,6 +171,7 @@
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
     <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled">Đã huỷ đồng bộ</string>

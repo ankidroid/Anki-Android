@@ -17,8 +17,8 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import org.json.JSONArray
+import org.json.JSONObject
 
 abstract class ConfigManager {
     @CheckResult abstract fun has(key: String): Boolean

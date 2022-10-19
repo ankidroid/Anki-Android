@@ -22,8 +22,8 @@ import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.NoteTypeId
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

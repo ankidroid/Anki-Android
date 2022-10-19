@@ -23,9 +23,6 @@ import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.CardBrowser.CardCache
-import com.ichi2.anki.CardBrowser.CardCollection
-import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.*
@@ -34,8 +31,11 @@ import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
-import com.ichi2.utils.*
+import com.ichi2.utils.Computation
+import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -210,68 +210,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
     }
 
-    class SuspendCardMulti(cardIds: List<Long>) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            val sched = col.sched
-            // collect undo information
-            val cids = LongArray(cards.size)
-            val originalSuspended = BooleanArray(cards.size)
-            var hasUnsuspended = false
-            for (i in cards.indices) {
-                val card = cards[i]
-                cids[i] = card.id
-                if (card.queue != Consts.QUEUE_TYPE_SUSPENDED) {
-                    hasUnsuspended = true
-                    originalSuspended[i] = false
-                } else {
-                    originalSuspended[i] = true
-                }
-            }
-
-            // if at least one card is unsuspended -> suspend all
-            // otherwise unsuspend all
-            if (hasUnsuspended) {
-                sched.suspendCards(cids)
-            } else {
-                sched.unsuspendCards(cids)
-            }
-
-            // mark undo for all at once
-            col.markUndo(UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended))
-
-            // reload cards because they'll be passed back to caller
-            for (c in cards) {
-                c.load()
-            }
-            sched.deferReset()
-            return true
-        }
-    }
-
-    class DeleteNoteMulti(cardIds: List<Long>) : DismissNotes<Array<Card>>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>, cards: Array<Card>): Boolean {
-            val sched = col.sched
-            // list of all ids to pass to remNotes method.
-            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-            val notes = CardUtils.getNotes(listOf(*cards))
-            val allCards = CardUtils.getAllCards(notes)
-            // delete note
-            val uniqueNoteIds = LongArray(notes.size)
-            val notesArr = notes.toTypedArray()
-            var count = 0
-            for (note in notes) {
-                uniqueNoteIds[count] = note.id
-                count++
-            }
-            col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
-            col.remNotes(uniqueNoteIds)
-            sched.deferReset()
-            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-            collectionTask.doProgress(allCards.toTypedArray())
-            return true
-        }
-    }
-
     class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
@@ -318,55 +256,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class RenderBrowserQA(private val cards: CardCollection<CardCache>, private val startPos: Int, private val n: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<Int, Pair<CardCollection<CardCache>, List<Long>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Pair<CardCollection<CardCache>, List<Long>>? {
-            Timber.d("doInBackgroundRenderBrowserQA")
-            val invalidCardIds: MutableList<Long> = ArrayList()
-            // for each specified card in the browser list
-            for (i in startPos until startPos + n) {
-                // Stop if cancelled
-                if (collectionTask.isCancelled()) {
-                    Timber.d("doInBackgroundRenderBrowserQA was aborted")
-                    return null
-                }
-                if (i < 0 || i >= cards.size()) {
-                    continue
-                }
-                var card: CardCache
-                card = try {
-                    cards[i]
-                } catch (e: IndexOutOfBoundsException) {
-                    // even though we test against card.size() above, there's still a race condition
-                    // We might be able to optimise this to return here. Logically if we're past the end of the collection,
-                    // we won't reach any more cards.
-                    continue
-                }
-                if (card.isLoaded) {
-                    // We've already rendered the answer, we don't need to do it again.
-                    continue
-                }
-                // Extract card item
-                try {
-                    // Ensure that card still exists.
-                    card.card
-                } catch (e: WrongId) {
-                    // #5891 - card can be inconsistent between the deck browser screen and the collection.
-                    // Realistically, we can skip any exception as it's a rendering task which should not kill the
-                    // process
-                    val cardId = card.id
-                    Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
-                    invalidCardIds.add(cardId)
-                    continue
-                }
-                // Update item
-                card.load(false, column1Index, column2Index)
-                val progress = i.toFloat() / n * 100
-                collectionTask.doProgress(progress.toInt())
-            }
-            return Pair(cards, invalidCardIds)
-        }
-    }
-
     class CheckDatabase : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
             Timber.d("doInBackgroundCheckDatabase")
@@ -380,14 +269,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 CollectionHelper.instance.closeCollection(true, "Check Database Completed")
                 Pair(true, result)
             }
-        }
-    }
-
-    class RebuildCram : TaskDelegate<Void, DeckStudyData?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): DeckStudyData? {
-            Timber.d("doInBackgroundRebuildCram")
-            col.sched.rebuildDyn(col.decks.selected())
-            return updateValuesFromDeck(col, true)
         }
     }
 
@@ -570,35 +451,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 return Pair(true, e.message)
             }
             return Pair(false, apkgPath)
-        }
-    }
-
-    class Reorder(private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundReorder")
-            col.sched.resortConf(conf)
-            return true
-        }
-    }
-
-    @KotlinCleanup("fix `val changed = execTask()!!`")
-    class ConfSetSubdecks(private val deck: Deck, private val conf: DeckConfig) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundConfSetSubdecks")
-            return try {
-                val children = col.decks.children(deck.getLong("id"))
-                for (childDid in children.values) {
-                    val child = col.decks.get(childDid)
-                    if (child.isDyn) {
-                        continue
-                    }
-                    changeDeckConfiguration(deck, conf, col)
-                }
-                true
-            } catch (e: JSONException) {
-                Timber.w(e)
-                false
-            }
         }
     }
 

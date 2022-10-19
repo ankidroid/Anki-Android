@@ -42,6 +42,12 @@
         <attr name="summaryFormat" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="HtmlHelpPreference">
+        <attr name="substitution1" format="string" />
+        <attr name="substitution2" format="string" />
+        <attr name="substitution3" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="HeaderPreference">
         <!-- String array of entries to join in order to build the preference summary -->
         <attr name="summaryEntries" format="reference"/>
@@ -154,6 +160,7 @@
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="reference"/>
     <attr name="iconColor" format="color"/>
+    <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
 
@@ -164,4 +171,9 @@
         <attr name="cycle_checked_to_indeterminate" format="boolean" />
         <attr name="cycle_indeterminate_to_checked" format="boolean" />
     </declare-styleable>
+
+    <!-- Background color for Tab layout. It is essentially the color of the toolbar.
+         The latter is set by colorPrimary, but theme overlay can't use it,
+         as it itself overrides colorPrimary, which is used by the view directly. -->
+    <attr name="tabLayoutBackgroundColor" format="color"/>
 </resources>

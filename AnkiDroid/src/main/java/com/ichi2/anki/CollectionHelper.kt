@@ -22,6 +22,7 @@ import android.text.format.Formatter
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
@@ -41,7 +42,6 @@ import kotlin.Throws
  * Singleton which opens, stores, and closes the reference to the Collection.
  */
 @KotlinCleanup("convert to object")
-@KotlinCleanup("IDE Lint")
 open class CollectionHelper {
     /**
      * Prevents [com.ichi2.async.CollectionLoader] from spuriously re-opening the [Collection].
@@ -73,14 +73,19 @@ open class CollectionHelper {
     private fun openCollection(context: Context, path: String): Collection {
         Timber.i("Begin openCollection: %s", path)
         val backend = BackendFactory.getBackend(context)
-        val collection = Storage.collection(context, path, false, true, backend)
+        val collection = Storage.collection(
+            context, path,
+            server = false,
+            log = true,
+            backend = backend
+        )
         Timber.i("End openCollection: %s", path)
         return collection
     }
 
     /**
      * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
-     * @param _context is no longer used, as the global AnkidroidApp instance is used instead
+     * @param context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection
      */
     @Synchronized
@@ -91,7 +96,7 @@ open class CollectionHelper {
     /**
      * Given a path to a .anki2 file returns an open [Collection] associated with the path.
      *
-     * This operation does not call [initializeAnkiDroidDirectory] and does not set the singleton instance's [mCollection]
+     * This operation does not call [initializeAnkiDroidDirectory] and does not set [CollectionManager.collection]
      *
      * @param path The path to collection.anki2
      * @return An open [Collection] object
@@ -112,13 +117,15 @@ open class CollectionHelper {
     }
 
     /**
-     * Call getCol(context) inside try / catch statement.
-     * Send exception report and return null if there was an exception.
+     * Calls [getCol] inside a try / catch statement.
+     * Send exception report if [reportException] is set and return null if there was an exception.
      * @param context
-     * @return
+     * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
+     * [BackendDbLockedException] and [BackendDbFileTooNewException]).
+     * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun getColSafe(context: Context?): Collection? {
+    fun getColSafe(context: Context?, reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
             getCol(context)
@@ -133,7 +140,9 @@ open class CollectionHelper {
         } catch (e: Exception) {
             lastOpenFailure = CollectionOpenFailure.CORRUPT
             Timber.w(e)
-            CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe")
+            if (reportException) {
+                CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe")
+            }
             null
         }
     }
@@ -265,10 +274,6 @@ open class CollectionHelper {
                 return CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace)
             }
         }
-    }
-
-    enum class DatabaseVersion {
-        USABLE, FUTURE_NOT_DOWNGRADABLE, UNKNOWN
     }
 
     enum class CollectionOpenFailure {
@@ -461,7 +466,7 @@ open class CollectionHelper {
          *
          * @return Absolute path to the AnkiDroid directory in primary shared/external storage
          */
-        val legacyAnkiDroidDirectory: String
+        private val legacyAnkiDroidDirectory: String
             get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath
 
         /**
@@ -481,7 +486,7 @@ open class CollectionHelper {
          * @param context Used to get the External App-Specific directory for AnkiDroid
          * @return Returns the absolute path to the App-Specific External AnkiDroid directory
          */
-        fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String {
+        private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String {
             return context.getExternalFilesDir(null)!!.absolutePath
         }
 
@@ -531,15 +536,6 @@ open class CollectionHelper {
                 preferences,
                 PREF_COLLECTION_PATH
             ) { getDefaultAnkiDroidDirectory(context) }
-        }
-
-        /**
-         * Get parent directory given the [Collection] path.
-         * @param path path to AnkiDroid collection
-         * @return path to AnkiDroid directory
-         */
-        private fun getParentDirectory(path: String): String {
-            return File(path).parentFile!!.absolutePath
         }
 
         /** Fetches additional collection data not required for

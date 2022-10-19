@@ -57,7 +57,7 @@
     <string name="studyoptions_new_total">新規カード:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
-    <string name="studyoptions_start">スタート</string>
+    <string name="studyoptions_start">学習開始</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
@@ -171,6 +171,7 @@
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
     <string name="sync_cancelled">同期がキャンセルされました</string>

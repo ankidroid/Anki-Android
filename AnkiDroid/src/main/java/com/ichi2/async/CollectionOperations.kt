@@ -16,24 +16,18 @@
 
 package com.ichi2.async
 
-import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.StudyOptionsFragment
-import com.ichi2.anki.TemporaryModel
+import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.Note
-import com.ichi2.utils.JSONObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import java.util.ArrayList
-import kotlin.Comparator
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
@@ -153,12 +147,15 @@ fun updateValuesFromDeck(
  *
  * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
  */
-fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
+suspend fun getAllModelsAndNotesCount(): Pair<List<Model>, List<Int>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundLoadModels")
-    val models = col.models.all()
+    val models = withCol { models.all() }
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
-    val cardCount = models.map { col.models.useCount(it) }
-    return Pair(models, cardCount)
+    val cardCount = models.map {
+        ensureActive()
+        withCol { this.models.useCount(it) }
+    }
+    Pair(models, cardCount)
 }
 
 fun changeDeckConfiguration(
@@ -178,6 +175,58 @@ fun changeDeckConfiguration(
     }
     col.decks.setConf(deck, newConfId)
     col.save()
+}
+
+suspend fun renderBrowserQA(
+    cards: CardBrowser.CardCollection<CardBrowser.CardCache>,
+    startPos: Int,
+    n: Int,
+    column1Index: Int,
+    column2Index: Int,
+    onProgressUpdate: (Int) -> Unit
+): Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
+    Timber.d("doInBackgroundRenderBrowserQA")
+    val invalidCardIds: MutableList<Long> = ArrayList()
+    // for each specified card in the browser list
+    for (i in startPos until startPos + n) {
+        // Stop if cancelled, throw cancellationException
+        ensureActive()
+
+        if (i < 0 || i >= cards.size()) {
+            continue
+        }
+        var card: CardBrowser.CardCache
+        card = try {
+            cards[i]
+        } catch (e: IndexOutOfBoundsException) {
+            // even though we test against card.size() above, there's still a race condition
+            // We might be able to optimise this to return here. Logically if we're past the end of the collection,
+            // we won't reach any more cards.
+            continue
+        }
+        if (card.isLoaded) {
+            // We've already rendered the answer, we don't need to do it again.
+            continue
+        }
+        // Extract card item
+        try {
+            // Ensure that card still exists.
+            card.card
+        } catch (e: WrongId) {
+            // #5891 - card can be inconsistent between the deck browser screen and the collection.
+            // Realistically, we can skip any exception as it's a rendering task which should not kill the
+            // process
+            val cardId = card.id
+            Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
+            invalidCardIds.add(cardId)
+            continue
+        }
+        // Update item
+        card.load(false, column1Index, column2Index)
+        val progress = i.toFloat() / n * 100
+        withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
+    }
+    Pair(cards, invalidCardIds)
 }
 
 /**
@@ -243,5 +292,77 @@ fun saveModel(
         }
     } finally {
         DB.safeEndInTransaction(col.db)
+    }
+}
+
+/**
+ * Deletes all the card with given ids
+ * @return Array<Cards> list of all deleted cards
+ */
+fun deleteMultipleNotes(
+    col: Collection,
+    cardIds: List<Long>,
+): Array<Card> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    return col.db.executeInTransaction {
+        val sched = col.sched
+        // list of all ids to pass to remNotes method.
+        // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+        val notes = CardUtils.getNotes(listOf(*cards))
+        val allCards = CardUtils.getAllCards(notes)
+        // delete note
+        val uniqueNoteIds = LongArray(notes.size)
+        val notesArr = notes.toTypedArray()
+        var count = 0
+        for (note in notes) {
+            uniqueNoteIds[count] = note.id
+            count++
+        }
+        col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
+        col.remNotes(uniqueNoteIds)
+        sched.deferReset()
+        // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+        allCards.toTypedArray()
+    }
+}
+
+fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    return col.db.executeInTransaction {
+        val sched = col.sched
+        // collect undo information
+        val cids = LongArray(cards.size)
+        val originalSuspended = BooleanArray(cards.size)
+        var hasUnsuspended = false
+        for (i in cards.indices) {
+            val card = cards[i]
+            cids[i] = card.id
+            if (card.queue != Consts.QUEUE_TYPE_SUSPENDED) {
+                hasUnsuspended = true
+                originalSuspended[i] = false
+            } else {
+                originalSuspended[i] = true
+            }
+        }
+
+        // if at least one card is unsuspended -> suspend all
+        // otherwise unsuspend all
+        if (hasUnsuspended) {
+            sched.suspendCards(cids)
+        } else {
+            sched.unsuspendCards(cids)
+        }
+
+        // mark undo for all at once
+        col.markUndo(UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended))
+
+        // reload cards because they'll be passed back to caller
+        for (c in cards) {
+            c.load()
+        }
+        sched.deferReset()
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        cards
     }
 }

@@ -31,6 +31,7 @@ import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
@@ -373,9 +374,9 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     private fun saveStrokeWidth(wbStrokeWidth: Int) {
         mPaint.strokeWidth = wbStrokeWidth.toFloat()
-        val edit = AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit()
-        edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth)
-        edit.apply()
+        AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit {
+            putInt("whiteBoardStrokeWidth", wbStrokeWidth)
+        }
     }
 
     @get:VisibleForTesting

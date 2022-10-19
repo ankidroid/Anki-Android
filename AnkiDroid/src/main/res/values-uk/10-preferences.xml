@@ -227,12 +227,23 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число кроків моделювання</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Користувацький сервер</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Використовувати користувацький сервер синхронізації</string>
-    <string name="custom_sync_server_enable_summary">Якщо ви не хочете використовувати сервер AnkiWeb, то ви можете вказати альтернативний сервер</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
+    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own servers for synchronization.
+        You may specify either collection or media server, or both.
+        If not set, the default AnkiWeb servers will be used instead.
+        For example, you could use the sync server built into Anki
+        Desktop to sync the collection when you only have a local network,
+        and AnkiWeb to sync media when you have general internet access.
+        <a href="%s">Learn more</a>
+        <br>
+        <br>Note: unlike in previous AnkiDroid versions,
+        you must specify the full custom sync URL,
+        for example: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронізації</string>
-    <string name="custom_sync_server_base_url_invalid">Непрацююче посилання для синхронізації</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">URL Media-даних</string>
-    <string name="custom_sync_server_media_url_invalid">Непрацююче посилання для синхронізації медіа</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавіатура</string>
     <string name="bluetooth">Bluetooth</string>
@@ -351,8 +362,8 @@
     <string name="pref_cat_experimental" maxLength="41">Експериментальні</string>
     <string name="experimental_pref_confirmation" maxLength="41">Ввімкнути \'%s\'</string>
     <string name="use_rust_backend_title" maxLength="41">Використовувати новий бекенд</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_summary">Вмикає нові функції Anki, такі як планувальник v3 scheduler\nUNSTABLE. Не використовуйте в потрібній вам колекції. Не спрямовано на закриття додатку.</string>
+    <string name="use_rust_backend_warning">Є ймовірність, що це може повністю зіпсувати вашу установку, вимагається видалення AnkiDroid та папки AnkiDroid, є імовірність розповсюдження корупції через синхронізацію з AnkiWeb.\n\nМи вітаємо тестування, але будь ласка, переконайтеся, що у вас є дійсна резервна копія не AnkiWeb.</string>
     <string name="enable_v3_sched_title" maxLength="41">Використовувати v3 планувальник </string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>

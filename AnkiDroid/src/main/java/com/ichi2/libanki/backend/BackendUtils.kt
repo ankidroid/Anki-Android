@@ -19,9 +19,9 @@
 package com.ichi2.libanki.backend
 
 import com.google.protobuf.ByteString
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 object BackendUtils {

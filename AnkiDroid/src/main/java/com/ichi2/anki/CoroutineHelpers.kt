@@ -19,11 +19,13 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.*
@@ -131,14 +133,17 @@ fun Fragment.launchCatchingTask(
 ): Job = requireActivity().launchCatchingTask(errorMessage, block)
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
-    AlertDialog.Builder(context)
-        .setTitle(R.string.vague_error)
-        .setMessage(msg)
-        .setPositiveButton(R.string.dialog_ok) { _, _ -> }
-        .setOnDismissListener {
-            CrashReportService.sendExceptionReport(exception, origin = context::class.java.simpleName)
+    MaterialDialog(context).show {
+        title(R.string.vague_error)
+        message(text = msg)
+        positiveButton(R.string.dialog_ok)
+        onDismiss {
+            CrashReportService.sendExceptionReport(
+                exception,
+                origin = context::class.java.simpleName
+            )
         }
-        .show()
+    }
 }
 
 /** In most cases, you'll want [AnkiActivity.withProgress]
@@ -295,16 +300,14 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
         return true
     }
     return suspendCoroutine { coroutine ->
-        AlertDialog.Builder(this)
-            // generic message
-            .setMessage(col.tr.deckConfigWillRequireFullSync())
-            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+        MaterialDialog(this).show {
+            message(text = col.tr.deckConfigWillRequireFullSync()) // generic message
+            positiveButton(R.string.dialog_ok) {
                 col.modSchemaNoCheck()
                 coroutine.resume(true)
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                coroutine.resume(false)
-            }
-            .show()
+            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+            onCancel { coroutine.resume(false) }
+        }
     }
 }

@@ -51,13 +51,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.*
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
+import org.json.JSONArray
+import org.json.JSONException
 import timber.log.Timber
-import java.lang.NumberFormatException
-import java.lang.RuntimeException
 import java.util.*
-import kotlin.Throws
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected

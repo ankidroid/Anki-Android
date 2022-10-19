@@ -50,8 +50,8 @@
         <item quantity="other">%d kaarten getoond</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d notitie getoond</item>
+        <item quantity="other">%d notities weergegeven</item>
     </plurals>
     <string name="card_browser_all_decks">Alle leersets</string>
     <string name="card_browser_delete_card">Memo\'s verwijderen</string>
@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">Alle leersets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kaart verwijderd</item>
         <item quantity="other">%d kaarten verwijderd</item>

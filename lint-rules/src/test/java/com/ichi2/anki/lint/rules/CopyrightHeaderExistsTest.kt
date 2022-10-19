@@ -47,8 +47,8 @@ class CopyrightHeaderExistsTest {
         
         import com.ichi2.libanki.Collection;
         
-        import com.ichi2.utils.JSONException;
-        import com.ichi2.utils.JSONObject;
+        import org.json.JSONException;
+        import org.json.JSONObject;
         
         import timber.log.Timber;
         

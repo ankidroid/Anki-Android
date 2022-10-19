@@ -90,7 +90,7 @@
         <item>Тип записи</item>
         <item>Вопрос</item>
         <item>Метки</item>
-        <item>Забытых</item>
+        <item>Ошибки</item>
         <item>Повторения</item>
         <item>Интервал</item>
         <item>Лёгкость</item>
@@ -101,7 +101,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Применить</string>
-    <string name="filter_by_flags">Флаги</string>
+    <string name="filter_by_flags">Флажки</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
     <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
@@ -123,7 +123,6 @@
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
-    <string name="saving_changes">Изменения сохраняются&#8230;</string>
     <string name="reordering_cards">Карточки перемешиваются&#8230;</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
@@ -164,7 +163,6 @@
     <string name="empty_card_warning">Эта карточка пуста. Используйте опцию «Пустые карточки» из меню списка колод.</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
     <string name="delete_deck">Колода удаляется&#8230;</string>
-    <string name="show_hint">Показать %s</string>
     <string name="info_rate">Оценить AnkiDroid</string>
     <string name="import_title">Импорт</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
@@ -198,14 +196,25 @@
     <string name="export_include_media">Вместе с медиафайлами</string>
     <string name="confirm_apkg_export">Экспортировать коллекцию в пакет Anki?</string>
     <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Экспортировать выбранную карточку в apkg файл?</item>
+        <item quantity="few">Export %d selected cards as apkg file?</item>
+        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
+        <item quantity="few">Export %d selected notes as apkg file?</item>
+        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
+    </plurals>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
-    <string name="export_successful_title">Отправить Anki-пакет?</string>
-    <string name="export_send_button">Отправить</string>
+    <string name="export_success_title">Коллекция успешно экспортирована</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
-    <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_success_message">Вы можете выбрать папку для сохранения или поделиться через другое приложение.</string>
+    <string name="export_share_title">Отправить пакет Anki с помощью</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[        Привет!
         <br/><br/>
@@ -215,6 +224,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
+    <string name="export_select_save_app">Выберите место сохранения</string>
+    <string name="export_select_share_app">Выберите, как поделиться</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
@@ -355,7 +366,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели инструментов</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -372,7 +383,7 @@
     <string name="cancel_download_question_title">Отменить загрузку?</string>
     <string name="downloading_file">Загружается %s</string>
     <string name="import_deck">Импортировать колоду</string>
-    <string name="something_wrong">Что-то пошло не так, попробуйте еще раз</string>
+    <string name="something_wrong">Что-то пошло не так. Попробуйте ещё раз</string>
     <string name="download_failed">Загрузка не удалась</string>
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
@@ -385,7 +396,7 @@
     <string name="suspended_card">Карточка исключена</string>
     <string name="suspended_note">Запись исключена</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Сделать поле %s липким</string>
+    <string name="note_editor_toggle_sticky">Закрепить поле %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Перенос хранилища</string>
     <string name="scoped_storage_initial_message">AnkiDroid должен перенести данные, чтобы соответствовать новым правилам конфиденциальности Android
@@ -422,10 +433,10 @@
     <string name="deck_created">Колода создана</string>
     <string name="deck_renamed">Колода переименована</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kiitos спасибо </string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Яблокь</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
     <string name="toggle_cards_notes">Переключить карточки/заметки</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
+    <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
     <string name="browser_options_dialog_heading">Настройки браузера</string>
 </resources>

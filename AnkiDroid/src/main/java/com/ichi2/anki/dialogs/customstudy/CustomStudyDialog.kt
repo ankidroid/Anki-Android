@@ -30,6 +30,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -43,8 +44,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfigura
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.async.CollectionTask.RebuildCram
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
@@ -52,13 +51,14 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
+
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
@@ -208,7 +208,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
                 when (contextMenuOption) {
                     STUDY_NEW -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply()
+                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
@@ -216,7 +216,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply()
+                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
@@ -476,8 +476,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        TaskManager.launchCollectionTask(RebuildCram(), createCustomStudySessionListener())
-
+        launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }
@@ -489,10 +488,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             customStudyListener?.onExtendStudyLimits()
         }
         customStudyListener?.dismissAllDialogFragments()
-    }
-
-    private fun createCustomStudySessionListener(): CreateCustomStudySessionListener {
-        return CreateCustomStudySessionListener(customStudyListener)
     }
 
     /**

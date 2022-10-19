@@ -42,6 +42,16 @@ object AnkiAssert {
         }
     }
 
+    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
+    // suspend variant of [assertDoesNotThrow]
+    suspend fun assertDoesNotThrowSuspend(block: suspend () -> Unit) {
+        try {
+            block()
+        } catch (e: Exception) {
+            throw AssertionError("method should not throw", e)
+        }
+    }
+
     fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
         try {
             r.run()

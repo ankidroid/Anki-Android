@@ -69,21 +69,46 @@ import java.io.*
  * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
  */
 interface Compat {
-    fun setupNotificationChannel(context: Context, id: String, name: String)
+    fun setupNotificationChannel(context: Context)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
+
+    /**
+     * Retrieve extended data from the intent.
+     * @param name – The name of the desired item.
+     * @param className – The type of the object expected.
+     * @return the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
+     */
     fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
+
+    /**
+     * Retrieve extended data from the intent.
+     * @param name – The name of the desired item.
+     * @param clazz – The type of the object expected.
+     * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
+     */
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
+    /**
+     * Copy file at path [source] to path [target]
+     */
     @Throws(IOException::class)
     fun copyFile(source: String, target: String)
 
+    /**
+     * Copy file at path [source] to [target]
+     * @return the number of bytes read or written
+     */
     @Throws(IOException::class)
     fun copyFile(source: String, target: OutputStream): Long
 
+    /**
+     * Copy file at path [source] to path [target]
+     * @return the number of bytes read or written
+     */
     @Throws(IOException::class)
     fun copyFile(source: InputStream, target: String): Long
 

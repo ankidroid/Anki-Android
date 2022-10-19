@@ -29,13 +29,14 @@ import anki.notetypes.StockNotetype
 import com.ichi2.anki.R
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
-import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.*
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 
 class NoteTypeNameID(val name: String, val id: NoteTypeId)
@@ -60,7 +61,7 @@ fun NoteType.update(updateFrom: NoteType) {
     }
 }
 
-fun NoteType.deepcopy(): NoteType = NoteType(JSONObject(this))
+fun NoteType.deepcopy(): NoteType = NoteType(this.deepClone())
 
 var NoteType.flds: JSONArray
     get() = getJSONArray("flds")

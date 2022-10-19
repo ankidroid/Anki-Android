@@ -48,7 +48,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
-import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
@@ -298,11 +297,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                mProgressDialog = show(
-                    requireActivity(), null,
-                    resources.getString(R.string.rebuild_filtered_deck), true
-                )
-                TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
+                launchCatchingTask { rebuildCram() }
                 return true
             }
             R.id.action_empty -> {
@@ -324,6 +319,17 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             else -> return false
         }
+    }
+
+    suspend fun rebuildCram() {
+        val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+            withCol {
+                Timber.d("doInBackground - RebuildCram")
+                sched.rebuildDyn(decks.selected())
+                updateValuesFromDeck(this, true)
+            }
+        }
+        rebuildUi(result, true)
     }
 
     @VisibleForTesting
@@ -445,11 +451,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             if (deck.isDyn && deck.has("empty")) {
                 deck.remove("empty")
             }
-            mProgressDialog = show(
-                requireActivity(), null,
-                resources.getString(R.string.rebuild_filtered_deck), true
-            )
-            TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
+            launchCatchingTask { rebuildCram() }
         } else {
             TaskManager.waitToFinish()
             refreshInterface(true)
@@ -528,19 +530,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          */
         val eta: Int
     )
-
-    /**
-     * Returns a listener that rebuilds the interface after execute.
-     *
-     * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
-     *                        to reflect the latest values.
-     */
-    private fun getCollectionTaskListener(refreshDecklist: Boolean): TaskListener<Void?, DeckStudyData?> {
-        return object : TaskListener<Void?, DeckStudyData?>() {
-            override fun onPreExecute() {}
-            override fun onPostExecute(result: DeckStudyData?) = rebuildUi(result, refreshDecklist)
-        }
-    }
 
     /** Open cram deck option if deck is opened for the first time
      * @return Whether we opened the deck options */

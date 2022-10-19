@@ -41,7 +41,6 @@ import android.view.WindowManager.BadTokenException
 import android.widget.*
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -65,7 +64,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
-import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -109,6 +107,7 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
+import com.ichi2.themes.Themes
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
@@ -117,6 +116,7 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -275,7 +275,7 @@ open class DeckPicker :
     private val mImportAddListener = ImportAddListener(this)
 
     @KotlinCleanup("Migrate from Triple to Kotlin class")
-    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
+    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
         override fun actualOnPostExecute(context: DeckPicker, result: Triple<List<AnkiPackageImporter>?, Boolean, String?>?) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
@@ -336,7 +336,7 @@ open class DeckPicker :
         return ImportReplaceListener(this)
     }
 
-    private class ImportReplaceListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
+    private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
         override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
             Timber.i("Import: Replace Task Completed")
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
@@ -588,36 +588,17 @@ open class DeckPicker :
         }
     }
 
+    /**
+     * precondition: [hasStorageAccessPermission] should return false
+     */
     fun requestStoragePermission() {
-        fun showStoragePermissionDialog() {
-            val storagePermissions = arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
-        }
-
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
-        val welcomeDialogDismissed = sharedPrefs.getBoolean("welcomeDialogDismissed", false)
-        if (welcomeDialogDismissed) {
-            // DEFECT #5847: This fails if the activity is killed.
-            // Even if the dialog is showing, we want to show it again.
-            showStoragePermissionDialog()
-            return
-        }
-
-        Timber.i("Displaying initial permission request dialog")
-        // Request storage permission if we don't have it (e.g. on Android 6.0+)
-        MaterialDialog(this).show {
-            title(R.string.collection_load_welcome_request_permissions_title)
-            message(R.string.collection_load_welcome_request_permissions_details)
-            positiveButton(R.string.dialog_ok) {
-                sharedPrefs.edit { putBoolean("welcomeDialogDismissed", true) }
-                showStoragePermissionDialog()
-            }
-            cancelable(false)
-            cancelOnTouchOutside(false)
-        }
+        // DEFECT #5847: This fails if the activity is killed.
+        // Even if the dialog is showing, we want to show it again.
+        val storagePermissions = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -696,29 +677,35 @@ open class DeckPicker :
     }
 
     private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
+        menuItem.setTitle(
+            when (syncIcon) {
+                SyncIconState.Normal -> R.string.button_sync
+                SyncIconState.PendingChanges -> R.string.button_sync
+                SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
+                SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+                SyncIconState.Disabled -> R.string.button_sync_disabled
+            }
+        )
         when (syncIcon) {
             SyncIconState.Normal -> {
                 BadgeDrawableBuilder.removeBadge(menuItem)
-                menuItem.setTitle(R.string.button_sync)
             }
             SyncIconState.PendingChanges -> {
                 BadgeDrawableBuilder(resources)
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
                     .replaceBadge(menuItem)
-                menuItem.setTitle(R.string.button_sync)
             }
             SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
                 BadgeDrawableBuilder(resources)
                     .withText('!')
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
                     .replaceBadge(menuItem)
-                if (syncIcon == SyncIconState.FullSync) {
-                    menuItem.setTitle(R.string.sync_menu_title_full_sync)
-                } else {
-                    menuItem.setTitle(R.string.sync_menu_title_no_account)
-                }
+            }
+            SyncIconState.Disabled -> {
+                BadgeDrawableBuilder.removeBadge(menuItem)
             }
         }
+        menuItem.iconAlpha = if (syncIcon == SyncIconState.Disabled) Themes.ALPHA_ICON_DISABLED_LIGHT else Themes.ALPHA_ICON_ENABLED_LIGHT
     }
 
     @VisibleForTesting
@@ -739,10 +726,13 @@ open class DeckPicker :
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
         val auth = syncAuth()
-        val syncStatus = SyncStatus.getSyncStatus(col, auth)
+        val syncStatus = SyncStatus.getSyncStatus(col, this, auth)
         return when (syncStatus) {
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
                 SyncIconState.Normal
+            }
+            SyncStatus.ONGOING_MIGRATION -> {
+                SyncIconState.Disabled
             }
             SyncStatus.HAS_CHANGES -> {
                 SyncIconState.PendingChanges
@@ -963,13 +953,12 @@ open class DeckPicker :
 
         // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
-        val isLoggedIn = preferences.getString("hkey", "")!!.isNotEmpty()
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
         val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
 
-        if (isLoggedIn && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
+        if (SyncStatus.isLoggedIn && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
@@ -1138,8 +1127,7 @@ open class DeckPicker :
                 // Fresh install
                 current
             }
-            preferences.edit().putLong(UPGRADE_VERSION_KEY, current).apply()
-
+            preferences.edit { putLong(UPGRADE_VERSION_KEY, current) }
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
@@ -1296,7 +1284,7 @@ open class DeckPicker :
         return UndoTaskListener(isReview, this)
     }
 
-    private class UndoTaskListener(private val isReview: Boolean, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Unit, Computation<NextCard<*>>?>(deckPicker) {
+    private class UndoTaskListener(private val isReview: Boolean, deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Unit, Computation<NextCard<*>>?>(deckPicker) {
         override fun actualOnCancelled(context: DeckPicker) {
             context.hideProgressBar()
         }
@@ -1362,7 +1350,7 @@ open class DeckPicker :
      */
     override fun showSyncErrorDialog(dialogType: Int, message: String?) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
-        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.SYNC)
+        showAsyncDialogFragment(newFragment, Channel.SYNC)
     }
 
     /**
@@ -1384,7 +1372,7 @@ open class DeckPicker :
             showSimpleNotification(
                 res.getString(R.string.app_name),
                 res.getString(messageResource),
-                NotificationChannels.Channel.SYNC
+                Channel.SYNC
             )
         } else {
             if (syncMessage.isNullOrEmpty()) {
@@ -1555,11 +1543,6 @@ open class DeckPicker :
             }
         }
         return false
-    }
-
-    // Sync with Anki Web
-    override fun sync() {
-        sync(null)
     }
 
     /**
@@ -2029,29 +2012,26 @@ open class DeckPicker :
     }
 
     private fun promptUserToUpdateScheduler() {
-        val builder = AlertDialog.Builder(this)
-            .setMessage(col.tr.schedulingUpdateRequired())
-            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+        MaterialDialog(this).show {
+            message(text = col.tr.schedulingUpdateRequired())
+            positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
                     if (!userAcceptsSchemaChange(col)) {
                         return@launchCatchingTask
                     }
-                    withProgress {
-                        CollectionManager.updateScheduler()
-                    }
+                    withProgress { CollectionManager.updateScheduler() }
                     showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
                     refreshState()
                 }
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                // nothing to do
-            }
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            builder.setNeutralButton(col.tr.schedulingUpdateMoreInfoButton()) { _, _ ->
-                this.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+            negativeButton(R.string.dialog_cancel)
+            if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
+                @Suppress("DEPRECATION")
+                neutralButton(text = col.tr.schedulingUpdateMoreInfoButton()) {
+                    this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+                }
             }
         }
-        builder.show()
     }
 
     private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
@@ -2156,7 +2136,7 @@ open class DeckPicker :
         return UpdateDeckListListener(this)
     }
 
-    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(private val deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
+    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             if (!context.colIsOpen()) {
                 context.showProgressBar()
@@ -2181,7 +2161,7 @@ open class DeckPicker :
 
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
-        if (!BackendFactory.defaultLegacySchema) {
+        if (!BackendFactory.defaultLegacySchema && Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
             // actually happens
             performBackupInBackground()
@@ -2446,29 +2426,17 @@ open class DeckPicker :
         }
     }
 
-    /**
-     * Show progress bars and rebuild deck list on completion
-     */
-    private fun simpleProgressListener(): SimpleProgressListener {
-        return SimpleProgressListener(this)
-    }
-
-    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData?) {
-            context.updateDeckList()
-            if (context.fragmented) {
-                context.loadStudyOptionsFragment(false)
+    suspend fun rebuildFiltered(did: DeckId) {
+        withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+            withCol {
+                Timber.d("rebuildFiltered: doInBackground - RebuildCram")
+                decks.select(did)
+                sched.rebuildDyn(decks.selected())
+                updateValuesFromDeck(this, true)
             }
+            updateDeckList()
+            if (fragmented) loadStudyOptionsFragment(false)
         }
-    }
-
-    fun rebuildFiltered(did: DeckId) {
-        col.decks.select(did)
-        TaskManager.launchCollectionTask(RebuildCram(), simpleProgressListener())
     }
 
     fun emptyFiltered(did: DeckId) {
@@ -2787,5 +2755,9 @@ enum class SyncIconState {
     Normal,
     PendingChanges,
     FullSync,
-    NotLoggedIn
+    NotLoggedIn,
+    /**
+     * The icon should appear as disabled. Currently only occurs during scoped storage migration.
+     */
+    Disabled,
 }

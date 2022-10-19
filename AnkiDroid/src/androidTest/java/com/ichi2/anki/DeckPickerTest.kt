@@ -19,6 +19,7 @@ package com.ichi2.anki
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
@@ -48,7 +49,11 @@ class DeckPickerTest {
 
     @get:Rule
     val mRuntimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
 
     @Ignore("This test appears to be flaky everywhere")
     @Test

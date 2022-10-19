@@ -34,6 +34,8 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.text.Normalizer
 import java.util.*

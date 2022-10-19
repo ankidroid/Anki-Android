@@ -15,17 +15,19 @@
  */
 package com.ichi2.anki.export
 
-import android.content.ComponentName
+import android.app.Activity
+import android.content.ClipData
 import android.content.Intent
-import android.content.pm.LabeledIntent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ShareCompat.IntentBuilder
+import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
+import anki.generic.Empty
+import anki.import_export.ExportLimit
+import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -67,100 +69,107 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did))
     }
 
-    override fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
-        val exportDir = File(activity.externalCacheDir, "export")
-        exportDir.mkdirs()
-        val exportPath: File
-        val timeStampSuffix = "-" + run {
+    /**
+     * Show the export dialog in the Browser to export selected cards or notes
+     * @param msg the message to show in the dialog
+     * @param ids the selected card/note ids
+     * @param isCardList true if the ids are card ids, false if they are note ids
+     */
+    fun showExportDialog(msg: String, ids: List<Long>, isCardList: Boolean) {
+        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, ids, isCardList))
+    }
+
+    private fun getTimeStampSuffix() =
+        "-" + run {
             collectionSupplier.get()
             TimeUtils.getTimestamp(TimeManager.time)
         }
-        exportPath = if (path != null) {
-            // filename has been explicitly specified
+
+    private fun getColpkgExportName(exportDir: File): File {
+        // full collection export -- use "collection.colpkg"
+        val colPath = File(collectionSupplier.get().path)
+        val newFileName = colPath.name.replace(".anki2", "${getTimeStampSuffix()}.colpkg")
+        return File(exportDir, newFileName)
+    }
+
+    private fun getExportFileName(path: String?, prefix: String, includeSched: Boolean): File {
+        val exportDir = File(activity.externalCacheDir, "export")
+        exportDir.mkdirs()
+
+        return if (path != null) {
             File(exportDir, path)
-        } else if (did != null) {
-            // filename not explicitly specified, but a deck has been specified so use deck name
-            File(exportDir, collectionSupplier.get().decks.get(did).getString("name").replace("\\W+".toRegex(), "_") + timeStampSuffix + ".apkg")
-        } else if (!includeSched) {
-            // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
-            File(exportDir, "All Decks$timeStampSuffix.apkg")
+        } else if (prefix == "All Decks" && includeSched) { // full collection export as .colpkg
+            getColpkgExportName(exportDir)
         } else {
-            // full collection export -- use "collection.colpkg"
-            val colPath = File(collectionSupplier.get().path)
-            val newFileName = colPath.name.replace(".anki2", "$timeStampSuffix.colpkg")
-            File(exportDir, newFileName)
+            File(exportDir, "$prefix${getTimeStampSuffix()}.apkg")
         }
-        val exportListener = ExportListener(activity, mDialogsFactory)
+    }
+
+    override fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
+        val exportPath = getExportFileName(path, "All Decks", includeSched)
+
         if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(
-                ExportApkg(
-                    exportPath.path,
-                    did,
-                    includeSched,
-                    includeMedia
-                ),
-                exportListener
-            )
+            exportApkgLegacy(exportPath, null, includeSched, includeMedia)
         } else {
-            activity.launchCatchingTask {
-                if (did == null && includeSched) {
+            if (includeSched) {
+                activity.launchCatchingTask {
                     activity.exportColpkg(exportPath.path, includeMedia)
-                } else {
-                    activity.exportApkg(exportPath.path, includeSched, includeMedia, did)
+                    val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+                    activity.showAsyncDialogFragment(dialog)
                 }
-                val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
-                activity.showAsyncDialogFragment(dialog)
+            } else {
+                val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
+                exportNewBackendApkg(exportPath, false, includeMedia, limit)
             }
+        }
+    }
+
+    override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
+        val deckName = collectionSupplier.get().decks.current().getString("name")
+        val exportPath = getExportFileName(path, deckName, includeSched)
+
+        if (BackendFactory.defaultLegacySchema) {
+            exportApkgLegacy(exportPath, did, includeSched, includeMedia)
+        } else {
+            val limit = exportLimit { this.deckId = did }
+            exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
+        }
+    }
+
+    /**
+     * Export selected cards or notes using the new backend
+     * TODO: Once new backend is default, exportColAsApkg and exportDeckAsApkg can be merged into this function
+     */
+    override fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean) {
+        val prefix = if (limit.hasCardIds()) "Cards" else "Notes"
+        val exportPath = getExportFileName(path, prefix, includeSched)
+        exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
+    }
+
+    private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
+        val exportListener = ExportListener(activity, mDialogsFactory)
+        TaskManager.launchCollectionTask(
+            ExportApkg(
+                exportPath.path,
+                did,
+                includeSched,
+                includeMedia
+            ),
+            exportListener
+        )
+    }
+
+    // Only for new backend schema
+    private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, limit: ExportLimit) {
+        activity.launchCatchingTask {
+            activity.exportApkg(exportPath.path, includeSched, includeMedia, limit)
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+            activity.showAsyncDialogFragment(dialog)
         }
     }
 
     override fun dismissAllDialogFragments() {
         activity.dismissAllDialogFragments()
-    }
-
-    @Suppress("deprecation") // API33 deprecation for pm.queryIntentActivities
-    fun shareFileIntent(exportPath: String, uri: Uri): Intent {
-        val attachment = File(exportPath)
-        val pm: PackageManager = activity.packageManager
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        sendIntent.type = "application/apkg"
-        val resInfo = pm.queryIntentActivities(sendIntent, 0)
-
-        // If we make two intents, one for save file and one for share, we get save file as
-        // an option in the share sheet
-        val intentList = arrayListOf(
-            LabeledIntent(
-                saveFileIntent(attachment),
-                BuildConfig.APPLICATION_ID,
-                "", // param "nonLocalizedLabel" isn't actually used
-                0 // param "icon" isn't actually used, this is the constant for "No icon"
-            )
-        )
-
-        for (ri in resInfo) {
-            val packageName = ri.activityInfo.packageName
-            val intent = IntentBuilder(activity)
-                .setType("application/apkg")
-                .setStream(uri)
-                .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
-                .setHtmlText(activity.getString(R.string.export_email_text, activity.getString(R.string.link_manual), activity.getString(R.string.link_distributions)))
-                .intent
-                .setAction(Intent.ACTION_SEND)
-                .setDataAndType(uri, "application/apkg")
-                .setComponent(ComponentName(packageName, ri.activityInfo.name))
-                .setPackage(packageName)
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-            intentList.add(
-                LabeledIntent(intent, packageName, ri.loadLabel(pm), ri.iconResource)
-            )
-        }
-
-        return Intent.createChooser(
-            intentList.first(),
-            activity.getString(R.string.export_share_title)
-        ).apply { putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toTypedArray()) }
     }
 
     override fun shareFile(path: String) {
@@ -179,8 +188,25 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
             return
         }
-
-        val shareFileIntent = shareFileIntent(path, uri)
+        val sendIntent = ShareCompat.IntentBuilder(activity)
+            .setType("application/apkg")
+            .setStream(uri)
+            .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
+            .setHtmlText(
+                activity.getString(
+                    R.string.export_email_text,
+                    activity.getString(R.string.link_manual),
+                    activity.getString(R.string.link_distributions),
+                )
+            )
+            .intent.apply {
+                clipData = ClipData.newRawUri(attachment.name, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+        val shareFileIntent = Intent.createChooser(
+            sendIntent,
+            activity.getString(R.string.export_share_title)
+        )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivityWithoutAnimation(shareFileIntent)
         } else {
@@ -201,22 +227,19 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
         // Send the user to the standard Android file picker via Intent
         mExportFileName = exportPath
-        val saveIntent = saveFileIntent(attachment)
-        mSaveFileLauncher.launch(saveIntent)
-    }
-
-    private fun saveFileIntent(file: File): Intent =
-        Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+        val saveIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "application/apkg"
-            putExtra(Intent.EXTRA_TITLE, file.name)
+            putExtra(Intent.EXTRA_TITLE, attachment.name)
             putExtra("android.content.extra.SHOW_ADVANCED", true)
             putExtra("android.content.extra.FANCY", true)
             putExtra("android.content.extra.SHOW_FILESIZE", true)
         }
+        mSaveFileLauncher.launch(saveIntent)
+    }
 
     private fun saveFileCallback(result: ActivityResult) {
-        val isSuccessful = exportToProvider(result.data!!, true)
+        val isSuccessful = exportToProvider(result.data!!)
 
         if (isSuccessful) {
             activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
@@ -225,7 +248,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
-    private fun exportToProvider(intent: Intent, deleteAfterExport: Boolean): Boolean {
+    private fun exportToProvider(intent: Intent, deleteAfterExport: Boolean = true): Boolean {
         if (intent.data == null) {
             Timber.e("exportToProvider() provided with insufficient intent data %s", intent)
             return false
@@ -261,6 +284,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         fragmentManager.fragmentFactory = mDialogsFactory
         mSaveFileLauncher = activity.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult -> saveFileCallback(result) }
+        ) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                saveFileCallback(result)
+            } else {
+                Timber.i("The file selection for the exported collection was cancelled")
+            }
+        }
     }
 }

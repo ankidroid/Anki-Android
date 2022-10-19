@@ -103,6 +103,18 @@
     <string name="card_browser_search_all_decks">חיפוש בכל החפיסות</string>
     <string name="card_browser_unknown_deck_name">לא ידוע</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">חתוך תוכן</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="two">Export cards</item>
+        <item quantity="many">Export cards</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="two">Export notes</item>
+        <item quantity="many">Export notes</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">קלף אחד נמחק.</item>
         <item quantity="two">%d קלפים נמחקו.</item>

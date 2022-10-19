@@ -24,10 +24,10 @@ import com.ichi2.anki.UIUtils.getDayStart
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException

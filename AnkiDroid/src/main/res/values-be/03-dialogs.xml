@@ -188,9 +188,6 @@
     <string name="multimedia_editor_failed">Памылка адкрыцця рэдактара мультымедыя</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Адхілены доступ да запісу гуку</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Вітаем у AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">Праграме AnkiDroid неабходны доступ да сховішча прылады, якое выкарыстоўваецца выключна для захавання калекцыі AnkiDroid, картак і рэзервовага капіявання. Код праграмы адкрыты кожнаму, а сама праграма напісаная добраахвотнікамі і ёй давяраюць мільёны людзей па ўсім свеце.\n\nКалі ў вас засталіся пытанні, калі ласка, звярніцеся да даведкі праграмы або спытайце на нашым форуме.\n\nДзякуй, што карыстаецеся AnkiDroid!\n— Каманда распрацоўшчыкаў AnkiDroid </string>
     <string name="mutimedia_editor_assertion_failed">Узнікла невядомая памылка падчас адлюстравання пашыранага рэдактара</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Праграма AnkiDroid абноўленая</string>

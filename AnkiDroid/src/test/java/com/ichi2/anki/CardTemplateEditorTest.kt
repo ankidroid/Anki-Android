@@ -25,9 +25,9 @@ import com.afollestad.materialdialogs.WhichButton
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Model
 import com.ichi2.testutils.assertFalse
-import com.ichi2.utils.JSONObject
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -312,7 +312,7 @@ class CardTemplateEditorTest : RobolectricTest() {
      * Normal template deletion - with no selective generation should of course work
      */
     @Test
-    fun testDeleteTemplateWithGeneratedCards() {
+    fun testDeleteTemplateWithGeneratedCards() = runTest {
         val modelName = "Basic (and reversed card)"
         var collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
 

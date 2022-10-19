@@ -53,7 +53,7 @@
     <string name="pref_search_no_results">Не найдено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
-    <string name="pref_cat_studying" maxLength="41">Учёба</string>
+    <string name="pref_cat_studying" maxLength="41">Поведение</string>
     <string name="pref_cat_system_wide" maxLength="41">Общесистемные</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
@@ -140,7 +140,7 @@
     <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
     <string name="override_font" maxLength="41">Когда применять шрифт по умолчанию</string>
     <string name="language" maxLength="41">Язык</string>
-    <string name="language_system">системный</string>
+    <string name="language_system">Системный</string>
     <string name="notification_pref" maxLength="41">Уведомления</string>
     <string name="notification_pref_title" maxLength="41">Какие показывать</string>
     <string name="never_notify">Никакие</string>
@@ -226,12 +226,23 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число итераций моделирования</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Использовать пользовательский сервер</string>
-    <string name="custom_sync_server_enable_summary">Если вы не хотите использовать AnkiWeb, то вы можете указать альтернативный сервер</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
+    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own servers for synchronization.
+        You may specify either collection or media server, or both.
+        If not set, the default AnkiWeb servers will be used instead.
+        For example, you could use the sync server built into Anki
+        Desktop to sync the collection when you only have a local network,
+        and AnkiWeb to sync media when you have general internet access.
+        <a href="%s">Learn more</a>
+        <br>
+        <br>Note: unlike in previous AnkiDroid versions,
+        you must specify the full custom sync URL,
+        for example: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
-    <string name="custom_sync_server_base_url_invalid">Недопустимый адрес синхронизации</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
-    <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>
     <string name="bluetooth">Bluetooth</string>
@@ -250,7 +261,7 @@
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">Новые карточки</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторяемые</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забытые</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
     <string name="deck_conf_steps" maxLength="41">Шаги (в минутах)</string>
@@ -350,8 +361,8 @@
     <string name="pref_cat_experimental" maxLength="41">Экспериментальная</string>
     <string name="experimental_pref_confirmation" maxLength="41">Включить «%s»</string>
     <string name="use_rust_backend_title" maxLength="41">Использовать новый бэк-энд</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_summary">Включает новые функции Anki, например, планировщик v3\nНЕСТАБИЛЬНО. Не используйте для коллекции, о которой вы заботитесь. Не изменяется при закрытии приложения</string>
+    <string name="use_rust_backend_warning">Есть вероятность того, что данные будут повреждены, что требует удаления приложения и папки AnkiDroid, а также вероятность порчи после синхронизации с AnkiWeb.\n\nСпасибо вам за тестирование. Убедитесь, что у вас есть резервная копия кроме AnkiWeb!</string>
     <string name="enable_v3_sched_title" maxLength="41">Использовать планировщик v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Настройки разработчика</string>

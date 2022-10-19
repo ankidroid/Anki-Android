@@ -31,8 +31,10 @@ import android.widget.TextView
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.DebugInfoService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.appName
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -105,9 +107,15 @@ class AboutFragment : Fragment() {
         val clipboardManager = requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         if (clipboardManager != null) {
             clipboardManager.setPrimaryClip(ClipData.newPlainText("$appName v$pkgVersionName", debugInfo))
-            UIUtils.showThemedToast(context, getString(R.string.about_ankidroid_successfully_copied_debug), true)
+            showSnackbar(
+                R.string.about_ankidroid_successfully_copied_debug,
+                Snackbar.LENGTH_SHORT
+            )
         } else {
-            UIUtils.showThemedToast(context, getString(R.string.about_ankidroid_error_copy_debug_info), false)
+            showSnackbar(
+                R.string.about_ankidroid_error_copy_debug_info,
+                Snackbar.LENGTH_SHORT
+            )
         }
     }
 

@@ -82,8 +82,8 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Остался %1$d день %2$d</item>
-        <item quantity="few">Остался %1$d дня %2$d</item>
-        <item quantity="many">Остался %1$d дней %2$d</item>
+        <item quantity="few">Осталось %1$d дня %2$d</item>
+        <item quantity="many">Осталось %1$d дней %2$d</item>
         <item quantity="other">Осталось %1$d дней %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>
@@ -186,6 +186,7 @@
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="empty_cloze_warning">Правьте эту заметку и добавьте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронизация временно отключена</string>
     <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
     <string name="continue_sync">Продолжить синхронизацию</string>
     <string name="sync_cancelled">Синхронизация отменена</string>

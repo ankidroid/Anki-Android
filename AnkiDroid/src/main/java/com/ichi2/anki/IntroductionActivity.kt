@@ -31,6 +31,7 @@ import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.*
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getColorFromAttr
 import timber.log.Timber
@@ -39,6 +40,7 @@ import timber.log.Timber
  * App introduction for new users.
  * TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
  */
+@NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
 class IntroductionActivity : AppIntro() {
 
     private val onLoginResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

@@ -43,12 +43,12 @@ import com.ichi2.testutils.AnkiAssert.checkRevIvl
 import com.ichi2.testutils.AnkiAssert.without_unicode_isolation
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.MutableTime
-import com.ichi2.utils.JSONArray
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
+import org.json.JSONArray
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith

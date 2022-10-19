@@ -118,13 +118,13 @@ object HelpDialog {
             // intentionally blank - no children
         }
 
-        private constructor(`in`: Parcel?) : super(`in`!!)
+        private constructor(source: Parcel?) : super(source!!)
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
-                override fun createFromParcel(`in`: Parcel): RateAppItem {
-                    return RateAppItem(`in`)
+                override fun createFromParcel(source: Parcel): RateAppItem {
+                    return RateAppItem(source)
                 }
 
                 override fun newArray(size: Int): Array<RateAppItem?> {
@@ -151,8 +151,8 @@ object HelpDialog {
             return Uri.parse(ctx.getString(mUrlLocationRes))
         }
 
-        private constructor(`in`: Parcel) : super(`in`) {
-            mUrlLocationRes = `in`.readInt()
+        private constructor(source: Parcel) : super(source) {
+            mUrlLocationRes = source.readInt()
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {
@@ -167,8 +167,8 @@ object HelpDialog {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
-                override fun createFromParcel(`in`: Parcel): LinkItem {
-                    return LinkItem(`in`)
+                override fun createFromParcel(source: Parcel): LinkItem {
+                    return LinkItem(source)
                 }
 
                 override fun newArray(size: Int): Array<LinkItem?> {
@@ -192,8 +192,8 @@ object HelpDialog {
         }
 
         @Suppress("deprecation") // readSerializable
-        private constructor(`in`: Parcel) : super(`in`) {
-            mFunc = `in`.readSerializable() as ActivityConsumer
+        private constructor(source: Parcel) : super(source) {
+            mFunc = source.readSerializable() as ActivityConsumer
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {
@@ -212,8 +212,8 @@ object HelpDialog {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
-                override fun createFromParcel(`in`: Parcel): FunctionItem {
-                    return FunctionItem(`in`)
+                override fun createFromParcel(source: Parcel): FunctionItem {
+                    return FunctionItem(source)
                 }
 
                 override fun newArray(size: Int): Array<FunctionItem?> {
@@ -240,15 +240,15 @@ object HelpDialog {
             }
         }
 
-        private constructor(`in`: Parcel) : super(`in`)
+        private constructor(source: Parcel) : super(source)
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {}
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
-                override fun createFromParcel(`in`: Parcel): ExceptionReportItem {
-                    return ExceptionReportItem(`in`)
+                override fun createFromParcel(source: Parcel): ExceptionReportItem {
+                    return ExceptionReportItem(source)
                 }
 
                 override fun newArray(size: Int): Array<ExceptionReportItem?> {

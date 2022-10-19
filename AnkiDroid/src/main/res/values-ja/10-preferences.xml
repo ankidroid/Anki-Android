@@ -50,10 +50,10 @@
     <string name="pref_summary_seconds">%s秒</string>
     <string name="pref_summary_minutes">%s分</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">該当なし</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_studying" maxLength="41">学習</string>
     <string name="pref_cat_system_wide" maxLength="41">Androidシステム全般</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同期</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">従量制課金接続時の同期を許可</string>
+    <string name="metered_sync_summary">この設定を無効にすると、通信データ量に応じて課金する方式でネット接続しているときに同期しようとすると、確認メッセージが表示されます</string>
     <string name="app_theme" maxLength="41">テーマ</string>
     <string name="day_theme" maxLength="41">通常モードのテーマ</string>
     <string name="night_theme" maxLength="41">ナイトモードのテーマ</string>
@@ -174,12 +174,12 @@
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
-    <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再基本学習、緑: 復習）</string>
+    <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
     <string name="show_eta" maxLength="41">推定学習時間を表示</string>
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">先取り学習の限度</string>
+    <string name="learn_cutoff" maxLength="41">習得ステップの前倒しの限度</string>
     <string name="time_limit" maxLength="41">タイムボックスの時間枠</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
@@ -226,12 +226,23 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">シミュレーションの反復回数</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">同期サーバーを変更する</string>
-    <string name="custom_sync_server_enable_summary">AnkiWebのサービスを使用せず、代替サーバーを指定します</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
+    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own servers for synchronization.
+        You may specify either collection or media server, or both.
+        If not set, the default AnkiWeb servers will be used instead.
+        For example, you could use the sync server built into Anki
+        Desktop to sync the collection when you only have a local network,
+        and AnkiWeb to sync media when you have general internet access.
+        <a href="%s">Learn more</a>
+        <br>
+        <br>Note: unlike in previous AnkiDroid versions,
+        you must specify the full custom sync URL,
+        for example: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
-    <string name="custom_sync_server_base_url_invalid">同期先のURLが無効です</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
-    <string name="custom_sync_server_media_url_invalid">メディア同期のためのURLが無効です</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
@@ -245,12 +256,12 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">新規カードと基本学習</string>
+    <string name="deck_conf_new_cards" maxLength="41">新規カードと習得</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘却と再基本学習</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
-    <string name="deck_conf_steps" maxLength="41">学習ステップ（分）</string>
+    <string name="deck_conf_steps" maxLength="41">習得ステップ（分）</string>
     <string name="deck_conf_order" maxLength="41">順序</string>
     <string name="deck_conf_new_cards_day" maxLength="41">一日あたりの新規カード出題枚数の上限</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">最終ステップから復習開始までの間隔</string>
@@ -270,9 +281,9 @@
     <string name="deck_conf_max_ivl" maxLength="41">復習間隔の上限</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">新しい復習間隔（前回比）</string>
     <string name="deck_conf_min_ivl" maxLength="41">復習間隔の下限</string>
-    <string name="deck_conf_leech_thres" maxLength="41">無駄（定着困難）カードと判定する基準</string>
+    <string name="deck_conf_leech_thres" maxLength="41">無駄（習得困難）カードと判定する基準</string>
     <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
-    <string name="deck_conf_leech_action" maxLength="41">無駄（定着困難）カードへの処置</string>
+    <string name="deck_conf_leech_action" maxLength="41">無駄（習得困難）カードへの処置</string>
     <string name="deck_conf_max_time" maxLength="41">統計に利用する解答時間の最大値</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer" maxLength="41">タイマーを表示</string>
@@ -302,7 +313,7 @@
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
     <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の学習ステップを設定</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">このグループのデッキをリマインダー通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">リマインダー通知時刻</string>
     <!-- analytics options -->
@@ -325,7 +336,7 @@
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">寄付</a>することでAnkiDroidの開発を支援することができます。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ジェスチャーを追加</string>
-    <string name="binding_replace_gesture">ジェスチャーを置き換える</string>
+    <string name="binding_replace_gesture">ジェスチャーを置換</string>
     <string name="binding_add_key">キーを追加</string>
     <string name="binding_replace_key">キーを置き換える</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
@@ -339,12 +350,12 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
-    <string name="bindings_already_bound">このキーには既に %s の操作を割り当て済みです</string>
+    <string name="bindings_already_bound">既に「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">試験運用機能</string>
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_summary">V3スケジューラなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません。</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
     <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->
