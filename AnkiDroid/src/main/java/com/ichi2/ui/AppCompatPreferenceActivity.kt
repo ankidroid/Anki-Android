@@ -65,7 +65,6 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         val mSummaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
         abstract fun cacheValues()
 
