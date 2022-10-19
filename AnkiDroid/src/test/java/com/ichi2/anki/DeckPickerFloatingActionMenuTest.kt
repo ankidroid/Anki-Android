@@ -52,6 +52,7 @@ class DeckPickerFloatingActionMenuTest {
     @Mock private val mAddSharedLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
     @Mock private val mAddDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+    @Mock private val addNoteLabel: TextView = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
     @Mock private val mAddNoteLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
@@ -92,10 +93,10 @@ class DeckPickerFloatingActionMenuTest {
             on { findViewById<View>(R.id.fabBGLayout) } doReturn mFabBGLayout
             on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn mLinearLayout
             on { findViewById<View>(R.id.studyoptions_fragment) } doReturn mStudyOptionsFrame
+            on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
 
             on { findViewById<FloatingActionButton>(R.id.add_shared_action) } doReturn addSharedButton
             on { findViewById<FloatingActionButton>(R.id.add_deck_action) } doReturn addDeckButton
-            on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
             on { findViewById<TextView>(R.id.add_shared_label) } doReturn addSharedLabel
             on { findViewById<TextView>(R.id.add_deck_label) } doReturn addDeckLabel
         }
@@ -118,5 +119,7 @@ class DeckPickerFloatingActionMenuTest {
         assertTrue("after a tap, menu should be open") { menu.isFABOpen }
 
         mFabMain.simulateUnconfirmedSingleTap()
+
+        verify(deckPicker).addNote() // On single tap when FAB is already opened, it opens Add Note.
     }
 }

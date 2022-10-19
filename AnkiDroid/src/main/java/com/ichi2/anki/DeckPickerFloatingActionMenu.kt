@@ -36,7 +36,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
-    private val addNoteLabel: View = view.findViewById(R.id.add_note_label)
+    private val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
 
     // Colors values obtained from attributes
     private val fabNormalColor = MaterialColors.getColor(mFabMain, R.attr.fab_normal)
@@ -92,6 +92,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
+            addNoteLabel.visibility = View.VISIBLE
             mAddSharedLayout.alpha = 1f
             mAddDeckLayout.alpha = 1f
             addNoteLabel.alpha = 1f
@@ -150,6 +151,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                             if (!isFABOpen) {
                                 mAddSharedLayout.visibility = View.GONE
                                 mAddDeckLayout.visibility = View.GONE
+                                addNoteLabel.visibility = View.GONE
                             }
                         }
 
@@ -160,6 +162,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 // Close without animation
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
+                addNoteLabel.visibility = View.GONE
             }
         } else {
             mLinearLayout.alpha = 1f
@@ -193,6 +196,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                             if (!isFABOpen) {
                                 mAddSharedLayout.visibility = View.GONE
                                 mAddDeckLayout.visibility = View.GONE
+                                addNoteLabel.visibility = View.GONE
                             }
                         }
 
@@ -203,6 +207,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 // Close without animation
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
+                addNoteLabel.visibility = View.GONE
             }
         }
     }
