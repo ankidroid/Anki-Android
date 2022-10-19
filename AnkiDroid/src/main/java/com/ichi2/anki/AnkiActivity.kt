@@ -540,7 +540,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         val prefs = AnkiDroidApp.getSharedPrefs(this)
         // Show a notification unless all notifications have been totally disabled
         if (prefs.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "0")!!
-                .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
+            .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             val ticker: String? = if (title == resources.getString(R.string.app_name)) {
