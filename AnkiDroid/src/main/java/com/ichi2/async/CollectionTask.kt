@@ -167,55 +167,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    abstract class DismissNotes<Progress>(protected val cardIds: List<Long>) : TaskDelegate<Progress, Computation<Array<Card>>>() {
-        /**
-         * @param col
-         * @param collectionTask Represents the background tasks.
-         * @return whether the task succeeded, and the array of cards affected.
-         */
-        @KotlinCleanup("fix requireNoNulls")
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Computation<Array<Card>> {
-            // query cards
-            val cards = arrayOfNulls<Card>(cardIds.size)
-            for (i in cardIds.indices) {
-                cards[i] = col.getCard(cardIds[i])
-            }
-            try {
-                col.db.database.beginTransaction()
-                try {
-                    val succeeded = actualTask(col, collectionTask, cards.requireNoNulls())
-                    if (!succeeded) {
-                        return Computation.err()
-                    }
-                    col.db.database.setTransactionSuccessful()
-                } finally {
-                    DB.safeEndInTransaction(col.db)
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
-                return Computation.err()
-            }
-            // pass cards back so more actions can be performed by the caller
-            // (querying the cards again is unnecessarily expensive)
-            return Computation.ok(cards.requireNoNulls())
-        }
-
-        /**
-         * @param col The collection
-         * @param collectionTask, where to send progress and listen for cancellation
-         * @param cards Cards to which the task should be applied
-         * @return Whether the tasks succeeded.
-         */
-        protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
-    }
-
-    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            return changeDeckMulti(col, cards, newDid)
-        }
-    }
-
     class CheckDatabase : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
             Timber.d("doInBackgroundCheckDatabase")
@@ -228,6 +179,27 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 // Close the collection and we restart the app to reload
                 CollectionHelper.instance.closeCollection(true, "Check Database Completed")
                 Pair(true, result)
+            }
+        }
+    }
+
+    class ChangeDeckMulti(private val cardIds: List<Long>, private val newDid: DeckId) : TaskDelegate<Void, Computation<Array<Card>>>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
+            val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+            return try {
+                col.db.executeInTransaction {
+                    val succeeded = changeDeckMulti(col, cards, newDid)
+                    if (!succeeded) {
+                        return@executeInTransaction Computation.err()
+                    }
+                    // pass cards back so more actions can be performed by the caller
+                    // (querying the cards again is unnecessarily expensive)
+                    Computation.ok(cards)
+                }
+            } catch (e: RuntimeException) {
+                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
+                return Computation.err()
             }
         }
     }
