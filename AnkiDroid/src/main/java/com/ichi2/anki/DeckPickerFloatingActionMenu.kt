@@ -231,6 +231,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_action)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
+        val addNote: TextView = view.findViewById(R.id.add_note_label)
         mFabMain.setOnTouchListener(object : DoubleTapListener(context) {
             override fun onDoubleTap(e: MotionEvent?) {
                 addNote()
@@ -265,6 +266,11 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         }
         addSharedButton.setOnClickListener(addSharedListener)
         addSharedLabel.setOnClickListener(addSharedListener)
+        val addNoteLabelListener = View.OnClickListener {
+            Timber.d("configureFloatingActionsMenu::addNoteLabel::onClickListener - Adding Note")
+            addNote()
+        }
+        addNote.setOnClickListener(addNoteLabelListener)
     }
 
     /**
