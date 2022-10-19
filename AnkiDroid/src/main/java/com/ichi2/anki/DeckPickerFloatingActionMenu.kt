@@ -261,7 +261,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         val addSharedListener = View.OnClickListener {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck")
             deckPicker.openAnkiWebSharedDecks()
-            mFabMain.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_light_blue_700))
+            mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
             mFabMain.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add_white))
         }
         addSharedButton.setOnClickListener(addSharedListener)
