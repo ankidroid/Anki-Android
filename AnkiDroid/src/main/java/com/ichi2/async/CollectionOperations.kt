@@ -21,6 +21,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.Computation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -371,13 +372,13 @@ fun changeDeckMulti(
     col: Collection,
     cards: Array<Card>,
     newDid: DeckId
-): Boolean {
+): Computation<Array<Card>> {
     Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
     val deckData = col.decks.get(newDid)
     if (Decks.isDynamic(deckData)) {
         // #5932 - can't change to a dynamic deck. Use "Rebuild"
         Timber.w("Attempted to move to dynamic deck. Cancelling task.")
-        return false
+        return Computation.err()
     }
 
     // Confirm that the deck exists (and is not the default)
@@ -385,11 +386,11 @@ fun changeDeckMulti(
         val actualId = deckData.getLong("id")
         if (actualId != newDid) {
             Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
-            return false
+            return Computation.err()
         }
     } catch (e: Exception) {
         Timber.e(e, "failed to check deck")
-        return false
+        return Computation.err()
     }
     val changedCardIds = LongArray(cards.size)
     for (i in cards.indices) {
@@ -412,5 +413,7 @@ fun changeDeckMulti(
     val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
     // mark undo for all at once
     col.markUndo(changeDeckMulti)
-    return true
+    // pass cards back so more actions can be performed by the caller
+    // (querying the cards again is unnecessarily expensive)
+    return Computation.ok(cards)
 }

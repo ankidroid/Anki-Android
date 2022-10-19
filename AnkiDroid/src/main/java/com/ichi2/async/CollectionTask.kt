@@ -187,15 +187,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
             val cards = cardIds.map { col.getCard(it) }.toTypedArray()
             return try {
-                col.db.executeInTransaction {
-                    val succeeded = changeDeckMulti(col, cards, newDid)
-                    if (!succeeded) {
-                        return@executeInTransaction Computation.err()
-                    }
-                    // pass cards back so more actions can be performed by the caller
-                    // (querying the cards again is unnecessarily expensive)
-                    Computation.ok(cards)
-                }
+                col.db.executeInTransaction { changeDeckMulti(col, cards, newDid) }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
                 CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
