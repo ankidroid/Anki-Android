@@ -2616,22 +2616,17 @@ open class CardBrowser :
                 withCol { changeDeckMulti(this, ids, newDid) }
             }
             if (result.succeeded()) {
-                hideProgressBar()
                 searchCards()
                 endMultiSelectMode()
                 cardsAdapter!!.notifyDataSetChanged()
                 invalidateOptionsMenu() // maybe the availability of undo changed
-                if (!result.succeeded()) {
-                    Timber.i("changeDeckHandler failed, not offering undo")
-                    displayCouldNotChangeDeck()
-                    return@launchCatchingTask
-                }
                 // snackbar to offer undo
                 val deckName = col.decks.name(mNewDid)
                 val message = getString(R.string.changed_deck_message, deckName)
                 showUndoSnackbar(message)
             } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+                Timber.i("changeDeckHandler failed, not offering undo")
+                displayCouldNotChangeDeck()
             }
         }
     }
