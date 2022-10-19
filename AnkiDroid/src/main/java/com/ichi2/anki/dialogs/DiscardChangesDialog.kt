@@ -30,5 +30,16 @@ class DiscardChangesDialog {
                 negativeButton(R.string.dialog_cancel)
             }
         }
+
+        fun closeNoteDialog(context: Context?, positiveMethod: () -> Unit): MaterialDialog {
+            return MaterialDialog(context!!).show {
+                title(R.string.note_dialog_title)
+                message(R.string.note_dialog_message)
+                positiveButton(R.string.close) {
+                    positiveMethod()
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
+        }
     }
 }
