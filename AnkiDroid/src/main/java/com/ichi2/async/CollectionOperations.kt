@@ -370,50 +370,53 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
 
 fun changeDeckMulti(
     col: Collection,
-    cards: Array<Card>,
+    cardIds: List<Long>,
     newDid: DeckId
 ): Computation<Array<Card>> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
     Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
-    val deckData = col.decks.get(newDid)
-    if (Decks.isDynamic(deckData)) {
-        // #5932 - can't change to a dynamic deck. Use "Rebuild"
-        Timber.w("Attempted to move to dynamic deck. Cancelling task.")
-        return Computation.err()
-    }
-
-    // Confirm that the deck exists (and is not the default)
-    try {
-        val actualId = deckData.getLong("id")
-        if (actualId != newDid) {
-            Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
-            return Computation.err()
+    return col.db.executeInTransaction {
+        val deckData = col.decks.get(newDid)
+        if (Decks.isDynamic(deckData)) {
+            // #5932 - can't change to a dynamic deck. Use "Rebuild"
+            Timber.w("Attempted to move to dynamic deck. Cancelling task.")
+            return@executeInTransaction Computation.err()
         }
-    } catch (e: Exception) {
-        Timber.e(e, "failed to check deck")
-        return Computation.err()
+
+        // Confirm that the deck exists (and is not the default)
+        try {
+            val actualId = deckData.getLong("id")
+            if (actualId != newDid) {
+                Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
+                return@executeInTransaction Computation.err()
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "failed to check deck")
+            return@executeInTransaction Computation.err()
+        }
+        val changedCardIds = LongArray(cards.size)
+        for (i in cards.indices) {
+            changedCardIds[i] = cards[i].id
+        }
+        col.sched.remFromDyn(changedCardIds)
+        val originalDids = LongArray(cards.size)
+        for (i in cards.indices) {
+            val card = cards[i]
+            card.load()
+            // save original did for undo
+            originalDids[i] = card.did
+            // then set the card ID to the new deck
+            card.did = newDid
+            val note = card.note()
+            note.flush()
+            // flush card too, in case, did has been changed
+            card.flush()
+        }
+        val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
+        // mark undo for all at once
+        col.markUndo(changeDeckMulti)
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        return@executeInTransaction Computation.ok(cards)
     }
-    val changedCardIds = LongArray(cards.size)
-    for (i in cards.indices) {
-        changedCardIds[i] = cards[i].id
-    }
-    col.sched.remFromDyn(changedCardIds)
-    val originalDids = LongArray(cards.size)
-    for (i in cards.indices) {
-        val card = cards[i]
-        card.load()
-        // save original did for undo
-        originalDids[i] = card.did
-        // then set the card ID to the new deck
-        card.did = newDid
-        val note = card.note()
-        note.flush()
-        // flush card too, in case, did has been changed
-        card.flush()
-    }
-    val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
-    // mark undo for all at once
-    col.markUndo(changeDeckMulti)
-    // pass cards back so more actions can be performed by the caller
-    // (querying the cards again is unnecessarily expensive)
-    return Computation.ok(cards)
 }
