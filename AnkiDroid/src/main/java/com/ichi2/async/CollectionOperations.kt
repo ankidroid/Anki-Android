@@ -366,3 +366,51 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
         cards
     }
 }
+
+fun changeDeckMulti(
+    col: Collection,
+    cards: Array<Card>,
+    newDid: DeckId
+): Boolean {
+    Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
+    val deckData = col.decks.get(newDid)
+    if (Decks.isDynamic(deckData)) {
+        // #5932 - can't change to a dynamic deck. Use "Rebuild"
+        Timber.w("Attempted to move to dynamic deck. Cancelling task.")
+        return false
+    }
+
+    // Confirm that the deck exists (and is not the default)
+    try {
+        val actualId = deckData.getLong("id")
+        if (actualId != newDid) {
+            Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
+            return false
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "failed to check deck")
+        return false
+    }
+    val changedCardIds = LongArray(cards.size)
+    for (i in cards.indices) {
+        changedCardIds[i] = cards[i].id
+    }
+    col.sched.remFromDyn(changedCardIds)
+    val originalDids = LongArray(cards.size)
+    for (i in cards.indices) {
+        val card = cards[i]
+        card.load()
+        // save original did for undo
+        originalDids[i] = card.did
+        // then set the card ID to the new deck
+        card.did = newDid
+        val note = card.note()
+        note.flush()
+        // flush card too, in case, did has been changed
+        card.flush()
+    }
+    val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
+    // mark undo for all at once
+    col.markUndo(changeDeckMulti)
+    return true
+}
