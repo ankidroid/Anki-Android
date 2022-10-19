@@ -368,6 +368,9 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
     }
 }
 
+// TODO: Instead of returning Computation.err() can throw an exception with the exact message what went wrong
+//      Or can add a message parameter to the Computation.err() so that message can be propagated upwards, currently
+//      there is no way for user to know why the operation failed, was it due to same deck id, dynamic deck or something else?
 fun changeDeckMulti(
     col: Collection,
     cardIds: List<Long>,

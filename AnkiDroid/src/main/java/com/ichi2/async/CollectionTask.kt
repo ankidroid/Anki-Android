@@ -183,18 +183,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ChangeDeckMulti(private val cardIds: List<Long>, private val newDid: DeckId) : TaskDelegate<Void, Computation<Array<Card>>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Computation<Array<Card>> {
-            return try {
-                changeDeckMulti(col, cardIds, newDid)
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
-                return Computation.err()
-            }
-        }
-    }
-
     @KotlinCleanup("Use StringBuilder to concatenate the strings")
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
