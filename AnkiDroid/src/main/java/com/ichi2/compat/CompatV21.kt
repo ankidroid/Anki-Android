@@ -28,6 +28,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
 import android.os.Vibrator
@@ -91,6 +92,27 @@ open class CompatV21 : Compat {
             Timber.e(e, "copyFile() error copying source %s", source)
             throw e
         }
+    }
+
+    override fun <T : Serializable?> getSerializable(
+        bundle: Bundle,
+        name: String,
+        clazz: Class<T>
+    ): T? {
+        return try {
+            @Suppress("UNCHECKED_CAST")
+            bundle.getSerializable(name) as? T?
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    override fun <T : Parcelable?> getParcelable(
+        bundle: Bundle,
+        name: String,
+        clazz: Class<T>
+    ): T? {
+        return bundle.getParcelable<T>(name)
     }
 
     // Until API 26 do the copy using streams

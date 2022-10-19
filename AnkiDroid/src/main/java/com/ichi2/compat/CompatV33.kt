@@ -18,6 +18,7 @@ package com.ichi2.compat
 
 import android.annotation.TargetApi
 import android.content.Intent
+import android.os.Bundle
 import android.os.Parcelable
 import java.io.Serializable
 
@@ -29,5 +30,12 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T? {
         return intent.getParcelableExtra(name, clazz)
+    }
+    override fun <T : Serializable?> getSerializable(bundle: Bundle, name: String, clazz: Class<T>): T? {
+        return bundle.getSerializable(name, clazz)
+    }
+
+    override fun <T : Parcelable?> getParcelable(bundle: Bundle, name: String, clazz: Class<T>): T? {
+        return bundle.getParcelable(name, clazz)
     }
 }
