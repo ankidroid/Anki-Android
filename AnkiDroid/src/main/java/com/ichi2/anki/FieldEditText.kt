@@ -183,11 +183,12 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     fun setContent(content: String?, replaceNewLine: Boolean) {
-        var text = content
-        if (content == null) {
-            text = ""
+        val text = if (content == null) {
+            ""
         } else if (replaceNewLine) {
-            text = content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+        } else {
+            content
         }
         setText(text)
     }
