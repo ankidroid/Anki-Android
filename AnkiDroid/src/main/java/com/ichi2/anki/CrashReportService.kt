@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
@@ -60,6 +61,13 @@ object CrashReportService {
     private const val WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME"
     private const val MIN_INTERVAL_MS = 60000
     private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
+
+    private enum class ToastType(@StringRes private val toastMessageRes: Int) {
+        AUTO_TOAST(R.string.feedback_auto_toast_text),
+        MANUAL_TOAST(R.string.feedback_for_manual_toast_text);
+
+        fun getToastMessage(context: Context) = context.getString(toastMessageRes)
+    }
 
     private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
         val builder = CoreConfigurationBuilder()
@@ -146,7 +154,7 @@ object CrashReportService {
         //   in GeneralSettingsFragment for the language dialog change listener, the context wrapper
         //   could be updated directly with the new locale code so that calling getString on would fetch
         //   the new language string ?
-        toastText = mApplication.getString(R.string.feedback_auto_toast_text)
+        toastText = ToastType.AUTO_TOAST.getToastMessage(mApplication)
 
         // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {
@@ -177,11 +185,11 @@ object CrashReportService {
                 // Switch between auto-report via toast and manual report via dialog
                 if (value == FEEDBACK_REPORT_ALWAYS) {
                     dialogEnabled = false
-                    toastText = mApplication.getString(R.string.feedback_auto_toast_text)
+                    toastText = ToastType.AUTO_TOAST.getToastMessage(mApplication)
                 } else if (value == FEEDBACK_REPORT_ASK) {
                     createAcraCoreConfigBuilder()
                     dialogEnabled = true
-                    toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
+                    toastText = ToastType.MANUAL_TOAST.getToastMessage(mApplication)
                 }
                 createAcraCoreConfigBuilder()
             }
@@ -306,7 +314,7 @@ object CrashReportService {
         val reportMode = preferences.getString(FEEDBACK_REPORT_KEY, "")
         return if (FEEDBACK_REPORT_NEVER == reportMode) {
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, false) }
-            toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
+            toastText = ToastType.MANUAL_TOAST.getToastMessage(mApplication)
             createAcraCoreConfigBuilder()
             val sendStatus = sendReportFor(ankiActivity)
             dialogEnabled = false
