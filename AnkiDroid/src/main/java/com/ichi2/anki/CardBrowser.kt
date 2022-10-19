@@ -71,7 +71,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
-import com.ichi2.async.CollectionTask.ChangeDeckMulti
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -1853,25 +1852,6 @@ open class CardBrowser :
         updateCardInList(updatedCard)
     }
 
-    private class ChangeDeckHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Any?, Computation<Array<Card>>?>("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
-            browser.hideProgressBar()
-            browser.searchCards()
-            browser.endMultiSelectMode()
-            browser.cardsAdapter!!.notifyDataSetChanged()
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (!result!!.succeeded()) {
-                Timber.i("changeDeckHandler failed, not offering undo")
-                browser.displayCouldNotChangeDeck()
-                return
-            }
-            // snackbar to offer undo
-            val deckName = browser.col.decks.name(browser.mNewDid)
-            val message = browser.getString(R.string.changed_deck_message, deckName)
-            browser.showUndoSnackbar(message)
-        }
-    }
-
     /**
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
@@ -2631,10 +2611,29 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun executeChangeCollectionTask(ids: List<Long>, newDid: DeckId) {
         mNewDid = newDid // line required for unit tests, not necessary, but a noop in regular call.
-        TaskManager.launchCollectionTask(
-            ChangeDeckMulti(ids, newDid),
-            ChangeDeckHandler(this)
-        )
+        launchCatchingTask {
+            val result = withProgress {
+                withCol { changeDeckMulti(this, ids, newDid) }
+            }
+            if (result.succeeded()) {
+                hideProgressBar()
+                searchCards()
+                endMultiSelectMode()
+                cardsAdapter!!.notifyDataSetChanged()
+                invalidateOptionsMenu() // maybe the availability of undo changed
+                if (!result.succeeded()) {
+                    Timber.i("changeDeckHandler failed, not offering undo")
+                    displayCouldNotChangeDeck()
+                    return@launchCatchingTask
+                }
+                // snackbar to offer undo
+                val deckName = col.decks.name(mNewDid)
+                val message = getString(R.string.changed_deck_message, deckName)
+                showUndoSnackbar(message)
+            } else {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            }
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
