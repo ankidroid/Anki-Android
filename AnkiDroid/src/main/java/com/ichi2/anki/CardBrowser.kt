@@ -444,7 +444,6 @@ open class CardBrowser :
      * @param did Id of the deck to which selected cards are to be moved
      */
     @VisibleForTesting
-    // TODO: This function can be simplified a lot
     suspend fun moveSelectedCardsToDeck(selectedCardIds: List<Long>, did: DeckId) {
         Timber.i("Changing selected cards to deck: %d", did)
         if (selectedCardIds.contains(reviewerCardId)) {
@@ -459,10 +458,6 @@ open class CardBrowser :
         val deckName = col.decks.name(did)
         val message = getString(R.string.changed_deck_message, deckName)
         showUndoSnackbar(message)
-    }
-
-    private fun displayCouldNotChangeDeck() {
-        showThemedToast(this, getString(R.string.card_browser_deck_change_error), true)
     }
 
     @get:VisibleForTesting
