@@ -21,7 +21,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.Computation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -368,14 +367,19 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
     }
 }
 
-// TODO: Instead of returning Computation.err() can throw an exception with the exact message what went wrong
-//      Or can add a message parameter to the Computation.err() so that message can be propagated upwards, currently
-//      there is no way for user to know why the operation failed, was it due to same deck id, dynamic deck or something else?
+/**
+ * Move the cards having in [cardIds] to the deck with id [newDid]
+ * @param col Collection
+ * @param cardIds list of id of cards which are to be moved
+ * @param newDid new deck id of the cards
+ *
+ * @return Array<Card> list of cards moved to the new deck
+ */
 fun changeDeckMulti(
     col: Collection,
     cardIds: List<Long>,
     newDid: DeckId
-): Computation<Array<Card>> {
+): Array<Card> {
     val cards = cardIds.map { col.getCard(it) }.toTypedArray()
     Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
     return col.db.executeInTransaction {
@@ -383,19 +387,19 @@ fun changeDeckMulti(
         if (Decks.isDynamic(deckData)) {
             // #5932 - can't change to a dynamic deck. Use "Rebuild"
             Timber.w("Attempted to move to dynamic deck. Cancelling task.")
-            return@executeInTransaction Computation.err()
+            throw IllegalArgumentException("Attempted to move to dynamic deck!")
         }
 
         // Confirm that the deck exists (and is not the default)
         try {
             val actualId = deckData.getLong("id")
             if (actualId != newDid) {
-                Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
-                return@executeInTransaction Computation.err()
+                Timber.w("Attempted to move to deck $newDid, but got $actualId")
+                throw IllegalArgumentException("Attempted to move to deck $newDid, but got $actualId")
             }
         } catch (e: Exception) {
             Timber.e(e, "failed to check deck")
-            return@executeInTransaction Computation.err()
+            throw IllegalArgumentException("failed to check deck")
         }
         val changedCardIds = LongArray(cards.size)
         for (i in cards.indices) {
@@ -420,6 +424,6 @@ fun changeDeckMulti(
         col.markUndo(changeDeckMulti)
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
-        return@executeInTransaction Computation.ok(cards)
+        return@executeInTransaction cards
     }
 }

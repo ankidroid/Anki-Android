@@ -450,22 +450,15 @@ open class CardBrowser :
         if (selectedCardIds.contains(reviewerCardId)) {
             mReloadRequired = true
         }
-        val result = withProgress {
-            withCol { changeDeckMulti(this, selectedCardIds, did) }
-        }
-        if (result.succeeded()) {
-            searchCards()
-            endMultiSelectMode()
-            cardsAdapter!!.notifyDataSetChanged()
-            invalidateOptionsMenu() // maybe the availability of undo changed
-            // snackbar to offer undo
-            val deckName = col.decks.name(did)
-            val message = getString(R.string.changed_deck_message, deckName)
-            showUndoSnackbar(message)
-        } else {
-            Timber.i("changeDeckHandler failed, not offering undo")
-            displayCouldNotChangeDeck()
-        }
+        withProgress { withCol { changeDeckMulti(this, selectedCardIds, did) } }
+        searchCards()
+        endMultiSelectMode()
+        cardsAdapter!!.notifyDataSetChanged()
+        invalidateOptionsMenu() // maybe the availability of undo changed
+        // snackbar to offer undo
+        val deckName = col.decks.name(did)
+        val message = getString(R.string.changed_deck_message, deckName)
+        showUndoSnackbar(message)
     }
 
     private fun displayCouldNotChangeDeck() {
