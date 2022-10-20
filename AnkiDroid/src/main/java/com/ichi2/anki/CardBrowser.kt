@@ -447,9 +447,7 @@ open class CardBrowser :
     @VisibleForTesting
     // TODO: This function can be simplified a lot
     fun moveSelectedCardsToDeck(did: DeckId) {
-        val selectedDeck = col.decks.get(did)
-        mNewDid = selectedDeck.getLong("id")
-        Timber.i("Changing selected cards to deck: %d", mNewDid)
+        Timber.i("Changing selected cards to deck: %d", did)
         selectedCardIds.run { // to prevent computing selectedCardIds multiple times
             if (isEmpty()) {
                 endMultiSelectMode()
@@ -458,7 +456,7 @@ open class CardBrowser :
                 if (contains(reviewerCardId)) {
                     mReloadRequired = true
                 }
-                executeChangeCollectionTask(this, mNewDid)
+                executeChangeCollectionTask(this, did)
             }
         }
     }
