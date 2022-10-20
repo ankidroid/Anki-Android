@@ -232,7 +232,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val cardIds = b.checkedCardIds
 
-        b.executeChangeCollectionTask(cardIds, dynId)
+        b.moveSelectedCardsToDeck(cardIds, dynId)
 
         for (cardId in cardIds) {
             assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))

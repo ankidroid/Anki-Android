@@ -455,7 +455,25 @@ open class CardBrowser :
             if (selectedCardIds.contains(reviewerCardId)) {
                 mReloadRequired = true
             }
-            executeChangeCollectionTask(selectedCardIds, did)
+            mNewDid = did // line required for unit tests, not necessary, but a noop in regular call.
+            launchCatchingTask {
+                val result = withProgress {
+                    withCol { changeDeckMulti(this, selectedCardIds, did) }
+                }
+                if (result.succeeded()) {
+                    searchCards()
+                    endMultiSelectMode()
+                    cardsAdapter!!.notifyDataSetChanged()
+                    invalidateOptionsMenu() // maybe the availability of undo changed
+                    // snackbar to offer undo
+                    val deckName = col.decks.name(mNewDid)
+                    val message = getString(R.string.changed_deck_message, deckName)
+                    showUndoSnackbar(message)
+                } else {
+                    Timber.i("changeDeckHandler failed, not offering undo")
+                    displayCouldNotChangeDeck()
+                }
+            }
         }
     }
 
@@ -2591,30 +2609,6 @@ open class CardBrowser :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val checkedCardIds: List<Long>
         get() = mCheckedCards.map { c -> c.id }
-
-    // should only be called from changeDeck()
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun executeChangeCollectionTask(ids: List<Long>, newDid: DeckId) {
-        mNewDid = newDid // line required for unit tests, not necessary, but a noop in regular call.
-        launchCatchingTask {
-            val result = withProgress {
-                withCol { changeDeckMulti(this, ids, newDid) }
-            }
-            if (result.succeeded()) {
-                searchCards()
-                endMultiSelectMode()
-                cardsAdapter!!.notifyDataSetChanged()
-                invalidateOptionsMenu() // maybe the availability of undo changed
-                // snackbar to offer undo
-                val deckName = col.decks.name(mNewDid)
-                val message = getString(R.string.changed_deck_message, deckName)
-                showUndoSnackbar(message)
-            } else {
-                Timber.i("changeDeckHandler failed, not offering undo")
-                displayCouldNotChangeDeck()
-            }
-        }
-    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {
