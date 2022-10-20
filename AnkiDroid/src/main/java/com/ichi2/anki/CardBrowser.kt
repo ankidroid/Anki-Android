@@ -441,8 +441,8 @@ open class CardBrowser :
     }
 
     /**
-     * Change Deck
-     * @param did Id of the deck
+     * Moves the selected cards to deck with id [did]
+     * @param did Id of the deck to which selected cards are to be moved
      */
     @VisibleForTesting
     // TODO: This function can be simplified a lot
