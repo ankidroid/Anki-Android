@@ -58,22 +58,21 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun verifyCodeMessages() {
-        HashMap<Int, String>().let {
-            // HashMap object will now be referenced by "it"
-            val context = targetContext
-            it[407] = context.getString(R.string.sync_error_407_proxy_required)
-            it[409] = context.getString(R.string.sync_error_409)
-            it[413] = context.getString(R.string.sync_error_413_collection_size)
-            it[500] = context.getString(R.string.sync_error_500_unknown)
-            it[501] = context.getString(R.string.sync_error_501_upgrade_required)
-            it[502] = context.getString(R.string.sync_error_502_maintenance)
-            it[503] = context.getString(R.string.sync_too_busy)
-            it[504] = context.getString(R.string.sync_error_504_gateway_timeout)
-            ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-                scenario.onActivity { deckPicker: DeckPicker ->
-                    for ((key, value) in it) {
-                        assertEquals(deckPicker.rewriteError(key), value)
-                    }
+        // getResourceString() is the wrapper for targetContext.getString(resource)
+        val codeResponsePairs = hashMapOf(
+            407 to getResourceString(R.string.sync_error_407_proxy_required),
+            409 to getResourceString(R.string.sync_error_409),
+            413 to getResourceString(R.string.sync_error_413_collection_size),
+            500 to getResourceString(R.string.sync_error_500_unknown),
+            501 to getResourceString(R.string.sync_error_501_upgrade_required),
+            502 to getResourceString(R.string.sync_error_502_maintenance),
+            503 to getResourceString(R.string.sync_too_busy),
+            504 to getResourceString(R.string.sync_error_504_gateway_timeout)
+        )
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            scenario.onActivity { deckPicker: DeckPicker ->
+                for ((key, value) in codeResponsePairs) {
+                    assertEquals(deckPicker.rewriteError(key), value)
                 }
             }
         }
