@@ -446,18 +446,16 @@ open class CardBrowser :
      */
     @VisibleForTesting
     // TODO: This function can be simplified a lot
-    fun moveSelectedCardsToDeck(did: DeckId) {
+    fun moveSelectedCardsToDeck(selectedCardIds: List<Long>, did: DeckId) {
         Timber.i("Changing selected cards to deck: %d", did)
-        selectedCardIds.run { // to prevent computing selectedCardIds multiple times
-            if (isEmpty()) {
-                endMultiSelectMode()
-                cardsAdapter!!.notifyDataSetChanged()
-            } else {
-                if (contains(reviewerCardId)) {
-                    mReloadRequired = true
-                }
-                executeChangeCollectionTask(this, did)
+        if (selectedCardIds.isEmpty()) {
+            endMultiSelectMode()
+            cardsAdapter!!.notifyDataSetChanged()
+        } else {
+            if (selectedCardIds.contains(reviewerCardId)) {
+                mReloadRequired = true
             }
+            executeChangeCollectionTask(selectedCardIds, did)
         }
     }
 
@@ -1491,7 +1489,7 @@ open class CardBrowser :
         // Add change deck argument so the dialog can be dismissed
         // after activity recreation, since the selected cards will be gone with it
         dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
-        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(deck!!.deckId) }
+        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(selectedCardIds, deck!!.deckId) }
         return dialog
     }
 

@@ -215,7 +215,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         // act
-        assertDoesNotThrow { b.moveSelectedCardsToDeck(deckIdToChangeTo) }
+        assertDoesNotThrow { b.moveSelectedCardsToDeck(cardIds, deckIdToChangeTo) }
 
         // assert
         for (cardId in cardIds) {
