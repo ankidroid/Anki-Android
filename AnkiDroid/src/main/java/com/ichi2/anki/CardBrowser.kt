@@ -173,7 +173,6 @@ open class CardBrowser :
     private var mColumn2Index = 0
     // DEFECT: Doesn't need to be a local
     /** The next deck for the "Change Deck" operation  */
-    private var mNewDid: DeckId = 0
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
@@ -455,7 +454,6 @@ open class CardBrowser :
             if (selectedCardIds.contains(reviewerCardId)) {
                 mReloadRequired = true
             }
-            mNewDid = did // line required for unit tests, not necessary, but a noop in regular call.
             val result = withProgress {
                 withCol { changeDeckMulti(this, selectedCardIds, did) }
             }
@@ -465,7 +463,7 @@ open class CardBrowser :
                 cardsAdapter!!.notifyDataSetChanged()
                 invalidateOptionsMenu() // maybe the availability of undo changed
                 // snackbar to offer undo
-                val deckName = col.decks.name(mNewDid)
+                val deckName = col.decks.name(did)
                 val message = getString(R.string.changed_deck_message, deckName)
                 showUndoSnackbar(message)
             } else {
