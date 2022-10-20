@@ -25,7 +25,6 @@ import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
-import com.ichi2.anki.export.exportApkg
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
@@ -335,12 +334,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             }
             return Computation.OK
-        }
-    }
-
-    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
-            return exportApkg(col, apkgPath, did, includeSched, includeMedia)
         }
     }
 

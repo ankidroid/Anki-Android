@@ -30,13 +30,12 @@ import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.CollectionTask.ExportApkg
-import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.AnkiPackageExporter
 import com.ichi2.libanki.Collection
@@ -152,16 +151,28 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
-        val exportListener = ExportListener(activity, mDialogsFactory)
-        TaskManager.launchCollectionTask(
-            ExportApkg(
-                exportPath.path,
-                did,
-                includeSched,
-                includeMedia
-            ),
-            exportListener
-        )
+        activity.launchCatchingTask {
+            val result = activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
+                withCol {
+                    exportApkg(this, exportPath.path, did, includeSched, includeMedia)
+                }
+            }
+            // If boolean and string are both set, we are signalling an error message
+            // instead of a successful result.
+            if (result.first == true && result.second != null) {
+                Timber.w("Export Failed: %s", result.second)
+                activity.showSimpleMessageDialog(result.second)
+            } else {
+                Timber.i("Export successful")
+                val exportedPath = result.second
+                if (exportedPath != null) {
+                    val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportedPath)
+                    activity.showAsyncDialogFragment(dialog)
+                } else {
+                    showThemedToast(activity, activity.resources.getString(R.string.export_unsuccessful), true)
+                }
+            }
+        }
     }
 
     // Only for new backend schema
