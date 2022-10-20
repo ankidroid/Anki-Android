@@ -28,7 +28,6 @@ import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.withNoWritePermission
@@ -199,7 +198,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun moveToNonDynamicDeckWorks() {
+    fun moveToNonDynamicDeckWorks() = runTest {
         addDeck("Foo")
         addDynamicDeck("Bar")
         val deckIdToChangeTo = addDeck("Hello")
@@ -215,7 +214,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         // act
-        assertDoesNotThrow { b.moveSelectedCardsToDeck(cardIds, deckIdToChangeTo) }
+        assertDoesNotThrowSuspend { b.moveSelectedCardsToDeck(cardIds, deckIdToChangeTo) }
 
         // assert
         for (cardId in cardIds) {

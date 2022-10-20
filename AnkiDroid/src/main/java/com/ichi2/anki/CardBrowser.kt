@@ -446,7 +446,7 @@ open class CardBrowser :
      */
     @VisibleForTesting
     // TODO: This function can be simplified a lot
-    fun moveSelectedCardsToDeck(selectedCardIds: List<Long>, did: DeckId) {
+    suspend fun moveSelectedCardsToDeck(selectedCardIds: List<Long>, did: DeckId) {
         Timber.i("Changing selected cards to deck: %d", did)
         if (selectedCardIds.isEmpty()) {
             endMultiSelectMode()
@@ -456,23 +456,21 @@ open class CardBrowser :
                 mReloadRequired = true
             }
             mNewDid = did // line required for unit tests, not necessary, but a noop in regular call.
-            launchCatchingTask {
-                val result = withProgress {
-                    withCol { changeDeckMulti(this, selectedCardIds, did) }
-                }
-                if (result.succeeded()) {
-                    searchCards()
-                    endMultiSelectMode()
-                    cardsAdapter!!.notifyDataSetChanged()
-                    invalidateOptionsMenu() // maybe the availability of undo changed
-                    // snackbar to offer undo
-                    val deckName = col.decks.name(mNewDid)
-                    val message = getString(R.string.changed_deck_message, deckName)
-                    showUndoSnackbar(message)
-                } else {
-                    Timber.i("changeDeckHandler failed, not offering undo")
-                    displayCouldNotChangeDeck()
-                }
+            val result = withProgress {
+                withCol { changeDeckMulti(this, selectedCardIds, did) }
+            }
+            if (result.succeeded()) {
+                searchCards()
+                endMultiSelectMode()
+                cardsAdapter!!.notifyDataSetChanged()
+                invalidateOptionsMenu() // maybe the availability of undo changed
+                // snackbar to offer undo
+                val deckName = col.decks.name(mNewDid)
+                val message = getString(R.string.changed_deck_message, deckName)
+                showUndoSnackbar(message)
+            } else {
+                Timber.i("changeDeckHandler failed, not offering undo")
+                displayCouldNotChangeDeck()
             }
         }
     }
@@ -1507,7 +1505,11 @@ open class CardBrowser :
         // Add change deck argument so the dialog can be dismissed
         // after activity recreation, since the selected cards will be gone with it
         dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
-        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(selectedCardIds, deck!!.deckId) }
+        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? ->
+            launchCatchingTask {
+                moveSelectedCardsToDeck(selectedCardIds, deck!!.deckId)
+            }
+        }
         return dialog
     }
 
