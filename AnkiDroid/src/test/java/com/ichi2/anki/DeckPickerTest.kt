@@ -58,7 +58,6 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun verifyCodeMessages() {
-        // getResourceString() is the wrapper for targetContext.getString(resource)
         val codeResponsePairs = hashMapOf(
             407 to getResourceString(R.string.sync_error_407_proxy_required),
             409 to getResourceString(R.string.sync_error_409),
