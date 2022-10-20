@@ -150,7 +150,14 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.launchCatchingTask {
             val result = activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
                 withCol {
-                    exportApkg(this, exportPath.path, did, includeSched, includeMedia)
+                    Timber.d("doInBackgroundExportApkg")
+                    val exporter = if (did == null) {
+                        AnkiPackageExporter(col, includeSched, includeMedia)
+                    } else {
+                        AnkiPackageExporter(col, did, includeSched, includeMedia)
+                    }
+                    exporter.exportInto(exportPath.path, col.context)
+                    exportPath.path
                 }
             }
             val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(result)
@@ -291,21 +298,4 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             }
         }
     }
-}
-
-fun exportApkg(
-    col: Collection,
-    apkgPath: String,
-    did: DeckId?,
-    includeSched: Boolean,
-    includeMedia: Boolean
-): String {
-    Timber.d("doInBackgroundExportApkg")
-    val exporter = if (did == null) {
-        AnkiPackageExporter(col, includeSched, includeMedia)
-    } else {
-        AnkiPackageExporter(col, did, includeSched, includeMedia)
-    }
-    exporter.exportInto(apkgPath, col.context)
-    return apkgPath
 }
