@@ -148,19 +148,18 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
     private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         activity.launchCatchingTask {
-            val result = activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
+            val apkgPath = exportPath.path
+            activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
                 withCol {
-                    Timber.d("doInBackgroundExportApkg")
                     val exporter = if (did == null) {
                         AnkiPackageExporter(col, includeSched, includeMedia)
                     } else {
                         AnkiPackageExporter(col, did, includeSched, includeMedia)
                     }
-                    exporter.exportInto(exportPath.path, col.context)
-                    exportPath.path
+                    exporter.exportInto(apkgPath, col.context)
                 }
             }
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(result)
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(apkgPath)
             activity.showAsyncDialogFragment(dialog)
         }
     }
