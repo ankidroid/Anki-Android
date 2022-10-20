@@ -34,7 +34,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
-import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.AnkiPackageExporter
@@ -43,12 +42,9 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeUtils
 import net.ankiweb.rsdroid.BackendFactory
-import org.json.JSONException
 import timber.log.Timber
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.io.IOException
 import java.util.function.Supplier
 
 /**
@@ -157,21 +153,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     exportApkg(this, exportPath.path, did, includeSched, includeMedia)
                 }
             }
-            // If boolean and string are both set, we are signalling an error message
-            // instead of a successful result.
-            if (result.first == true && result.second != null) {
-                Timber.w("Export Failed: %s", result.second)
-                activity.showSimpleMessageDialog(result.second)
-            } else {
-                Timber.i("Export successful")
-                val exportedPath = result.second
-                if (exportedPath != null) {
-                    val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportedPath)
-                    activity.showAsyncDialogFragment(dialog)
-                } else {
-                    showThemedToast(activity, activity.resources.getString(R.string.export_unsuccessful), true)
-                }
-            }
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(result)
+            activity.showAsyncDialogFragment(dialog)
         }
     }
 
@@ -316,27 +299,13 @@ fun exportApkg(
     did: DeckId?,
     includeSched: Boolean,
     includeMedia: Boolean
-): Pair<Boolean, String?> {
+): String {
     Timber.d("doInBackgroundExportApkg")
-    try {
-        val exporter = if (did == null) {
-            AnkiPackageExporter(col, includeSched, includeMedia)
-        } else {
-            AnkiPackageExporter(col, did, includeSched, includeMedia)
-        }
-        exporter.exportInto(apkgPath, col.context)
-    } catch (e: FileNotFoundException) {
-        Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg")
-        return Pair(false, null)
-    } catch (e: IOException) {
-        Timber.e(e, "IOException in doInBackgroundExportApkg")
-        return Pair(false, null)
-    } catch (e: JSONException) {
-        Timber.e(e, "JSOnException in doInBackgroundExportApkg")
-        return Pair(false, null)
-    } catch (e: ImportExportException) {
-        Timber.e(e, "ImportExportException in doInBackgroundExportApkg")
-        return Pair(true, e.message)
+    val exporter = if (did == null) {
+        AnkiPackageExporter(col, includeSched, includeMedia)
+    } else {
+        AnkiPackageExporter(col, did, includeSched, includeMedia)
     }
-    return Pair(false, apkgPath)
+    exporter.exportInto(apkgPath, col.context)
+    return apkgPath
 }
