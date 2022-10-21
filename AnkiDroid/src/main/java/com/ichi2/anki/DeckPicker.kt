@@ -729,8 +729,7 @@ open class DeckPicker :
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
         val auth = syncAuth()
-        val syncStatus = SyncStatus.getSyncStatus(col, this, auth)
-        return when (syncStatus) {
+        return when (SyncStatus.getSyncStatus(col, this, auth)) {
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
                 SyncIconState.Normal
             }
