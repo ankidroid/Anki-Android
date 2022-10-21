@@ -554,7 +554,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 channel.id
             )
                 .setSmallIcon(R.drawable.ic_stat_notify)
-                .setContentTitle(title)
                 .setContentText(message)
                 .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
