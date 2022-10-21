@@ -46,11 +46,11 @@ class MathJaxClozeTest : RobolectricTest() {
 
         val cards = note.cards()
 
-        assertThat(cards[0].q(), containsString("class=cloze"))
-        assertThat(cards[1].q(), containsString("class=cloze"))
-        assertThat(cards[2].q(), not(containsString("class=cloze")))
-        assertThat(cards[3].q(), containsString("class=cloze"))
-        assertThat(cards[4].q(), containsString("class=cloze"))
+        assertThat(cards[0].q(), containsString(clozeClass()))
+        assertThat(cards[1].q(), containsString(clozeClass()))
+        assertThat(cards[2].q(), not(containsString(clozeClass())))
+        assertThat(cards[3].q(), containsString(clozeClass()))
+        assertThat(cards[4].q(), containsString(clozeClass()))
     }
 
     @Test
@@ -67,7 +67,7 @@ class MathJaxClozeTest : RobolectricTest() {
             val a = c2.a()
             assertThat(q, containsString("\\(1 \\div 2 =\\)"))
             assertThat(a, containsString("\\(1 \\div 2 =\\)"))
-            assertThat(a, containsString("<span class=cloze>\\(\\frac{1}{2}\\)</span>"))
+            assertThat(a, containsString("<span ${clozeClass()}>\\(\\frac{1}{2}\\)</span>"))
         }
         run {
             val note = c.newNote(c.models.byName("Cloze")!!)
@@ -76,7 +76,7 @@ class MathJaxClozeTest : RobolectricTest() {
             val cards = note.cards()
             val c2 = cards[0]
             val q = c2.q()
-            assertThat(q, containsString("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"))
+            assertThat(q, containsString("\\(a\\) <span ${clozeClass()}${clozeData("b")}>[...]</span> \\[ [...] \\]"))
         }
     }
 
@@ -92,8 +92,8 @@ class MathJaxClozeTest : RobolectricTest() {
         val c2 = cards[0]
         val q = c2.q()
         val a = c2.a()
-        assertThat(q, endsWith("</style>the \\((\\)<span class=cloze>[...]</span>\\()\\) is \\(y\\) but not <span class=cloze>[...]</span> or \\(\\lambda\\)"))
-        assertThat(a, endsWith("</style>the \\((\\)<span class=cloze>\\(x\\)</span>\\()\\) is \\(y\\) but not <span class=cloze>\\(z\\)</span> or \\(\\lambda\\)<br>\n"))
+        assertThat(q, endsWith("</style>the \\((\\)<span ${clozeClass()}${clozeData("&#x5C;&#x28;x&#x5C;&#x29;")}>[...]</span>\\()\\) is \\(y\\) but not <span ${clozeClass()}${clozeData("&#x5C;&#x28;z&#x5C;&#x29;")}>[...]</span> or \\(\\lambda\\)"))
+        assertThat(a, endsWith("</style>the \\((\\)<span ${clozeClass()}>\\(x\\)</span>\\()\\) is \\(y\\) but not <span ${clozeClass()}>\\(z\\)</span> or \\(\\lambda\\)<br>\n"))
     }
 
     @Test
