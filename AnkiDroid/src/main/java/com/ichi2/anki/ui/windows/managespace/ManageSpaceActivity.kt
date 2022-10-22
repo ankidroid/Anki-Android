@@ -14,25 +14,36 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
 package com.ichi2.anki.ui.windows.managespace
 
 import android.os.Bundle
-import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.themes.Themes
 
 class ManageSpaceActivity : AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
+
+        Themes.updateCurrentThemeByUiMode(resources.configuration.uiMode)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_space)
 
-        val manageSpaceFragment = ManageSpaceFragment()
+        // TODO Without this preferences don't get visually disabled. Must be called after onCreate.
+        //   As I see it, legacy themes add action bar, which has no effect after onCreate,
+        //   and also set disabled text color, which does. Make it so this is not needed.
+        //   Comment by Brayan: For anyone else that wants to take this [task], just set
+        //   `textColorSecondary` on the default themes to the same color used by the legacy themes.
+        Themes.setThemeLegacy(this)
 
-        supportFragmentManager.commit {
-            replace(R.id.manage_space_layout, manageSpaceFragment, null)
+        enableToolbar().apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = "Manage space"
         }
     }
 }

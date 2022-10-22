@@ -63,6 +63,12 @@ object CollectionManager {
      * does not happen.
      * It's important that the block is not suspendable - if it were, it would allow
      * multiple requests to be interleaved when a suspend point was hit.
+     *
+     * TODO Allow suspendable blocks, rely on locking instead.
+     *
+     * TODO Disallow running functions that are supposed to be run inside the queue outside of it.
+     *   For instance, this can be done by marking the [block] with a context
+     *   that cannot be instantiated outside of this class.
      */
     private suspend fun<T> withQueue(block: CollectionManager.() -> T): T {
         return withContext(queue) {
@@ -210,30 +216,21 @@ object CollectionManager {
         }
     }
 
-    /**
-     * Delete the collection directory. Do nothing if it does not exist.
-     */
+    // TODO Move withQueue to call site
     suspend fun deleteCollectionDirectory() {
-        if (!collectionDirectoryExists()) return
-        ensureClosed(save = false)
         withQueue {
-            File(expectedCollectionPath()).deleteRecursively()
+            ensureClosedInner(save = false)
+            getCollectionDirectory().deleteRecursively()
         }
     }
 
-    fun collectionDirectoryExists() =
-        File(expectedCollectionPath()).exists()
-
-    /**
-     * @return Expected path of the AnkiDroid collection. There may be no collection there.
-     */
-    private fun expectedCollectionPath() =
-        CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance)
+    fun getCollectionDirectory() =
+        File(CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance))
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
     fun createCollectionPath(): String {
-        val dir = expectedCollectionPath()
+        val dir = getCollectionDirectory().path
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
     }

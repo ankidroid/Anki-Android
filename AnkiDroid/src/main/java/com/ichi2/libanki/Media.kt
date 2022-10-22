@@ -17,6 +17,7 @@
 
 package com.ichi2.libanki
 
+import android.database.Cursor
 import android.database.SQLException
 import android.net.Uri
 import android.text.TextUtils
@@ -26,11 +27,14 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ensureActive
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
+import java.text.Normalizer
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -328,9 +332,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                 @KotlinCleanup("simplify with first {}")
                 for (f in noteRefs) {
                     // if they're not, we'll need to fix them first
-                    if (f != Utils.nfcNormalized(f)) {
+                    if (f != Utils.nfcNormalized(f)) { // TODO Call Normalizer.isNormalized instead
                         _normalizeNoteRefs(nid)
-                        noteRefs = filesInStr(mid, flds)
+                        noteRefs = filesInStr(mid, flds) // TODO It seems that this does nothing; investigate
                         break
                     }
                 }
@@ -412,6 +416,47 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             }
         }
         note.flush()
+    }
+
+    class MediaCheckRequiredException : Exception("Media check required")
+
+    /**
+     * Find unused media files. Cancellable.
+     * If any file names, or file references in notes, are not NFC-normalized,
+     * throws [MediaCheckRequiredException].
+     *
+     * TODO Consolidate this method and related media checking functionality.
+     *   This method does what the [check] method does, except this is cancellable,
+     *   does not change files in case of any problems, and is less broken.
+     *   The backend also provides a method for checking media, [BackendMedia.check];
+     *   however it seems it performs normalization unconditionally.
+     */
+    context(CoroutineScope)
+    @Throws(MediaCheckRequiredException::class)
+    fun findUnusedMediaFiles(): List<File> {
+        val namesOfFilesUsedInNotes = mutableSetOf<String>()
+
+        col.db.query("select mid, flds from notes").use { cursor: Cursor ->
+            while (cursor.moveToNext()) {
+                ensureActive()
+                val modelId = cursor.getLong(0)
+                val fields = cursor.getString(1)
+                namesOfFilesUsedInNotes += filesInStr(modelId, fields)
+            }
+        }
+
+        val mediaDirectoryFiles = File(dir()).listFiles()?.filter { !it.isDirectory } ?: emptyList()
+
+        fun String.isNormalized() = Normalizer.isNormalized(this, Normalizer.Form.NFC)
+
+        val allNamesAreNormalized = namesOfFilesUsedInNotes.all { it.isNormalized() } &&
+            mediaDirectoryFiles.all { it.name.isNormalized() }
+
+        if (!allNamesAreNormalized) throw MediaCheckRequiredException()
+
+        val nonStaticMediaDirectoryFiles = mediaDirectoryFiles.filter { !it.name.startsWith("_") }
+
+        return nonStaticMediaDirectoryFiles.filter { it.name !in namesOfFilesUsedInNotes }
     }
 
     /**
