@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
+import android.view.WindowManager.BadTokenException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
@@ -133,16 +134,21 @@ fun Fragment.launchCatchingTask(
 ): Job = requireActivity().launchCatchingTask(errorMessage, block)
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
-    MaterialDialog(context).show {
-        title(R.string.vague_error)
-        message(text = msg)
-        positiveButton(R.string.dialog_ok)
-        onDismiss {
-            CrashReportService.sendExceptionReport(
-                exception,
-                origin = context::class.java.simpleName
-            )
+    try {
+        MaterialDialog(context).show {
+            title(R.string.vague_error)
+            message(text = msg)
+            positiveButton(R.string.dialog_ok)
+            onDismiss {
+                CrashReportService.sendExceptionReport(
+                    exception,
+                    origin = context::class.java.simpleName
+                )
+            }
         }
+    } catch (ex: BadTokenException) {
+        // issue 12718: activity provided by `context` was not running
+        Timber.w(ex, "unable to display error dialog")
     }
 }
 
