@@ -232,15 +232,15 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     @KotlinCleanup("assertThrows")
-    @KotlinCleanup("scope function: values")
     fun testInsertAndRemoveNote() {
         // Get required objects for test
         val cr = contentResolver
         // Add the note
-        val values = ContentValues()
-        values.put(FlashCardsContract.Note.MID, mModelId)
-        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
-        values.put(FlashCardsContract.Note.TAGS, TEST_TAG)
+        val values = ContentValues().apply {
+            put(FlashCardsContract.Note.MID, mModelId)
+            put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
+            put(FlashCardsContract.Note.TAGS, TEST_TAG)
+        }
         val newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values)
         assertNotNull("Check that URI returned from addNewNote is not null", newNoteUri)
         val col = reopenCol() // test that the changes are physically saved to the DB
@@ -273,7 +273,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     @Throws(Exception::class)
-    @KotlinCleanup("scope function: cv")
     fun testInsertTemplate() {
         // Get required objects for test
         val cr = contentResolver
@@ -286,12 +285,13 @@ class ContentProviderTest : InstrumentedTest() {
         val testIndex =
             TEST_MODEL_CARDS.size - 1 // choose the last one because not the same as the basic model template
         val expectedOrd = model.getJSONArray("tmpls").length()
-        val cv = ContentValues()
-        cv.put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+        val cv = ContentValues().apply {
+            put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[testIndex])
+            put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
+            put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+            put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
+            put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+        }
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         val templateUri = cr.insert(templatesUri, cv)
         col = reopenCol() // test that the changes are physically saved to the DB
@@ -553,15 +553,15 @@ class ContentProviderTest : InstrumentedTest() {
     /**
      * Check that inserting a new model works as expected
      */
-    @KotlinCleanup("use apply when initializing ContentValues")
     @Test
     fun testInsertAndUpdateModel() {
         val cr = contentResolver
-        var cv = ContentValues()
-        // Insert a new model
-        cv.put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME)
-        cv.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS))
-        cv.put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.size)
+        var cv = ContentValues().apply {
+            // Insert a new model
+            put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME)
+            put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS))
+            put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.size)
+        }
         val modelUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv)
         assertNotNull("Check inserted model isn't null", modelUri)
         assertNotNull("Check last path segment exists", modelUri!!.lastPathSegment)
@@ -602,12 +602,13 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals("Check css", TEST_MODEL_CSS, model!!.getString("css"))
             // Update each of the templates in model (to test updating MODELS_ID_TEMPLATES_ID Uri)
             for (i in TEST_MODEL_CARDS.indices) {
-                cv = ContentValues()
-                cv.put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[i])
-                cv.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[i])
-                cv.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[i])
-                cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i])
-                cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                cv = ContentValues().apply {
+                    put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[i])
+                    put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[i])
+                    put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                    put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i])
+                    put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                }
                 val tmplUri = Uri.withAppendedPath(
                     Uri.withAppendedPath(modelUri, "templates"),
                     Integer.toString(i)
@@ -1102,17 +1103,17 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val values = ContentValues()
         val noteId = card.note().id
         val cardOrd = card.ord
         val earlyGraduatingEase =
             if (schedVersion == 1) AbstractFlashcardViewer.EASE_3 else AbstractFlashcardViewer.EASE_4
-        @KotlinCleanup("move ContentValues instantiation here and use apply scope function")
-        val timeTaken: Long = 5000 // 5 seconds
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-        values.put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase)
-        values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken)
+        val values = ContentValues().apply {
+            val timeTaken: Long = 5000 // 5 seconds
+            put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
+            put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
+            put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase)
+            put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken)
+        }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount.toLong())
         try {
@@ -1156,14 +1157,14 @@ class ContentProviderTest : InstrumentedTest() {
         // -----------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val values = ContentValues()
         val noteId = card.note().id
         val cardOrd = card.ord
         val bury = 1
-        @KotlinCleanup("move ContentValues instantiation here and use apply scope function")
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-        values.put(FlashCardsContract.ReviewInfo.BURY, bury)
+        val values = ContentValues().apply {
+            put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
+            put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
+            put(FlashCardsContract.ReviewInfo.BURY, bury)
+        }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount.toLong())
 
@@ -1207,15 +1208,15 @@ class ContentProviderTest : InstrumentedTest() {
         // --------------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val values = ContentValues()
         val noteId = card.note().id
         val cardOrd = card.ord
-        @KotlinCleanup("move ContentValues instantiation here and use apply scope function")
         @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
-        val suspend = 1
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-        values.put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+        val values = ContentValues().apply {
+            val suspend = 1
+            put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
+            put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+        }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount.toLong())
 
