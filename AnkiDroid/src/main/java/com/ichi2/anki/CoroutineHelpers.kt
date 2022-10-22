@@ -230,8 +230,16 @@ suspend fun <T> Activity.withProgress(
 }
 
 /** @see withProgress(String, ...) */
+suspend fun <T> Fragment.withProgress(message: String, block: suspend () -> T): T =
+    requireActivity().withProgress(message, block)
+
+/** @see withProgress(String, ...) */
 suspend fun <T> Activity.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
     withProgress(resources.getString(messageId), block)
+
+/** @see withProgress(String, ...) */
+suspend fun <T> Fragment.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
+    requireActivity().withProgress(messageId, block)
 
 @Suppress("Deprecation") // ProgressDialog deprecation
 private suspend fun <T> withProgressDialog(

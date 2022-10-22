@@ -451,13 +451,4 @@
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser Options</string>
-
-    <!-- Manage Space -->
-    <!--- Collection deletion -->
-    <string name="delete_collection">Delete collection</string>
-    <string name="delete_collection_summary">Permanently erases your AnkiDroid collection and media</string>
-    <string name="delete_collection_confirmation">Are you sure you want to delete your whole collection and media?\n\nThis can\'t be undone.</string>
-    <string name="delete_collection_ongoing">Your AnkiDroid data are currently being deleted.</string>
-    <!--- Check media -->
-    <string name="check_media_summary">Delete unused medias from your collection.</string>
 </resources>

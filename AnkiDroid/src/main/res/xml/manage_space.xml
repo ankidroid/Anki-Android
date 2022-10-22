@@ -15,23 +15,38 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/pref_cat_dev_options"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-    android:key="@string/pref_dev_options_screen_key">
-  <Preference
-      android:key="@string/delete_collection_key"
-      android:summary="@string/delete_collection_summary"
-      android:title="@string/delete_collection"/>
-  <Preference
-      android:key="@string/check_media_key"
-      android:summary="@string/check_media_summary"
-      android:title="@string/check_media"/>
-  <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-      android:defaultValue="8"
-      android:key="@string/pref_backup_max_key"
-      android:title="@string/pref_backup_max"
-      app1:useSimpleSummaryProvider="true"
-      app:min="0"
-      app:max="99" />
+    >
+
+    <com.ichi2.preferences.TextWidgetPreference
+        android:key="@string/pref_delete_media_key"
+        android:title="Delete unused media files"
+        android:summary="Delete images and other media that are not prefixed with _ and are not references by any notes"
+        />
+
+    <com.ichi2.preferences.TextWidgetPreference
+        android:key="@string/pref_delete_backups_key"
+        android:title="Delete backups"
+        />
+
+    <com.ichi2.preferences.TextWidgetPreference
+        android:key="@string/pref_delete_collection_key"
+        android:title="Delete collection"
+        android:summary="Delete collection, media, and backups. App settings are not deleted"
+        />
+
+    <com.ichi2.preferences.TextWidgetPreference
+        android:key="@string/pref_delete_everything_key"
+        android:title="Delete everything"
+        android:summary="Delete collection, media, backups, and settings"
+        />
+
+    <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+        android:defaultValue="8"
+        android:key="@string/pref_backup_max_key"
+        android:title="@string/pref_backup_max"
+        app1:useSimpleSummaryProvider="true"
+        app:min="0"
+        app:max="99" />
 </PreferenceScreen>

@@ -422,6 +422,24 @@ open class BackupManager {
             return true
         }
 
+        /**
+         * Delete backups as specified by [backupsToDelete],
+         * throwing [IllegalArgumentException] if any of the files passed aren't actually backups.
+         *
+         * @return Whether all specified backups were successfully deleted.
+         */
+        @Throws(IllegalArgumentException::class)
+        fun deleteBackups(collection: Collection, backupsToDelete: List<File>): Boolean {
+            val allBackups = getBackups(File(collection.path))
+            val invalidBackupsToDelete = backupsToDelete.toSet() - allBackups.toSet()
+
+            if (invalidBackupsToDelete.isNotEmpty()) {
+                throw IllegalArgumentException("Not backup files: $invalidBackupsToDelete")
+            }
+
+            return backupsToDelete.all { it.delete() }
+        }
+
         fun removeDir(dir: File): Boolean {
             if (dir.isDirectory) {
                 val files = dir.listFiles()

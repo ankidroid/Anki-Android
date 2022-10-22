@@ -85,7 +85,6 @@
         >
         <activity
             android:name=".ui.windows.managespace.ManageSpaceActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".DrawingActivity"
