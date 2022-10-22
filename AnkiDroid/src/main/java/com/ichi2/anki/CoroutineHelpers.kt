@@ -261,7 +261,7 @@ private suspend fun monitorProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
 ) {
-    var state = ProgressContext(Progress.getDefaultInstance())
+    val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
         state.progress = backend.latestProgress()
         state.extractProgress()
