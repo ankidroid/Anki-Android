@@ -26,6 +26,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -85,6 +86,10 @@ class Info : AnkiActivity() {
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor = String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
+
+        val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, R.attr.colorAccent)
+        val anchorTextColor = String.format("#%06X", 0xFFFFFF and anchorTextThemeColor)
+
         mWebView!!.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
         when (type) {
@@ -104,7 +109,7 @@ class Info : AnkiActivity() {
                                  */
                         mWebView!!.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
                                 "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                 "document.body.style.setProperty(\"background\", \"" + background + "\");"
