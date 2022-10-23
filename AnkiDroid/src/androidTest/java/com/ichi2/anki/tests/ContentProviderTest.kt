@@ -70,7 +70,7 @@ class ContentProviderTest : InstrumentedTest() {
     var schedVersion = 0
 
     @get:Rule
-    var runtimePermissionRule = GrantPermissionRule.grant(
+    var runtimePermissionRule: GrantPermissionRule? = GrantPermissionRule.grant(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         FlashCardsContract.READ_WRITE_PERMISSION
     )
@@ -163,20 +163,20 @@ class ContentProviderTest : InstrumentedTest() {
         }
         val col = col
         // Delete all notes
-        val remnantNotes = col.findNotes("tag:" + TEST_TAG)
-        if (!remnantNotes.isEmpty()) {
+        val remnantNotes = col.findNotes("tag:$TEST_TAG")
+        if (remnantNotes.isNotEmpty()) {
             val noteIds = Utils.collection2Array(remnantNotes)
             col.remNotes(noteIds)
             col.save()
             assertEquals(
                 "Check that remnant notes have been deleted",
                 0,
-                col.findNotes("tag:" + TEST_TAG).size.toLong()
+                col.findNotes("tag:$TEST_TAG").size.toLong()
             )
         }
         // delete test decks
         for (did in mTestDeckIds) {
-            col.decks.rem(did, true, true)
+            col.decks.rem(did, cardsToo = true, childrenToo = true)
         }
         col.decks.flush()
         assertEquals(
@@ -204,7 +204,7 @@ class ContentProviderTest : InstrumentedTest() {
         // called by android.database.CursorToBulkCursorAdapter
         // This is called by API clients implicitly, but isn't done by this test class
         val firstNote = getFirstCardFromScheduler(col)
-        val NOTE_PROJECTION = arrayOf(
+        val noteProjection = arrayOf(
             FlashCardsContract.Note._ID,
             FlashCardsContract.Note.FLDS,
             FlashCardsContract.Note.TAGS
@@ -212,7 +212,7 @@ class ContentProviderTest : InstrumentedTest() {
         val resolver = contentResolver
         val cursor = resolver.query(
             FlashCardsContract.Note.CONTENT_URI_V2,
-            NOTE_PROJECTION,
+            noteProjection,
             "id=" + firstNote!!.nid,
             null,
             null
@@ -232,15 +232,15 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     @KotlinCleanup("assertThrows")
-    @KotlinCleanup("scope function: values")
     fun testInsertAndRemoveNote() {
         // Get required objects for test
         val cr = contentResolver
         // Add the note
-        val values = ContentValues()
-        values.put(FlashCardsContract.Note.MID, mModelId)
-        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
-        values.put(FlashCardsContract.Note.TAGS, TEST_TAG)
+        val values = ContentValues().apply {
+            put(FlashCardsContract.Note.MID, mModelId)
+            put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
+            put(FlashCardsContract.Note.TAGS, TEST_TAG)
+        }
         val newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values)
         assertNotNull("Check that URI returned from addNewNote is not null", newNoteUri)
         val col = reopenCol() // test that the changes are physically saved to the DB
@@ -273,7 +273,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     @Throws(Exception::class)
-    @KotlinCleanup("scope function: cv")
     fun testInsertTemplate() {
         // Get required objects for test
         val cr = contentResolver
@@ -286,12 +285,13 @@ class ContentProviderTest : InstrumentedTest() {
         val testIndex =
             TEST_MODEL_CARDS.size - 1 // choose the last one because not the same as the basic model template
         val expectedOrd = model.getJSONArray("tmpls").length()
-        val cv = ContentValues()
-        cv.put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
-        cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+        val cv = ContentValues().apply {
+            put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[testIndex])
+            put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
+            put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+            put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
+            put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+        }
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         val templateUri = cr.insert(templatesUri, cv)
         col = reopenCol() // test that the changes are physically saved to the DB
@@ -406,21 +406,21 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         // Query all available notes
         val allNotesCursor =
-            cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null)
+            cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:$TEST_TAG", null, null)
         assertNotNull(allNotesCursor)
-        try {
+        allNotesCursor.use {
             assertEquals(
                 "Check number of results",
                 mCreatedNotes!!.size.toLong(),
-                allNotesCursor.count.toLong()
+                it.count.toLong()
             )
-            while (allNotesCursor.moveToNext()) {
+            while (it.moveToNext()) {
                 // Check that it's possible to leave out columns from the projection
                 for (i in FlashCardsContract.Note.DEFAULT_PROJECTION.indices) {
                     val projection =
                         removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i)
                     val noteId =
-                        allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))
+                        it.getString(it.getColumnIndex(FlashCardsContract.Note._ID))
                     val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId)
                     val singleNoteCursor = cr.query(noteUri, projection, null, null, null)
                     assertNotNull("Check that there is a valid cursor for detail data", singleNoteCursor)
@@ -452,8 +452,6 @@ class ContentProviderTest : InstrumentedTest() {
                     }
                 }
             }
-        } finally {
-            allNotesCursor.close()
         }
     }
 
@@ -469,7 +467,7 @@ class ContentProviderTest : InstrumentedTest() {
             val allNotesCursor = cr.query(
                 FlashCardsContract.Note.CONTENT_URI,
                 projection,
-                "tag:" + TEST_TAG,
+                "tag:$TEST_TAG",
                 null,
                 null
             )
@@ -553,15 +551,15 @@ class ContentProviderTest : InstrumentedTest() {
     /**
      * Check that inserting a new model works as expected
      */
-    @KotlinCleanup("use apply when initializing ContentValues")
     @Test
     fun testInsertAndUpdateModel() {
         val cr = contentResolver
-        var cv = ContentValues()
-        // Insert a new model
-        cv.put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME)
-        cv.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS))
-        cv.put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.size)
+        var cv = ContentValues().apply {
+            // Insert a new model
+            put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME)
+            put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS))
+            put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.size)
+        }
         val modelUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv)
         assertNotNull("Check inserted model isn't null", modelUri)
         assertNotNull("Check last path segment exists", modelUri!!.lastPathSegment)
@@ -602,15 +600,16 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals("Check css", TEST_MODEL_CSS, model!!.getString("css"))
             // Update each of the templates in model (to test updating MODELS_ID_TEMPLATES_ID Uri)
             for (i in TEST_MODEL_CARDS.indices) {
-                cv = ContentValues()
-                cv.put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[i])
-                cv.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[i])
-                cv.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[i])
-                cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i])
-                cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                cv = ContentValues().apply {
+                    put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[i])
+                    put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[i])
+                    put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                    put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i])
+                    put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                }
                 val tmplUri = Uri.withAppendedPath(
                     Uri.withAppendedPath(modelUri, "templates"),
-                    Integer.toString(i)
+                    i.toString()
                 )
                 assertThat(
                     "Update rows", cr.update(tmplUri, cv, null, null),
@@ -664,21 +663,21 @@ class ContentProviderTest : InstrumentedTest() {
                     allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID))
                 val modelUri = Uri.withAppendedPath(
                     FlashCardsContract.Model.CONTENT_URI,
-                    java.lang.Long.toString(modelId)
+                    modelId.toString()
                 )
                 val singleModel = cr.query(modelUri, null, null, null, null)
                 assertNotNull(singleModel)
-                try {
+                singleModel.use {
                     assertEquals(
                         "Check that there is exactly one result",
                         1,
-                        singleModel.count.toLong()
+                        it.count.toLong()
                     )
-                    assertTrue("Move to beginning of cursor", singleModel.moveToFirst())
+                    assertTrue("Move to beginning of cursor", it.moveToFirst())
                     val nameFromModels =
                         allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME))
                     val nameFromModel =
-                        singleModel.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME))
+                        it.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME))
                     assertEquals(
                         "Check that model names are the same",
                         nameFromModel,
@@ -701,8 +700,6 @@ class ContentProviderTest : InstrumentedTest() {
                             greaterThanOrEqualTo(1)
                         )
                     )
-                } finally {
-                    singleModel.close()
                 }
             }
         } finally {
@@ -718,20 +715,20 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         // Query all available notes
         val allNotesCursor =
-            cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null)
+            cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:$TEST_TAG", null, null)
         assertNotNull(allNotesCursor)
-        try {
+        allNotesCursor.use {
             assertEquals(
                 "Check number of results",
                 mCreatedNotes!!.size.toLong(),
-                allNotesCursor.count.toLong()
+                it.count.toLong()
             )
-            while (allNotesCursor.moveToNext()) {
+            while (it.moveToNext()) {
                 // Now iterate over all cursors
                 val cardsUri = Uri.withAppendedPath(
                     Uri.withAppendedPath(
                         FlashCardsContract.Note.CONTENT_URI,
-                        allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))
+                        it.getString(it.getColumnIndex(FlashCardsContract.Note._ID))
                     ),
                     "cards"
                 )
@@ -776,8 +773,6 @@ class ContentProviderTest : InstrumentedTest() {
                     cardsCursor!!.close()
                 }
             }
-        } finally {
-            allNotesCursor.close()
         }
     }
 
@@ -793,23 +788,21 @@ class ContentProviderTest : InstrumentedTest() {
         )
         val modelCursor = cr.query(uri, null, null, null, null)
         assertNotNull(modelCursor)
-        try {
+        modelCursor.use {
             assertEquals(
                 "Check that there is exactly one result",
                 1,
-                modelCursor.count.toLong()
+                it.count.toLong()
             )
-            assertTrue("Move to beginning of cursor", modelCursor.moveToFirst())
+            assertTrue("Move to beginning of cursor", it.moveToFirst())
             assertNotNull(
                 "Check non-empty field names",
-                modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES))
+                it.getString(it.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES))
             )
             assertTrue(
                 "Check at least one template",
-                modelCursor.getInt(modelCursor.getColumnIndex(FlashCardsContract.Model.NUM_CARDS)) > 0
+                it.getInt(it.getColumnIndex(FlashCardsContract.Model.NUM_CARDS)) > 0
             )
-        } finally {
-            modelCursor.close()
         }
     }
 
@@ -909,17 +902,17 @@ class ContentProviderTest : InstrumentedTest() {
                 null
             )
         assertNotNull(decksCursor)
-        try {
+        decksCursor.use {
             assertEquals(
                 "Check number of results",
                 decks.count().toLong(),
-                decksCursor.count.toLong()
+                it.count.toLong()
             )
-            while (decksCursor.moveToNext()) {
+            while (it.moveToNext()) {
                 val deckID =
-                    decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
+                    it.getLong(it.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
                 val deckName =
-                    decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
+                    it.getString(it.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
                 val deck = decks.get(deckID)
                 assertNotNull("Check that the deck we received actually exists", deck)
                 assertEquals(
@@ -928,8 +921,6 @@ class ContentProviderTest : InstrumentedTest() {
                     deckName
                 )
             }
-        } finally {
-            decksCursor.close()
         }
     }
 
@@ -942,7 +933,7 @@ class ContentProviderTest : InstrumentedTest() {
         val deckId = mTestDeckIds[0]
         val deckUri = Uri.withAppendedPath(
             FlashCardsContract.Deck.CONTENT_ALL_URI,
-            java.lang.Long.toString(deckId)
+            deckId.toString()
         )
         contentResolver.query(deckUri, null, null, null, null).use { decksCursor ->
             if (decksCursor == null || !decksCursor.moveToFirst()) {
@@ -1013,7 +1004,7 @@ class ContentProviderTest : InstrumentedTest() {
     fun testQueryCardFromCertainDeck() {
         val deckToTest = mTestDeckIds[0]
         val deckSelector = "deckID=?"
-        val deckArguments = arrayOf(java.lang.Long.toString(deckToTest))
+        val deckArguments = arrayOf(deckToTest.toString())
         val col = col
         val sched = col.sched
         val selectedDeckBeforeTest = col.decks.selected()
@@ -1023,12 +1014,12 @@ class ContentProviderTest : InstrumentedTest() {
         )
         assertNotNull(reviewInfoCursor)
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.count)
-        try {
-            reviewInfoCursor.moveToFirst()
+        reviewInfoCursor.use {
+            it.moveToFirst()
             val cardOrd =
-                reviewInfoCursor.getInt(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.CARD_ORD))
+                it.getInt(it.getColumnIndex(FlashCardsContract.ReviewInfo.CARD_ORD))
             val noteID =
-                reviewInfoCursor.getLong(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID))
+                it.getLong(it.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID))
             assertEquals(
                 "Check that the selected deck has not changed",
                 1,
@@ -1057,8 +1048,6 @@ class ContentProviderTest : InstrumentedTest() {
                 nextCard.ord,
                 cardOrd
             )
-        } finally {
-            reviewInfoCursor.close()
         }
         col.decks.select(selectedDeckBeforeTest)
     }
@@ -1102,17 +1091,17 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val values = ContentValues()
         val noteId = card.note().id
         val cardOrd = card.ord
         val earlyGraduatingEase =
             if (schedVersion == 1) AbstractFlashcardViewer.EASE_3 else AbstractFlashcardViewer.EASE_4
-        @KotlinCleanup("move ContentValues instantiation here and use apply scope function")
-        val timeTaken: Long = 5000 // 5 seconds
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-        values.put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase)
-        values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken)
+        val values = ContentValues().apply {
+            val timeTaken: Long = 5000 // 5 seconds
+            put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
+            put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
+            put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase)
+            put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken)
+        }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount.toLong())
         try {
@@ -1156,14 +1145,14 @@ class ContentProviderTest : InstrumentedTest() {
         // -----------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val values = ContentValues()
         val noteId = card.note().id
         val cardOrd = card.ord
         val bury = 1
-        @KotlinCleanup("move ContentValues instantiation here and use apply scope function")
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-        values.put(FlashCardsContract.ReviewInfo.BURY, bury)
+        val values = ContentValues().apply {
+            put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
+            put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
+            put(FlashCardsContract.ReviewInfo.BURY, bury)
+        }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount.toLong())
 
@@ -1207,15 +1196,15 @@ class ContentProviderTest : InstrumentedTest() {
         // --------------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val values = ContentValues()
         val noteId = card.note().id
         val cardOrd = card.ord
-        @KotlinCleanup("move ContentValues instantiation here and use apply scope function")
         @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
-        val suspend = 1
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-        values.put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+        val values = ContentValues().apply {
+            val suspend = 1
+            put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
+            put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+        }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount.toLong())
 
@@ -1254,10 +1243,10 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         val updateNoteUri = Uri.withAppendedPath(
             FlashCardsContract.Note.CONTENT_URI,
-            java.lang.Long.toString(noteId)
+            noteId.toString()
         )
         val values = ContentValues()
-        values.put(FlashCardsContract.Note.TAGS, TEST_TAG + " " + tag2)
+        values.put(FlashCardsContract.Note.TAGS, "$TEST_TAG $tag2")
         val updateCount = cr.update(updateNoteUri, values, null, null)
         assertEquals("updateCount is 1", 1, updateCount.toLong())
 
@@ -1291,7 +1280,7 @@ class ContentProviderTest : InstrumentedTest() {
         return col
     }
 
-    protected val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver
         get() = testContext.contentResolver
 
     companion object {
@@ -1347,7 +1336,7 @@ class ContentProviderTest : InstrumentedTest() {
             }
             return Uri.withAppendedPath(
                 FlashCardsContract.Note.CONTENT_URI,
-                java.lang.Long.toString(newNote.id)
+                newNote.id.toString()
             )
         }
     }
