@@ -26,7 +26,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
 import android.database.sqlite.SQLiteDatabaseLockedException
-import android.text.TextUtils
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode
@@ -2142,23 +2141,20 @@ open class Collection(
         }
     }
 
-    fun log(vararg argsParam: Any?) {
-        val args = argsParam.toMutableList()
-        if (!debugLog) {
-            return
-        }
-        val trace = Thread.currentThread().stackTrace[3]
-        // Overwrite any args that need special handling for an appropriate string representation
-        for (i in 0 until args.size) {
-            if (args[i] is LongArray) {
-                args[i] = Arrays.toString(args[i] as LongArray?)
-            }
-        }
-        val s = String.format(
-            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
-            TextUtils.join(",  ", args)
-        )
-        writeLog(s)
+    fun log(vararg objects: Any?) {
+        if (!debugLog) return
+
+        val unixTime = TimeManager.time.intTime()
+
+        val outerTraceElement = Thread.currentThread().stackTrace[3]
+        val fileName = outerTraceElement.fileName
+        val methodName = outerTraceElement.methodName
+
+        val objectsString = objects
+            .map { if (it is LongArray) Arrays.toString(it) else it }
+            .joinToString(", ")
+
+        writeLog("[$unixTime] $fileName:$methodName() $objectsString")
     }
 
     private fun writeLog(s: String) {
