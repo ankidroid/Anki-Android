@@ -152,11 +152,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
                 withCol {
                     val exporter = if (did == null) {
-                        AnkiPackageExporter(col, includeSched, includeMedia)
+                        AnkiPackageExporter(this, includeSched, includeMedia)
                     } else {
-                        AnkiPackageExporter(col, did, includeSched, includeMedia)
+                        AnkiPackageExporter(this, did, includeSched, includeMedia)
                     }
-                    exporter.exportInto(apkgPath, col.context)
+                    exporter.exportInto(apkgPath, context)
                 }
             }
             val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(apkgPath)
