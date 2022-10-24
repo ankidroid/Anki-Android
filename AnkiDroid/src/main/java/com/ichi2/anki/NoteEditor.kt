@@ -1282,7 +1282,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val editLineView = editLines[i]
             mCustomViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText!!.setImagePasteListener { editText: EditText?, uri: Uri? ->
+            newEditText.setImagePasteListener { editText: EditText?, uri: Uri? ->
                 onImagePaste(
                     editText!!,
                     uri!!
@@ -1293,7 +1293,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
                 }
                 if (previous != null) {
-                    previous.lastViewInTabOrder!!.nextFocusForwardId = newEditText.id
+                    previous.lastViewInTabOrder.nextFocusForwardId = newEditText.id
                 }
             }
             previous = editLineView
@@ -1323,26 +1323,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
-                mediaButton!!.setBackgroundResource(icons[1])
+                mediaButton.setBackgroundResource(icons[1])
                 setRemapButtonListener(mediaButton, i)
-                toggleStickyButton!!.setBackgroundResource(0)
+                toggleStickyButton.setBackgroundResource(0)
             } else if (editModelMode && !allowFieldRemapping()) {
-                mediaButton!!.setBackgroundResource(0)
-                toggleStickyButton!!.setBackgroundResource(0)
+                mediaButton.setBackgroundResource(0)
+                toggleStickyButton.setBackgroundResource(0)
             } else {
                 // Use media editor button if not changing note type
-                mediaButton!!.setBackgroundResource(icons[0])
+                mediaButton.setBackgroundResource(icons[0])
                 setMMButtonListener(mediaButton, i)
                 if (addNote) {
                     // toggle sticky button
-                    toggleStickyButton!!.setBackgroundResource(icons[2])
+                    toggleStickyButton.setBackgroundResource(icons[2])
                     setToggleStickyButtonListener(toggleStickyButton, i)
                 } else {
-                    toggleStickyButton!!.setBackgroundResource(0)
+                    toggleStickyButton.setBackgroundResource(0)
                 }
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
+                previous.lastViewInTabOrder.nextFocusForwardId = R.id.CardEditorTagButton
             }
             mediaButton.contentDescription =
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
