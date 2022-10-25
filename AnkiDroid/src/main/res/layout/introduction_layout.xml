@@ -60,7 +60,7 @@
         android:id="@+id/title_divider"
         android:layout_width="160dp"
         android:layout_height="2dp"
-        android:background="@drawable/gradient_line_horizontal"
+        android:background="@drawable/horizontal_gradient_separator"
         app:layout_constraintBottom_toTopOf="@+id/remember_more"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
