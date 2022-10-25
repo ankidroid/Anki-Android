@@ -245,7 +245,7 @@ dependencies {
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
-    implementation 'androidx.activity:activity-ktx:1.6.0'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
     implementation 'androidx.browser:browser:1.4.0'
