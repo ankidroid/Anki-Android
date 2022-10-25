@@ -13,7 +13,7 @@ buildscript {
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.9.1'
     ext.coroutines_version = '1.6.4'
-    ext.fragments_version = "1.5.3"
+    ext.fragments_version = "1.5.4"
 
     repositories {
         google()
