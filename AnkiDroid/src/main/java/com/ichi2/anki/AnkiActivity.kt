@@ -33,11 +33,11 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
@@ -416,17 +416,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         }
     }
 
-    @KotlinCleanup("toast -> snackbar")
     open fun openUrl(url: Uri) {
         // DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         // display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
             @KotlinCleanup("check RTL with concat")
-            showThemedToast(
-                this,
-                resources.getString(R.string.no_browser_notification) + url,
-                false
-            )
+            showSnackbar(resources.getString(R.string.no_browser_notification) + url, Snackbar.LENGTH_LONG)
             return
         }
         val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
