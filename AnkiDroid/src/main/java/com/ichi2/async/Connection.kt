@@ -555,12 +555,11 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
          * @return the original payload
          */
         private fun genericError(data: Payload): Payload {
-            data.apply {
+            return data.apply {
                 success = false
                 resultType = GENERIC_ERROR
                 result = arrayOfNulls(0)
             }
-            return data
         }
 
         @Synchronized // #7108: AsyncTask
