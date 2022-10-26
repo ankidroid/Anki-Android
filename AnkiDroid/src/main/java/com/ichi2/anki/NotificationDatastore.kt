@@ -213,11 +213,6 @@ class NotificationDatastore private constructor(val context: Context) {
      * */
     /*
     * We actually are not blocking the thread. This method throws an exception. It will not create problem for us.
-    * TODO: unit test that :
-    *  * if there is no preference at all, we return null
-    *  * if there is a preference without entry for this key we return null
-    *  * if there is a preference whose entry for this key can't be cast to DeckNotification, throw
-    *  * if there is a preference with entry for this key that can be cast, we get expected notification
     */
     @Suppress("BlockingMethodInNonBlockingContext")
     suspend fun getDeckSchedData(did: DeckId): DeckNotification? {
