@@ -125,6 +125,7 @@ class IntentHandler : Activity() {
                         File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
                     )
                 }
+                // TODO move the file deletion on a background thread
                 contentResolver.delete(fileUri!!, null, null)
                 Timber.i("onCreate() import successful and downloaded file deleted")
             } catch (e: Exception) {
