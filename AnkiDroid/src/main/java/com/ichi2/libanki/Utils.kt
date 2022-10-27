@@ -544,7 +544,7 @@ object Utils {
         for (i in 0 until list.size - 1) {
             result.append(list[i]).append("\u001f")
         }
-        if (list.size > 0) {
+        if (list.isNotEmpty()) {
             result.append(list[list.size - 1])
         }
         return result.toString()

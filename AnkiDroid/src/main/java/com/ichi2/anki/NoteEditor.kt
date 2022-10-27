@@ -31,6 +31,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
+import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -196,7 +197,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (isClozeType) {
                 return R.string.note_editor_no_cloze_delations
             }
-            if (TextUtils.isEmpty(getCurrentFieldText(0))) {
+            if (isEmpty(getCurrentFieldText(0))) {
                 return R.string.note_editor_no_first_field
             }
             return if (allFieldsHaveContent()) {
@@ -208,7 +209,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun allFieldsHaveContent(): Boolean {
         for (s in currentFieldStrings) {
-            if (TextUtils.isEmpty(s)) {
+            if (isEmpty(s)) {
                 return false
             }
         }
@@ -1757,7 +1758,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun addToolbarButton(buttonText: String, prefix: String, suffix: String) {
-        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
+        if (isEmpty(prefix) && isEmpty(suffix)) {
             return
         }
         val toolbarButtons = toolbarButtons
@@ -1766,7 +1767,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         updateToolbar()
     }
 
-    @KotlinCleanup(".isEmpty()")
     private fun editToolbarButton(
         buttonTextParam: String,
         prefixParam: String,
@@ -1776,9 +1776,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         var buttonText: String? = buttonTextParam
         var prefix: String? = prefixParam
         var suffix: String? = suffixParam
-        buttonText = if (TextUtils.isEmpty(buttonText)) currentButton.buttonText else buttonText
-        prefix = if (TextUtils.isEmpty(prefix)) currentButton.prefix else prefix
-        suffix = if (TextUtils.isEmpty(suffix)) currentButton.suffix else suffix
+        buttonText = buttonText?.ifEmpty { currentButton.buttonText }
+        prefix = prefix?.ifEmpty { currentButton.prefix }
+        suffix = suffix?.ifEmpty { currentButton.suffix }
         val toolbarButtons = toolbarButtons
         val index = currentButton.index
         toolbarButtons[index] = CustomToolbarButton(index, buttonText!!, prefix!!, suffix!!)
