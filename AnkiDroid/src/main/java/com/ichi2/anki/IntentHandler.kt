@@ -129,7 +129,7 @@ class IntentHandler : Activity() {
                 contentResolver.delete(fileUri!!, null, null)
                 Timber.i("onCreate() import successful and downloaded file deleted")
             } catch (e: Exception) {
-                Timber.w("onCreate() import successful and cannot delete file $e")
+                Timber.w(e, "onCreate() import successful and cannot delete file")
             }
 
             reloadIntent.action = action
