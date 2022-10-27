@@ -58,8 +58,8 @@ class ManageSpaceFragment : SettingsFragment() {
                     val progressDialog = StyledProgressDialog.show(requireContext(), getString(R.string.delete_collection_ongoing), null)
                     launchCatchingTask {
                         // TODO: Uses withProgress if we move to FragmentActivity
-                        val mediaCheckResult = withCol { media.fullCheck() }
-                        val unused = mediaCheckResult.unused
+                        val mediaCheckResult = withCol { media.performFullCheck() }
+                        val unused = mediaCheckResult.unusedFileNames
                         if (unused.isEmpty()) {
                             // TODO: Let the user know there is nothing to do
                             return@launchCatchingTask

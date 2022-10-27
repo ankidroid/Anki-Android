@@ -1486,22 +1486,14 @@ open class DeckPicker :
         val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
             launchCatchingTask {
-                val result = withProgress(resources.getString(R.string.check_media_message)) { checkMedia() }
+                val result = withProgress(R.string.check_media_message) {
+                    withCol { media.performFullCheck() }
+                }
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
             }
         } else {
             requestStoragePermission()
         }
-    }
-
-    /**
-     * Finds missing, unused and invalid media files
-     *
-     * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
-     */
-    @VisibleForTesting
-    suspend inline fun checkMedia() = withCol {
-        media.fullCheck()
     }
 
     override fun deleteUnused(unused: List<String>) {

@@ -296,13 +296,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
       ***********************************************************
      */
 
-    /**
-     * Finds missing, unused and invalid media files
-     *
-     * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
-     */
     @VisibleForTesting
-    fun fullCheck(): MediaCheckResult {
+    fun performFullCheck(): MediaCheckResult {
         if (BackendFactory.defaultLegacySchema) {
             // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
             rebuildIfInvalid()
@@ -994,4 +989,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
     }
 }
 
-data class MediaCheckResult(val noHave: List<String>, val unused: List<String>, val invalid: List<String>)
+data class MediaCheckResult(
+    val missingFileNames: List<String>,
+    val unusedFileNames: List<String>,
+    val invalidFileNames: List<String>,
+)
