@@ -1,4 +1,4 @@
-    android {
+android {
     lintOptions {
         textReport true
         textOutput "stdout"
