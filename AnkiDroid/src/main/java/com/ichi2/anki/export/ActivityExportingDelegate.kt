@@ -30,13 +30,13 @@ import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.CollectionTask.ExportApkg
-import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.AnkiPackageExporter
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager
@@ -147,16 +147,21 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
-        val exportListener = ExportListener(activity, mDialogsFactory)
-        TaskManager.launchCollectionTask(
-            ExportApkg(
-                exportPath.path,
-                did,
-                includeSched,
-                includeMedia
-            ),
-            exportListener
-        )
+        activity.launchCatchingTask {
+            val apkgPath = exportPath.path
+            activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
+                withCol {
+                    val exporter = if (did == null) {
+                        AnkiPackageExporter(this, includeSched, includeMedia)
+                    } else {
+                        AnkiPackageExporter(this, did, includeSched, includeMedia)
+                    }
+                    exporter.exportInto(apkgPath, context)
+                }
+            }
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(apkgPath)
+            activity.showAsyncDialogFragment(dialog)
+        }
     }
 
     // Only for new backend schema
