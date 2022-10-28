@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/deck_conf_cram_search"
+        ankidroid:actionViewClass="com.ichi2.ui.ModelFieldEditorSearchView"
+        ankidroid:showAsAction="always|collapseActionView"/>
+
     <item
         android:id="@+id/action_add_new_model"
         android:title="@string/model_field_editor_add"

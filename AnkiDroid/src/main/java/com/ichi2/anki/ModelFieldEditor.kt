@@ -21,10 +21,9 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ListView
+import android.view.View
+import android.view.View.OnAttachStateChangeListener
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
@@ -33,6 +32,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.AnkiDroidApp.Companion.TAG
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -51,6 +51,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
+import com.ichi2.ui.ModelFieldEditorSearchView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.utils.toStringList
@@ -59,8 +60,10 @@ import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
+
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var mFieldsListView: ListView
@@ -71,6 +74,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private lateinit var mModel: Model
     private lateinit var mNoteFields: JSONArray
     private lateinit var mFieldsLabels: List<String>
+    private lateinit var mFieldsLabelsFiltered: ArrayList<String>
+
+    private lateinit var mSearchView: ModelFieldEditorSearchView
+    private lateinit var mSearchItem: MenuItem
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -100,6 +107,36 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.model_editor, menu)
+
+        mSearchItem = menu.findItem(R.id.action_search)
+        mSearchView = mSearchItem.actionView as ModelFieldEditorSearchView
+
+        mSearchView.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                Timber.d("onViewAttachedToWindow: search view is open")
+            }
+
+            override fun onViewDetachedFromWindow(v: View) {
+                Timber.d("onViewAttachedToWindow: search view is closed")
+                reloadLabelListView()
+            }
+        })
+
+        mSearchView.setOnQueryTextListener(object :
+                SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    filterListView(query)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    Timber.tag(TAG).d("onQueryTextChange: $newText")
+                    filterListView(newText)
+                    return true
+                }
+            })
+
         return true
     }
 
@@ -120,7 +157,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * isn't followed by other type of work that access the data properties as it has the capability
      * to finish the activity.
      */
-    private fun initialize() {
+    fun initialize() {
         val noteTypeID = intent.getLongExtra("noteTypeID", 0)
         val collectionModel = collection.models.get(noteTypeID)
         if (collectionModel == null) {
@@ -137,6 +174,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             currentPos = position
         }
     }
+
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
@@ -207,6 +245,39 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             }
                 .displayKeyboard(_fieldNameInput)
         }
+    }
+
+    /**
+     * filterListView() takes a string as an argument and filters the list view with similar labels
+     */
+    private fun filterListView(query: String?) {
+        Timber.tag(TAG).d("filterListView: $query")
+        mFieldsLabelsFiltered = ArrayList()
+        mFieldsLabels.forEach {
+            if (it.lowercase().contains(query!!.lowercase().toString())) {
+                mFieldsLabelsFiltered.add(it)
+            }
+        }
+        mFieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, mFieldsLabelsFiltered)
+        mFieldsListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+            showDialogFragment(newInstance(mFieldsLabelsFiltered[position]))
+            currentPos = position
+        }
+    }
+
+    /**
+     * This function is to re-load the list view with all labels when user presses back
+     * button after they're done with searching
+     */
+    private fun reloadLabelListView() {
+        Timber.tag(TAG).d("reloadLabelListView: ")
+        mFieldsListView.adapter =
+            ArrayAdapter(this, R.layout.model_field_editor_list_item, mFieldsLabels)
+        mFieldsListView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+                showDialogFragment(newInstance(mFieldsLabels[position]))
+                currentPos = position
+            }
     }
 
     /**
