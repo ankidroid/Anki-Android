@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki
+package com.ichi2.anki.ui.windows.managespace
 
 import android.os.Bundle
 import androidx.fragment.app.commit
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
 
 class ManageSpaceActivity : AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

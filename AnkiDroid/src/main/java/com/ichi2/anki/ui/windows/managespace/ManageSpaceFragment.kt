@@ -14,12 +14,15 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki
+package com.ichi2.anki.ui.windows.managespace
 
 import androidx.preference.Preference
 import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.deleteCollectionDirectory
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.async.deleteMedia
