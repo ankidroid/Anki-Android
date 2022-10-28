@@ -29,6 +29,7 @@ import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
+import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController

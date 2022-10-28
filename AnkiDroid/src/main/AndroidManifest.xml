@@ -81,10 +81,10 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
-        android:manageSpaceActivity=".ManageSpaceActivity"
+        android:manageSpaceActivity=".ui.windows.managespace.ManageSpaceActivity"
         >
         <activity
-            android:name=".ManageSpaceActivity"
+            android:name=".ui.windows.managespace.ManageSpaceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
