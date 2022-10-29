@@ -113,6 +113,6 @@
     <string name="gesture_show_all_hints">全てのヒントを表示</string>
     <string name="record_voice">音声を録音</string>
     <string name="replay_voice">音声を再生</string>
-    <string name="automatic_answer_option_2">難しい（選択できない場合は 普通）</string>
-    <string name="automatic_answer_option_4">簡単（選択できない場合は 普通）</string>
+    <string name="automatic_answer_option_2">難しい（選択できない場合は 順調）</string>
+    <string name="automatic_answer_option_4">簡単（選択できない場合は 順調）</string>
 </resources>

@@ -198,8 +198,8 @@
     <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Экспортировать выбранную карточку в apkg файл?</item>
-        <item quantity="few">Export %d selected cards as apkg file?</item>
-        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="few">Экспортировать %d выбранные карточки в apkg файл?</item>
+        <item quantity="many">Экспортировать %d выбранных карточек в apkg файл?</item>
         <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
@@ -223,7 +223,6 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="export_select_save_app">Выберите место сохранения</string>
     <string name="export_select_share_app">Выберите, как поделиться</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>

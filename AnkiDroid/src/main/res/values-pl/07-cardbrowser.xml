@@ -104,10 +104,10 @@
     <string name="card_browser_unknown_deck_name">Nieznany</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="few">Export cards</item>
-        <item quantity="many">Export cards</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Eksportuj kartę</item>
+        <item quantity="few">Eksportuj karty</item>
+        <item quantity="many">Eksportuj karty</item>
+        <item quantity="other">Eksportuj karty</item>
     </plurals>
     <plurals name="card_browser_export_notes">
         <item quantity="one">Export note</item>

@@ -117,7 +117,7 @@
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду дополнительного обучения</string>
+    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду допзанятия</string>
     <string name="importing_collection">Коллекция импортируется&#8230;</string>
     <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
     <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>

@@ -98,13 +98,13 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; meses</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; días</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; horas</string>
-    <string name="stats_overview_answer_buttons_learn">Aprendido: &lt;b&gt;%1$.2f%%&lt;/b&gt; correcto (%2$d de %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Jovenes: &lt;b&gt;%1$.2f%%&lt;/b&gt; correcto (%2$d de %3$d)</string>
+    <string name="stats_overview_answer_buttons_learn">Aprendiendo: &lt;b&gt;%1$.2f%%&lt;/b&gt; correcto (%2$d de %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Jóvenes: &lt;b&gt;%1$.2f%%&lt;/b&gt; correcto (%2$d de %3$d)</string>
     <string name="stats_overview_answer_buttons_mature">Maduras: &lt;b&gt;%1$.2f%%&lt;/b&gt; correcto (%2$d de %3$d)</string>
     <string name="stats_overview_card_types_total_cards">Tarjetas totales: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_total_notes">Notas totales: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_lowest_ease">Fácilidad más baja: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Fácilidad media: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Facilidad media: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Mayor facilidad: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_select_time_scale">Seleccionar escala de tiempo</string>
     <string-array name="due_x_axis_title">
