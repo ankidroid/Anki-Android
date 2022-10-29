@@ -6,7 +6,7 @@ on:
       clearCaches:
         description: "Clear workflow caches where possible"
         required: false
-        type: boolean
+        type: string
   pull_request:
     branches:
       - '**'
@@ -84,7 +84,7 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ hashFiles('~/.android/avd/**/snapshots/**') }}
+          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ github.event.inputs.clearCaches }}
           restore-keys: |
             avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
 
