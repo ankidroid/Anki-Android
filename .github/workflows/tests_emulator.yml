@@ -2,6 +2,11 @@ name: Emulator Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      clearCaches:
+        description: "Clear workflow caches where possible"
+        required: false
+        type: boolean
   pull_request:
     branches:
       - '**'
@@ -82,6 +87,17 @@ jobs:
           key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ hashFiles('~/.android/avd/**/snapshots/**') }}
           restore-keys: |
             avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
+
+      - name: Clear Caches Optionally
+        if: "${{ github.event.inputs.clearCaches != '' }}"
+        shell: bash
+        run: |
+          du -sk ~/.gradle
+          du -sk ~/.android
+          rm -fr ~/.gradle
+          rm -fr ~/.android
+          du -sk ~/.gradle
+          du -sk ~/.android
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
