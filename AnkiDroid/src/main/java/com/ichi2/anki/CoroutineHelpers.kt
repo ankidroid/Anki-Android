@@ -134,7 +134,11 @@ fun FragmentActivity.launchCatchingTask(
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit
-): Job = requireActivity().launchCatchingTask(errorMessage, block)
+): Job {
+    return lifecycle.coroutineScope.launch {
+        requireActivity().runCatchingTask(errorMessage) { block() }
+    }
+}
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
