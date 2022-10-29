@@ -27,7 +27,6 @@ import android.webkit.JavascriptInterface
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
@@ -126,7 +125,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
             /*
             * if api major version equals to supplied major version then return true and also check for minor version and patch version
-            * show toast for update and contact developer if need updates
+            * show snackbar for update and contact developer if need updates
             * otherwise return false
             */
             return when {
@@ -135,13 +134,13 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 versionSupplied.lessThan(versionCurrent) -> {
                     activity.runOnUiThread {
-                        showThemedToast(context, context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact), false)
+                        activity.showSnackbar(context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact), Snackbar.LENGTH_LONG)
                     }
                     versionSupplied.greaterThanOrEqualTo(Version.valueOf(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
                     activity.runOnUiThread {
-                        showThemedToast(context, context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact), false)
+                        activity.showSnackbar(context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact), Snackbar.LENGTH_LONG)
                     }
                     false
                 }
@@ -178,7 +177,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {
-                showThemedToast(context, context.getString(R.string.invalid_json_data, j.localizedMessage), false)
+                activity.showSnackbar(context.getString(R.string.invalid_json_data, j.localizedMessage), Snackbar.LENGTH_LONG)
             }
         }
         return apiStatusJson

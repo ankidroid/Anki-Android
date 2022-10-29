@@ -51,7 +51,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
@@ -488,7 +487,7 @@ abstract class AbstractFlashcardViewer :
 
                 // When launched with a shortcut, we want to display a message when finishing
                 if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                    showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
+                    showSnackbar(R.string.studyoptions_congrats_finished, Snackbar.LENGTH_LONG)
                 }
                 return
             }
@@ -2298,7 +2297,7 @@ abstract class AbstractFlashcardViewer :
                 if (isFullscreen) {
                     openOptionsMenu()
                 } else {
-                    showThemedToast(this@AbstractFlashcardViewer, getString(R.string.ankidroid_turn_on_fullscreen_options_menu), true)
+                    showSnackbar(R.string.ankidroid_turn_on_fullscreen_options_menu, Snackbar.LENGTH_SHORT)
                 }
                 return true
             }
@@ -2308,7 +2307,7 @@ abstract class AbstractFlashcardViewer :
                 if (isFullscreen) {
                     onNavigationPressed()
                 } else {
-                    showThemedToast(this@AbstractFlashcardViewer, getString(R.string.ankidroid_turn_on_fullscreen_nav_drawer), true)
+                    showSnackbar(R.string.ankidroid_turn_on_fullscreen_nav_drawer, Snackbar.LENGTH_SHORT)
                 }
                 return true
             }
@@ -2359,11 +2358,11 @@ abstract class AbstractFlashcardViewer :
                 }
             }
 
-            // Show toast using JS
+            // Show snackbar using JS
             if (url.startsWith("signal:anki_show_toast:")) {
                 val msg = url.replaceFirst("signal:anki_show_toast:".toRegex(), "")
                 val msgDecode = decodeUrl(msg)
-                showThemedToast(this@AbstractFlashcardViewer, msgDecode, true)
+                showSnackbar(msgDecode, Snackbar.LENGTH_SHORT)
                 return true
             }
             when (val signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url)) {
@@ -2500,7 +2499,7 @@ abstract class AbstractFlashcardViewer :
                 Timber.e(e, "UTF-8 isn't supported as an encoding?")
             } catch (e: Exception) {
                 Timber.e(e, "Exception decoding: '%s'", url)
-                showThemedToast(this@AbstractFlashcardViewer, getString(R.string.card_viewer_url_decode_error), true)
+                showSnackbar(R.string.card_viewer_url_decode_error, Snackbar.LENGTH_SHORT)
             }
             return ""
         }

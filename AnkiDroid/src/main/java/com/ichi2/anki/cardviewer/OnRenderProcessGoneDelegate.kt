@@ -22,9 +22,10 @@ import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.CardId
 import timber.log.Timber
 
@@ -104,7 +105,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
             return
         }
         val errorMessage = target.resources.getString(R.string.webview_crash_fatal, getErrorCause(detail))
-        showThemedToast(target, errorMessage, false)
+        target.showSnackbar(errorMessage, Snackbar.LENGTH_LONG)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -114,7 +115,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
             return
         }
         val nonFatalError = target.resources.getString(R.string.webview_crash_nonfatal, getErrorCause(detail))
-        showThemedToast(target, nonFatalError, false)
+        target.showSnackbar(nonFatalError, Snackbar.LENGTH_LONG)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

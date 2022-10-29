@@ -23,11 +23,12 @@ import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
@@ -85,7 +86,7 @@ class IntentHandler : Activity() {
             runnable.run()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
-            showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
+            showSnackbar(R.string.intent_handler_failed_no_storage_permission, Snackbar.LENGTH_LONG)
             launchDeckPickerIfNoOtherTasks(reloadIntent)
         }
     }

@@ -23,7 +23,9 @@ import android.view.MenuItem
 import android.widget.EditText
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.JSONObject
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -43,7 +45,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         super.onCreate(savedInstanceState)
         val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
-            UIUtils.showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
+            showSnackbar(R.string.card_template_editor_card_browser_appearance_failed, Snackbar.LENGTH_SHORT)
             finishActivityWithFade(this)
             return
         }

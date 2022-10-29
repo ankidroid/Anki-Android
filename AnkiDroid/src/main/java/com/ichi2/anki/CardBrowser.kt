@@ -42,7 +42,6 @@ import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
@@ -52,6 +51,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleMultipleCards
 import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleSingleCard
+import com.ichi2.anki.dialogs.RescheduleDialog.show
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -302,10 +302,7 @@ open class CardBrowser :
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute")
             context.mReloadRequired = true
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                context,
-                context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true
-            )
+            context.showSnackbar(context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), Snackbar.LENGTH_SHORT)
             context.reloadCards(result.value.result)
             context.invalidateOptionsMenu()
         }
@@ -324,10 +321,7 @@ open class CardBrowser :
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute")
             context.mReloadRequired = true
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                context,
-                context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true
-            )
+            context.showSnackbar(context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), Snackbar.LENGTH_SHORT)
             context.reloadCards(result.value.result)
             context.invalidateOptionsMenu()
         }
@@ -346,10 +340,7 @@ open class CardBrowser :
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute")
             context.mReloadRequired = true
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                context,
-                context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true
-            )
+            context.showSnackbar(context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), Snackbar.LENGTH_SHORT)
             context.reloadCards(result.value.result)
             context.invalidateOptionsMenu()
         }
@@ -384,10 +375,7 @@ open class CardBrowser :
 
         override fun onSaveSearch(searchName: String?, searchTerms: String?) {
             if (searchName.isNullOrEmpty()) {
-                showThemedToast(
-                    this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true
-                )
+                this@CardBrowser.showSnackbar(R.string.card_browser_list_my_searches_new_search_error_empty_name, Snackbar.LENGTH_SHORT)
                 return
             }
             val savedFiltersObj = col.get_config("savedFilters", JSONObject())!!
@@ -398,10 +386,7 @@ open class CardBrowser :
                 mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
-                showThemedToast(
-                    this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_dup), true
-                )
+                this@CardBrowser.showSnackbar(R.string.card_browser_list_my_searches_new_search_error_dup, Snackbar.LENGTH_SHORT)
             }
         }
     }
@@ -461,7 +446,7 @@ open class CardBrowser :
     }
 
     private fun displayCouldNotChangeDeck() {
-        showThemedToast(this, getString(R.string.card_browser_deck_change_error), true)
+        showSnackbar(R.string.card_browser_deck_change_error, Snackbar.LENGTH_SHORT)
     }
 
     @get:VisibleForTesting
@@ -487,7 +472,7 @@ open class CardBrowser :
         Timber.d("onCreate()")
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
+            showSnackbar(R.string.intent_handler_failed_no_storage_permission, Snackbar.LENGTH_LONG)
             displayDeckPickerForPermissionsDialog()
             return
         }
@@ -836,7 +821,7 @@ open class CardBrowser :
             openNoteEditorForCard(selectedCardIds[0])
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false)
+            showSnackbar(R.string.multimedia_editor_something_wrong, Snackbar.LENGTH_LONG)
         }
     }
 

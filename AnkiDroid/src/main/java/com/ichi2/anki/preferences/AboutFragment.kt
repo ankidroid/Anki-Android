@@ -152,7 +152,7 @@ class AboutFragment : Fragment() {
          */
         fun enableDevOptions(context: Context) {
             val message = context.getString(R.string.dev_options_enabled_msg)
-            UIUtils.showThemedToast(context, message, true)
+            preferencesActivity.showSnackbar(message, Snackbar.LENGTH_SHORT)
             preferencesActivity.setDevOptionsEnabled(true)
         }
     }
