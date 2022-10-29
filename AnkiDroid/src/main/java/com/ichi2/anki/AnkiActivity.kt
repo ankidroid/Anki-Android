@@ -422,7 +422,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         if (!AdaptionUtil.hasWebBrowser(this)) {
             val noBrowserNotification = resources.getString(R.string.no_browser_notification) + url
             @KotlinCleanup("check RTL with concat")
-            showSnackbar(noBrowserNotification, Snackbar.LENGTH_LONG)
+            showSnackbar(noBrowserNotification, Snackbar.LENGTH_LONG, snackbarBuilder = null)
             return
         }
         val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
