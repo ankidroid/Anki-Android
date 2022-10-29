@@ -205,8 +205,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 )
             )
             .intent.apply {
-                clipData = ClipData.newRawUri(attachment.name, uri)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                clipData = ClipData.newUri(activity.contentResolver, attachment.name, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             }
         val shareFileIntent = Intent.createChooser(
             sendIntent,
