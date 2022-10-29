@@ -28,7 +28,6 @@ import androidx.core.app.ShareCompat.IntentBuilder
 import androidx.core.content.FileProvider
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.snackbar.showSnackbar
@@ -168,7 +167,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val attachment = File(path)
         if (!attachment.exists()) {
             Timber.e("Specified apkg file %s does not exist", path)
-            showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
+            activity.showSnackbar(R.string.apk_share_error, Snackbar.LENGTH_LONG)
             return
         }
         // Get a URI for the file to be shared via the FileProvider API
@@ -176,7 +175,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             FileProvider.getUriForFile(activity, "com.ichi2.anki.apkgfileprovider", attachment)
         } catch (e: IllegalArgumentException) {
             Timber.e("Could not generate a valid URI for the apkg file")
-            showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
+            activity.showSnackbar(R.string.apk_share_error, Snackbar.LENGTH_LONG)
             return
         }
 

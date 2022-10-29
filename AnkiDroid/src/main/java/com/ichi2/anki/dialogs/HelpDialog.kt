@@ -22,15 +22,16 @@ import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem.ActivityConsumer
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -228,15 +229,12 @@ object HelpDialog {
 
         override fun onClicked(activity: AnkiActivity) {
             if (isUserATestClient) {
-                showThemedToast(activity, activity.getString(R.string.user_is_a_robot), false)
+                activity.showSnackbar(R.string.user_is_a_robot, Snackbar.LENGTH_LONG)
                 return
             }
             val wasReportSent = CrashReportService.sendReport(activity)
             if (!wasReportSent) {
-                showThemedToast(
-                    activity, activity.getString(R.string.help_dialog_exception_report_debounce),
-                    true
-                )
+                activity.showSnackbar(R.string.help_dialog_exception_report_debounce, Snackbar.LENGTH_SHORT)
             }
         }
 

@@ -17,9 +17,10 @@ package com.ichi2.compat.customtabs
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
 
 /**
@@ -36,7 +37,7 @@ class CustomTabsFallback : CustomTabFallback {
             // and I assume an exported intent will take priority over a non-exported intent.
             // Add an exception report to see if I'm wrong
             CrashReportService.sendExceptionReport(e, "CustomTabsFallback::openUri")
-            showThemedToast(activity, activity.getString(R.string.web_page_error, uri), false)
+            activity.showSnackbar(activity.getString(R.string.web_page_error, uri), Snackbar.LENGTH_LONG)
         }
     }
 }

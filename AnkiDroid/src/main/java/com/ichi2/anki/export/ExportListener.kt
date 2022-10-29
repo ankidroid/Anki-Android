@@ -15,9 +15,10 @@
  */
 package com.ichi2.anki.export
 
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.themes.StyledProgressDialog
 import timber.log.Timber
@@ -49,7 +50,7 @@ internal class ExportListener(activity: AnkiActivity?, private val dialogsFactor
                 val dialog = dialogsFactory.newExportCompleteDialog().withArguments(exportPath)
                 context.showAsyncDialogFragment(dialog)
             } else {
-                showThemedToast(context, context.resources.getString(R.string.export_unsuccessful), true)
+                context.showSnackbar(R.string.export_unsuccessful, Snackbar.LENGTH_SHORT)
             }
         }
     }

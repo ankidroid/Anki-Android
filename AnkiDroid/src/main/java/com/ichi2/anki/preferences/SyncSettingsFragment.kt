@@ -17,9 +17,10 @@ package com.ichi2.anki.preferences
 
 import androidx.preference.Preference
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.CustomSyncServer
 
 /**
@@ -42,11 +43,11 @@ class SyncSettingsFragment : SettingsFragment() {
                 message(R.string.force_full_sync_summary)
                 positiveButton(R.string.dialog_ok) {
                     if (col == null) {
-                        showThemedToast(requireContext(), R.string.directory_inaccessible, false)
+                        showSnackbar(R.string.directory_inaccessible, Snackbar.LENGTH_LONG)
                         return@positiveButton
                     }
                     col!!.modSchemaNoCheck()
-                    showThemedToast(requireContext(), R.string.force_full_sync_confirmation, true)
+                    showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
                 }
                 negativeButton(R.string.dialog_cancel)
             }

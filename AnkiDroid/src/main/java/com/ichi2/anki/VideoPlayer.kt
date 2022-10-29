@@ -23,7 +23,8 @@ import android.os.Bundle
 import android.view.SurfaceHolder
 import android.view.WindowManager.LayoutParams
 import android.widget.VideoView
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Sound
 import com.ichi2.themes.Themes
 import timber.log.Timber
@@ -57,7 +58,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             // #5911 - path shouldn't be null. I couldn't determine why this happens.
             CrashReportService.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated")
             Timber.e("path was unexpectedly null")
-            showThemedToast(this, getString(R.string.video_creation_error), true)
+            showSnackbar(R.string.video_creation_error, Snackbar.LENGTH_SHORT)
             finish()
             return
         }
