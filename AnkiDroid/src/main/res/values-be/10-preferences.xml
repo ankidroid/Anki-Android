@@ -227,9 +227,9 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Колькасць крокаў мадэлявання</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Уласны сервер сінхранізацыі</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не выкарыстоўваецца</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Калекцыя: %1$s\nМедыя: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">прадвызначана</string>
     <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own servers for synchronization.
         You may specify either collection or media server, or both.
@@ -363,7 +363,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">Уключыць ‘%s’</string>
     <string name="use_rust_backend_title" maxLength="41">Выкарыстоўваць новую серверную частку</string>
     <string name="use_rust_backend_summary">Уключыце новыя функцыі Anki. Напрыклад, планіроўшчык трэцяй версіі\nНЕСТАБІЛЬНА. Не выкарыстоўвайце з калекцыяй, якая прадстаўляе для вас каштоўнасць. НЕ вяртаецца пры закрыцці праграмы.</string>
-    <string name="use_rust_backend_warning">Верагодна, што гэта можа цалкам пашкодзіць вашу ўстаноўку і будзе неабходна выдаліць прыладу, і папку AnkiDroid. Таксама можа быць зломана сінхранізацыя з AnkiWeb.\n\nМы вітаем тэставанне, але будзьце ўпэўнены, што ў вас ёсць прыгодны не-AnkiWeb бэкап.</string>
+    <string name="use_rust_backend_warning">Ёсць верагоднасць, што гэта можа цалкам пашкодзіць усталёўку і запатрабуе выдалення праграмы і папкі AnkiDroid і што можа адбыцца распаўсюджанне пашкоджання праз сінхранізацыю ў AnkiWeb.\n\nМы вітаем тэсціраванне гэтай функцыі, але настойліва рэкамендуем пераканацца, што ў вас ёсць актуальная рэзервовая копія па-за межамі сістэмы AnkiWeb.</string>
     <string name="enable_v3_sched_title" maxLength="41">Выкарыстоўваць планіроўшчык v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметры распрацоўшчыка</string>

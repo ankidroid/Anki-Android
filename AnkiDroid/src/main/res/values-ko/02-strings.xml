@@ -208,7 +208,6 @@
         ]]>    
  
 Context | Request Context    [1]</string>
-    <string name="export_unsuccessful">Apkg 파일 오류 내보내기</string>
     <string name="export_select_save_app">Select where to save file</string>
     <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>

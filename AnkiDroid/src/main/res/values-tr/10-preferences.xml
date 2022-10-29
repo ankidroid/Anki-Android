@@ -76,14 +76,14 @@
     <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
     <string name="reset_confirmation">Bütün durumlar sıfırlandı</string>
     <string name="card_zoom" maxLength="41">Kart yakınlaştırma</string>
-    <string name="image_zoom" maxLength="41">Görüntü yakınlaştırma</string>
+    <string name="image_zoom" maxLength="41">Resim yakınlaştırma</string>
     <string name="button_size" maxLength="41">Cevap düğmesi büyüklüğü</string>
     <string name="card_browser_font_size" maxLength="41">Kart tarayıcısı font ölçeği</string>
     <string name="card_browser_hide_media" maxLength="41">Kart gözatıcısında dosya isimlerini göster</string>
     <string name="card_browser_hide_media_summary">Kart gözatıcısı soru/cevap alanlarında medya dosyası isimlerini göster</string>
     <string name="col_path" maxLength="41">AnkiDroid dizini</string>
     <string name="fullscreen_review" maxLength="41">Tam ekran modu</string>
-    <string name="full_screen_off">Devre Dışı</string>
+    <string name="full_screen_off">Kapalı</string>
     <string name="full_screen_system">Sistem çubuklarını gizle</string>
     <string name="full_screen_complete">Sistem çubuklarını ve cevap butonlarını gizle</string>
     <string name="full_screen_error_gestures">Cevap butonlarını gizlemek için el hareketlerini açmalısınız</string>
@@ -226,21 +226,22 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Simülasyonun iterasyon sayısı</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Özel senkronizasyon sunucusu</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Kullanılmıyor</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Koleksiyon: %1$s\nMedya: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">varsayılan</string>
+    <string name="custom_sync_server_help"><![CDATA[        AnkiWeb\'le senkronize etmeye bir alternatif olarak,
+        senkronizasyon için kendi sunucularınızı kullanabilirsiniz.
+        Koleksiyon veya medya sunucusu, ya da ikisini de belirleyebilirsiniz.
+        Ayarlanmazsa varsayılan AnkiWeb sunucuları kullanılır.
+        Örneğin, yalnızca yerel ağa bağlıyken koleksiyonu senkronize
+        etmek için Anki Masaüstü\'nün dahili senkronizasyon sunucusunu,
+        genel internet erişiminiz varken medyayı senkronize etmek için de
+        AnkiWeb\'i kullanabilirsiniz.
+        <a href="%s">Daha fazlasını öğren</a>
         <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        <br>Not: Önceki AnkiDroid sürümlerinin aksine,
+        senkronizasyon URL\'ini komple belirtmeniz gerekir,
+        örneğin: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Medya Senkronizasyon Url\'i</string>
     <!-- Key Bindings -->

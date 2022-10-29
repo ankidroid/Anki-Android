@@ -59,7 +59,7 @@
     </plurals>
     <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
-    <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
+    <string name="initializing_tts">Spouští se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>

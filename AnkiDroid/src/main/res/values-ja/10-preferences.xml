@@ -64,7 +64,7 @@
     <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_controls" maxLength="41">操作</string>
-    <string name="pref_cat_advanced" maxLength="41">その他</string>
+    <string name="pref_cat_advanced" maxLength="41">高度な設定</string>
     <string name="pref_cat_workarounds" maxLength="41">不具合回避策</string>
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
     <!-- preferences.xml entries-->
@@ -203,7 +203,7 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
     <string name="html_javascript_debugging_summ">リモートのWebView接続を有効にし、カードのHTMLをAnkiDroidディレクトリに保存します</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">レビュア</string>
+    <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">PNG形式でクリップボード画像を貼り付け</string>
@@ -226,21 +226,20 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">シミュレーションの反復回数</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">指定なし</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">コレクション: %1$s\nメディア: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">既定</string>
+    <string name="custom_sync_server_help"><![CDATA[        AnkiWebとの同期の代わりに、
+        独自のサーバーを使用して同期を行うこともできます。
+        コレクションサーバーとメディアサーバーのどちらか、または両方を指定することができます。
+        設定しない場合は、デフォルトのAnkiWebサーバーが代わりに使用されます。
+        例えば、ローカルネットワークしかない場合はAnki Desktopに組み込まれた同期サーバーを使用してコレクションを同期し、
+        一般的なインターネットアクセスが可能な場合はAnkiWebを使用してメディアを同期する、といったことが可能です。
+        詳細は<a href="%s">こちら</a>をご覧ください。
         <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        <br>注：以前のバージョンのAnkiDroidの場合とは異なり、
+        カスタマイズされた同期URLを完全に指定する必要があります。
+        例：https://example.com:8080/sync/]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
     <!-- Key Bindings -->
@@ -355,8 +354,8 @@
     <string name="pref_cat_experimental" maxLength="41">試験運用機能</string>
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
-    <string name="use_rust_backend_summary">V3スケジューラなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません。</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_summary">V3スケジューラーなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません</string>
+    <string name="use_rust_backend_warning">この機能を有効にすることによって、あなたのAnkiDroidのデータが完全に破損してしまうリスクが生じます。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも破損を波及させてしまう可能性があります。\n\nこの機能を試していただくことは歓迎いたしますが、必ず、AnkiWeb以外のバックアップをあらかじめ確保しておいてください。</string>
     <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>

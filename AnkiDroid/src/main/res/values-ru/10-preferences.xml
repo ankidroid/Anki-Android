@@ -77,7 +77,7 @@
     <string name="reset_confirmation">Все сопоставления сброшены</string>
     <string name="card_zoom" maxLength="41">Масштаб карточек</string>
     <string name="image_zoom" maxLength="41">Масштаб картинок</string>
-    <string name="button_size" maxLength="41">Размер кнопки ответа</string>
+    <string name="button_size" maxLength="41">Масштаб кнопок ответа</string>
     <string name="card_browser_font_size" maxLength="41">Масштаб шрифта в списке карточек</string>
     <string name="card_browser_hide_media" maxLength="41">Показывать имена файлов</string>
     <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
@@ -226,21 +226,21 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число итераций моделирования</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не используется</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Коллекция: %1$s\nМедиа: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">по умолчанию</string>
+    <string name="custom_sync_server_help"><![CDATA[        Вместо синхронизации с AnkiWeb,
+        вы можете использовать свои собственные серверы для синхронизации.
+        Вы можете указать либо коллекцию или медиасервер, либо и то, и другое.
+        Если сервер не задан, то будут использоваться сервера AnkiWeb.
+        Например, вы можете использовать сервер синхронизации встроенный в Anki
+        Desktop для синхронизации коллекции, когда у вас только локальная сеть,
+        и AnkiWeb синхронизировать медиа при общем доступе к Интернету.
+        <a href="%s">Подробнее</a>
         <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        <br>Примечание: в отличие от предыдущих версий AnkiDroid,
+        вы должны указать полный URL-адрес синхронизации,
+        например: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
     <!-- Key Bindings -->
