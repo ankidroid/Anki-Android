@@ -69,15 +69,6 @@ jobs:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
           gradle-home-cache-cleanup: true
 
-      - name: Warm Gradle Cache
-        # This makes sure we fetch gradle network resources with a retry
-        uses: nick-invision/retry@v2
-        with:
-          timeout_minutes: 15
-          retry_wait_seconds: 60
-          max_attempts: 3
-          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest --daemon
-
         # This appears to be 'Cache Size: ~1230 MB (1290026823 B)' based on watching action logs
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
         # We don't want branches to evict main branch snapshot, so save on main, read-only all else
@@ -91,6 +82,15 @@ jobs:
           key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ hashFiles('~/.android/avd/**/snapshots/**') }}
           restore-keys: |
             avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
+
+      - name: Warm Gradle Cache
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 15
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest --daemon
 
       - name: AVD Boot and Snapshot Creation
         # Only generate a snapshot for saving if we are on main branch with a cache miss
