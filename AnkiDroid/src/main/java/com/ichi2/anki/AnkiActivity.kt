@@ -123,15 +123,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val newNightModeStatus =
-            newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        // Check if theme should change
-        if (Themes.systemIsInNightMode != newNightModeStatus) {
-            Themes.systemIsInNightMode = newNightModeStatus
-            if (Themes.themeFollowsSystem()) {
-                Themes.updateCurrentTheme()
-                recreate()
-            }
+        if (Themes.updateCurrentThemeByUiMode(newConfig.uiMode) == Themes.ThemeChanged.Yes) {
+            recreate()
         }
     }
 
