@@ -106,7 +106,11 @@ jobs:
           sdcard-path-or-size: 100M
           disable-animations: true
           # Give the emulator a little time to run and do first boot stuff before taking snapshot
-          script: echo "Generated AVD snapshot for caching."
+          script: |
+            touch adb-log.txt
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
+            adb logcat --clear
+            echo "Generated AVD snapshot for caching."
 
         # This step is separate so pure install time may be calculated as a step
       - name: Emulator Snapshot After Firstboot Warmup
@@ -127,9 +131,12 @@ jobs:
           disable-animations: true
           # Restart zygote to win a config race / Give emulator time to run and do first boot stuff before taking snapshot
           script: |
+            touch adb-log.txt
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
             $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
             sleep 10
             sleep $FIRST_BOOT_DELAY
+            adb logcat --clear
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
@@ -144,7 +151,8 @@ jobs:
           sdcard-path-or-size: 100M
           disable-animations: true
           script: |
-            $ANDROID_HOME/platform-tools/adb logcat '*:D' > adb-log.txt &
+            touch adb-log.txt
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
