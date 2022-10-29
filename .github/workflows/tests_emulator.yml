@@ -96,8 +96,8 @@ jobs:
           du -sk ~/.android
           rm -fr ~/.gradle
           rm -fr ~/.android
-          du -sk ~/.gradle
-          du -sk ~/.android
+          du -sk ~/.gradle || echo ~/.gradle is gone
+          du -sk ~/.android || echo ~/.android is gone
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
