@@ -125,8 +125,10 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           sdcard-path-or-size: 100M
           disable-animations: true
-          # Give the emulator a little time to run and do first boot stuff before taking snapshot
+          # Restart zygote to win a config race / Give emulator time to run and do first boot stuff before taking snapshot
           script: |
+            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
+            sleep 10
             sleep $FIRST_BOOT_DELAY
             echo "First boot warmup completed."
 
@@ -144,8 +146,6 @@ jobs:
           script: |
             $ANDROID_HOME/platform-tools/adb logcat '*:D' > adb-log.txt &
             sleep 5
-            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
-            sleep 10
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Compress Emulator Log
