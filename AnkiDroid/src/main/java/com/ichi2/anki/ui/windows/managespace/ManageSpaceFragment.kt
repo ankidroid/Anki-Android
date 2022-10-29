@@ -29,7 +29,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
 import com.ichi2.anki.*
-import com.ichi2.anki.CollectionManager.deleteCollectionDirectory
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
@@ -128,7 +127,7 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     }
 
     suspend fun deleteCollection() {
-        deleteCollectionDirectory()
+        withQueue { CollectionManager.deleteCollectionDirectory() }
 
         launchCalculationOfBackupsSize()
         launchCalculationOfSizeOfEverything()
