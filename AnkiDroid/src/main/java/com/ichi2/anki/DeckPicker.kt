@@ -84,6 +84,7 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
@@ -1554,6 +1555,12 @@ open class DeckPicker :
      */
     override fun sync(conflict: ConflictResolution?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+
+        if (userMigrationIsInProgress(this)) {
+            warnNoSyncDuringMigration()
+            return
+        }
+
         val hkey = preferences.getString("hkey", "")
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
@@ -2737,6 +2744,20 @@ open class DeckPicker :
         if (changes.studyQueues && handler !== this) {
             invalidateOptionsMenu()
             updateDeckList()
+        }
+    }
+
+    /**
+     * Show a dialog that explains no sync can occur during migration.
+     */
+    private fun warnNoSyncDuringMigration() {
+        // TODO: Fetch and display real numbers
+        MaterialDialog(this).show {
+            message(text = resources.getString(R.string.sync_impossible_during_migration, 5))
+            positiveButton(res = R.string.dialog_ok)
+            negativeButton(res = R.string.scoped_storage_learn_more) {
+                openUrl(R.string.link_scoped_storage_faq)
+            }
         }
     }
 

@@ -407,6 +407,8 @@
     <string name="scoped_storage_migrate">Migrate</string>
 
     <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
 
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
