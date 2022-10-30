@@ -1561,6 +1561,11 @@ open class DeckPicker :
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
+        if (!NetworkUtils.isOnline) {
+            Timber.w("Network unavailable")
+            showSnackbar(R.string.data_unavailable)
+            return
+        }
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_unavailable">Turn off Flight mode/connect to data to continue syncing</string>
+</resources>
