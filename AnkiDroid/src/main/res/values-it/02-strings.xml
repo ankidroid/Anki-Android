@@ -211,7 +211,6 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
     <string name="export_select_save_app">Selezionare dove salvare il file</string>
     <string name="export_select_share_app">Selezionare l\'applicazione con cui condividere</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opzioni</string>

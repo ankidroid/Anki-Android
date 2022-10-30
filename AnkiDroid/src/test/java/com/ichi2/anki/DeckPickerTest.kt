@@ -13,9 +13,9 @@ import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import net.ankiweb.rsdroid.BackendFactory
@@ -54,22 +54,23 @@ class DeckPickerTest : RobolectricTest() {
     @Before
     fun before() {
         RuntimeEnvironment.setQualifiers(mQualifiers)
-        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        getPreferences().edit {
+            putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
+        }
     }
 
     @Test
     fun verifyCodeMessages() {
-        @KotlinCleanup("use scope function")
-        val codeResponsePairs: MutableMap<Int, String> = HashMap()
-        val context = targetContext
-        codeResponsePairs[407] = context.getString(R.string.sync_error_407_proxy_required)
-        codeResponsePairs[409] = context.getString(R.string.sync_error_409)
-        codeResponsePairs[413] = context.getString(R.string.sync_error_413_collection_size)
-        codeResponsePairs[500] = context.getString(R.string.sync_error_500_unknown)
-        codeResponsePairs[501] = context.getString(R.string.sync_error_501_upgrade_required)
-        codeResponsePairs[502] = context.getString(R.string.sync_error_502_maintenance)
-        codeResponsePairs[503] = context.getString(R.string.sync_too_busy)
-        codeResponsePairs[504] = context.getString(R.string.sync_error_504_gateway_timeout)
+        val codeResponsePairs = hashMapOf(
+            407 to getResourceString(R.string.sync_error_407_proxy_required),
+            409 to getResourceString(R.string.sync_error_409),
+            413 to getResourceString(R.string.sync_error_413_collection_size),
+            500 to getResourceString(R.string.sync_error_500_unknown),
+            501 to getResourceString(R.string.sync_error_501_upgrade_required),
+            502 to getResourceString(R.string.sync_error_502_maintenance),
+            503 to getResourceString(R.string.sync_too_busy),
+            504 to getResourceString(R.string.sync_error_504_gateway_timeout)
+        )
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
                 for ((key, value) in codeResponsePairs) {
@@ -596,6 +597,30 @@ class DeckPickerTest : RobolectricTest() {
         override fun onPrepareOptionsMenu(menu: Menu): Boolean {
             optionsMenu = menu
             return super.onPrepareOptionsMenu(menu)
+        }
+    }
+
+    // Migration
+    @Test
+    fun `If user never postponed migration, shouldNotWaitMoreToOfferToMigrate() returns true`() {
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            scenario.onActivity { deckPicker: DeckPicker ->
+                assertThat("When no postpone occurred, it should be time to offer migration", deckPicker.shouldNotWaitMoreToOfferToMigrate())
+            }
+        }
+    }
+
+    @Test
+    fun `If user postpone, shouldNotWaitMoreToOfferToMigrate() returns false, an true later`() {
+        // Testing twice because the function may have side effect and normally we should not see different after two calls
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            scenario.onActivity { deckPicker: DeckPicker ->
+                deckPicker.setMigrationWasLastPostponedAtToNow()
+                assertThat("When postpone just occurred, we should not offer migration", !deckPicker.shouldNotWaitMoreToOfferToMigrate())
+                (TimeManager.time as MockTime).addD(POSTPONE_MIGRATION_INTERVAL_DAYS)
+                (TimeManager.time as MockTime).addM(1)
+                assertThat("When postpone occurred after our interval elapsed, it should be time to offer migration", deckPicker.shouldNotWaitMoreToOfferToMigrate())
+            }
         }
     }
 }

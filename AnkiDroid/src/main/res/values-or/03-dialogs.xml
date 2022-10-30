@@ -60,7 +60,7 @@
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
     <string name="reposition_card_not_new_error">କେବଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ରିପୋଜିସନ୍ କରାଯାଇପାରିବ</string>

@@ -113,7 +113,7 @@
         <item>ମାସ</item>
     </string-array>
     <string name="stats_today">ଆଜି</string>
-    <string name="stats_overview">ଅବଲୋକନ</string>
+    <string name="stats_overview">ଅଵଲୋକନ</string>
     <string name="stats_forecast">ପୂର୍ବାନୁମାନ</string>
     <string name="stats_review_count">ସମୀକ୍ଷା ଗଣନା</string>
     <string name="stats_review_time">ସମୀକ୍ଷା ସମୟ</string>

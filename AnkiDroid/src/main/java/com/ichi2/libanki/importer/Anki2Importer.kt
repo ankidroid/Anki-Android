@@ -255,13 +255,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                                     update.add(arrayOf(nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data))
                                     dirty.add(nid)
                                 } else {
-                                    dupesIgnored.add(
-                                        String.format(
-                                            "%s: %s",
-                                            mCol.models.get(oldMid)!!.getString("name"),
-                                            flds.replace('\u001f', ',')
-                                        )
-                                    )
+                                    val modelName = mCol.models.get(oldMid)!!.getString("name")
+                                    val commaSeparatedFields = flds.replace('\u001f', ',')
+                                    dupesIgnored.add("$modelName: $commaSeparatedFields")
                                     mIgnoredGuids!!.add(guid)
                                 }
                             }

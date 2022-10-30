@@ -205,7 +205,6 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">导出apkg文件时出错</string>
     <string name="export_select_save_app">选择文件保存位置</string>
     <string name="export_select_share_app">选择分享应用</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>

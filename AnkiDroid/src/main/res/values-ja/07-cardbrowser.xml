@@ -57,7 +57,7 @@
     <string name="card_browser_change_deck">デッキを変更</string>
     <string name="card_browser_unsuspend_card">カードの保留を解除</string>
     <string name="card_browser_mark_card">ノートにマーク</string>
-    <string name="card_browser_unmark_card">ノートのマークを取り外す</string>
+    <string name="card_browser_unmark_card">ノートのマークを解除</string>
     <string name="delete_card_title">ノートの削除</string>
     <string name="changed_deck_message">%sにカードを移動しました</string>
     <string name="card_browser_show_marked">マーク付きカードを抽出</string>
@@ -98,10 +98,10 @@
     <string name="card_browser_unknown_deck_name">不明</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">表示の切り詰め</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="other">Export cards</item>
+        <item quantity="other">カードをエクスポート</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="other">Export notes</item>
+        <item quantity="other">ノートをエクスポート</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 枚のカードが削除されました</item>

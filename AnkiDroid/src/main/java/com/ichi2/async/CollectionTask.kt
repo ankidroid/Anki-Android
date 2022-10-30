@@ -34,7 +34,6 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
-import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
@@ -164,95 +163,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Timber.e(e, "doInBackgroundLoadDeckCounts - error")
                 null
             }
-        }
-    }
-
-    abstract class DismissNotes<Progress>(protected val cardIds: List<Long>) : TaskDelegate<Progress, Computation<Array<Card>>>() {
-        /**
-         * @param col
-         * @param collectionTask Represents the background tasks.
-         * @return whether the task succeeded, and the array of cards affected.
-         */
-        @KotlinCleanup("fix requireNoNulls")
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Computation<Array<Card>> {
-            // query cards
-            val cards = arrayOfNulls<Card>(cardIds.size)
-            for (i in cardIds.indices) {
-                cards[i] = col.getCard(cardIds[i])
-            }
-            try {
-                col.db.database.beginTransaction()
-                try {
-                    val succeeded = actualTask(col, collectionTask, cards.requireNoNulls())
-                    if (!succeeded) {
-                        return Computation.err()
-                    }
-                    col.db.database.setTransactionSuccessful()
-                } finally {
-                    DB.safeEndInTransaction(col.db)
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
-                return Computation.err()
-            }
-            // pass cards back so more actions can be performed by the caller
-            // (querying the cards again is unnecessarily expensive)
-            return Computation.ok(cards.requireNoNulls())
-        }
-
-        /**
-         * @param col The collection
-         * @param collectionTask, where to send progress and listen for cancellation
-         * @param cards Cards to which the task should be applied
-         * @return Whether the tasks succeeded.
-         */
-        protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
-    }
-
-    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
-        override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
-            Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
-            val deckData = col.decks.get(newDid)
-            if (Decks.isDynamic(deckData)) {
-                // #5932 - can't change to a dynamic deck. Use "Rebuild"
-                Timber.w("Attempted to move to dynamic deck. Cancelling task.")
-                return false
-            }
-
-            // Confirm that the deck exists (and is not the default)
-            try {
-                val actualId = deckData.getLong("id")
-                if (actualId != newDid) {
-                    Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
-                    return false
-                }
-            } catch (e: Exception) {
-                Timber.e(e, "failed to check deck")
-                return false
-            }
-            val changedCardIds = LongArray(cards.size)
-            for (i in cards.indices) {
-                changedCardIds[i] = cards[i].id
-            }
-            col.sched.remFromDyn(changedCardIds)
-            val originalDids = LongArray(cards.size)
-            for (i in cards.indices) {
-                val card = cards[i]
-                card.load()
-                // save original did for undo
-                originalDids[i] = card.did
-                // then set the card ID to the new deck
-                card.did = newDid
-                val note = card.note()
-                note.flush()
-                // flush card too, in case, did has been changed
-                card.flush()
-            }
-            val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
-            // mark undo for all at once
-            col.markUndo(changeDeckMulti)
-            return true
         }
     }
 
@@ -424,33 +334,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             }
             return Computation.OK
-        }
-    }
-
-    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
-            Timber.d("doInBackgroundExportApkg")
-            try {
-                val exporter = if (did == null) {
-                    AnkiPackageExporter(col, includeSched, includeMedia)
-                } else {
-                    AnkiPackageExporter(col, did, includeSched, includeMedia)
-                }
-                exporter.exportInto(apkgPath, col.context)
-            } catch (e: FileNotFoundException) {
-                Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg")
-                return Pair(false, null)
-            } catch (e: IOException) {
-                Timber.e(e, "IOException in doInBackgroundExportApkg")
-                return Pair(false, null)
-            } catch (e: JSONException) {
-                Timber.e(e, "JSOnException in doInBackgroundExportApkg")
-                return Pair(false, null)
-            } catch (e: ImportExportException) {
-                Timber.e(e, "ImportExportException in doInBackgroundExportApkg")
-                return Pair(true, e.message)
-            }
-            return Pair(false, apkgPath)
         }
     }
 

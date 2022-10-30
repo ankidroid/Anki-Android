@@ -178,7 +178,7 @@ abstract class AbstractFlashcardViewer :
     private var mTouchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
     protected var flipCardLayout: LinearLayout? = null
-    protected var easeButtonsLayout: LinearLayout? = null
+    private var easeButtonsLayout: LinearLayout? = null
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton1: EaseButton? = null
     @KotlinCleanup("internal for AnkiDroidJsApi")
@@ -447,13 +447,12 @@ abstract class AbstractFlashcardViewer :
         }
 
         private fun dealWithTimeBox() {
-            val res = resources
             val elapsed = col.timeboxReached()
             if (elapsed != null) {
                 val nCards = elapsed.second
                 val nMins = elapsed.first / 60
-                val mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-                val timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+                val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
+                val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
                 MaterialDialog(this@AbstractFlashcardViewer).show {
                     title(R.string.timebox_reached_title)
                     message(text = timeboxMessage)
@@ -657,8 +656,7 @@ abstract class AbstractFlashcardViewer :
         } else super.onKeyDown(keyCode, event)
     }
 
-    public override val currentCardId: CardId?
-        get() = currentCard?.id
+    public override val currentCardId: CardId? get() = currentCard?.id
 
     private fun processHardwareButtonScroll(keyCode: Int, card: WebView?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
@@ -863,12 +861,11 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun showDeleteNoteDialog() {
-        val res = resources
         MaterialDialog(this).show {
             title(R.string.delete_card_title)
             iconAttr(R.attr.dialogErrorIcon)
             message(
-                text = res.getString(
+                text = resources.getString(
                     R.string.delete_note_message,
                     Utils.stripHTML(currentCard!!.q(true))
                 )
@@ -2458,8 +2455,7 @@ abstract class AbstractFlashcardViewer :
             val replacedUrl = if (BackendFactory.defaultLegacySchema) {
                 url.replaceFirst("playsound:".toRegex(), "")
             } else {
-                val tag = currentCard?.let { getAvTag(it, url) }
-                val filename = when (tag) {
+                val filename = when (val tag = currentCard?.let { getAvTag(it, url) }) {
                     is SoundOrVideoTag -> tag.filename
                     // not currently supported
                     is TTSTag -> null
