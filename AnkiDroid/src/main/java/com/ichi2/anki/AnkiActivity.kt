@@ -522,8 +522,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    open fun showSimpleMessageDialog(message: String?, title: String = "", reload: Boolean = false) {
-        val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message!!, reload)
+    open fun showSimpleMessageDialog(message: String, title: String = "", reload: Boolean = false) {
+        val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
 
