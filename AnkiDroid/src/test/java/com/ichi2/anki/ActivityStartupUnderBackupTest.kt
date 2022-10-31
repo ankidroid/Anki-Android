@@ -24,6 +24,8 @@ import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ExceptionUtil.getFullStackTrace
+import com.pluto.plugin.PluginSelectorActivity
+import com.pluto.ui.PlutoActivity
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert
@@ -56,6 +58,8 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(DeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
+        notYetHandled(PlutoActivity::class.java.simpleName, "Cannot be implemented - this activity is from Pluto")
+        notYetHandled(PluginSelectorActivity::class.java.simpleName, "Cannot be implemented - this activity is from Pluto")
     }
 
     /**

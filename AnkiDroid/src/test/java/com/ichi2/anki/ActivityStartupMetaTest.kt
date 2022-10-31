@@ -51,6 +51,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
             .filter { x: String -> !x.startsWith("androidx") }
             .filter { x: String -> !x.startsWith("org.acra") }
             .filter { x: String -> !x.startsWith("leakcanary.internal") }
+            .filter { x: String -> !x.startsWith("com.pluto") }
             .toArray()
         MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }

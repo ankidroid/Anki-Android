@@ -47,6 +47,13 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.utils.LanguageUtil.getCurrentLanguage
 import com.ichi2.utils.LanguageUtil.getLanguage
+import com.pluto.Pluto
+import com.pluto.plugins.exceptions.PlutoExceptions
+import com.pluto.plugins.exceptions.PlutoExceptionsPlugin
+import com.pluto.plugins.logger.PlutoLog
+import com.pluto.plugins.logger.PlutoLoggerPlugin
+import com.pluto.plugins.network.PlutoNetworkPlugin
+import com.pluto.plugins.preferences.PlutoSharePreferencesPlugin
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -190,6 +197,32 @@ open class AnkiDroidApp : Application() {
         Themes.systemIsInNightMode =
             resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         Themes.updateCurrentTheme()
+
+        initPluto()
+        setPlutoExceptionListener()
+    }
+
+    private fun initPluto() {
+        Pluto.Installer(this)
+            .addPlugin(PlutoExceptionsPlugin("Exceptions"))
+            .addPlugin(PlutoNetworkPlugin("Network"))
+            .addPlugin(PlutoLoggerPlugin("Logger"))
+            .addPlugin(PlutoSharePreferencesPlugin("SharedPrefs"))
+            .install()
+    }
+
+    private fun setPlutoExceptionListener() {
+        PlutoExceptions.setExceptionHandler { thread, throwable ->
+            Timber.i("Exception", "Uncaught exception handled on thread: " + thread.name, throwable)
+            PlutoLog.e("Exception on thread ${thread.name}", throwable.message.toString())
+        }
+
+        PlutoExceptions.mainThreadResponseThreshold = 5000L
+
+        PlutoExceptions.setANRHandler { thread, anrException ->
+            Timber.i("ANR", "ANR detected on thread: " + thread.name, anrException)
+            PlutoLog.e("ANR detected on thread ${thread.name}", anrException.message.toString())
+        }
     }
 
     fun scheduleNotification() {

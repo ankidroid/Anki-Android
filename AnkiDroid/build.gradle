@@ -321,6 +321,23 @@ dependencies {
     // build via AnkiDroidApp.
     implementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
+    def plutoVersion = "2.0.6"
+
+    debugImplementation "com.plutolib:pluto:$plutoVersion"
+    releaseImplementation "com.plutolib:pluto-no-op:$plutoVersion"
+
+    debugImplementation "com.plutolib.plugins:network:$plutoVersion"
+    releaseImplementation "com.plutolib.plugins:network-no-op:$plutoVersion"
+
+    debugImplementation "com.plutolib.plugins:exceptions:$plutoVersion"
+    releaseImplementation "com.plutolib.plugins:exceptions-no-op:$plutoVersion"
+
+    debugImplementation "com.plutolib.plugins:logger:$plutoVersion"
+    releaseImplementation "com.plutolib.plugins:logger-no-op:$plutoVersion"
+
+    debugImplementation "com.plutolib.plugins:preferences:$plutoVersion"
+    releaseImplementation "com.plutolib.plugins:preferences-no-op:$plutoVersion"
+
     api project(":api")
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"

@@ -94,6 +94,7 @@ class LayoutValidationTest : InstrumentedTest() {
             nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout::class.java))
             nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout::class.java))
             nonAnkiFieldNames.addAll(getFieldNames(androidx.preference.R.layout::class.java)) // preference_category_material
+            nonAnkiFieldNames.addAll(getFieldNames(com.pluto.R.layout::class.java))
             val layouts: MutableList<Array<Any>> = ArrayList()
             for (f in layout::class.java.fields) {
                 if (nonAnkiFieldNames.contains(f.name)) {
