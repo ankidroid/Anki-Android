@@ -18,6 +18,7 @@ package com.ichi2.utils
 
 import android.content.ContentResolver
 import android.net.Uri
+import android.os.Environment
 import android.os.StatFs
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
@@ -35,6 +36,10 @@ object FileUtil {
             Timber.e(e, "Free space could not be retrieved")
             defaultValue
         }
+    }
+    /** Returns the current download Directory */
+    fun getDownloadDirectory(): String {
+        return Environment.DIRECTORY_DOWNLOADS
     }
 
     /**

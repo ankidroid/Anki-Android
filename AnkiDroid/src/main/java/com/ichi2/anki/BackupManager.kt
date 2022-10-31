@@ -183,6 +183,9 @@ open class BackupManager {
     }
 
     companion object {
+        /**
+         * Number of MB of
+         */
         private const val MIN_FREE_SPACE = 10
         private const val MIN_BACKUP_COL_SIZE = 10000 // threshold in bytes to backup a col file
         private const val BACKUP_SUFFIX = "backup"

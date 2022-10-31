@@ -27,6 +27,8 @@ import anki.collection.Progress
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.*
@@ -316,4 +318,22 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
             onCancel { coroutine.resume(false) }
         }
     }
+}
+
+suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
+    if (withCol { schemaChanged() }) {
+        return true
+    }
+    val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
+        MaterialDialog(this).show {
+            message(text = TR.deckConfigWillRequireFullSync())
+            positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
+            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+            onCancel { coroutine.resume(false) }
+        }
+    }
+    if (hasAcceptedSchemaChange) {
+        withCol { modSchemaNoCheck() }
+    }
+    return hasAcceptedSchemaChange
 }

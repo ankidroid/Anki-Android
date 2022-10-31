@@ -23,17 +23,20 @@ import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.FileProvider
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import timber.log.Timber
+import java.io.File
 import java.util.function.Consumer
 
 /**
@@ -113,7 +116,22 @@ class IntentHandler : Activity() {
         val importResult = handleFileImport(this, intent)
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
-            Timber.d("onCreate() import successful")
+            try {
+                val file = File(intent.data!!.path!!)
+                val fileUri = applicationContext?.let {
+                    FileProvider.getUriForFile(
+                        it,
+                        it.applicationContext?.packageName + ".apkgfileprovider",
+                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
+                    )
+                }
+                // TODO move the file deletion on a background thread
+                contentResolver.delete(fileUri!!, null, null)
+                Timber.i("onCreate() import successful and downloaded file deleted")
+            } catch (e: Exception) {
+                Timber.w(e, "onCreate() import successful and cannot delete file")
+            }
+
             reloadIntent.action = action
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(reloadIntent)

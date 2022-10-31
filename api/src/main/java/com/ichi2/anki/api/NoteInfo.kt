@@ -77,7 +77,7 @@ public class NoteInfo {
     }
 
     /** The set of tags  */
-    public fun getTags(): Set<String?> {
+    public fun getTags(): Set<String> {
         return tags
     }
 

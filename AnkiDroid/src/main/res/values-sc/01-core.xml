@@ -178,7 +178,8 @@
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="empty_cloze_warning">Modìfica custa nota e annanghe unos cantos iscantzellamentos de cloze. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronizatzione disabilitada in manera temporànea.</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Chetes annullare sa sincronizatzione?</string>
     <string name="continue_sync">Sighi a sincronizare</string>
     <string name="sync_cancelled">Sincronizatzione annullada</string>

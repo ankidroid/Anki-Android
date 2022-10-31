@@ -194,7 +194,6 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     @KotlinCleanup("rename: bChangeToText")
     protected fun done() {
-        fieldController!!.onDone()
         var bChangeToText = false
         if (mField.type === EFieldType.IMAGE) {
             if (mField.imagePath == null) {
@@ -223,6 +222,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 }
             }
         }
+        fieldController!!.onDone()
         saveAndExit(bChangeToText)
     }
 

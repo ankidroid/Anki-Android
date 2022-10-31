@@ -172,6 +172,7 @@
     <string name="empty_cloze_warning">编辑此卡牌记录并添加一些创建填空。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">暂时禁用了同步</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">你想要取消同步吗？</string>
     <string name="continue_sync">继续同步</string>
     <string name="sync_cancelled">同步已取消</string>
@@ -185,7 +186,7 @@
     <string name="card_template_editor_front">正面</string>
     <string name="card_template_editor_back">背面</string>
     <string name="card_template_editor_styling">样式</string>
-    <string name="card_template_editor_menu_card_browser_appearance">卡牌浏览器外观</string>
+    <string name="card_template_editor_menu_card_browser_appearance">卡片浏览器外观</string>
     <string name="card_template_editor_deck_override">牌组覆盖</string>
     <string name="card_template_editor_insert_field">插入字段</string>
     <string name="card_template_editor_select_field">选择字段</string>
@@ -209,8 +210,8 @@
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
     <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡牌浏览器</string>
-    <string name="context_menu_anki_card_label">Anki 卡</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片浏览器</string>
+    <string name="context_menu_anki_card_label">Anki 卡片</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s 有一个问题：<br/>%2$s</string>
     <string name="more_information">更多信息</string>
     <string name="no_field">找到了 “{{%1$s}}”，但没有一个字段叫 “%1$s”。</string>

@@ -172,6 +172,7 @@
     <string name="empty_cloze_warning">이 노트를 편집하여 클로즈 빈칸을 추가하세요. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">동기화</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">동기화를 취소하시겠습니까?</string>
     <string name="continue_sync">동기화 계속하기</string>
     <string name="sync_cancelled">동기화 취소됨</string>

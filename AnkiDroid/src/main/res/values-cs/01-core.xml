@@ -187,6 +187,7 @@
     <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronizace dočasně zakázána</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Přejete si přerušit synchronizaci?</string>
     <string name="continue_sync">Pokračovat v synchronizaci</string>
     <string name="sync_cancelled">Synchronizace přrušena</string>

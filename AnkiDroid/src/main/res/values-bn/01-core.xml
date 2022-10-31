@@ -176,7 +176,8 @@
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
     <string name="empty_cloze_warning">এই নোট সম্পাদনা করুন এবং কিছু ক্লোজ দিলিশন অ্যাড করুন (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">সিংক্রোনাইজ</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">সিঙ্ক সাময়িকভাবে বন্ধ আছে</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">আপনি সিঙ্ক বাতিল করতে চান?</string>
     <string name="continue_sync">সিংক বজায় রাখুন</string>
     <string name="sync_cancelled">সিংক বাতিল করা হয়েছে</string>

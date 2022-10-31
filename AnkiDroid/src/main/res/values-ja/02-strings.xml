@@ -166,7 +166,7 @@
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">パッケージをインポートするために十分な空き容量がありません。\n必要な容量 - %1$s \n空き容量 - %2$s.\n\nお困りですか？　可能であれば、端末の空き容量を確保してみてください。あるいは、容量に余裕のある端末（Anki Desktopをインストール済みのPCなど）でパッケージをインポートし、そのデータをAnkiWeb経由でこの端末に同期してみるという方法で解決できる可能性もあります。</string>
     <string name="import_log_file_cache_cleared">ファイルのインポート中にエラーが発生しました。キャッシュ処理の問題など。\nもう一度やり直してください</string>
     <string name="import_succeeded_but_check_database">データのインポートに成功しましたが、インポート後のクリーンアップに失敗しました。データベースを確認してください。原因: %s</string>
     <string name="import_error_corrupt_zip">apkgファイルが壊れています。削除して再ダウンロードしてください。\n\n原因ファイル: %s</string>
@@ -175,7 +175,7 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">複数の colpkg ファイルが選択されました。</string>
     <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
     <string name="import_stats_error">下記のファイルをインポートする際にエラーが発生しました:\n%s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
@@ -185,17 +185,17 @@
     <string name="confirm_apkg_export">コレクション（全デッキ）のデータの控え（Ankiパッケージ）を作成しますか？</string>
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">選択した%d枚のカードをapkgファイルとしてエクスポートしますか？</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="other">選択した%d枚のノートを apkgファイルとしてエクスポートしますか？</item>
     </plurals>
     <string name="export_in_progress">Ankiパッケージを作成しています...</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_success_title">コレクションのエクスポートに成功しました</string>
     <string name="export_send_no_handlers">apkgファイルに対応した他のアプリがありません。保存します...</string>
     <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
+    <string name="export_success_message">ファイルを保存する場所を選択するか、ファイルを別のアプリと共有することができます。</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[        こんにちは！
@@ -205,9 +205,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_select_save_app">ファイルを保存する場所を選択</string>
+    <string name="export_select_share_app">共有先のアプリを選択</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
     <string name="menu__deck_options">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
@@ -268,7 +267,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">デッキ一覧画面の背景</string>
+    <string name="background_image_title">デッキリスト画面の背景</string>
     <string name="choose_an_image">画像を選択</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">デフォルトに戻す</string>
@@ -357,7 +356,7 @@
     <string name="suspended_card">カードを保留しました</string>
     <string name="suspended_note">ノートを保留しました</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">フィールド「%s」の内容を固定する</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">ストレージ移行</string>
     <string name="scoped_storage_initial_message">Androidがプライバシーに関する新しい方針を導入したことに伴い、AnkiDroidのデータの保存場所を変更する必要があります。\n\nこのデータ移行を済ませる前にAnkiDroidをアンインストールした場合、AnkiDroidであなたが使用していたデッキやメディアファイルなどのデータも削除されます。\n\nこのデータ移行を、できるだけ早く行うことを強くお勧めします</string>
@@ -370,16 +369,25 @@
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
+    <string name="malicious_archive_entry_outside">不正なアーカイブです。ターゲットディレクトリ(%s)外のエントリが含まれています。</string>
     <string name="malicious_archive_exceeds_limit">不正なアーカイブです。サイズが%1$sを超えるか、 ファイル数が%2$d個を超えています</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">保存するファイルのサイズがストレージの空き容量を超えています</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">タグ \'%s \' を展開</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">コレクションにアクセスできませんでした。もう一度試してみてください</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">より少ない時間で</string>
     <string name="intro_ankidroid_tagline_two">より多く学びましょう</string>

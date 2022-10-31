@@ -244,8 +244,8 @@ class DeckOptions :
                             // TODO: Extract out deckConf, confReset, remConf and confSetSubdecks to a function. They are overall similar.
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
-                                mOptions = col.decks.getConf(newConfId)!!
                                 confChangeHandler("change Deck configuration") {
+                                    mOptions = decks.getConf(newConfId)!!
                                     changeDeckConfiguration(deck, mOptions, this)
                                 }
                             }

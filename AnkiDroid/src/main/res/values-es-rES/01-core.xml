@@ -176,7 +176,8 @@
     <string name="sd_card_not_mounted">Almacenamiento del dispositivo no montado</string>
     <string name="empty_cloze_warning">Editar esta nota y añadir algunos huecos (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronización desactivada temporalmente</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
     <string name="continue_sync">Continuar la sincronización</string>
     <string name="sync_cancelled">Sincronización cancelada</string>
@@ -192,7 +193,7 @@
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apariencia del Navegador de Tarjetas</string>
     <string name="card_template_editor_deck_override">Anulación de mazo</string>
-    <string name="card_template_editor_insert_field">Insertar campos</string>
+    <string name="card_template_editor_insert_field">Insertar campo</string>
     <string name="card_template_editor_select_field">Seleccionar campo</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de tarjeta</string>
     <plurals name="card_template_editor_confirm_add">
