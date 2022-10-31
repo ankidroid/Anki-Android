@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">ही टीप संपादित करा आणि काही क्लोझ हटवणे जोडा. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">आपण संकालन रद्द करू इच्छिता?</string>
     <string name="continue_sync">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled">संकालन रद्द केले</string>

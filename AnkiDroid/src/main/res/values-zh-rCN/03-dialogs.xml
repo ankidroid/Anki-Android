@@ -117,6 +117,7 @@
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">否</string>
     <string name="dialog_continue">继续</string>
     <string name="dialog_processing">处理中...</string>
@@ -247,4 +248,14 @@
     <string name="import_csv">文本文件(.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

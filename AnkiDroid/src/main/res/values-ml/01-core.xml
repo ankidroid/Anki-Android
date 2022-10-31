@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">ഈ കുറിപ്പ് എഡിറ്റുചെയ്‌ത് കുറച്ച് ക്ലോസ് ഇല്ലാതാക്കലുകൾ ചേർക്കുക. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">സമന്വയിപ്പിക്കുക</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">സമന്വയം റദ്ദാക്കണോ?</string>
     <string name="continue_sync">സമന്വയം തുടരുക</string>
     <string name="sync_cancelled">സമന്വയം റദ്ദാക്കി</string>

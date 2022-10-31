@@ -188,6 +188,7 @@
     <string name="empty_cloze_warning">ערוך את הרשומה והוסף השלם את החסר. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">לבטל את הסנכרון?</string>
     <string name="continue_sync">המשך סנכרון</string>
     <string name="sync_cancelled">סנכרון בוטל</string>

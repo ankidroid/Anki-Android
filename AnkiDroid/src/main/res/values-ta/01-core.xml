@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ஒத்திசைக்க</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ஒத்திசைவை ரத்து செய்ய விரும்புகிறீர்களா?</string>
     <string name="continue_sync">ஒத்திசைவைத் தொடரவும்</string>
     <string name="sync_cancelled">ஒத்திசைவு ரத்துசெய்யப்பட்டது</string>

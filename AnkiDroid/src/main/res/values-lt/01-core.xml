@@ -187,6 +187,7 @@
     <string name="empty_cloze_warning">Redaguoti šį užrašą ir įkelti keletą paslėptų žodžių. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinchronizuoti</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Ar norite sinchronizavimą atšaukti?</string>
     <string name="continue_sync">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled">Sinchronizavimas atšauktas</string>
