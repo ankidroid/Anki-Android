@@ -51,15 +51,16 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
+import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.*
 
+@RustCleanup("Delete when switching to the new backend")
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
@@ -421,7 +422,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private suspend fun changeSortField(model: Model, idx: Int) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
-            CollectionManager.withCol {
+            withCol {
                 Timber.d("doInBackgroundChangeSortField")
                 models.setSortIdx(model, idx)
                 save()
@@ -460,7 +461,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             }
         }
 
-        @KotlinCleanup("Convert result to non-null")
         override fun actualOnPostExecute(context: ModelFieldEditor, result: Boolean?) {
             if (result == false) {
                 context.closeActivity()
@@ -472,6 +472,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
+            @Suppress("DEPRECATION")
             onBackPressed()
             true
         }
@@ -486,6 +487,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
+    @Suppress("OVERRIDE_DEPRECATION")
     override fun onBackPressed() {
         closeActivity()
     }

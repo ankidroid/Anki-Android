@@ -14,6 +14,8 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+@file:Suppress("LocalVariableName")
+
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
@@ -45,14 +47,14 @@ import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
 import kotlinx.coroutines.Job
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
 
-@KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
+@RustCleanup("Delete when switching to the new backend")
 @NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
 class ModelBrowser : AnkiActivity() {
     private var modelDisplayAdapter: DisplayPairAdapter? = null

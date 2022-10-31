@@ -320,6 +320,14 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
     }
 }
 
+/**
+ * If a full sync is not already required, confirm the user wishes to proceed.
+ * If the user agrees, the schema is bumped and the routine will return true.
+ * On false, calling routine should abort.
+ *
+ * The version of [userAcceptsSchemaChange] which uses the Collection internally without the need to
+ * pass it in.
+ */
 suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     if (withCol { schemaChanged() }) {
         return true

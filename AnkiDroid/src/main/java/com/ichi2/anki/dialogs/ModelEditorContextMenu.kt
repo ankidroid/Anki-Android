@@ -15,11 +15,13 @@ import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction.AddLanguageHint
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 /**
  * Note: the class is declared as open only to support testing.
  */
+@RustCleanup("Delete when switching to the new backend")
 open class ModelEditorContextMenu : AnalyticsDialogFragment() {
 
     @SuppressLint("CheckResult")

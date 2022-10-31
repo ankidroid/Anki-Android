@@ -11,8 +11,10 @@ import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.ModelBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
+@RustCleanup("Delete when switching to the new backend")
 class ModelBrowserContextMenu : AnalyticsDialogFragment() {
 
     @SuppressLint("CheckResult")
@@ -37,6 +39,7 @@ class ModelBrowserContextMenu : AnalyticsDialogFragment() {
     }
 }
 
+@RustCleanup("Delete when switching to the new backend")
 enum class ModelBrowserContextMenuAction(val order: Int, @StringRes val actionTextResId: Int) {
     Template(0, R.string.model_browser_template),
     Rename(1, R.string.model_browser_rename),

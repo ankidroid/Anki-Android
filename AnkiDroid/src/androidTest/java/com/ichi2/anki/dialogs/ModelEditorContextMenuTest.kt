@@ -25,10 +25,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import net.ankiweb.rsdroid.RustCleanup
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@RustCleanup("Delete when switching to the new backend")
 @RunWith(AndroidJUnit4::class)
 class ModelEditorContextMenuTest {
     private val testDialogTitle = "test editor title"
