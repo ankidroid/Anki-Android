@@ -117,7 +117,7 @@
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду дополнительного обучения</string>
+    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду допзанятия</string>
     <string name="importing_collection">Коллекция импортируется&#8230;</string>
     <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
     <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>
@@ -138,6 +138,7 @@
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка...</string>
@@ -275,4 +276,14 @@
     <string name="import_csv">Текстовый файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Вы не можете создать подколоду для всех колод</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

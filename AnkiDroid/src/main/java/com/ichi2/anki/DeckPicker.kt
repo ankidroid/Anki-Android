@@ -41,6 +41,7 @@ import android.view.WindowManager.BadTokenException
 import android.widget.*
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -56,6 +57,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -79,11 +81,16 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.servicelayer.ScopedStorageService.getBestDefaultRootDirectory
+import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
+import com.ichi2.anki.servicelayer.ScopedStorageService.migrateEssentialFiles
+import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
@@ -114,9 +121,12 @@ import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -277,19 +287,18 @@ open class DeckPicker :
         get() = BackupManager()
     private val mImportAddListener = ImportAddListener(this)
 
-    @KotlinCleanup("Migrate from Triple to Kotlin class")
-    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Triple<List<AnkiPackageImporter>?, Boolean, String?>?) {
+    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
+        override fun actualOnPostExecute(context: DeckPicker, result: ImporterData?) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
             }
-            // If result.second and result are both set, we are signalling
+            // If result.errFlag and result are both set, we are signalling
             // some files were imported successfully & some errors occurred.
-            // If result.first is null & result.second & result.third is set
+            // If result.impList is null & result.errList is set
             // we are signalling all the files which were selected threw error
-            if (result!!.first == null && result.second && result.third != null) {
-                Timber.w("Import: Add Failed: %s", result.third)
-                context.showSimpleMessageDialog(result.third)
+            if (result!!.impList == null && result.errList != null) {
+                Timber.w("Import: Add Failed: %s", result.errList)
+                context.showSimpleMessageDialog(result.errList)
             } else {
                 Timber.i("Import: Add succeeded")
 
@@ -298,7 +307,7 @@ open class DeckPicker :
 
                 var errorMsg = ""
 
-                for (data in result.first!!) {
+                for (data in result.impList!!) {
                     // Check if mLog is not null or empty
                     // If mLog is not null or empty that indicates an error has occurred.
                     if (data.log.isNullOrEmpty()) {
@@ -308,8 +317,8 @@ open class DeckPicker :
                 }
 
                 var dialogMsg = context.resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
-                if (result.third != null) {
-                    errorMsg += result.third
+                if (result.errList != null) {
+                    errorMsg += result.errList
                 }
                 if (errorMsg.isNotEmpty()) {
                     dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
@@ -665,6 +674,7 @@ open class DeckPicker :
             menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
             updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), syncIcon)
+            menu.findItem(R.id.action_scoped_storage_migrate).isVisible = offerToMigrate
         }
     }
 
@@ -723,7 +733,8 @@ open class DeckPicker :
                 }
             }
             val syncIcon = fetchSyncStatus(col)
-            OptionsMenuState(searchIcon, undoIcon, syncIcon)
+            val offerToUpgrade = isLegacyStorage(context) && !userMigrationIsInProgress(context)
+            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
         }
     }
 
@@ -765,6 +776,11 @@ open class DeckPicker :
                 sync()
                 return true
             }
+            R.id.action_scoped_storage_migrate -> {
+                Timber.i("DeckPicker:: migrate button pressed")
+                offerToMigrate()
+                return true
+            }
             R.id.action_import -> {
                 Timber.i("DeckPicker:: Import button pressed")
                 showDialogFragment(ImportFileSelectionFragment.createInstance(this))
@@ -800,7 +816,12 @@ open class DeckPicker :
             }
             R.id.action_model_browser_open -> {
                 Timber.i("DeckPicker:: Model browser button pressed")
-                val noteTypeBrowser = Intent(this, ModelBrowser::class.java)
+                val manageNoteTypesTarget = if (!BackendFactory.defaultLegacySchema) {
+                    ManageNotetypes::class.java
+                } else {
+                    ModelBrowser::class.java
+                }
+                val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
                 startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
                 return true
             }
@@ -961,7 +982,7 @@ open class DeckPicker :
         val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
 
-        if (SyncStatus.isLoggedIn && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
+        if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
@@ -1554,6 +1575,12 @@ open class DeckPicker :
      */
     override fun sync(conflict: ConflictResolution?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+
+        if (userMigrationIsInProgress(this)) {
+            warnNoSyncDuringMigration()
+            return
+        }
+
         val hkey = preferences.getString("hkey", "")
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
@@ -2297,9 +2324,14 @@ open class DeckPicker :
             startActivityWithAnimation(i, FADE)
         } else {
             // otherwise open regular options
-            val i = Intent(this@DeckPicker, DeckOptions::class.java)
-            i.putExtra("did", did)
-            startActivityWithAnimation(i, FADE)
+            val intent = if (BackendFactory.defaultLegacySchema) {
+                Intent(this@DeckPicker, DeckOptions::class.java).apply {
+                    putExtra("did", did)
+                }
+            } else {
+                com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
+            }
+            startActivityWithAnimation(intent, FADE)
         }
     }
 
@@ -2741,12 +2773,118 @@ open class DeckPicker :
     }
 
     /**
+     * Do the whole migration.
+     * Blocks the UI until essential files are migrated.
+     * Change the preferences related to storage
+     * Migrate the user data in a service
+     */
+    fun migrate() {
+        if (userMigrationIsInProgress(this) || !isLegacyStorage(this)) {
+            // This should not ever occurs.
+            return
+        }
+        launchCatchingTask {
+            withProgress(getString(R.string.start_migration_progress_message)) {
+                withContext(Dispatchers.IO) {
+                    migrateEssentialFiles(baseContext)
+                }
+            }
+            showSnackbar(R.string.migration_part_1_done_resume)
+            startMigrateUserDataService()
+        }
+    }
+
+    /**
+     * Start migrating the user data. Assumes that
+     */
+    fun startMigrateUserDataService() {
+        // TODO
+    }
+
+    /**
+     * Show a dialog that explains no sync can occur during migration.
+     */
+    private fun warnNoSyncDuringMigration() {
+        // TODO: Fetch and display real numbers
+        MaterialDialog(this).show {
+            message(text = resources.getString(R.string.sync_impossible_during_migration, 5))
+            positiveButton(res = R.string.dialog_ok)
+            negativeButton(res = R.string.scoped_storage_learn_more) {
+                openUrl(R.string.link_scoped_storage_faq)
+            }
+        }
+    }
+
+    /**
+     * Show a window offering the user to migrate, postpone or learn mose.
+     */
+    fun offerToMigrate() {
+        // TODO: Implements
+    }
+
+    /**
+     * Last warning, asking the user whether they accept risk of data loss.
+     */
+    fun warnAboutBackup() {
+        val currentDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
+        val newDirectory = getBestDefaultRootDirectory(this, File(currentDirectory))
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.manual_backup)
+            .setMessage(getString(R.string.scoped_storage_require_user_to_accept_risk, currentDirectory, newDirectory.absolutePath))
+            .setPositiveButton(
+                R.string.dialog_confirm
+            ) { _, _ ->
+                AnkiDroidApp.getSharedPrefs(this).edit {
+                    putBoolean(USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP, true)
+                }
+            }
+            .setNegativeButton(
+                R.string.remind_me_later
+            ) { _, _ ->
+                setMigrationWasLastPostponedAtToNow()
+            }
+            .show()
+    }
+
+    /**
      * Last time the user had chosen to postpone migration. Or 0 if never.
      */
     var migrationWasLastPostponedAt: Long
         get() = getSharedPrefs(baseContext).getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
         set(timeInSecond) = getSharedPrefs(baseContext)
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
+    /**
+     * Show a dialog offering to migrate, postpone or learn more.
+     */
+    fun showDialogThatOffersToMigrateStorage() {
+        if (userMigrationIsInProgress(baseContext)) {
+            // This should not occur. We should have not called the function in this case.
+            return
+        }
+
+        val ifYouUninstallMessageId = when {
+            isLoggedIn() -> R.string.migration_warning_risk_of_data_loss_if_no_update
+            else -> R.string.migration_update_request_dialog_download_warning
+        }
+
+        @Language("HTML") val message = """${getString(R.string.migration_update_request)}
+            <br>
+            <br>${getString(ifYouUninstallMessageId)}"""
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.scoped_storage_title)
+            .setMessage(message)
+            .setPositiveButton(
+                getString(R.string.scoped_storage_migrate)
+            ) { _, _ ->
+                migrate()
+            }
+            .setNegativeButton(
+                getString(R.string.scoped_storage_postpone)
+            ) { _, _ ->
+                setMigrationWasLastPostponedAtToNow()
+            }.addScopedStorageLearnMoreLinkAndShow(message)
+    }
 
     // Scoped Storage migration
     fun setMigrationWasLastPostponedAtToNow() {
@@ -2762,6 +2900,9 @@ open class DeckPicker :
         return timeSinceLastPostponed > POSTPONE_MIGRATION_INTERVAL_DAYS * 24 * 60 * 60
     }
 }
+
+const val USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP = "user accept the risk of migration without a backup"
+
 /** Android's onCreateOptionsMenu does not play well with coroutines, as
  * it expects the menu to have been fully configured by the time the routine
  * returns. This results in flicker, as the menu gets blanked out, and then
@@ -2769,10 +2910,11 @@ open class DeckPicker :
  * the current state is stored in the deck picker so that we can redraw the
  * menu immediately. */
 data class OptionsMenuState(
-    var searchIcon: Boolean,
+    val searchIcon: Boolean,
     /** If undo is available, a string describing the action. */
-    var undoIcon: String?,
-    var syncIcon: SyncIconState
+    val undoIcon: String?,
+    val syncIcon: SyncIconState,
+    val offerToMigrate: Boolean,
 )
 
 enum class SyncIconState {
@@ -2785,3 +2927,9 @@ enum class SyncIconState {
      */
     Disabled,
 }
+
+/**
+ * @param impList: List of packages to import
+ * @param errList: a string describing the errors. Null if no error.
+ */
+data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)

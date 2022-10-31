@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизирај</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Дали сакате да ја откажете синхронизацијата?</string>
     <string name="continue_sync">Продолжете со синхронизација</string>
     <string name="sync_cancelled">Синхронизацијата е откажана</string>

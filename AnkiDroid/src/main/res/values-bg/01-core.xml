@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Редактирай тази бележка и добави празни полета. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхрон</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Искате ли да прекратите синхронизирането?</string>
     <string name="continue_sync">Продължи синхронизацията</string>
     <string name="sync_cancelled">Синхронизирането е прекратено</string>

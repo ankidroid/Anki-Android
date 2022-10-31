@@ -12,6 +12,11 @@
         We're OK to do this as we're using "always" so it won't be hidden
         -->
         <item
+            android:id="@+id/action_scoped_storage_migrate"
+            android:icon="@drawable/ic_migrate"
+            android:title="@string/button_upgrade"
+            ankidroid:showAsAction="always"/>
+        <item
             android:id="@+id/action_sync"
             android:icon="@drawable/ic_sync"
             android:title="@string/button_sync"

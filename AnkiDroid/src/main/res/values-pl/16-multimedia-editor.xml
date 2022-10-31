@@ -80,8 +80,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Aparat</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Dźwięk</string>
+    <string name="multimedia_editor_import_video">Wideo</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Pobieranie</string>

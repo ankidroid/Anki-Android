@@ -95,11 +95,11 @@
     <string name="ease_button_easy">Kolay</string>
     <string name="studyoptions_congrats_undo">%s geri al</string>
     <string name="menu_import">İçeri aktar</string>
-    <string name="undo">Geri Al</string>
+    <string name="undo">Geri al</string>
     <string name="undo_action_review">Son çalışmayı</string>
     <string name="undo_action_change_deck_multi">Desteleri değiştir</string>
     <string name="move_all_to_deck">Hepsini desteye taşı</string>
-    <string name="unbury">Görünür Yap</string>
+    <string name="unbury">Görünür yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Kısayol oluştur</string>
     <string name="browse_cards">Turkcha</string>
@@ -108,8 +108,8 @@
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
     <string name="menu_bury_card">Kartı gizle</string>
-    <string name="menu_bury_note">Notu Gizle</string>
-    <string name="menu_suspend_card">Kartı Askıya Al</string>
+    <string name="menu_bury_note">Notu gizle</string>
+    <string name="menu_suspend_card">Kartı askıya al</string>
     <string name="menu_suspend_note">Notu Askıya Al</string>
     <string name="menu_bury">Gizle</string>
     <string name="menu_suspend">Askıya Al</string>
@@ -156,7 +156,7 @@
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor...</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
-    <string name="empty_cram_label">Boş</string>
+    <string name="empty_cram_label">Boşalt</string>
     <string name="create_subdeck">Altdeste oluştur</string>
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
@@ -176,7 +176,8 @@
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="empty_cloze_warning">Bu notu düzenleyip doldurulacak boşluklar ekleyin. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Senkronizasyon geçici olarak devredışı</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
     <string name="continue_sync">Senkronizasyona devam et</string>
     <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>

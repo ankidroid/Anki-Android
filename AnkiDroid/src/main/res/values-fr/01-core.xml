@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Modifier cette note et ajouter quelques textes à trous. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
     <string name="continue_sync">Continuer la synchronisation</string>
     <string name="sync_cancelled">Synchronisation annulée</string>

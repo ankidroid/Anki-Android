@@ -169,7 +169,7 @@
     <string name="empty_cram_label">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="custom_study_deck_name">Дополнительное занятие</string>
+    <string name="custom_study_deck_name">Допзанятие</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
@@ -187,6 +187,7 @@
     <string name="empty_cloze_warning">Правьте эту заметку и добавьте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронизация временно отключена</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
     <string name="continue_sync">Продолжить синхронизацию</string>
     <string name="sync_cancelled">Синхронизация отменена</string>
@@ -199,7 +200,7 @@
     <string name="title_activity_template_editor">Типы карточек</string>
     <string name="card_template_editor_front">Шаблон лица</string>
     <string name="card_template_editor_back">Шаблон оборота</string>
-    <string name="card_template_editor_styling">Стилизация</string>
+    <string name="card_template_editor_styling">Таблица стилей</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
     <string name="card_template_editor_insert_field">Вставить поле</string>

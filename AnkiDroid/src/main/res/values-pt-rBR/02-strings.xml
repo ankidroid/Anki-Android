@@ -101,7 +101,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Aplicar</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novos cards para hoje</string>
     <string name="custom_study_increase_review_limit">Modificar o limite de revisões de hoje.</string>
@@ -174,11 +174,11 @@
     <string name="import_log_file_cache_cleared">Erro ao importar arquivo, provavelmente um cache foi limpo durante o processamento.\nPor favor, tente novamente</string>
     <string name="import_succeeded_but_check_database">Importação de dados bem-sucedida, mas a limpeza pós importação falhou. Execute a verificação do banco de dados mais tarde. Causa: %s</string>
     <string name="import_error_corrupt_zip">O arquivo apkg está corrompido. Por favor delete-o e baixe-o novamente.\n\nCausa raiz: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Falha ao importar arquivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Falha ao armazenar em cache o arquivo (possivelmente sem espaço de armazenamento)</string>
     <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
     <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
     <string name="import_stats_error">Ocorreram alguns erros ao importar os seguintes arquivos:\n%s</string>
@@ -189,8 +189,8 @@
     <string name="confirm_apkg_export">Exportar a coleção como arquivo Anki (.apkg)?</string>
     <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="one">Exportar cartão selecionado como arquivo apkg?</item>
+        <item quantity="other">Exportar %d cartões selecionados como arquivo apkg?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">Export selected note as apkg file?</item>
@@ -211,7 +211,6 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Erro ao exportar arquivo apkg</string>
     <string name="export_select_save_app">Select where to save file</string>
     <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
@@ -385,6 +384,15 @@
     <string name="scoped_storage_postpone">Adiar</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">Nenhum resultado para a busca</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s Não é um pacote de addon javascript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>

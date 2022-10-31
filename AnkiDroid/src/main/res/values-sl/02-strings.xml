@@ -223,7 +223,6 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Napaka pri izvažanju datoteke apkg</string>
     <string name="export_select_save_app">Select where to save file</string>
     <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
@@ -411,6 +410,15 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Could not create directory %s</string>

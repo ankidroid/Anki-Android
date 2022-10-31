@@ -59,7 +59,7 @@
     </plurals>
     <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
-    <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
+    <string name="initializing_tts">Spouští se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
@@ -138,6 +138,7 @@
     <string name="restore_backup_choose_another">Vybrat jinou</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_processing">Zpracovává se...</string>
@@ -274,4 +275,14 @@
     <string name="import_csv">Textový soubor (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nemůžete vytvořit podřízený balíček pro všechny balíčky</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

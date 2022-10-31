@@ -31,7 +31,7 @@ import com.ichi2.utils.contentNullable
 
 class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialogFragment() {
     interface ExportDialogListener {
-        fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean)
+        fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean)
         fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean)
         fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean)
         fun dismissAllDialogFragments()
@@ -110,7 +110,7 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
                     }
                     listener.exportSelectedAsApkg(null, limit, mIncludeSched, mIncludeMedia)
                 } else {
-                    listener.exportColAsApkg(null, mIncludeSched, mIncludeMedia)
+                    listener.exportColAsApkgOrColpkg(null, mIncludeSched, mIncludeMedia)
                 }
                 dismissAllDialogFragments()
             }

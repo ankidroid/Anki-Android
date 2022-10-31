@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ ᱢᱮ ᱟᱨ cloze deletions ᱥᱮᱞᱮᱫ ᱢᱮ ᱾ (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤᱭᱟᱢ ᱥᱮ ?</string>
     <string name="continue_sync">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
     <string name="sync_cancelled">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>

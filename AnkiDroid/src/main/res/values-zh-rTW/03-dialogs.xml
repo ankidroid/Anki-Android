@@ -73,7 +73,7 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">重設 %d 張卡牌學習進度</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">當前間期：%d 天</item>
@@ -106,7 +106,7 @@
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
     <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">導入的檔案數：%1$d\n總共導入的卡片數：%2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD 卡空間已滿</string>
     <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
@@ -117,9 +117,10 @@
     <string name="restore_backup_choose_another">選擇其他時間</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">否</string>
     <string name="dialog_continue">繼續</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">處理中…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
     <string name="dialog_positive_delete">刪除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -234,7 +235,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">您的連接已按流量計費。 資料傳輸可能需要資金</string>
     <string name="deck_picker_new">此牌組中今天要看的新卡片數</string>
     <string name="deck_picker_rev">詞牌組今天到期的卡片數量</string>
     <string name="deck_picker_lrn">詞牌組中學習中的卡片數</string>
@@ -244,7 +245,17 @@
     <string name="deck_picker_counts">開啟包含今天要查看的卡片數量的牌組概覽頁。</string>
     <string name="import_deck_package">卡包</string>
     <string name="import_collection_package">匯總打包</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">文檔（.txt、.csv）</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">您不能為所有牌組創建子牌組</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

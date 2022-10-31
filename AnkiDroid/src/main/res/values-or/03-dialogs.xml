@@ -60,7 +60,7 @@
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
     <string name="reposition_card_not_new_error">କେବଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ରିପୋଜିସନ୍ କରାଯାଇପାରିବ</string>
@@ -124,6 +124,7 @@
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
     <string name="dialog_cancel">ବାତିଲ୍ କର</string>
     <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ...</string>
@@ -256,4 +257,14 @@
     <string name="import_csv">ପାଠ୍ୟ ଫାଇଲ୍ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">ଆପଣ ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ଗୋଟେ ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

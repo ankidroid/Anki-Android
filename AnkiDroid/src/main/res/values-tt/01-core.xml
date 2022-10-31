@@ -172,6 +172,7 @@
     <string name="empty_cloze_warning">Бу язуны үзгәртеп, бушлыклар калдырыгыз. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизацияләргә</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Синхронизацияне кире кагыргамы?</string>
     <string name="continue_sync">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled">Синхронизация кире кагылган</string>

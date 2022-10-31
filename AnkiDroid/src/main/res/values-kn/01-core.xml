@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">ಈ ಟಿಪ್ಪಣಿಯನ್ನು ಸಂಪಾದಿಸಿ ಮತ್ತು ಕೆಲವು ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳನ್ನು ಸೇರಿಸಿ. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ಸಿಂಕ್ ಅನ್ನು ರದ್ದುಗೊಳಿಸಲು ನೀವು ಬಯಸುವಿರಾ?</string>
     <string name="continue_sync">ಸಿಂಕ್ ಮುಂದುವರಿಸಿ</string>
     <string name="sync_cancelled">ಸಿಂಕ್ ರದ್ದುಗೊಂಡಿದೆ</string>

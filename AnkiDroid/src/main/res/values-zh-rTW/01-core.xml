@@ -173,6 +173,7 @@
     <string name="empty_cloze_warning">編輯此筆記，並新增一些克漏字測驗。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">暫時禁用同步</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">你要取消同步嗎？</string>
     <string name="continue_sync">繼續同步</string>
     <string name="sync_cancelled">同步已取消</string>

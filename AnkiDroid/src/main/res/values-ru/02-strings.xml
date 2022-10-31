@@ -198,8 +198,8 @@
     <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Экспортировать выбранную карточку в apkg файл?</item>
-        <item quantity="few">Export %d selected cards as apkg file?</item>
-        <item quantity="many">Export %d selected cards as apkg file?</item>
+        <item quantity="few">Экспортировать %d выбранные карточки в apkg файл?</item>
+        <item quantity="many">Экспортировать %d выбранных карточек в apkg файл?</item>
         <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
@@ -223,7 +223,6 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="export_select_save_app">Выберите место сохранения</string>
     <string name="export_select_share_app">Выберите, как поделиться</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
@@ -411,6 +410,15 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не является допустимым пакетом дополнения JavaScript</string>
     <string name="could_not_create_dir">Не удалось создать каталог «%s»</string>

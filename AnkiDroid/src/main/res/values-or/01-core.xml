@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ସିଙ୍କ୍</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>

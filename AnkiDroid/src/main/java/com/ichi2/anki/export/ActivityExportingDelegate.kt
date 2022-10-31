@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.edit
 import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
@@ -105,11 +106,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
-    override fun exportColAsApkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
+    override fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
         val exportPath = getExportFileName(path, "All Decks", includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
-            exportApkgLegacy(exportPath, null, includeSched, includeMedia)
+            exportApkgOrColpkgLegacy(exportPath, null, includeSched, includeMedia)
         } else {
             if (includeSched) {
                 activity.launchCatchingTask {
@@ -129,7 +130,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val exportPath = getExportFileName(path, deckName, includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
-            exportApkgLegacy(exportPath, did, includeSched, includeMedia)
+            exportApkgOrColpkgLegacy(exportPath, did, includeSched, includeMedia)
         } else {
             val limit = exportLimit { this.deckId = did }
             exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
@@ -146,9 +147,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
     }
 
-    private fun exportApkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
+    private fun exportApkgOrColpkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         activity.launchCatchingTask {
-            val apkgPath = exportPath.path
+            val exportPkgPath = exportPath.path
             activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
                 withCol {
                     val exporter = if (did == null) {
@@ -156,10 +157,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     } else {
                         AnkiPackageExporter(this, did, includeSched, includeMedia)
                     }
-                    exporter.exportInto(apkgPath, context)
+                    exporter.exportInto(exportPkgPath, context)
                 }
             }
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(apkgPath)
+            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPkgPath)
             activity.showAsyncDialogFragment(dialog)
         }
     }
@@ -205,8 +206,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 )
             )
             .intent.apply {
-                clipData = ClipData.newRawUri(attachment.name, uri)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                clipData = ClipData.newUri(activity.contentResolver, attachment.name, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             }
         val shareFileIntent = Intent.createChooser(
             sendIntent,
@@ -214,6 +215,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivityWithoutAnimation(shareFileIntent)
+            // TODO: find if there is a way to check whether the activity successfully shared the collection.
+            saveSuccessfulCollectionExportIfRelevant()
         } else {
             // Try to save it?
             activity.showSnackbar(R.string.export_send_no_handlers)
@@ -248,6 +251,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
         if (isSuccessful) {
             activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
+            saveSuccessfulCollectionExportIfRelevant()
         } else {
             activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
         }
@@ -297,4 +301,27 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             }
         }
     }
+
+    /**
+     * If we exported a collection (hence [mExportFileName] ends with ".colpkg"), save in the preferences
+     * the mod of the collection and the time at which it occurred.
+     * This will allow to check whether a recent export was made, hence scoped storage migration is safe.
+     */
+    private fun saveSuccessfulCollectionExportIfRelevant() {
+        if (::mExportFileName.isInitialized && !mExportFileName.endsWith(".colpkg")) return
+        AnkiDroidApp.getSharedPrefs(activity).edit {
+            putLong(
+                LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY, TimeManager.time.intTime()
+            )
+        }
+        val col = collectionSupplier.get()
+        AnkiDroidApp.getSharedPrefs(activity).edit {
+            putLong(
+                LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY, col.mod
+            )
+        }
+    }
 }
+
+const val LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY = "last_successful_export_mod"
+const val LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY = "last_successful_export_second"

@@ -196,7 +196,8 @@
     <string name="sd_card_not_mounted">لم يتم تحميل وحدة تخزين الجهاز</string>
     <string name="empty_cloze_warning">عدّل هذه الملحوظة وأضف بعض عبارات ملء الفراغات. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">تم إيقاف المزامنة مؤقتًا</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync">واصِل المزامنة</string>
     <string name="sync_cancelled">أُلغِيت المزامنة</string>

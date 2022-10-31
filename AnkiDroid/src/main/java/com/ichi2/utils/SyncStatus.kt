@@ -73,12 +73,6 @@ enum class SyncStatus {
                 val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
-        val isLoggedIn: Boolean
-            get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-                val hkey = preferences.getString("hkey", "")
-                return hkey != null && hkey.length != 0
-            }
 
         /** Whether data has been changed - to be converted to Rust  */
         fun hasDatabaseChanges(): Boolean {
