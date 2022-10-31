@@ -197,7 +197,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (isClozeType) {
                 return R.string.note_editor_no_cloze_delations
             }
-            if (isEmpty(getCurrentFieldText(0))) {
+            if (getCurrentFieldText(0).isEmpty()) {
                 return R.string.note_editor_no_first_field
             }
             return if (allFieldsHaveContent()) {

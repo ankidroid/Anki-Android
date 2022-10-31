@@ -114,9 +114,7 @@ object HttpFetcher {
             Timber.d(e, "Failed with an exception")
             "FAILED with exception: " + e.message
         } finally {
-            if (response?.body != null) {
-                response.body?.close()
-            }
+            response?.body?.close()
         }
     }
 

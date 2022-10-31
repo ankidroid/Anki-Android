@@ -43,14 +43,8 @@ internal class ApiUtilsTest {
 
     @Test
     fun joinTagsShouldReturnEmptyStringWhenSetIsValid() {
-        // val set: MutableSet<String?> = HashSet()
-        val set = mutableSetOf<String?>()
-        set.also {
-            it.add("A")
-            it.add("B")
-            it.add("C")
-        }
-        assertEquals("A B C", Utils.joinTags(set))
+        val tags = setOf("A", "B", "C")
+        assertEquals("A B C", Utils.joinTags(tags))
     }
 
     @Test
