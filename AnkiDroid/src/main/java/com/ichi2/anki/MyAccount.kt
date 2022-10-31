@@ -291,14 +291,12 @@ open class MyAccount : AnkiActivity() {
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
-                    if (result.isNotEmpty() && result[0] is Exception) {
-                        getHumanReadableLoginErrorMessage(result[0] as Exception)?.let {
-                            showSimpleMessageDialog(
-                                title = message,
-                                message = it,
-                                reload = false
-                            )
-                        }
+                    if (!result.isNullOrEmpty() && result[0] is Exception) {
+                        showSimpleMessageDialog(
+                            title = message,
+                            message = getHumanReadableLoginErrorMessage(result[0] as Exception) ?: "",
+                            reload = false
+                        )
                     } else {
                         showSnackbar(message)
                     }

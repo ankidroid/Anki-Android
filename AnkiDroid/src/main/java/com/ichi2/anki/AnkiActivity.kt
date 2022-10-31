@@ -540,7 +540,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             var ticker: String? = title
             if (title == resources.getString(R.string.app_name)) {
-                ticker = message!!
+                ticker = message ?: ""
             }
             // Build basic notification
             val builder = NotificationCompat.Builder(
@@ -549,7 +549,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setContentTitle(title)
-                .setContentText(message!!)
+                .setContentText(message ?: "")
                 .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

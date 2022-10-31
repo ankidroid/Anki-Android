@@ -1379,9 +1379,7 @@ open class DeckPicker :
      */
     private fun showSyncErrorMessage(message: String?) {
         val title = resources.getString(R.string.sync_error)
-        if (message != null) {
-            showSimpleMessageDialog(title = title, message = message, reload = true)
-        }
+        showSimpleMessageDialog(title = title, message = message ?: "", reload = true)
     }
 
     /**
