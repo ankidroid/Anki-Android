@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Redaktu tiun ĉi noton kaj aldonu kelkajn malplenejojn. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Samtempigi</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Ĉu vi volas ĉesigi samtempigadon?</string>
     <string name="continue_sync">Pluigi samtempigadon</string>
     <string name="sync_cancelled">Samtempigado nuligita</string>

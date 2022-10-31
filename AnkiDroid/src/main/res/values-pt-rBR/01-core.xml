@@ -176,7 +176,8 @@
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="empty_cloze_warning">Edite e use Ocultar em algum termo. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronização temporariamente desativada</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
     <string name="continue_sync">Continuar a sincronização</string>
     <string name="sync_cancelled">Sincronização cancelada</string>

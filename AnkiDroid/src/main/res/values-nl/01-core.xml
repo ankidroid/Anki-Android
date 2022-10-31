@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Bewerk deze notitie en selecteer woorden die verborgen moeten blijven voor de invuloefening.(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniseer</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Wilt u de synchronisatie annuleren?</string>
     <string name="continue_sync">Synchronisatie hervatten</string>
     <string name="sync_cancelled">Synchronisatie geannuleerd</string>

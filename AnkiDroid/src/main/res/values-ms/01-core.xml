@@ -172,6 +172,7 @@
     <string name="empty_cloze_warning">Sunting nota ini dan tambah penghapusan kloz. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Adakah anda mahu untuk membatalkan sync?</string>
     <string name="continue_sync">Lanjut sync</string>
     <string name="sync_cancelled">Sync censel</string>

@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">इस नोट को संपादित करें और कुछ cloze विलोपन जोड़ें। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">क्या आप सिंक्रनाइज़ेशन रद्द करना चाहते हैं?</string>
     <string name="continue_sync">सिंक जारी रखें</string>
     <string name="sync_cancelled">सिंक्रनाइज़ेशन रद्द किया गया</string>

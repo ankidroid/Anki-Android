@@ -177,6 +177,7 @@
     <string name="empty_cloze_warning">Bearbeiten Sie diese Notiz und fügen Sie einige Auslassungen hinzu. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronisation vorübergehend deaktiviert</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
     <string name="continue_sync">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled">Synchronisation abgebrochen</string>
