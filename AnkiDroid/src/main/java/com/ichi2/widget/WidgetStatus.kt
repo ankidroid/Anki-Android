@@ -56,7 +56,7 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-/*    @KotlinCleanup("make context non-null")*/ fun fetchSmall(context: Context): IntArray {
+    fun fetchSmall(context: Context): IntArray {
         return MetaDB.getWidgetSmallStatus(context)
     }
 
