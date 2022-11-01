@@ -2,6 +2,13 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:id="@+id/field_search_view_note_editor"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/search_view"
+        ankidroid:actionViewClass="android.widget.SearchView"
+        ankidroid:showAsAction="always"/>
+
+    <item
         android:id="@+id/action_save"
         android:icon="@drawable/ic_done_white"
         android:title="@string/save"
@@ -23,6 +30,10 @@
     <item
         android:id="@+id/action_font_size"
         android:title="@string/menu_font_size"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/search_options"
+        android:title="@string/search_options"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_capitalize"

@@ -102,6 +102,7 @@
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
     <string name="save">Save</string>
+    <string name="search_view">Search View</string>
     <string name="close">Close</string>
     <string name="select">Select</string>
     <string name="reordering_cards">Reordering cards…</string>
@@ -322,6 +323,7 @@
 
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font size</string>
+    <string name="search_options">Search Options</string>
 
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
 
