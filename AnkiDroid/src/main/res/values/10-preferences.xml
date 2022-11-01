@@ -126,6 +126,9 @@
     <string name="notification_minimum_cards_due">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
+    <string name="notification_preference_global_notification" maxLength="41">Daily reminder notification</string>
+    <string name="notification_remind_at_summary" maxLength="41">%1$02d:%2$02d</string>
+    <string name="notification_global_notification_summary" maxLength="41">Notifies the due cards from all deck at the given time.</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>

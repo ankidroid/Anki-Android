@@ -18,6 +18,20 @@
     android:title="@string/notification_pref"
     android:key="@string/pref_notifications_screen_key"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_global_notification"
+        android:title="@string/notification_preference_global_notification"
+        android:summary="@string/notification_global_notification_summary"/>
+
+    <Preference
+        android:defaultValue="false"
+        android:key="@string/pref_remind_at"
+        android:title="@string/deck_conf_reminders_time"
+        android:dependency="@string/pref_global_notification"
+        app:summary="@string/notification_remind_at_summary"/>
+
     <ListPreference
         android:defaultValue="1000000"
         android:entries="@array/notification_minimum_cards_due_labels"
@@ -29,6 +43,7 @@
         android:defaultValue="false"
         android:key="@string/pref_notifications_vibrate_key"
         android:title="@string/notification_minimum_cards_due_vibrate" />
+
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_notifications_blink_key"

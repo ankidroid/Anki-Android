@@ -16,12 +16,19 @@
 package com.ichi2.anki.preferences
 
 import android.app.AlarmManager
-import android.content.Context.ALARM_SERVICE
+import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.Context
 import android.content.Intent
+import android.widget.TimePicker
+import androidx.core.content.edit
 import androidx.preference.ListPreference
+import androidx.preference.Preference
 import androidx.preference.SwitchPreference
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.services.BootService.Companion.scheduleNotification
+import com.ichi2.anki.ReminderNotificationHelper
+import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.TimeManager
@@ -37,10 +44,80 @@ class NotificationsSettingsFragment : SettingsFragment() {
         get() = "prefs.notifications"
 
     override fun initSubscreen() {
+        initNewNotificationSubscreen()
+        initLegacyNotificationSubscreen()
+    }
+
+    private fun initNewNotificationSubscreen() {
+        val sharedPreference = AnkiDroidApp.getSharedPrefs(context)
+        val notificationHelper = ReminderNotificationHelper(requireContext())
+        val globalNotification =
+            requirePreference<SwitchPreference>(R.string.pref_global_notification)
+        val remindAtPreference = requirePreference<Preference>(R.string.pref_remind_at)
+
+        val notificationEnabled = sharedPreference.getBoolean(
+            ReminderNotificationHelper.GLOBAL_NOTIFICATION_ENABLED,
+            false
+        )
+        val notificationTime = sharedPreference.getString(
+            ReminderNotificationHelper.GLOBAL_NOTIFICATION_TIME,
+            ReminderNotificationHelper.GLOBAL_NOTIFICATION_DEFAULT_TIME
+        ) ?: ReminderNotificationHelper.GLOBAL_NOTIFICATION_DEFAULT_TIME
+        var hourOfNotification = notificationTime.split(":")[0].toInt()
+        var minutesOfNotification = notificationTime.split(":")[1].toInt()
+
+        globalNotification.isChecked = notificationEnabled
+        remindAtPreference.summary = notificationTime
+
+        val timeSetListener = OnTimeSetListener { _: TimePicker, hour: Int, minutes: Int ->
+            val time = requireContext().getString(
+                R.string.notification_remind_at_summary,
+                hour,
+                minutes
+            )
+            hourOfNotification = hour
+            minutesOfNotification = minutes
+            remindAtPreference.summary = time
+            sharedPreference.edit {
+                putString(ReminderNotificationHelper.GLOBAL_NOTIFICATION_TIME, time)
+            }
+            notificationHelper.scheduleGlobalNotificationWorker()
+        }
+        remindAtPreference.apply {
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                TimePickerDialog(
+                    context,
+                    timeSetListener,
+                    hourOfNotification,
+                    minutesOfNotification,
+                    true
+                ).show()
+                true
+            }
+        }
+
+        globalNotification.apply {
+            setOnPreferenceChangeListener { _, newValue ->
+                val enabled = newValue as Boolean
+                if (enabled) {
+                    notificationHelper.scheduleGlobalNotificationWorker()
+                } else {
+                    notificationHelper.cancelNotificationWorker()
+                }
+                sharedPreference.edit {
+                    putBoolean(ReminderNotificationHelper.GLOBAL_NOTIFICATION_ENABLED, enabled)
+                }
+                true
+            }
+        }
+    }
+
+    private fun initLegacyNotificationSubscreen() {
         if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             /** These preferences should be searchable or not based
              * on this same condition at [Preferences.configureSearchBar] */
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_vibrate_key))
+            // TODO: Remove this preference when a phone don't have light.
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_blink_key))
         }
         // Minimum cards due
@@ -50,13 +127,14 @@ class NotificationsSettingsFragment : SettingsFragment() {
             setOnPreferenceChangeListener { preference, newValue ->
                 updateNotificationPreference(preference as ListPreference)
                 if ((newValue as String).toInt() < Preferences.PENDING_NOTIFICATIONS_ONLY) {
-                    scheduleNotification(TimeManager.time, requireContext())
+                    BootService.scheduleNotification(TimeManager.time, requireContext())
                 } else {
                     val intent = CompatHelper.compat.getImmutableBroadcastIntent(
                         requireContext(), 0,
                         Intent(requireContext(), NotificationService::class.java), 0
                     )
-                    val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
+                    val alarmManager =
+                        requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
                     alarmManager.cancel(intent)
                 }
                 true
