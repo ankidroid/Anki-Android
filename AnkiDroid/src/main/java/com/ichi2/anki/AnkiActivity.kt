@@ -510,7 +510,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Show a basic notification to the user in the notification bar in the meantime
             val title = newFragment.notificationTitle
             val message = newFragment.notificationMessage
-            showSimpleNotification(title, message, channel)
+            showSimpleNotification(title, message ?: "", channel)
         }
     }
 
@@ -529,7 +529,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     fun showSimpleNotification(
         title: String,
-        message: String?,
+        message: String,
         channel: Channel
     ) {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
@@ -540,7 +540,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             var ticker: String? = title
             if (title == resources.getString(R.string.app_name)) {
-                ticker = message ?: ""
+                ticker = message
             }
             // Build basic notification
             val builder = NotificationCompat.Builder(
