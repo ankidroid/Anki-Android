@@ -133,7 +133,7 @@ private suspend fun handleNormalSync(
         },
         onCancel = ::cancelSync
     ) {
-        withCol { return@withCol newBackend.syncCollection(auth) }
+        withCol { newBackend.syncCollection(auth) }
     }
 
     // Save current host number
