@@ -150,9 +150,7 @@ object HttpFetcher {
             Timber.w(e)
             "FAILED " + e.message
         } finally {
-            if (response?.body != null) {
-                response.body?.close()
-            }
+            response?.body?.close()
         }
     }
 }

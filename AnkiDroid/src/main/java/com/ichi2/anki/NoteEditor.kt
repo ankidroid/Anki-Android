@@ -207,14 +207,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Otherwise, display "no cards created".
         }
 
-    private fun allFieldsHaveContent(): Boolean {
-        for (s in currentFieldStrings) {
-            if (isEmpty(s)) {
-                return false
-            }
-        }
-        return true
-    }
+    private fun allFieldsHaveContent() = currentFieldStrings.none { it.isNullOrEmpty() }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -1758,9 +1751,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun addToolbarButton(buttonText: String, prefix: String, suffix: String) {
-        if (isEmpty(prefix) && isEmpty(suffix)) {
-            return
-        }
+        if (prefix.isEmpty() && suffix.isEmpty()) return
         val toolbarButtons = toolbarButtons
         toolbarButtons.add(CustomToolbarButton(toolbarButtons.size, buttonText, prefix, suffix))
         saveToolbarButtons(toolbarButtons)
@@ -1768,20 +1759,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun editToolbarButton(
-        buttonTextParam: String,
-        prefixParam: String,
-        suffixParam: String,
+        buttonText: String,
+        prefix: String,
+        suffix: String,
         currentButton: CustomToolbarButton
     ) {
-        var buttonText: String? = buttonTextParam
-        var prefix: String? = prefixParam
-        var suffix: String? = suffixParam
-        buttonText = buttonText?.ifEmpty { currentButton.buttonText }
-        prefix = prefix?.ifEmpty { currentButton.prefix }
-        suffix = suffix?.ifEmpty { currentButton.suffix }
         val toolbarButtons = toolbarButtons
-        val index = currentButton.index
-        toolbarButtons[index] = CustomToolbarButton(index, buttonText!!, prefix!!, suffix!!)
+        val currentButtonIndex = currentButton.index
+
+        toolbarButtons[currentButtonIndex] = CustomToolbarButton(
+            index = currentButtonIndex,
+            buttonText = buttonText.ifEmpty { currentButton.buttonText },
+            prefix = prefix.ifEmpty { currentButton.prefix },
+            suffix = suffix.ifEmpty { currentButton.suffix }
+        )
+
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }

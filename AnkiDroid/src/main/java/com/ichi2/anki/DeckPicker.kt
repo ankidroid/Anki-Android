@@ -724,11 +724,7 @@ open class DeckPicker :
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
-            val undoIcon = undoName(resources).let {
-                it.ifEmpty {
-                    null
-                }
-            }
+            val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
             val offerToUpgrade = isLegacyStorage(context) && !userMigrationIsInProgress(context)
             OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
