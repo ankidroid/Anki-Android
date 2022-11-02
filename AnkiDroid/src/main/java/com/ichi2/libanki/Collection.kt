@@ -1234,7 +1234,7 @@ open class Collection(
      * @param order only used in overridden V16 findNotes() method
      * */
     open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
-        return Finder(this).findNotes(query)
+        return Finder(this).findNotes(query, order)
     }
 
     fun findReplace(nids: List<Long?>, src: String, dst: String): Int {

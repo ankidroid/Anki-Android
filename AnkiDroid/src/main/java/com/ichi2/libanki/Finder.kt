@@ -84,7 +84,7 @@ class Finder(private val col: Collection) {
      */
     @KotlinCleanup("Remove in V16.") // Not in libAnki
     fun findOneCardByNote(query: String): List<Long> {
-        return findNotes(query, true)
+        return findNotes(query, NoOrdering())
     }
 
     /**
@@ -93,7 +93,7 @@ class Finder(private val col: Collection) {
      * @return note of notes satisfying the query.
      */
     fun findNotes(query: String): List<Long> {
-        return findNotes(query, false)
+        return findNotes(query, NoOrdering())
     }
 
     /**
@@ -103,7 +103,7 @@ class Finder(private val col: Collection) {
      * @return note or card id (at most one by note) of notes satisfying the query.
      */
     @KotlinCleanup("Remove 'returnCid' in V16.") // returnCid Not in libAnki
-    fun findNotes(query: String, returnCid: Boolean): List<Long> {
+    fun findNotes(query: String, _order: SortOrder): List<Long> {
         val tokens = _tokenize(query)
         val res1 = _where(tokens)
         val args = res1.second
@@ -115,11 +115,10 @@ class Finder(private val col: Collection) {
                 "($first)"
             }
         } ?: return res
-        val sql: String = if (returnCid) {
-            "select min(c.id) from cards c, notes n where c.nid=n.id and $preds group by n.id"
-        } else {
-            "select distinct(n.id) from cards c, notes n where c.nid=n.id and $preds"
-        }
+        val res2 = _order(_order)
+        val order = res2.first
+        val rev = res2.second
+        val sql = _query(preds, order)
         try {
             col.db.database.query(sql, args).use { cur ->
                 while (cur.moveToNext()) {
@@ -130,6 +129,9 @@ class Finder(private val col: Collection) {
             Timber.w(e)
             // invalid grouping
             return ArrayList(0)
+        }
+        if (rev) {
+            Collections.reverse(res)
         }
         return res
     }

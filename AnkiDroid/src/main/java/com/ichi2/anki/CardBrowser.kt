@@ -2763,7 +2763,7 @@ suspend fun searchForCards(
     inCardsMode: Boolean
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
-        (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
+        (if (inCardsMode) findCards(query, order) else findNotes(query, order)).asSequence()
             .toCardCache(col, inCardsMode)
             .toMutableList()
     }
