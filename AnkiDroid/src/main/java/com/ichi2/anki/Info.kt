@@ -19,10 +19,12 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -111,9 +113,22 @@ class Info : AnkiActivity() {
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
-                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"" +
+                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                 "document.body.style.setProperty(\"background\", \"" + background + "\");"
                         )
+                    }
+
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView?,
+                        request: WebResourceRequest?
+                    ): Boolean {
+                        if (request?.url.toString() == "https://docs.ankidroid.org/changelog.html" || request?.url.toString() == "https://github.com/ankidroid/Anki-Android/commits/main") {
+                            return false
+                        }
+                        Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString())).apply {
+                            startActivity(this)
+                        }
+                        return true
                     }
                 }
             }
