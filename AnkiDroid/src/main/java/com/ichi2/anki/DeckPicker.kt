@@ -2162,21 +2162,6 @@ open class DeckPicker :
         mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
 
-    private fun <T : AbstractDeckTreeNode> updateDeckListListener(): UpdateDeckListListener<T> {
-        return UpdateDeckListListener(this)
-    }
-
-    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            if (!context.colIsOpen()) {
-                context.showProgressBar()
-            }
-            Timber.d("Refreshing deck list")
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: List<TreeNode<T>>?) = context.onDecksLoaded(result)
-    }
-
     /**
      * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
      * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
@@ -2205,11 +2190,12 @@ open class DeckPicker :
                 }
             }
         } else {
-            TaskManager.launchCollectionTask(
-                object : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
-                    override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckDueTreeNode>>? {
-                        Timber.d("doInBackgroundLoadDeckCounts")
-                        return try {
+            launchCatchingTask {
+                Timber.d("Refreshing deck list")
+                withProgress {
+                    Timber.d("doInBackgroundLoadDeckCounts")
+                    val deckData = withCol {
+                        try {
                             // Get due tree
                             col.sched.deckDueTree(null)
                         } catch (e: RuntimeException) {
@@ -2217,9 +2203,9 @@ open class DeckPicker :
                             null
                         }
                     }
-                },
-                updateDeckListListener()
-            )
+                    onDecksLoaded(deckData)
+                }
+            }
         }
     }
 
