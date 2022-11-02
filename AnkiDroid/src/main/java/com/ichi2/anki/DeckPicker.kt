@@ -947,7 +947,7 @@ open class DeckPicker :
         Timber.d("onPause()")
         mActivityPaused = true
         // The deck count will be computed on resume. No need to compute it now
-        TaskManager.cancelAllTasks(LoadDeckCounts::class.java)
+        // TaskManager.cancelAllTasks(LoadDeckCounts::class.java)
         super.onPause()
     }
 
@@ -2205,7 +2205,21 @@ open class DeckPicker :
                 }
             }
         } else {
-            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
+            TaskManager.launchCollectionTask(
+                object : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
+                    override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckDueTreeNode>>? {
+                        Timber.d("doInBackgroundLoadDeckCounts")
+                        return try {
+                            // Get due tree
+                            col.sched.deckDueTree(collectionTask)
+                        } catch (e: RuntimeException) {
+                            Timber.e(e, "doInBackgroundLoadDeckCounts - error")
+                            null
+                        }
+                    }
+                },
+                updateDeckListListener()
+            )
         }
     }
 
