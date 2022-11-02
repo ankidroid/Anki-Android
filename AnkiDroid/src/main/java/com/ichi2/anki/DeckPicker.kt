@@ -2194,15 +2194,7 @@ open class DeckPicker :
                 Timber.d("Refreshing deck list")
                 withProgress {
                     Timber.d("doInBackgroundLoadDeckCounts")
-                    val deckData = withCol {
-                        try {
-                            // Get due tree
-                            col.sched.deckDueTree(null)
-                        } catch (e: RuntimeException) {
-                            Timber.e(e, "doInBackgroundLoadDeckCounts - error")
-                            null
-                        }
-                    }
+                    val deckData = withCol { sched.deckDueTree(null) }
                     onDecksLoaded(deckData)
                 }
             }
