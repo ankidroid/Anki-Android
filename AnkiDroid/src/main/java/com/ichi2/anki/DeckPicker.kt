@@ -2211,7 +2211,7 @@ open class DeckPicker :
                         Timber.d("doInBackgroundLoadDeckCounts")
                         return try {
                             // Get due tree
-                            col.sched.deckDueTree(collectionTask)
+                            col.sched.deckDueTree(null)
                         } catch (e: RuntimeException) {
                             Timber.e(e, "doInBackgroundLoadDeckCounts - error")
                             null
