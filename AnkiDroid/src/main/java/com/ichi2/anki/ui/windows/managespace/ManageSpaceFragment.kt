@@ -42,7 +42,6 @@ import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.File
-import java.text.DateFormat
 
 sealed interface Size {
     object Calculating : Size
@@ -254,8 +253,9 @@ class ManageSpaceFragment : SettingsFragment() {
     context(CoroutineScope) private suspend fun onDeleteBackupsClick() {
         val size = viewModel.flowOfDeleteBackupsSize.value
         if (size is Size.FilesAndBytes) {
+            val formatter = LocalizedUnambiguousBackupTimeFormatter()
             val backupFiles = size.files
-            val backupNames = backupFiles.map { it.getLocalizedTimeOfBackupAsText() }
+            val backupNames = backupFiles.map { formatter.getTimeOfBackupAsText(it) }
 
             val chooseBackupsPromptResult = requireContext().awaitDialog {
                 setTitle("Delete backups")
@@ -379,10 +379,4 @@ context(Fragment) private fun showSnackbarIfCalculatingOrError(size: Size) {
         is Size.Error -> showSnackbar(requireContext().getUserFriendlyErrorText(size.exception))
         else -> {}
     }
-}
-
-private fun File.getLocalizedTimeOfBackupAsText(): CharSequence {
-    val dateFormat = DateFormat.getInstance()
-    val date = BackupManager.getBackupDate(this.name)
-    return if (date == null) this.name else dateFormat.format(date)
 }
