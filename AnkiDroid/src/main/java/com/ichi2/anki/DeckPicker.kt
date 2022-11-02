@@ -234,6 +234,7 @@ open class DeckPicker :
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
+    private var loadDeckCounts: Job? = null
 
     init {
         ChangeManager.subscribe(this)
@@ -947,7 +948,7 @@ open class DeckPicker :
         Timber.d("onPause()")
         mActivityPaused = true
         // The deck count will be computed on resume. No need to compute it now
-        // TaskManager.cancelAllTasks(LoadDeckCounts::class.java)
+        loadDeckCounts?.cancel()
         super.onPause()
     }
 
@@ -2190,7 +2191,8 @@ open class DeckPicker :
                 }
             }
         } else {
-            launchCatchingTask {
+            loadDeckCounts?.cancel()
+            loadDeckCounts = launchCatchingTask {
                 Timber.d("Refreshing deck list")
                 withProgress {
                     Timber.d("doInBackgroundLoadDeckCounts")
