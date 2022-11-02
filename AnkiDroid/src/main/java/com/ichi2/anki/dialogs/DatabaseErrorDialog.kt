@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Message
-import android.text.format.DateFormat.getBestDateTimePattern
 import android.view.KeyEvent
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -38,7 +37,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
@@ -205,17 +203,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 } else {
                     // Show backups sorted with latest on top
                     mBackups.reverse()
-                    val localDf = SimpleDateFormat(getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"))
-                    val dates = mutableListOf<String>()
-                    /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
-                    for (backup in mBackups) {
-                        val date = BackupManager.getBackupDate(backup.name)
-                        if (date != null) {
-                            dates.add(localDf.format(date))
-                        } else {
-                            Timber.w("backup name '%s' couldn't be parsed", backup.name)
-                        }
-                    }
+                    val formatter = LocalizedUnambiguousBackupTimeFormatter()
+                    val dates = mBackups.map { formatter.getTimeOfBackupAsText(it) }
+
                     dialog.title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
                             ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity, DeckPicker.PICK_APKG_FILE)
