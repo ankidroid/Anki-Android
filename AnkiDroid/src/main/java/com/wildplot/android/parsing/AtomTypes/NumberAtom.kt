@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes
 
-import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.parsing.Atom.AtomType
 import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TreeElement
@@ -25,7 +24,11 @@ import kotlin.Throws
 
 class NumberAtom(factorString: String) : TreeElement {
 
-    private var atomType = AtomType.NUMBER
+    var atomType = AtomType.NUMBER
+        private set(value) {
+            field = value
+        }
+
     private var valueField: Double? = null
 
     init {
@@ -35,11 +38,6 @@ class NumberAtom(factorString: String) : TreeElement {
             Timber.w(e)
             atomType = AtomType.INVALID
         }
-    }
-
-    @KotlinCleanup("Make atomType val with private setter.")
-    fun getAtomType(): AtomType {
-        return atomType
     }
 
     @get:Throws(ExpressionFormatException::class)

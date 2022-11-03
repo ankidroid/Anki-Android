@@ -87,8 +87,8 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
 
     private fun initAsNumber(atomString: String): Boolean {
         val numberAtom = NumberAtom(atomString)
-        return if (numberAtom.getAtomType() !== INVALID) {
-            atomType = numberAtom.getAtomType()
+        return if (numberAtom.atomType !== INVALID) {
+            atomType = numberAtom.atomType
             atomObject = numberAtom
             true
         } else false
