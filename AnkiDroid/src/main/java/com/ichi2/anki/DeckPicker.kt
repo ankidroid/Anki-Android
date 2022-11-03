@@ -282,8 +282,7 @@ open class DeckPicker :
         showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
         true
     }
-    open val backupManager: BackupManager
-        get() = BackupManager()
+
     private val mImportAddListener = ImportAddListener(this)
 
     private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
