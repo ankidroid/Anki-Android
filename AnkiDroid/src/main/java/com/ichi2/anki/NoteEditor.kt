@@ -20,7 +20,6 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -95,6 +94,7 @@ import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
+import java.text.Normalizer
 import java.util.*
 import java.util.function.Consumer
 import kotlin.math.max
@@ -165,6 +165,17 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?> = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
+    private lateinit var menu: Menu
+
+    enum class SearchIn { FieldLabel, FieldContents }
+
+    var searchIn: SearchIn
+        get() {
+            return SearchIn.valueOf(AnkiDroidApp.getSharedPrefs(this).getString(SEARCH_OPTIONS, SearchIn.FieldLabel.name)!!)
+        }
+        set(value) {
+            AnkiDroidApp.getSharedPrefs(this).edit().putString(SEARCH_OPTIONS, value.name).apply()
+        }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
@@ -857,6 +868,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.note_editor, menu)
+        this.menu = menu
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
         } else {
@@ -880,64 +892,24 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menu.findItem(R.id.action_scroll_toolbar).isChecked =
             AnkiDroidApp.getSharedPrefs(this).getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
 
-        val actionViewFieldSearch = menu.findItem(R.id.field_search_view_note_editor)
-        val searchViewFieldSearch: SearchView = actionViewFieldSearch.actionView as SearchView
+        val fieldSearchViewNoteEditorMenuItem = menu.findItem(R.id.field_search_view_note_editor)
+        val fieldSearchViewNoteEditorActionView: SearchView = fieldSearchViewNoteEditorMenuItem.actionView as SearchView
 
-        searchViewFieldSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        fieldSearchViewNoteEditorActionView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val sharedPreferences = getSharedPreferences("SEARCH_OPTIONS_PREF", MODE_PRIVATE)
-                if (sharedPreferences.getString("search_options", "fieldlabel") == "fieldlabel") {
+
+                if (searchIn == SearchIn.FieldLabel) {
                     populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, newText, "")
-                } else if (sharedPreferences.getString("search_options", "fieldlabel") == "fieldcontent") {
+                } else if (searchIn == SearchIn.FieldContents) {
                     populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, "", newText)
                 }
                 return true
             }
         })
-
-        menu.findItem(R.id.search_options).setOnMenuItemClickListener {
-
-            val dialogBuilder = AlertDialog.Builder(this)
-            val inflater = this.layoutInflater
-            val dialogView = inflater.inflate(R.layout.search_options, null)
-            dialogBuilder.setView(dialogView)
-
-            val imageViewTickSearchForFieldLabel = dialogView.findViewById<ImageView>(R.id.image_view_tick_search_for_field_label)
-            val imageViewTickSearchForFieldContent = dialogView.findViewById<ImageView>(R.id.image_view_tick_search_for_field_content)
-
-            val sharedPreferences = getSharedPreferences("SEARCH_OPTIONS_PREF", MODE_PRIVATE)
-
-            if (sharedPreferences.getString("search_options", "fieldLabel").equals("fieldLabel")) {
-                imageViewTickSearchForFieldLabel.visibility = View.VISIBLE
-                imageViewTickSearchForFieldContent.visibility = View.INVISIBLE
-            } else if (sharedPreferences.getString("search_options", "fieldlabel").equals("fieldcontent")) {
-                imageViewTickSearchForFieldLabel.visibility = View.INVISIBLE
-                imageViewTickSearchForFieldContent.visibility = View.VISIBLE
-            }
-
-            val textViewSearchForFieldLabel = dialogView.findViewById<TextView>(R.id.text_view_search_for_field_label)
-            val textViewSearchforFieldContent = dialogView.findViewById<TextView>(R.id.text_view_search_for_field_content)
-
-            val dialog = dialogBuilder.create()
-
-            textViewSearchForFieldLabel.setOnClickListener {
-                sharedPreferences.edit().putString("search_options", "fieldlabel").apply()
-                dialog.dismiss()
-            }
-
-            textViewSearchforFieldContent.setOnClickListener {
-                sharedPreferences.edit().putString("search_options", "fieldcontent").apply()
-                dialog.dismiss()
-            }
-
-            dialog.show()
-
-            return@setOnMenuItemClickListener true
-        }
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -996,6 +968,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked)
                 }
                 updateToolbar()
+            }
+            R.id.search_for_field_label -> {
+                item.isChecked = !item.isChecked
+                menu.findItem(R.id.search_for_field_content).isChecked = !menu.findItem(R.id.search_for_field_content).isChecked
+                searchIn = SearchIn.FieldLabel
+            }
+            R.id.search_for_field_content -> {
+                item.isChecked = !item.isChecked
+                menu.findItem(R.id.search_for_field_label).isChecked = !menu.findItem(R.id.search_for_field_label).isChecked
+                searchIn = SearchIn.FieldContents
             }
         }
         return super.onOptionsItemSelected(item)
@@ -1324,7 +1306,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return ret
         }
 
-    private fun populateEditFields(type: FieldChangeType, editModelMode: Boolean, filterQueryByFieldName: String?, filterQueryByFieldContent: String?) {
+    private fun populateEditFields(type: FieldChangeType, editModelMode: Boolean, QueryByFieldName: String?, QueryByFieldContent: String?) {
         val editLines = mFieldState.loadFieldEditLines(type)
         mFieldsLayoutContainer!!.removeAllViews()
         mCustomViewIds.clear()
@@ -1409,13 +1391,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
             toggleStickyButton.contentDescription =
                 getString(R.string.note_editor_toggle_sticky, editLineView.name)
-            if (editLineView.name!!.lowercase().contains(filterQueryByFieldName!!.lowercase()) &&
-                editLineView.editText.text!!.toString().lowercase().contains(filterQueryByFieldContent!!.lowercase())
+            if (editLineView.name!!.removeNonSpacingMarks().contains(QueryByFieldName!!.removeNonSpacingMarks(), ignoreCase = true) &&
+                editLineView.editText.text!!.toString().removeNonSpacingMarks().contains(
+                        QueryByFieldContent!!.removeNonSpacingMarks(), ignoreCase = true
+                    )
             ) {
                 mFieldsLayoutContainer!!.addView(editLineView)
             }
         }
     }
+
+    fun String.removeNonSpacingMarks() =
+        Normalizer.normalize(this, Normalizer.Form.NFD)
+            .replace("\\p{Mn}+".toRegex(), "")
 
     private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
         val imageTag = mMediaRegistration!!.onImagePaste(uri) ?: return false
@@ -2285,6 +2273,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         private const val PREF_NOTE_EDITOR_CAPITALIZE = "note_editor_capitalize"
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
+        private const val SEARCH_OPTIONS = "search_options"
 
         private fun shouldReplaceNewlines(): Boolean {
             return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)

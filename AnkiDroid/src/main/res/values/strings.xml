@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search_for_field_label">Search for Field label</string>
-    <string name="search_for_field_content">Search for Field Content</string>
+    <string name="search_for_field_label">Search in field labels</string>
+    <string name="search_for_field_content">Search in field contents</string>
 </resources>

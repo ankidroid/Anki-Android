@@ -34,7 +34,28 @@
     <item
         android:id="@+id/search_options"
         android:title="@string/search_options"
-        ankidroid:showAsAction="never"/>
+        ankidroid:showAsAction="never">
+
+        <menu>
+
+            <item
+                android:id="@+id/search_for_field_label"
+                android:checkable="true"
+                android:checked="true"
+                android:title="@string/search_for_field_label"
+                ankidroid:showAsAction="never"/>
+
+            <item
+                android:id="@+id/search_for_field_content"
+                android:checkable="true"
+                android:checked="false"
+                android:title="@string/search_for_field_content"
+                ankidroid:showAsAction="never"/>
+
+        </menu>
+
+    </item>
+
     <item
         android:id="@+id/action_capitalize"
         android:checkable="true"
