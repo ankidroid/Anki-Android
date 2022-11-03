@@ -23,7 +23,7 @@ internal class ApiUtilsTest {
     @Test
     fun joinFieldsShouldJoinWhenListIsValid() {
         val fieldList = arrayOf<String>("A", "B", "C")
-        assertEquals("", Utils.joinTags(emptySet()))
+        assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList))
     }
 
     @Test
