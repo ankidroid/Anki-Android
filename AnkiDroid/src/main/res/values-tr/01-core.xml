@@ -95,11 +95,11 @@
     <string name="ease_button_easy">Kolay</string>
     <string name="studyoptions_congrats_undo">%s geri al</string>
     <string name="menu_import">İçeri aktar</string>
-    <string name="undo">Geri Al</string>
+    <string name="undo">Geri al</string>
     <string name="undo_action_review">Son çalışmayı</string>
     <string name="undo_action_change_deck_multi">Desteleri değiştir</string>
     <string name="move_all_to_deck">Hepsini desteye taşı</string>
-    <string name="unbury">Görünür Yap</string>
+    <string name="unbury">Görünür yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Kısayol oluştur</string>
     <string name="browse_cards">Turkcha</string>
@@ -108,8 +108,8 @@
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
     <string name="menu_bury_card">Kartı gizle</string>
-    <string name="menu_bury_note">Notu Gizle</string>
-    <string name="menu_suspend_card">Kartı Askıya Al</string>
+    <string name="menu_bury_note">Notu gizle</string>
+    <string name="menu_suspend_card">Kartı askıya al</string>
     <string name="menu_suspend_note">Notu Askıya Al</string>
     <string name="menu_bury">Gizle</string>
     <string name="menu_suspend">Askıya Al</string>
@@ -156,7 +156,7 @@
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor...</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
-    <string name="empty_cram_label">Boş</string>
+    <string name="empty_cram_label">Boşalt</string>
     <string name="create_subdeck">Altdeste oluştur</string>
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">Bu deste boş</string>
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
-    <string name="empty_deck_add_note">Kart ekle</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>
     <string name="studyoptions_limit_reached">Günlük çalışma sınırına ulaşıldı</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="empty_cloze_warning">Bu notu düzenleyip doldurulacak boşluklar ekleyin. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Senkronizasyon geçici olarak devredışı</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
     <string name="continue_sync">Senkronizasyona devam et</string>
     <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>
@@ -190,7 +191,7 @@
     <string name="card_template_editor_front">Şablon Ön Yüz</string>
     <string name="card_template_editor_back">Şablon Arka Yüz</string>
     <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Kart Listeleyici Görünümü</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kart Tarayıcısı Görünümü</string>
     <string name="card_template_editor_deck_override">Desteyi Geçersiz Kılma</string>
     <string name="card_template_editor_insert_field">Alan Ekle</string>
     <string name="card_template_editor_select_field">Alan seç</string>
@@ -208,7 +209,7 @@
     <string name="card_template_editor_save_error">Kart şablon değişiklikleri yapılamıyor: %s</string>
     <string name="template_for_current_card_deleted">Kart için mevcut olan kart tipi silindi.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Listeleyici görünümü</string>
+    <string name="card_template_browser_appearance_title">Tarayıcı görünümü</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Kart Bilgileri</string>
@@ -216,7 +217,7 @@
     <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmek</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart Listeleyicisi</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart Tarayıcısı</string>
     <string name="context_menu_anki_card_label">Anki Kart</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s problem var:<br/>%2$s</string>
     <string name="more_information">Daha fazla bilgi</string>

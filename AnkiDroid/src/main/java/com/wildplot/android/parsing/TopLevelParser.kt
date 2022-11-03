@@ -133,7 +133,6 @@ class TopLevelParser(expressionString: String, parserRegister: HashMap<String, T
     }
 
     companion object {
-        @JvmStatic
         fun stringHasValidBrackets(string: String): Boolean {
             val finalBracketCheck = string.replace("\\(".toRegex(), "").length - string.replace(
                 "\\)".toRegex(),

@@ -20,12 +20,13 @@ package com.ichi2.libanki
 import android.database.SQLException
 import android.net.Uri
 import android.text.TextUtils
-import android.util.Pair
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.util.*
@@ -223,7 +224,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             var s = s
             // handle latex
             @KotlinCleanup("change to .map { }")
-            s = LaTeX.mungeQA(s!!, col, model)
+            val svg = model.optBoolean("latexsvg", false)
+            s = LaTeX.mungeQA(s!!, col, svg)
             // extract filenames
             var m: Matcher
             for (p in REGEXPS) {
@@ -296,11 +298,11 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    open fun check(): List<List<String>> {
+    open fun check(): MediaCheckResult {
         return check(null)
     }
 
-    private fun check(local: Array<File>?): List<List<String>> {
+    private fun check(local: Array<File>?): MediaCheckResult {
         val mdir = File(dir())
         // gather all media references in NFC form
         val allRefs: MutableSet<String> = HashSet()
@@ -383,12 +385,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             Timber.w(ignored)
             _deleteDB()
         }
-        @KotlinCleanup("return listOf")
-        val result: MutableList<List<String>> = ArrayList(3)
-        result.add(noHave)
-        result.add(unused)
-        result.add(invalid)
-        return result
+        return MediaCheckResult(noHave, unused, invalid)
     }
 
     private fun _normalizeNoteRefs(nid: Long) {
@@ -934,7 +931,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             Pattern.compile("(?i)(<(?:img|audio)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)")
         private val fObjectRegExpU =
             Pattern.compile("(?i)(<object\\b[^>]* data=(?!['\"])([^ >]+)[^>]*?>)")
-        val REGEXPS = Arrays.asList(
+        val REGEXPS = listOf(
             fSoundRegexps,
             fImgAudioRegExpQ,
             fImgAudioRegExpU,
@@ -955,7 +952,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         fun escapeImages(string: String, unescape: Boolean = false): String {
             @Suppress("NAME_SHADOWING")
             var string = string
-            for (p in Arrays.asList(fImgAudioRegExpQ, fImgAudioRegExpU)) {
+            for (p in listOf(fImgAudioRegExpQ, fImgAudioRegExpU)) {
                 val m = p.matcher(string)
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using
@@ -1002,3 +999,5 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         }
     }
 }
+
+data class MediaCheckResult(val noHave: List<String>, val unused: List<String>, val invalid: List<String>)

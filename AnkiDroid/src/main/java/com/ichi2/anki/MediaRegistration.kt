@@ -50,7 +50,7 @@ class MediaRegistration(private val context: Context) {
         val fd = openInputStreamWithURI(uri)
         val fileNameAndExtension = getFileNameAndExtension(filename)
         fileName = if (checkFilename(fileNameAndExtension!!)) {
-            String.format("%s-name", fileNameAndExtension.key)
+            "${fileNameAndExtension.key}-name"
         } else {
             fileNameAndExtension.key
         }
@@ -83,7 +83,7 @@ class MediaRegistration(private val context: Context) {
             return null
         }
         val field = ImageField()
-        field.setHasTemporaryMedia(true)
+        field.hasTemporaryMedia = true
         field.extraImagePathRef = tempFilePath
         return field.formattedValue
     }

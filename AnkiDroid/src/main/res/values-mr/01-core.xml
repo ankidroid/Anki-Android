@@ -164,7 +164,6 @@
     <string name="empty_deck">हा डेक रिक्त आहे</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">कार्ड जोडा</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
     <string name="studyoptions_empty">हा डेक रिक्त आहे. नवीन सामग्री जोडण्यासाठी + बटण दाबा.</string>
     <string name="studyoptions_limit_reached">दररोज अभ्यासाची मर्यादा गाठली</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
     <string name="empty_cloze_warning">ही टीप संपादित करा आणि काही क्लोझ हटवणे जोडा. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">आपण संकालन रद्द करू इच्छिता?</string>
     <string name="continue_sync">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled">संकालन रद्द केले</string>

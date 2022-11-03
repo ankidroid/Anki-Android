@@ -72,11 +72,11 @@
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d timmar %2$d kvar</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d dagar %2$d kvar</item>
     </plurals>
     <string name="no_cards_placeholder_title">Samlingen är tom</string>
     <string name="no_cards_placeholder_description">Börja lägga till kort\nmed + knappen</string>
@@ -163,8 +163,7 @@
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="empty_deck">Den här leken är tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Lägg till kort</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
     <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Lagringsenheten inte monterad</string>
     <string name="empty_cloze_warning">Redigera denna not och lägg till några textluckor. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Vill du avbryta synkroniseringen?</string>
     <string name="continue_sync">Fortsätt synkronisering</string>
     <string name="sync_cancelled">Synkronisering avbruten</string>

@@ -117,6 +117,7 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_ok">확인</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">아니요</string>
     <string name="dialog_continue">계속하기</string>
     <string name="dialog_processing">Processing...</string>
@@ -164,9 +165,6 @@
     <string name="multimedia_editor_failed">멀티미디어 편집기를 열기 실패</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">오디오 녹음 권한이 거부됨</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid에 오신 것을 환영합니다</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
@@ -250,4 +248,14 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

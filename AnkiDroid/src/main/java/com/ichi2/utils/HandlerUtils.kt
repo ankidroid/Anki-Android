@@ -22,10 +22,8 @@ import android.os.Looper
 
 object HandlerUtils {
 
-    @JvmStatic
     fun getDefaultLooper(): Looper = Looper.getMainLooper()
 
-    @JvmStatic
     fun newHandler(): Handler = Handler(getDefaultLooper())
 
     /**
@@ -34,7 +32,6 @@ object HandlerUtils {
      *
      * @param r The Runnable that will be executed.
      */
-    @JvmStatic
     fun postOnNewHandler(r: Runnable): Handler {
         val newHandler = newHandler()
         newHandler.post(r)
@@ -53,7 +50,6 @@ object HandlerUtils {
      * @param delayMillis The delay (in milliseconds) until the Runnable
      *        will be executed.
      */
-    @JvmStatic
     fun postDelayedOnNewHandler(r: Runnable, delayMillis: Long): Handler {
         val newHandler = newHandler()
         newHandler.postDelayed(r, delayMillis)

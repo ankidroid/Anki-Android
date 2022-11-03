@@ -24,10 +24,10 @@ import com.ichi2.anki.UIUtils.getDayStart
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -57,7 +57,6 @@ object Storage {
     /**
      * Helper method for when the collection can't be opened
      */
-    @JvmStatic
     @Throws(UnknownDatabaseVersionException::class)
     fun getDatabaseVersion(context: Context, path: String): Int {
         return try {
@@ -77,7 +76,6 @@ object Storage {
     /**
      *  Open a new or existing collection. Path must be unicode
      * */
-    @JvmStatic
     fun collection(
         context: Context,
         path: String,
@@ -172,7 +170,6 @@ object Storage {
         _updateIndices(db)
     }
 
-    @JvmStatic
     fun setUseInMemory(useInMemoryDatabase: Boolean) {
         isInMemory = useInMemoryDatabase
     }

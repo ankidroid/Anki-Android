@@ -22,7 +22,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.PowerManager
 import android.os.PowerManager.WakeLock
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
@@ -40,15 +39,14 @@ import com.ichi2.libanki.sync.RemoteMediaServer
 import com.ichi2.libanki.sync.RemoteServer
 import com.ichi2.libanki.sync.Syncer
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import okhttp3.Response
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
-import java.util.Arrays
 
 @Suppress("DEPRECATION") // #7108: AsyncTask
 @KotlinCleanup("Simplify null comparison, !! -> ?.")
@@ -258,7 +256,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             colCorruptFullSync = if (FULL_DOWNLOAD == conflictResolution) {
                 true
             } else {
-                return returnGenericError(data)
+                return genericError(data)
             }
         }
         return try {
@@ -274,7 +272,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 val ret = client.sync(this)
                 data.message = client.syncMsg
                 if (ret == null) {
-                    return returnGenericError(data)
+                    return genericError(data)
                 }
                 if (NO_CHANGES != ret.first && SUCCESS != ret.first) {
                     data.success = false
@@ -305,12 +303,12 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             val ret = fullSyncServer.upload()
                             col.reopen()
                             if (ret == null) {
-                                return returnGenericError(data)
+                                return genericError(data)
                             }
-                            if (ret.first == ARBITRARY_STRING && ret.second[0] != HttpSyncer.ANKIWEB_STATUS_OK) {
+                            if (ret.first == ARBITRARY_STRING && ret.second!![0] != HttpSyncer.ANKIWEB_STATUS_OK) {
                                 data.success = false
                                 data.resultType = ret.first
-                                data.result = ret.second
+                                data.result = ret.second!!
                                 return data
                             }
                         }
@@ -371,25 +369,20 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 try {
                     Timber.i("Sync - Performing media sync")
                     ret = mediaClient.sync()
-                    if (ret.first == null) {
-                        mediaError =
-                            AnkiDroidApp.appResources.getString(R.string.sync_media_error)
+                    if (CORRUPT == ret.first) {
+                        mediaError = AnkiDroidApp.appResources
+                            .getString(R.string.sync_media_db_error)
+                        noMediaChanges = true
+                    }
+                    if (NO_CHANGES == ret.first) {
+                        publishProgress(R.string.sync_media_no_changes)
+                        noMediaChanges = true
+                    }
+                    if (MEDIA_SANITY_FAILED == ret.first) {
+                        mediaError = AnkiDroidApp.appResources
+                            .getString(R.string.sync_media_sanity_failed)
                     } else {
-                        if (CORRUPT == ret.first) {
-                            mediaError = AnkiDroidApp.appResources
-                                .getString(R.string.sync_media_db_error)
-                            noMediaChanges = true
-                        }
-                        if (NO_CHANGES == ret.first) {
-                            publishProgress(R.string.sync_media_no_changes)
-                            noMediaChanges = true
-                        }
-                        if (MEDIA_SANITY_FAILED == ret.first) {
-                            mediaError = AnkiDroidApp.appResources
-                                .getString(R.string.sync_media_sanity_failed)
-                        } else {
-                            publishProgress(R.string.sync_media_success)
-                        }
+                        publishProgress(R.string.sync_media_success)
                     }
                 } catch (e: RuntimeException) {
                     Timber.w(e)
@@ -489,21 +482,19 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         var taskType = 0
         var resultType: Syncer.ConnectionResultType? = null
         var result: Array<Any?> = arrayOf()
-        @JvmField
         var success = true
         var returnType = 0
         var exception: Exception? = null
         var message: String? = null
         var col: Collection? = null
 
-        @KotlinCleanup("replace Arrays.toString() -> contentToString")
         @KotlinCleanup("use formatted string")
         override fun toString(): String {
             return "Payload{" +
                 "mTaskType=" + taskType +
-                ", data=" + Arrays.toString(data) +
+                ", data=" + data.contentToString() +
                 ", resultType=" + resultType +
-                ", result=" + Arrays.toString(result) +
+                ", result=" + result.contentToString() +
                 ", success=" + success +
                 ", returnType=" + returnType +
                 ", exception=" + exception +
@@ -548,7 +539,6 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             return sInstance
         }
 
-        @JvmStatic
         fun login(listener: TaskListener, data: Payload): Connection? {
             data.taskType = LOGIN
             return launchConnectionTask(listener, data)
@@ -564,13 +554,12 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
          * @param data Some payload that should be transformed
          * @return the original payload
          */
-        @KotlinCleanup("remove return from method name")
-        @KotlinCleanup("scpoed function")
-        private fun returnGenericError(data: Payload): Payload {
-            data.success = false
-            data.resultType = GENERIC_ERROR
-            data.result = arrayOfNulls(0)
-            return data
+        private fun genericError(data: Payload): Payload {
+            return data.apply {
+                success = false
+                resultType = GENERIC_ERROR
+                result = arrayOfNulls(0)
+            }
         }
 
         @Synchronized // #7108: AsyncTask

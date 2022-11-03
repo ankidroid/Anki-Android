@@ -190,16 +190,15 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         return c
     }
 
-    private class CommandTestCardViewer(currentCard: Card?) : Reviewer() {
+    private class CommandTestCardViewer(private var currentCardOverride: Card?) : Reviewer() {
         var lastFlag = 0
             private set
 
-        // we don't have getCol() here and we don't need the additional sound processing.
         override var currentCard: Card?
-            get() = super.currentCard
+            get() = currentCardOverride
             set(card) {
-                mCurrentCard = card
                 // we don't have getCol() here and we don't need the additional sound processing.
+                currentCardOverride = card
             }
 
         override fun setTitle() {
@@ -216,17 +215,12 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
                 super.controlBlocked = controlBlocked
             }
 
-        override fun isControlBlocked(): Boolean {
-            return controlBlocked !== ControlBlock.UNBLOCKED
-        }
+        override val isControlBlocked: Boolean
+            get() = controlBlocked !== ControlBlock.UNBLOCKED
 
         override fun onFlag(card: Card?, @FlagDef flag: Int) {
             lastFlag = flag
-            mCurrentCard!!.setUserFlag(flag)
-        }
-
-        init {
-            this@CommandTestCardViewer.currentCard = currentCard
+            currentCard!!.setUserFlag(flag)
         }
     }
 }

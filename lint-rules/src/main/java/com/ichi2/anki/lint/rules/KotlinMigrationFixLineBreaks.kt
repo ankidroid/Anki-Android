@@ -67,7 +67,6 @@ class KotlinMigrationFixLineBreaks : Detector(), SourceCodeScanner {
             "Please check the relevant piece of code.\n" +
             "And change instances of <br></br> to a newline: Kotlin supports Markdown formatting."
         private val implementation = Implementation(KotlinMigrationFixLineBreaks::class.java, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES))
-        @JvmField
         val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,

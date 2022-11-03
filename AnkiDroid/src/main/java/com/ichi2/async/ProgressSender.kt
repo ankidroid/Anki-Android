@@ -20,7 +20,6 @@ fun interface ProgressSender<T> {
     fun doProgress(value: T?)
 
     companion object {
-        @JvmStatic
         fun <T> publishProgress(progress: ProgressSender<T>?, value: T) {
             progress?.doProgress(value)
         }

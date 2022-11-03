@@ -15,7 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.utils
 
-import java.util.Comparator
+import org.json.JSONObject
 
 class DeckComparator : Comparator<JSONObject> {
     override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
@@ -23,7 +23,6 @@ class DeckComparator : Comparator<JSONObject> {
     }
 
     companion object {
-        @JvmField
         val INSTANCE = DeckComparator()
     }
 }

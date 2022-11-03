@@ -18,6 +18,7 @@ package com.ichi2.utils
 
 import android.content.ContentResolver
 import android.net.Uri
+import android.os.Environment
 import android.os.StatFs
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
@@ -28,7 +29,6 @@ import java.util.*
 
 object FileUtil {
     /** Gets the free disk space given a file  */
-    @JvmStatic
     fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
         return try {
             StatFs(file.parentFile?.path).availableBytes
@@ -36,6 +36,10 @@ object FileUtil {
             Timber.e(e, "Free space could not be retrieved")
             defaultValue
         }
+    }
+    /** Returns the current download Directory */
+    fun getDownloadDirectory(): String {
+        return Environment.DIRECTORY_DOWNLOADS
     }
 
     /**
@@ -46,7 +50,6 @@ object FileUtil {
      * @return the internal file after copying the data across.
      * @throws IOException
      */
-    @JvmStatic
     @Throws(IOException::class)
     @KotlinCleanup("nonnull uri")
     fun internalizeUri(uri: Uri?, internalFile: File, contentResolver: ContentResolver): File {
@@ -69,7 +72,6 @@ object FileUtil {
     /**
      * @return Key: Filename; Value: extension including dot
      */
-    @JvmStatic
     fun getFileNameAndExtension(fileName: String?): Map.Entry<String, String>? {
         if (fileName == null) {
             return null
@@ -81,44 +83,45 @@ object FileUtil {
     }
 
     /**
-     * Calculates the size of a directory by recursively exploring the directory tree and summing the length of each
-     * file. The time taken to calculate directory size is proportional to the number of files in the directory
-     * and all of its sub-directories.
-     * It is assumed that directory contains no symbolic links.
-     *
-     * @throws IOException if the directory argument doesn't denote a directory
-     * @param directory Abstract representation of the file/directory whose size needs to be calculated
-     * @return Size of the directory in bytes
+     * Information about the content of a directory `d`.
      */
-    @JvmStatic
-    @Throws(IOException::class)
-    fun getDirectorySize(directory: File): Long {
-        var directorySize: Long = 0
-        val files = listFiles(directory)
-        for (file in files) {
-            directorySize += getSize(file)
-        }
-        return directorySize
-    }
+    data class DirectoryContentInformation(
+        /**
+         * Size of all files contained in `d` directly or indirectly.
+         * Ignore the extra size taken by file system.
+         */
+        val totalBytes: Long,
+        /**
+         * Number of subdirectories of `d`, directly or indirectly. Not counting `d`.
+         */
+        val numberOfSubdirectories: Int,
+        /**
+         * Number of files contained in `d` directly or indirectly.
+         */
+        val numberOfFiles: Int
+    ) {
+        companion object {
+            fun fromDirectory(root: File): DirectoryContentInformation {
+                var totalBytes = 0L
+                var numberOfDirectories = 0
+                var numberOfFiles = 0
+                val directoriesToProcess = mutableListOf<File>(root)
+                while (directoriesToProcess.isNotEmpty()) {
+                    val dir = directoriesToProcess.removeLast()
+                    listFiles(dir).forEach {
+                        if (it.isDirectory) {
+                            numberOfDirectories++
+                            directoriesToProcess.add(it)
+                        } else {
+                            numberOfFiles++
+                            totalBytes += it.length()
+                        }
+                    }
+                }
 
-    /**
-     * Calculates the size of a [File].
-     * If it is a file, returns the size.
-     * If the file does not exist, returns 0
-     * If the file is a directory, recursively explore the directory tree and summing the length of each
-     * file. The time taken to calculate directory size is proportional to the number of files in the directory
-     * and all of its sub-directories. See: [getDirectorySize]
-     * It is assumed that directory contains no symbolic links.
-     *
-     * @param file Abstract representation of the file/directory whose size needs to be calculated
-     * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
-     */
-    @JvmStatic
-    @KotlinCleanup("remove JvmStatic once FileUtilTest is in Kotlin")
-    fun getSize(file: File) = if (file.isDirectory) {
-        getDirectorySize(file)
-    } else {
-        file.length()
+                return DirectoryContentInformation(totalBytes, numberOfDirectories, numberOfFiles)
+            }
+        }
     }
 
     /**
@@ -127,7 +130,6 @@ object FileUtil {
      * @param dir Abstract representation of a directory
      * @throws IOException if dir is not a directory or could not be created
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun ensureFileIsDirectory(dir: File) {
         if (dir.exists()) {
@@ -148,7 +150,6 @@ object FileUtil {
      * @return An array of abstract representations of the files / directories present in the directory represented
      * by dir
      */
-    @JvmStatic
     @Throws(IOException::class)
     fun listFiles(dir: File): Array<File> {
         return dir.listFiles()

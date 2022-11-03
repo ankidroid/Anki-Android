@@ -27,6 +27,7 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Parcelable
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
@@ -38,11 +39,12 @@ import java.io.*
  * A set of implementations for the supported platforms are available.
  *
  *
- * Each implementation ends with a `V<n>` prefix, identifying the minimum API version on which this implementation
+ * Each implementation ends with a `V<n>` suffix, identifying the minimum API version on which this implementation
  * can be used. For example, see [CompatV21].
  *
  *
- * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that></n>`CompatVm` exists. E.g. as of July 2021 `CompatV23` extends `CompatV21` because there is no `CompatV22`.
+ * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that `CompatVm`
+ * exists. E.g. as of July 2021 `CompatV23` extends `CompatV21` because there is no `CompatV22`.
  * If `CompatV22` were to be created one day, it will extends `CompatV22` and be extended by `CompatV23`.
  *
  *
@@ -61,25 +63,52 @@ import java.io.*
  * Example: `CompatV26` extends `CompatV23` which extends `CompatV21`. The method `vibrate` is
  * defined in `CompatV21` where only the number of seconds of vibration is taken into consideration, and is
  * redefined in `CompatV26` - using `@Override` - where the style of vibration is also taken into
- * consideration. It meas that  on devices using APIs 21 to 25 included, the implementation of `CompatV21` is
+ * consideration. It means that  on devices using APIs 21 to 25 included, the implementation of `CompatV21` is
  * used, and on devices using API 26 and higher, the implementation of `CompatV26` is used.
  * On the other hand a method like `setTime` that got defined in `CompatV21` and redefined in
  * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
  */
 interface Compat {
-    fun setupNotificationChannel(context: Context, id: String, name: String)
+    fun setupNotificationChannel(context: Context)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
 
+    /**
+     * Retrieve extended data from the intent.
+     * @param name – The name of the desired item.
+     * @param className – The type of the object expected.
+     * @return the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
+     */
+    fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
+
+    /**
+     * Retrieve extended data from the intent.
+     * @param name – The name of the desired item.
+     * @param clazz – The type of the object expected.
+     * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
+     */
+    fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
+
+    /**
+     * Copy file at path [source] to path [target]
+     */
     @Throws(IOException::class)
     fun copyFile(source: String, target: String)
 
+    /**
+     * Copy file at path [source] to [target]
+     * @return the number of bytes read or written
+     */
     @Throws(IOException::class)
     fun copyFile(source: String, target: OutputStream): Long
 
+    /**
+     * Copy file at path [source] to path [target]
+     * @return the number of bytes read or written
+     */
     @Throws(IOException::class)
     fun copyFile(source: InputStream, target: String): Long
 

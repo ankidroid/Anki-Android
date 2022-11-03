@@ -15,10 +15,13 @@
  ****************************************************************************************/
 package com.ichi2.compat
 
+import android.content.Intent
 import android.os.Build
+import android.os.Parcelable
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
 import com.ichi2.compat.CompatHelper.Companion.compat
+import java.io.Serializable
 
 /**
  * Selects a [Compat] class based on the device's [Build.VERSION.SDK_INT]
@@ -33,6 +36,7 @@ class CompatHelper private constructor() {
 
     // Note: Needs ": Compat" or the type system assumes `Compat21`
     private val compatValue: Compat = when {
+        sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
         sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
         sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
@@ -45,19 +49,16 @@ class CompatHelper private constructor() {
         private val instance by lazy { CompatHelper() }
 
         /** Get the current Android API level.  */
-        @JvmStatic
         val sdkVersion: Int
             get() = Build.VERSION.SDK_INT
 
         /** Determine if the device is running API level 23 or higher.  */
-        @JvmStatic
         val isMarshmallow: Boolean
             get() = sdkVersion >= Build.VERSION_CODES.M
 
         /**
          * Main public method to get the compatibility class
          */
-        @JvmStatic
         val compat get() = instance.compatValue
 
         val isChromebook: Boolean
@@ -65,7 +66,6 @@ class CompatHelper private constructor() {
                 "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
                     "novato_cheets".equals(Build.DEVICE, ignoreCase = true)
                 )
-        @JvmStatic
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
@@ -75,6 +75,13 @@ class CompatHelper private constructor() {
 
         fun hasScrollKeys(): Boolean {
             return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
+        }
+        inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
+            return compat.getSerializableExtra(this, name, T::class.java)
+        }
+
+        inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
+            return compat.getParcelableExtra(this, name, T::class.java)
         }
     }
 }

@@ -55,7 +55,6 @@ object HtmlColors {
      * #777777 is the grey color</span> This is done with a state machine with 2 states: - 0: within content - 1: within
      * a tag
      */
-    @JvmStatic
     fun invertColors(text: String?): String {
         val sb = StringBuffer()
         val m1 = fHtmlColorPattern.matcher(text!!)

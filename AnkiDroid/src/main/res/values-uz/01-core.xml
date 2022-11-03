@@ -164,7 +164,6 @@
     <string name="empty_deck">Bu to\'plam bo\'sh</string>
     <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
-    <string name="empty_deck_add_note">Karta qo\'shish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
     <string name="studyoptions_empty">Bu to\'plam bo\'sh. Yangi karta qo\'shish uchun + tugmasini bosing.</string>
     <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
     <string name="empty_cloze_warning">Bu kartani o\'zgartirish va bir nechta yopilma o\'chirishlar qo\'shish (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Sinxronlashni bekor qilishni istaysizmi?</string>
     <string name="continue_sync">Sinxronlashni davom ettirish</string>
     <string name="sync_cancelled">Sinxronlash bekor qilindi</string>
@@ -191,7 +192,7 @@
     <string name="card_template_editor_back">Ort shablon</string>
     <string name="card_template_editor_styling">Ko\'rinish</string>
     <string name="card_template_editor_menu_card_browser_appearance">Karta Qidiruvchisi Ko\'rinishi</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
+    <string name="card_template_editor_deck_override">Hilol Nashr</string>
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>

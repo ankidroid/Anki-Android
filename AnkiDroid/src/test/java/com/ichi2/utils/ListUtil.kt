@@ -72,7 +72,6 @@ class ListUtil {
          * @param actuals Object list or list of arrays (multi-dimensional array) with
          * actual values
          */
-        @JvmStatic
         fun assertListEquals(expected: List<Any?>?, actuals: List<Any?>?) {
             assertListEquals(null, expected, actuals)
         }

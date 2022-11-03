@@ -105,7 +105,7 @@
     <string name="browse_cards">ბარათების ძიება</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">დამატება</string>
     <string name="menu_add_note">დაამატე შენიშვნა</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">აქაუნთის სინქრონიზაცია</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ანგარიშის სინქრონიზაცია</string>
     <string name="menu_dismiss_note">დამალვა / წაშლა</string>
     <string name="menu_bury_card">ბარათის დამალვა</string>
     <string name="menu_bury_note">შენიშვნის დამალვა</string>
@@ -164,7 +164,6 @@
     <string name="empty_deck">ეს დასტა ცარიელია</string>
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
-    <string name="empty_deck_add_note">ბარათის დამატება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
     <string name="studyoptions_empty">დასტა ცარიელია. დააჭირეთ + ნიშანს, რომ დაამატოთ ახალი კონტენტი.</string>
     <string name="studyoptions_limit_reached">დღიური სწავლის ლიმიტი მიღწეულია</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებული ადგილი. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
     <string name="continue_sync">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled">სინქრონიზაცია გაუქმებულია</string>
@@ -217,7 +218,7 @@
     <string name="read_write_permission_description">წვდომა არსებულ შენიშვნებთან, ბარათებთან, შენიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ბარათების საძიებო</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki-ბარათი</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s აქვს პრობლემა:<br/>%2$s</string>
     <string name="more_information">მეტი ინფორმაცია</string>
     <string name="no_field">\"{{%1$s}}\" ნაპოვნია, მაგრამ ველი \"%1$s\" არ არის</string>

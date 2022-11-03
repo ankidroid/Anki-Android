@@ -27,7 +27,6 @@ object LeakCanaryConfiguration {
     /**
      * Disable LeakCanary.
      */
-    @JvmStatic
     fun disable() {
         config = config.copy(
             dumpHeap = false,
@@ -42,7 +41,6 @@ object LeakCanaryConfiguration {
      * Sets the initial configuration for LeakCanary. This method can be used to match known library
      * leaks or leaks which have been already reported previously.
      */
-    @JvmStatic
     fun setInitialConfigFor(application: Application, knownMemoryLeaks: List<ReferenceMatcher> = emptyList()) {
         config = config.copy(referenceMatchers = AndroidReferenceMatchers.appDefaults + knownMemoryLeaks)
         // AppWatcher manual install if not already installed

@@ -110,7 +110,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         companion object {
             fun create(): KeyboardInputTestCardViewer {
-                sDisplayAnswer = false
+                displayAnswer = false
                 return KeyboardInputTestCardViewer()
             }
         }

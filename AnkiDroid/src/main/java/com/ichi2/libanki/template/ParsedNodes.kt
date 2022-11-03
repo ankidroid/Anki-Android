@@ -31,9 +31,8 @@ class ParsedNodes : ParsedNode {
 
     // Only used for testing
     @VisibleForTesting
-    @KotlinCleanup("fix ide issue")
     constructor(vararg nodes: ParsedNode?) {
-        mChildren = ArrayList(Arrays.asList(*nodes))
+        mChildren = ArrayList(listOf(*nodes))
     }
 
     @KotlinCleanup("simplify fun with any {}")
@@ -68,7 +67,7 @@ class ParsedNodes : ParsedNode {
 
     @KotlinCleanup("see if it can be removed if not simplify string and function")
     override fun toString(): String {
-        var t: String? = "new ParsedNodes(Arrays.asList("
+        var t: String? = "new ParsedNodes(listOf("
         for (child in mChildren) {
             t += child
         }
@@ -80,7 +79,6 @@ class ParsedNodes : ParsedNode {
          * @param nodes A list of nodes to put in a tree
          * @return The list of node, as compactly as possible.
          */
-        @JvmStatic
         fun create(nodes: List<ParsedNode>): ParsedNode {
             @KotlinCleanup("replace with when")
             return if (nodes.isEmpty()) {

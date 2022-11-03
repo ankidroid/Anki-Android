@@ -59,7 +59,7 @@
     </plurals>
     <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
-    <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
+    <string name="initializing_tts">Spouští se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
@@ -117,7 +117,7 @@
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního učení</string>
+    <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního studia</string>
     <string name="importing_collection">Importuje se kolekce&#8230;</string>
     <string name="import_media_count">Importují se multimediální soubory %1$d%%&#8230;</string>
     <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -138,6 +138,7 @@
     <string name="restore_backup_choose_another">Vybrat jinou</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_processing">Zpracovává se...</string>
@@ -188,9 +189,6 @@
     <string name="multimedia_editor_failed">Nepodařilo se otevřít multimediální editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Vítejte v AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid vyžaduje oprávnění k úložišti, které používáme výhradně pro ukládání vaší AnkiDroid kolekce, multimédií kartiček a záloh. Náš kód je otevřený, napsaný dobrovolníky a mají v něj důvěru miliony.\n\nPokud máte jakékoliv dotazy, nahlédněte prosím do naší příručky v aplikaci nebo navštivte naše fóra podpory.\n\nDěkujeme, že zkoušíte AnkiDroid!\n—AnkiDroid vývojový tým</string>
     <string name="mutimedia_editor_assertion_failed">Nastala neznámá chyba při zobrazování pokročilého editoru</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
@@ -277,4 +275,14 @@
     <string name="import_csv">Textový soubor (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nemůžete vytvořit podřízený balíček pro všechny balíčky</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

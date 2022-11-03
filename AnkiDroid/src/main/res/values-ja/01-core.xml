@@ -57,7 +57,7 @@
     <string name="studyoptions_new_total">新規カード:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
-    <string name="studyoptions_start">スタート</string>
+    <string name="studyoptions_start">学習開始</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
@@ -84,9 +84,9 @@
     <string name="type_answer_hint">答えを入力してください</string>
     <string name="show_answer">解答を表示</string>
     <string name="hide_answer">解答を非表示</string>
-    <string name="ease_button_again">もう一度</string>
+    <string name="ease_button_again">やり直し</string>
     <string name="ease_button_hard">難しい</string>
-    <string name="ease_button_good">普通</string>
+    <string name="ease_button_good">順調</string>
     <string name="ease_button_easy">簡単</string>
     <string name="studyoptions_congrats_undo">%s を元に戻す</string>
     <string name="menu_import">インポート</string>
@@ -159,7 +159,6 @@
     <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
-    <string name="empty_deck_add_note">カードを追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
@@ -172,6 +171,8 @@
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">同期が一時的に無効になっています</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
     <string name="sync_cancelled">同期がキャンセルされました</string>

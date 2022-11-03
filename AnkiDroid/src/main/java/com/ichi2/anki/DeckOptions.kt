@@ -19,7 +19,9 @@
 package com.ichi2.anki
 
 import android.app.AlarmManager
-import android.content.*
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.CheckBoxPreference
@@ -30,15 +32,15 @@ import android.text.TextUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask
 import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
+import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -50,52 +52,53 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
-import com.ichi2.utils.*
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.NamedJSONComparator
+import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
 @KotlinCleanup("IDE lint")
-@KotlinCleanup("All java.lang. methods")
 class DeckOptions :
     AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
-    private lateinit var mDeck: Deck
-    private lateinit var mPref: DeckPreferenceHack
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         @Suppress("Deprecation")
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptions: DeckOptions
+        val deckOptionsActivity: DeckOptions // TODO: rename the class to DeckOptionsActivity
             get() = this@DeckOptions
 
-        @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
         override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
-                mOptions = col.decks.confForDid(mDeck.getLong("id"))
+                mOptions = col.decks.confForDid(deck.getLong("id"))
 
-                mValues["name"] = mDeck.getString("name")
-                mValues["desc"] = mDeck.getString("desc")
-                mValues["deckConf"] = mDeck.getString("conf")
+                mValues["name"] = deck.getString("name")
+                mValues["desc"] = deck.getString("desc")
+                mValues["deckConf"] = deck.getString("conf")
                 // general
                 mValues["maxAnswerTime"] = mOptions.getString("maxTaken")
-                mValues["showAnswerTimer"] = java.lang.Boolean.toString(parseTimerValue(mOptions))
-                mValues["autoPlayAudio"] = java.lang.Boolean.toString(mOptions.getBoolean("autoplay"))
-                mValues["replayQuestion"] = java.lang.Boolean.toString(mOptions.optBoolean("replayq", true))
+                mValues["showAnswerTimer"] = parseTimerValue(mOptions).toString()
+                mValues["autoPlayAudio"] = mOptions.getBoolean("autoplay").toString()
+                mValues["replayQuestion"] = mOptions.optBoolean("replayq", true).toString()
                 // new
                 val newOptions = mOptions.getJSONObject("new")
                 mValues["newSteps"] = StepsPreference.convertFromJSON(newOptions.getJSONArray("delays"))
                 mValues["newGradIvl"] = newOptions.getJSONArray("ints").getString(0)
                 mValues["newEasy"] = newOptions.getJSONArray("ints").getString(1)
-                mValues["newFactor"] = Integer.toString(newOptions.getInt("initialFactor") / 10)
+                mValues["newFactor"] = (newOptions.getInt("initialFactor") / 10).toString()
                 mValues["newOrder"] = newOptions.getString("order")
                 mValues["newPerDay"] = newOptions.getString("perDay")
-                mValues["newBury"] = java.lang.Boolean.toString(newOptions.optBoolean("bury", true))
+                mValues["newBury"] = newOptions.optBoolean("bury", true).toString()
                 // rev
                 val revOptions = mOptions.getJSONObject("rev")
                 mValues["revPerDay"] = revOptions.getString("perDay")
@@ -103,12 +106,12 @@ class DeckOptions :
                 mValues["hardFactor"] = String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100)
                 mValues["revIvlFct"] = String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100)
                 mValues["revMaxIvl"] = revOptions.getString("maxIvl")
-                mValues["revBury"] = java.lang.Boolean.toString(revOptions.optBoolean("bury", true))
+                mValues["revBury"] = revOptions.optBoolean("bury", true).toString()
 
-                mValues["revUseGeneralTimeoutSettings"] = java.lang.Boolean.toString(revOptions.optBoolean("useGeneralTimeoutSettings", true))
-                mValues["revTimeoutAnswer"] = java.lang.Boolean.toString(revOptions.optBoolean("timeoutAnswer", false))
-                mValues["revTimeoutAnswerSeconds"] = Integer.toString(revOptions.optInt("timeoutAnswerSeconds", 6))
-                mValues["revTimeoutQuestionSeconds"] = Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60))
+                mValues["revUseGeneralTimeoutSettings"] = revOptions.optBoolean("useGeneralTimeoutSettings", true).toString()
+                mValues["revTimeoutAnswer"] = revOptions.optBoolean("timeoutAnswer", false).toString()
+                mValues["revTimeoutAnswerSeconds"] = revOptions.optInt("timeoutAnswerSeconds", 6).toString()
+                mValues["revTimeoutQuestionSeconds"] = revOptions.optInt("timeoutQuestionSeconds", 60).toString()
 
                 // lapse
                 val lapOptions = mOptions.getJSONObject("lapse")
@@ -118,13 +121,13 @@ class DeckOptions :
                 mValues["lapLeechThres"] = lapOptions.getString("leechFails")
                 mValues["lapLeechAct"] = lapOptions.getString("leechAction")
                 // options group management
-                mValues["currentConf"] = col.decks.getConf(mDeck.getLong("conf"))!!.getString("name")
+                mValues["currentConf"] = col.decks.getConf(deck.getLong("conf"))!!.getString("name")
                 // reminders
                 if (mOptions.has("reminder")) {
                     val reminder = mOptions.getJSONObject("reminder")
                     val reminderTime = reminder.getJSONArray("time")
 
-                    mValues["reminderEnabled"] = java.lang.Boolean.toString(reminder.getBoolean("enabled"))
+                    mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
                     mValues["reminderTime"] = String.format(
                         "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
                     )
@@ -135,15 +138,44 @@ class DeckOptions :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                @KotlinCleanup("Remove `val r` and access resources directly")
-                val r = this@DeckOptions.resources
-                UIUtils.showThemedToast(this@DeckOptions, r.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
+                UIUtils.showThemedToast(this@DeckOptions, this@DeckOptions.resources.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
                 finish()
             }
         }
 
         private fun parseTimerValue(options: DeckConfig): Boolean {
             return DeckConfig.parseTimerOpt(options, true)
+        }
+
+        fun confChangeHandler(timbering: String, block: Collection.() -> Unit) {
+            launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                preConfChange()
+                Timber.d(timbering)
+                try {
+                    withCol(block)
+                } finally {
+                    // need to call postConfChange in finally because if withCol{} throws an exception,
+                    // postConfChange would never get called and progress-bar will never get dismissed
+                    postConfChange()
+                }
+            }
+        }
+
+        fun preConfChange() {
+            val res = deckOptionsActivity.resources
+            progressDialog = StyledProgressDialog.show(
+                deckOptionsActivity as Context, null,
+                res?.getString(R.string.reordering_cards), false
+            )
+        }
+
+        fun postConfChange() {
+            cacheValues()
+            deckOptionsActivity.buildLists()
+            deckOptionsActivity.updateSummaries()
+            progressDialog.dismiss()
+            // Restart to reflect the new preference values
+            deckOptionsActivity.restartActivity()
         }
 
         inner class Editor : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
@@ -163,7 +195,9 @@ class DeckOptions :
                                 val oldOrder = mOptions.getJSONObject("new").getInt("order")
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder)
-                                    TaskManager.launchCollectionTask(CollectionTask.Reorder(mOptions), confChangeHandler())
+                                    confChangeHandler("doInBackground - reorder") {
+                                        sched.resortConf(mOptions)
+                                    }
                                 }
                                 mOptions.getJSONObject("new").put("order", value.toInt())
                             }
@@ -202,15 +236,18 @@ class DeckOptions :
                             "autoPlayAudio" -> mOptions.put("autoplay", value)
                             "replayQuestion" -> mOptions.put("replayq", value)
                             "desc" -> {
-                                mDeck.put("desc", value)
-                                col.decks.save(mDeck)
+                                deck.put("desc", value)
+                                col.decks.save(deck)
                             }
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
+                            // TODO: Extract out deckConf, confReset, remConf and confSetSubdecks to a function. They are overall similar.
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
-                                mOptions = col.decks.getConf(newConfId)!!
-                                TaskManager.launchCollectionTask(CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler())
+                                confChangeHandler("change Deck configuration") {
+                                    mOptions = decks.getConf(newConfId)!!
+                                    changeDeckConfiguration(deck, mOptions, this)
+                                }
                             }
                             "confRename" -> {
                                 val newName = value as String
@@ -219,20 +256,19 @@ class DeckOptions :
                                 }
                             }
                             "confReset" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(
-                                    CollectionTask.ConfReset(
-                                        mOptions
-                                    ),
-                                    confChangeHandler()
-                                )
+                                // reset configuration
+                                confChangeHandler("doInBackgroundConfReset") {
+                                    decks.restoreToDefault(mOptions)
+                                    save()
+                                }
                             }
                             "confAdd" -> {
                                 val newName = value as String
                                 if (!TextUtils.isEmpty(newName)) {
                                     // New config clones current config
                                     val id = col.decks.confId(newName, mOptions.toString())
-                                    mDeck.put("conf", id)
-                                    col.decks.save(mDeck)
+                                    deck.put("conf", id)
+                                    col.decks.save(deck)
                                 }
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
@@ -265,7 +301,22 @@ class DeckOptions :
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(CollectionTask.ConfSetSubdecks(mDeck, mOptions), confChangeHandler())
+                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                    preConfChange()
+                                    try {
+                                        withCol {
+                                            Timber.d("confSetSubdecks")
+                                            val children = col.decks.children(deck.getLong("id"))
+                                            for (childDid in children.values) {
+                                                val child = col.decks.get(childDid)
+                                                if (child.isDyn) continue
+                                                changeDeckConfiguration(deck, mOptions, col)
+                                            }
+                                        }
+                                    } finally {
+                                        postConfChange()
+                                    }
+                                }
                             }
                             "reminderEnabled" -> {
                                 val reminder = JSONObject()
@@ -377,8 +428,23 @@ class DeckOptions :
                 // Remove options group, asking user to confirm full sync if necessary
                 col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
-                TaskManager.launchCollectionTask(CollectionTask.ConfRemove(mOptions), confChangeHandler())
-                mDeck.put("conf", 1)
+                val conf = mOptions
+                confChangeHandler("Remove configuration") {
+                    // Note: We do the actual removing of the options group in the main thread so that we
+                    // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+
+                    // When a conf is deleted, all decks using it revert to the default conf.
+                    // Cards must be reordered according to the default conf.
+                    val order = conf.getJSONObject("new").getInt("order")
+                    val defaultOrder =
+                        col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
+                    if (order != defaultOrder) {
+                        conf.getJSONObject("new").put("order", defaultOrder)
+                        col.sched.resortConf(conf)
+                    }
+                    col.save()
+                }
+                deck.put("conf", 1)
             }
 
             private fun confChangeHandler(): ConfChangeHandler {
@@ -394,28 +460,9 @@ class DeckOptions :
     class ConfChangeHandler(deckPreferenceHack: DeckPreferenceHack) :
         TaskListenerWithContext<DeckPreferenceHack, Void?, Boolean?>(deckPreferenceHack) {
 
-        override fun actualOnPreExecute(context: DeckPreferenceHack) {
-            @Suppress("unused") val res = context.deckOptions.resources
-            context.progressDialog = StyledProgressDialog.show(
-                context.deckOptions as Context, null,
-                res?.getString(R.string.reordering_cards), false
-            )
-        }
+        override fun actualOnPreExecute(context: DeckPreferenceHack) = context.preConfChange()
 
-        @KotlinCleanup("Scope function")
-        override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) {
-            context.cacheValues()
-            context.deckOptions.buildLists()
-            context.deckOptions.updateSummaries()
-            context.progressDialog.dismiss()
-            // Restart to reflect the new preference values
-            context.deckOptions.restartActivity()
-        }
-    }
-
-    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
-        Timber.d("getSharedPreferences(name=%s)", name)
-        return mPref
+        override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) = context.postConfChange()
     }
 
     @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
@@ -442,19 +489,19 @@ class DeckOptions :
             return
         }
         val extras = intent.extras
-        mDeck = if (extras != null && extras.containsKey("did")) {
+        deck = if (extras != null && extras.containsKey("did")) {
             col.decks.get(extras.getLong("did"))
         } else {
             col.decks.current()
         }
         registerExternalStorageListener()
 
-        mPref = DeckPreferenceHack()
+        pref = DeckPreferenceHack()
         // #6068 - constructor can call finish()
         if (this.isFinishing) {
             return
         }
-        mPref.registerOnSharedPreferenceChangeListener(this)
+        pref.registerOnSharedPreferenceChangeListener(this)
 
         addPreferencesFromResource(R.xml.deck_options)
         if (isSchedV2) {
@@ -466,7 +513,7 @@ class DeckOptions :
         var title = resources.getString(R.string.deckpreferences_title)
         if (title.contains("XXX")) {
             title = try {
-                title.replace("XXX", mDeck.getString("name"))
+                title.replace("XXX", deck.getString("name"))
             } catch (e: JSONException) {
                 Timber.w(e)
                 title.replace("XXX", "???")
@@ -507,7 +554,7 @@ class DeckOptions :
     override fun updateSummaries() {
         val res = resources
         // for all text preferences, set summary as current database value
-        for (key in mPref.mValues.keys) {
+        for (key in pref.mValues.keys) {
             val pref = findPreference(key)
             if ("deckConf" == key) {
                 var groupName = optionsGroupName
@@ -526,20 +573,17 @@ class DeckOptions :
                 val lp = pref
                 if (lp.entry != null) lp.entry.toString() else ""
             } else {
-                mPref.getString(key, "")
+                this.pref.getString(key, "")
             }
             // update summary
-            @KotlinCleanup("Remove `val s` and use pref.summary?.toString()")
-            if (!mPref.mSummaries.containsKey(key)) {
-                val s = pref.summary
-                mPref.mSummaries[key] = if (s != null) pref.summary.toString() else null
+            if (!this.pref.mSummaries.containsKey(key)) {
+                this.pref.mSummaries[key] = pref.summary?.toString()
             }
-            val summ = mPref.mSummaries[key]
-            @KotlinCleanup("pref.summary = if ...")
-            if (summ != null && summ.contains("XXX")) {
-                pref.summary = summ.replace("XXX", value!!)
+            val summ = this.pref.mSummaries[key]
+            pref.summary = if (summ != null && summ.contains("XXX")) {
+                summ.replace("XXX", value!!)
             } else {
-                pref.summary = value
+                value
             }
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
@@ -555,27 +599,25 @@ class DeckOptions :
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
         val confValues = arrayOfNulls<String>(confs.size)
         val confLabels = arrayOfNulls<String>(confs.size)
-        @KotlinCleanup(".forEachIndexed")
-        for (i in confs.indices) {
-            val o = confs[i]
-            confValues[i] = o.getString("id")
-            confLabels[i] = o.getString("name")
+        confs.forEachIndexed { index, deckConfig ->
+            confValues[index] = deckConfig.getString("id")
+            confLabels[index] = deckConfig.getString("name")
         }
         deckConfPref.entries = confLabels
         deckConfPref.entryValues = confValues
-        deckConfPref.value = mPref.getString("deckConf", "0")
+        deckConfPref.value = pref.getString("deckConf", "0")
 
         val newOrderPref = findPreference("newOrder") as ListPreference
         newOrderPref.setEntries(R.array.new_order_labels)
         newOrderPref.setEntryValues(R.array.new_order_values)
-        newOrderPref.value = mPref.getString("newOrder", "0")
+        newOrderPref.value = pref.getString("newOrder", "0")
 
         val leechActPref = findPreference("lapLeechAct") as ListPreference
         leechActPref.setEntries(R.array.leech_action_labels)
         leechActPref.setEntryValues(R.array.leech_action_values)
-        leechActPref.value = mPref.getString(
+        leechActPref.value = pref.getString(
             "lapLeechAct",
-            Integer.toString(Consts.LEECH_SUSPEND)
+            Consts.LEECH_SUSPEND.toString()
         )
     }
 
@@ -597,7 +639,7 @@ class DeckOptions :
     private val optionsGroupCount: Int
         get() {
             var count = 0
-            val conf = mDeck.getLong("conf")
+            val conf = deck.getLong("conf")
             @KotlinCleanup("Join both if blocks")
             for (deck in col.decks.all()) {
                 if (deck.isDyn) {
@@ -615,7 +657,7 @@ class DeckOptions :
      */
     private val optionsGroupName: String
         get() {
-            val confId = mPref.getLong("deckConf", 0)
+            val confId = pref.getLong("deckConf", 0)
             return col.decks.getConf(confId)!!.getString("name")
         }
 
@@ -626,7 +668,7 @@ class DeckOptions :
     private val subdeckCount: Int
         get() {
             var count = 0
-            val did = mDeck.getLong("id")
+            val did = deck.getLong("id")
             val children = col.decks.children(did)
             for (childDid in children.values) {
                 val child = col.decks.get(childDid)

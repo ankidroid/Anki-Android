@@ -159,7 +159,6 @@
     <string name="empty_deck">Бу колода буш</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
     <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>
     <string name="studyoptions_limit_reached">Бүгенге өйрәнү үтәлде</string>
@@ -172,6 +171,8 @@
     <string name="sd_card_not_mounted">Хәтер картасы куелмаган</string>
     <string name="empty_cloze_warning">Бу язуны үзгәртеп, бушлыклар калдырыгыз. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизацияләргә</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Синхронизацияне кире кагыргамы?</string>
     <string name="continue_sync">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled">Синхронизация кире кагылган</string>

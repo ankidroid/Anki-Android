@@ -169,7 +169,6 @@
     <string name="empty_deck">Ova skupina je prazna</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ova skupina je prazna. Pritisnite tipku + kako biste dodali novi sadržaj.</string>
     <string name="studyoptions_limit_reached">Dostignuto dnevno ograničenje učenja</string>
@@ -182,6 +181,8 @@
     <string name="sd_card_not_mounted">Pohrana uređaja nije montirana</string>
     <string name="empty_cloze_warning">Uredi bilješku i dodaj cloze brisanja (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinkroniziraj</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Želite li prekinuti sinkronizaciju?</string>
     <string name="continue_sync">Nastavi sinkronizaciju</string>
     <string name="sync_cancelled">Sinkronizacija je otkazana</string>

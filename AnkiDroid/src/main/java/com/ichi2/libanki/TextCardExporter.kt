@@ -21,7 +21,7 @@ import java.util.*
 
 class TextCardExporter(col: Collection, did: DeckId?, includeHTML: Boolean) : Exporter(col, did) {
     init {
-        mIncludeHTML = includeHTML
+        this.includeHTML = includeHTML
     }
     constructor(col: Collection, includeHTML: Boolean) : this(col, null, includeHTML)
 

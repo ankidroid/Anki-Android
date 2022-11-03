@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">未学习</string>
     <string name="statistics_suspended">已暂停</string>
     <string name="statistics_buried">已搁置</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">重新学习</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">重新学习</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">学习</string>
     <string name="statistics_cram">强记模式</string>
-    <string name="stats_cards">卡片</string>
+    <string name="stats_cards" comment="Title to use in stats pages">卡片</string>
     <string name="stats_cards_intervals">卡片间隔</string>
     <string name="stats_cumulative_cards">累积卡片</string>
     <string name="stats_cumulative_answers">累积回答</string>

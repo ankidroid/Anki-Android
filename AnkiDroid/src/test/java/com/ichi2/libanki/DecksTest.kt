@@ -282,7 +282,6 @@ class DecksTest : RobolectricTest() {
 
     companion object {
         // Used in other class to populate decks.
-        @JvmField
         @Suppress("SpellCheckingInspection")
         val TEST_DECKS = arrayOf(
             "scxipjiyozczaaczoawo",

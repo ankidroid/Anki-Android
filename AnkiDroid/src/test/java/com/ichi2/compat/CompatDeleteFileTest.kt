@@ -35,7 +35,7 @@ class CompatDeleteFileTest(
     @Suppress("unused") private val unitTestDescription: String
 ) {
     companion object {
-        @JvmStatic
+        @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
         fun data(): Iterable<Array<Any>> = sequence {
             yield(arrayOf(CompatV21(), "CompatV21"))

@@ -42,6 +42,16 @@ object AnkiAssert {
         }
     }
 
+    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
+    // suspend variant of [assertDoesNotThrow]
+    suspend fun assertDoesNotThrowSuspend(block: suspend () -> Unit) {
+        try {
+            block()
+        } catch (e: Exception) {
+            throw AssertionError("method should not throw", e)
+        }
+    }
+
     fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
         try {
             r.run()
@@ -67,12 +77,10 @@ object AnkiAssert {
         assertListEquals(expected.toList(), actual)
     }
 
-    @JvmStatic
     fun without_unicode_isolation(s: String): String {
         return s.replace("\u2068", "").replace("\u2069", "")
     }
 
-    @JvmStatic
     @KotlinCleanup("scope function")
     fun checkRevIvl(c: Card, targetIvl: Int): Boolean {
         val minMax = SchedV2._fuzzIvlRange(targetIvl)

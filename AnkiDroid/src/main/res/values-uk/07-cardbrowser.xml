@@ -51,6 +51,12 @@
         <item quantity="many">%d картки показано</item>
         <item quantity="other">%d карт показано</item>
     </plurals>
+    <plurals name="card_browser_subtitle_notes_mode">
+        <item quantity="one">%d Запис показано </item>
+        <item quantity="few">%d Записів показано </item>
+        <item quantity="many">%d карт показано</item>
+        <item quantity="other">%d карт показано</item>
+    </plurals>
     <string name="card_browser_all_decks">Всі колоди</string>
     <string name="card_browser_delete_card">Видалити записи</string>
     <string name="card_browser_suspend_card">Призупинити картку</string>
@@ -97,6 +103,18 @@
     <string name="card_browser_search_all_decks">Шукати у всіх колодах</string>
     <string name="card_browser_unknown_deck_name">Невідома</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Скорочувати вміст</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="few">Export cards</item>
+        <item quantity="many">Export cards</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="few">Export notes</item>
+        <item quantity="many">Export notes</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d картку видалено</item>
         <item quantity="few">%d картки видалено</item>

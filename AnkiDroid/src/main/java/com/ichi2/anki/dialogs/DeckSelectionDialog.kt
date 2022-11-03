@@ -51,7 +51,6 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
-import java.util.Objects.requireNonNull
 
 /**
  * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
@@ -117,12 +116,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return arguments.getString(SUMMARY_MESSAGE)
     }
 
-    private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> {
-        return requireNonNull(arguments.getParcelableArrayList<SelectableDeck>(DECK_NAMES)) as ArrayList<SelectableDeck>
-    }
+    @Suppress("deprecation") // getParcelableArrayList
+    private fun getDeckNames(arguments: Bundle) =
+        arguments.getParcelableArrayList<SelectableDeck>(DECK_NAMES)!! as ArrayList<SelectableDeck>
 
-    private val title: String?
-        get() = requireNonNull(requireArguments().getString(TITLE))
+    private val title: String
+        get() = requireArguments().getString(TITLE)!!
 
     private fun adjustToolbar(dialogView: View, adapter: DecksArrayAdapter) {
         val toolbar: Toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar)
@@ -356,7 +355,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            @JvmStatic
             fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
                 val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
@@ -384,7 +382,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         /**
          * A dialog which handles selecting a deck
          */
-        @JvmStatic
         fun newInstance(title: String, summaryMessage: String?, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()

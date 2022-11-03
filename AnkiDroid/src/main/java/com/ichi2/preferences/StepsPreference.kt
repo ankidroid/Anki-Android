@@ -24,8 +24,9 @@ import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
+import com.ichi2.utils.stringIterable
+import org.json.JSONArray
+import org.json.JSONException
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
@@ -113,7 +114,6 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
          * @param a JSONArray representation of steps.
          * @return The steps as a space-separated string.
          */
-        @JvmStatic
         fun convertFromJSON(a: JSONArray): String {
             val sb = StringBuilder()
             for (s in a.stringIterable()) {
@@ -129,7 +129,6 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
          * @param steps String representation of steps.
          * @return The steps as a JSONArray or null if the steps are not valid.
          */
-        @JvmStatic
         fun convertToJSON(steps: String): JSONArray? {
             val stepsAr = JSONArray()
             val stepsTrim = steps.trim { it <= ' ' }

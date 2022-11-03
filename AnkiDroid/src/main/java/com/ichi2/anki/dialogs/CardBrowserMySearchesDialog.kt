@@ -102,7 +102,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         const val CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0 // list searches dialog
         const val CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1 // save searches dialog
         private var mySearchesDialogListener: MySearchesDialogListener? = null
-        @JvmStatic
+
         fun newInstance(
             savedFilters: HashMap<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,

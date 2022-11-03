@@ -19,7 +19,6 @@ import android.text.TextUtils
 
 object HtmlUtils {
     // #5188 - compat.fromHtml converts newlines into spaces.
-    @JvmStatic
     fun convertNewlinesToHtml(html: String?): String? {
         if (html == null) {
             return null
@@ -29,7 +28,6 @@ object HtmlUtils {
         return withoutWindowsLineEndings.replace("\n", "<br/>")
     }
 
-    @JvmStatic
     fun escape(html: String): String {
         return TextUtils.htmlEncode(html)
     }

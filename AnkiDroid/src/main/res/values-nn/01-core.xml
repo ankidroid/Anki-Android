@@ -164,7 +164,6 @@
     <string name="empty_deck">Denne kortstokken er tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Legg til kort</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Denne kortstokken er tom. Bruk +-knappen for å legge til nytt innhold.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Vil du avbryte synkroniseringen?</string>
     <string name="continue_sync">Fortsett synkronisering</string>
     <string name="sync_cancelled">Synkronisering Avbrutt</string>

@@ -18,19 +18,6 @@ package com.ichi2.utils
 object CollectionUtils {
 
     /**
-     * @param c A collection in which to add elements of it
-     * @param it An iterator returning things to add to C
-     * @param <T> Type of elements to copy from iterator to collection
-     */
-    @JvmStatic
-    @KotlinCleanup("replace with Kotlin extension: MutableCollections.addAll")
-    fun <T> addAll(c: MutableCollection<T>, it: Iterable<T>) {
-        for (elt in it) {
-            c.add(elt)
-        }
-    }
-
-    /**
      * Given an array: `[A, B, C]`, returns `[[A, B], [A, C], [B, C]]`
      * @return Each pair `[A, B]` for `A` occurring before `B` in the input list.
      */
@@ -42,5 +29,13 @@ object CollectionUtils {
                 }
             }
         }
+    }
+
+    /**
+     * Return the average of the elements in the iterable,
+     * or null if the iterable is empty.
+     */
+    fun <T> Iterable<T>.average(f: (T) -> Int): Double? {
+        return this.map(f).average().let { if (it.isNaN()) null else it }
     }
 }

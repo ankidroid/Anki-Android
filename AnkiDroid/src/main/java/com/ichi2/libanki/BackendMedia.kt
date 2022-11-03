@@ -48,9 +48,9 @@ class BackendMedia(val col: CollectionV16, server: Boolean) : Media(col, server)
     // markFileAdd
 
     // FIXME: this also provides trash count, but UI can not handle it yet
-    override fun check(): List<List<String>> {
+    override fun check(): MediaCheckResult {
         val out = col.backend.checkMedia()
-        return listOf(out.missingList, out.unusedList, listOf())
+        return MediaCheckResult(out.missingList, out.unusedList, listOf())
     }
 
     // FIXME: this currently removes files immediately, as the UI does not expose a way

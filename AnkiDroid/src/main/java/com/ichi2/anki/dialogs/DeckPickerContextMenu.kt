@@ -128,8 +128,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as AnkiActivity).dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
-                Timber.i("Empty deck selected")
-                (activity as DeckPicker).rebuildFiltered(deckId)
+                Timber.i("Rebuild deck selected")
+                launchCatchingTask { (activity as DeckPicker).rebuildFiltered(deckId) }
                 (activity as AnkiActivity).dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {

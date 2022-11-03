@@ -37,8 +37,7 @@ class AudioPlayerTest : RobolectricTest() {
     private lateinit var audioPlayer: AudioPlayer
     private lateinit var file: File
 
-    @Rule
-    @JvmField
+    @get:Rule
     var temporaryDirectory = TemporaryFolder()
 
     @Before

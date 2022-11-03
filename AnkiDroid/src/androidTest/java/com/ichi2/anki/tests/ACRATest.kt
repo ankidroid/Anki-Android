@@ -31,7 +31,6 @@ import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
-import org.acra.collections.ImmutableList
 import org.acra.config.ACRAConfigurationException
 import org.acra.config.LimitingReportAdministrator
 import org.acra.config.ToastConfiguration
@@ -71,8 +70,8 @@ class ACRATest : InstrumentedTest() {
         CrashReportService.setDebugACRAConfig(sharedPrefs)
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
-            CrashReportService.getAcraCoreConfigBuilder().build().logcatArguments().toTypedArray(),
-            ImmutableList(*mDebugLogcatArguments).toTypedArray()
+            CrashReportService.acraCoreConfigBuilder.build().logcatArguments.toTypedArray(),
+            mDebugLogcatArguments
         )
         verifyDebugACRAPreferences()
     }
@@ -147,12 +146,12 @@ class ACRATest : InstrumentedTest() {
         // one send should work
         val crashData = CrashReportDataFactory(
             testContext,
-            CrashReportService.getAcraCoreConfigBuilder().build()
+            CrashReportService.acraCoreConfigBuilder.build()
         ).createCrashData(ReportBuilder().exception(crash))
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
-                CrashReportService.getAcraCoreConfigBuilder().build(),
+                CrashReportService.acraCoreConfigBuilder.build(),
                 crashData
             )
         )
@@ -161,7 +160,7 @@ class ACRATest : InstrumentedTest() {
         assertFalse(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
-                CrashReportService.getAcraCoreConfigBuilder().build(),
+                CrashReportService.acraCoreConfigBuilder.build(),
                 crashData
             )
         )
@@ -173,7 +172,7 @@ class ACRATest : InstrumentedTest() {
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
-                CrashReportService.getAcraCoreConfigBuilder().build(),
+                CrashReportService.acraCoreConfigBuilder.build(),
                 crashData
             )
         )
@@ -236,8 +235,8 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertDialogEnabledStatus(message: String, isEnabled: Boolean) {
-        val config = CrashReportService.getAcraCoreConfigBuilder().build()
-        for (configuration in config.pluginConfigurations()) {
+        val config = CrashReportService.acraCoreConfigBuilder.build()
+        for (configuration in config.pluginConfigurations) {
             // Make sure the dialog is set to pop up
             if (configuration.javaClass.toString().contains("Dialog")) {
                 assertThat(message, configuration.enabled(), equalTo(isEnabled))
@@ -247,8 +246,8 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertToastIsEnabled() {
-        val config = CrashReportService.getAcraCoreConfigBuilder().build()
-        for (configuration in config.pluginConfigurations()) {
+        val config = CrashReportService.acraCoreConfigBuilder.build()
+        for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertThat("Toast should be enabled", configuration.enabled(), equalTo(true))
             }
@@ -257,12 +256,12 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertToastMessage(@StringRes res: Int) {
-        val config = CrashReportService.getAcraCoreConfigBuilder().build()
-        for (configuration in config.pluginConfigurations()) {
+        val config = CrashReportService.acraCoreConfigBuilder.build()
+        for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertEquals(
                     mApp!!.resources.getString(res),
-                    (configuration as ToastConfiguration).text()
+                    (configuration as ToastConfiguration).text
                 )
                 assertTrue("Toast should be enabled", configuration.enabled())
             }

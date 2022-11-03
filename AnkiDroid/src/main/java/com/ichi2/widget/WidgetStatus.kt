@@ -15,7 +15,6 @@
 package com.ichi2.widget
 
 import android.content.Context
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.MetaDB
@@ -42,7 +41,6 @@ object WidgetStatus {
      *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     @Suppress("deprecation") // #7108: AsyncTask
-    @JvmStatic
     fun update(context: Context?) {
         val preferences = AnkiDroidApp.getSharedPrefs(context)
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
@@ -58,7 +56,6 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    @JvmStatic
     @KotlinCleanup("make context non-null")
     fun fetchSmall(context: Context?): IntArray {
         return MetaDB.getWidgetSmallStatus(context!!)

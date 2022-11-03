@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.servicelayer.DeckService.deckExists
@@ -31,7 +32,9 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.displayKeyboard
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -50,15 +53,21 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     private val col
         get() = CollectionHelper.instance.getCol(context)!!
 
-    fun showFilteredDeckDialog() {
+    suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        val names = col.decks.allNames()
-        var n = 1
-        val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
-        while (names.contains(namePrefix + n)) {
-            n++
+        mInitialDeckName = withCol {
+            if (!BackendFactory.defaultLegacySchema) {
+                newBackend.getOrCreateFilteredDeck(did = 0).name
+            } else {
+                val names = decks.allNames()
+                var n = 1
+                val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
+                while (names.contains(namePrefix + n)) {
+                    n++
+                }
+                namePrefix + n
+            }
         }
-        mInitialDeckName = namePrefix + n
         showDialog()
     }
 

@@ -31,24 +31,20 @@ import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.assertThrowsSubclass
-import com.ichi2.utils.JSONArray
+import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.empty
-import org.hamcrest.Matchers.emptyString
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.*
+import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
-import java.lang.Exception
-import java.util.*
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
-    @JvmField
+    @JvmField // required for Parameter
     @ParameterizedRobolectricTestRunner.Parameter
     var schedVersion = 0
     @Before
@@ -201,26 +197,26 @@ class ReviewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[0], reviewer.mCurrentCard!!)
+        equalFirstField(cards[0], reviewer.currentCard!!)
         reviewer.answerCard(Consts.BUTTON_ONE)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[1], reviewer.mCurrentCard!!)
+        equalFirstField(cards[1], reviewer.currentCard!!)
         reviewer.answerCard(Consts.BUTTON_ONE)
         waitForAsyncTasksToComplete()
 
         undo(reviewer)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[1], reviewer.mCurrentCard!!)
+        equalFirstField(cards[1], reviewer.currentCard!!)
         reviewer.answerCard(col.sched.goodNewButton)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[2], reviewer.mCurrentCard!!)
+        equalFirstField(cards[2], reviewer.currentCard!!)
         time.addM(2)
         reviewer.answerCard(col.sched.goodNewButton)
         advanceRobolectricLooperWithSleep()
-        equalFirstField(cards[0], reviewer.mCurrentCard!!) // This failed in #6898 because this card was not in the queue
+        equalFirstField(cards[0], reviewer.currentCard!!) // This failed in #6898 because this card was not in the queue
     }
 
     @Test
@@ -262,7 +258,7 @@ class ReviewerTest : RobolectricTest() {
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
         reviewer.toggleWhiteboard()
 
-        assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard)
+        assumeTrue("Whiteboard should now be enabled", reviewer.prefWhiteboard)
 
         advanceRobolectricLooperWithSleep()
     }
@@ -281,7 +277,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun assertCurrentOrdIsNot(r: Reviewer, @Suppress("SameParameterValue") i: Int) {
         waitForAsyncTasksToComplete()
-        val ord = r.mCurrentCard!!.ord
+        val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
     }
@@ -319,7 +315,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun assertCurrentOrdIs(r: Reviewer, i: Int) {
         waitForAsyncTasksToComplete()
-        val ord = r.mCurrentCard!!.ord
+        val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, equalTo(i))
     }
@@ -409,7 +405,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // required for initParameters
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
@@ -420,7 +416,6 @@ class ReviewerTest : RobolectricTest() {
             return startReviewer(testClass, Reviewer::class.java)
         }
 
-        @JvmStatic
         fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T {
             val reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
             waitForAsyncTasksToComplete()

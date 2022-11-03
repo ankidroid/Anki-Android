@@ -124,6 +124,7 @@
     <string name="restore_backup_choose_another">Başka seç</string>
     <string name="dialog_cancel">İptal</string>
     <string name="dialog_ok">Tamam</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Hayır</string>
     <string name="dialog_continue">Devam Et</string>
     <string name="dialog_processing">İşlem yapılıyor...</string>
@@ -172,9 +173,6 @@
     <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid\'e Hoşgeldiniz!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid, yalnızca AnkiDroid koleksiyonunuzu, flash kart ortamınızı ve yedeklerinizi depolamak için depolama izni gerektirir. Kodumuz açık kaynaklıdır, gönüllüler tarafından yazılmıştır ve milyonlarca kişi tarafından güvenilmektedir.\n\nHerhangi bir sorunuz varsa, lütfen uygulama içi kılavuzumuza erişin veya destek forumlarımızı ziyaret edin.\n\nAnkiDroid\'i denediğiniz için teşekkür ederiz!\n— AnkiDroid Geliştirme Ekibi</string>
     <string name="mutimedia_editor_assertion_failed">Gelişmiş Düzenleyici görüntülenirken bilinmeyen bir hata oluştu</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
@@ -209,7 +207,7 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Gerekli depolama izni eksik. Lütfen depolama izni verin ve ardından işleminizi yeniden deneyin.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Kart Tarayıcı Görünümü yüklenemedi</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Kart Tarayıcısı Görünümü yüklenemedi</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Hatırlatıcılar planlanamadı</string>
     <string name="boot_service_too_many_notifications">Çok fazla hatırlatıcı planlandı. Bazıları görünmeyecek</string>
@@ -246,7 +244,7 @@
         <item quantity="one">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
         <item quantity="other">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Bağlantınız ölçülü. Veri aktarımı para yazabilir</string>
     <string name="deck_picker_new">Bu destede bugün görülecek yeni kart sayısı</string>
     <string name="deck_picker_rev">Bu destede bugün vakti ğeçen yeni kart sayısı</string>
     <string name="deck_picker_lrn">Bu destede öğrenilen kart sayısı.</string>
@@ -256,7 +254,17 @@
     <string name="deck_picker_counts">Bugün bakılacak kart sayısını içeren deste genel görünüm sayfasını açın.</string>
     <string name="import_deck_package">Deste paketi (.apkg)</string>
     <string name="import_collection_package">Koleksiyon paketi (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Metin dosyası (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Bütün desteler için bir altdeste oluşturamazsınız</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

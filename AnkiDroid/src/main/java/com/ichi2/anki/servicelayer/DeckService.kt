@@ -23,7 +23,6 @@ import com.ichi2.libanki.Utils
 import java.util.*
 
 object DeckService {
-    @JvmStatic
     fun shouldShowDefaultDeck(col: Collection): Boolean =
         defaultDeckHasCards(col) || hasChildren(col, Consts.DEFAULT_DECK_ID)
 
@@ -31,7 +30,6 @@ object DeckService {
     private fun hasChildren(col: Collection, did: DeckId) =
         col.decks.children(did).size > 0
 
-    @JvmStatic
     fun defaultDeckHasCards(col: Collection) =
         col.db.queryScalar("select 1 from cards where did = 1") != 0
 
@@ -44,7 +42,6 @@ object DeckService {
      * @param did Id of the deck to search
      * @return the number of cards in the supplied deck and child decks
      */
-    @JvmStatic
     fun countCardsInDeckTree(col: Collection, did: DeckId): Int {
         val children: TreeMap<String, Long> = col.decks.children(did)
         val dids = LongArray(children.size + 1)

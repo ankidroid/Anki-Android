@@ -46,7 +46,6 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
-import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
@@ -55,6 +54,7 @@ import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONException
 import org.junit.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
@@ -82,8 +82,7 @@ open class RobolectricTest : CollectionGetter {
         return true
     }
 
-    @Rule
-    @JvmField
+    @get:Rule
     val mTaskScheduler = TaskSchedulerRule()
 
     @Before
@@ -217,7 +216,6 @@ open class RobolectricTest : CollectionGetter {
         private var mBackground = true
 
         // Robolectric needs a manual advance with the new PAUSED looper mode
-        @JvmStatic
         fun advanceRobolectricLooper() {
             if (!mBackground) {
                 return
@@ -244,7 +242,6 @@ open class RobolectricTest : CollectionGetter {
         }
 
         // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
-        @JvmStatic
         fun advanceRobolectricLooperWithSleep() {
             if (!mBackground) {
                 return
@@ -259,12 +256,12 @@ open class RobolectricTest : CollectionGetter {
         }
 
         /** This can probably be implemented in a better manner  */
-        @JvmStatic
+        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun waitForAsyncTasksToComplete() {
             advanceRobolectricLooperWithSleep()
         }
 
-        @JvmStatic
+        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(testClass: RobolectricTest, clazz: Class<T>?, i: Intent?): T {
             val controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible()
@@ -576,7 +573,35 @@ open class RobolectricTest : CollectionGetter {
                 )
             }
             // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
-            RustBackendLoader.ensureSetup(backendPath)
+            try {
+                RustBackendLoader.ensureSetup(backendPath)
+            } catch (e: UnsatisfiedLinkError) {
+                // java.lang.UnsatisfiedLinkError: /Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib:
+                // dlopen(/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib, 0x0001):
+                // tried: '/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib'
+                // (code signature in <3C55B9B3-1E8A-33F4-A43E-173BDB074DC5>
+                // '/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib'
+                // not valid for use in process: library load disallowed by system policy)
+
+                // Dialog with message:
+                // “librsdroid-0-1-11.dylib” can’t be opened because Apple cannot check it for malicious software.
+                // This software needs to be updated. Contact the developer for more information.
+                // [Show in Finder] [OK]
+                if (e.message.toString().contains("library load disallowed by system policy")) {
+                    throw IllegalStateException(
+                        """library load disallowed by system policy.
+"To fix:
+* Run the test such that the "developer cannot be verified" message appears
+* Press "OK" on the "Apple cannot check it for malicious software" prompt
+* Run the Test Again
+* Apple Menu - System Preferences - Security & Privacy - General (tab) - Unlock Settings - Select Allow Anyway". 
+    Button is underneath the text: "librsdroid.dylib was blocked from use because it is not from an identified developer"
+* Press "OK" on the "Apple cannot check it for malicious software" prompt
+* Test should execute correctly"""
+                    )
+                }
+                throw e
+            }
         } else {
             // default (no env variable): Extract the backend testing lib from the jar
             try {

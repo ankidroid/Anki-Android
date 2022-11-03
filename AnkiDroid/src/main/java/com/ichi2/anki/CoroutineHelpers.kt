@@ -16,13 +16,19 @@
 
 package com.ichi2.anki
 
+import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
+import android.view.WindowManager.BadTokenException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
+import com.afollestad.materialdialogs.callbacks.onDismiss
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.*
@@ -38,12 +44,6 @@ import kotlin.coroutines.suspendCoroutine
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  *
- * TODO: This seems to be similar to [com.ichi2.async.catchingLifecycleScope],
- *   perhaps put the two methods together?
- *
- * TODO: The try/except block here catches CancellationException, is this right?
- *   If it is, add a comment explaining why.
- *
  * TODO: `Throwable.getLocalizedMessage()` might be null, and `BackendException` constructor
  *   accepts a null message, so `exc.localizedMessage!!` is probably dangerous.
  *   If not, add a comment explaining why, or refactor to have a method that returns
@@ -53,23 +53,52 @@ suspend fun <T> FragmentActivity.runCatchingTask(
     errorMessage: String? = null,
     block: suspend () -> T?
 ): T? {
-    val extraInfo = errorMessage ?: ""
     try {
         return block()
-    } catch (exc: CancellationException) {
-        // do nothing
+    } catch (cancellationException: CancellationException) {
+        throw cancellationException // CancellationException should be re-thrown to propagate it to the parent coroutine
     } catch (exc: BackendInterruptedException) {
-        Timber.e(exc, extraInfo)
+        Timber.e(exc, errorMessage)
         exc.localizedMessage?.let { showSnackbar(it) }
     } catch (exc: BackendException) {
-        Timber.e(exc, extraInfo)
-        showError(this, exc.localizedMessage!!)
+        Timber.e(exc, errorMessage)
+        showError(this, exc.localizedMessage!!, exc)
     } catch (exc: Exception) {
-        Timber.e(exc, extraInfo)
-        showError(this, exc.toString())
+        Timber.e(exc, errorMessage)
+        showError(this, exc.toString(), exc)
     }
     return null
 }
+
+/**
+ * Returns CoroutineExceptionHandler which catches any uncaught exceptions and reports it to user
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ *
+ * Typically you'll want to use [launchCatchingTask] instead; this routine is mainly useful for
+ * launching tasks in an activity that is not a lifecycleOwner.
+ *
+ * @return [CoroutineExceptionHandler]
+ * @see [FragmentActivity.launchCatchingTask]
+ */
+fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = null) =
+    CoroutineExceptionHandler { _, throwable ->
+        // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
+        when (throwable) {
+            is BackendInterruptedException -> {
+                Timber.e(throwable, errorMessage)
+                throwable.localizedMessage?.let { activity.showSnackbar(it) }
+            }
+            is BackendException -> {
+                Timber.e(throwable, errorMessage)
+                showError(activity, throwable.localizedMessage!!, throwable)
+            }
+            else -> {
+                Timber.e(throwable, errorMessage)
+                showError(activity, throwable.toString(), throwable)
+            }
+        }
+    }
 
 /**
  * Calls [runBlocking] while catching errors with [runCatchingTask].
@@ -106,12 +135,23 @@ fun Fragment.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit
 ): Job = requireActivity().launchCatchingTask(errorMessage, block)
 
-private fun showError(context: Context, msg: String) {
-    AlertDialog.Builder(context)
-        .setTitle(R.string.vague_error)
-        .setMessage(msg)
-        .setPositiveButton(R.string.dialog_ok) { _, _ -> }
-        .show()
+private fun showError(context: Context, msg: String, exception: Throwable) {
+    try {
+        MaterialDialog(context).show {
+            title(R.string.vague_error)
+            message(text = msg)
+            positiveButton(R.string.dialog_ok)
+            onDismiss {
+                CrashReportService.sendExceptionReport(
+                    exception,
+                    origin = context::class.java.simpleName
+                )
+            }
+        }
+    } catch (ex: BadTokenException) {
+        // issue 12718: activity provided by `context` was not running
+        Timber.w(ex, "unable to display error dialog")
+    }
 }
 
 /** In most cases, you'll want [AnkiActivity.withProgress]
@@ -138,6 +178,9 @@ suspend fun <T> Backend.withProgress(
 /**
  * Run the provided operation, showing a progress window until it completes.
  * Progress info is polled from the backend.
+ *
+ * Starts the progress dialog after 600ms so that quick operations don't just show
+ * flashes of a dialog.
  */
 suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
@@ -165,6 +208,9 @@ suspend fun <T> FragmentActivity.withProgress(
 /**
  * Run the provided operation, showing a progress window with the provided
  * message until the operation completes.
+ *
+ * Starts the progress dialog after 600ms so that quick operations don't just show
+ * flashes of a dialog.
  */
 suspend fun <T> FragmentActivity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
@@ -217,7 +263,7 @@ private suspend fun monitorProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
 ) {
-    var state = ProgressContext(Progress.getDefaultInstance())
+    val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
         state.progress = backend.latestProgress()
         state.extractProgress()
@@ -262,16 +308,32 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
         return true
     }
     return suspendCoroutine { coroutine ->
-        AlertDialog.Builder(this)
-            // generic message
-            .setMessage(col.tr.deckConfigWillRequireFullSync())
-            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+        MaterialDialog(this).show {
+            message(text = col.tr.deckConfigWillRequireFullSync()) // generic message
+            positiveButton(R.string.dialog_ok) {
                 col.modSchemaNoCheck()
                 coroutine.resume(true)
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                coroutine.resume(false)
-            }
-            .show()
+            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+            onCancel { coroutine.resume(false) }
+        }
     }
+}
+
+suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
+    if (withCol { schemaChanged() }) {
+        return true
+    }
+    val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
+        MaterialDialog(this).show {
+            message(text = TR.deckConfigWillRequireFullSync())
+            positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
+            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+            onCancel { coroutine.resume(false) }
+        }
+    }
+    if (hasAcceptedSchemaChange) {
+        withCol { modSchemaNoCheck() }
+    }
+    return hasAcceptedSchemaChange
 }

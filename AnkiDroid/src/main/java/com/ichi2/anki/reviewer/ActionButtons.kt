@@ -78,11 +78,9 @@ class ActionButtons(reviewerUi: ReviewerUi) {
     }
 
     companion object {
-        @JvmField
         @IdRes
         val RES_FLAG = R.id.action_flag
 
-        @JvmField
         @IdRes
         val RES_MARK = R.id.action_mark_card
     }

@@ -174,7 +174,6 @@
     <string name="empty_deck">Tento balíček je prázdny</string>
     <string name="search_deck" comment="Deck search for selecting it">Vyhľadávanie v balíčku</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Pridať kartičku</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
     <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>
     <string name="studyoptions_limit_reached">Denný limit učenia bol dosiahnutý</string>
@@ -187,6 +186,8 @@
     <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
     <string name="empty_cloze_warning">Upraviť túto poznámku a pridať doplňovačku. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizácia</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Chcete prerušiť synchronizáciu?</string>
     <string name="continue_sync">Pokračovať v synchronizácii</string>
     <string name="sync_cancelled">Synchronizácia zrušená</string>

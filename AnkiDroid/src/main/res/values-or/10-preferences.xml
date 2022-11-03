@@ -132,7 +132,7 @@
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_title" maxLength="41">ମିଟର ହେଉଥିବା ସଂଯୋଜନାଗୁଡ଼ିକରେ ସିଙ୍କ୍ କରିବାର ଅନୁମତି ଦେବା</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">ଥିମ୍</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
@@ -141,7 +141,7 @@
     <string name="override_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ ପ୍ରୟୋଗତା</string>
     <string name="language" maxLength="41">ଭାଷା</string>
     <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
-    <string name="notification_pref" maxLength="41">ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକ</string>
+    <string name="notification_pref" maxLength="41">ଵିଜ୍ଞପ୍ତି</string>
     <string name="notification_pref_title" maxLength="41">କେବେ ସୂଚିତ କରାଯିବ</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ</string>
     <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ ଥିଲେ</string>
@@ -196,7 +196,7 @@
     <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
     <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
     <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
-    <string name="custom_buttons_setting_menu_only">କେବଳ ମେନୁ</string>
+    <string name="custom_buttons_setting_menu_only">କେଵଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
@@ -225,13 +225,24 @@
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">ଗଣନର ସଠିକତା</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">ଅନୁକରଣର ପୁନରାବୃତ୍ତି ସଂଖ୍ୟା</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="custom_sync_server_enable_summary">ଯଦି ଆପଣ ମାଲିକାନା AnkiWeb ସେବା ବ୍ୟବହାର କରିବାକୁ ଚାହୁଁନାହାଁନ୍ତି ତେବେ ଆପଣ ଏଠାରେ ଏକ ବିକଳ୍ପ ସର୍ଭର ନିର୍ଦ୍ଦିଷ୍ଟ କରିପାରିବେ</string>
+    <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ଵ୍ୟଵହାର ହୋଇନାହିଁ</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">ସଂଗ୍ରହ: %1$s\nମିଡ଼ିଆ: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">ଡିଫଲ୍ଟ</string>
+    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own servers for synchronization.
+        You may specify either collection or media server, or both.
+        If not set, the default AnkiWeb servers will be used instead.
+        For example, you could use the sync server built into Anki
+        Desktop to sync the collection when you only have a local network,
+        and AnkiWeb to sync media when you have general internet access.
+        <a href="%s">Learn more</a>
+        <br>
+        <br>Note: unlike in previous AnkiDroid versions,
+        you must specify the full custom sync URL,
+        for example: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">ସିଙ୍କ୍ url</string>
-    <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
-    <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <!-- Key Bindings -->
     <string name="keyboard">କୀବୋର୍ଡ୍</string>
     <string name="bluetooth">Bluetooth</string>
@@ -305,7 +316,7 @@
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ବିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ଵିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_reminders_time" maxLength="41">…ରେ ମନେ ପକାନ୍ତୁ</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
@@ -345,10 +356,10 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">ପ୍ରାୟୋଗିକ</string>
     <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
-    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ବ୍ୟବହାର କରିବା</string>
+    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ଵ୍ୟଵହାର କରିବା</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>

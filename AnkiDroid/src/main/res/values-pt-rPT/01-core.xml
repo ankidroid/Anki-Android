@@ -164,7 +164,6 @@
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Adicionar ficha</string>
     <string name="invalid_deck_name">Nome inválido do baralho</string>
     <string name="studyoptions_empty">Este baralho está vazio. Toque no botão \"+\" para adicionar novo conteúdo.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="empty_cloze_warning">Editar esta nota e adicionar alguns apagamentos de cloze. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Deseja cancelar a sincronização?</string>
     <string name="continue_sync">Continuar sincronização</string>
     <string name="sync_cancelled">Sincronização cancelada</string>

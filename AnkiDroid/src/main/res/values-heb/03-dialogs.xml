@@ -139,6 +139,7 @@
     <string name="restore_backup_choose_another">אחר</string>
     <string name="dialog_cancel">ביטול</string>
     <string name="dialog_ok">אישור</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">לא</string>
     <string name="dialog_continue">המשך</string>
     <string name="dialog_processing">Processing...</string>
@@ -189,9 +190,6 @@
     <string name="multimedia_editor_failed">נכשל בפתיחת עורך מדיה.</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">הרשאת הקלטת שמע נדחתה</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">ברוך בואך ל־AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid דורש הרשאת אחסון, שבה הוא משתמש באופן בלעדי כדי לאחסן את אוסף ה-AnkiDroid שלך, מדיה של כרטיסי פלאש וגיבויים. הקוד שלנו הוא קוד פתוח, נכתב על ידי מתנדבים ומיליונים מהימנים בו.\n\nאם יש לך שאלות, אנא גש למדריך שלנו בתוך האפליקציה או בקר בפורומי התמיכה שלנו.\n\nתודה שניסית את AnkiDroid!\n— צוות הפיתוח של AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">אירעה שגיאה לא ידועה בהצגת העורך המתקדם</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">שדרוג ל־AnkiDroid</string>
@@ -278,4 +276,14 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

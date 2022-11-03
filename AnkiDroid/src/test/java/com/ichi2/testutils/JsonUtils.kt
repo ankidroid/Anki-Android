@@ -16,9 +16,9 @@
 
 package com.ichi2.testutils
 
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import org.json.JSONArray
 import org.json.JSONException
+import org.json.JSONObject
 import org.json.JSONStringer
 
 object JsonUtils {
@@ -27,14 +27,12 @@ object JsonUtils {
      * COULD_BE_BETTER: This would be much better as a Matcher for JSON
      * COULD_BE_BETTER: Only handles one level of ordering
      */
-    @JvmStatic
     fun JSONObject.toOrderedString(): String {
         val stringer = JSONStringer()
         writeTo(stringer)
         return stringer.toString()
     }
 
-    @JvmStatic
     fun JSONArray.toOrderedString(): String {
         val stringer = JSONStringer()
         writeTo(stringer)
@@ -58,7 +56,7 @@ object JsonUtils {
     }
 
     private fun JSONObject.iterateEntries() = sequence {
-        for (k in this@iterateEntries) {
+        for (k in this@iterateEntries.keys()) {
             yield(Pair(k, this@iterateEntries.get(k)))
         }
     }

@@ -22,10 +22,10 @@ import com.ichi2.async.CollectionTask.Companion.nonTaskUndo
 import com.ichi2.libanki.*
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
-import com.ichi2.utils.JSONArray
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
+import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,7 +42,7 @@ import kotlin.test.assertNull
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class AbstractSchedTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField
+    @JvmField // required for Parameter
     var schedVersion = 0
     @Before
     override fun setUp() {
@@ -521,7 +521,7 @@ mw.col.sched.extendLimits(1, 0)
     companion object {
         @Suppress("unused")
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
-        @JvmStatic
+        @JvmStatic // required for initParameters
         @KotlinCleanup("fix array init")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2

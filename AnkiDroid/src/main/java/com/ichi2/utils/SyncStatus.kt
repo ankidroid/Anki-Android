@@ -16,21 +16,30 @@
 
 package com.ichi2.utils
 
+import android.content.Context
+import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.libanki.Collection
 import net.ankiweb.rsdroid.BackendFactory
 
 enum class SyncStatus {
-    INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED;
+    INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED,
+    /**
+     * Scope storage migration is ongoing. Sync should be disabled.
+     */
+    ONGOING_MIGRATION;
 
     companion object {
         private var sPauseCheckingDatabase = false
         private var sMarkedInMemory = false
 
-        @JvmStatic
-        fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus {
+        fun getSyncStatus(col: Collection, context: Context, auth: SyncAuth?): SyncStatus {
+            if (userMigrationIsInProgress(context)) {
+                return ONGOING_MIGRATION
+            }
             if (isDisabled) {
                 return BADGE_DISABLED
             }
@@ -64,12 +73,6 @@ enum class SyncStatus {
                 val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
-        val isLoggedIn: Boolean
-            get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-                val hkey = preferences.getString("hkey", "")
-                return hkey != null && hkey.length != 0
-            }
 
         /** Whether data has been changed - to be converted to Rust  */
         fun hasDatabaseChanges(): Boolean {
@@ -82,18 +85,16 @@ enum class SyncStatus {
                 return
             }
             sMarkedInMemory = true
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", true).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit { putBoolean("changesSinceLastSync", true) }
         }
 
         /** To be converted to Rust  */
         @KotlinCleanup("Convert these to @RustCleanup")
-        @JvmStatic
         fun markSyncCompleted() {
             sMarkedInMemory = false
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", false).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit { putBoolean("changesSinceLastSync", false) }
         }
 
-        @JvmStatic
         fun ignoreDatabaseModification(runnable: Runnable) {
             sPauseCheckingDatabase = true
             try {

@@ -24,7 +24,6 @@ import androidx.annotation.UiThread
 
 object WebViewDebugging {
     private var sHasSetDataDirectory = false
-    @JvmStatic
     @UiThread
     fun initializeDebugging(sharedPrefs: SharedPreferences) {
         // DEFECT: We might be able to cache this value: check what happens on WebView Renderer crash
@@ -40,14 +39,12 @@ object WebViewDebugging {
     }
 
     /** Throws IllegalStateException if a WebView has been initialized  */
-    @JvmStatic
     @RequiresApi(api = Build.VERSION_CODES.P)
     fun setDataDirectorySuffix(suffix: String) {
         WebView.setDataDirectorySuffix(suffix)
         sHasSetDataDirectory = true
     }
 
-    @JvmStatic
     fun hasSetDataDirectory(): Boolean {
         // Implicitly truth requires API >= P
         return sHasSetDataDirectory

@@ -37,7 +37,6 @@ class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): DeckPickerNoSpaceLeftDialog {
             return DeckPickerNoSpaceLeftDialog()
         }

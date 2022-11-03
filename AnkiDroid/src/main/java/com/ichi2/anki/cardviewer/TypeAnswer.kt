@@ -26,8 +26,9 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
-import com.ichi2.utils.JSONArray
+import com.ichi2.utils.jsonObjectIterable
 import org.intellij.lang.annotations.Language
+import org.json.JSONArray
 import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -227,11 +228,9 @@ class TypeAnswer(
     }
 
     companion object {
-        @JvmField
         /** Regular expression in card data for a 'type answer' after processing has occurred */
         val PATTERN: Pattern = Pattern.compile("\\[\\[type:(.+?)]]")
 
-        @JvmStatic
         fun createInstance(preferences: SharedPreferences): TypeAnswer {
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
@@ -250,7 +249,6 @@ class TypeAnswer(
          * @param answer The content of the field the text typed by the user is compared to.
          * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
          */
-        @JvmStatic
         fun cleanCorrectAnswer(answer: String?): String {
             if (answer.isNullOrEmpty()) return ""
 

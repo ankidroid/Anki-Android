@@ -31,10 +31,11 @@ import com.ichi2.libanki.Consts.DECK_STD
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.*
-import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.utils.HashUtil.HashMapInit
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
@@ -831,7 +832,7 @@ class Decks(private val col: Collection) : DeckManager() {
     override fun active(): LinkedList<Long> {
         val activeDecks = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
-        addAll(result, activeDecks.longIterable())
+        result.addAll(activeDecks.longIterable())
         return result
     }
 
@@ -903,7 +904,7 @@ class Decks(private val col: Collection) : DeckManager() {
         for (deck in decks) {
             val node = Node()
             childMap[deck.getLong("id")] = node
-            val parts = Arrays.asList(*path(deck.getString("name")))
+            val parts = listOf(*path(deck.getString("name")))
             if (parts.size > 1) {
                 val immediateParent = TextUtils.join("::", parts.subList(0, parts.size - 1))
                 val pid = byName(immediateParent)!!.getLong("id")
@@ -1066,7 +1067,6 @@ class Decks(private val col: Collection) : DeckManager() {
                 "}"
             )
         private val pathCache = HashMap<String, Array<String>>()
-        @JvmStatic
         fun path(name: String): Array<String> {
             if (!pathCache.containsKey(name)) {
                 pathCache[name] = name.split("::".toRegex()).toTypedArray()
@@ -1098,7 +1098,6 @@ class Decks(private val col: Collection) : DeckManager() {
      * **************************************
      */
         private val normalized = HashMap<String?, String>()
-        @JvmStatic
         @KotlinCleanup("nullability")
         fun normalizeName(name: String?): String? {
             if (!normalized.containsKey(name)) {
@@ -1123,11 +1122,10 @@ class Decks(private val col: Collection) : DeckManager() {
         }
 
         private val sParentCache = HashMap<String, String?>()
-        @JvmStatic
         fun parent(deckName: String): String? {
             // method parent, from sched's method deckDueList in python
             if (!sParentCache.containsKey(deckName)) {
-                var parts = Arrays.asList(*path(deckName))
+                var parts = listOf(*path(deckName))
                 if (parts.size < 2) {
                     sParentCache[deckName] = null
                 } else {

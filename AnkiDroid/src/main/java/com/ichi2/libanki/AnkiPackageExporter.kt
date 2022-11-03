@@ -22,25 +22,24 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.utils.CollectionUtils.addAll
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.stringIterable
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 
 @KotlinCleanup("lots in this file")
-open class Exporter(@JvmField protected val col: Collection, protected val did: DeckId?) {
+open class Exporter(protected val col: Collection, protected val did: DeckId?) {
 
     /**
      * If set exporter will export only this deck, otherwise will export all cards
      */
-    @JvmField
-    protected var mCount = 0
-    @JvmField
-    protected var mIncludeHTML = false
+    protected var count = 0
+    protected var includeHTML = false
 
     /**
      * An exporter for the whole collection of decks
@@ -61,13 +60,13 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
         } else {
             Utils.list2ObjectArray(col.decks.cids(did, true))
         }
-        mCount = cids.size
+        count = cids.size
         return cids
     }
 
     fun processText(input: String): String {
         var text = input
-        if (!mIncludeHTML) {
+        if (!includeHTML) {
             text = stripHTML(text)
         }
         text = escapeText(text)
@@ -271,12 +270,12 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         val keys = media.names()
         if (keys != null) {
             mMediaFiles.ensureCapacity(keys.length())
-            addAll(mMediaFiles, keys.stringIterable())
+            mMediaFiles.addAll(keys.stringIterable())
         }
         Timber.d("Cleanup")
         dst.crt = col.crt
         // todo: tags?
-        mCount = dst.cardCount()
+        count = dst.cardCount()
         dst.setMod()
         postExport()
         dst.close()
@@ -370,7 +369,7 @@ class AnkiPackageExporter : AnkiExporter {
     @Throws(IOException::class)
     private fun exportVerbatim(z: ZipFile, context: Context): JSONObject {
         // close our deck & write it into the zip file, and reopen
-        mCount = col.cardCount()
+        count = col.cardCount()
         col.close()
         if (!_v2sched) {
             z.write(col.path, CollectionHelper.COLLECTION_FILENAME)

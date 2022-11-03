@@ -29,7 +29,6 @@ import java.util.*
 
 object ContentResolverUtil {
     /** Obtains the filename from the url. Throws if all methods return exception  */
-    @JvmStatic
     @CheckResult
     fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
         try {
@@ -46,7 +45,7 @@ object ContentResolverUtil {
         if (filename != null) {
             return filename
         }
-        throw IllegalStateException(String.format("Unable to obtain valid filename from uri: %s", uri))
+        throw IllegalStateException("Unable to obtain valid filename from uri: $uri")
     }
 
     @CheckResult

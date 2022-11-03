@@ -26,8 +26,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
 import android.database.sqlite.SQLiteDatabaseLockedException
-import android.text.TextUtils
-import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode
@@ -55,11 +53,14 @@ import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.upgrade.Upgrade
+import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.util.*
@@ -614,7 +615,7 @@ open class Collection(
      * @return Number of card added
      * @return Number of card added.
      */
-    fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
+    open fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
         val cms = findTemplates(note, allowEmpty)
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
@@ -1124,7 +1125,7 @@ open class Collection(
         d["id"] = cid.toString()
         qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
         afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
-        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt), Pair("a", afmt))) {
+        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
             val type = p.first
             var format = p.second
             if ("q" == type) {
@@ -1152,7 +1153,8 @@ open class Collection(
             html = ChessFilter.fenToChessboard(html, context)
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
-                html = LaTeX.mungeQA(html, this, model)
+                val svg = model.optBoolean("latexsvg", false)
+                html = LaTeX.mungeQA(html, this, svg)
             }
             d[type] = html
             // empty cloze?
@@ -2139,23 +2141,20 @@ open class Collection(
         }
     }
 
-    fun log(vararg argsParam: Any?) {
-        val args = argsParam.toMutableList()
-        if (!debugLog) {
-            return
-        }
-        val trace = Thread.currentThread().stackTrace[3]
-        // Overwrite any args that need special handling for an appropriate string representation
-        for (i in 0 until args.size) {
-            if (args[i] is LongArray) {
-                args[i] = Arrays.toString(args[i] as LongArray?)
-            }
-        }
-        val s = String.format(
-            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
-            TextUtils.join(",  ", args)
-        )
-        writeLog(s)
+    fun log(vararg objects: Any?) {
+        if (!debugLog) return
+
+        val unixTime = TimeManager.time.intTime()
+
+        val outerTraceElement = Thread.currentThread().stackTrace[3]
+        val fileName = outerTraceElement.fileName
+        val methodName = outerTraceElement.methodName
+
+        val objectsString = objects
+            .map { if (it is LongArray) Arrays.toString(it) else it }
+            .joinToString(", ")
+
+        writeLog("[$unixTime] $fileName:$methodName() $objectsString")
     }
 
     private fun writeLog(s: String) {
@@ -2254,7 +2253,7 @@ open class Collection(
             // bug #5523. This bug should occur only for people using anki
             // prior to version 2.16 and has been corrected with
             // dae/anki#347
-            Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false)
+            upgradeJSONIfNecessary("sortBackwards", false)
             config!!.json = conf
         }
 
@@ -2305,14 +2304,14 @@ open class Collection(
      */
     @Suppress("unused")
     fun get_config_object(key: String): JSONObject {
-        return JSONObject(config!!.getJSONObject(key))
+        return config!!.getJSONObject(key).deepClone()
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
     fun get_config_array(key: String): JSONArray {
-        return JSONArray(config!!.getJSONArray(key))
+        return config!!.getJSONArray(key).deepClone()
     }
 
     /**
@@ -2362,8 +2361,8 @@ open class Collection(
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
         return if (config!!.isNull(key)) {
-            if (defaultValue == null) null else JSONObject(defaultValue)
-        } else JSONObject(config!!.getJSONObject(key))
+            if (defaultValue == null) null else defaultValue.deepClone()
+        } else config!!.getJSONObject(key).deepClone()
     }
 
     /** Edits to the array are not persisted to the preferences  */

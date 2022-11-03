@@ -17,6 +17,7 @@ package com.ichi2.preferences
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import java.util.function.Supplier
 
 /** Extension methods over the SharedPreferences class  */
@@ -28,7 +29,6 @@ object PreferenceExtensions {
      *
      * Defect #5828 - This is potentially not thread safe and could cause another preference commit to fail.
      */
-    @JvmStatic
     @CheckResult // Not truly an error as this has a side effect, but you should use a "set" API for perf.
     fun getOrSetString(target: SharedPreferences, key: String, supplier: Supplier<String>): String {
         if (target.contains(key)) {
@@ -36,7 +36,7 @@ object PreferenceExtensions {
             return target.getString(key, "")!!
         }
         val supplied = supplier.get()
-        target.edit().putString(key, supplied).apply()
+        target.edit { putString(key, supplied) }
         return supplied
     }
 }

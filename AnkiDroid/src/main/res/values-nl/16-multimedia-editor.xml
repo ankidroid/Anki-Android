@@ -96,7 +96,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
     <string name="multimedia_editor_svg_preview">SVG\'s zijn niet beschikbaar voor voorbeeldweergave</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_png_paste_error">Fout bij het converteren van klembord naar png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Multimedia-inhoud toevoegen aan het %1$s-veld</string>
     <string name="multimedia_editor_attach_media">Voeg media toe</string>
     <!-- Audio view -->
@@ -114,5 +114,5 @@
     <string name="save_dialog_content">Huidige afbeeldingsgrootte is %sMB. Standaard afbeeldingsgrootte is 1 MB. Wilt u dit bijsnijden?</string>
     <string name="select_image_failed">"Selectie van afbeelding is mislukt, probeer opnieuw"</string>
     <string name="activity_result_unexpected">App leverde een onverwachte waarde op. U moet mogelijk een andere app gebruiken</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Veld inhoud</string>
 </resources>

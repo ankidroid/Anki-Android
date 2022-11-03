@@ -18,8 +18,8 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException.MissingFile
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MissingDirectoryException.MissingFile
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -41,7 +41,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     companion object {
         @Suppress("unused")
         @Parameters(name = "attemptRename = {0}")
-        @JvmStatic
+        @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             return listOf(arrayOf(true), arrayOf(false))
         }

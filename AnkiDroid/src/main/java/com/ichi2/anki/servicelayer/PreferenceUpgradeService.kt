@@ -40,7 +40,6 @@ private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
 
 object PreferenceUpgradeService {
-    @JvmStatic
     fun upgradePreferences(context: Context?, previousVersionCode: LegacyVersionIdentifier): Boolean =
         upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
 
@@ -60,7 +59,7 @@ object PreferenceUpgradeService {
      * Typically because the app has been run for the first time, or the preferences
      * have been deleted
      */
-    @JvmStatic
+    @JvmStatic // reqired for mockito for now
     fun setPreferencesUpToDate(preferences: SharedPreferences) {
         Timber.i("Marking preferences as up to date")
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)
@@ -88,6 +87,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeGesturesToControls())
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeCustomCollectionSyncUrl())
+                yield(UpgradeCustomSyncServerEnabled())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -193,8 +193,8 @@ object PreferenceUpgradeService {
          */
         internal class RemoveLegacyMediaSyncUrl : PreferenceUpgrade(3) {
             override fun upgrade(preferences: SharedPreferences) {
-                val mediaSyncUrl = CustomSyncServer.getMediaSyncUrl(preferences) ?: return
-                if (mediaSyncUrl.startsWith("https://msync.ankiweb.net")) {
+                val mediaSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
+                if (mediaSyncUrl?.startsWith("https://msync.ankiweb.net") == true) {
                     preferences.edit { remove(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL) }
                 }
             }
@@ -390,9 +390,30 @@ object PreferenceUpgradeService {
                 }
             }
         }
+
+        internal class UpgradeCustomSyncServerEnabled : PreferenceUpgrade(8) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val customSyncServerEnabled = preferences.getBoolean(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false)
+                val customCollectionSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, null)
+                val customMediaSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
+
+                preferences.edit {
+                    remove(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER)
+                    putBoolean(
+                        CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED,
+                        customSyncServerEnabled && !customCollectionSyncUrl.isNullOrEmpty()
+                    )
+                    putBoolean(
+                        CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED,
+                        customSyncServerEnabled && !customMediaSyncUrl.isNullOrEmpty()
+                    )
+                }
+            }
+        }
     }
 }
 
 object RemovedPreferences {
     const val PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl"
+    const val PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER = "useCustomSyncServer"
 }

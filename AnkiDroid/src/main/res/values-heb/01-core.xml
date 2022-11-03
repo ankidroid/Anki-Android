@@ -175,7 +175,6 @@
     <string name="empty_deck">החפיסה ריקה</string>
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">חיפוש חפיסה</string>
-    <string name="empty_deck_add_note">הוספת קלף</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
     <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
@@ -188,6 +187,8 @@
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="empty_cloze_warning">ערוך את הרשומה והוסף השלם את החסר. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">לבטל את הסנכרון?</string>
     <string name="continue_sync">המשך סנכרון</string>
     <string name="sync_cancelled">סנכרון בוטל</string>

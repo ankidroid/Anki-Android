@@ -16,7 +16,6 @@
 package com.ichi2.anki
 
 import android.content.Intent
-import android.util.Pair
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.DeckPicker.CheckDatabaseListener
 import com.ichi2.libanki.Collection.CheckDatabaseResult

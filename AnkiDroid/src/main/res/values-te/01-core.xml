@@ -164,7 +164,6 @@
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">ఈ డెక్ ఖాళీగా ఉంది. క్రొత్త కంటెంట్ని జోడించడానికి + బటన్ నొక్కండి.</string>
     <string name="studyoptions_limit_reached">రోజువారీ అధ్యయనం పరిమితిని చేరుకుంది</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">సమకాలీకరణ</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">మీరు సమకాలీకరణను రద్దు చేయాలనుకుంటున్నారా?</string>
     <string name="continue_sync">సమకాలీకరించండి</string>
     <string name="sync_cancelled">సమకాలీకరణ రద్దు చేయబడింది</string>

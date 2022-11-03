@@ -112,7 +112,6 @@ object Consts {
     const val SYNC_MAX_BYTES = (2.5 * 1024 * 1024).toInt()
     const val SYNC_MAX_FILES = 25
 
-    @JvmField
     val DEFAULT_HOST_NUM: Int? = null
 
     const val SYNC_VER = 10
@@ -146,7 +145,7 @@ object Consts {
 
     /** Default dconf - can't be removed  */
     const val DEFAULT_DECK_CONFIG_ID: Long = 1
-    @JvmField
+
     val FIELD_SEPARATOR = Character.toString('\u001f')
 
     /** Time duration for toast **/

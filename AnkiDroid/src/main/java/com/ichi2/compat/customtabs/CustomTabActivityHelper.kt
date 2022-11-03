@@ -146,7 +146,6 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
          * @param uri the Uri to be opened.
          * @param fallback a CustomTabFallback to be used if Custom Tabs is not available.
          */
-        @JvmStatic
         fun openCustomTab(
             activity: Activity,
             customTabsIntent: CustomTabsIntent,
@@ -169,7 +168,6 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
             }
         }
 
-        @JvmStatic
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
         fun resetFailed() {
             sCustomTabsFailed = false

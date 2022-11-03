@@ -21,6 +21,7 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.NetworkUtils
@@ -61,10 +62,12 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             // Media check results
             val id = msgData.getInt("dialogType")
             if (id != MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                val checkList: MutableList<List<String>> = ArrayList(3)
-                checkList.add(msgData.getStringArrayList("nohave")!!)
-                checkList.add(msgData.getStringArrayList("unused")!!)
-                checkList.add(msgData.getStringArrayList("invalid")!!)
+                val checkList =
+                    MediaCheckResult(
+                        msgData.getStringArrayList("nohave")!!,
+                        msgData.getStringArrayList("unused")!!,
+                        msgData.getStringArrayList("invalid")!!
+                    )
                 deckPicker.showMediaCheckDialog(id, checkList)
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
@@ -95,9 +98,9 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
                     // getQuantityString needs an int
                     val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
                     val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
-                    mActivity.get()!!.showSimpleNotification(err, message, NotificationChannels.Channel.SYNC)
+                    mActivity.get()!!.showSimpleNotification(err, message, Channel.SYNC)
                 } else {
-                    mActivity.get()!!.showSimpleNotification(err, res.getString(R.string.youre_offline), NotificationChannels.Channel.SYNC)
+                    mActivity.get()!!.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
                 }
             }
             mActivity.get()!!.finishWithoutAnimation()
@@ -149,7 +152,6 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
          * Store a persistent message to static variable
          * @param message Message to store
          */
-        @JvmStatic
         fun storeMessage(message: Message?) {
             Timber.d("Storing persistent message")
             sStoredMessage = message

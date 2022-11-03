@@ -41,10 +41,10 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -211,7 +211,7 @@ class CardContentProvider : ContentProvider() {
                 val query = selection ?: ""
                 val noteIds = col.findNotes(query)
                 if (noteIds.isNotEmpty()) {
-                    val sel = String.format("id in (%s)", TextUtils.join(",", noteIds))
+                    val sel = "id in (${TextUtils.join(",", noteIds)})"
                     val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null)
                     col.db.database.query(sql)
                 } else {
@@ -843,12 +843,12 @@ class CardContentProvider : ContentProvider() {
                     while (idx < numCards) {
                         val cardName = context!!.resources.getString(R.string.card_n_name, idx + 1)
                         val t = Models.newTemplate(cardName)
-                        t.put("qfmt", String.format("{{%s}}", allFields[0]))
+                        t.put("qfmt", "{{${allFields[0]}}}")
                         var answerField: String? = allFields[0]
                         if (allFields.size > 1) {
                             answerField = allFields[1]
                         }
-                        t.put("afmt", String.format("{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{%s}}", answerField))
+                        t.put("afmt", "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}")
                         mm.addTemplateInNewModel(newModel, t)
                         idx++
                     }
@@ -1250,7 +1250,7 @@ class CardContentProvider : ContentProvider() {
     }
 
     private fun throwSecurityException(methodName: String, uri: Uri) {
-        val msg = String.format("Permission not granted for: %s", getLogMessage(methodName, uri))
+        val msg = "Permission not granted for: ${getLogMessage(methodName, uri)}"
         Timber.e("%s", msg)
         throw SecurityException(msg)
     }
@@ -1269,6 +1269,7 @@ class CardContentProvider : ContentProvider() {
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted  */
+    @Suppress("deprecation") // getPackageInfo
     private fun knownRogueClient(): Boolean {
         val pm = context!!.packageManager
         return try {

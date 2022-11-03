@@ -33,7 +33,6 @@ import java.util.*
 object AdaptionUtil {
     private var sHasRunWebBrowserCheck = false
     private var sHasWebBrowser = true
-    @JvmStatic
     fun hasWebBrowser(context: Context): Boolean {
         if (sHasRunWebBrowserCheck) {
             return sHasWebBrowser
@@ -43,7 +42,6 @@ object AdaptionUtil {
         return sHasWebBrowser
     }
 
-    @JvmStatic
     val isUserATestClient: Boolean
         get() = try {
             ActivityManager.isUserAMonkey() ||
@@ -66,6 +64,7 @@ object AdaptionUtil {
         return "true" == testLabSetting
     }
 
+    @Suppress("deprecation") // queryIntentActivities
     private fun checkHasWebBrowser(context: Context): Boolean {
         // The test monkey often gets stuck on the Shared Decks WebView, ignore it as it shouldn't crash.
         if (isUserATestClient) {
@@ -94,14 +93,15 @@ object AdaptionUtil {
 
     private fun isValidBrowser(ri: ResolveInfo?): Boolean {
         // https://stackoverflow.com/a/57223246/
-        return ri != null && ri.activityInfo != null && ri.activityInfo.exported
+        return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
+    @Suppress("deprecation") // getPackageInfo
     private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
         return if (packageName != null) {
             try {
                 val info = pm.getPackageInfo(packageName, 0)
-                info != null && info.applicationInfo != null &&
+                info?.applicationInfo != null &&
                     info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
@@ -138,12 +138,12 @@ object AdaptionUtil {
     }
 
     // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
+    @Suppress("deprecation") // resolveActivity
     private fun isIntentResolved(ctx: Context, intent: Intent): Boolean {
         return ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
     }
 
     /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
-    @JvmStatic
     val isVivo: Boolean
         get() {
             val manufacturer = Build.MANUFACTURER ?: return false
@@ -155,7 +155,6 @@ object AdaptionUtil {
      * is imported.
      * https://stackoverflow.com/questions/28550370/how-to-detect-whether-android-app-is-running-ui-test-with-espresso
      */
-    @JvmStatic
     val isRunningAsUnitTest: Boolean
         get() {
             try {

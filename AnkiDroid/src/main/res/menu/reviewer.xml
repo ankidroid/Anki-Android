@@ -3,6 +3,13 @@
     android:layoutDirection="locale">
 
     <item
+        android:id="@+id/action_undo"
+        android:enabled="false"
+        android:icon="@drawable/ic_undo_white"
+        android:title="@string/undo"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
         android:icon="@drawable/ic_clear_white"
@@ -21,12 +28,16 @@
         android:visible="false"
         ankidroid:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_undo"
-        android:enabled="false"
-        android:icon="@drawable/ic_undo_white"
-        android:title="@string/undo"
-        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
-        ankidroid:showAsAction="always"/>
+        android:id="@+id/action_save_whiteboard"
+        android:title="@string/save_whiteboard"
+        android:icon="@drawable/ic_save_white"
+        android:visible="false"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_toggle_whiteboard"
+        android:title="@string/enable_whiteboard"
+        android:icon="@drawable/ic_gesture_white"
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_flag"
         android:title="@string/menu_flag_card"
@@ -67,17 +78,6 @@
         </menu>
     </item>
     <item
-        android:id="@+id/action_save_whiteboard"
-        android:title="@string/save_whiteboard"
-        android:icon="@drawable/ic_save_white"
-        android:visible="false"
-        ankidroid:showAsAction="never"/>
-    <item
-        android:id="@+id/action_toggle_whiteboard"
-        android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white"
-        ankidroid:showAsAction="never"/>
-    <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/cardeditor_title_edit_card"
@@ -96,16 +96,6 @@
         android:id="@+id/action_tag"
         android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"
-        ankidroid:showAsAction="never"/>
-    <item
-        android:id="@+id/action_replay"
-        android:title="@string/replay_audio"
-        android:icon="@drawable/ic_play_circle_white"
-        ankidroid:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_toggle_mic_tool_bar"
-        android:title="@string/menu_toggle_mic_tool_bar"
-        android:icon="@drawable/ic_action_mic"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_bury"
@@ -131,12 +121,22 @@
         <menu/>
     </item>
     <item
-        android:id="@+id/action_open_deck_options"
-        android:icon="@drawable/ic_tune_white"
-        android:title="@string/menu__deck_options" />
+        android:id="@+id/action_replay"
+        android:title="@string/replay_audio"
+        android:icon="@drawable/ic_play_circle_white"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_toggle_mic_tool_bar"
+        android:title="@string/menu_toggle_mic_tool_bar"
+        android:icon="@drawable/ic_action_mic"
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_select_tts"
         android:title="@string/select_tts"
         android:icon="@drawable/ic_language_white"
         android:visible="false" />
+    <item
+        android:id="@+id/action_open_deck_options"
+        android:icon="@drawable/ic_tune_white"
+        android:title="@string/menu__deck_options" />
 </menu>

@@ -64,12 +64,12 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             }
         val hintLocale: String?
             get() {
-                val imeHintLocales = mAnswerField!!.imeHintLocales ?: return null
+                val imeHintLocales = answerField!!.imeHintLocales ?: return null
                 return imeHintLocales.toLanguageTags()
             }
 
         fun hasAutomaticAnswerQueued(): Boolean {
-            return mAutomaticAnswer.timeoutHandler.hasMessages(0)
+            return automaticAnswer.timeoutHandler.hasMessages(0)
         }
     }
 
@@ -110,9 +110,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.mCurrentCard
+        AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.mCurrentCard!!.note()
+        val note = viewer.currentCard!!.note()
         note.setField(1, "David")
 
         viewer.saveEditedCard()
@@ -137,9 +137,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.mCurrentCard
+        AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.mCurrentCard!!.note()
+        val note = viewer.currentCard!!.note()
         note.setField(1, "David")
 
         viewer.saveEditedCard()
@@ -196,22 +196,22 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun automaticAnswerDisabledProperty() {
         val controller = getViewerController(true, false)
         val viewer = controller.get()
-        assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled, equalTo(false))
+        assertThat("not disabled initially", viewer.automaticAnswer.isDisabled, equalTo(false))
         controller.pause()
-        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, equalTo(true))
+        assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
         controller.resume()
-        assertThat("enabled after resume", viewer.mAutomaticAnswer.isDisabled, equalTo(false))
+        assertThat("enabled after resume", viewer.automaticAnswer.isDisabled, equalTo(false))
     }
 
     @Test
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
         val controller = getViewerController(true, false)
         val viewer = controller.get()
-        viewer.mAutomaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
+        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
         assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
         controller.pause()
-        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, equalTo(true))
+        assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
         assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
         viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
         assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
@@ -268,7 +268,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         return multimediaController
     }
     companion object {
-        @JvmStatic
+        @JvmStatic // required for @MethodSource
         fun getSignalFromUrlTest_args(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of("signal:show_answer", SHOW_ANSWER),

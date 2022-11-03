@@ -21,13 +21,11 @@ import java.util.*
 
 class FileOperation {
     companion object {
-        @JvmStatic
         fun getFileResource(name: String): String {
-            val resource = Objects.requireNonNull(FileOperation::class.java.classLoader).getResource(name)
+            val resource = FileOperation::class.java.classLoader!!.getResource(name)
             return (File(resource.path).path)
         }
 
-        @JvmStatic
         fun getFileContentsBytes(exportedFile: File): ByteArray {
             val f = RandomAccessFile(exportedFile, "r")
             val b = ByteArray(f.length().toInt())
@@ -35,7 +33,6 @@ class FileOperation {
             return b
         }
 
-        @JvmStatic
         fun getFileContents(exportedFile: File): String {
             return String(getFileContentsBytes(exportedFile))
         }

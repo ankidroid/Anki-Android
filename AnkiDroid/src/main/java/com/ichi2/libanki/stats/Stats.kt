@@ -18,7 +18,6 @@ package com.ichi2.libanki.stats
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset

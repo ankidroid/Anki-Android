@@ -264,7 +264,7 @@ class Sound {
             // Check if the file extension is that of a known video format
             val extension =
                 soundPath.substring(soundPath.lastIndexOf(".") + 1).lowercase(Locale.getDefault())
-            var isVideo = Arrays.asList(*VIDEO_WHITELIST).contains(extension)
+            var isVideo = listOf(*VIDEO_WHITELIST).contains(extension)
             if (!isVideo) {
                 val guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
                 isVideo = guessedType != null && guessedType.startsWith("video/")
@@ -496,7 +496,6 @@ class Sound {
         /** Extract SoundOrVideoTag instances from content where sound tags are in the form: [sound:filename.mp3]  */
         @CheckResult
         @KotlinCleanup("non-null param")
-        @JvmStatic
         fun extractTagsFromLegacyContent(content: String?): List<SoundOrVideoTag> {
             val matcher = SOUND_PATTERN.matcher(content!!)
             // While there is matches of the pattern for sound markers

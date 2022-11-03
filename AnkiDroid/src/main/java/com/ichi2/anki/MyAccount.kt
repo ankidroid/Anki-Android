@@ -39,7 +39,6 @@ import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.lang.Exception
 import java.net.UnknownHostException
 
 /**
@@ -90,8 +89,7 @@ open class MyAccount : AnkiActivity() {
         }
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
         initAllContentViews()
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        if (preferences.getString("hkey", "")!!.isNotEmpty()) {
+        if (isLoggedIn()) {
             switchToState(STATE_LOGGED_IN)
         } else {
             switchToState(STATE_LOG_IN)

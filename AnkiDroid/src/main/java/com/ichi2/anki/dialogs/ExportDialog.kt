@@ -18,17 +18,22 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import anki.import_export.ExportLimit
+import anki.import_export.exportLimit
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.getNullableLong
 import com.ichi2.utils.contentNullable
 
 class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialogFragment() {
     interface ExportDialogListener {
-        fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean)
+        fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean)
+        fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean)
+        fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean)
         fun dismissAllDialogFragments()
     }
 
@@ -52,13 +57,33 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
         return this
     }
 
+    /**
+     * @param ids A list of longs which specifies the card/note ids to be exported
+     * @param isCardList A boolean which specifies whether the list of ids is a list of card ids or note ids
+     * @param dialogMessage A string which can be used to show a custom message or specify import path
+     */
+    fun withArguments(dialogMessage: String, ids: List<Long>, isCardList: Boolean): ExportDialog {
+        val args = this.arguments ?: Bundle()
+        args.putString("dialogMessage", dialogMessage)
+        if (isCardList) {
+            args.putLongArray("cardIds", ids.toLongArray())
+        } else {
+            args.putLongArray("noteIds", ids.toLongArray())
+        }
+        this.arguments = args
+        return this
+    }
+
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val res = resources
         val did = getNullableLong(arguments, "did")
+        val cardIds = arguments?.getLongArray("cardIds")?.toList()
+        val noteIds = arguments?.getLongArray("noteIds")?.toList()
         val checked: Array<Int>
-        if (did != null) {
+        @NeedsTest("Test that correct options are checked given different arguments")
+        if (did != null || cardIds == null || noteIds == null) {
             mIncludeSched = false
             checked = arrayOf()
         } else {
@@ -73,7 +98,20 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
             title(R.string.export)
             contentNullable(requireArguments().getString("dialogMessage"))
             positiveButton(android.R.string.ok) {
-                listener.exportApkg(null, did, mIncludeSched, mIncludeMedia)
+                if (did != null) {
+                    listener.exportDeckAsApkg(null, did, mIncludeSched, mIncludeMedia)
+                } else if (cardIds != null || noteIds != null) {
+                    val limit = exportLimit {
+                        if (cardIds != null) {
+                            this.cardIds = this.cardIds.toBuilder().addAllCids(cardIds).build()
+                        } else {
+                            this.noteIds = this.noteIds.toBuilder().addAllNoteIds(noteIds).build()
+                        }
+                    }
+                    listener.exportSelectedAsApkg(null, limit, mIncludeSched, mIncludeMedia)
+                } else {
+                    listener.exportColAsApkgOrColpkg(null, mIncludeSched, mIncludeMedia)
+                }
                 dismissAllDialogFragments()
             }
             negativeButton(android.R.string.cancel) {

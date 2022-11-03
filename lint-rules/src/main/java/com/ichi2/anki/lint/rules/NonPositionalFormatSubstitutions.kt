@@ -45,7 +45,6 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
-        @JvmField
         val ISSUE = Issue.create(
             "NonPositionalFormatSubstitutions",
             "Multiple substitutions specified in non-positional format",

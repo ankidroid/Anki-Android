@@ -24,10 +24,10 @@ import com.ichi2.async.Connection
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Response
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream

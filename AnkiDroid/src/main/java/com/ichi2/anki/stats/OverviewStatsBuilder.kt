@@ -37,49 +37,30 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         var forecastTotalReviews = 0
         var forecastAverageReviews = 0.0
         var forecastDueTomorrow = 0
-        @JvmField
         var reviewsPerDayOnAll = 0.0
-        @JvmField
         var reviewsPerDayOnStudyDays = 0.0
-        @JvmField
         var allDays = 0
-        @JvmField
         var daysStudied = 0
-        @JvmField
         var timePerDayOnAll = 0.0
-        @JvmField
         var timePerDayOnStudyDays = 0.0
-        @JvmField
         var totalTime = 0.0
-        @JvmField
         var totalReviews = 0
-        @JvmField
         var newCardsPerDay = 0.0
-        @JvmField
         var totalNewCards = 0
-        @JvmField
         var averageInterval = 0.0
-        @JvmField
         var longestInterval = 0.0
         lateinit var newCardsOverview: AnswerButtonsOverview
         lateinit var youngCardsOverview: AnswerButtonsOverview
         lateinit var matureCardsOverview: AnswerButtonsOverview
 
-        @JvmField
         var totalCards: Long = 0
-        @JvmField
         var totalNotes: Long = 0
-        @JvmField
         var lowestEase = 0.0
-        @JvmField
         var averageEase = 0.0
-        @JvmField
         var highestEase = 0.0
 
         class AnswerButtonsOverview {
-            @JvmField
             var total = 0
-            @JvmField
             var correct = 0
             val percentage: Double
                 get() = if (correct == 0) {

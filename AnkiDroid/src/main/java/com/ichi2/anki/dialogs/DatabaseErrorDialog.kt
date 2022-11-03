@@ -31,7 +31,6 @@ import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
 import com.ichi2.utils.iconAttr
@@ -53,7 +52,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         val type = requireArguments().getInt("dialogType")
         val res = resources
         val dialog = MaterialDialog(requireActivity())
-        val isLoggedIn = SyncStatus.isLoggedIn
+        val isLoggedIn = isLoggedIn()
         dialog.cancelable(true)
             .title(text = title)
             .cancelOnTouchOutside(false)
@@ -369,7 +368,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help))
             }
             DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)
-            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX)
+            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
             DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore_no_backups)
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)
@@ -447,7 +446,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         const val INCOMPATIBLE_DB_VERSION = 10
 
         // public flag which lets us distinguish between inaccessible and corrupt database
-        @JvmField
         var databaseCorruptFlag = false
 
         /**
@@ -455,7 +453,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          */
-        @JvmStatic
         fun newInstance(dialogType: Int): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()

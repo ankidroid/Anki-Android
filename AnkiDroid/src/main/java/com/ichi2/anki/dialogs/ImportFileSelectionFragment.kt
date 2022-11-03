@@ -32,7 +32,6 @@ import timber.log.Timber
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
     companion object {
-        @JvmStatic
         @KotlinCleanup("convert importItems to java ArrayList")
         fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker): RecursivePictureMenu {
             // this needs a deckPicker for now. See use of PICK_APKG_FILE
@@ -83,7 +82,6 @@ class ImportFileSelectionFragment {
         }
 
         // needs to be static for serialization
-        @JvmStatic
         fun openImportFilePicker(
             activity: AnkiActivity,
             requestCode: Int,

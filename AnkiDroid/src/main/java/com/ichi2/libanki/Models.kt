@@ -19,16 +19,18 @@
 package com.ichi2.libanki
 
 import android.content.ContentValues
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.stringIterable
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
@@ -357,7 +359,7 @@ class Models(col: Collection) : ModelManager(col) {
     internal class TransformFieldDelete(private val idx: Int) : TransformFieldVisitor {
         @KotlinCleanup("simplify fun with array.toMutableList().filterIndexed")
         override fun transform(fields: Array<String>): Array<String> {
-            val fl = ArrayList(Arrays.asList(*fields))
+            val fl = ArrayList(listOf(*fields))
             fl.removeAt(idx)
             return fl.toTypedArray()
         }
@@ -402,7 +404,7 @@ class Models(col: Collection) : ModelManager(col) {
         @KotlinCleanup("simplify with array.toMutableList and maybe scope function")
         override fun transform(fields: Array<String>): Array<String> {
             val `val` = fields[oldidx]
-            val fl = ArrayList(Arrays.asList(*fields))
+            val fl = ArrayList(listOf(*fields))
             fl.removeAt(oldidx)
             fl.add(idx, `val`)
             return fl.toTypedArray()
@@ -882,7 +884,6 @@ class Models(col: Collection) : ModelManager(col) {
         }
 
         /** "Mapping of field name -> (ord, field).  */
-        @JvmStatic
         fun fieldMap(m: Model): Map<String, Pair<Int, JSONObject>> {
             val flds = m.getJSONArray("flds")
             // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
@@ -896,7 +897,6 @@ class Models(col: Collection) : ModelManager(col) {
         /*
      * Templates ***********************************************************************************************
      */
-        @JvmStatic
         @KotlinCleanup("direct return and use scope function")
         fun newTemplate(name: String?): JSONObject {
             val t = JSONObject(defaultTemplate)

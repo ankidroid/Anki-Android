@@ -53,8 +53,8 @@
     <string name="pref_search_no_results">Nessun risultato</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Generale</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Studio</string>
+    <string name="pref_cat_system_wide" maxLength="41">A livello di sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizzazione</string>
     <string name="pref_cat_scheduling" maxLength="41">Ripianifica</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>
     <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Consenti sincronizzazione con connessione a consumo.</string>
+    <string name="metered_sync_summary">Se disabilitato, verrai avvisato se provi a sincronizzare quando usi una connessione a consumo</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema di giorno</string>
     <string name="night_theme" maxLength="41">Tema notturno</string>
@@ -203,7 +203,7 @@
     <string name="html_javascript_debugging" maxLength="41">Debug HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abilita connessioni WebView remote e salva l\'HTML della carta nella cartella AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
     <string name="accessibility" maxLength="41">Accessibilità</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla le immagini degli appunti in PNG</string>
@@ -226,14 +226,25 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Numero di iterazioni della simulazione</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Server di sincronizzazione personalizzato</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Utilizza server di sincronizzazione personalizzato</string>
-    <string name="custom_sync_server_enable_summary">Se non desideri utilizzare il servizio proprietario AnkiWeb puoi specificare un server alternativo qui</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
+    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own servers for synchronization.
+        You may specify either collection or media server, or both.
+        If not set, the default AnkiWeb servers will be used instead.
+        For example, you could use the sync server built into Anki
+        Desktop to sync the collection when you only have a local network,
+        and AnkiWeb to sync media when you have general internet access.
+        <a href="%s">Learn more</a>
+        <br>
+        <br>Note: unlike in previous AnkiDroid versions,
+        you must specify the full custom sync URL,
+        for example: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url di sincronizzazione</string>
-    <string name="custom_sync_server_base_url_invalid">URL di sincronizzazione non valido</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Url di sincronizzazione del contenuto multimediale</string>
-    <string name="custom_sync_server_media_url_invalid">URL sincronizzazione media non valido</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Tastiera</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mappatura dei comandi</string>
     <!-- studyoptions -->
@@ -329,7 +340,7 @@
     <string name="binding_add_gesture">Aggiungi un gesto</string>
     <string name="binding_replace_gesture">Sostituisci gesto</string>
     <string name="binding_add_key">Aggiungi un tasto</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Sostituisci chiave</string>
     <string name="key_picker_default_press_key">Premi un tasto</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seleziona il lato della carta</string>
@@ -345,10 +356,10 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Sperimentale</string>
     <string name="experimental_pref_confirmation" maxLength="41">Abilita ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_title" maxLength="41">Usa il nuovo backend</string>
+    <string name="use_rust_backend_summary">Abilita le funzionalità Anki più recenti, come lo scheduler v3 \nINSTABILE. Non usare su una collezione che ritieni importante. NON viene ripristinato alla chiusura dell\'app</string>
     <string name="use_rust_backend_warning">C\'è la possibilità che questo possa corrompere completamente la tua installazione, rendendo necessaria la disinstallazione dell\'app e il cancellamento della cartella AnkiDroid, e ha la possibilità di propagare la corruzione ad AnkiWeb tramite la sincronizzazione.\n\nAccogliamo con favore i test, ma assicurati di avere un backup non AnkiWeb valido.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Usa lo scheduler v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opzioni sviluppatore</string>
     <string name="dev_options_enabled_pref" maxLength="41">Abilita le opzioni sviluppatore</string>

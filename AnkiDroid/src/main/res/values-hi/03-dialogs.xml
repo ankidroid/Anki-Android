@@ -71,7 +71,7 @@
     <string name="reset_card_dialog_title">पत्ता प्रगति रीसेट करें</string>
     <string name="reset_card_dialog_message">इस पत्ते को नए पत्तों के कतार के अंत में रखा जाएगा</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">कार्ड रीसेट हुआ</item>
+        <item quantity="one">%d कार्ड रीसेट हुआ</item>
         <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
@@ -124,6 +124,7 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">रद्द करें</string>
     <string name="dialog_ok">ठीक है</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">नहीं</string>
     <string name="dialog_continue">जारी रखें</string>
     <string name="dialog_processing">Processing...</string>
@@ -172,9 +173,6 @@
     <string name="multimedia_editor_failed">मल्टीमीडिया संपादक खोलने में विफल</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ऑडियो रिकॉर्डिंग की अनुमति से इनकार किया</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid में आपका स्वागत है!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid को storage permission की आवश्यकता होती है, जिसका उपयोग हम विशेष रूप से आपके AnkiDroid संग्रह, फ्लैशकार्ड मीडिया और बैकअप को संग्रहीत करने के लिए करते हैं। हमारा कोड open-source है, जो स्वयंसेवकों द्वारा लिखा गया है, और लाखों लोगों द्वारा भरोसेमंद है। \n \n यदि आपके कोई प्रश्न हैं, तो कृपया हमारे इन-ऐप मैनुअल का उपयोग करें या हमारे support forums पर जाएं। \n \n आप को AnkiDroid की इस्तेमाल करने के लिए धन्यवाद! \n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Advanced Editor प्रदर्शित करने में अज्ञात त्रुटि हुई</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid अपग्रेड किया गया</string>
@@ -259,4 +257,14 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

@@ -101,10 +101,10 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Aplicar</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Cambiar el límite de tarjetas nuevas para hoy</string>
-    <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
+    <string name="custom_study_increase_review_limit">Cambiar el límite de repasos para hoy</string>
     <string name="custom_study_review_forgotten">Repasar tarjetas olvidadas</string>
     <string name="custom_study_review_ahead">Repasar con antelación</string>
     <string name="custom_study_random_selection">Estudiar una selección aleatoria de tarjetas</string>
@@ -116,14 +116,13 @@
     <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
     <string name="note_editor_no_first_field">El primer campo está vacío</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener preguntas anidadas</string>
-    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haga clic en \"Tarjetas\" y añade un sustituto de campo</string>
+    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haz clic en \"Tarjetas\" y añade un sustituto de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Las preguntas anidadas sólo funcionarán en un tipo de nota de Pregunta anidada (Cloze)</string>
     <string name="saving_facts">Guardando nota</string>
     <string name="saving_model">Guardando tipo de nota</string>
     <string name="save">Guardar</string>
     <string name="close">Cerrar</string>
     <string name="select">Seleccionar</string>
-    <string name="saving_changes">Guardando cambios&#8230;</string>
     <string name="reordering_cards">Reorganizando tarjetas&#8230;</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Las tarjetas asignadas a nada se eliminarán. Si una nota no tiene cartas restantes, se perderán. ¿Seguro que deseas continuar?</string>
@@ -158,7 +157,6 @@
     <string name="empty_card_warning">Esta tarjeta está vacía. Utiliza la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
     <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
     <string name="delete_deck">Eliminando mazo&#8230;</string>
-    <string name="show_hint">Mostrar %s</string>
     <string name="info_rate">Puntúa AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
@@ -171,9 +169,9 @@
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
-    <string name="import_log_failed_validate">falló la validación apkg</string>
+    <string name="import_log_failed_validate">Falló la validación apkg</string>
     <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
-    <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
+    <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se haya borrado la cache durante el procesamiento.\nPor favor, inténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
@@ -190,14 +188,21 @@
     <string name="export_include_media">Incluir multimedia</string>
     <string name="confirm_apkg_export">¿Exportar colección como paquete Anki?</string>
     <string name="confirm_apkg_export_deck">¿Exportar \"%s\" como archivo apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">¿Exportar la tarjeta seleccionada como archivo apkg?</item>
+        <item quantity="other">¿Exportar %d tarjetas seleccionadas como archivo apkg?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">¿Exportar la nota seleccionada como archivo apkg?</item>
+        <item quantity="other">¿Exportar %d notas seleccionadas como archivo apkg?</item>
+    </plurals>
     <string name="export_in_progress">Exportando archivo de paquete Anki&#8230;</string>
-    <string name="export_successful_title">¿Enviar paquete Anki?</string>
-    <string name="export_send_button">Enviar</string>
-    <string name="export_save_button">Guardar en un archivo</string>
+    <string name="export_success_title">Colección exportada exitosamente</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
-    <string name="export_successful">Se exportó el archivo \"%s\". ¿Quieres enviarlo con otra aplicación?</string>
+    <string name="export_success_message">Puedes elegir un lugar donde guardar tu documento o compartirlo con otra aplicación.</string>
+    <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarjetas AnkiDroid exportadas: %s</string>
     <string name="export_email_text"><![CDATA[        ¡Hola!
         <br/><br/>
@@ -206,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Error al exportar el archivo apkg</string>
+    <string name="export_select_save_app">Elige donde guardar el documento</string>
+    <string name="export_select_share_app">Selecciona una aplicación para compartir</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
     <string name="menu__deck_options">Opciones de mazo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>
@@ -378,6 +384,15 @@
     <string name="scoped_storage_postpone">Posponer</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">La búsqueda no ha devuelto resultados</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s no es un paquete válido de addon de javascript</string>
     <string name="could_not_create_dir">No se pudo crear el directorio %s</string>
@@ -396,7 +411,14 @@
     <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
     <string name="already_logged_in">Ya has iniciado sesión</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="validation_deck_already_exists">El mazo ya existe</string>
+    <string name="deck_created">Mazo creado</string>
+    <string name="deck_renamed">Mazo renombrado</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarjetas</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
+    <string name="toggle_cards_notes">Cambiar tarjetas/notas</string>
+    <string name="toggle_browser_mode_help">Alternar la muestra de tarjetas o notas en el navegador</string>
+    <string name="truncate_content_help">Limita la altura de cada fila del navegador de tal manera que solo muestra las primeras 3 líneas de contenido</string>
+    <string name="browser_options_dialog_heading">Opciones del navegador</string>
 </resources>

@@ -102,7 +102,7 @@
     <string name="sync_media_find">Wyszukiwanie zmienionych mediów...</string>
     <string name="sync_media_no_changes">Brak zmian w plikach mediów.</string>
     <string name="sync_media_success">Media zsynchronizowane.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Synchronizacja mediów częściowo zakończona:\n%1$d pobranych plików.\n%2$d przesłanych plików.</string>
     <string name="sync_media_changes_count">%d zmian mediów do wysłania</string>
     <string name="sync_media_downloaded_count">Pobrane %d plików mediów</string>
     <string name="sync_sanity_failed">Po synchronizacji kolekcja była niespójna. Aby to naprawić AnkiDroid wymusi pełną synchronizację. Wybierz którą wersję chcesz zatrzymać (lokalną czy z serwera) lub anuluj, jeśli chcesz synchronizować później.</string>
@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">Zdalne</string>
     <string name="force_full_sync_title">Wymuś pełną synchronizację</string>
     <string name="force_full_sync_summary">Przy następnej synchronizacji wymuś zmiany tylko w jednym kierunku</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Wymuszono pełną synchronizację</string>
     <string name="full_sync_confirmation">Żądana zmiana wymagać będzie pełnego wysłania bazy danych przy następnej synchronizacji Twojej kolekcji. Jeżeli posiadasz powtórki lub inne oczekujące zmiany na innym urządzeniu, które nie zostały jeszcze zsynchronizowane, zostaną one utracone. Czy kontynuować?</string>
     <string name="full_sync_confirmation_upgrade">Z powodu błędu w poprzednio zainstalowanej wersji AnkiDroid zalecane jest wymuszenie pełnej synchronizacji.</string>
     <string name="sync_error_407_proxy_required">Wymagane uwierzytelnienie serwera proxy.</string>

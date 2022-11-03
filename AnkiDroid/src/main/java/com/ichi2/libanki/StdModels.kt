@@ -61,7 +61,6 @@ class StdModels(
 
     companion object {
         // / create the standard models
-        @JvmField
         val BASIC_MODEL = StdModels(
             { mm: ModelManager, name: String ->
                 val m = mm.newModel(name)

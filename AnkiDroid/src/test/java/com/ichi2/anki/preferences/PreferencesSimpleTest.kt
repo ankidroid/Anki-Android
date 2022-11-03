@@ -35,7 +35,7 @@ class PreferencesSimpleTest {
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // required for @MethodSource
         fun buildCategorySummary_LTR_Test_args(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(arrayOf(""), ""),

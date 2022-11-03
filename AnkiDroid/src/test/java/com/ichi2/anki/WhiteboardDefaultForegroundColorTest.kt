@@ -26,11 +26,11 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField
+    @JvmField // required for Parameter
     var mIsInverted = false
 
     @ParameterizedRobolectricTestRunner.Parameter(1)
-    @JvmField
+    @JvmField // required for Parameter
     var mExpectedResult = 0
     @Test
     fun testDefaultForegroundColor() {
@@ -45,7 +45,7 @@ class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
 
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
-        @JvmStatic
+        @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             return mutableListOf((arrayOf(true, Color.WHITE)), arrayOf(false, Color.BLACK))
         }

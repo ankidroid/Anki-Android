@@ -31,11 +31,14 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Deck
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -46,6 +49,7 @@ import kotlin.collections.HashMap
  */
 abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceActivity<PreferenceHack>.AbstractPreferenceHack> :
     PreferenceActivity(),
+    CoroutineScope by MainScope(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     private var mDelegate: AppCompatDelegate? = null
     fun isColInitialized() = ::col.isInitialized
@@ -54,13 +58,13 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var col: Collection
         private set
     protected lateinit var pref: PreferenceHack
+    protected lateinit var deck: Deck
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
         val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
         val mSummaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        @KotlinCleanup("Use kotlin's methods instead of java's")
         @KotlinCleanup("scope function")
         abstract fun cacheValues()
 
@@ -133,15 +137,15 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         }
 
         override fun getFloat(key: String, defValue: Float): Float {
-            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
+            return this.getString(key, defValue.toString())!!.toFloat()
         }
 
         override fun getInt(key: String, defValue: Int): Int {
-            return this.getString(key, Integer.toString(defValue))!!.toInt()
+            return this.getString(key, defValue.toString())!!.toInt()
         }
 
         override fun getLong(key: String, defValue: Long): Long {
-            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
+            return this.getString(key, defValue.toString())!!.toLong()
         }
 
         override fun getString(key: String, defValue: String?): String? {
@@ -245,6 +249,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         super.onDestroy()
         delegate.onDestroy()
         unregisterReceiver(unmountReceiver)
+        cancel() // cancel all the Coroutines started from Activity's Scope
     }
 
     override fun invalidateOptionsMenu() {
@@ -306,5 +311,10 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
+        Timber.d("getSharedPreferences(name=%s)", name)
+        return pref
     }
 }

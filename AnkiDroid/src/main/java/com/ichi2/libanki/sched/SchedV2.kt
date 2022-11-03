@@ -24,7 +24,6 @@ import android.app.Activity
 import android.database.SQLException
 import android.database.sqlite.SQLiteConstraintException
 import android.text.TextUtils
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
@@ -39,12 +38,17 @@ import com.ichi2.libanki.Consts.NEW_CARD_ORDER
 import com.ichi2.libanki.Consts.REVLOG_TYPE
 import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.libanki.sched.Counts.Queue.*
+import com.ichi2.libanki.sched.SchedV2.CountMethod
+import com.ichi2.libanki.sched.SchedV2.LimitMethod
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
@@ -53,45 +57,32 @@ import java.util.*
 @KotlinCleanup("much to do - keep in line with libAnki")
 @SuppressLint("VariableNamingDetector") // mCurrentCard: complex setter
 open class SchedV2(col: Collection) : AbstractSched(col) {
-    @JvmField
     protected val mQueueLimit = 50
-    @JvmField
     protected var mReportLimit = 99999
     private val mDynReportLimit = 99999
     override var reps = 0
         protected set
     protected var haveQueues = false
-    @JvmField
     protected var mHaveCounts = false
-    @JvmField
     protected var mToday: Int? = null
     @KotlinCleanup("replace Sched.getDayCutoff() with dayCutoff")
     final override var dayCutoff: Long = 0
     private var mLrnCutoff: Long = 0
-    @JvmField
     protected var mNewCount = 0
-    @JvmField
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal var mLrnCount = 0
-    @JvmField
     protected var mRevCount = 0
     private var mNewCardModulus = 0
 
     // Queues
-    @JvmField
     protected val mNewQueue = SimpleCardQueue(this)
-    @JvmField
     protected val mLrnQueue = LrnCardQueue(this)
-    @JvmField
     protected val mLrnDayQueue = SimpleCardQueue(this)
-    @JvmField
     protected val mRevQueue = SimpleCardQueue(this)
     private var mNewDids = LinkedList<Long>()
-    @JvmField
     protected var mLrnDids = LinkedList<Long>()
 
     // Not in libanki
-    @JvmField
     protected var mContextReference: WeakReference<Activity>? = null
 
     fun interface LimitMethod {

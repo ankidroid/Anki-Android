@@ -28,7 +28,7 @@ class TextNoteExporter(
     includeHTML: Boolean
 ) : Exporter(col, did) {
     init {
-        mIncludeHTML = includeHTML
+        this.includeHTML = includeHTML
     }
 
     constructor(
@@ -66,7 +66,7 @@ class TextNoteExporter(
                 data.add(TextUtils.join("\t", row))
             }
         }
-        mCount = data.size
+        count = data.size
         val out = TextUtils.join("\n", data)
         BufferedWriter(
             OutputStreamWriter(

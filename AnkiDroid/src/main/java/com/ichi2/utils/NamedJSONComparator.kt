@@ -16,7 +16,7 @@
 
 package com.ichi2.utils
 
-import java.util.Comparator
+import org.json.JSONObject
 
 class NamedJSONComparator : Comparator<JSONObject> {
     override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
@@ -26,7 +26,6 @@ class NamedJSONComparator : Comparator<JSONObject> {
     }
 
     companion object {
-        @JvmField
         val INSTANCE = NamedJSONComparator()
     }
 }

@@ -59,20 +59,17 @@ class InitialActivityWithConflictTest : RobolectricTest() {
     }
 
     companion object {
-        @JvmStatic
         fun setupForDatabaseConflict() {
             grantWritePermissions()
             ShadowEnvironment.setExternalStorageState("mounted")
         }
 
-        @JvmStatic
         fun setupForValid(context: Context) {
             grantWritePermissions()
             ShadowEnvironment.setExternalStorageState("mounted")
             BackupManagerTestUtilities.setupSpaceForBackup(context)
         }
 
-        @JvmStatic
         fun setupForDefault() {
             revokeWritePermissions()
             ShadowEnvironment.setExternalStorageState("removed")

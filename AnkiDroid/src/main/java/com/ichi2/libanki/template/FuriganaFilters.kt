@@ -23,7 +23,6 @@ object FuriganaFilters {
     private val r = Pattern.compile(" ?([^ >]+?)\\[(.+?)]")
     private const val RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
 
-    @JvmStatic
     @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @KotlinCleanup("handle the nullability of match.group")
     private fun noSound(match: Matcher, replacement: String): String {
@@ -35,7 +34,6 @@ object FuriganaFilters {
         }
     }
 
-    @JvmStatic
     fun kanjiFilter(txt: String): String {
         val m = r.matcher(txt)
         val sb = StringBuffer()
@@ -46,7 +44,6 @@ object FuriganaFilters {
         return sb.toString()
     }
 
-    @JvmStatic
     fun kanaFilter(txt: String): String {
         val m = r.matcher(txt)
         val sb = StringBuffer()
@@ -57,7 +54,6 @@ object FuriganaFilters {
         return sb.toString()
     }
 
-    @JvmStatic
     fun furiganaFilter(txt: String): String {
         val m = r.matcher(txt)
         val sb = StringBuffer()

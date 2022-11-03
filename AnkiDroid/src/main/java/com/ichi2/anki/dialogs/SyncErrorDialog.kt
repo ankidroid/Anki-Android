@@ -33,8 +33,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         fun showSyncErrorDialog(dialogType: Int)
         fun showSyncErrorDialog(dialogType: Int, message: String?)
         fun loginToSyncServer()
-        fun sync()
-        fun sync(conflict: ConflictResolution?)
+        fun sync(conflict: ConflictResolution? = null)
         fun mediaCheck()
         fun dismissAllDialogFragments()
         fun integrityCheck()
@@ -268,7 +267,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param dialogMessage A string which can be optionally used to set the dialog message
          */
-        @JvmStatic
         fun newInstance(dialogType: Int, dialogMessage: String?): SyncErrorDialog {
             val f = SyncErrorDialog()
             val args = Bundle()

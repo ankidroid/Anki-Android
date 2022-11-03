@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">遠端</string>
     <string name="force_full_sync_title">強制完整同步</string>
     <string name="force_full_sync_summary">下一次同步時，強制單方面的修改</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">強制完全同步</string>
     <string name="full_sync_confirmation">此變動會使你下一次同步你的集合時，需要完整上傳你的資料庫。如果同步的話，你其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，你是否要繼續？</string>
     <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的程式錯誤，我們建議你強制完整同步一次。</string>
     <string name="sync_error_407_proxy_required">Proxy 要求認證。</string>

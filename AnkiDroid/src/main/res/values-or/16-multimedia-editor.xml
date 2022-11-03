@@ -54,8 +54,8 @@
     <string name="multimedia_editor_pron_looking_up">ଉଚ୍ଚାରଣକୁ ଦେଖୁଛି</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">ଉଚ୍ଚାରଣ ବିଫଳ ହେଲା</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
-    <string name="multimedia_editor_word_search_try_lower_case">କେବଳ ଛୋଟ ଅକ୍ଷର ବ୍ୟବହାର କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="multimedia_editor_only_one_word">ଥରକୁ କେଵଳ ଗୋଟିଏ ଶବ୍ଦର ପ୍ରକ୍ରିୟାକରଣ ସୁଵିଧା ରହିଛି</string>
+    <string name="multimedia_editor_word_search_try_lower_case">କେଵଳ ସାନ ଅକ୍ଷର ଵ୍ୟଵହାର କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="multimedia_editor_poweredbeolingus">Beolingus ଦ୍ୱାରା ଚାଳିତ</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->

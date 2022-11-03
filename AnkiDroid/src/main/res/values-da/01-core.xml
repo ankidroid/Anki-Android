@@ -164,7 +164,6 @@
     <string name="empty_deck">Dette kortsæt er tomt</string>
     <string name="search_deck" comment="Deck search for selecting it">Søgning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Tilføj kort</string>
     <string name="invalid_deck_name">Ugyldigt dæknavn</string>
     <string name="studyoptions_empty">Dette dæk er tomt. Tryk på + knappen for at tilføje nyt indhold.</string>
     <string name="studyoptions_limit_reached">Daglig studiegrænse nået</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Enhedslagring er ikke monteret</string>
     <string name="empty_cloze_warning">Rediger denne note og tilføj nogle huller i teksten. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Vil du annullere synkroniseringen? </string>
     <string name="continue_sync">Fortsæt synkronisering</string>
     <string name="sync_cancelled">Synkronisering annulleret</string>

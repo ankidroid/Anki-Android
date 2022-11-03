@@ -23,7 +23,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Pair
 import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,21 +41,28 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.dialogs.*
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.END
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Models.Companion.NOT_FOUND_NOTE_TYPE
-import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.*
+import com.ichi2.utils.FunctionalInterfaces
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.jsonObjectIterable
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.regex.Pattern
 import kotlin.math.max
@@ -90,7 +96,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
     @KotlinCleanup("Unchecked cast")
-    @Suppress("UNCHECKED_CAST") // as HashMap<Int, Int?>?
+    @Suppress("UNCHECKED_CAST", "deprecation") // as HashMap<Int, Int?>?. Deprecation: getSerializable
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -141,6 +147,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
+    @Suppress("deprecation") // onBackPressed
     override fun onBackPressed() {
         if (modelHasChanged()) {
             showDiscardChangesDialog()
@@ -552,7 +559,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                         }
                                         confirmButton.isEnabled = false
                                     }
-                                    tempModel!!.saveToDatabase(saveModelAndExitHandler())
+                                    launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
+                                        requireActivity().withProgress(resources.getString(R.string.saving_model)) {
+                                            withCol {
+                                                tempModel!!.saveToDatabase(this)
+                                            }
+                                        }
+                                        onModelSaved()
+                                    }
                                 } else {
                                     Timber.d("CardTemplateEditor:: model has not changed, exiting")
                                     mTemplateEditor.finishWithAnimation(END)
@@ -572,6 +586,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 },
                 viewLifecycleOwner, Lifecycle.State.RESUMED
             )
+        }
+
+        private fun onModelSaved() {
+            Timber.d("saveModelAndExitHandler::postExecute called")
+            val button = mTemplateEditor.findViewById<View>(R.id.action_confirm)
+            if (button != null) {
+                button.isEnabled = true
+            }
+            mTemplateEditor.tempModel = null
+            mTemplateEditor.finishWithAnimation(END)
         }
 
         fun performPreview() {
@@ -703,44 +727,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val currentTemplate = getCurrentTemplate()
             if (currentTemplate != null) {
                 result.applyTo(currentTemplate)
-            }
-        }
-
-        /* Used for updating the collection when a model has been edited */
-        private fun saveModelAndExitHandler(): SaveModelAndExitHandler {
-            return SaveModelAndExitHandler(this)
-        }
-
-        class SaveModelAndExitHandler(templateFragment: CardTemplateFragment) :
-            TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>?>(
-                templateFragment
-            ) {
-            @Suppress("Deprecation")
-            private var mProgressDialog: android.app.ProgressDialog? = null
-            override fun actualOnPreExecute(context: CardTemplateFragment) {
-                Timber.d("saveModelAndExitHandler::preExecute called")
-                mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.appResources.getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
-            }
-
-            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>?) {
-                Timber.d("saveModelAndExitHandler::postExecute called")
-                val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
-                if (button != null) {
-                    button.isEnabled = true
-                }
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
-                }
-                context.mTemplateEditor.tempModel = null
-                if (result!!.first) {
-                    context.mTemplateEditor.finishWithAnimation(
-                        END
-                    )
-                } else {
-                    Timber.w("CardTemplateFragment:: save model task failed: %s", result.second)
-                    UIUtils.showThemedToast(context.mTemplateEditor, context.getString(R.string.card_template_editor_save_error, result.second), false)
-                    context.mTemplateEditor.finishWithoutAnimation()
-                }
             }
         }
 

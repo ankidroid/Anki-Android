@@ -20,10 +20,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.utils.JSONObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
+import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -18,7 +18,6 @@ package com.ichi2.anki.noteeditor
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Pair
 import android.util.SparseArray
 import android.view.View
 import com.ichi2.anki.FieldEditLine
@@ -26,9 +25,9 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Models
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
+import org.json.JSONObject
 import java.util.*
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations
@@ -101,6 +100,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return editor.fieldsFromSelectedNote
     }
 
+    @Suppress("deprecation") // get
     fun setInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             return
@@ -127,7 +127,6 @@ class FieldState private constructor(private val editor: NoteEditor) {
         var newModel: Model? = null
 
         companion object {
-            @JvmStatic
             fun refreshWithMap(newModel: Model?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
                 typeClass.newModel = newModel
@@ -135,22 +134,18 @@ class FieldState private constructor(private val editor: NoteEditor) {
                 return typeClass
             }
 
-            @JvmStatic
             fun refresh(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.REFRESH, replaceNewlines)
             }
 
-            @JvmStatic
             fun refreshWithStickyFields(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines)
             }
 
-            @JvmStatic
             fun changeFieldCount(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines)
             }
 
-            @JvmStatic
             fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType {
                 return fromType(Type.INIT, replaceNewlines)
             }
@@ -170,7 +165,6 @@ class FieldState private constructor(private val editor: NoteEditor) {
             return oldFields.size > 2
         }
 
-        @JvmStatic
         fun fromEditor(editor: NoteEditor): FieldState {
             return FieldState(editor)
         }

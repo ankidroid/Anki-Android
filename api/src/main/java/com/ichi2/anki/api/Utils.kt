@@ -17,7 +17,6 @@
 package com.ichi2.anki.api
 
 import android.text.Html
-import android.text.TextUtils
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.math.BigInteger
@@ -37,18 +36,15 @@ internal object Utils {
     private const val FIELD_SEPARATOR = '\u001f'.toString()
 
     // TODO: Add contract for null -> null and non-null to non-null.
-    @JvmStatic
     fun joinFields(list: Array<String>?): String? {
-        return if (list != null) TextUtils.join("\u001f", list) else null
+        return list?.joinToString(FIELD_SEPARATOR)
     }
 
-    @JvmStatic
     fun splitFields(fields: String): Array<String> {
         return fields.split(FIELD_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }
             .toTypedArray()
     }
 
-    @JvmStatic
     fun joinTags(tags: Set<String?>?): String {
         if (tags == null || tags.isEmpty()) {
             return ""
@@ -56,15 +52,13 @@ internal object Utils {
         for (t in tags) {
             t!!.replace(" ".toRegex(), "_")
         }
-        return TextUtils.join(" ", tags)
+        return tags.joinToString(" ")
     }
 
-    @JvmStatic
     fun splitTags(tags: String): Array<String> {
         return tags.trim { it <= ' ' }.split("\\s+".toRegex()).toTypedArray()
     }
 
-    @JvmStatic
     fun fieldChecksum(data: String): Long {
         val strippedData = stripHTMLMedia(data)
         return try {

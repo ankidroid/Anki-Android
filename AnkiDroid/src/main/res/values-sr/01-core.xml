@@ -169,7 +169,6 @@
     <string name="empty_deck">Овај шпил је празан</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Додај карту</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Овај шпил је празан. Притисните дугме +, да бисте додали нови садржај.</string>
     <string name="studyoptions_limit_reached">Дневни лимит је достигнут</string>
@@ -182,6 +181,8 @@
     <string name="sd_card_not_mounted">Уређај за чување није монтиран</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизујте</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Желите ли да откажете синхронизацију?</string>
     <string name="continue_sync">Настави синхронизацију</string>
     <string name="sync_cancelled">Синхронизација отказана</string>

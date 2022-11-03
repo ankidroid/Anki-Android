@@ -29,7 +29,6 @@ object BundleUtils {
      * @param key the key to use
      * @return the long value, or null if not found
      */
-    @JvmStatic
     fun getNullableLong(bundle: Bundle?, key: String): Long? {
         return if (bundle == null || !bundle.containsKey(key)) {
             null
@@ -50,6 +49,7 @@ object BundleUtils {
         return getLong(key)
     }
 
+    @Suppress("deprecation") // getSerializable
     inline fun <reified T> Bundle.getSerializableWithCast(key: String): T {
         return getSerializable(key) as T
     }

@@ -25,11 +25,11 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
-import com.ichi2.utils.KotlinCleanup
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import java.util.function.Function
@@ -76,41 +76,32 @@ object ActivityList {
             get(PagesActivity::class.java),
             get(LoginActivity::class.java),
             get(IntroductionActivity::class.java),
+            get(ManageNotetypes::class.java),
         )
     }
 
-    @KotlinCleanup("use Kotlin scope functions")
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
-        val intent = Intent()
-        intent.putExtra(INTENT_QUESTION_FORMAT, "{{Front}}")
-        intent.putExtra(
-            INTENT_ANSWER_FORMAT,
-            "{{FrontSide}}\n{{Back}}"
-        )
-        return intent
+        return Intent().apply {
+            putExtra(INTENT_QUESTION_FORMAT, "{{Front}}")
+            putExtra(INTENT_ANSWER_FORMAT, "{{FrontSide}}\n{{Back}}")
+        }
     }
 
-    @KotlinCleanup("use Kotlin scope functions")
     private fun intentForCardTemplateEditor(): Intent {
-        val intent = Intent()
-        intent.putExtra("modelId", 1L)
-        return intent
+        return Intent().apply { putExtra("modelId", 1L) }
     }
 
-    @KotlinCleanup("simplify expression by removing `get()`")
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
         private var intentBuilder: Function<Context, Intent>
     ) {
-        val simpleName: String
-            get() = activity.simpleName
+        val simpleName: String = activity.simpleName
 
         fun build(context: Context): ActivityController<out Activity> = Robolectric
             .buildActivity(activity, intentBuilder.apply(context))
 
-        val className: String
-            get() = activity.name
+        val className: String = activity.name
 
         companion object {
             operator fun get(

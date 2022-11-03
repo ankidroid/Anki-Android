@@ -164,7 +164,6 @@
     <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">இந்த கட்டு காலியாக உள்ளது. பத்திரிகை, + புதிய உள்ளடக்கம் சேர்க்க பொத்தான்.</string>
     <string name="studyoptions_limit_reached">தினசரி படிப்பு வரம்பை அடைந்தது</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">சாதன சேமிப்பகம் பொருத்தப்படவில்லை</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ஒத்திசைக்க</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ஒத்திசைவை ரத்து செய்ய விரும்புகிறீர்களா?</string>
     <string name="continue_sync">ஒத்திசைவைத் தொடரவும்</string>
     <string name="sync_cancelled">ஒத்திசைவு ரத்துசெய்யப்பட்டது</string>

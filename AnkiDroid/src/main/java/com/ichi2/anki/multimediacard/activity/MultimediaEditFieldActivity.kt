@@ -44,8 +44,8 @@ import java.text.DecimalFormat
 @KotlinCleanup("IDE-based lint")
 @KotlinCleanup("lateinit")
 class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCallback {
-    private var mField: IField? = null
-    private var mNote: IMultimediaEditableNote? = null
+    private lateinit var mField: IField
+    private lateinit var mNote: IMultimediaEditableNote
     private var mFieldIndex = 0
 
     @get:VisibleForTesting
@@ -78,15 +78,16 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
         val intent = this.intent
-        mField = getFieldFromIntent(intent)
-        mNote = intent.getSerializableExtra(EXTRA_WHOLE_NOTE) as IMultimediaEditableNote?
-        mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0)
-        if (mField == null) {
+        val extras = getFieldFromIntent(intent)
+        if (extras == null) {
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)
             finishCancel()
             return
         }
-        recreateEditingUi(ChangeUIRequest.init(mField!!), controllerBundle)
+        mFieldIndex = extras.first
+        mField = extras.second
+        mNote = extras.third
+        recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle)
     }
 
     private fun finishCancel() {
@@ -124,9 +125,9 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     /** Sets various properties required for IFieldController to be in a valid state  */
     @KotlinCleanup("scope function")
     private fun setupUIController(fieldController: IFieldController, savedInstanceState: Bundle?) {
-        fieldController.setField(mField!!)
+        fieldController.setField(mField)
         fieldController.setFieldIndex(mFieldIndex)
-        fieldController.setNote(mNote!!)
+        fieldController.setNote(mNote)
         fieldController.setEditingActivity(this)
         fieldController.loadInstanceState(savedInstanceState)
     }
@@ -155,13 +156,13 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", mField!!.type)
+        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", mField.type)
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.activity_edit_text, menu)
-        menu.findItem(R.id.multimedia_edit_field_to_text).isVisible = mField!!.type !== EFieldType.TEXT
-        menu.findItem(R.id.multimedia_edit_field_to_audio).isVisible = mField!!.type !== EFieldType.AUDIO_RECORDING
-        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).isVisible = mField!!.type !== EFieldType.MEDIA_CLIP
-        menu.findItem(R.id.multimedia_edit_field_to_image).isVisible = mField!!.type !== EFieldType.IMAGE
+        menu.findItem(R.id.multimedia_edit_field_to_text).isVisible = mField.type !== EFieldType.TEXT
+        menu.findItem(R.id.multimedia_edit_field_to_audio).isVisible = mField.type !== EFieldType.AUDIO_RECORDING
+        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).isVisible = mField.type !== EFieldType.MEDIA_CLIP
+        menu.findItem(R.id.multimedia_edit_field_to_image).isVisible = mField.type !== EFieldType.IMAGE
         return true
     }
 
@@ -193,14 +194,13 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     @KotlinCleanup("rename: bChangeToText")
     protected fun done() {
-        fieldController!!.onDone()
         var bChangeToText = false
-        if (mField!!.type === EFieldType.IMAGE) {
-            if (mField!!.imagePath == null) {
+        if (mField.type === EFieldType.IMAGE) {
+            if (mField.imagePath == null) {
                 bChangeToText = true
             }
             if (!bChangeToText) {
-                val f = File(mField!!.imagePath!!)
+                val f = File(mField.imagePath!!)
                 if (!f.exists()) {
                     bChangeToText = true
                 } else {
@@ -211,46 +211,44 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                     }
                 }
             }
-        } else if (mField!!.type === EFieldType.AUDIO_RECORDING) {
-            if (mField!!.audioPath == null) {
+        } else if (mField.type === EFieldType.AUDIO_RECORDING) {
+            if (mField.audioPath == null) {
                 bChangeToText = true
             }
             if (!bChangeToText) {
-                val f = File(mField!!.audioPath!!)
+                val f = File(mField.audioPath!!)
                 if (!f.exists()) {
                     bChangeToText = true
                 }
             }
         }
-        if (bChangeToText) {
-            mField = null
-        }
-        saveAndExit()
+        fieldController!!.onDone()
+        saveAndExit(bChangeToText)
     }
 
     protected fun toAudioRecordingField() {
-        if (mField!!.type !== EFieldType.AUDIO_RECORDING) {
+        if (mField.type !== EFieldType.AUDIO_RECORDING) {
             val request = ChangeUIRequest.uiChange(AudioRecordingField())
             recreateEditingUi(request)
         }
     }
 
     protected fun toAudioClipField() {
-        if (mField!!.type !== EFieldType.MEDIA_CLIP) {
+        if (mField.type !== EFieldType.MEDIA_CLIP) {
             val request = ChangeUIRequest.uiChange(MediaClipField())
             recreateEditingUi(request)
         }
     }
 
     protected fun toImageField() {
-        if (mField!!.type !== EFieldType.IMAGE) {
+        if (mField.type !== EFieldType.IMAGE) {
             val request = ChangeUIRequest.uiChange(ImageField())
             recreateEditingUi(request)
         }
     }
 
     protected fun toTextField() {
-        if (mField!!.type !== EFieldType.TEXT) {
+        if (mField.type !== EFieldType.TEXT) {
             val request = ChangeUIRequest.uiChange(TextField())
             recreateEditingUi(request)
         }
@@ -327,9 +325,9 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     @KotlinCleanup("scope function")
-    private fun saveAndExit() {
+    private fun saveAndExit(ignoreField: Boolean = false) {
         val resultData = Intent()
-        resultData.putExtra(EXTRA_RESULT_FIELD, mField)
+        resultData.putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
         resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
         setResult(RESULT_OK, resultData)
         finishWithoutAnimation()
@@ -447,17 +445,16 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     companion object {
         const val EXTRA_RESULT_FIELD = "edit.field.result.field"
         const val EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index"
-        const val EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index"
-        const val EXTRA_FIELD = "multim.card.ed.extra.field"
-        const val EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note"
+        const val EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY = "multim.card.ed.extra"
         private const val BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off"
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val REQUEST_CAMERA_PERMISSION = 1
         const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
         @KotlinCleanup("see if we can make this non-null")
         @VisibleForTesting
-        fun getFieldFromIntent(intent: Intent): IField? {
-            return intent.extras!!.getSerializable(EXTRA_FIELD) as IField?
-        }
+        @Suppress("deprecation", "UNCHECKED_CAST") // getSerializable
+        fun getFieldFromIntent(intent: Intent) = intent.extras!!.getSerializable(EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY) as MultimediaEditFieldActivityExtra?
     }
 }
+
+typealias MultimediaEditFieldActivityExtra = Triple<Int, IField, IMultimediaEditableNote>

@@ -75,13 +75,13 @@
         <item quantity="other">Засталося %d хвіліны</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d гадзіна %2$d засталася</item>
         <item quantity="few">%1$d hours %2$d left</item>
         <item quantity="many">%1$d hours %2$d left</item>
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="one">%1$d дзень %2$d застаўся</item>
         <item quantity="few">%1$d days %2$d left</item>
         <item quantity="many">%1$d days %2$d left</item>
         <item quantity="other">%1$d days %2$d left</item>
@@ -174,7 +174,6 @@
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
-    <string name="empty_deck_add_note">Дадаць картку</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_empty">Гэта калода пустая. Націсніце кнопку +, каб дадаць новае змесціва.</string>
     <string name="studyoptions_limit_reached">Вы выканалі дзённую норму</string>
@@ -187,6 +186,8 @@
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="empty_cloze_warning">Адрэдагуйце гэты запіс і дадайце пропускі. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Сінхранізацыя часова адключана</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Скасаваць сінхранізацыю?</string>
     <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled">Сiнхранiзацыя скасаваная</string>

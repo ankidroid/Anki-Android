@@ -18,7 +18,6 @@
 package com.ichi2.libanki.importer
 
 import android.text.TextUtils
-import android.util.Pair
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
@@ -256,13 +255,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                                     update.add(arrayOf(nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data))
                                     dirty.add(nid)
                                 } else {
-                                    dupesIgnored.add(
-                                        String.format(
-                                            "%s: %s",
-                                            mCol.models.get(oldMid)!!.getString("name"),
-                                            flds.replace('\u001f', ',')
-                                        )
-                                    )
+                                    val modelName = mCol.models.get(oldMid)!!.getString("name")
+                                    val commaSeparatedFields = flds.replace('\u001f', ',')
+                                    dupesIgnored.add("$modelName: $commaSeparatedFields")
                                     mIgnoredGuids!!.add(guid)
                                 }
                             }
@@ -426,7 +421,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         var name = g.getString("name")
         // if there's a prefix, replace the top level deck
         if (!TextUtils.isEmpty(mDeckPrefix)) {
-            val parts = Arrays.asList(*Decks.path(name))
+            val parts = listOf(*Decks.path(name))
             val tmpname = TextUtils.join("::", parts.subList(1, parts.size))
             name = mDeckPrefix!!
             if (!TextUtils.isEmpty(tmpname)) {
@@ -435,7 +430,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         }
         // Manually create any parents so we can pull in descriptions
         var head: String? = ""
-        val parents = Arrays.asList(*Decks.path(name))
+        val parents = listOf(*Decks.path(name))
         for (parent in parents.subList(0, parents.size - 1)) {
             if (!TextUtils.isEmpty(head)) {
                 head += "::"
@@ -754,6 +749,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     if (srcData == null) {
                         // file was not in source, ignore
                         m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)!!))
+                        continue
                     }
                     // if model-local file exists from a previous import, use that
                     val split = Utils.splitFilename(fname)
@@ -767,13 +763,13 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                         )
                         continue
                     } else if (dstData == null || compareMedia(
-                            srcData!!,
+                            srcData,
                             dstData
                         )
                     ) { // if missing or the same, pass unmodified
                         // need to copy?
                         if (dstData == null) {
-                            _writeDstMedia(fname, srcData!!)
+                            _writeDstMedia(fname, srcData)
                         }
                         m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)!!))
                         continue

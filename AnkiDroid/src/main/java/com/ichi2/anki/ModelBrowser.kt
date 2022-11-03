@@ -16,10 +16,10 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Pair
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemLongClickListener
@@ -28,18 +28,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.saveCollectionInBackground
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu
 import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.CountModels
-import com.ichi2.async.CollectionTask.DeleteModel
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
+import com.ichi2.async.getAllModelsAndNotesCount
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.StdModels
@@ -49,9 +48,9 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
+import kotlinx.coroutines.Job
 import timber.log.Timber
-import java.lang.RuntimeException
-import java.util.ArrayList
+import java.util.*
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
 @NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
@@ -68,70 +67,17 @@ class ModelBrowser : AnkiActivity() {
     private var mCardCounts: ArrayList<Int>? = null
     private var mModelIds: ArrayList<Long>? = null
     private var mModelDisplayList: ArrayList<DisplayPair>? = null
-    private var mNewModelLabels: ArrayList<String>? = null
-    private var mExistingModelNames: ArrayList<String>? = null
     private lateinit var mCol: Collection
     private var mActionBar: ActionBar? = null
 
     // Dialogue used in renaming
     private var modelNameInput: EditText? = null
-    private var mNewModelNames: ArrayList<String>? = null
+
+    private var loadModelsJob: Job? = null
 
     // ----------------------------------------------------------------------------
     // AsyncTask methods
     // ----------------------------------------------------------------------------
-    /*
-     * Displays the loading bar when loading the mModels and displaying them
-     * loading bar is necessary because card count per model is not cached *
-     */
-    private fun loadingModelsHandler(): LoadingModelsHandler {
-        return LoadingModelsHandler(this)
-    }
-
-    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model>, ArrayList<Int>>?>(browser) {
-        override fun actualOnCancelled(context: ModelBrowser) {
-            context.hideProgressBar()
-        }
-
-        override fun actualOnPreExecute(context: ModelBrowser) {
-            context.showProgressBar()
-        }
-
-        @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
-        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model>, ArrayList<Int>>?) {
-            if (result == null) {
-                throw RuntimeException()
-            }
-            context.let {
-                it.hideProgressBar()
-                it.mModels = ArrayList(result.first!!)
-                it.mCardCounts = result.second
-                it.fillModelList()
-            }
-        }
-    }
-
-    /*
-     * Displays loading bar when deleting a model loading bar is needed
-     * because deleting a model also deletes all of the associated cards/notes *
-     */
-    private fun deleteModelHandler(): DeleteModelHandler {
-        return DeleteModelHandler(this)
-    }
-
-    private class DeleteModelHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Boolean?>(browser) {
-        override fun actualOnPreExecute(context: ModelBrowser) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: ModelBrowser, result: Boolean?) {
-            if (result == false) {
-                throw RuntimeException()
-            }
-            context.hideProgressBar()
-            context.refreshList()
-        }
-    }
 
     /**
      * Handle the actions that can be done on  a note type from the list.
@@ -172,15 +118,17 @@ class ModelBrowser : AnkiActivity() {
         return true
     }
 
-    @KotlinCleanup("Replace with when")
+    @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        } else if (itemId == R.id.action_add_new_note_type) {
-            addNewNoteTypeDialog()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.action_add_new_note_type -> {
+                showAddNewNoteTypeDialog()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -193,23 +141,40 @@ class ModelBrowser : AnkiActivity() {
         }
     }
 
-    public override fun onDestroy() {
-        TaskManager.cancelAllTasks(CountModels::class.java)
-        super.onDestroy()
-    }
-
     // ----------------------------------------------------------------------------
     // ANKI METHODS
     // ----------------------------------------------------------------------------
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         mCol = col
-        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+        loadModels()
     }
 
     // ----------------------------------------------------------------------------
     // HELPER METHODS
     // ----------------------------------------------------------------------------
+
+    /**
+     * Schedules a job to load all models and note count associated with each of model
+     * displays a progress dialog till the completion of job
+     *
+     * After completion, initializes mModels and mCardCounts and refreshes UI with new data
+     */
+    private fun loadModels() {
+        loadModelsJob?.cancel() // cancel if any previous task was scheduled, ideally only one job should exist
+        loadModelsJob = launchCatchingTask {
+            // Pair of list of models and corresponding notesCount
+            Timber.d("doInBackgroundLoadModels: Started")
+            val allModelsAndNotesCount = withProgress {
+                getAllModelsAndNotesCount()
+            }
+            Timber.d("doInBackgroundLoadModels: Completed, refreshing UI")
+            mModels = ArrayList(allModelsAndNotesCount.first)
+            mCardCounts = ArrayList(allModelsAndNotesCount.second)
+            fillModelList()
+        }
+    }
+
     /*
      * Fills the main list view with model names.
      * Handles filling the ArrayLists and attaching
@@ -221,7 +186,7 @@ class ModelBrowser : AnkiActivity() {
         mModelIds = ArrayList(mModels!!.size)
         for (i in mModels!!.indices) {
             mModelIds!!.add(mModels!![i].getLong("id"))
-            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i].toInt()))
+            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i]))
         }
         modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
         mModelListView!!.adapter = modelDisplayAdapter
@@ -252,103 +217,93 @@ class ModelBrowser : AnkiActivity() {
         mActionBar!!.subtitle = resources.getQuantityString(R.plurals.model_browser_types_available, count, count)
     }
 
-    /*
-     *Creates the dialogue box to select a note type, add a name, and then clone it
+    /**
+     *   * Shows a single choice dialog titled “Add note type” with items such as:
+     *     * Add: Basic
+     *     * Add: Basic (type in the answer)
+     *     * ...
+     *     * Clone: Vocabulary
+     *
+     *   * When user selects one of these and presses Ok,
+     *     shows a text input dialog with the same title and a suggested name
+     *     such as “Basic”, “Vocabulary copy” or “Basic-ce43a”.
+     *
+     *   * When user Okays the new name, a new model with the provided name is created
+     *     based on the previously selected model.
      */
-    private fun addNewNoteTypeDialog() {
-        initializeNoteTypeList()
-        val addSelectionSpinner = Spinner(this)
-        val newModelAdapter = ArrayAdapter(this, R.layout.dropdown_deck_item, mNewModelLabels!!.toList())
-        addSelectionSpinner.adapter = newModelAdapter
-        MaterialDialog(this).show {
-            customView(view = addSelectionSpinner, scrollable = true, horizontalPadding = true)
-            title(R.string.model_browser_add)
-            positiveButton(R.string.dialog_ok) {
-                modelNameInput = FixedEditText(this@ModelBrowser)
-                modelNameInput?.let { modelNameEditText ->
-                    modelNameEditText.setSingleLine()
-                    val isStdModel = addSelectionSpinner.selectedItemPosition < mNewModelLabels!!.size
-                    // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
-                    var suggestedName = mNewModelNames!![addSelectionSpinner.selectedItemPosition]
-                    if (!isStdModel) {
-                        suggestedName += " " + resources.getString(R.string.model_clone_suffix)
-                    }
-                    if (mExistingModelNames!!.contains(suggestedName)) {
-                        suggestedName = randomizeName(suggestedName)
-                    }
-                    modelNameEditText.setText(suggestedName)
-                    modelNameEditText.setSelection(modelNameEditText.text.length)
+    @SuppressLint("CheckResult") // listItemsSingleChoice() is annotated with @CheckResult ¯\_(ツ)_/¯
+    private fun showAddNewNoteTypeDialog() {
+        val addTemplate = resources.getString(R.string.model_browser_add_add)
+        val cloneTemplate = resources.getString(R.string.model_browser_add_clone)
 
-                    // Create textbox to name new model
-                    MaterialDialog(this@ModelBrowser).show {
-                        customView(view = modelNameEditText, scrollable = true)
-                        title(R.string.model_browser_add)
-                        positiveButton(R.string.dialog_ok) {
-                            val modelName = modelNameEditText.text.toString()
-                            addNewNoteType(modelName, addSelectionSpinner.selectedItemPosition)
-                        }
-                        negativeButton(R.string.dialog_cancel)
-                        displayKeyboard(modelNameEditText)
+        open class ModelInfo(val name: String, val label: String)
+        class StandardModelInfo(val model: StdModels, name: String, label: String) : ModelInfo(name, label)
+        class UserModelInfo(val model: Model, name: String, label: String) : ModelInfo(name, label)
+
+        val infos = sequence {
+            StdModels.STD_MODELS.forEach { model ->
+                val name = model.defaultName
+                val label = String.format(addTemplate, name)
+                yield(StandardModelInfo(model, name, label))
+            }
+
+            mModels!!.forEach { model ->
+                val name = model.getString("name")
+                val label = String.format(cloneTemplate, name)
+                yield(UserModelInfo(model, name, label))
+            }
+        }.toList()
+
+        // TODO Instead of appending " copy", a string template should be used instead.
+        fun ModelInfo.makeSuggestedName(): String {
+            val suggestion = when (this) {
+                is StandardModelInfo -> name
+                else -> name + " " + resources.getString(R.string.model_clone_suffix)
+            }
+
+            val alreadyExists = infos.any { it is UserModelInfo && it.name == suggestion }
+
+            return if (alreadyExists) randomizeName(suggestion) else suggestion
+        }
+
+        // TODO This will happily accept names that already exist in the user model list.
+        //   If duplicate names are not undesirable, add a comment stating so.
+        fun addNewModel(sourceModelInfo: ModelInfo, newName: String) {
+            if (newName.isEmpty()) {
+                showToast(resources.getString(R.string.toast_empty_name))
+                return
+            }
+
+            val newModel = if (sourceModelInfo is StandardModelInfo) {
+                sourceModelInfo.model.add(mCol)
+            } else {
+                sourceModelInfo as UserModelInfo // Kotlin does not yet support sealed local classes
+                sourceModelInfo.model.deepClone().apply {
+                    put("id", StdModels.BASIC_MODEL.add(mCol).getLong("id"))
+                }
+            }
+
+            newModel.put("name", newName)
+            mCol.models.update(newModel)
+            fullRefresh()
+        }
+
+        // TODO These dialogs are slightly confusing.
+        //   The first one says “Add note type ... Ok”, but it doesn't add anything straight away.
+        //   The second one also says “Add note type ... Ok”, and it is not mention the model
+        //   that you are cloning. I suggest reworking the strings so this is less confusing.
+        MaterialDialog(this).show {
+            title(R.string.model_browser_add)
+            positiveButton(R.string.dialog_ok)
+            listItemsSingleChoice(items = infos.map { it.label }) { _, index, _ ->
+                MaterialDialog(this@ModelBrowser).show {
+                    title(R.string.model_browser_add)
+                    positiveButton(R.string.dialog_ok)
+                    input(prefill = infos[index].makeSuggestedName()) { _, text ->
+                        addNewModel(infos[index], text.toString())
                     }
                 }
             }
-            negativeButton(R.string.dialog_cancel)
-        }
-    }
-
-    /**
-     * Add a new note type
-     * @param modelName name of the new model
-     * @param position position in dialog the user selected to add / clone the model type from
-     */
-    @KotlinCleanup("Use scope function while initializing oldModel + Invert and return early")
-    private fun addNewNoteType(modelName: String, position: Int) {
-        val model: Model
-        if (modelName.isNotEmpty()) {
-            val nbStdModels = StdModels.STD_MODELS.size
-            model = if (position < nbStdModels) {
-                StdModels.STD_MODELS[position].add(mCol)
-            } else {
-                // New model
-                // Model that is being cloned
-                val oldModel = mModels!![position - nbStdModels].deepClone()
-                val newModel = StdModels.BASIC_MODEL.add(mCol)
-                oldModel.put("id", newModel.getLong("id"))
-                oldModel
-            }
-            model.put("name", modelName)
-            mCol.models.update(model)
-            fullRefresh()
-        } else {
-            showToast(resources.getString(R.string.toast_empty_name))
-        }
-    }
-
-    /*
-     * retrieve list of note type in variable, which will going to be in use for adding/cloning note type
-     */
-    private fun initializeNoteTypeList() {
-        val add = resources.getString(R.string.model_browser_add_add)
-        val clone = resources.getString(R.string.model_browser_add_clone)
-
-        // Populates array adapters listing the mModels (includes prefixes/suffixes)
-        val existingModelSize = mModels!!.size
-        val stdModelSize = StdModels.STD_MODELS.size
-        mNewModelLabels = ArrayList(existingModelSize + stdModelSize)
-        mExistingModelNames = ArrayList(existingModelSize)
-
-        // Used to fetch model names
-        mNewModelNames = ArrayList(stdModelSize)
-        for (StdModels in StdModels.STD_MODELS) {
-            val defaultName = StdModels.defaultName
-            mNewModelLabels!!.add(String.format(add, defaultName))
-            mNewModelNames!!.add(defaultName)
-        }
-        for (model in mModels!!) {
-            val name = model.getString("name")
-            mNewModelLabels!!.add(String.format(clone, name))
-            mNewModelNames!!.add(name)
-            mExistingModelNames!!.add(name)
         }
     }
 
@@ -383,7 +338,6 @@ class ModelBrowser : AnkiActivity() {
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private fun renameModelDialog() {
-        initializeNoteTypeList()
         modelNameInput = FixedEditText(this)
         modelNameInput?.let { modelNameEditText ->
             modelNameEditText.isSingleLine = true
@@ -395,18 +349,18 @@ class ModelBrowser : AnkiActivity() {
                 title(R.string.rename_model)
                 positiveButton(R.string.rename) {
                     val model = mModels!![mModelListPosition]
-                    var deckName = modelNameEditText.text.toString() // Anki desktop doesn't allow double quote characters in deck names
+                    var name = modelNameEditText.text.toString() // Anki desktop doesn't allow double quote characters in deck names
                         .replace("[\"\\n\\r]".toRegex(), "")
-                    if (mExistingModelNames!!.contains(deckName)) {
-                        deckName = randomizeName(deckName)
+                    if (mModels!!.any { it.getString("name") == name }) {
+                        name = randomizeName(name)
                     }
-                    if (deckName.isNotEmpty()) {
-                        model.put("name", deckName)
+                    if (name.isNotEmpty()) {
+                        model.put("name", name)
                         mCol.models.update(model)
-                        mModels!![mModelListPosition].put("name", deckName)
+                        mModels!![mModelListPosition].put("name", name)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),
-                            mCardCounts!![mModelListPosition].toInt()
+                            mCardCounts!![mModelListPosition]
                         )
                         refreshList()
                     } else {
@@ -445,14 +399,26 @@ class ModelBrowser : AnkiActivity() {
      * Reloads everything
      */
     private fun fullRefresh() {
-        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+        loadModels()
     }
 
-    /*
-     * Deletes the currently selected model
+    /**
+     * Deletes the currently selected model and all notes associated with it
+     *
+     * Displays loading bar when deleting a model loading bar is needed
+     * because deleting a model also deletes all of the associated cards/notes
      */
     private fun deleteModel() {
-        TaskManager.launchCollectionTask(DeleteModel(mCurrentID), deleteModelHandler())
+        launchCatchingTask {
+            withProgress {
+                withCol {
+                    Timber.d("doInBackGroundDeleteModel")
+                    col.models.rem(col.models.get(mCurrentID)!!)
+                    col.save()
+                }
+            }
+            refreshList()
+        }
         mModels!!.removeAt(mModelListPosition)
         mModelIds!!.removeAt(mModelListPosition)
         mModelDisplayList!!.removeAt(mModelListPosition)
@@ -506,7 +472,7 @@ class ModelBrowser : AnkiActivity() {
 
     private val mEditTemplateResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+            loadModels()
         }
     }
 }

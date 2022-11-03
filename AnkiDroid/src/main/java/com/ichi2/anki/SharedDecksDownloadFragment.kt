@@ -21,7 +21,6 @@ import android.app.DownloadManager
 import android.content.*
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -36,6 +35,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 import java.io.File
@@ -85,6 +85,7 @@ class SharedDecksDownloadFragment : Fragment() {
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
     }
 
+    @Suppress("deprecation") // getSerializable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,6 +94,7 @@ class SharedDecksDownloadFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shared_decks_download, container, false)
     }
 
+    @Suppress("deprecation") // getSerializable
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -167,7 +169,7 @@ class SharedDecksDownloadFragment : Fragment() {
         request.setTitle(currentFileName)
 
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, currentFileName)
+        request.setDestinationInExternalFilesDir(context, FileUtil.getDownloadDirectory(), currentFileName)
 
         return request
     }
@@ -380,7 +382,7 @@ class SharedDecksDownloadFragment : Fragment() {
             FileProvider.getUriForFile(
                 it,
                 it.applicationContext?.packageName + ".apkgfileprovider",
-                File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), mFileName.toString())
+                File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), mFileName.toString())
             )
         }
         Timber.d("File URI -> $fileUri")
@@ -400,6 +402,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * If there are any pending downloads, continue with them.
      * Else, set mIsPreviousDownloadOngoing as false and unregister mOnComplete broadcast receiver.
      */
+    @Suppress("deprecation") // onBackPressed
     private fun checkDownloadStatusAndUnregisterReceiver(isSuccessful: Boolean, isInvalidDeckFile: Boolean = false) {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
@@ -425,6 +428,7 @@ class SharedDecksDownloadFragment : Fragment() {
         removeCancelConfirmationDialog()
     }
 
+    @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
             MaterialDialog(it).show {

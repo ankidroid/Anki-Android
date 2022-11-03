@@ -123,7 +123,6 @@
     <string name="save">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
-    <string name="saving_changes">Ukládají se změny&#8230;</string>
     <string name="reordering_cards">Mění se pořadí karet&#8230;</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
@@ -164,7 +163,6 @@
     <string name="empty_card_warning">Tato karta je prázdná. Použijte možnost \"Prázdné karty\" z menu na obrazovce seznamu balíčků.</string>
     <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
     <string name="delete_deck">Odstraňuje se balíček&#8230;</string>
-    <string name="show_hint">Zobrazit %s</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
     <string name="import_title">Importuje se</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
@@ -198,14 +196,25 @@
     <string name="export_include_media">Zahrnout multimédia</string>
     <string name="confirm_apkg_export">Exportovat kolekci jako Anki balíček?</string>
     <string name="confirm_apkg_export_deck">Exportovat „%s“ jako apkg soubor?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Exportovat vybranou kartu jako soubor apkg?</item>
+        <item quantity="few">Exportovat %d vybrané karty jako soubor apkg?</item>
+        <item quantity="many">Exportovat %d vybrané karty jako soubor apkg?</item>
+        <item quantity="other">Exportovat %d vybraných karet jako soubor apkg?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Exportovat vybranou poznámku jako soubor apkg?</item>
+        <item quantity="few">Exportovat %d vybrané poznámky jako soubor apkg?</item>
+        <item quantity="many">Exportovat %d vybrané poznámky jako soubor apkg?</item>
+        <item quantity="other">Exportovat %d vybraných poznámek jako soubor apkg?</item>
+    </plurals>
     <string name="export_in_progress">Exportuje se Anki balíček&#8230;</string>
-    <string name="export_successful_title">Odeslat Anki balíček?</string>
-    <string name="export_send_button">Odeslat</string>
-    <string name="export_save_button">Uložit do souboru</string>
+    <string name="export_success_title">Kolekce úspěšně exportována</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>
     <string name="export_save_apkg_successful">Anki balíček úspěšně uložen</string>
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
-    <string name="export_successful">Soubor „%s“ byl exportován. Chcete jej poslat pomocí jiné aplikace?</string>
+    <string name="export_success_message">Můžete zvolit umístění, kam se soubor uloží, nebo jej sdílet jinou aplikací.</string>
+    <string name="export_share_title">Odeslat Anki balíček pomocí</string>
     <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
     <string name="export_email_text"><![CDATA[        Ahoj!
         <br/><br/>
@@ -214,12 +223,13 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
+    <string name="export_select_save_app">Vyberte, kam uložit soubor</string>
+    <string name="export_select_share_app">Vyberte aplikaci pro sdílení</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
-    <string name="select_tts">Nastavit jazyk pro převod textu na řeč</string>
-    <string name="custom_study">Vlastní učení</string>
+    <string name="select_tts">Nastavit jazyk TTS</string>
+    <string name="custom_study">Vlastní studium</string>
     <string name="more_options">Více</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="steps_error">Kroky musí být čísla větší než 0</string>
@@ -228,7 +238,7 @@
     <string name="sched_unbury_action">Pro jejich zobrazení stiskněte v menu položku „Zrušit přeskočení“.</string>
     <string name="sched_has_buried">Některé související nebo přeskočené karty byly přesunuty na zítra.</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
-    <string name="tag_editor_add_feedback_existing">Vybrán štítek “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekunda</item>
@@ -400,6 +410,15 @@
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Migrovat</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s není platný balíček javascript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
@@ -419,6 +438,13 @@
     <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Balíček existuje</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_created">Balíček vytvořen</string>
+    <string name="deck_renamed">Balíček přejmenován</string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>
+    <string name="toggle_cards_notes">Přepnout karty/poznámky</string>
+    <string name="toggle_browser_mode_help">Přepnout zobrazení karet nebo poznámek v prohlížeči</string>
+    <string name="truncate_content_help">Zkrátit výšku každého řádku prohlížeče, aby se zobrazily pouze první 3 řádky obsahu</string>
+    <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
 </resources>

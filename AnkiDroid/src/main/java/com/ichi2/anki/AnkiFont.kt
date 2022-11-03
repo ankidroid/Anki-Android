@@ -59,7 +59,6 @@ class AnkiFont private constructor(val name: String, private val family: String,
          * @param fromAssets True if the font is to be found in assets of application
          * @return A new AnkiFont object or null if the file can't be interpreted as typeface.
          */
-        @JvmStatic
         fun createAnkiFont(ctx: Context, filePath: String, fromAssets: Boolean): AnkiFont? {
             var path = filePath
             val fontFile = File(path)
@@ -114,7 +113,6 @@ class AnkiFont private constructor(val name: String, private val family: String,
             return createdFont
         }
 
-        @JvmStatic
         fun getTypeface(ctx: Context, path: String): Typeface? {
             return try {
                 if (path.startsWith(fAssetPathPrefix)) {

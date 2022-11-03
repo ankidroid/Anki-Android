@@ -123,7 +123,6 @@
     <string name="save">حفظ</string>
     <string name="close">إغلاق</string>
     <string name="select">تحديد</string>
-    <string name="saving_changes">حفظ التغييرات...</string>
     <string name="reordering_cards">إعادة ترتيب البطاقات&#8230;</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
@@ -170,7 +169,6 @@
     <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
     <string name="delete_deck">يجري حذف الرزمة...</string>
-    <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
@@ -206,14 +204,29 @@
     <string name="export_include_media">تضمين الوسائط</string>
     <string name="confirm_apkg_export">هل تريد تصدير المجموعة كحزمة أنكي؟</string>
     <string name="confirm_apkg_export_deck">هل تريد تصدير “%s” كملف apkg؟</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="zero">هل تريد تصدير البطاقة المحددة كملف apkg؟</item>
+        <item quantity="one">هل تريد تصدير البطاقة المحددة كملف apkg؟</item>
+        <item quantity="two">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
+        <item quantity="few">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
+        <item quantity="many">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
+        <item quantity="other">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="zero">هل تريد تصدير الملحوظة المحددة كملف apkg؟</item>
+        <item quantity="one">هل تريد تصدير الملحوظة المحددة كملف apkg؟</item>
+        <item quantity="two">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
+        <item quantity="few">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
+        <item quantity="many">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
+        <item quantity="other">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
+    </plurals>
     <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
-    <string name="export_successful_title">هل تريد إرسال حزمة أنكي؟</string>
-    <string name="export_send_button">إرسال</string>
-    <string name="export_save_button">حفظ إلى ملف</string>
+    <string name="export_success_title">تم تصدير المجموعة بنجاح</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
-    <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
+    <string name="export_success_message">تستطيع اختيار ملف للحفظ فيه، أو المشاركة مع تطبيق آخر</string>
+    <string name="export_share_title">إرسال حزمة أنكي باستخدام</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
     <string name="export_email_text"><![CDATA[        مرحبًا
         <br/><br/>
@@ -222,7 +235,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
+    <string name="export_select_save_app">حدد مكان حفظ الملف</string>
+    <string name="export_select_share_app">اختر تطبيقًا للمشاركة</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
@@ -420,6 +434,15 @@
     <string name="scoped_storage_postpone">تأجيل</string>
     <string name="scoped_storage_migrate">نقل</string>
     <string name="search_card_js_api_no_results">لم يجد البحث أي نتائج</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s ليست حزمة إضافة جافاسكربت صالحة</string>
     <string name="could_not_create_dir">فشل إنشاء المجلد %s</string>
@@ -441,4 +464,11 @@
     <string name="validation_deck_already_exists">سلام </string>
     <string name="deck_created">كيفية </string>
     <string name="deck_renamed">Minato </string>
+    <!-- Browser Options Dialog -->
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>
+    <string name="toggle_cards_notes">تبديل عرض البطاقات/الملحوظات</string>
+    <string name="toggle_browser_mode_help">تبديل عرض البطاقات أو الملحوظات في المتصفح</string>
+    <string name="truncate_content_help">حد ارتفاع كل صف من المتصفح لإظهار أول 3 سطور فقط</string>
+    <string name="browser_options_dialog_heading">خيارات المتصفح</string>
 </resources>

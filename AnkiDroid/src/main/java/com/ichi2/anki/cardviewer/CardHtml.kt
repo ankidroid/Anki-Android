@@ -24,9 +24,9 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -201,7 +201,6 @@ class CardHtml(
          * @param answerContent     The content from which to remove front side audio.
          * @return The content stripped of audio due to {{FrontSide}} inclusion.
          */
-        @JvmStatic
         fun removeFrontSideAudio(card: Card, answerContent: String): String {
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
@@ -216,7 +215,6 @@ class CardHtml(
             return newAnswerContent
         }
 
-        @JvmStatic
         fun legacyGetTtsTags(card: Card, cardSide: Sound.SoundSide, context: Context): List<TTSTag>? {
             val cardSideContent: String = when {
                 Sound.SoundSide.QUESTION == cardSide -> card.q(true)

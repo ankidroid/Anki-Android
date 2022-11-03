@@ -75,16 +75,16 @@
         <item quantity="other">Zostało %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Pozostała %1$d godzina %2$d</item>
+        <item quantity="few">Pozostały %1$d godziny %2$d</item>
+        <item quantity="many">Pozostało %1$d godzin %2$d</item>
+        <item quantity="other">Pozostało %1$d godzin %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Pozostał %1$d dzień %2$d</item>
+        <item quantity="few">Pozostały %1$d dni %2$d</item>
+        <item quantity="many">Pozostało %1$d dni %2$d</item>
+        <item quantity="other">Pozostało %1$d dni %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
     <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>
@@ -174,7 +174,6 @@
     <string name="empty_deck">Ta talia jest pusta</string>
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Wyszukiwanie talii</string>
-    <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
     <string name="studyoptions_limit_reached">Dzienny limit nauki został osiągnięty</string>
@@ -187,6 +186,8 @@
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="empty_cloze_warning">Edytuj notatkę i dodaj luki w tekście. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronizacja tymczasowo wyłączona</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
     <string name="continue_sync">Kontynuuj synchronizację</string>
     <string name="sync_cancelled">Synchronizacja przerwana</string>

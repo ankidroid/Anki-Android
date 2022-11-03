@@ -16,7 +16,6 @@
 package com.ichi2.libanki.template
 
 import android.content.Context
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.libanki.Utils
@@ -39,7 +38,7 @@ abstract class ParsedNode {
     // Used only fot testing
     @VisibleForTesting
     fun template_is_empty(vararg nonempty_fields: String?): Boolean {
-        return template_is_empty(HashSet(Arrays.asList(*nonempty_fields)))
+        return template_is_empty(nonempty_fields.map { it!! }.toSet())
     }
 
     @Throws(TemplateError::class)

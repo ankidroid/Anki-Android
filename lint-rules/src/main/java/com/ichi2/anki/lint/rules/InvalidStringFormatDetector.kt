@@ -46,7 +46,6 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         /**
          * Whether the string or plural resource that is being used has all the translations
          * **/
-        @JvmField
         val ISSUE = Issue.create(
             "InvalidStringFormat",
             "The String format is invalid",

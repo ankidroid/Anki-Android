@@ -15,7 +15,6 @@
  */
 package com.ichi2.utils
 
-import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
 import com.ichi2.utils.CollectionUtils.combinations
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -23,13 +22,6 @@ import org.junit.Test
 
 class CollectionUtilsTest {
     var testList = arrayListOf(1, 2, 3)
-
-    @Test
-    fun testAddAll() {
-        val toTest = arrayListOf<Int>()
-        CollectionUtils.addAll(toTest, testList)
-        assertEqualsArrayList(arrayOf(1, 2, 3), toTest)
-    }
 
     @Test
     fun testCombinations() {

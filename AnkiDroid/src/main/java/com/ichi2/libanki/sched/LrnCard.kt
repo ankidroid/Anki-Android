@@ -18,16 +18,13 @@ package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("make col non-null")
-@KotlinCleanup("IDE Lint")
-class LrnCard(col: Collection?, val due: Long, cid: Long) :
+class LrnCard(col: Collection, val due: Long, cid: Long) :
     Card.Cache(
-        col!!, cid
+        col, cid
     ),
     Comparable<LrnCard> {
     override fun compareTo(other: LrnCard): Int {
-        return java.lang.Long.compare(due, other.due)
+        return due.compareTo(other.due)
     }
 }

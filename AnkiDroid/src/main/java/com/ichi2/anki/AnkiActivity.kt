@@ -28,9 +28,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
-import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
-import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
+import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -38,6 +36,7 @@ import androidx.fragment.app.FragmentManager
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -60,6 +59,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
@@ -481,12 +481,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     /**
      * Calls [.showAsyncDialogFragment] internally, using the channel
-     * [NotificationChannels.Channel.GENERAL]
+     * [Channel.GENERAL]
      *
      * @param newFragment  the AsyncDialogFragment you want to show
      */
     open fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
-        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.GENERAL)
+        showAsyncDialogFragment(newFragment, Channel.GENERAL)
     }
 
     /**
@@ -495,11 +495,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * AsyncTask completed
      *
      * @param newFragment  the AsyncDialogFragment you want to show
-     * @param channel the NotificationChannels.Channel to use for the notification
+     * @param channel the Channel to use for the notification
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: NotificationChannels.Channel
+        channel: Channel
     ) {
         try {
             showDialogFragment(newFragment)
@@ -532,7 +532,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     fun showSimpleNotification(
         title: String,
         message: String?,
-        channel: NotificationChannels.Channel
+        channel: Channel
     ) {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
         // Show a notification unless all notifications have been totally disabled
@@ -547,7 +547,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Build basic notification
             val builder = NotificationCompat.Builder(
                 this,
-                NotificationChannels.getId(channel)
+                channel.id
             )
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setContentTitle(title)
@@ -640,6 +640,28 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }
         )
+
+    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
+        if (CollectionHelper.instance.colIsOpen()) {
+            launchCatchingTask {
+                Timber.d("saveCollectionInBackground: start")
+                withCol {
+                    Timber.d("doInBackgroundSaveCollection")
+                    try {
+                        if (syncIgnoresDatabaseModification) {
+                            SyncStatus.ignoreDatabaseModification { col.save() }
+                        } else {
+                            col.save()
+                        }
+                    } catch (e: Exception) {
+                        Timber.e(e, "Error on saving deck in background")
+                        // TODO should this error be reported through our error reporting service?
+                    }
+                }
+                Timber.d("saveCollectionInBackground: finished")
+            }
+        }
+    }
 
     companion object {
         const val REQUEST_REVIEW = 901

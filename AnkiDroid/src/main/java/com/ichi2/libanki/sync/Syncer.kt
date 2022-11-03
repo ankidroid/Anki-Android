@@ -19,7 +19,6 @@ package com.ichi2.libanki.sync
 
 import android.database.Cursor
 import android.database.SQLException
-import android.util.Pair
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -32,11 +31,11 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
@@ -474,28 +473,28 @@ class Syncer(
     private fun cursorForTable(table: String): Cursor {
         val limAndArg = usnLim()
         return if ("revlog" == table) {
-            col.db.query("SELECT id, cid, " + mMaxUsn + ", ease, ivl, lastIvl, factor, time, type FROM revlog WHERE " + limAndArg.first, *limAndArg.second!!)
+            col.db.query("SELECT id, cid, " + mMaxUsn + ", ease, ivl, lastIvl, factor, time, type FROM revlog WHERE " + limAndArg.first, *limAndArg.second)
         } else if ("cards" == table) {
-            col.db.query("SELECT id, nid, did, ord, mod, " + mMaxUsn + ", type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE " + limAndArg.first, *limAndArg.second!!)
+            col.db.query("SELECT id, nid, did, ord, mod, " + mMaxUsn + ", type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE " + limAndArg.first, *limAndArg.second)
         } else {
-            col.db.query("SELECT id, guid, mid, mod, " + mMaxUsn + ", tags, flds, '', '', flags, data FROM notes WHERE " + limAndArg.first, *limAndArg.second!!)
+            col.db.query("SELECT id, guid, mid, mod, " + mMaxUsn + ", tags, flds, '', '', flags, data FROM notes WHERE " + limAndArg.first, *limAndArg.second)
         }
     }
 
     private fun columnTypesForQuery(table: String): List<Int> {
         return if ("revlog" == table) {
-            Arrays.asList(
+            listOf(
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER
             )
         } else if ("cards" == table) {
-            Arrays.asList(
+            listOf(
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                 TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING
             )
         } else {
-            Arrays.asList(
+            listOf(
                 TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING,
                 TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_INTEGER, TYPE_STRING
             )
@@ -782,12 +781,12 @@ class Syncer(
         val lmods: MutableMap<Long, Long> = HashMapInit(
             col.db.queryScalar(
                 "SELECT count() FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND " + limAndArg.first,
-                *limAndArg.second!!
+                *limAndArg.second
             )
         )
         col.db.query(
             "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND " + limAndArg.first,
-            *limAndArg.second!!
+            *limAndArg.second
         ).use { cur ->
             while (cur.moveToNext()) {
                 lmods[cur.getLong(0)] = cur.getLong(1)

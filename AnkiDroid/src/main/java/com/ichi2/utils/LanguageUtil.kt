@@ -33,7 +33,6 @@ object LanguageUtil {
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
      * Please note 'yue' is special, it is 'yu' on CrowdIn, and mapped in import specially to 'yue' */
-    @JvmField
     val APP_LANGUAGES = arrayOf(
         "af", // Afrikaans / Afrikaans
         "am", // Amharic / አማርኛ
@@ -187,12 +186,13 @@ object LanguageUtil {
         "vi", // Tiếng Việt
         "zh-CN", // 简体中文
         "zh-TW", // 繁體中文
-    ) /**
+    )
+
+    /**
      * Returns the [Locale] for the given code or the default locale, if no code or preferences are given.
      *
      * @return The [Locale] for the given code
      */
-    @JvmStatic
     val locale: Locale
         get() = getLocale("")
 
@@ -201,7 +201,6 @@ object LanguageUtil {
      *
      * @return The [Locale] for the given code
      */
-    @JvmStatic
     fun getLocale(localeCode: String?): Locale {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
         return getLocale(localeCode, prefs)
@@ -213,11 +212,10 @@ object LanguageUtil {
      * @param localeCode The locale code of the language
      * @return The [Locale] for the given code
      */
-    @JvmStatic
     fun getLocale(localeCode: String?, prefs: SharedPreferences): Locale {
         var tempLocaleCode = localeCode
         if (tempLocaleCode == null || TextUtils.isEmpty(tempLocaleCode)) {
-            tempLocaleCode = prefs.getString(Preferences.LANGUAGE, "")
+            tempLocaleCode = prefs.getLanguage()
             // If no code provided use the app language.
         }
         if (TextUtils.isEmpty(tempLocaleCode)) {
@@ -239,23 +237,22 @@ object LanguageUtil {
         return locale
     }
 
-    @JvmStatic
     fun getShortDateFormatFromMs(ms: Long): String {
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(Date(ms))
     }
 
-    @JvmStatic
     fun getShortDateFormatFromS(s: Long): String {
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(Date(s * 1000L))
     }
 
-    @JvmStatic
     fun getLocaleCompat(resources: Resources): Locale? {
         return ConfigurationCompat.getLocales(resources.configuration)[0]
     }
 
-    /** If locale is not provided, the current locale will be used. */
     @JvmStatic
+    fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
+
+    /** If locale is not provided, the current locale will be used. */
     fun setDefaultBackendLanguages(locale: String = "") {
         BackendFactory.defaultLanguages = listOf(localeToBackendCode(getLocale(locale)))
     }
@@ -270,4 +267,13 @@ object LanguageUtil {
             else -> locale.toLanguageTag()
         }
     }
+
+    /**
+     * @return the language defined by the preferences, or the empty string.
+     */
+    fun SharedPreferences.getLanguage() = getString(Preferences.LANGUAGE, "")
+    /**
+     * @return the language defined by the preferences, or otherwise the default locale
+     */
+    fun SharedPreferences.getCurrentLanguage(): String = getString(Preferences.LANGUAGE, null) ?: Locale.getDefault().language
 }

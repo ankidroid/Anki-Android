@@ -19,7 +19,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.TemporaryModel.ChangeType.*
 import com.ichi2.libanki.Model
-import com.ichi2.utils.JSONObject
+import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -56,6 +56,7 @@ class TemporaryModelTest : RobolectricTest() {
     }
 
     @Test
+    @Suppress("deprecation") // getSerializable
     fun testAddDeleteTracking() {
 
         // Assume you start with a 2 template model (like "Basic (and reversed)")

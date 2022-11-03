@@ -36,6 +36,7 @@ abstract class PageFragment : Fragment() {
     abstract val title: Int
     abstract val pageName: String
     abstract var webViewClient: PageWebViewClient
+    abstract var webChromeClient: PageChromeClient
 
     lateinit var webView: WebView
 
@@ -52,6 +53,7 @@ abstract class PageFragment : Fragment() {
         webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
             settings.javaScriptEnabled = true
             webViewClient = this@PageFragment.webViewClient
+            webChromeClient = this@PageFragment.webChromeClient
         }
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
         val url = "http://$HOST_NAME:$port/$pageName.html$nightMode"

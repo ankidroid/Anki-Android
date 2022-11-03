@@ -45,7 +45,7 @@ class ActivityTransitionAnimationTest {
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // used in @MethodSource
         fun getInverseTransition_returns_inverse_direction_args(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(Direction.START, Direction.END),

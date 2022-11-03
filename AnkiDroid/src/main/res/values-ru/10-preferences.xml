@@ -50,11 +50,11 @@
     <string name="pref_summary_seconds">%s с</string>
     <string name="pref_summary_minutes">%s мин.</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Не найдено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Поведение</string>
+    <string name="pref_cat_system_wide" maxLength="41">Общесистемные</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
     <string name="pref_cat_scheduling" maxLength="41">Расписание</string>
@@ -77,7 +77,7 @@
     <string name="reset_confirmation">Все сопоставления сброшены</string>
     <string name="card_zoom" maxLength="41">Масштаб карточек</string>
     <string name="image_zoom" maxLength="41">Масштаб картинок</string>
-    <string name="button_size" maxLength="41">Размер кнопки ответа</string>
+    <string name="button_size" maxLength="41">Масштаб кнопок ответа</string>
     <string name="card_browser_font_size" maxLength="41">Масштаб шрифта в списке карточек</string>
     <string name="card_browser_hide_media" maxLength="41">Показывать имена файлов</string>
     <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
@@ -132,15 +132,15 @@
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
     <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>
     <string name="sync_status_badge_summ">Добавляет точку на значок синхронизации, когда можно выгрузить изменения</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Разрешить синхронизацию в тарифицируемых сетях</string>
+    <string name="metered_sync_summary">Если отключено, предупреждает, если вы синхронизируетесь через тарифицированную сеть</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
     <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
     <string name="override_font" maxLength="41">Когда применять шрифт по умолчанию</string>
     <string name="language" maxLength="41">Язык</string>
-    <string name="language_system">системный</string>
+    <string name="language_system">Системный</string>
     <string name="notification_pref" maxLength="41">Уведомления</string>
     <string name="notification_pref_title" maxLength="41">Какие показывать</string>
     <string name="never_notify">Никакие</string>
@@ -226,12 +226,23 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число итераций моделирования</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Использовать пользовательский сервер</string>
-    <string name="custom_sync_server_enable_summary">Если вы не хотите использовать AnkiWeb, то вы можете указать альтернативный сервер</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не используется</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Коллекция: %1$s\nМедиа: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">по умолчанию</string>
+    <string name="custom_sync_server_help"><![CDATA[        Вместо синхронизации с AnkiWeb,
+        вы можете использовать свои собственные серверы для синхронизации.
+        Вы можете указать либо коллекцию или медиасервер, либо и то, и другое.
+        Если сервер не задан, то будут использоваться сервера AnkiWeb.
+        Например, вы можете использовать сервер синхронизации встроенный в Anki
+        Desktop для синхронизации коллекции, когда у вас только локальная сеть,
+        и AnkiWeb синхронизировать медиа при общем доступе к Интернету.
+        <a href="%s">Подробнее</a>
+        <br>
+        <br>Примечание: в отличие от предыдущих версий AnkiDroid,
+        вы должны указать полный URL-адрес синхронизации,
+        например: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
-    <string name="custom_sync_server_base_url_invalid">Недопустимый адрес синхронизации</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
-    <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>
     <string name="bluetooth">Bluetooth</string>
@@ -250,7 +261,7 @@
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">Новые карточки</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторяемые</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забытые</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
     <string name="deck_conf_steps" maxLength="41">Шаги (в минутах)</string>
@@ -347,12 +358,12 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Удалить «%s»</string>
     <string name="bindings_already_bound">Уже назначено на «%s»</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41">Экспериментальная</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Включить «%s»</string>
+    <string name="use_rust_backend_title" maxLength="41">Использовать новый бэк-энд</string>
+    <string name="use_rust_backend_summary">Включает новые функции Anki, например, планировщик v3\nНЕСТАБИЛЬНО. Не используйте для коллекции, о которой вы заботитесь. Не изменяется при закрытии приложения</string>
+    <string name="use_rust_backend_warning">Есть вероятность того, что данные будут повреждены, что требует удаления приложения и папки AnkiDroid, а также вероятность порчи после синхронизации с AnkiWeb.\n\nСпасибо вам за тестирование. Убедитесь, что у вас есть резервная копия кроме AnkiWeb!</string>
+    <string name="enable_v3_sched_title" maxLength="41">Использовать планировщик v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Настройки разработчика</string>
     <string name="dev_options_enabled_pref" maxLength="41">Включить параметры для разработчиков</string>

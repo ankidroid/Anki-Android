@@ -44,7 +44,6 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -55,7 +54,6 @@ import com.ichi2.ui.FixedTextView
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.Locale
 
 @RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")
 class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleListener {
@@ -260,7 +258,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
 
         private fun getTabTitle(position: Int): String {
-            val l = Locale.getDefault()
             return when (position) {
                 TODAYS_STATS_TAB_POSITION -> getString(R.string.stats_overview)
                 FORECAST_TAB_POSITION -> getString(R.string.stats_forecast)
@@ -272,7 +269,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
                 ANSWER_BUTTONS_TAB_POSITION -> getString(R.string.stats_answer_buttons)
                 CARDS_TYPES_TAB_POSITION -> getString(R.string.title_activity_template_editor)
                 else -> ""
-            }.uppercase(l)
+            }
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -378,7 +375,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsJob = catchingLifecycleScope {
+            statisticsJob = launchCatchingTask {
                 taskHandler.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
             }
         }
@@ -453,7 +450,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsJob = catchingLifecycleScope("createStatisticOverview failed with error") {
+            statisticsJob = launchCatchingTask("createStatisticOverview failed with error") {
                 handler.createStatisticsOverview(mWebView, mProgressBar)
             }
         }

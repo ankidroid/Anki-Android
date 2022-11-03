@@ -28,12 +28,12 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     fun appendCssStyle(style: StringBuilder) {
         // Zoom cards
         if (cardZoom != 100) {
-            style.append(String.format("body { zoom: %s }\n", cardZoom / 100.0))
+            style.append("body { zoom: ${cardZoom / 100.0} }\n")
         }
 
         // Zoom images
         if (imageZoom != 100) {
-            style.append(String.format("img { zoom: %s }\n", imageZoom / 100.0))
+            style.append("img { zoom: ${imageZoom / 100.0} }\n")
         }
     }
 
@@ -77,7 +77,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     companion object {
         private val nightModeClassRegex = Regex("\\.night(?:_m|M)ode\\b")
 
-        @JvmStatic
         fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)
@@ -85,7 +84,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             return CardAppearance(customFonts, cardZoom, imageZoom, centerVertically)
         }
 
-        @JvmStatic
         fun fixBoldStyle(content: String): String {
             // In order to display the bold style correctly, we have to change
             // font-weight to 700

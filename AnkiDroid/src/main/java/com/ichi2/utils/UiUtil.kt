@@ -23,14 +23,12 @@ import android.text.style.StyleSpan
 import android.widget.Spinner
 
 object UiUtil {
-    @JvmStatic
     fun makeBold(s: String): Spannable {
         val str = SpannableStringBuilder(s)
         str.setSpan(StyleSpan(Typeface.BOLD), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return str
     }
 
-    @JvmStatic
     fun makeColored(s: String, color: Int): Spannable {
         val str = SpannableStringBuilder(s)
         str.setSpan(ForegroundColorSpan(color), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

@@ -42,7 +42,6 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): DeckPickerAnalyticsOptInDialog {
             return DeckPickerAnalyticsOptInDialog()
         }

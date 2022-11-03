@@ -50,10 +50,10 @@
     <string name="statistics_unlearned">Non vues</string>
     <string name="statistics_suspended">Suspendues</string>
     <string name="statistics_buried">Enfouies</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">En réapprentissage</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">En réapprentissage</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Apprentissage</string>
     <string name="statistics_cram">Bachotage</string>
-    <string name="stats_cards">Cartes</string>
+    <string name="stats_cards" comment="Title to use in stats pages">Cartes</string>
     <string name="stats_cards_intervals">Cartes ayant un intervalle donné</string>
     <string name="stats_cumulative_cards">Cartes cumulées</string>
     <string name="stats_cumulative_answers">Réponses cumulées</string>

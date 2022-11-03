@@ -184,7 +184,6 @@
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
-    <string name="empty_deck_add_note">إضافة بِطاقة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_empty">هذه الرزمة فارغة. اضغط زر + لإضافة محتوى جديد.</string>
     <string name="studyoptions_limit_reached">بلغت حد الدراسة اليومي</string>
@@ -197,6 +196,8 @@
     <string name="sd_card_not_mounted">لم يتم تحميل وحدة تخزين الجهاز</string>
     <string name="empty_cloze_warning">عدّل هذه الملحوظة وأضف بعض عبارات ملء الفراغات. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">تم إيقاف المزامنة مؤقتًا</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync">واصِل المزامنة</string>
     <string name="sync_cancelled">أُلغِيت المزامنة</string>

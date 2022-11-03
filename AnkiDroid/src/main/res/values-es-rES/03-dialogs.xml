@@ -124,6 +124,7 @@
     <string name="restore_backup_choose_another">Elige otro</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">Aceptar</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">Procesando...</string>
@@ -172,9 +173,6 @@
     <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">¡Bienvenido a AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requiere permiso de almacenamiento, que utilizamos exclusivamente para almacenar su colección AnkiDroid, soportes de flash y copias de seguridad. Nuestro código es de código abierto, escrito por voluntarios y confiado por millones.\n\nSi tienes alguna pregunta, por favor accede a nuestro manual en la aplicación o visita nuestros foros de soporte.\n\n¡Gracias por probar AnkiDroid!\n—Equipo de Desarrollo de AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Error desconocido al mostrar el Editor Avanzado</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid actualizado</string>
@@ -259,4 +257,14 @@
     <string name="import_csv">Archivo de texto (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">No puedes crear un submazo para todos los mazos</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

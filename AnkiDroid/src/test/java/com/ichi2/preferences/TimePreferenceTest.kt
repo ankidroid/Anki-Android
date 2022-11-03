@@ -33,10 +33,10 @@ class TimePreferenceTest(private val parsableHour: String, private val expectedH
     }
 
     companion object {
-        @JvmStatic
+        @JvmStatic // required for Parameters
         @Parameterized.Parameters
         fun data(): Collection<Array<Any>> {
-            return Arrays.asList(
+            return listOf(
                 arrayOf("00:00", 0), arrayOf("01:00", 1), arrayOf("24:00", 24)
             )
         }

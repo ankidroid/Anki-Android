@@ -27,16 +27,16 @@ import com.ichi2.anki.R
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
 class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
-    @JvmField
     @VisibleForTesting
     val mActivity: Activity
 
     override fun onCreateActionView(forItem: MenuItem): View {
         val actionView = ImageButton(context, null, R.attr.actionButtonStyle)
         TooltipCompat.setTooltipText(actionView, forItem.title)
-        val iconDrawable = forItem.icon
-        iconDrawable.isAutoMirrored = true
-        actionView.setImageDrawable(iconDrawable)
+        forItem.icon?.let {
+            it.isAutoMirrored = true
+            actionView.setImageDrawable(it)
+        }
         actionView.id = R.id.action_undo
         actionView.setOnClickListener {
             if (!forItem.isEnabled) {

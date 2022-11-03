@@ -80,7 +80,6 @@ object ViewAnimation {
         FADE_IN(0f),
         FADE_OUT(1f);
     }
-    @JvmStatic
     fun fade(type: Fade, duration: Int, offset: Int) =
         AlphaAnimation(type.originalAlpha, 1.0f - type.originalAlpha).apply {
             this.duration = duration.toLong()

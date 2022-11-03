@@ -60,7 +60,7 @@
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
     <string name="reposition_card_not_new_error">କେବଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ରିପୋଜିସନ୍ କରାଯାଇପାରିବ</string>
@@ -109,7 +109,7 @@
     <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି କରୁଛି&#8230;</string>
     <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
     <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରବର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
-    <string name="import_update_details">ବିଦ୍ୟମାନ %2$d ନୋଟଗୁଡିକର %1$dକୁ ଅଦ୍ୟତନ କରାଯାଇଛି </string>
+    <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା। </string>
     <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
     <plurals name="import_complete_message">
         <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
@@ -124,6 +124,7 @@
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
     <string name="dialog_cancel">ବାତିଲ୍ କର</string>
     <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ...</string>
@@ -172,9 +173,6 @@
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid କୁ ସ୍ୱାଗତ </string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ଷ୍ଟୋରେଜ୍ ଅନୁମତି ଆବଶ୍ୟକ କରେ, ଯାହାକୁ ଆମେ ଆପଣଙ୍କର AnkiDroid ସଂଗ୍ରହ, ଫ୍ଲାସକାର୍ଡ ମିଡ଼ିଆ ଏବଂ ବ୍ୟାକଅପ୍ ଗଚ୍ଛିତ କରିବା ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ବ୍ୟବହାର କରୁ। ଆମର କୋଡ୍ ଖୋଲା-ଉତ୍ସ ଅଟେ, ସ୍ୱେଚ୍ଛାସେବୀମାନଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏବଂ ଲକ୍ଷ ଲକ୍ଷ ଲୋକଙ୍କ ଦ୍ୱାରା ବିଶ୍ୱାସ କରାଯାଏ।\n\n ଯଦି ଆପଣଙ୍କର କିଛି ପ୍ରଶ୍ନ ଅଛି, ଦୟାକରି ଆମର ଇନ୍-ଆପ୍ ମାନୁଆଲକୁ ପ୍ରବେଶ କରନ୍ତୁ କିମ୍ବା ଆମର ସମର୍ଥନ ଫୋରମ୍ ପରିଦର୍ଶନ କରନ୍ତୁ।\n\n AnkiDroid ଚେଷ୍ଟା କରିଥିବାରୁ ଧନ୍ୟବାଦ!\n—AnkiDroid ବିକାଶ ଦଳ</string>
     <string name="mutimedia_editor_assertion_failed">ଉନ୍ନତ ସମ୍ପାଦକ ପ୍ରଦର୍ଶନ କଲାବେଳେ ଅଜଣା ତ୍ରୁଟି ଘଟିଲା</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid  ଅପଗ୍ରେଡ୍ ହୋଇଛି</string>
@@ -238,7 +236,7 @@
     <string name="help_title_privacy">ଗୋପନୀୟତା</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid ଗୋପନୀୟତା ନୀତି</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb ଗୋପନୀୟତା ନୀତି</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତିନାମା ଓ ସର୍ତ୍ତାବଳୀ</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତିନାମା ଓ ସର୍ତ୍ତାଵଳୀ</string>
     <string name="help_title_send_exception">ତ୍ରୁଟି ନିବାରଣ ରିପୋର୍ଟ ପଠାନ୍ତୁ</string>
     <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
     <!--Sync-->
@@ -259,4 +257,14 @@
     <string name="import_csv">ପାଠ୍ୟ ଫାଇଲ୍ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">ଆପଣ ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ଗୋଟେ ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

@@ -61,7 +61,6 @@ object TemplateFilters {
      * @param tag The entire content of the tag.
      * @return Result of filter on current txt.
      */
-    @JvmStatic
     @KotlinCleanup("maybe change var to val")
     fun apply_filter(txtInput: String, filterInput: String, field_name: String, tag: String): String {
         // Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
@@ -116,12 +115,11 @@ object TemplateFilters {
         if (txt.trim { it <= ' ' }.length == 0) {
             return ""
         }
-        val res = AnkiDroidApp.appResources
         // random id
         val domId = "hint" + txt.hashCode()
         return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
             domId + "').style.display='block';_relinquishFocus();return false;\">" +
-            res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+            tag + "</a><div id=\"" +
             domId + "\" class=hint style=\"display: none\">" + txt + "</div>"
     }
 
@@ -148,7 +146,7 @@ object TemplateFilters {
                 m.group(2)
             }
             if ("c" == m.group(1)) {
-                buf = String.format("<span class=cloze>%s</span>", buf)
+                buf = "<span class=cloze>$buf</span>"
             }
             m.appendReplacement(repl, Matcher.quoteReplacement(buf!!))
         }

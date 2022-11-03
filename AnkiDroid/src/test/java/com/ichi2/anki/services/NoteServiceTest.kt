@@ -22,6 +22,7 @@ import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.createTransientFile
@@ -39,7 +40,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-@KotlinCleanup("See if we can remove JvmField from Rule")
 @KotlinCleanup("have Model constructor accent @Language('JSON')")
 @KotlinCleanup("fix typo: testimage -> test_image")
 @KotlinCleanup("Add scope functions")
@@ -53,12 +53,10 @@ class NoteServiceTest : RobolectricTest() {
     }
 
     // temporary directory to test importMediaToDirectory function
-    @Rule
-    @JvmField
+    @get:Rule
     var directory = TemporaryFolder()
 
-    @Rule
-    @JvmField
+    @get:Rule
     var directory2 = TemporaryFolder()
 
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
@@ -220,7 +218,7 @@ class NoteServiceTest : RobolectricTest() {
 
         val field = MediaClipField()
         field.audioPath = file.absolutePath
-        field.setHasTemporaryMedia(true)
+        field.hasTemporaryMedia = true
 
         NoteService.importMediaToDirectory(testCol!!, field)
 
@@ -234,10 +232,76 @@ class NoteServiceTest : RobolectricTest() {
 
         val field = ImageField()
         field.extraImagePathRef = file.absolutePath
-        field.setHasTemporaryMedia(true)
+        field.hasTemporaryMedia = true
 
         NoteService.importMediaToDirectory(testCol!!, field)
 
         assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()))
+    }
+
+    @Test
+    fun testAvgEase() {
+        // basic case: no cards are new
+        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        // factor for cards: 3000, 1500, 1000, 750
+        for ((i, card) in note.cards().withIndex()) {
+            card.type = Consts.CARD_TYPE_REV
+            card.factor = 3000 / (i + 1)
+            card.flush()
+        }
+        // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
+        assertEquals(156, NoteService.avgEase(note))
+
+        // test case: one card is new
+        note.cards()[2].apply {
+            type = Consts.CARD_TYPE_NEW
+            flush()
+        }
+        // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
+        assertEquals(175, NoteService.avgEase(note))
+
+        // test case: all cards are new
+        for (card in note.cards()) {
+            card.type = Consts.CARD_TYPE_NEW
+            card.flush()
+        }
+        // no cards are rev, so avg ease cannot be calculated
+        assertEquals(null, NoteService.avgEase(note))
+    }
+
+    @Test
+    fun testAvgInterval() {
+        // basic case: all cards are relearning or review
+        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        val reviewOrRelearningList = listOf(Consts.CARD_TYPE_REV, Consts.CARD_TYPE_RELEARNING)
+        val newOrLearningList = listOf(Consts.CARD_TYPE_NEW, Consts.CARD_TYPE_LRN)
+
+        // interval for cards: 3000, 1500, 1000, 750
+        for ((i, card) in note.cards().withIndex()) {
+            card.type = reviewOrRelearningList.shuffled().first()
+            card.ivl = 3000 / (i + 1)
+            card.flush()
+        }
+
+        // avg interval = (3000 + 1500 + 1000 + 750) / 4 = [1562.5] = 1562
+        assertEquals(1562, NoteService.avgInterval(note))
+
+        // case: one card is new or learning
+        note.cards()[2].apply {
+            type = newOrLearningList.shuffled().first()
+            flush()
+        }
+
+        // avg interval = (3000 + 1500 + 750) / 3 = [1750] = 1750
+        assertEquals(1750, NoteService.avgInterval(note))
+
+        // case: all cards are new or learning
+        for (card in note.cards()) {
+            card.type = newOrLearningList.shuffled().first()
+            card.flush()
+        }
+
+        // no cards are rev or relearning, so avg interval cannot be calculated
+        assertEquals(null, NoteService.avgInterval(note))
     }
 }

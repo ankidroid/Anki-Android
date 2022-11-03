@@ -40,7 +40,6 @@ open class HostNum(open var hostNum: Int?) {
     }
 
     companion object {
-        @JvmStatic
         fun getDefaultHostNum(): Int? {
             return Consts.DEFAULT_HOST_NUM
         }

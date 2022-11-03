@@ -67,7 +67,6 @@ object PreferenceUtils {
         return fragments.distinctBy { it::class } // and remove any repeated fragments
     }
 
-    @JvmStatic
     fun getAllCustomButtonKeys(context: Context): Set<String> {
         val ret = AtomicReference<Set<String>>()
         val i = CustomButtonsSettingsFragment.getSubscreenIntent(context)

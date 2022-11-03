@@ -125,7 +125,7 @@
     <string name="menu_flag_card_six">ଫୀରୋଜା ପତାକା</string>
     <string name="menu_flag_card_seven">ବାଇଗଣୀ ପତାକା</string>
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
-    <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏବଂ ଏହାର ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
+    <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
     <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
@@ -160,11 +160,10 @@
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
-    <string name="custom_study_deck_exists">ପ୍ରଥମେ ବିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="custom_study_deck_exists">ପ୍ରଥମେ ଵିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
-    <string name="empty_deck_add_note">ପତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
     <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ବିଷୟବସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
     <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ସିଙ୍କ୍</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>
@@ -214,7 +215,7 @@
     <string name="card_info_title">ପତ୍ର ସୂଚନା</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ିବା ଓ ଲେଖିବା</string>
-    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ଅଧ୍ୟୟନ କରିବା ବ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="read_write_permission_description">ଵିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ଅଧ୍ୟୟନ କରିବା ଵ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="context_menu_anki_card_label">Anki ପତ୍ର</string>

@@ -17,13 +17,12 @@
 
 package com.ichi2.utils
 
-import kotlin.Throws
+import org.json.JSONException
 
 object JSON {
     /**
      * Returns the input if it is a JSON-permissible value; throws otherwise.
      */
-    @JvmStatic
     @Throws(JSONException::class)
     fun checkDouble(d: Double): Double {
         if (java.lang.Double.isInfinite(d) || java.lang.Double.isNaN(d)) {
@@ -32,7 +31,6 @@ object JSON {
         return d
     }
 
-    @JvmStatic
     fun toString(value: Any?): String? {
         if (value is String) {
             return value

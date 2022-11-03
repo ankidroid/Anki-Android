@@ -164,7 +164,6 @@
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Կապուկը դատարկ է: Սեղմեք + կոճակը նոր բովանդակություն ավելացնելու համար:</string>
     <string name="studyoptions_limit_reached">Հասաք օրական սահմանափակման շեմին</string>
@@ -177,6 +176,8 @@
     <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Համաժամեցում</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Ուզու՞մ եք չեղարկել համաժամեցումը:</string>
     <string name="continue_sync">Շարունակել համաժամեցումը</string>
     <string name="sync_cancelled">Համաժամեցումը չեղարկվեց</string>
