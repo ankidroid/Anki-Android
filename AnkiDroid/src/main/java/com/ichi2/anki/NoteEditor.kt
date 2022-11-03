@@ -25,13 +25,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableString
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.text.style.BackgroundColorSpan
 import android.view.*
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
@@ -111,6 +114,9 @@ import kotlin.math.roundToInt
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener {
+    private lateinit var searchView: SearchView
+    private lateinit var searchMenuItem: MenuItem
+
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -892,10 +898,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menu.findItem(R.id.action_scroll_toolbar).isChecked =
             AnkiDroidApp.getSharedPrefs(this).getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
 
-        val fieldSearchViewNoteEditorMenuItem = menu.findItem(R.id.field_search_view_note_editor)
-        val fieldSearchViewNoteEditorActionView: SearchView = fieldSearchViewNoteEditorMenuItem.actionView as SearchView
+        if (searchIn == SearchIn.FieldLabel) {
+            menu.findItem(R.id.search_for_field_label).isChecked = true
+            menu.findItem(R.id.search_for_field_content).isChecked = false
+        } else if (searchIn == SearchIn.FieldContents) {
+            menu.findItem(R.id.search_for_field_label).isChecked = false
+            menu.findItem(R.id.search_for_field_content).isChecked = true
+        }
 
-        fieldSearchViewNoteEditorActionView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchMenuItem = menu.findItem(R.id.menu_search)
+        searchView = searchMenuItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
@@ -1306,7 +1320,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return ret
         }
 
-    private fun populateEditFields(type: FieldChangeType, editModelMode: Boolean, QueryByFieldName: String?, QueryByFieldContent: String?) {
+    private fun populateEditFields(type: FieldChangeType, editModelMode: Boolean, queryByFieldName: String?, queryByFieldContent: String?) {
         val editLines = mFieldState.loadFieldEditLines(type)
         mFieldsLayoutContainer!!.removeAllViews()
         mCustomViewIds.clear()
@@ -1391,11 +1405,20 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
             toggleStickyButton.contentDescription =
                 getString(R.string.note_editor_toggle_sticky, editLineView.name)
-            if (editLineView.name!!.removeNonSpacingMarks().contains(QueryByFieldName!!.removeNonSpacingMarks(), ignoreCase = true) &&
+            if (editLineView.name!!.removeNonSpacingMarks().contains(queryByFieldName!!.removeNonSpacingMarks(), ignoreCase = true) &&
                 editLineView.editText.text!!.toString().removeNonSpacingMarks().contains(
-                        QueryByFieldContent!!.removeNonSpacingMarks(), ignoreCase = true
+                        queryByFieldContent!!.removeNonSpacingMarks(), ignoreCase = true
                     )
             ) {
+
+                val fieldContent = editLineView.editText.text.toString().removeNonSpacingMarks().lowercase()
+                val start = fieldContent.indexOf(queryByFieldContent)
+                val end = start + queryByFieldContent.length
+
+                val spannableString = SpannableString(editLineView.editText.text.toString())
+                spannableString.setSpan(BackgroundColorSpan(Color.YELLOW), start, end, 0)
+
+                editLineView.editText.setText(spannableString)
                 mFieldsLayoutContainer!!.addView(editLineView)
             }
         }

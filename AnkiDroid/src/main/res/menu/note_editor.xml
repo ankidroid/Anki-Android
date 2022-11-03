@@ -2,9 +2,10 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/field_search_view_note_editor"
+        android:id="@+id/menu_search"
         android:icon="@drawable/ic_search_white"
         android:title="@string/search_view"
+        android:queryBackground="@android:color/transparent"
         ankidroid:actionViewClass="android.widget.SearchView"
         ankidroid:showAsAction="always"/>
 
