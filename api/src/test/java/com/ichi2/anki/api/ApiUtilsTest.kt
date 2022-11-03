@@ -5,7 +5,6 @@ package com.ichi2.anki.api
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import kotlin.collections.HashSet
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -54,7 +53,7 @@ internal class ApiUtilsTest {
 
     @Test
     fun joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
-        assertEquals("", Utils.joinTags(HashSet()))
+        assertEquals("", Utils.joinTags(emptySet()))
     }
 
     @Test
