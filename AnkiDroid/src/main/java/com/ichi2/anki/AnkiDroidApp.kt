@@ -40,7 +40,6 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
-import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes
@@ -182,8 +181,6 @@ open class AnkiDroidApp : Application() {
                 }
             }
         }
-        Timber.i("AnkiDroidApp: Starting Services")
-        BootService().onReceive(this, Intent(this, BootService::class.java))
 
         // Register for notifications
         mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }

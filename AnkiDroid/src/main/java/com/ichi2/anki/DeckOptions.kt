@@ -18,9 +18,7 @@
 
 package com.ichi2.anki
 
-import android.app.AlarmManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -34,19 +32,14 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.changeDeckConfiguration
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
-import com.ichi2.libanki.utils.Time
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
-import com.ichi2.preferences.TimePreference
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.themeFollowsSystem
@@ -57,7 +50,6 @@ import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
-import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
@@ -122,19 +114,6 @@ class DeckOptions :
                 mValues["lapLeechAct"] = lapOptions.getString("leechAction")
                 // options group management
                 mValues["currentConf"] = col.decks.getConf(deck.getLong("conf"))!!.getString("name")
-                // reminders
-                if (mOptions.has("reminder")) {
-                    val reminder = mOptions.getJSONObject("reminder")
-                    val reminderTime = reminder.getJSONArray("time")
-
-                    mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
-                    mValues["reminderTime"] = String.format(
-                        "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
-                    )
-                } else {
-                    mValues["reminderEnabled"] = "false"
-                    mValues["reminderTime"] = TimePreference.DEFAULT_VALUE
-                }
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
@@ -317,79 +296,6 @@ class DeckOptions :
                                         postConfChange()
                                     }
                                 }
-                            }
-                            "reminderEnabled" -> {
-                                val reminder = JSONObject()
-
-                                reminder.put("enabled", value)
-                                if (mOptions.has("reminder")) {
-                                    reminder.put("time", mOptions.getJSONObject("reminder").getJSONArray("time"))
-                                } else {
-                                    reminder.put(
-                                        "time",
-                                        JSONArray()
-                                            .put(TimePreference.parseHours(TimePreference.DEFAULT_VALUE))
-                                            .put(TimePreference.parseMinutes(TimePreference.DEFAULT_VALUE))
-                                    )
-                                }
-                                mOptions.put("reminder", reminder)
-
-                                val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                                val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
-                                    applicationContext,
-                                    mOptions.getLong("id").toInt(),
-                                    Intent(applicationContext, ReminderService::class.java).putExtra(
-                                        ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")
-                                    ),
-                                    0
-                                )
-
-                                alarmManager.cancel(reminderIntent)
-                                if (value as Boolean) {
-                                    val calendar = reminderToCalendar(TimeManager.time, reminder)
-
-                                    alarmManager.setRepeating(
-                                        AlarmManager.RTC_WAKEUP,
-                                        calendar.timeInMillis,
-                                        AlarmManager.INTERVAL_DAY,
-                                        reminderIntent
-                                    )
-                                }
-                            }
-                            "reminderTime" -> {
-                                val reminder = JSONObject()
-
-                                reminder.put("enabled", true)
-                                reminder.put(
-                                    "time",
-                                    JSONArray().put(TimePreference.parseHours((value as String)))
-                                        .put(TimePreference.parseMinutes(value))
-                                )
-
-                                mOptions.put("reminder", reminder)
-                                val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                                val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
-                                    applicationContext,
-                                    mOptions.getLong("id").toInt(),
-                                    Intent(
-                                        applicationContext,
-                                        ReminderService::class.java
-                                    ).putExtra(
-                                        ReminderService.EXTRA_DECK_OPTION_ID,
-                                        mOptions.getLong("id")
-                                    ),
-                                    0
-                                )
-                                alarmManager.cancel(reminderIntent)
-
-                                val calendar = reminderToCalendar(TimeManager.time, reminder)
-
-                                alarmManager.setRepeating(
-                                    AlarmManager.RTC_WAKEUP,
-                                    calendar.timeInMillis,
-                                    AlarmManager.INTERVAL_DAY,
-                                    reminderIntent
-                                )
                             }
                             else -> Timber.w("Unknown key type: %s", key)
                         }
@@ -682,17 +588,5 @@ class DeckOptions :
 
     private fun restartActivity() {
         recreate()
-    }
-
-    companion object {
-        fun reminderToCalendar(time: Time, reminder: JSONObject): Calendar {
-
-            val calendar = time.calendar()
-
-            calendar[Calendar.HOUR_OF_DAY] = reminder.getJSONArray("time").getInt(0)
-            calendar[Calendar.MINUTE] = reminder.getJSONArray("time").getInt(1)
-            calendar[Calendar.SECOND] = 0
-            return calendar
-        }
     }
 }

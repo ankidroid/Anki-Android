@@ -48,7 +48,5 @@
     <string name="deck_options_showAnswerTimer_key">showAnswerTimer</string>
     <string name="deck_options_autoPlayAudio_key">autoPlayAudio</string>
     <string name="deck_options_replayQuestion_key">replayQuestion</string>
-    <string name="deck_options_reminderEnabled_key">reminderEnabled</string>
-    <string name="deck_options_reminderTime_key">reminderTime</string>
     <string name="deck_options_desc_key">desc</string>
 </resources>

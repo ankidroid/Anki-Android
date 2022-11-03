@@ -39,10 +39,8 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.ichi2.anki.*
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.getInstanceFromClassName
@@ -174,12 +172,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
                 .addBreadcrumb(R.string.statistics)
         }
 
-        /** From [NotificationsSettingsFragment.initSubscreen] */
-        if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
-            searchConfig.ignorePreference(getString(R.string.pref_notifications_vibrate_key))
-            searchConfig.ignorePreference(getString(R.string.pref_notifications_blink_key))
-        }
-
         /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
         if (!CompatHelper.hasKanaAndEmojiKeys()) {
             searchConfig.ignorePreference(getString(R.string.more_scrolling_buttons_key))
@@ -257,7 +249,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
                 col.setMod()
             }
         }
-        scheduleNotification(TimeManager.time, this)
     }
 
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
