@@ -70,13 +70,13 @@ class DecksTest : RobolectricTest() {
         val col = col
         val decks = col.decks
         // we start with a standard col
-        assertEquals(1, decks.allSortedNames().size.toLong())
+        assertEquals(1, decks.allSortedNames().size)
         // it should have an id of 1
         assertNotNull(decks.name(1))
         // create a new col
         val parentId = addDeck("new deck")
         assertNotEquals(parentId, 0)
-        assertEquals(2, decks.allSortedNames().size.toLong())
+        assertEquals(2, decks.allSortedNames().size)
         // should get the same id
         assertEquals(parentId, addDeck("new deck"))
         // we start with the default col selected
@@ -105,8 +105,8 @@ class DecksTest : RobolectricTest() {
         n.setItem("Front", "abc")
         col.addNote(n)
 
-        assertEquals(decks.id_for_name("new deck")!!.toLong(), parentId)
-        assertEquals(decks.id_for_name("  New Deck  ")!!.toLong(), parentId)
+        assertEquals(decks.id_for_name("new deck")!!, parentId)
+        assertEquals(decks.id_for_name("  New Deck  ")!!, parentId)
         assertNull(decks.id_for_name("Not existing deck"))
         assertNull(decks.id_for_name("new deck::not either"))
     }
@@ -122,9 +122,9 @@ class DecksTest : RobolectricTest() {
         col.addNote(note)
         val c = note.cards()[0]
         assertEquals(deck1, c.did)
-        assertEquals(1, col.cardCount().toLong())
+        assertEquals(1, col.cardCount())
         col.decks.rem(deck1)
-        assertEquals(0, col.cardCount().toLong())
+        assertEquals(0, col.cardCount())
         // if we try to get it, we get the default
         assertEquals("[no deck]", col.decks.name(c.did))
     }

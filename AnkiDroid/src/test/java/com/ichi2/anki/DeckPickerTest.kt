@@ -200,7 +200,7 @@ class DeckPickerTest : RobolectricTest() {
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
-        assertEquals(10, deckPicker.dueTree!![0].value.newCount.toLong())
+        assertEquals(10, deckPicker.dueTree!![0].value.newCount)
     }
 
     @Test

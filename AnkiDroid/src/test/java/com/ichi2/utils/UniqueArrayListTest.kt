@@ -115,14 +115,14 @@ class UniqueArrayListTest {
         val list = mutableListOf("TarekkMA", "TarekkMA", "TarekkmA", "tarekkma")
         val uniqueList = UniqueArrayList.from(list, String.CASE_INSENSITIVE_ORDER)
 
-        assertEquals(1, uniqueList.size.toLong())
+        assertEquals(1, uniqueList.size)
         assertEquals("TarekkMA", uniqueList[0])
 
         uniqueList.clear()
         list.reverse()
         uniqueList.addAll(list)
 
-        assertEquals(1, uniqueList.size.toLong())
+        assertEquals(1, uniqueList.size)
         assertEquals("tarekkma", uniqueList[0])
     }
 
@@ -368,11 +368,11 @@ class UniqueArrayListTest {
         val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        assertNotEquals(-1, uniqueList.indexOf(1L).toLong())
+        assertNotEquals(-1, uniqueList.indexOf(1L))
         uniqueList.remove(1L)
-        assertEquals(-1, uniqueList.indexOf(1L).toLong())
+        assertEquals(-1, uniqueList.indexOf(1L))
         uniqueList[10] = 1L
-        assertEquals(10, uniqueList.indexOf(1L).toLong())
+        assertEquals(10, uniqueList.indexOf(1L))
     }
 
     @Test
@@ -380,11 +380,11 @@ class UniqueArrayListTest {
         val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        assertNotEquals(-1, uniqueList.indexOf(1L).toLong())
+        assertNotEquals(-1, uniqueList.indexOf(1L))
         uniqueList.removeAt(0 /*index of 1L*/)
-        assertEquals(-1, uniqueList.indexOf(1L).toLong())
+        assertEquals(-1, uniqueList.indexOf(1L))
         uniqueList[10] = 1L
-        assertEquals(10, uniqueList.indexOf(1L).toLong())
+        assertEquals(10, uniqueList.indexOf(1L))
     }
 
     @Test
@@ -412,17 +412,17 @@ class UniqueArrayListTest {
         val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        assertEquals(0, uniqueList.indexOf(1L).toLong())
-        assertEquals(5, uniqueList.indexOf(6L).toLong())
-        assertEquals(12, uniqueList.indexOf(13L).toLong())
-        assertEquals(9, uniqueList.indexOf(10L).toLong())
-        assertEquals(2, uniqueList.indexOf(3L).toLong())
+        assertEquals(0, uniqueList.indexOf(1L))
+        assertEquals(5, uniqueList.indexOf(6L))
+        assertEquals(12, uniqueList.indexOf(13L))
+        assertEquals(9, uniqueList.indexOf(10L))
+        assertEquals(2, uniqueList.indexOf(3L))
 
-        assertEquals(0, uniqueList.lastIndexOf(1L).toLong())
-        assertEquals(5, uniqueList.lastIndexOf(6L).toLong())
-        assertEquals(12, uniqueList.lastIndexOf(13L).toLong())
-        assertEquals(9, uniqueList.lastIndexOf(10L).toLong())
-        assertEquals(2, uniqueList.lastIndexOf(3L).toLong())
+        assertEquals(0, uniqueList.lastIndexOf(1L))
+        assertEquals(5, uniqueList.lastIndexOf(6L))
+        assertEquals(12, uniqueList.lastIndexOf(13L))
+        assertEquals(9, uniqueList.lastIndexOf(10L))
+        assertEquals(2, uniqueList.lastIndexOf(3L))
     }
 
     @Test
@@ -501,9 +501,9 @@ class UniqueArrayListTest {
         val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        assertNotEquals(2, uniqueList.size.toLong())
+        assertNotEquals(2, uniqueList.size)
         uniqueList.retainAll(listOf(1L, 3L))
-        assertEquals(2, uniqueList.size.toLong())
+        assertEquals(2, uniqueList.size)
         assertEquals(listOf(1L, 3L), uniqueList)
     }
 

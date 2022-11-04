@@ -21,7 +21,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.KotlinCleanup
-import junit.framework.TestCase.*
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -32,7 +32,7 @@ class OverviewStatsBuilderTest : RobolectricTest() {
     @Test
     fun testGetPercentage() {
         val testAnswerButtonsOverview = AnswerButtonsOverview()
-        assertEquals(testAnswerButtonsOverview.percentage.toInt(), 0)
+        assertEquals(testAnswerButtonsOverview.percentage, 0.0)
 
         testAnswerButtonsOverview.correct = 15
         testAnswerButtonsOverview.total = 50

@@ -121,7 +121,7 @@ class FileUtilTest {
         for (testDirChild in testDirChildren) {
             assertTrue(expectedChildren.contains(testDirChild))
         }
-        assertEquals(expectedChildren.size.toLong(), testDirChildren.size.toLong())
+        assertEquals(expectedChildren.size, testDirChildren.size)
 
         // Create invalid input
         assertThrows(IOException::class.java) { FileUtil.listFiles(File(testDir, "file1.txt")) }

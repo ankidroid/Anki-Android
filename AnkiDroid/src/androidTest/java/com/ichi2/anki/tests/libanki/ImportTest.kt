@@ -97,7 +97,7 @@ class ImportTest : InstrumentedTest() {
         var expected = listOf("foo.mp3")
         var actual = File(empty.media.dir()).list()!!.toMutableList()
         actual.retainAll(expected)
-        assertEquals(expected.size.toLong(), actual.size.toLong())
+        assertEquals(expected.size, actual.size)
         // and importing again will not duplicate, as the file content matches
         empty.remCards(empty.db.queryLongList("select id from cards"))
         imp = Anki2Importer(empty, testCol.path)
@@ -105,7 +105,7 @@ class ImportTest : InstrumentedTest() {
         expected = listOf("foo.mp3")
         actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
-        assertEquals(expected.size.toLong(), actual.size.toLong())
+        assertEquals(expected.size, actual.size)
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
         assertTrue("foo.mp3" in n.fields[0])
         // if the local file content is different, and import should trigger a rename
@@ -118,7 +118,7 @@ class ImportTest : InstrumentedTest() {
         expected = listOf("foo.mp3", String.format("foo_%s.mp3", mid))
         actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
-        assertEquals(expected.size.toLong(), actual.size.toLong())
+        assertEquals(expected.size, actual.size)
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
         assertTrue(n.fields[0].contains("_"))
         // if the localized media file already exists, we rewrite the note and media
@@ -131,7 +131,7 @@ class ImportTest : InstrumentedTest() {
         expected = listOf("foo.mp3", String.format("foo_%s.mp3", mid))
         actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
-        assertEquals(expected.size.toLong(), actual.size.toLong())
+        assertEquals(expected.size, actual.size)
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
         assertTrue(n.fields[0].contains("_"))
         empty.close()
@@ -149,12 +149,12 @@ class ImportTest : InstrumentedTest() {
             ).list()!!
         )
         actual.retainAll(expected)
-        assertEquals(actual.size.toLong(), expected.size.toLong())
+        assertEquals(actual.size, expected.size)
         imp.run()
         expected = listOf("foo.wav")
         actual = mutableListOf(*File(testCol.media.dir()).list()!!)
         actual.retainAll(expected)
-        assertEquals(expected.size.toLong(), actual.size.toLong())
+        assertEquals(expected.size, actual.size)
         // import again should be idempotent in terms of media
         testCol.remCards(testCol.db.queryLongList("select id from cards"))
         imp = AnkiPackageImporter(testCol, apkg)
@@ -162,7 +162,7 @@ class ImportTest : InstrumentedTest() {
         expected = listOf("foo.wav")
         actual = mutableListOf(*File(testCol.media.dir()).list()!!)
         actual.retainAll(expected)
-        assertEquals(expected.size.toLong(), actual.size.toLong())
+        assertEquals(expected.size, actual.size)
         // but if the local file has different data, it will rename
         testCol.remCards(testCol.db.queryLongList("select id from cards"))
         val os = FileOutputStream(File(testCol.media.dir(), "foo.wav"), false)
@@ -170,7 +170,7 @@ class ImportTest : InstrumentedTest() {
         os.close()
         imp = AnkiPackageImporter(testCol, apkg)
         imp.run()
-        assertEquals(2, File(testCol.media.dir()).list()!!.size.toLong())
+        assertEquals(2, File(testCol.media.dir()).list()!!.size)
     }
 
     @Test
@@ -189,7 +189,7 @@ class ImportTest : InstrumentedTest() {
         imp.setDupeOnSchemaChange(true)
         imp.run()
         // collection should contain the note we imported
-        assertEquals(1, testCol.noteCount().toLong())
+        assertEquals(1, testCol.noteCount())
         // the front template should contain the text added in the 2nd package
         val tcid = testCol.findCards("")[0]
         val tnote = testCol.getCard(tcid).note()
@@ -215,7 +215,7 @@ class ImportTest : InstrumentedTest() {
         assertEquals(0, imp.added)
         assertEquals(0, imp.updated)
         // importing a newer note should update
-        assertEquals(1, testCol.noteCount().toLong())
+        assertEquals(1, testCol.noteCount())
         assertTrue(testCol.db.queryString("select flds from notes").startsWith("hello"))
         tmp = Shared.getTestFilePath(testContext, "update2.apkg")
         imp = AnkiPackageImporter(testCol, tmp)

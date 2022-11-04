@@ -345,7 +345,7 @@ class ContentProviderTest : InstrumentedTest() {
         model = col.models.get(modelId)
         // Test the field is as expected
         val fieldId = ContentUris.parseId(fieldUri!!)
-        assertEquals("Check field id", initialFieldCount.toLong(), fieldId)
+        assertEquals("Check field id", initialFieldCount, fieldId)
         assertNotNull("Check model", model)
         val fldsArr = model!!.getJSONArray("flds")
         assertEquals(
@@ -389,7 +389,7 @@ class ContentProviderTest : InstrumentedTest() {
         cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=0", null, null)
         assertNotNull(cursor)
         try {
-            assertEquals("Check number of results", 0, cursor.count.toLong())
+            assertEquals("Check number of results", 0, cursor.count)
         } finally {
             cursor.close()
         }
@@ -1103,7 +1103,7 @@ class ContentProviderTest : InstrumentedTest() {
             put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
-        assertEquals("Check if update returns 1", 1, updateCount.toLong())
+        assertEquals("Check if update returns 1", 1, updateCount)
         try {
             Thread.currentThread().join(500)
         } catch (e: Exception) { /* do nothing */
@@ -1154,7 +1154,7 @@ class ContentProviderTest : InstrumentedTest() {
             put(FlashCardsContract.ReviewInfo.BURY, bury)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
-        assertEquals("Check if update returns 1", 1, updateCount.toLong())
+        assertEquals("Check if update returns 1", 1, updateCount)
 
         // verify that it did get buried
         // -----------------------------
@@ -1206,7 +1206,7 @@ class ContentProviderTest : InstrumentedTest() {
             put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
-        assertEquals("Check if update returns 1", 1, updateCount.toLong())
+        assertEquals("Check if update returns 1", 1, updateCount)
 
         // verify that it did get suspended
         // --------------------------------
@@ -1234,7 +1234,7 @@ class ContentProviderTest : InstrumentedTest() {
         // make sure the tag is what we expect initially
         // ---------------------------------------------
         val tagList: List<String> = note.tags
-        assertEquals("only one tag", 1, tagList.size.toLong())
+        assertEquals("only one tag", 1, tagList.size)
         assertEquals("check tag value", TEST_TAG, tagList[0])
 
         // update tags
@@ -1248,13 +1248,13 @@ class ContentProviderTest : InstrumentedTest() {
         val values = ContentValues()
         values.put(FlashCardsContract.Note.TAGS, "$TEST_TAG $tag2")
         val updateCount = cr.update(updateNoteUri, values, null, null)
-        assertEquals("updateCount is 1", 1, updateCount.toLong())
+        assertEquals("updateCount is 1", 1, updateCount)
 
         // lookup the note now and verify tags
         // -----------------------------------
         val noteAfterUpdate = col.getNote(noteId)
         val newTagList: List<String> = noteAfterUpdate.tags
-        assertEquals("two tags", 2, newTagList.size.toLong())
+        assertEquals("two tags", 2, newTagList.size)
         assertEquals("check first tag", TEST_TAG, newTagList[0])
         assertEquals("check second tag", tag2, newTagList[1])
     }

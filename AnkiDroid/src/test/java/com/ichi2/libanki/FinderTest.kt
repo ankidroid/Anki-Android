@@ -30,9 +30,7 @@ import com.ichi2.testutils.AnkiAssert
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.greaterThan
-import org.hamcrest.Matchers.hasItem
-import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -436,7 +434,7 @@ class FinderTest : RobolectricTest() {
         )
         cb.deckSpinnerSelection!!.updateDeckPosition(currentDid)
         advanceRobolectricLooperWithSleep()
-        assertEquals(1L, cb.cardCount.toLong())
+        assertEquals(1, cb.cardCount)
     }
 
     @Test

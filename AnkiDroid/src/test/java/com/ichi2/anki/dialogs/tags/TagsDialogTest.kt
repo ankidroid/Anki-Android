@@ -63,7 +63,7 @@ class TagsDialogTest {
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
-            Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
+            Assert.assertEquals(optionsGroup.visibility, View.VISIBLE)
             val expectedOption = 1
             optionsGroup.getChildAt(expectedOption).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
@@ -94,12 +94,12 @@ class TagsDialogTest {
             )
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
-            Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
+            Assert.assertEquals(optionsGroup.visibility, View.VISIBLE)
             val expectedOption = 2
             optionsGroup.getChildAt(expectedOption).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
             ListUtil.assertListEquals(ArrayList(), returnedList.get())
-            Assert.assertEquals(expectedOption.toLong(), returnedOption.get().toLong())
+            Assert.assertEquals(expectedOption, returnedOption.get())
         }
     }
 
@@ -131,7 +131,7 @@ class TagsDialogTest {
             recycler.layout(0, 0, 100, 1000)
             val lastItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
             val newTagItemItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
-            Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(5, recycler.adapter!!.itemCount)
             Assert.assertEquals(tag, newTagItemItem.text)
             Assert.assertTrue(newTagItemItem.isChecked)
             Assert.assertNotEquals(tag, lastItem.text)
@@ -166,7 +166,7 @@ class TagsDialogTest {
             recycler.layout(0, 0, 100, 1000)
             val lastItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
             val newTagItemItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
-            Assert.assertEquals(4, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(4, recycler.adapter!!.itemCount)
             Assert.assertEquals(tag, newTagItemItem.text)
             Assert.assertTrue(newTagItemItem.isChecked)
             Assert.assertNotEquals(tag, lastItem.text)
@@ -262,7 +262,7 @@ class TagsDialogTest {
             //   - football    [ ]
             //   - tennis      [x]
             // - book          [ ]
-            Assert.assertEquals(8, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(8, recycler.adapter!!.itemCount)
             Assert.assertEquals("fruit", getItem(0).text)
             Assert.assertEquals("fruit::apple", getItem(1).text)
             Assert.assertEquals("fruit::pear", getItem(2).text)
@@ -303,7 +303,7 @@ class TagsDialogTest {
             //     - tennis    [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(7, recycler.adapter!!.itemCount)
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
@@ -353,7 +353,7 @@ class TagsDialogTest {
             //     - careless  [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(3, recycler.adapter!!.itemCount)
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
@@ -399,7 +399,7 @@ class TagsDialogTest {
             //     - tennis    [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(5, recycler.adapter!!.itemCount)
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
@@ -442,7 +442,7 @@ class TagsDialogTest {
             // v common     [ ]
             //   v sport    [ ]
             //     - tennis [ ]
-            Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(3, recycler.adapter!!.itemCount)
 
             adapter.filter.filter("")
             updateLayout()
@@ -450,7 +450,7 @@ class TagsDialogTest {
             //   - speak    [ ]
             //   v sport    [ ]
             //     - tennis [ ]
-            Assert.assertEquals(4, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(4, recycler.adapter!!.itemCount)
         }
     }
 
@@ -498,7 +498,7 @@ class TagsDialogTest {
             //     v football  [ ]
             //       - small   [ ]
             //     - tennis    [ ]
-            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(7, recycler.adapter!!.itemCount)
 
             getItem(2).mCheckBoxView.performClick()
             updateLayout()

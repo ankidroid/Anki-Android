@@ -45,7 +45,7 @@ class TemporaryModelTest : RobolectricTest() {
         Assert.assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString())
 
         // Make sure clearing works
-        Assert.assertEquals(1, TemporaryModel.clearTempModelFiles().toLong())
+        Assert.assertEquals(1, TemporaryModel.clearTempModelFiles())
         Timber.i("The following logged NoSuchFileException is an expected part of verifying a file delete.")
         try {
             TemporaryModel.getTempModel(tempModelPath)
@@ -140,7 +140,7 @@ class TemporaryModelTest : RobolectricTest() {
         if (actual !is ArrayList<*>) {
             Assert.fail("actual array null or not the correct type")
         }
-        Assert.assertEquals("arrays didn't have the same length?", expected.size.toLong(), (actual as ArrayList<Array<Any?>?>).size.toLong())
+        Assert.assertEquals("arrays didn't have the same length?", expected.size, (actual as ArrayList<Array<Any?>?>).size)
         for (i in expected.indices) {
             if (actual[i] !is Array<Any?>) {
                 Assert.fail("actual array does not contain Object[] entries")

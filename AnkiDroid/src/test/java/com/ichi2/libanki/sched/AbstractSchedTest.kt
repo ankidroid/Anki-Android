@@ -167,8 +167,8 @@ class AbstractSchedTest : RobolectricTest() {
                 `is`(lessThanOrEqualTo(nbNote * 2 - i))
             ) // Maximal number potentially shown,
             // because decrementing does not consider burying sibling
-            assertEquals(0, counts.lrn.toLong())
-            assertEquals(0, counts.rev.toLong())
+            assertEquals(0, counts.lrn)
+            assertEquals(0, counts.rev)
             assertEquals(notes[i]!!.firstCard().id, card.id)
             assertEquals(Consts.QUEUE_TYPE_NEW, card.queue)
             sched.answerCard(card, sched.answerButtons(card))

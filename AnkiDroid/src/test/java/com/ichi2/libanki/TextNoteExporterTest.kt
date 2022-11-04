@@ -64,7 +64,7 @@ class TextNoteExporterTest(
         val exportedFile = File.createTempFile("export", ".txt")
         exporter.doExport(exportedFile.absolutePath)
         val lines = FileOperation.getFileContents(exportedFile).split("\n".toRegex()).toTypedArray()
-        Assert.assertEquals(noteList.size.toLong(), lines.size.toLong())
+        Assert.assertEquals(noteList.size, lines.size)
         for (i in noteList.indices) {
             val note = noteList[i]
             val line = lines[i]

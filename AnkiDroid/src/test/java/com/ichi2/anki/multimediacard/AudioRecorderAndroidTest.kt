@@ -74,6 +74,6 @@ class AudioRecorderAndroidTest : RobolectricTest() {
         val recordingHandler = InitHandlerWithError()
         mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
         mAudioRecorder.startRecording(targetContext, "testpath")
-        Assert.assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun.toLong())
+        Assert.assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun)
     }
 }

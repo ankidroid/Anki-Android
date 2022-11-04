@@ -923,7 +923,7 @@ class JSONObjectTest {
         correctJsonObjectBasicCopy.putOpt("boolean_key", true)
         correctJsonObjectBasicCopy.putOpt("object_key", mCorrectJsonBasic)
 
-        Assert.assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key").toLong())
+        Assert.assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key"))
         Assert.assertEquals(2L, correctJsonObjectBasicCopy.getLong("long_key"))
         Assert.assertEquals(2.0, correctJsonObjectBasicCopy.getDouble("double_key"), 1e-10)
         Assert.assertTrue(correctJsonObjectBasicCopy.getBoolean("boolean_key"))

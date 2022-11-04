@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_FOUR
 import com.ichi2.libanki.Consts.BUTTON_ONE
@@ -37,6 +37,8 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.Consts.STARTING_FACTOR
 import com.ichi2.libanki.DecksTest.Companion.TEST_DECKS
+import com.ichi2.libanki.Models
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.stats.Stats.Companion.SECONDS_PER_DAY
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert.checkRevIvl
@@ -46,7 +48,7 @@ import com.ichi2.testutils.MutableTime
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONArray
 import org.junit.Ignore
@@ -182,14 +184,14 @@ class SchedTest : RobolectricTest() {
     fun test_new_v1() {
         val col = getColV1()
         col.reset()
-        assertEquals(0, col.sched.newCount().toLong())
+        assertEquals(0, col.sched.newCount())
         // add a note
         val note = col.newNote()
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
         col.reset()
-        assertEquals(1, col.sched.counts().new.toLong())
+        assertEquals(1, col.sched.counts().new)
         // fetch it
         val c = card!!
         assertNotNull(c)
@@ -255,13 +257,13 @@ class SchedTest : RobolectricTest() {
         conf1.getJSONObject("new").put("perDay", 10)
         col.decks.save(conf1)
         col.reset()
-        assertEquals(10, col.sched.counts().new.toLong())
+        assertEquals(10, col.sched.counts().new)
         // if we limit child to 4, we should get 9
         val conf2 = col.decks.confForDid(deck2)
         conf2.getJSONObject("new").put("perDay", 4)
         col.decks.save(conf2)
         col.reset()
-        assertEquals(9, col.sched.counts().new.toLong())
+        assertEquals(9, col.sched.counts().new)
     }
 
     @Test
@@ -304,8 +306,8 @@ class SchedTest : RobolectricTest() {
         // fail it
         col.sched.answerCard(c, BUTTON_ONE)
         // it should have three reps left to graduation
-        assertEquals(3, (c.left % 1000).toLong())
-        assertEquals(3, (c.left / 1000).toLong())
+        assertEquals(3, (c.left % 1000))
+        assertEquals(3, (c.left / 1000))
         // it should be due in 30 seconds
         val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
         assertThat(t, `is`(greaterThanOrEqualTo(25L)))
@@ -314,20 +316,20 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 3 minutes
         assertEquals(Math.round((c.due - TimeManager.time.intTime()).toFloat()).toFloat(), 179f, 1f)
-        assertEquals(2, (c.left % 1000).toLong())
-        assertEquals(2, (c.left / 1000).toLong())
+        assertEquals(2, (c.left % 1000))
+        assertEquals(2, (c.left / 1000))
         // check log is accurate
         val log = col.db.database.query("select * from revlog order by id desc")
         assertTrue(log.moveToFirst())
-        assertEquals(2, log.getInt(3).toLong())
-        assertEquals(-180, log.getInt(4).toLong())
-        assertEquals(-30, log.getInt(5).toLong())
+        assertEquals(2, log.getInt(3))
+        assertEquals(-180, log.getInt(4))
+        assertEquals(-30, log.getInt(5))
         // pass again
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 10 minutes
         assertEquals((c.due - TimeManager.time.intTime()).toFloat(), 599f, 1f)
-        assertEquals(1, (c.left % 1000).toLong())
-        assertEquals(1, (c.left / 1000).toLong())
+        assertEquals(1, (c.left % 1000))
+        assertEquals(1, (c.left / 1000))
         // the next pass should graduate the card
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_LRN, c.type)
@@ -413,8 +415,8 @@ class SchedTest : RobolectricTest() {
         // pass it
         col.sched.answerCard(c, BUTTON_TWO)
         // two reps to graduate, 1 more today
-        assertEquals(3, (c.left % 1000).toLong())
-        assertEquals(1, (c.left / 1000).toLong())
+        assertEquals(3, (c.left % 1000))
+        assertEquals(1, (c.left / 1000))
         assertEquals(Counts(0, 1, 0), col.sched.counts())
         c = card!!
         assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_TWO))
@@ -508,7 +510,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(4, c.reps)
         // check ests.
         assertEquals(120, col.sched.nextIvl(c, BUTTON_ONE))
-        assertEquals((20 * 60).toLong(), col.sched.nextIvl(c, BUTTON_TWO))
+        assertEquals((20 * 60), col.sched.nextIvl(c, BUTTON_TWO))
         // try again with an ease of 2 instead
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
@@ -804,16 +806,16 @@ class SchedTest : RobolectricTest() {
         assertEquals(Counts(1, 0, 0), col.sched.counts())
         // grab it and check estimates
         c = card!!
-        assertEquals(2, col.sched.answerButtons(c).toLong())
+        assertEquals(2, col.sched.answerButtons(c))
         assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
-        assertEquals((138 * 60 * 60 * 24).toLong(), col.sched.nextIvl(c, BUTTON_TWO))
+        assertEquals((138 * 60 * 60 * 24), col.sched.nextIvl(c, BUTTON_TWO))
         val cram = col.decks.get(did)
         cram.put("delays", JSONArray(doubleArrayOf(1.0, 10.0)))
         col.decks.save(cram)
-        assertEquals(3, col.sched.answerButtons(c).toLong())
+        assertEquals(3, col.sched.answerButtons(c))
         assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
         assertEquals(600, col.sched.nextIvl(c, BUTTON_TWO))
-        assertEquals((138 * 60 * 60 * 24).toLong(), col.sched.nextIvl(c, BUTTON_THREE))
+        assertEquals((138 * 60 * 60 * 24), col.sched.nextIvl(c, BUTTON_THREE))
         col.sched.answerCard(c, BUTTON_TWO)
         // elapsed time was 75 days
         // factor = 2.5+1.2/2 = 1.85
@@ -828,8 +830,8 @@ class SchedTest : RobolectricTest() {
         )
         // check ivls again
         assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
-        assertEquals((138 * 60 * 60 * 24).toLong(), col.sched.nextIvl(c, BUTTON_TWO))
-        assertEquals((138 * 60 * 60 * 24).toLong(), col.sched.nextIvl(c, BUTTON_THREE))
+        assertEquals((138 * 60 * 60 * 24), col.sched.nextIvl(c, BUTTON_TWO))
+        assertEquals((138 * 60 * 60 * 24), col.sched.nextIvl(c, BUTTON_THREE))
         // when it graduates, due is updated
         c = card!!
         col.sched.answerCard(c, BUTTON_TWO)
@@ -845,7 +847,7 @@ class SchedTest : RobolectricTest() {
         // check ivls again - passing should be idempotent
         assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
         assertEquals(600, col.sched.nextIvl(c, BUTTON_TWO))
-        assertEquals((138 * 60 * 60 * 24).toLong(), col.sched.nextIvl(c, BUTTON_THREE))
+        assertEquals((138 * 60 * 60 * 24), col.sched.nextIvl(c, BUTTON_THREE))
         col.sched.answerCard(c, BUTTON_TWO)
         assertEquals(138, c.ivl)
         assertEquals(138, c.oDue)
@@ -856,7 +858,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         // delete the deck, returning the card mid-study
         col.decks.rem(col.decks.selected())
-        assertEquals(1, col.sched.deckDueTree().size.toLong())
+        assertEquals(1, col.sched.deckDueTree().size)
         c.load()
         assertEquals(1, c.ivl)
         assertEquals((col.sched.today + 1).toLong(), c.due)
@@ -874,7 +876,7 @@ class SchedTest : RobolectricTest() {
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         c.load()
-        assertEquals(4, col.sched.answerButtons(c).toLong())
+        assertEquals(4, col.sched.answerButtons(c))
         // add a sibling so we can test minSpace, etc
         @KotlinCleanup("use apply")
         val c2 = c.clone()
@@ -1046,7 +1048,7 @@ class SchedTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "1")
         col.addNote(note)
-        assertEquals(3, col.cardCount().toLong())
+        assertEquals(3, col.cardCount())
         col.reset()
         // ordinals should arrive in order
         val sched = col.sched
@@ -1245,19 +1247,19 @@ class SchedTest : RobolectricTest() {
         val foobaz = note.model().put("did", addDeck("foo::baz"))
         col.addNote(note)
         col.reset()
-        assertEquals(5, col.decks.allSortedNames().size.toLong())
+        assertEquals(5, col.decks.allSortedNames().size)
         val tree = col.sched.deckDueTree()[0]
         assertEquals("Default", tree.value.lastDeckNameComponent)
         // sum of child and parent
         assertEquals(1, tree.value.did)
-        assertEquals(1, tree.value.revCount.toLong())
-        assertEquals(1, tree.value.newCount.toLong())
+        assertEquals(1, tree.value.revCount)
+        assertEquals(1, tree.value.newCount)
         // child count is just review
         val (value) = tree.children[0]
         assertEquals("1", value.lastDeckNameComponent)
         assertEquals(default1, value.did)
-        assertEquals(1, value.revCount.toLong())
-        assertEquals(0, value.newCount.toLong())
+        assertEquals(1, value.revCount)
+        assertEquals(0, value.newCount)
         // code should not fail if a card has an invalid deck
         c.did = 12345
         c.flush()
