@@ -17,7 +17,7 @@ package com.ichi2.libanki.sched
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.async.CollectionTask.Companion.nonTaskUndo
 import com.ichi2.libanki.*
 import com.ichi2.libanki.utils.TimeManager.time

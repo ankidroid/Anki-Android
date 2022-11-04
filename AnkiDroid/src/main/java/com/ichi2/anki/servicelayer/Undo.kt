@@ -22,19 +22,17 @@ import com.ichi2.async.CollectionTask
 import com.ichi2.utils.Computation
 import timber.log.Timber
 
-class UndoService {
-    class Undo : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return try {
-                val card = col.db.executeInTransaction {
-                    CollectionTask.nonTaskUndo(col)
-                }
-                Computation.ok(NextCard.withNoResult(card))
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundUndo")
-                Computation.err()
+class Undo : ActionAndNextCard() {
+    override fun execute(): ComputeResult {
+        return try {
+            val card = col.db.executeInTransaction {
+                CollectionTask.nonTaskUndo(col)
             }
+            Computation.ok(NextCard.withNoResult(card))
+        } catch (e: RuntimeException) {
+            Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing")
+            CrashReportService.sendExceptionReport(e, "doInBackgroundUndo")
+            Computation.err()
         }
     }
 }
