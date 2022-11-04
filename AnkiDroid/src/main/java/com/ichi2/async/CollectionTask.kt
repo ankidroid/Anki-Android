@@ -19,7 +19,6 @@
 package com.ichi2.async
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
@@ -380,28 +379,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
             col.sched.reset()
             return null
-        }
-    }
-
-    companion object {
-        @JvmStatic
-        @VisibleForTesting
-        fun nonTaskUndo(col: Collection): Card? {
-            val sched = col.sched
-            val card = col.undo()
-            if (card == null) {
-                /* multi-card action undone, no action to take here */
-                Timber.d("Multi-select undo succeeded")
-            } else {
-                // cid is actually a card id.
-                // a review was undone,
-                /* card review undone, set up to review that card again */
-                Timber.d("Single card review undo succeeded")
-                card.startTimer()
-                col.reset()
-                sched.deferReset(card)
-            }
-            return card
         }
     }
 }
