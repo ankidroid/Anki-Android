@@ -16,23 +16,44 @@
 
 package com.ichi2.anki.servicelayer
 
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.async.CollectionTask
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.utils.Computation
 import timber.log.Timber
 
 class Undo : ActionAndNextCard() {
     override fun execute(): ComputeResult {
         return try {
-            val card = col.db.executeInTransaction {
-                CollectionTask.nonTaskUndo(col)
-            }
+            val card = col.db.executeInTransaction { nonTaskUndo(col) }
             Computation.ok(NextCard.withNoResult(card))
         } catch (e: RuntimeException) {
             Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing")
             CrashReportService.sendExceptionReport(e, "doInBackgroundUndo")
             Computation.err()
+        }
+    }
+
+    companion object {
+        @VisibleForTesting
+        fun nonTaskUndo(col: Collection): Card? {
+            val sched = col.sched
+            val card = col.undo()
+            if (card == null) {
+                /* multi-card action undone, no action to take here */
+                Timber.d("Multi-select undo succeeded")
+            } else {
+                // cid is actually a card id.
+                // a review was undone,
+                /* card review undone, set up to review that card again */
+                Timber.d("Single card review undo succeeded")
+                card.startTimer()
+                col.reset()
+                sched.deferReset(card)
+            }
+            return card
         }
     }
 }
