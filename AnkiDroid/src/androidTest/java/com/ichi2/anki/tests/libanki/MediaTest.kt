@@ -26,6 +26,7 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.intellij.lang.annotations.Language
 import org.junit.*
 import org.junit.Assert.*
 import org.junit.runner.RunWith
@@ -114,7 +115,8 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "bar.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao").toMutableList()
+        @Language("HTML")
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -129,13 +131,15 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao").toMutableList()
+        @Language("HTML")
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src=\"foo.jpg\">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "fo")
+        @Language("HTML")
         actual =
-            mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao").toMutableList()
+            mTestCol!!.media.filesInStr(mid, """aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -149,12 +153,12 @@ class MediaTest : InstrumentedTest() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<img src=yo>oeu"))
         assertEquals("aoeu", Media.escapeImages("aoeu"))
         assertEquals(
-            "<img src='http://foo.com'>",
-            Media.escapeImages("<img src='http://foo.com'>")
+            """<img src='http://foo.com'>""",
+            Media.escapeImages("""<img src='http://foo.com'>""")
         )
         assertEquals(
-            "<img src=\"foo%20bar.jpg\">",
-            Media.escapeImages("<img src=\"foo bar.jpg\">")
+            """<img src=\"foo%20bar.jpg\">""",
+            Media.escapeImages("""<img src=\"foo bar.jpg\">""")
         )
     }
 

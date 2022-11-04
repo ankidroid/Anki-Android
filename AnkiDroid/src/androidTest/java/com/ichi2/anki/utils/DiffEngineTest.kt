@@ -17,6 +17,7 @@ package com.ichi2.anki.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.utils.DiffEngine
+import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,12 +26,13 @@ import org.junit.runner.RunWith
 class DiffEngineTest {
 
     @Test
+    @Language("HTML")
     fun testSimpleDiff() {
         val diffEngine = DiffEngine()
         val diffs = diffEngine.diffedHtmlStrings("typed", "correct")
         val expectedDiffs = arrayOf(
-            "<span class=\"typeBad\">corr</span><span class=\"typeGood\">e</span><span class=\"typeBad\">ct</span>",
-            "<span class=\"typeMissed\">typ</span><span class=\"typeGood\">e</span><span class=\"typeMissed\">d</span>"
+            """<span class=\"typeBad\">corr</span><span class=\"typeGood\">e</span><span class=\"typeBad\">ct</span>""",
+            """<span class=\"typeMissed\">typ</span><span class=\"typeGood\">e</span><span class=\"typeMissed\">d</span>"""
         )
         assertArrayEquals("Diff results were unexpected", expectedDiffs, diffs)
     }

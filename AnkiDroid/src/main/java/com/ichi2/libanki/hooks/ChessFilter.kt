@@ -18,6 +18,7 @@ package com.ichi2.libanki.hooks
 
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
@@ -62,6 +63,7 @@ object ChessFilter {
         var showBlack = false
         val mf = fFenPattern.matcher(text)
         val sb = StringBuffer()
+        @Language("JAVASCRIPT")
         while (mf.find()) {
             if (mf.group(1) != null) {
                 val mo = fFenOrientationPattern.matcher(mf.group(1) as CharSequence)
@@ -70,7 +72,7 @@ object ChessFilter {
                 }
             }
             try {
-                mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(" + String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + ");</script>")
+                mf.appendReplacement(sb, """<script type=\"text/javascript\">document.write(" + String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + ");</script>""")
             } catch (e: Exception) {
                 Timber.e(e, "ChessFilter exception: ")
             }

@@ -24,6 +24,7 @@ import com.ichi2.libanki.template.FuriganaFilters.furiganaFilter
 import com.ichi2.libanki.template.FuriganaFilters.kanaFilter
 import com.ichi2.libanki.template.FuriganaFilters.kanjiFilter
 import com.ichi2.utils.KotlinCleanup
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.lang.Exception
 import java.util.*
@@ -116,8 +117,9 @@ object TemplateFilters {
             return ""
         }
         // random id
+        @Language("HTML")
         val domId = "hint" + txt.hashCode()
-        return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+        return """<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('""" +
             domId + "').style.display='block';_relinquishFocus();return false;\">" +
             tag + "</a><div id=\"" +
             domId + "\" class=hint style=\"display: none\">" + txt + "</div>"

@@ -19,6 +19,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.HtmlUtils.escape
+import org.intellij.lang.annotations.Language
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -107,13 +108,14 @@ object LaTeX {
     /**
      * Return an img link for LATEX.
      */
+    @Language("HTML")
     @VisibleForTesting
     internal fun imgLink(latex: String, svg: Boolean, m: Media): String {
         val txt = latexFromHtml(latex)
         val ext = if (svg) "svg" else "png"
         val fname = "latex-" + Utils.checksum(txt) + "." + ext
         return if (m.have(fname)) {
-            Matcher.quoteReplacement("<img class=latex alt=\"" + escape(latex) + "\" src=\"" + fname + "\">")
+            Matcher.quoteReplacement("""<img class=latex alt=\"" + escape(latex) + "\" src=\"" + fname + "\">""")
         } else {
             Matcher.quoteReplacement(latex)
         }

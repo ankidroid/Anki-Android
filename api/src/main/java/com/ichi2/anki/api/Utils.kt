@@ -17,6 +17,7 @@
 package com.ichi2.anki.api
 
 import android.text.Html
+import org.intellij.lang.annotations.Language
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.math.BigInteger
@@ -31,7 +32,8 @@ internal object Utils {
     private val stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>")
     private val scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>")
     private val tagPattern = Pattern.compile("<.*?>")
-    private val imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>")
+    @Language("HTML")
+    private val imgPattern = Pattern.compile("""<img src=[\"']?([^\"'>]+)[\"']? ?/?>""")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
     private const val FIELD_SEPARATOR = '\u001f'.toString()
 

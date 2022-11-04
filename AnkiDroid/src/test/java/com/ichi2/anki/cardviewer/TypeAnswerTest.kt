@@ -247,7 +247,7 @@ $!"""
     fun testMediaIsNotExpected() {
         // #0096 - Anki Desktop did not expect media.
         @Language("HTML")
-        val input = "ya[sound:36_ya.mp3]<div><img src=\"paste-efbfdfbff329f818e3b5568e578234d0d0054067.png\" /><br /></div>"
+        val input = """ya[sound:36_ya.mp3]<div><img src=\"paste-efbfdfbff329f818e3b5568e578234d0d0054067.png\" /><br /></div>"""
         val expected = "ya"
         val actual: String = cleanCorrectAnswer(input)
         MatcherAssert.assertThat(actual, Matchers.equalTo(expected))

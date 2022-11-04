@@ -537,10 +537,10 @@ class ModelTest : RobolectricTest() {
         mm.save(m)
         col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
         val note = col.newNote()
-        val q1 = "<span style=\"color:red\">phrase</span>"
-        val a1 = "<b>sentence</b>"
-        val q2 = "<span style=\"color:red\">en chaine</span>"
-        val a2 = "<i>chained</i>"
+        val q1 = """<span style=\"color:red\">phrase</span>"""
+        val a1 = """<b>sentence</b>"""
+        val q2 = """<span style=\"color:red\">en chaine</span>"""
+        val a2 = """<i>chained</i>"""
         note.setItem("Text", "This {{c1::$q1::$a1}} demonstrates {{c1::$q2::$a2}} clozes.")
         assertEquals(1, col.addNote(note))
         note.cards()[0].q()

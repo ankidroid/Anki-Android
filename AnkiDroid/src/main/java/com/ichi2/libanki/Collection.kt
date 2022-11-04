@@ -57,6 +57,7 @@ import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.Contract
 import org.json.JSONArray
 import org.json.JSONException
@@ -1158,10 +1159,11 @@ open class Collection(
             }
             d[type] = html
             // empty cloze?
+            @Language("HTML")
             if ("q" == type && model.isCloze) {
                 if (Models._availClozeOrds(model, flist, false).isEmpty()) {
                     val link = String.format(
-                        "<a href=\"%s\">%s</a>",
+                        """<a href=\"%s\">%s</a>""",
                         context.resources.getString(R.string.link_ankiweb_docs_cloze_deletion),
                         "help"
                     )

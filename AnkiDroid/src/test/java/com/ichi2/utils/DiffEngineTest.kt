@@ -20,6 +20,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.MatcherAssert.assertThat
+import org.intellij.lang.annotations.Language
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -67,12 +68,13 @@ class DiffEngineTest : RobolectricTest() {
 
     @Test
     fun combiningMarksGetSeparatedTest() {
+        @Language("HTML")
         val diffEngine = DiffEngine()
 
         val diffedHtmlStrings = diffEngine.diffedHtmlStrings("အခ်ျန်", "အချိန်")
 
-        val expectedTyped = "<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>"
-        val expectedCorrect = "<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>"
+        val expectedTyped = """<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>"""
+        val expectedCorrect = """<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>"""
 
         assertEquals(expectedTyped, diffedHtmlStrings[0])
         assertEquals(expectedCorrect, diffedHtmlStrings[1])

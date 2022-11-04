@@ -176,7 +176,7 @@ public class AddContentApi(context: Context) {
 
     private fun formatMediaName(fname: String, mimeType: String): String? = when (mimeType) {
         "audio" -> "[sound:${fname.substring(1)}]" // first character in the path is "/"
-        "image" -> "<img src=\"${fname.substring(1)}\" />"
+        "image" -> """<img src=\"${fname.substring(1)}\" />"""
         else -> null // something went wrong
     }
 

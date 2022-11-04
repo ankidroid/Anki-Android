@@ -21,6 +21,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.intellij.lang.annotations.Language
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -44,7 +45,8 @@ class ImageFieldTest {
         // This differs between AnkDesktop Version 2.0.51 and 2.1.22
         // 2.0:  "<img src=\"paste-abc.jpg\" />";
         // 2.1: (note: no trailing slash or space)
-        val expected = "<img src=\"paste-abc.jpg\">"
+        @Language("HTML")
+        val expected = """<img src=\"paste-abc.jpg\">"""
         assertThat(actual, equalTo(expected))
     }
 

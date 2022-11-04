@@ -28,10 +28,11 @@ import java.util.regex.Pattern
  */
 object BeolingusParser {
     private val PRONUNCIATION_PATTERN = Pattern.compile(
-        "<a href=\"([^\"]+)\"[^>]*>" +
-            "<img src=\"/pics/s1[.]png\"[^>]*title=\"([^\"]+)\"[^>]*>"
+        """<a href=\"([^\"]+)\"[^>]*>""" +
+            """<img src=\"/pics/s1[.]png\"[^>]*title=\"([^\"]+)\"[^>]*>"""
     )
-    private val MP3_PATTERN = Pattern.compile("href=\"([^\"]+\\.mp3)\">")
+    @Language("HTML")
+    private val MP3_PATTERN = Pattern.compile("""href=\"([^\"]+\\.mp3)\">""")
 
     /**
      * @param html HTML page from beolingus, with translation of the word we search

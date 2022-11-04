@@ -34,6 +34,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -327,10 +328,11 @@ open class Card : Cloneable {
     /*
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
+    @Language("HTML")
     val pureAnswer: String
         get() {
             val s = render_output(false).answer_text
-            for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+            for (target in arrayOf("""<hr id=answer>", "<hr id=\"answer\">""")) {
                 val pos = s.indexOf(target)
                 if (pos == -1) continue
                 return s.substring(pos + target.length).trim { it <= ' ' }

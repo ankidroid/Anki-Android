@@ -23,6 +23,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
+import org.intellij.lang.annotations.Language
 import org.jsoup.Jsoup
 import timber.log.Timber
 import java.io.File
@@ -69,13 +70,12 @@ class ImageField : FieldBase(), IField {
     override fun setFormattedString(col: Collection, value: String) {
         extraImagePathRef = getImageFullPath(col, value)
     }
-
     companion object {
         private const val serialVersionUID = 4431611060655809687L
         @VisibleForTesting
         fun formatImageFileName(file: File): String {
             return if (file.exists()) {
-                "<img src=\"${file.name}\">"
+                """<img src=\"${file.name}\">"""
             } else {
                 ""
             }

@@ -39,6 +39,7 @@ import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.ImportUtils.isValidPackageName
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -81,7 +82,8 @@ object Utils {
     private val stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>")
     private val scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>")
     private val tagPattern = Pattern.compile("(?s)<.*?>")
-    private val imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>")
+    @Language("HTML")
+    private val imgPattern = Pattern.compile("""(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>""")
     private val soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
     private const val ALL_CHARACTERS =

@@ -43,6 +43,7 @@ import com.ichi2.anki.UIUtils.convertDpToPixel
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.*
 import kotlin.math.ceil
@@ -225,8 +226,9 @@ class Toolbar : FrameLayout {
         // Might be better to add this as a fragment - let's see.
         MaterialDialog(context).show {
             listItems(R.array.html_size_code_labels) { _: MaterialDialog, index: Int, _: CharSequence ->
+                @Language("CSS")
                 val formatter = TextWrapper(
-                    prefix = "<span style=\"font-size:${results[index]}\">",
+                    prefix = """<span style=\"font-size:${results[index]}\">""",
                     suffix = "</span>"
                 )
                 onFormat(formatter)
