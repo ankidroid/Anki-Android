@@ -56,14 +56,12 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    @KotlinCleanup("make context non-null")
-    fun fetchSmall(context: Context?): IntArray {
-        return MetaDB.getWidgetSmallStatus(context!!)
+    fun fetchSmall(context: Context): IntArray {
+        return MetaDB.getWidgetSmallStatus(context)
     }
 
-    @KotlinCleanup("make context non-null")
-    fun fetchDue(context: Context?): Int {
-        return MetaDB.getNotificationStatus(context!!)
+    fun fetchDue(context: Context): Int {
+        return MetaDB.getNotificationStatus(context)
     }
 
     private class UpdateDeckStatusAsyncTask : BaseAsyncTask<Context?, Void?, Context?>() {
