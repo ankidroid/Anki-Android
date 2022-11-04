@@ -91,7 +91,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.getBestDefaultRootDirect
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.migrateEssentialFiles
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.web.CustomSyncServer
