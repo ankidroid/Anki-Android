@@ -27,6 +27,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import timber.log.Timber
 import java.util.*
 
@@ -71,8 +72,7 @@ object AdaptionUtil {
             return false
         }
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
-        val pm = context.packageManager
-        val list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        val list = context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         for (ri in list) {
             if (!isValidBrowser(ri)) {
                 continue
@@ -83,7 +83,7 @@ object AdaptionUtil {
                 return true
             }
             // If we are a restricted device, only a system browser will do
-            if (isSystemApp(ri.activityInfo.packageName, pm)) {
+            if (isSystemApp(ri.activityInfo.packageName, context)) {
                 return true
             }
         }
@@ -96,12 +96,11 @@ object AdaptionUtil {
         return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
-    @Suppress("deprecation") // getPackageInfo
-    private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
+    private fun isSystemApp(packageName: String?, context: Context): Boolean {
         return if (packageName != null) {
             try {
-                val info = pm.getPackageInfo(packageName, 0)
-                info?.applicationInfo != null &&
+                val info = context.getPackageInfoCompat(packageName, 0)
+                info.applicationInfo != null &&
                     info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
