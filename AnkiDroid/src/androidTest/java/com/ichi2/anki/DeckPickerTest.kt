@@ -118,7 +118,7 @@ class DeckPickerTest {
 
         // Create a card belonging to the new deck, using Basic type (guaranteed to exist)
         onView(withId(R.id.fab_main)).perform(click())
-        onView(withId(R.id.add_note_action)).perform(click())
+        onView(withId(R.id.add_note_label)).perform(click())
 
         // Close the keyboard, it auto-focuses and obscures enough of the screen
         // on some devices that espresso complains about global visibility being <90%

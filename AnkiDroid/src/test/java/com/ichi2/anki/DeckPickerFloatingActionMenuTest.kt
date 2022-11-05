@@ -52,6 +52,7 @@ class DeckPickerFloatingActionMenuTest {
     @Mock private val mAddSharedLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
     @Mock private val mAddDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+
     @Mock private val addNoteLabel: TextView = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
     @Mock private val mAddNoteLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
@@ -69,8 +70,6 @@ class DeckPickerFloatingActionMenuTest {
     @Mock private val addSharedButton: FloatingActionButton = mock()
 
     @Mock private val addDeckButton: FloatingActionButton = mock()
-
-    @Mock private val addNoteLabel: TextView = mock()
 
     @Mock private val addSharedLabel: TextView = mock()
 
