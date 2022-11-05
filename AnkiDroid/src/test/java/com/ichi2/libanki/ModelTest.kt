@@ -74,10 +74,11 @@ class ModelTest : RobolectricTest() {
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}")
         col.models.save(m)
 
-        val note = col.newNote()
-        note.setItem("Front", "helloworld")
-        note.setItem("FrontSide", "1")
-        note.setItem("FrontSide2", "2")
+        val note = col.newNote().apply {
+            setItem("Front", "helloworld")
+            setItem("FrontSide", "1")
+            setItem("FrontSide2", "2")
+        }
         col.addNote(note)
         val card = note.firstCard()
         val q = card.q()
@@ -95,9 +96,10 @@ class ModelTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_modelDelete() {
 
-        val note = col.newNote()
-        note.setItem("Front", "1")
-        note.setItem("Back", "2")
+        val note = col.newNote().apply {
+            setItem("Front", "1")
+            setItem("Back", "2")
+        }
         col.addNote(note)
         assertEquals(1, col.cardCount())
         col.models.rem(col.models.current()!!)
@@ -124,9 +126,10 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_fields() {
-        var note = col.newNote()
-        note.setItem("Front", "1")
-        note.setItem("Back", "2")
+        var note = col.newNote().apply {
+            setItem("Front", "1")
+            setItem("Back", "2")
+        }
         col.addNote(note)
         val m = col.models.current()
         // make sure renaming a field updates the templates
@@ -238,9 +241,10 @@ class ModelTest : RobolectricTest() {
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(m!!, t)
         mm.save(m)
-        val note = col.newNote()
-        note.setItem("Front", "1")
-        note.setItem("Back", "2")
+        val note = col.newNote().apply {
+            setItem("Front", "1")
+            setItem("Back", "2")
+        }
         col.addNote(note)
         assertEquals(2, col.cardCount())
         val cards: List<Card> = note.cards()
@@ -552,9 +556,10 @@ class ModelTest : RobolectricTest() {
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(basic!!, t)
         mm.save(basic)
-        var note = col.newNote()
-        note.setItem("Front", "note")
-        note.setItem("Back", "b123")
+        var note = col.newNote().apply {
+            setItem("Front", "note")
+            setItem("Back", "b123")
+        }
         col.addNote(note)
         // switch fields
         var map: MutableMap<Int, Int?> = HashMap()
