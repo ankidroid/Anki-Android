@@ -226,7 +226,7 @@ class Toolbar : FrameLayout {
         MaterialDialog(context).show {
             listItems(R.array.html_size_code_labels) { _: MaterialDialog, index: Int, _: CharSequence ->
                 val formatter = TextWrapper(
-                    prefix = "<span style=\"font-size:${results[index]}\">",
+                    prefix = """<span style="font-size:${results[index]}">""",
                     suffix = "</span>"
                 )
                 onFormat(formatter)

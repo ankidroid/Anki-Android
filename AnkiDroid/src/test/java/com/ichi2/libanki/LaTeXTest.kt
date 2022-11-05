@@ -42,7 +42,7 @@ class LaTeXTest : RobolectricTest() {
         // Test with media access
         assertThat(
             LaTeX.imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", false, m),
-            equalTo("<img class=latex alt=\"\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
+            equalTo("""<img class=latex alt="\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$" src="latex-dd84e5d506179a137f7924d0960609a8c89d491e.png">""")
         )
 
         // Test without access to media
@@ -96,7 +96,7 @@ class LaTeXTest : RobolectricTest() {
         // Test with media access
         assertThat(
             LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", m, false),
-            equalTo("<img class=latex alt=\"$\\sqrt[3]{2} + \\text{&quot;var&quot;}$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
+            equalTo("""<img class=latex alt="$\\sqrt[3]{2} + \\text{&quot;var&quot;}$" src="latex-dd84e5d506179a137f7924d0960609a8c89d491e.png">""")
         )
 
         // Test without access to media

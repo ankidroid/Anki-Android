@@ -53,13 +53,13 @@ class MediaTest : RobolectricTest() {
         assertEquals(0, col.media.filesInStr(mid, "aoeu").size.toLong())
         assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg'>ao"))
         assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg' style='test'>ao"))
-        assertEqualsArrayList(arrayOf("foo.jpg", "bar.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao"))
+        assertEqualsArrayList(arrayOf("foo.jpg", "bar.jpg"), col.media.filesInStr(mid, """aoeu<img src='foo.jpg'><img src="bar.jpg">ao"""))
         assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao"))
         assertEqualsArrayList(arrayOf("one", "two"), col.media.filesInStr(mid, "<img src=one><img src=two>"))
-        assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao"))
+        assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, """aoeu<img src="foo.jpg">ao"""))
         assertEqualsArrayList(
             arrayOf("foo.jpg", "fo"),
-            col.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao")
+            col.media.filesInStr(mid, """aoeu<img src="foo.jpg"><img class=yo src=fo>ao""")
         )
         assertEqualsArrayList(arrayOf("foo.mp3"), col.media.filesInStr(mid, "aou[sound:foo.mp3]aou"))
         assertEquals("aoeu", col.media.strip("aoeu"))
@@ -67,7 +67,7 @@ class MediaTest : RobolectricTest() {
         assertEquals("aoeu", col.media.strip("a<img src=yo>oeu"))
         assertEquals("aoeu", Media.escapeImages("aoeu"))
         assertEquals("<img src='http://foo.com'>", Media.escapeImages("<img src='http://foo.com'>"))
-        assertEquals("<img src=\"foo%20bar.jpg\">", Media.escapeImages("<img src=\"foo bar.jpg\">"))
+        assertEquals("""<img src="foo%20bar.jpg">""", Media.escapeImages("""<img src="foo bar.jpg">"""))
     }
 
     /* TODO: file

@@ -71,8 +71,8 @@ class DiffEngineTest : RobolectricTest() {
 
         val diffedHtmlStrings = diffEngine.diffedHtmlStrings("အခ်ျန်", "အချိန်")
 
-        val expectedTyped = "<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>"
-        val expectedCorrect = "<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>"
+        val expectedTyped = """<span class="typeGood">အခ</span><span class="typeGood">&nbsp;ျ</span><span class="typeBad">&nbsp;ိ</span><span class="typeGood">န်</span>"""
+        val expectedCorrect = """<span class="typeGood">အခ</span><span class="typeMissed">&nbsp;်</span><span class="typeGood">&nbsp;ျ</span><span class="typeGood">န်</span>"""
 
         assertEquals(expectedTyped, diffedHtmlStrings[0])
         assertEquals(expectedCorrect, diffedHtmlStrings[1])

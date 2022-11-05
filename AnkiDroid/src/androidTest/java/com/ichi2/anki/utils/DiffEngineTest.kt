@@ -29,8 +29,8 @@ class DiffEngineTest {
         val diffEngine = DiffEngine()
         val diffs = diffEngine.diffedHtmlStrings("typed", "correct")
         val expectedDiffs = arrayOf(
-            "<span class=\"typeBad\">corr</span><span class=\"typeGood\">e</span><span class=\"typeBad\">ct</span>",
-            "<span class=\"typeMissed\">typ</span><span class=\"typeGood\">e</span><span class=\"typeMissed\">d</span>"
+            """<span class="typeBad">corr</span><span class="typeGood">e</span><span class="typeBad">ct</span>""",
+            """<span class="typeMissed">typ</span><span class="typeGood">e</span><span class="typeMissed">d</span>"""
         )
         assertArrayEquals("Diff results were unexpected", expectedDiffs, diffs)
     }
