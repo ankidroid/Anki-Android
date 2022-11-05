@@ -263,7 +263,7 @@ dependencies {
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.2'
-    implementation 'com.github.CanHub:Android-Image-Cropper:4.3.2'
+    implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
     // Backend libraries
