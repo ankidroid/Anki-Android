@@ -122,36 +122,35 @@ object TemplateFilters {
             domId + "\" class=hint style=\"display: none\">" + txt + "</div>"
     }
 
-    @KotlinCleanup("see if we can remove the var")
     private fun clozeText(txtInput: String, ord: String, type: Char): String {
-        var txt = txtInput
-        if (!Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt).find()) {
-            return ""
-        }
-        txt = removeFormattingFromMathjax(txt, ord)
-        val m = Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt)
-        val repl = StringBuffer()
-        while (m.find()) {
-            // replace chosen cloze with type
-            @KotlinCleanup("maybe make non-null")
-            var buf: String?
-            buf = if (type == 'q') {
-                if (!TextUtils.isEmpty(m.group(4))) {
-                    "[" + m.group(4) + "]"
+        return if (!Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txtInput)
+            .find()
+        ) {
+            ""
+        } else {
+            val m = Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(removeFormattingFromMathjax(txtInput, ord))
+            val repl = StringBuffer()
+            while (m.find()) {
+                // replace chosen cloze with type
+                @KotlinCleanup("maybe make non-null")
+                var buf: String?
+                buf = if (type == 'q') {
+                    if (!TextUtils.isEmpty(m.group(4))) {
+                        "[" + m.group(4) + "]"
+                    } else {
+                        CLOZE_DELETION_REPLACEMENT
+                    }
                 } else {
-                    CLOZE_DELETION_REPLACEMENT
+                    m.group(2)
                 }
-            } else {
-                m.group(2)
+                if ("c" == m.group(1)) {
+                    buf = "<span class=cloze>$buf</span>"
+                }
+                m.appendReplacement(repl, Matcher.quoteReplacement(buf!!))
             }
-            if ("c" == m.group(1)) {
-                buf = "<span class=cloze>$buf</span>"
-            }
-            m.appendReplacement(repl, Matcher.quoteReplacement(buf!!))
+            // and display other clozes normally
+            return m.appendTail(repl).toString().replace(String.format(Locale.US, CLOZE_REG, "\\d+").toRegex(), "$2")
         }
-        txt = m.appendTail(repl).toString()
-        // and display other clozes normally
-        return txt.replace(String.format(Locale.US, CLOZE_REG, "\\d+").toRegex(), "$2")
     }
 
     /**
