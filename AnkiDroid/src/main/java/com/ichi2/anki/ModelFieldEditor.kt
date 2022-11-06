@@ -43,7 +43,8 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuActio
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.CollectionTask.RepositionField
+import com.ichi2.async.ProgressSenderAndCancelListener
+import com.ichi2.async.TaskDelegate
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
@@ -388,7 +389,20 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private fun repositionField(index: Int) {
         TaskManager.launchCollectionTask(
-            RepositionField(mModel, mNoteFields.getJSONObject(currentPos), index),
+            object : TaskDelegate<Void, Boolean>() {
+                override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
+                    Timber.d("doInBackgroundRepositionField")
+                    try {
+                        col.models.moveField(mModel, mNoteFields.getJSONObject(currentPos), index)
+                        col.save()
+                    } catch (e: ConfirmModSchemaException) {
+                        e.log()
+                        // Should never be reached
+                        return false
+                    }
+                    return true
+                }
+            },
             changeFieldHandler()
         )
     }
