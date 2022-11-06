@@ -54,7 +54,6 @@ class ControlPreference : ListPreference {
     @Suppress("unused") constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     @Suppress("unused") constructor(context: Context) : super(context)
 
-    @SuppressLint("StringFormatInvalid")
     fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
         val entryIndices: MutableList<Int> = ArrayList()
