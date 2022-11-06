@@ -59,11 +59,11 @@ class ControlPreference : ListPreference {
         val entryTitles: MutableList<CharSequence> = ArrayList()
         val entryIndices: MutableList<Int> = ArrayList()
         // negative indices are "add"
-        entryTitles.add(context.getString(R.string.binding_add_key, ADD_KEY_INDEX.toString()))
+        entryTitles.add(context.getString(R.string.binding_add_key))
         entryIndices.add(ADD_KEY_INDEX)
         // Put "Add gesture" option if gestures are enabled
         if (AnkiDroidApp.getSharedPrefs(context).getBoolean(GestureProcessor.PREF_KEY, false)) {
-            entryTitles.add(context.getString(R.string.binding_add_gesture, ADD_GESTURE_INDEX.toString()))
+            entryTitles.add(context.getString(R.string.binding_add_gesture))
             entryIndices.add(ADD_GESTURE_INDEX)
         }
         // 0 and above are "delete" actions for already mapped preferences
