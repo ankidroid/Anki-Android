@@ -1805,7 +1805,7 @@ open class DeckPicker :
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
                         ConnectionResultType.SD_ACCESS_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_write_access_error)
+                            dialogMessage = res.getString(R.string.sync_write_access_error_on_storage)
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
                         ConnectionResultType.FINISH_ERROR -> {
