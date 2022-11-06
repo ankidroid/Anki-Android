@@ -18,7 +18,7 @@ package com.ichi2.libanki.template
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.template.TemplateError.FieldNotFound
-import com.ichi2.libanki.template.TemplateFilters.apply_filter
+import com.ichi2.libanki.template.TemplateFilters.applyFilter
 import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("IDE Lint")
@@ -64,7 +64,7 @@ class Replacement(
             }
         }
         for (filter in filters) {
-            txt = apply_filter(txt!!, filter, key, tag)
+            txt = applyFilter(txt!!, filter, key, tag)
         }
         builder.append(txt)
     }

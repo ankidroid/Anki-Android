@@ -46,10 +46,10 @@ object TemplateFilters {
      * @param tag The entire part between {{ and }}
      * @return The result of applying each filter successively to txt
      */
-    fun apply_filters(txtInput: String, filters: List<String>, field_name: String, tag: String): String {
+    fun applyFilters(txtInput: String, filters: List<String>, field_name: String, tag: String): String {
         var txt = txtInput
         for (filter in filters) {
-            txt = apply_filter(txt, filter, field_name, tag)
+            txt = applyFilter(txt, filter, field_name, tag)
         }
         return txt
     }
@@ -62,15 +62,14 @@ object TemplateFilters {
      * @return Result of filter on current txt.
      */
     @KotlinCleanup("maybe change var to val")
-    fun apply_filter(txtInput: String, filterInput: String, field_name: String, tag: String): String {
+    fun applyFilter(txtInput: String, filterInput: String, field_name: String, tag: String): String {
         // Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
         // built-in modifiers
-        val txt = txtInput
         var filter = filterInput
         return if ("text" == filter) {
             // strip html
-            if (!TextUtils.isEmpty(txt)) {
-                Utils.stripHTML(txt)
+            if (!TextUtils.isEmpty(txtInput)) {
+                Utils.stripHTML(txtInput)
             } else {
                 ""
             }
@@ -83,8 +82,8 @@ object TemplateFilters {
             val split = filter.split("-").toTypedArray()
             filter = split[0]
             val extra = split[1]
-            if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
-                clozeText(txt, extra, filter[1])
+            if (!TextUtils.isEmpty(txtInput) && !TextUtils.isEmpty(extra)) {
+                clozeText(txtInput, extra, filter[1])
             } else {
                 ""
             }
@@ -98,11 +97,11 @@ object TemplateFilters {
             }
             try {
                 when (filter) {
-                    "hint" -> runHint(txt, field_name)
-                    "kanji" -> kanjiFilter(txt)
-                    "kana" -> kanaFilter(txt)
-                    "furigana" -> furiganaFilter(txt)
-                    else -> txt
+                    "hint" -> runHint(txtInput, field_name)
+                    "kanji" -> kanjiFilter(txtInput)
+                    "kana" -> kanaFilter(txtInput)
+                    "furigana" -> furiganaFilter(txtInput)
+                    else -> txtInput
                 }
             } catch (e: Exception) {
                 Timber.e(e, "Exception while running hook %s", filter)
@@ -112,7 +111,7 @@ object TemplateFilters {
     }
 
     private fun runHint(txt: String, tag: String): String {
-        if (txt.trim { it <= ' ' }.length == 0) {
+        if (txt.trim { it <= ' ' }.isEmpty()) {
             return ""
         }
         // random id
@@ -176,7 +175,7 @@ object TemplateFilters {
         // TODO: Report mismatching opens/closes - e.g. '\(\]'
         // TODO: Report errors in this method better than printing to stdout.
         // flags in middle of expression deprecated
-        var in_mathjax = false
+        var inMathjax = false
 
         // The following regex matches one of 3 things, noted below:
         val regex = "(?si)" +
@@ -188,17 +187,17 @@ object TemplateFilters {
         val replacement = StringBuffer()
         while (m.find()) {
             if (m.group(1) != null) {
-                if (in_mathjax) {
+                if (inMathjax) {
                     Timber.d("MathJax opening found while already in MathJax")
                 }
-                in_mathjax = true
+                inMathjax = true
             } else if (m.group(2) != null) {
-                if (!in_mathjax) {
+                if (!inMathjax) {
                     Timber.d("MathJax close found while not in MathJax")
                 }
-                in_mathjax = false
+                inMathjax = false
             } else if (m.group(3) != null) {
-                if (in_mathjax) {
+                if (inMathjax) {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
                         replacement,
