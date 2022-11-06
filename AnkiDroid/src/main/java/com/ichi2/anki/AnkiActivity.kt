@@ -510,7 +510,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Show a basic notification to the user in the notification bar in the meantime
             val title = newFragment.notificationTitle
             val message = newFragment.notificationMessage
-            showSimpleNotification(title, message ?: "", channel)
+            showSimpleNotification(title, message, channel)
         }
     }
 
@@ -526,10 +526,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
-
+    @KotlinCleanup("make non-null")
     fun showSimpleNotification(
         title: String,
-        message: String,
+        message: String?,
         channel: Channel
     ) {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
