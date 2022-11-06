@@ -334,9 +334,11 @@
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
 
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture for %s</string>
+    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture_title">Add gesture for %s</string>
+    <string name="binding_add_key_title">Add key for %s</string>
     <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key for %s</string>
+    <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>
 
