@@ -43,15 +43,9 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuActio
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.ProgressSenderAndCancelListener
-import com.ichi2.async.TaskDelegate
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
-import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
@@ -64,8 +58,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var mFieldsListView: ListView
-    @Suppress("Deprecation")
-    private var progressDialog: android.app.ProgressDialog? = null // TODO: Check alternatives to ProgressDialog
     private var fieldNameInput: EditText? = null
     private lateinit var collection: Collection
     private lateinit var mModel: Model
@@ -388,33 +380,26 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     private fun repositionField(index: Int) {
-        TaskManager.launchCollectionTask(
-            object : TaskDelegate<Void, Boolean>() {
-                override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
+        launchCatchingTask {
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                val result = withCol {
                     Timber.d("doInBackgroundRepositionField")
                     try {
-                        col.models.moveField(mModel, mNoteFields.getJSONObject(currentPos), index)
-                        col.save()
+                        models.moveField(mModel, mNoteFields.getJSONObject(currentPos), index)
+                        save()
+                        true
                     } catch (e: ConfirmModSchemaException) {
                         e.log()
                         // Should never be reached
-                        return false
+                        false
                     }
-                    return true
                 }
-            },
-            changeFieldHandler()
-        )
-    }
-
-    // ----------------------------------------------------------------------------
-    // HELPER METHODS
-    // ----------------------------------------------------------------------------
-    private fun dismissProgressBar() {
-        if (progressDialog != null) {
-            progressDialog!!.dismiss()
+                if (!result) {
+                    closeActivity()
+                }
+                initialize()
+            }
         }
-        progressDialog = null
     }
 
     /*
@@ -470,36 +455,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val field = mNoteFields.getJSONObject(currentPos)
         // If the sticky setting is enabled then disable it, otherwise enable it
         field.put("sticky", !field.getBoolean("sticky"))
-    }
-
-    // ----------------------------------------------------------------------------
-    // HANDLERS
-    // ----------------------------------------------------------------------------
-    /*
-     * Called during the desk task when any field is modified
-     */
-    private fun changeFieldHandler(): ChangeHandler {
-        return ChangeHandler(this)
-    }
-
-    private class ChangeHandler(modelFieldEditor: ModelFieldEditor) : TaskListenerWithContext<ModelFieldEditor, Void?, Boolean?>(modelFieldEditor) {
-        override fun actualOnPreExecute(context: ModelFieldEditor) {
-            if (context.progressDialog == null) {
-                context.progressDialog = show(
-                    context, context.intent.getStringExtra("title"),
-                    context.resources.getString(R.string.model_field_editor_changing), false
-                )
-            }
-        }
-
-        @KotlinCleanup("Convert result to non-null")
-        override fun actualOnPostExecute(context: ModelFieldEditor, result: Boolean?) {
-            if (result == false) {
-                context.closeActivity()
-            }
-            context.dismissProgressBar()
-            context.initialize()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
