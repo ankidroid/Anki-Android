@@ -357,11 +357,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     if (pos < 1 || pos > mFieldsLabels.size) {
                         showThemedToast(this@ModelFieldEditor, resources.getString(R.string.toast_out_of_range), true)
                     } else {
-                        val listener = changeFieldHandler()
                         // Input is valid, now attempt to modify
                         try {
                             collection.modSchema()
-                            TaskManager.launchCollectionTask(RepositionField(mModel, mNoteFields.getJSONObject(currentPos), pos - 1), listener)
+                            repositionField(pos - 1)
                         } catch (e: ConfirmModSchemaException) {
                             e.log()
 
@@ -371,13 +370,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             val confirm = Runnable {
                                 try {
                                     collection.modSchemaNoCheck()
-                                    TaskManager.launchCollectionTask(
-                                        RepositionField(
-                                            mModel,
-                                            mNoteFields.getJSONObject(currentPos), pos - 1
-                                        ),
-                                        listener
-                                    )
+                                    repositionField(pos - 1)
                                 } catch (e1: JSONException) {
                                     throw RuntimeException(e1)
                                 }
@@ -391,6 +384,13 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             }
                 .displayKeyboard(_fieldNameInput)
         }
+    }
+
+    private fun repositionField(index: Int) {
+        TaskManager.launchCollectionTask(
+            RepositionField(mModel, mNoteFields.getJSONObject(currentPos), index),
+            changeFieldHandler()
+        )
     }
 
     // ----------------------------------------------------------------------------
