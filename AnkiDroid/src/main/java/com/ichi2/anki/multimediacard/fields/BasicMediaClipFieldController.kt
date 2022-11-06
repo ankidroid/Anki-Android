@@ -165,7 +165,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
 
                 // If everything worked, hand off the information
-                mField.setHasTemporaryMedia(true)
+                mField.hasTemporaryMedia = true
                 mField.audioPath = clipCopy.absolutePath
                 tvAudioClip.text = clipCopy.name
                 tvAudioClip.visibility = View.VISIBLE

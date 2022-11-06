@@ -19,7 +19,6 @@
 package com.ichi2.anki.multimediacard.fields
 
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import java.io.Serializable
 
 /**
@@ -44,14 +43,8 @@ interface IField : Serializable {
 
     /**
      * Mark if the current media path is temporary and if it should be deleted once the media has been processed.
-     *
-     * @param hasTemporaryMedia True if the media is temporary, False if it is existing media.
-     * @return
      */
-    @KotlinCleanup("turn set/hasTemporaryMedia into a property")
-    fun setHasTemporaryMedia(hasTemporaryMedia: Boolean)
-
-    fun hasTemporaryMedia(): Boolean
+    var hasTemporaryMedia: Boolean
 
     var name: String?
 
