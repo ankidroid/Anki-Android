@@ -335,8 +335,6 @@
 
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_gesture_title">Add gesture for %s</string>
-    <string name="binding_add_key_title">Add key for %s</string>
     <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Replace key</string>
