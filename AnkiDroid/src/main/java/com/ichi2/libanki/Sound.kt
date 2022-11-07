@@ -469,7 +469,7 @@ class Sound {
         /**
          * Pattern used to identify the markers for sound files
          */
-        val SOUND_PATTERN = Pattern.compile("\\[sound:([^\\[\\]]*)]")
+        val SOUND_PATTERN: Pattern = Pattern.compile("\\[sound:([^\\[\\]]*)]")
 
         /**
          * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
