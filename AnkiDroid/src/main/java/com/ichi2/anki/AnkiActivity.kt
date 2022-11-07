@@ -527,7 +527,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
-    @KotlinCleanup("make non-null")
+
     fun showSimpleNotification(
         title: String,
         message: String?,
