@@ -101,7 +101,7 @@ open class MyAccount : AnkiActivity() {
         }
     }
 
-    fun attemptLogin() {
+    private fun attemptLogin() {
         val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
@@ -253,7 +253,7 @@ open class MyAccount : AnkiActivity() {
     /**
      * Listeners
      */
-    val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
+    private val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
         override fun onProgressUpdate(vararg values: Any?) {
             // Pass
         }
@@ -291,7 +291,7 @@ open class MyAccount : AnkiActivity() {
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
-                    if (!result.isNullOrEmpty() && result[0] is Exception) {
+                    if (result.isNotEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(
                             title = message,
                             message = getHumanReadableLoginErrorMessage(result[0] as Exception),
