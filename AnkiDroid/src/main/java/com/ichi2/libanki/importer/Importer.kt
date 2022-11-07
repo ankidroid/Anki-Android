@@ -19,10 +19,10 @@ package com.ichi2.libanki.importer
 import android.content.Context
 import android.content.res.Resources
 import com.ichi2.anki.exception.ImportExportException
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.channels.SendChannel
 import java.io.File
 
 abstract class Importer(col: Collection, protected var file: String) {
@@ -42,7 +42,7 @@ abstract class Importer(col: Collection, protected var file: String) {
     protected lateinit var dst: Collection
     protected lateinit var src: Collection
     protected val context: Context
-    protected var progress: TaskManager.ProgressCallback<String>? = null
+    protected var progress: SendChannel<ImportAddProgress>? = null
 
     @Throws(ImportExportException::class)
     abstract fun run()
@@ -67,7 +67,7 @@ abstract class Importer(col: Collection, protected var file: String) {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    fun setProgressCallback(progressCallback: TaskManager.ProgressCallback<String>?) {
+    fun setProgressCallback(progressCallback: SendChannel<ImportAddProgress>?) {
         progress = progressCallback
     }
 
