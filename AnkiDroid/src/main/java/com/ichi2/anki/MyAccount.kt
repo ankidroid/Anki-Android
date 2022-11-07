@@ -294,7 +294,7 @@ open class MyAccount : AnkiActivity() {
                     if (!result.isNullOrEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(
                             title = message,
-                            message = getHumanReadableLoginErrorMessage(result[0] as Exception) ?: "",
+                            message = getHumanReadableLoginErrorMessage(result[0] as Exception),
                             reload = false
                         )
                     } else {
