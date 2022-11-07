@@ -18,6 +18,13 @@ internal class BasicModel {
         val QFMT = arrayOf("{{Front}}")
         @JvmField // required for API
         @Language("HTML")
-        val AFMT = arrayOf("""{{FrontSide}}\n\n<hr id="answer">\n\n{{Back}}""")
+        val AFMT = arrayOf(
+            """{{FrontSide}}
+        
+        |<hr id="answer">
+        
+        |{{Back}}
+            """.trimMargin()
+        )
     }
 }

@@ -115,7 +115,7 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "bar.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao").toMutableList()
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src='foo.jpg'><img src="bar.jpg">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -130,7 +130,7 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao").toMutableList()
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src="foo.jpg">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
