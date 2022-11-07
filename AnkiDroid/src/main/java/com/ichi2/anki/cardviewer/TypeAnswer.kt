@@ -159,9 +159,6 @@ class TypeAnswer(
             append(">\n</center>\n")
         } else {
             append("<span id=\"typeans\" class=\"typePrompt")
-            if (useInputTag) {
-                append(" typeOff")
-            }
             append("\">........</span>")
         }
         return m.replaceAll(sb.toString())
