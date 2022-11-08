@@ -2211,7 +2211,7 @@ end)  """
      * Unbury the cards of deck [did] and its descendants.
      * @param type See [UnburyType]
      */
-     override fun unburyCardsForDeck(did: Long, type: UnburyType) {
+    override fun unburyCardsForDeck(did: Long, type: UnburyType) {
         if (!BackendFactory.defaultLegacySchema) {
             super.unburyCardsForDeck(did, type)
             return
@@ -2224,22 +2224,30 @@ end)  """
     /**
      * Unbury the cards of some decks.
      * @param type See [UnburyType]
-     * @param allDecks the decks from which cards should be unburied.
+     * @param allDecks the decks from which cards should be unburied. If None, unbury for all decks.
      * Only cards directly in a deck of this lists are considered, not subdecks.
      */
-    fun unburyCardsForDeck(type: UnburyType, allDecks: List<Long>) {
+    fun unburyCardsForDeck(type: UnburyType, allDecks: List<Long>?) {
         @Language("SQL")
         val queue = when (type) {
             UnburyType.ALL -> queueIsBuriedSnippet()
             UnburyType.MANUAL -> "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED
             UnburyType.SIBLINGS -> "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED
         }
-        val sids = Utils.ids2str(allDecks)
-        col.log(col.db.queryLongList("select id from cards where $queue and did in $sids"))
+        val deckConstraint = if (allDecks == null) {
+            ""
+        } else {
+            " and did in " + Utils.ids2str(allDecks)
+        }
+        col.log(col.db.queryLongList("select id from cards where $queue $deckConstraint"))
         col.db.execute(
-            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
+            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + deckConstraint,
             time.intTime(), col.usn()
         )
+    }
+
+    override fun unburyCards() {
+        unburyCardsForDeck(UnburyType.ALL, null)
     }
 
     /**
