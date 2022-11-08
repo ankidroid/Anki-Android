@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    >
+
+    <PreferenceCategory
+        android:title="Backup options"
+        >
+
+        <!-- ############################## Old backend settings ############################### -->
+
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:defaultValue="8"
+            android:key="@string/pref_backup_max_key"
+            android:title="@string/pref_backup_max"
+            app1:useSimpleSummaryProvider="true"
+            app:min="0"
+            app:max="99"
+            />
+
+        <!-- ############################## New backend settings ############################### -->
+
+        <!-- Includes modified text from `TR.preferencesBackupExplanation()`
+             and `TR.preferencesNoteMediaIsNotBackedUp()`. -->
+        <com.ichi2.preferences.HtmlHelpPreference
+            android:key="@string/pref_backups_help_key"
+            android:summary="AnkiDroid periodically backs up your collection.
+                After backups are more than two days old,
+                AnkiDroid will start removing some of them to free up disk space.
+                &lt;br>&lt;br>
+                Note that media files are not backed up.
+                To be safe, please periodically synchronize your collection, or back up exports of it.
+                &lt;br>&lt;br>
+                You can restore from a backup and export your collection in the deck list menu."
+            />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_minutes_between_automatic_backups_key"
+            android:title="Minutes between automatic backups"
+            android:persistent="false"
+            app:min="5"
+            />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_daily_backups_to_keep_key"
+            android:title="Daily backups to keep"
+            android:persistent="false"
+            app:min="0"
+            />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_weekly_backups_to_keep_key"
+            android:title="Weekly backups to keep"
+            android:persistent="false"
+            app:min="0"
+            />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_monthly_backups_to_keep_key"
+            android:title="Monthly backups to keep"
+            android:persistent="false"
+            app:min="0"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>
