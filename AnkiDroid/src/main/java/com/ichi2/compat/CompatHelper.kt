@@ -16,6 +16,9 @@
 package com.ichi2.compat
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.ResolveInfoFlags
+import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Parcelable
 import android.view.KeyCharacterMap.deviceHasKey
@@ -82,6 +85,10 @@ class CompatHelper private constructor() {
 
         inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
             return compat.getParcelableExtra(this, name, T::class.java)
+        }
+
+        fun PackageManager.resolveActivity(intent: Intent, flags: Compat.ResolveInfoFlags): ResolveInfo? {
+            return compat.resolveActivity(this, intent, flags)
         }
     }
 }

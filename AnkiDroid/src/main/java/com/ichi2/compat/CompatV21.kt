@@ -20,6 +20,8 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -91,6 +93,10 @@ open class CompatV21 : Compat {
             Timber.e(e, "copyFile() error copying source %s", source)
             throw e
         }
+    }
+
+    override fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: Compat.ResolveInfoFlags): ResolveInfo? {
+        return packageManager.resolveActivity(intent, flags.value.toInt())
     }
 
     // Until API 26 do the copy using streams

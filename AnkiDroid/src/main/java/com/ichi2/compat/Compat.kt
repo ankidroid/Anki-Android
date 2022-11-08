@@ -20,6 +20,8 @@ package com.ichi2.compat
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -91,6 +93,29 @@ interface Compat {
      * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
      */
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
+
+    /**
+     * Retrieve various kinds of information related to the application packages that are currently
+     * installed on the device.
+     * @param packageManager
+     * @param intent
+     * @param flags
+     * @return Returns a ResolveInfo object containing the final activity intent that was determined
+     * to be the best action. Returns null if no matching activity was found. If multiple matching
+     * activities are found and there is no default set, returns a ResolveInfo object containing
+     * something else, such as the activity resolver.
+     */
+    fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlags): ResolveInfo?
+
+    /**
+     * Placeholder class(replicating the API 33 ResolveInfoFlags class) which is used to
+     * provide a consistent API on all supported Android versions.
+     */
+    data class ResolveInfoFlags(val value: Long) {
+        companion object {
+            fun of(value: Long) = ResolveInfoFlags(value = value)
+        }
+    }
 
     /**
      * Copy file at path [source] to path [target]
