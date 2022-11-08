@@ -56,9 +56,10 @@ object ResourceLoader {
      * Only add files (and not subdirectories) to this directory.
      */
     private fun getTestDir(context: Context, name: String): File {
-        var suffix = ""
-        if (name.isNotEmpty()) {
-            suffix = "-$name"
+        val suffix = if (name.isNotEmpty()) {
+            "-$name"
+        } else {
+            ""
         }
         val dir = File(context.cacheDir, "testfiles$suffix")
         if (!dir.exists()) {
