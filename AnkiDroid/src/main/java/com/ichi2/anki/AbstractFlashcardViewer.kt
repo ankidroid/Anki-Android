@@ -78,7 +78,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListener
 import com.ichi2.async.updateCard
+import com.ichi2.compat.Compat.ResolveInfoFlags
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.resolveActivity
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -2408,7 +2410,7 @@ abstract class AbstractFlashcardViewer :
                     }
                 }
                 if (intent != null) {
-                    if (packageManager.resolveActivity(intent, 0) == null) {
+                    if (packageManager.resolveActivity(intent, ResolveInfoFlags.of(0)) == null) {
                         val packageName = intent.getPackage()
                         if (packageName == null) {
                             Timber.d("Not using resolved intent uri because not available: %s", intent)
@@ -2419,7 +2421,7 @@ abstract class AbstractFlashcardViewer :
                                 Intent.ACTION_VIEW,
                                 Uri.parse("market://details?id=$packageName")
                             )
-                            if (packageManager.resolveActivity(intent, 0) == null) {
+                            if (packageManager.resolveActivity(intent, ResolveInfoFlags.of(0)) == null) {
                                 intent = null
                             }
                         }
