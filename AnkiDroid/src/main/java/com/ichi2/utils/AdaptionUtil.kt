@@ -27,6 +27,8 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.compat.Compat.ResolveInfoFlags
+import com.ichi2.compat.CompatHelper.Companion.resolveActivity
 import timber.log.Timber
 import java.util.*
 
@@ -138,9 +140,8 @@ object AdaptionUtil {
     }
 
     // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
-    @Suppress("deprecation") // resolveActivity
     private fun isIntentResolved(ctx: Context, intent: Intent): Boolean {
-        return ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
+        return ctx.packageManager.resolveActivity(intent, ResolveInfoFlags.of(PackageManager.MATCH_DEFAULT_ONLY.toLong())) != null
     }
 
     /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
