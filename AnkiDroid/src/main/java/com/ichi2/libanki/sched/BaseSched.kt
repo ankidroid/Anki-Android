@@ -155,7 +155,7 @@ abstract class BaseSched(val col: Collection) {
     /**
      * Unbury all buried cards in all decks. Only used for tests.
      */
-    fun unburyCards() {
+    open fun unburyCards() {
         for (did in col.decks.allIds()) {
             unburyCardsForDeck(did)
         }
