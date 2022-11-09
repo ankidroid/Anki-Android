@@ -52,6 +52,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.Collection
+import kotlin.math.abs
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("timeQuantity methods: single source line per return")
@@ -104,28 +105,28 @@ object Utils {
         val res = context.resources
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
-        return if (Math.abs(time_s) < TIME_MINUTE) {
+        return if (abs(time_s) < TIME_MINUTE) {
             res.getString(R.string.time_quantity_seconds, time_s)
-        } else if (Math.abs(time_s) < TIME_HOUR) {
+        } else if (abs(time_s) < TIME_HOUR) {
             res.getString(
                 R.string.time_quantity_minutes,
                 Math.round(time_s / TIME_MINUTE).toInt()
             )
-        } else if (Math.abs(time_s) < TIME_DAY) {
+        } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours_minutes,
                 Math.floor(time_s / TIME_HOUR).toInt(),
                 Math.round(time_s % TIME_HOUR / TIME_MINUTE)
                     .toInt()
             )
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days_hours,
                 Math.floor(time_s / TIME_DAY).toInt(),
                 Math.round(time_s % TIME_DAY / TIME_HOUR)
                     .toInt()
             )
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
         } else {
             res.getString(R.string.time_quantity_years, time_s / TIME_YEAR)
@@ -147,24 +148,24 @@ object Utils {
         val res = context.resources
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
-        return if (Math.abs(time_s) < TIME_MINUTE) {
+        return if (abs(time_s) < TIME_MINUTE) {
             res.getString(R.string.time_quantity_seconds, time_s)
-        } else if (Math.abs(time_s) < TIME_HOUR) {
+        } else if (abs(time_s) < TIME_HOUR) {
             res.getString(
                 R.string.time_quantity_minutes,
                 Math.round(time_s / TIME_MINUTE).toInt()
             )
-        } else if (Math.abs(time_s) < TIME_DAY) {
+        } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours,
                 Math.round(time_s / TIME_HOUR).toInt()
             )
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days,
                 Math.round(time_s / TIME_DAY).toInt()
             )
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
         } else {
             res.getString(R.string.time_quantity_years, time_s / TIME_YEAR)
@@ -229,19 +230,19 @@ object Utils {
     fun timeSpan(context: Context, time_s: Long): String {
         val time_x: Int // Time in unit x
         val res = context.resources
-        return if (Math.abs(time_s) < TIME_MINUTE) {
+        return if (abs(time_s) < TIME_MINUTE) {
             time_x = time_s.toInt()
             res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_HOUR) {
+        } else if (abs(time_s) < TIME_HOUR) {
             time_x = Math.round(time_s / TIME_MINUTE).toInt()
             res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_DAY) {
+        } else if (abs(time_s) < TIME_DAY) {
             time_x = Math.round(time_s / TIME_HOUR).toInt()
             res.getQuantityString(R.plurals.time_span_hours, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             time_x = Math.round(time_s / TIME_DAY).toInt()
             res.getQuantityString(R.plurals.time_span_days, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             time_x = Math.round(time_s / TIME_MONTH).toInt()
             res.getQuantityString(R.plurals.time_span_months, time_x, time_x)
         } else {
@@ -274,17 +275,17 @@ object Utils {
      * @return The formatted, localized time string. The time is always a float. E.g. "**27.0** days"
      */
     fun roundedTimeSpan(context: Context, time_s: Long): String {
-        return if (Math.abs(time_s) < TIME_DAY) {
+        return if (abs(time_s) < TIME_DAY) {
             context.resources.getString(
                 R.string.stats_overview_hours,
                 time_s / TIME_HOUR
             )
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             context.resources.getString(
                 R.string.stats_overview_days,
                 time_s / TIME_DAY
             )
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             context.resources.getString(
                 R.string.stats_overview_months,
                 time_s / TIME_MONTH
