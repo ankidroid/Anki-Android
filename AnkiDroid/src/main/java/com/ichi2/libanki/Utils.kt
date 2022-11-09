@@ -53,6 +53,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.Collection
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("timeQuantity methods: single source line per return")
@@ -110,21 +111,19 @@ object Utils {
         } else if (abs(time_s) < TIME_HOUR) {
             res.getString(
                 R.string.time_quantity_minutes,
-                Math.round(time_s / TIME_MINUTE).toInt()
+                (time_s / TIME_MINUTE).roundToInt()
             )
         } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours_minutes,
                 Math.floor(time_s / TIME_HOUR).toInt(),
-                Math.round(time_s % TIME_HOUR / TIME_MINUTE)
-                    .toInt()
+                (time_s % TIME_HOUR / TIME_MINUTE).roundToInt()
             )
         } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days_hours,
                 Math.floor(time_s / TIME_DAY).toInt(),
-                Math.round(time_s % TIME_DAY / TIME_HOUR)
-                    .toInt()
+                (time_s % TIME_DAY / TIME_HOUR).roundToInt()
             )
         } else if (abs(time_s) < TIME_YEAR) {
             res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
@@ -153,17 +152,17 @@ object Utils {
         } else if (abs(time_s) < TIME_HOUR) {
             res.getString(
                 R.string.time_quantity_minutes,
-                Math.round(time_s / TIME_MINUTE).toInt()
+                (time_s / TIME_MINUTE).roundToInt()
             )
         } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours,
-                Math.round(time_s / TIME_HOUR).toInt()
+                (time_s / TIME_HOUR).roundToInt()
             )
         } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days,
-                Math.round(time_s / TIME_DAY).toInt()
+                (time_s / TIME_DAY).roundToInt()
             )
         } else if (abs(time_s) < TIME_YEAR) {
             res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
@@ -187,7 +186,7 @@ object Utils {
         return if (time_s < TIME_HOUR_LONG) {
             // get time remaining, but never less than 1
             time_x = Math.max(
-                Math.round(time_s / TIME_MINUTE).toInt(), 1
+                (time_s / TIME_MINUTE).roundToInt(), 1
             )
             res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x)
             // It used to be minutes only. So the word "minutes" is not
@@ -196,8 +195,7 @@ object Utils {
             time_x = (time_s / TIME_HOUR_LONG).toInt()
             remaining_seconds = (time_s % TIME_HOUR_LONG).toInt()
             remaining =
-                Math.round(remaining_seconds.toFloat() / TIME_MINUTE)
-                    .toInt()
+                (remaining_seconds.toFloat() / TIME_MINUTE).roundToInt()
             res.getQuantityString(
                 R.plurals.reviewer_window_title_hours_new,
                 time_x,
@@ -208,7 +206,7 @@ object Utils {
             time_x = (time_s / TIME_DAY_LONG).toInt()
             remaining_seconds = (time_s.toFloat() % TIME_DAY_LONG).toInt()
             remaining =
-                Math.round(remaining_seconds / TIME_HOUR).toInt()
+                (remaining_seconds / TIME_HOUR).roundToInt()
             res.getQuantityString(
                 R.plurals.reviewer_window_title_days_new,
                 time_x,
@@ -234,19 +232,19 @@ object Utils {
             time_x = time_s.toInt()
             res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x)
         } else if (abs(time_s) < TIME_HOUR) {
-            time_x = Math.round(time_s / TIME_MINUTE).toInt()
+            time_x = (time_s / TIME_MINUTE).roundToInt()
             res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x)
         } else if (abs(time_s) < TIME_DAY) {
-            time_x = Math.round(time_s / TIME_HOUR).toInt()
+            time_x = (time_s / TIME_HOUR).roundToInt()
             res.getQuantityString(R.plurals.time_span_hours, time_x, time_x)
         } else if (abs(time_s) < TIME_MONTH) {
-            time_x = Math.round(time_s / TIME_DAY).toInt()
+            time_x = (time_s / TIME_DAY).roundToInt()
             res.getQuantityString(R.plurals.time_span_days, time_x, time_x)
         } else if (abs(time_s) < TIME_YEAR) {
-            time_x = Math.round(time_s / TIME_MONTH).toInt()
+            time_x = (time_s / TIME_MONTH).roundToInt()
             res.getQuantityString(R.plurals.time_span_months, time_x, time_x)
         } else {
-            time_x = Math.round(time_s / TIME_YEAR).toInt()
+            time_x = (time_s / TIME_YEAR).roundToInt()
             res.getQuantityString(R.plurals.time_span_years, time_x, time_x)
         }
     }
