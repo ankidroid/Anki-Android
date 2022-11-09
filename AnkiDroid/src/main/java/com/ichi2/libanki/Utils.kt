@@ -456,11 +456,6 @@ object Utils {
         return str.toString()
     }
 
-    @KotlinCleanup("inline")
-    fun list2ObjectArray(list: List<Long>): Array<Long> {
-        return list.toTypedArray()
-    }
-
     // used in ankiweb
     private fun base62(numParam: Int, extra: String): String {
         var num = numParam
