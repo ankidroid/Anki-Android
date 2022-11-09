@@ -52,10 +52,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.Collection
-import kotlin.math.abs
-import kotlin.math.floor
-import kotlin.math.max
-import kotlin.math.roundToInt
+import kotlin.math.*
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("timeQuantity methods: single source line per return")
@@ -502,7 +499,7 @@ object Utils {
     /** return a base91-encoded 64bit random number  */
     fun guid64(): String {
         return base91(
-            Random().nextInt((Math.pow(2.0, 61.0) - 1).toInt())
+            Random().nextInt((2.0.pow(61.0) - 1).toInt())
         )
     }
 
