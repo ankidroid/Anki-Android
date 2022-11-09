@@ -54,6 +54,7 @@ import java.util.regex.Pattern
 import kotlin.collections.Collection
 import kotlin.math.abs
 import kotlin.math.floor
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 @KotlinCleanup("IDE Lint")
@@ -186,7 +187,7 @@ object Utils {
         val res = context.resources
         return if (time_s < TIME_HOUR_LONG) {
             // get time remaining, but never less than 1
-            time_x = Math.max(
+            time_x = max(
                 (time_s / TIME_MINUTE).roundToInt(), 1
             )
             res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x)
