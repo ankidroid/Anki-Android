@@ -343,7 +343,7 @@ dependencies {
     debugImplementation "androidx.fragment:fragment-testing:$fragments_version"
 
     // May need a resolution strategy for support libs to our versions
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0') {
         exclude module: "protobuf-lite"
     }
