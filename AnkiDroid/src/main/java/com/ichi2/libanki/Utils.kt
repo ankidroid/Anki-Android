@@ -485,9 +485,8 @@ object Utils {
 
     // increment a guid by one, for note type conflicts
     // used in Anki
-    @KotlinCleanup("non-null param")
-    fun incGuid(guid: String?): String {
-        return StringBuffer(_incGuid(StringBuffer(guid!!).reverse().toString())).reverse().toString()
+    fun incGuid(guid: String): String {
+        return StringBuffer(_incGuid(StringBuffer(guid).reverse().toString())).reverse().toString()
     }
 
     @KotlinCleanup("remove var guid")
