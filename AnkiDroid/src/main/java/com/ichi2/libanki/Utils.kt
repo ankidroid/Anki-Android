@@ -485,8 +485,8 @@ object Utils {
         var mod: Int
         while (num != 0) {
             mod = num % len
-            buf = buf + table.substring(mod, mod + 1)
-            num = num / len
+            buf += table.substring(mod, mod + 1)
+            num /= len
         }
         return buf
     }
