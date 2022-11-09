@@ -53,6 +53,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.Collection
 import kotlin.math.abs
+import kotlin.math.floor
 import kotlin.math.roundToInt
 
 @KotlinCleanup("IDE Lint")
@@ -116,13 +117,13 @@ object Utils {
         } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours_minutes,
-                Math.floor(time_s / TIME_HOUR).toInt(),
+                floor(time_s / TIME_HOUR).toInt(),
                 (time_s % TIME_HOUR / TIME_MINUTE).roundToInt()
             )
         } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days_hours,
-                Math.floor(time_s / TIME_DAY).toInt(),
+                floor(time_s / TIME_DAY).toInt(),
                 (time_s % TIME_DAY / TIME_HOUR).roundToInt()
             )
         } else if (abs(time_s) < TIME_YEAR) {
