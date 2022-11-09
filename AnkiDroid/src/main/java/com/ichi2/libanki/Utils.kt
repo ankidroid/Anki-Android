@@ -322,10 +322,9 @@ object Utils {
      * @param inputParam The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
-    @KotlinCleanup("non-null param")
     @KotlinCleanup("see if function body could be improved")
-    fun stripHTMLScriptAndStyleTags(inputParam: String?): String {
-        var s = inputParam!!
+    fun stripHTMLScriptAndStyleTags(inputParam: String): String {
+        var s = inputParam
         var htmlMatcher = stylePattern.matcher(s)
         s = htmlMatcher.replaceAll("")
         htmlMatcher = scriptPattern.matcher(s)
