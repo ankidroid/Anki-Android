@@ -390,7 +390,7 @@
     <string name="field_editor_model_not_available">コレクションにアクセスできませんでした。もう一度試してみてください</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">より少ない時間で</string>
-    <string name="intro_ankidroid_tagline_two">より多く学びましょう</string>
+    <string name="intro_ankidroid_tagline_two">より多く学ぼう</string>
     <string name="intro_short_ankidroid_explanation">Ankiのカードは、微弱な記憶を強化し、強化した記憶を保持するのに適したスケジュールで表示されるので、効率的な学習が可能になります</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">開始する</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>

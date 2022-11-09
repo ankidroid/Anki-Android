@@ -150,7 +150,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazení odpovědi</string>
     <string name="timeout_answer" maxLength="41">Odpověď po časovém limitu</string>
-    <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané audio soubory</string>
+    <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané zvukové soubory</string>
     <string name="timeout_answer_seconds" maxLength="41">Čas pro zobrazení odpovědi</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Čas pro zobrazení další otázky</string>
@@ -290,9 +290,9 @@
     <string name="deck_conf_max_time" maxLength="41">Maximální čas pro odpověď</string>
     <string name="deck_conf_seconds">XXX sekund</string>
     <string name="deck_conf_timer" maxLength="41">Zobrazit časovač odpovědí</string>
-    <string name="deck_conf_autoplay" maxLength="41">Automaticky přehrát audio</string>
+    <string name="deck_conf_autoplay" maxLength="41">Automaticky přehrát zvuk</string>
     <string name="deck_conf_replayq" maxLength="41">Přehrát otázku</string>
-    <string name="deck_conf_replayq_summ">Při zobrazení odpovědi přehrát audio otázky i odpovědi</string>
+    <string name="deck_conf_replayq_summ">Při zobrazení odpovědi přehrát zvuk otázky i odpovědi</string>
     <string name="deck_conf_manage" maxLength="41">Správa skupin</string>
     <string name="deck_conf_manage_summ">Přidat a změnit skupiny možností</string>
     <string name="deck_conf_current_group" maxLength="41">Aktuální skupina</string>

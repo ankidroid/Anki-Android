@@ -50,13 +50,13 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">ᱛᱮᱞᱟ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰᱯᱟᱴᱟ</string>
     <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ </string>
@@ -91,7 +91,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>ᱪᱚᱴ</item>
         <item>ᱞᱟᱛᱟᱨ</item>
-        <item>None</item>
+        <item>ᱪᱮᱫ ᱦᱚᱸ ᱵᱟᱝᱟ</item>
     </string-array>
     <string name="gestures" maxLength="41">ᱪᱤᱱᱦᱟ ᱮᱢᱚᱜᱢᱮ</string>
     <string name="gestures_summ">ᱛᱮᱞᱟ ᱮᱢ ᱟᱨ ᱠᱟᱰᱥ ᱥᱟᱯᱰᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱜᱮᱥᱪᱚᱨ ᱠᱚ ᱴᱷᱤᱠ ᱢᱮ ᱾</string>
@@ -154,7 +154,7 @@
     <string name="timeout_answer_seconds" maxLength="41">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱥᱚᱢᱚᱭ ᱦᱩᱡᱮᱱᱟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="timeout_question_seconds" maxLength="41">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱯᱚᱨᱥᱚᱱ ᱫᱮᱠᱷᱟᱣᱼᱟ</string>
-    <string name="select_locale_title">ᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
+    <string name="select_locale_title">ᱟᱲᱟᱝ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="software_render" maxLength="41">ᱠᱟᱰ ᱦᱟᱰᱣᱮᱨ ᱥᱤᱡᱚᱱᱤᱭᱟᱹ ᱴᱷᱟᱠᱮᱫ ᱮᱢᱮ </string>
     <string name="software_render_summ">ᱦᱟᱰᱣᱮᱨ ᱵᱮᱱᱟᱣ ᱩᱥᱟᱹᱨᱟ ᱜᱮᱭᱟ ᱢᱮᱱᱠᱟᱷᱟᱱ ᱵᱤᱥᱮᱥ ᱞᱮᱠᱟᱛᱮ Android 8/8.1. ᱮᱴᱠᱮᱴᱚᱬᱮ ᱦᱩᱭᱫᱟᱲᱮᱟᱫ-ᱟ।ᱡᱩᱫᱤ ᱟᱢ ᱤᱸᱴᱚᱨᱯᱷᱮᱥ  ᱠᱟᱰ ᱨᱤᱵᱷᱭᱩ ᱟᱜ ᱵᱟᱢ ᱧᱮᱞᱧᱟᱢᱮᱫ-ᱟ, ᱮᱱᱠᱷᱟᱱ ᱥᱮᱴᱤᱝ ᱨᱮ ᱪᱮᱥᱴᱟᱭᱢᱮ</string>
     <string name="safe_display" maxLength="41">ᱡᱟᱹᱯᱛᱤ ᱚᱵᱚᱥᱛᱷᱟ ᱩᱫᱩᱜᱽ ᱢᱚᱰ</string>
@@ -226,9 +226,9 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱱᱟ</string>
     <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">ᱢᱩᱞ</string>
     <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own servers for synchronization.
         You may specify either collection or media server, or both.
@@ -310,7 +310,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">ᱪᱷᱟᱹᱱᱤᱭᱟᱜ</string>
     <string name="deck_conf_cram_search" maxLength="41">ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="deck_conf_cram_limit" maxLength="41">ᱥᱤᱢᱟᱹ ᱛᱮ</string>
-    <string name="deck_conf_cram_order" maxLength="41">ᱠᱟᱰᱥ ᱪᱚᱭᱚᱱ ᱯᱨᱚᱠᱟᱨ ᱠᱚ</string>
+    <string name="deck_conf_cram_order" maxLength="41">ᱠᱟᱰᱥ ᱵᱟᱪᱷᱟᱣ ᱯᱨᱚᱠᱟᱨ ᱠᱚ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">ᱫᱚᱥᱟᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱜᱚᱱᱚᱪᱚ</string>

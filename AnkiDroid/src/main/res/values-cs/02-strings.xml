@@ -66,7 +66,7 @@
     <string name="show_whiteboard">Zobrazit tabuli</string>
     <string name="hide_whiteboard">Skrýt tabuli</string>
     <string name="clear_whiteboard">Smazat tabuli</string>
-    <string name="replay_audio">Přehrát audio</string>
+    <string name="replay_audio">Přehrát zvuk</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="corrupt_font">Poškozený soubor písma %s</string>
@@ -399,9 +399,9 @@
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Přesun úložiště</string>
     <string name="scoped_storage_initial_message">AnkiDroid musí přesunout svá data, aby splňoval nová pravidla ochrany osobních údajů Android
-\n\nPokud před migrací odinstalujete AnkiDroid, vaše data budou ztracena
-\n\nProsím proveďte migraci co nejdříve</string>
-    <string name="scoped_storage_terms_message">Migrace bude probíhat na pozadí. Během migrace nebudete moci synchronizovat\n\nPředpokládaná doba trvání: %s</string>
+\n\nPokud před přesunem dat odinstalujete AnkiDroid, vaše data budou ztracena
+\n\nProsím proveďte přesun dat co nejdříve</string>
+    <string name="scoped_storage_terms_message">Přesun dat bude probíhat na pozadí. Během přesunu dat nebudete moci synchronizovat\n\nPředpokládaná doba trvání: %s</string>
     <string name="scoped_storage_term_1">Zálohoval jsem svá data</string>
     <string name="scoped_storage_term_1_ankiweb">Nedávno jsem synchronizoval s AnkiWeb</string>
     <string name="scoped_storage_term_2">Během přesunu dat neodinstaluji aplikaci</string>
@@ -410,15 +410,15 @@
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Migrovat</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="sync_impossible_during_migration">Synchronizace je zakázána, dokud nebude dokončen přesun dat.\n
+        %1$d multimediálních souborů zbývá přesunout.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Pokud přeinstalujete AnkiDroid, nebude možné otevřít vaši kolekci.</string>
+    <string name="migration_update_request_dialog_download_warning">Pokud odinstalujete AnkiDroid, budete muset znovu stáhnout celou vaši kolekci.</string>
+    <string name="migration_update_request">Zásady přístupu k úložišti Android vyžadují změnu místa, kam se ukládá vaše kolekce. Až budou vaše data přesunuta, AnkiDroid bude rychlejší a vaše data budou ve větším bezpečí.
+    Během přesunu úložiště nebudete moci synchronizovat.</string>
+    <string name="start_migration_progress_message">Začíná přesun úložiště. Brzy můžete pokračovat v používání AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.
+\nPřesun úložiště bude pokračovat na pozadí.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s není platný balíček javascript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
