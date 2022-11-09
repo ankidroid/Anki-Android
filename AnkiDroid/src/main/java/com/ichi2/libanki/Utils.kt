@@ -870,7 +870,7 @@ object Utils {
         val intent = Intent(action)
         intent.component = componentName
         val list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        return !list.isEmpty()
+        return list.isNotEmpty()
     }
 
     /**
