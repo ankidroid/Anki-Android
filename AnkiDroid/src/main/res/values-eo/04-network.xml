@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">La elŝutita datumbazo estas difektita. Bonvolu reprovi.</string>
     <string name="sync_overwrite_error">Via loka kolekto ne povas esti superskribita de la elŝutita dosiero</string>
     <string name="sync_connection_error">Tempolimo de konekto. Aŭ okazas problemo ĉe via interret-konekto aŭ vi havas tre grandan dosieron en via aŭdvidaĵa dosierujo.</string>
-    <string name="sync_write_access_error">Ne povas konservi elŝutitan dosieron al la SD-karto. Aŭ la karto estas muntita nurlege aŭ libera spaco mankas.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">La propra samtempiga servilo difinita en altnivelaj agordoj estas malĝusta (%s). Enigu ĝustan servilon.</string>
     <string name="sync_deletions_message">Samtempigado de forigoj&#8230;</string>
     <string name="sync_small_objects_message">Samtempigado de etaj objektoj&#8230;</string>

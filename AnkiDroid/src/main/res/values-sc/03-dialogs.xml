@@ -123,8 +123,8 @@
         <item quantity="one">Cartas importadas: %2$d</item>
         <item quantity="other">Documentos importados: %1$d\nTotale de cartas importadas: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">S\'ischeda SD est prena</string>
-    <string name="sd_card_almost_full_title">S\'ischeda SD est belle prena</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Non b\'at ispàtziu</string>
     <string name="no_space_to_downgrade_content">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
     <string name="restore_backup_title">Ripristinare sa còpia de seguresa?</string>
@@ -134,6 +134,7 @@
     <string name="dialog_ok">AB</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Nono</string>
+    <string name="dialog_yes">Yes</string>
     <string name="dialog_continue">Sighi</string>
     <string name="dialog_processing">Protzessende...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
