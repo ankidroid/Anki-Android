@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ହଁ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ତାସଖଣ୍ଡଗୁଡ଼ିକ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>

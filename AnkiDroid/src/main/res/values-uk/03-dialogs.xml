@@ -129,8 +129,8 @@
         <item quantity="many">Карток імпортовано: %2$d</item>
         <item quantity="other">Файлів імпортовано: %1$d\nЗагалом карток імпортовано: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD карта заповнена</string>
-    <string name="sd_card_almost_full_title">SD-карта майже заповнена</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Пам\'ять заповнена</string>
     <string name="no_space_to_downgrade_content">AnkiDroid потрібно %s вільного місця, щоб продовжити. Будь ласка, очистіть трохи пам\'ять</string>
     <string name="restore_backup_title">Відновити резервну копію?</string>
@@ -140,6 +140,7 @@
     <string name="dialog_ok">Ок</string>
     <string name="dialog_confirm">Підтвердити</string>
     <string name="dialog_no">Ні</string>
+    <string name="dialog_yes">Yes</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>

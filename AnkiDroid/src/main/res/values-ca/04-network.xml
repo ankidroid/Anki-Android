@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">La base de dades descarregada era corrupta. Si us plau proveu-ho de nou.</string>
     <string name="sync_overwrite_error">No ha estat possible sobreescriure la vostra col·lecció actual amb l\'arxiu descarregat.</string>
     <string name="sync_connection_error">S\'ha esgotat el emps d\'espera de la connexió. O la connexió a internet està experimentant problemes o teniu un fitxer molt gran a la vostra carpeta de multimèdia.</string>
-    <string name="sync_write_access_error">No ha estat possible desar l\'arxiu descarregat a la targeta SD. O bé la vostra targeta SD està muntada com a només de lectura o bé no hi ha prou espai.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">El valor del servidor de sincronització personalitzat establert a la configuració avançada és incorrecte (%s).Si us plau entreu un servidor vàlid o canvieu aquest valor a la configuració.</string>
     <string name="sync_deletions_message">S\'estan sincronitzant les supressions...</string>
     <string name="sync_small_objects_message">S\'estan sincronitzant els petits objectes...</string>

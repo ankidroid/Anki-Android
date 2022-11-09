@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ಹೌದು </string>
     <!-- Navigation drawer items-->
     <string name="decks">ಡೆಕ್ಸ್</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ಕಾರ್ಡ್ ಬ್ರೌಸರ್  </string>
