@@ -2533,10 +2533,10 @@ open class DeckPicker :
             MaterialDialog(deckPicker).show {
                 message(R.string.confirm_cancel)
                 positiveButton(R.string.yes) {
-                    actualOnPreExecute(deckPicker)
+                    task.safeCancel()
                 }
                 negativeButton(R.string.dialog_no) {
-                    task.safeCancel()
+                    actualOnPreExecute(deckPicker)
                 }
             }
         }
