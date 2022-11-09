@@ -334,10 +334,9 @@ object Utils {
     /**
      * Strip HTML but keep media filenames
      */
-    @KotlinCleanup("replacement: non-null")
-    fun stripHTMLMedia(s: String, replacement: String? = " $1 "): String {
+    fun stripHTMLMedia(s: String, replacement: String = " $1 "): String {
         val imgMatcher = imgPattern.matcher(s)
-        return stripHTML(imgMatcher.replaceAll(replacement!!))
+        return stripHTML(imgMatcher.replaceAll(replacement))
     }
 
     /**
