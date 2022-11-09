@@ -542,7 +542,7 @@ object Utils {
         for (i in 0 until list.size - 1) {
             result.append(list[i]).append("\u001f")
         }
-        if (list.size > 0) {
+        if (list.isNotEmpty()) {
             result.append(list[list.size - 1])
         }
         return result.toString()
@@ -881,7 +881,7 @@ object Utils {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
         // with existing slashes
-        if (mediaDir.length != 0 && !"null".equals(mediaDir, ignoreCase = true)) {
+        if (mediaDir.isNotEmpty() && !"null".equals(mediaDir, ignoreCase = true)) {
             val mediaDirUri = Uri.fromFile(File(mediaDir))
             return "$mediaDirUri/"
         }
