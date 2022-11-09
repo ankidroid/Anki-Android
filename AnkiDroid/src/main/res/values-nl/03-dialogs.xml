@@ -124,7 +124,7 @@
     <string name="restore_backup_choose_another">Kies een ander</string>
     <string name="dialog_cancel">Annuleren</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Bevestigen</string>
     <string name="dialog_no">Nee</string>
     <string name="dialog_continue">Doorgaan</string>
     <string name="dialog_processing">Verwerking...</string>
@@ -265,6 +265,6 @@
         \n\nThe private storage location will be %2$s
         \n\nPlease confirm that you will regularly make backups of this folder.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Handmatige back-up</string>
+    <string name="remind_me_later">Herinner me later</string>
 </resources>

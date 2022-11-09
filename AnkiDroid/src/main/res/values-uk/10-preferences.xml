@@ -227,21 +227,21 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число кроків моделювання</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Користувацький сервер</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не використовується</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Колекція: %1$s\nМедіа: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">за замовчуванням</string>
+    <string name="custom_sync_server_help"><![CDATA[        Як альтернатива синхронізації з AnkiWeb,
+        ви можете використовувати власні сервери для синхронізації.
+        Ви можете вказати колекцію або медіа сервер, або і те, і інше.
+        Якщо нічого не вказано, буде використано стандартні сервери AnkiWeb.
+        Наприклад, ви можете використовувати сервер синхронізації вбудований в 
+        Anki Desktop, щоб синхронізувати колекцію, якщо у вас лише локальна мережа,
+        і AnkiWeb, щоб синхронізувати медіа, якщо в вас є доступ до інтернету.
+        <a href="%s">Дізнатися більше</a>
         <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        <br>Примітка: на відміну від попередніх версій AnkiDroid,
+        ви мусите вказати повну URL-адресу синхронізації,
+        наприклад: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронізації</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">URL Media-даних</string>
     <!-- Key Bindings -->
