@@ -342,10 +342,9 @@ object Utils {
     /**
      * Strip sound but keep media filenames
      */
-    @KotlinCleanup("replacement & s: non-null")
-    fun stripSoundMedia(s: String?, replacement: String? = " $1 "): String {
-        val soundMatcher = soundPattern.matcher(s!!)
-        return soundMatcher.replaceAll(replacement!!)
+    fun stripSoundMedia(s: String, replacement: String = " $1 "): String {
+        val soundMatcher = soundPattern.matcher(s)
+        return soundMatcher.replaceAll(replacement)
     }
 
     /**
