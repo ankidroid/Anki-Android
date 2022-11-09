@@ -282,9 +282,7 @@ open class DeckPicker :
         showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
         true
     }
-    @KotlinCleanup("remove ?")
-    open val backupManager: BackupManager?
-        get() = BackupManager()
+
     private val mImportAddListener = ImportAddListener(this)
 
     private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
@@ -725,13 +723,7 @@ open class DeckPicker :
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
-            val undoIcon = undoName(resources).let {
-                if (it.isEmpty()) {
-                    null
-                } else {
-                    it
-                }
-            }
+            val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
             val offerToUpgrade = isLegacyStorage(context) && !userMigrationIsInProgress(context)
             OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
