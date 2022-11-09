@@ -2532,7 +2532,7 @@ open class DeckPicker :
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
             MaterialDialog(deckPicker).show {
                 message(R.string.confirm_cancel)
-                positiveButton(R.string.yes) {
+                positiveButton(R.string.dialog_yes) {
                     task.safeCancel()
                 }
                 negativeButton(R.string.dialog_no) {
