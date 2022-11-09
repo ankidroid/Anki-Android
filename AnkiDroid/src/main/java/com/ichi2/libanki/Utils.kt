@@ -456,18 +456,6 @@ object Utils {
         return str.toString()
     }
 
-    /** LIBANKI: not in libanki
-     * Transform a collection of Long into an array of Long  */
-    @KotlinCleanup("inline as .toLongArray() and remove")
-    fun collection2Array(list: Collection<Long>): LongArray {
-        val ar = LongArray(list.size)
-        var i = 0
-        for (l in list) {
-            ar[i++] = l
-        }
-        return ar
-    }
-
     @KotlinCleanup("inline")
     fun list2ObjectArray(list: List<Long>): Array<Long> {
         return list.toTypedArray()
