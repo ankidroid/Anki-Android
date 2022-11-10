@@ -384,15 +384,15 @@
     <string name="scoped_storage_postpone">Posponer</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">La búsqueda no ha devuelto resultados</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="sync_impossible_during_migration">La sincronización estará deshabilitada hasta que finalice la migración.\n
+        %1$d archivos multimedia pendientes de migrar.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Si reinstalas AnkiDroid, no podrá abrir tu colección.</string>
+    <string name="migration_update_request_dialog_download_warning">Si desinstalas AnkiDroid, necesitarás descargar tu colección completa de nuevo.</string>
+    <string name="migration_update_request">La política de acceso al almacenamiento Android requiere que cambiemos el lugar en el que almacenamos tu colección. Cuando tus datos sean migrados, AnkiDroid será más rápido y tus datos serán más seguros.
+    No podrás sincronizar durante la migración del almacenamiento.</string>
+    <string name="start_migration_progress_message">Iniciando migración de almacenamiento. Podrás seguir usando AnkiDroid en breve.</string>
+    <string name="migration_part_1_done_resume">Puedes seguir usando AnkiDroid.
+\nLa migración del almacenamiento continuará en segundo plano.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s no es un paquete válido de addon de javascript</string>
     <string name="could_not_create_dir">No se pudo crear el directorio %s</string>

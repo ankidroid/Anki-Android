@@ -229,18 +229,9 @@
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nicht in Gebrauch</string>
     <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Sammlung: %1$s\nMedien: %2$s</string>
     <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">Standard</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help"><![CDATA[Als Alternative zur Synchronisierung mit AnkiWeb kannst du deine eigenen Server verwenden. Du kannst einen Sammlungsserver, einen Medienserver oder beide auswählen. Standardmäßig werden stattdessen die AnkiWeb-Server verwendet. Zum Beispiel könntest du den Server, der in die Desktopversion von Anki eingebaut ist verwenden, um deine Sammlung zu synchronisieren, wenn du nur ein lokales Netzwerk zur Verfügung hast. AnkiWeb könnte dann bei vollständigem Internetzugriff verwendet werden.
+<a href="%s">Lerne mehr darüber</a><br><br>
+Bitte beachte: anders als bei älteren AnkiDroid-Versionen musst du jetzt deine gesamte Synchronisierungs-URL angeben, zum Beispiel "https://example.com:8080/sync/".]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronisations-URL</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediensynchronisations-URL</string>
     <!-- Key Bindings -->

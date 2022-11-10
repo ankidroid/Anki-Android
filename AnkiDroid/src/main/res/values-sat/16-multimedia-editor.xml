@@ -112,7 +112,7 @@
     <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱮᱫ ᱢᱮᱭᱟ ᱥᱮ ᱵᱟᱝ-ᱟ  ?</string>
     <string name="crop_button">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ </string>
     <string name="save_dialog_content">ᱱᱤᱛᱚᱜ ᱪᱤᱛᱟᱹᱨ ᱨᱮᱭᱟᱜ ᱢᱟᱯ %sMB ᱾ ᱦᱩᱰᱟᱹᱜ ᱪᱤᱛᱹᱨ ᱢᱟᱯ ᱑MB ᱾ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟ ᱠᱟᱱᱟ ᱥᱮ?  </string>
-    <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱪᱚᱭᱚᱱ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
+    <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱵᱟᱪᱷᱟᱣ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
     <string name="activity_result_unexpected">ᱮᱯᱯ ᱵᱟᱝ ᱵᱟᱰᱟᱭ ᱠᱟᱱ ᱜᱚᱱᱚᱝ ᱨᱩᱟᱹᱰ ᱮᱢᱚᱜ ᱠᱟᱱᱟᱭ ᱾ ᱟᱢ ᱚᱞᱜᱟ ᱮᱯᱯ ᱵᱮᱵᱷᱨᱟ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

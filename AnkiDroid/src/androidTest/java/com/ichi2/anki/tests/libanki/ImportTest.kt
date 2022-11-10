@@ -25,7 +25,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.importer.Anki2Importer
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.importer.Importer
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.Matchers.equalTo
 import org.json.JSONException
@@ -41,13 +40,12 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-@KotlinCleanup("IDE Lint")
 @RunWith(AndroidJUnit4::class)
 class ImportTest : InstrumentedTest() {
     private lateinit var testCol: Collection
 
     @get:Rule
-    var runtimePermissionRule =
+    var runtimePermissionRule: GrantPermissionRule? =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     // testAnki2Mediadupes() failed on Travis API=22 EMU_FLAVOR=default ABI=armeabi-v7a
@@ -149,7 +147,7 @@ class ImportTest : InstrumentedTest() {
             ).list()!!
         )
         actual.retainAll(expected)
-        assertEquals(actual.size.toLong(), expected.size.toLong())
+        assertEquals(actual.size.toLong(), 0)
         imp.run()
         expected = listOf("foo.wav")
         actual = mutableListOf(*File(testCol.media.dir()).list()!!)

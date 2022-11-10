@@ -371,15 +371,15 @@
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="sync_impossible_during_migration">同步功能被禁用，直到迁移完成。\n
+        %1$d 个媒体文件留待迁移。</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">如果您重新安装 AnkiDroid，它将无法打开您的牌组集。</string>
+    <string name="migration_update_request_dialog_download_warning">如果您卸载 AnkiDroid，您需要再次下载您的全部牌组集。</string>
+    <string name="migration_update_request">Android 存储访问策略要求我们更改存储牌组集的位置。 迁移数据后，AnkiDroid 将更快，您的数据将更安全。
+    您将无法在存储迁移过程中同步。</string>
+    <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid 啦。</string>
+    <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
+\n存储迁移将在后台继续。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s 不是一个有效的 javascript 附加组件包</string>
     <string name="could_not_create_dir">无法创建目录 %s</string>

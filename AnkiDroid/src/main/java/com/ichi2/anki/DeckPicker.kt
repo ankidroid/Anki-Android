@@ -282,9 +282,7 @@ open class DeckPicker :
         showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
         true
     }
-    @KotlinCleanup("remove ?")
-    open val backupManager: BackupManager?
-        get() = BackupManager()
+
     private val mImportAddListener = ImportAddListener(this)
 
     private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
@@ -725,13 +723,7 @@ open class DeckPicker :
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
-            val undoIcon = undoName(resources).let {
-                if (it.isEmpty()) {
-                    null
-                } else {
-                    it
-                }
-            }
+            val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
             val offerToUpgrade = isLegacyStorage(context) && !userMigrationIsInProgress(context)
             OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
@@ -1805,7 +1797,7 @@ open class DeckPicker :
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
                         ConnectionResultType.SD_ACCESS_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_write_access_error)
+                            dialogMessage = res.getString(R.string.sync_write_access_error_on_storage)
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
                         ConnectionResultType.FINISH_ERROR -> {
@@ -2532,11 +2524,11 @@ open class DeckPicker :
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
             MaterialDialog(deckPicker).show {
                 message(R.string.confirm_cancel)
-                positiveButton(R.string.yes) {
-                    actualOnPreExecute(deckPicker)
+                positiveButton(R.string.dialog_yes) {
+                    task.safeCancel()
                 }
                 negativeButton(R.string.dialog_no) {
-                    task.safeCancel()
+                    actualOnPreExecute(deckPicker)
                 }
             }
         }

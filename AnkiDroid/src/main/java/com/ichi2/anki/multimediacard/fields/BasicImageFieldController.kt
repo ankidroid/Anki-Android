@@ -650,7 +650,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun setTemporaryMedia(imagePath: String) {
         mField.apply {
             this.imagePath = imagePath
-            setHasTemporaryMedia(true)
+            hasTemporaryMedia = true
         }
     }
 
@@ -689,7 +689,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             showSomethingWentWrong()
             return false
         }
-        mField.setHasTemporaryMedia(true)
+        mField.hasTemporaryMedia = true
         return true
     }
 

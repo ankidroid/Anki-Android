@@ -138,7 +138,7 @@
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Подтвердить</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка...</string>
@@ -284,6 +284,6 @@
         \n\nThe private storage location will be %2$s
         \n\nPlease confirm that you will regularly make backups of this folder.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Резервное копирование</string>
+    <string name="remind_me_later">Напомнить позже</string>
 </resources>
