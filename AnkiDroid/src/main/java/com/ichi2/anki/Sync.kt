@@ -40,8 +40,10 @@ import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
@@ -74,9 +76,16 @@ fun DeckPicker.handleNewSync(
                 Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, syncMedia)
                 Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, syncMedia)
                 null -> {
-                    try { handleNormalSync(deckPicker, auth, syncMedia) } catch (exc: Exception) {
-                        showSnackbar(R.string.hostname_exception)
-                        Timber.i("No network exception")
+                    try {
+                        handleNormalSync(deckPicker, auth, syncMedia)
+                    } catch (exc: Exception) {
+                        when (exc) {
+                            is UnknownHostException, is BackendNetworkException -> {
+                                showSnackbar(R.string.check_network)
+                                Timber.i("No network exception")
+                            }
+                            else -> throw exc
+                        }
                     }
                 }
             }

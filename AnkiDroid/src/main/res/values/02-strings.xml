@@ -452,5 +452,4 @@
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser Options</string>
 
-    <string name="hostname_exception">Please check your internet connection</string>
 </resources>
