@@ -123,12 +123,12 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     private fun setupUIController(fieldController: IFieldController, savedInstanceState: Bundle?) {
-        fieldController.let {
-            it.setField(mField)
-            it.setFieldIndex(mFieldIndex)
-            it.setNote(mNote)
-            it.setEditingActivity(this)
-            it.loadInstanceState(savedInstanceState)
+        fieldController.apply {
+            setField(mField)
+            setFieldIndex(mFieldIndex)
+            setNote(mNote)
+            setEditingActivity(this@MultimediaEditFieldActivity)
+            loadInstanceState(savedInstanceState)
         }
     }
 
