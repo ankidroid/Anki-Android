@@ -122,14 +122,14 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         return false
     }
 
-    /** Sets various properties required for IFieldController to be in a valid state  */
-    @KotlinCleanup("scope function")
     private fun setupUIController(fieldController: IFieldController, savedInstanceState: Bundle?) {
-        fieldController.setField(mField)
-        fieldController.setFieldIndex(mFieldIndex)
-        fieldController.setNote(mNote)
-        fieldController.setEditingActivity(this)
-        fieldController.loadInstanceState(savedInstanceState)
+        fieldController.let {
+            it.setField(mField)
+            it.setFieldIndex(mFieldIndex)
+            it.setNote(mNote)
+            it.setEditingActivity(this)
+            it.loadInstanceState(savedInstanceState)
+        }
     }
 
     private fun recreateEditingUi(newUI: ChangeUIRequest, savedInstanceState: Bundle? = null) {
