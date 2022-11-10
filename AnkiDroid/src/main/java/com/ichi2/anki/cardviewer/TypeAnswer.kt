@@ -158,7 +158,7 @@ class TypeAnswer(
             }
             append(">\n</center>\n")
         } else {
-            append("""<span id="typeans" class=\"typePrompt""")
+            append("<span id=\"typeans\" class=\"typePrompt")
             if (useInputTag) {
                 append(" typeOff")
             }
