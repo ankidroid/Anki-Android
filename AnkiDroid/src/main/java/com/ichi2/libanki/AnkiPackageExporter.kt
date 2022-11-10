@@ -56,9 +56,9 @@ open class Exporter(protected val col: Collection, protected val did: DeckId?) {
     fun cardIds(): Array<Long> {
         val cids: Array<Long>
         cids = if (did == null) {
-            Utils.list2ObjectArray(col.db.queryLongList("select id from cards"))
+            col.db.queryLongList("select id from cards").toTypedArray()
         } else {
-            Utils.list2ObjectArray(col.decks.cids(did, true))
+            col.decks.cids(did, true).toTypedArray()
         }
         count = cids.size
         return cids

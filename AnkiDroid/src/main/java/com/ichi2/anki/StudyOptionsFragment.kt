@@ -737,7 +737,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
 
         @VisibleForTesting
-        fun formatDescription(desc: String?): Spanned {
+        fun formatDescription(desc: String): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)
