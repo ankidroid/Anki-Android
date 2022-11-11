@@ -319,7 +319,7 @@ dependencies {
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
     // build via AnkiDroidApp.
-    implementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+    implementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 
     api project(":api")
 
