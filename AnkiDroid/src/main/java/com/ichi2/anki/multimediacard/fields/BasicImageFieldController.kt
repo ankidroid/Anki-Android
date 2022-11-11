@@ -212,7 +212,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 // cropImage can give us more information. Not sure it is actionable so for now just log it.
                 val error: String = cropResult.error?.toString() ?: "Error info not available"
                 Timber.w(error, "cropImage threw an error")
-                CrashReportService.sendExceptionReport(error, "cropImage threw an error")
+                // condition can be removed if #12768 get fixed by Canhub
+                if (cropResult.error is CropException.Cancellation) {
+                    Timber.i("CropException caught, seemingly nothing to do ", error)
+                } else {
+                    CrashReportService.sendExceptionReport(error, "cropImage threw an error")
+                }
             }
         }
     }
