@@ -126,7 +126,7 @@
     <string name="dialog_ok">დიახ</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">არა</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">კი</string>
     <string name="dialog_continue">გაგრძელება</string>
     <string name="dialog_processing">მუშავდება…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>

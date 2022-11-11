@@ -108,8 +108,8 @@
     <plurals name="import_complete_message">
         <item quantity="other">导入的文件数: %1$d\n总共导入的卡片数: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">存储空间已满</string>
+    <string name="storage_almost_full_title">存储空间几乎满了</string>
     <string name="no_space_to_downgrade_title">没有空间</string>
     <string name="no_space_to_downgrade_content">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
@@ -119,7 +119,7 @@
     <string name="dialog_ok">确定</string>
     <string name="dialog_confirm">确认</string>
     <string name="dialog_no">否</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">是</string>
     <string name="dialog_continue">继续</string>
     <string name="dialog_processing">处理中...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>

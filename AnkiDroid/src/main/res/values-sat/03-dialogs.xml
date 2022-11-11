@@ -126,7 +126,7 @@
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
     <string name="dialog_confirm">ᱴᱷᱟᱹᱣᱠᱟᱹ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">ᱦᱮᱸ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
     <string name="dialog_processing">ᱠᱟᱹᱢᱤ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ ...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ᱛᱮᱭᱟᱨ</string>

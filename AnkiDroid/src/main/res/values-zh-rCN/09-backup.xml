@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">备份未保存。您的剩余存储空间不足。降低备份深度或删除其他文件。</string>
+    <string name="storage_warning">您的存储空间剩余不到 %d MB。\n释放一些空间以避免数据丢失。</string>
     <string name="backup_restore">恢复备份</string>
     <string name="backup_new_collection">新建集合</string>
     <string name="backup_del_collection">删除集合，并创建新集合</string>

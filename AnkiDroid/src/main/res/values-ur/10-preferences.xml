@@ -50,58 +50,58 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">کوئی نتیجہ نہیں</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">جنرل</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">نظام بھر میں</string>
     <string name="pref_cat_reviewing" maxLength="41">نظر ثانی</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_fonts" maxLength="41">Fonts</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_advanced" maxLength="41">Advanced</string>
-    <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
-    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="pref_cat_scheduling" maxLength="41">شیڈولنگ</string>
+    <string name="pref_cat_whiteboard" maxLength="41">سفید تختہ</string>
+    <string name="pref_cat_appearance" maxLength="41">ظہور</string>
+    <string name="pref_cat_themes" maxLength="41">تھیمز</string>
+    <string name="pref_cat_fonts" maxLength="41">فونٹس</string>
+    <string name="pref_cat_gestures" maxLength="41">اشارے</string>
+    <string name="pref_cat_controls" maxLength="41">اختیار</string>
+    <string name="pref_cat_advanced" maxLength="41">ترقی یافتہ</string>
+    <string name="pref_cat_workarounds" maxLength="41">حل</string>
+    <string name="pref_cat_plugins" maxLength="41">پلگ ان</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
+    <string name="whiteboard_stroke_width" maxLength="41">اسٹروک کی چوڑائی</string>
     <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom" maxLength="41">Card zoom</string>
-    <string name="image_zoom" maxLength="41">Image zoom</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
-    <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">کارڈ زوم</string>
+    <string name="image_zoom" maxLength="41">تصویر زوم</string>
+    <string name="button_size" maxLength="41">جواب بٹن کا سائز</string>
+    <string name="card_browser_font_size" maxLength="41">کارڈ براؤزر فونٹ اسکیلنگ</string>
+    <string name="card_browser_hide_media" maxLength="41">کارڈ براؤزر میں فائل کے نام ڈسپلے کریں۔</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
-    <string name="full_screen_off">Off</string>
-    <string name="full_screen_system">Hide the system bars</string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-    <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
+    <string name="col_path" maxLength="41">AnkiDroid ڈائریکٹری</string>
+    <string name="fullscreen_review" maxLength="41">فل سکرین موڈ</string>
+    <string name="full_screen_off">بند</string>
+    <string name="full_screen_system">سسٹم کی سلاخوں کو چھپائیں</string>
+    <string name="full_screen_complete">سسٹم بارز اور جوابی بٹن چھپائیں</string>
+    <string name="full_screen_error_gestures">جواب کے بٹنوں کو چھپانے کے لیے آپ کو اشاروں کو فعال کرنا چاہیے</string>
+    <string name="answer_buttons_position" maxLength="41">جواب بٹن کی پوزیشن</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
-        <item>None</item>
+        <item>سب سے اوپر</item>
+        <item>نیچے</item>
+        <item>کوئی نہیں</item>
     </string-array>
-    <string name="gestures" maxLength="41">Enable gestures</string>
+    <string name="gestures" maxLength="41">اشاروں کو فعال کریں</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_swipe_up" maxLength="41">Swipe up</string>
-    <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
-    <string name="gestures_swipe_left" maxLength="41">Swipe left</string>
+    <string name="gestures_swipe_up" maxLength="41">اوپر سوائپ کریں</string>
+    <string name="gestures_swipe_down" maxLength="41">نیچے سوائپ کریں</string>
+    <string name="gestures_swipe_left" maxLength="41">بائیں سوائپ کریں</string>
     <string name="gestures_swipe_right" maxLength="41">Swipe right</string>
     <string name="gestures_double_tap" maxLength="41">Double touch</string>
     <string name="gestures_long_tap" maxLength="41">Long touch</string>
@@ -137,8 +137,8 @@
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
-    <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="default_font" maxLength="41">Default font</string>
+    <string name="night_theme" maxLength="41">رات کا تھیم</string>
+    <string name="default_font" maxLength="41">پہلے سے طے شدہ فونٹ</string>
     <string name="override_font" maxLength="41">Default font applicability</string>
     <string name="language" maxLength="41">Language</string>
     <string name="language_system">System language</string>

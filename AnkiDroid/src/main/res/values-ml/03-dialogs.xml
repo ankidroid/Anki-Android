@@ -126,7 +126,7 @@
     <string name="dialog_ok">ശരി</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">No (വേണ്ട)</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">അതെ</string>
     <string name="dialog_continue">തുടരുക</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">സൃഷ്ടിച്ചു</string>

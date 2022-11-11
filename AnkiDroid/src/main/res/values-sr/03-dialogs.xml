@@ -133,7 +133,7 @@
     <string name="dialog_ok">У реду</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">No</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">Да</string>
     <string name="dialog_continue">Настави</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Направи</string>
