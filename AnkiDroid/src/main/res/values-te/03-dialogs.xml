@@ -126,7 +126,7 @@
     <string name="dialog_ok">సరే</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">No</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">అవును</string>
     <string name="dialog_continue">కొనసాగండి</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">సృష్టించు</string>

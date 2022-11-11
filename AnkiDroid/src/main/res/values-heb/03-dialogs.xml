@@ -141,7 +141,7 @@
     <string name="dialog_ok">אישור</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">לא</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">כן</string>
     <string name="dialog_continue">המשך</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">יצירה</string>

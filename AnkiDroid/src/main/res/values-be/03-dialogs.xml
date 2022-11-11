@@ -140,7 +140,7 @@
     <string name="dialog_ok">Добра</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Не</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">Так</string>
     <string name="dialog_continue">Працягнуць</string>
     <string name="dialog_processing">Апрацоўка...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Стварыць</string>

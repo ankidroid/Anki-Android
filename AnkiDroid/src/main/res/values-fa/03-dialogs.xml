@@ -128,7 +128,7 @@
     <string name="dialog_ok">تایید</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">خیر</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">بله</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
