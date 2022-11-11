@@ -344,7 +344,7 @@ dependencies {
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0') {
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.5.0') {
         exclude module: "protobuf-lite"
     }
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
