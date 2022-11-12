@@ -108,7 +108,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             openContextMenuAndSelectItem(recyclerView, 3)
 
             val deckOptions = shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.DeckOptions", deckOptions.component!!.className)
+            assertEquals("com.ichi2.anki.DeckOptionsActivity", deckOptions.component!!.className)
             assertEquals(deckId, deckOptions.getLongExtra("did", 1))
         }
     }

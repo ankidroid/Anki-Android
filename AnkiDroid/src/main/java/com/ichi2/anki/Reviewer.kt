@@ -458,7 +458,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = Intent(this, DeckOptions::class.java)
+                val i = Intent(this, DeckOptionsActivity::class.java)
                 startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
             }
             R.id.action_select_tts -> {

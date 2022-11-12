@@ -276,7 +276,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 if (col!!.decks.isDyn(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
-                    val i = Intent(activity, DeckOptions::class.java)
+                    val i = Intent(activity, DeckOptionsActivity::class.java)
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                     slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
