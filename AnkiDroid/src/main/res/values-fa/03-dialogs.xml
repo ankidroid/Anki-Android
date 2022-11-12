@@ -117,8 +117,8 @@
         <item quantity="one">کارت های وارد شده: %2$d</item>
         <item quantity="other">فایل های وارد شده: %1$d\nکل کارت های وارد شده: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">کارت حافظه پر</string>
-    <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">جای خالی وجود ندارد</string>
     <string name="no_space_to_downgrade_content">AnkiDroid %s فضای خالی لازم دارد تا ادامه دهد. لطفا کمی جا خالی کنید</string>
     <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
@@ -128,6 +128,7 @@
     <string name="dialog_ok">تایید</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">خیر</string>
+    <string name="dialog_yes">بله</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>

@@ -115,8 +115,8 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD ბარათი სავსეა</string>
-    <string name="sd_card_almost_full_title">SD ბარათი თითქმის სავსეა</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">მეხსიერების სივრცე არ არის</string>
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restore backup?</string>
@@ -126,6 +126,7 @@
     <string name="dialog_ok">დიახ</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">არა</string>
+    <string name="dialog_yes">კი</string>
     <string name="dialog_continue">გაგრძელება</string>
     <string name="dialog_processing">მუშავდება…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>

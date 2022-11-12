@@ -40,10 +40,8 @@ object JsonUtils {
     }
 
     private fun JSONArray.values() = sequence {
-        var i = 0
-        while (i < this@values.length()) {
+        for (i in 0 until this@values.length()) {
             yield(this@values[i])
-            i++
         }
     }
 

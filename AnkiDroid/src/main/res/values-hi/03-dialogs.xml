@@ -115,8 +115,8 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD कार्ड भरा हुआ है</string>
-    <string name="sd_card_almost_full_title">एसडी कार्ड लगभग पूर्ण</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">कोई जगह नहीं</string>
     <string name="no_space_to_downgrade_content">AnkiDroid को जारी रखने के लिए %s मुफ्त संग्रहण स्थान की आवश्यकता है। कृपया कुछ जगह खाली करें</string>
     <string name="restore_backup_title">बैकअप रिस्टोर करें</string>
@@ -126,6 +126,7 @@
     <string name="dialog_ok">ठीक है</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">नहीं</string>
+    <string name="dialog_yes">हाँ</string>
     <string name="dialog_continue">जारी रखें</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">बनाएँ</string>

@@ -2237,11 +2237,9 @@ end)  """
             super.buryNote(nid)
             return
         }
-        val cids = Utils.collection2Array(
-            col.db.queryLongList(
-                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid
-            )
-        )
+        val cids = col.db.queryLongList(
+            "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid
+        ).toLongArray()
         buryCards(cids)
     }
 
@@ -2284,7 +2282,7 @@ end)  """
         }
         // then bury
         if (!toBury.isEmpty()) {
-            buryCards(Utils.collection2Array(toBury), false)
+            buryCards(toBury.toLongArray(), false)
         }
     }
     /*

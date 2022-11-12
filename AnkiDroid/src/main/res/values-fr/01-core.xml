@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">oui</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigateur de cartes</string>
@@ -176,8 +175,8 @@
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="empty_cloze_warning">Modifier cette note et ajouter quelques textes à trous. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronisation temporairement désactivée</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrer vers l\'espace de stockage étendu</string>
     <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
     <string name="continue_sync">Continuer la synchronisation</string>
     <string name="sync_cancelled">Synchronisation annulée</string>

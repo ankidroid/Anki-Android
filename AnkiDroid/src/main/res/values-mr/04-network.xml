@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">डाउनलोड केलेला डेटाबेस दूषित झाला होता. कृपया पुन्हा प्रयत्न करा.</string>
     <string name="sync_overwrite_error">डाउनलोड केलेला डेटाबेस दूषित झाला होता. कृपया पुन्हा प्रयत्न करा.</string>
     <string name="sync_connection_error">जोडणी कालबाह्य. एकतर आपल्या इंटरनेट कनेक्शनला समस्या येत आहे किंवा आपल्याकडे आपल्या मीडिया फोल्डरमध्ये खूप मोठी फाईल आहे.</string>
-    <string name="sync_write_access_error">डाऊनलोड केलेली फाईल एसडी कार्डमध्ये जतन केली जाऊ शकली नाही. एकतर कार्ड केवळ वाचनीय माउंट केले आहे किंवा तेथे पुरेशी जागा नाही.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">प्रगत सेटिंग्जमधील सानुकूल समक्रमण सर्व्हर अवैध (%s) आहे. कृपया एखादा वैध सर्व्हर प्रविष्ट करा किंवा सेटिंग अक्षम करा.</string>
     <string name="sync_deletions_message">हटवण्याची संकालन करीत आहे&#8230;</string>
     <string name="sync_small_objects_message">लहान ऑब्जेक्ट समक्रमित करीत आहे ...</string>

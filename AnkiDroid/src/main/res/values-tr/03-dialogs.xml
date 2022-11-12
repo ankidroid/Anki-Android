@@ -115,8 +115,8 @@
         <item quantity="one">Aktarılan kart: %2$d</item>
         <item quantity="other">Aktarılan dosya: %1$d\nAktarılan toplam kart: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD kart dolu</string>
-    <string name="sd_card_almost_full_title">SD kart neredeyse dolu</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Hiç alan yok</string>
     <string name="no_space_to_downgrade_content">AnkiDroid\'in devam etmesi için %s boş depolama alanına ihtiyacı var. Lütfen biraz yer açın.</string>
     <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
@@ -124,8 +124,9 @@
     <string name="restore_backup_choose_another">Başka seç</string>
     <string name="dialog_cancel">İptal</string>
     <string name="dialog_ok">Tamam</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Onayla</string>
     <string name="dialog_no">Hayır</string>
+    <string name="dialog_yes">Evet</string>
     <string name="dialog_continue">Devam Et</string>
     <string name="dialog_processing">İşlem yapılıyor...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Oluştur</string>
@@ -258,13 +259,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Bütün desteler için bir altdeste oluşturamazsınız</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
+    <string name="scoped_storage_require_user_to_accept_risk">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa şimdiki depolama yerinize erişilemeyecek.
+        \n\nVerilerinizi AnkiDroid uygulamasına özel bir yere geçirmemiz gerekiyor.
+        \n\nBu özel yerdeki veriler uygulama kaldırılırsa silinebilir.
+        \n\nŞimdiki depolama yeriniz %1$s
+        \n\nÖzel depolama yeri %2$s olacak
+        \n\nLütfen düzenli olarak bu klasörün yedeklerini alacağınızı onaylayın.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Elle yedekleme</string>
+    <string name="remind_me_later">Sonra hatırlat</string>
 </resources>

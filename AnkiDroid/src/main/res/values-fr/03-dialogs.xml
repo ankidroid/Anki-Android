@@ -115,8 +115,8 @@
         <item quantity="one">Cartes importées : %2$d</item>
         <item quantity="other">Fichiers importés : %1$d\nNombre total de cartes importées : %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">Carte SD pleine</string>
-    <string name="sd_card_almost_full_title">Carte SD presque pleine</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Aucun espace</string>
     <string name="no_space_to_downgrade_content">AnkiDroid a besoin de %s d\'espace libre pour continuer. Veuillez libérer de l\'espace</string>
     <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
@@ -124,8 +124,9 @@
     <string name="restore_backup_choose_another">En choisir un autre</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Confirmer</string>
     <string name="dialog_no">Non</string>
+    <string name="dialog_yes">Oui</string>
     <string name="dialog_continue">Continuer</string>
     <string name="dialog_processing">Traitement…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
@@ -258,13 +259,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Vous ne pouvez pas créer un sous-paquet pour tous les paquets</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
+    <string name="scoped_storage_require_user_to_accept_risk">        En raison de modifications de la confidentialité d\'Android, votre emplacement de stockage actuel sera inaccessible si l\'application est désinstallée.
+        \n\nNous avons besoin de migrer vos données vers un emplacement privé vers l\'application AnkiDroid.
+        \n\nLes données de cet emplacement privé peuvent être supprimées si l\'application est désinstallée.
+        \n\nVotre emplacement de stockage actuel est %1$s
+        \n\nL\'emplacement de stockage privé sera %2$s
+        \n\nVeuillez confirmer que vous ferez régulièrement des sauvegardes de ce dossier.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Sauvegarde manuelle</string>
+    <string name="remind_me_later">Me le rappeler plus tard</string>
 </resources>

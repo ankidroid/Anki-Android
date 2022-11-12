@@ -104,16 +104,16 @@
     <string name="card_browser_unknown_deck_name">Невідома</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Скорочувати вміст</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="few">Export cards</item>
-        <item quantity="many">Export cards</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Експортувати картку</item>
+        <item quantity="few">Експортувати картки</item>
+        <item quantity="many">Експортувати картки</item>
+        <item quantity="other">Експортувати картки</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="few">Export notes</item>
-        <item quantity="many">Export notes</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Експортувати запис</item>
+        <item quantity="few">Експортувати записи</item>
+        <item quantity="many">Експортувати записи</item>
+        <item quantity="other">Експортувати записи</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d картку видалено</item>

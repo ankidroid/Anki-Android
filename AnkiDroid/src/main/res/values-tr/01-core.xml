@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">evet</string>
     <!-- Navigation drawer items-->
     <string name="decks">Desteler</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart tarayıcısı</string>
@@ -177,7 +176,7 @@
     <string name="empty_cloze_warning">Bu notu düzenleyip doldurulacak boşluklar ekleyin. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Senkronizasyon geçici olarak devredışı</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Kapsamlı depolamaya geç</string>
     <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
     <string name="continue_sync">Senkronizasyona devam et</string>
     <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>

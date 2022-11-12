@@ -410,15 +410,15 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="sync_impossible_during_migration">Синхронизация отключена до завершения переноса.\n
+        Осталось пернести %1$d медиафайлов.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Если вы переустановите AnkiDroid, он не сможет открыть вашу коллекцию.</string>
+    <string name="migration_update_request_dialog_download_warning">Если вы удалите AnkiDroid, вам придется заново загрузить всю коллекцию.</string>
     <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
     You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="start_migration_progress_message">Начало перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
+\nПеренос хранилища будет продолжаться в фоновом режиме.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не является допустимым пакетом дополнения JavaScript</string>
     <string name="could_not_create_dir">Не удалось создать каталог «%s»</string>

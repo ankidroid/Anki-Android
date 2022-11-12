@@ -37,7 +37,7 @@ import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
@@ -737,7 +737,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
 
         @VisibleForTesting
-        fun formatDescription(desc: String?): Spanned {
+        fun formatDescription(desc: String): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)

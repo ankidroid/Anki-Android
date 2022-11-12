@@ -108,8 +108,8 @@
     <plurals name="import_complete_message">
         <item quantity="other">导入的文件数: %1$d\n总共导入的卡片数: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD 卡已满</string>
-    <string name="sd_card_almost_full_title">SD 卡几乎已满</string>
+    <string name="storage_full_title">存储空间已满</string>
+    <string name="storage_almost_full_title">存储空间几乎满了</string>
     <string name="no_space_to_downgrade_title">没有空间</string>
     <string name="no_space_to_downgrade_content">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
@@ -117,8 +117,9 @@
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">确认</string>
     <string name="dialog_no">否</string>
+    <string name="dialog_yes">是</string>
     <string name="dialog_continue">继续</string>
     <string name="dialog_processing">处理中...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
@@ -249,13 +250,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
+    <string name="scoped_storage_require_user_to_accept_risk">        由于 Android 隐私变化，如应用被卸载，您当前的存储位置将不可访问。
+        \n\n我们需要将您的数据迁移到一个对 AnkiDroid 应用来说秘密的地方。
+        \n\n如果应用被卸载，这个私有位置中的数据可能会被删除。
+        \n\n您当前的存储位置是 %1$s
+        \n\n私有存储位置将是 %2$s
+        \n\n请确保您将定期备份此文件夹。
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">手动备份</string>
+    <string name="remind_me_later">稍后提醒我</string>
 </resources>

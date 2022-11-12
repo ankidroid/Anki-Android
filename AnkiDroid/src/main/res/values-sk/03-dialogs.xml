@@ -129,8 +129,8 @@
         <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD karta je plná</string>
-    <string name="sd_card_almost_full_title">SD karta je takmer plná</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Nedostatok miesta</string>
     <string name="no_space_to_downgrade_content">AnkiDroid potrebuje %s voľného ukladacieho priestoru na pokračovanie. Prosím, uvoľnite priestor</string>
     <string name="restore_backup_title">Obnoviť zálohu?</string>
@@ -140,6 +140,7 @@
     <string name="dialog_ok">Ok</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Nie</string>
+    <string name="dialog_yes">Áno</string>
     <string name="dialog_continue">Pokračovať</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvoriť</string>

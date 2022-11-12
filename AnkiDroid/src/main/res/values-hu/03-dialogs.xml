@@ -115,8 +115,8 @@
         <item quantity="one">Importált kártyák: %2$d</item>
         <item quantity="other">Importált kártyák: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD kártya tele</string>
-    <string name="sd_card_almost_full_title">Az SD kártya már majdnem tele van</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Nincs hely</string>
     <string name="no_space_to_downgrade_content">AnkiDroid-nak szüksége van %s szabad tárterületre a folytatáshoz. Szabadíts fel helyet, légyszíves!</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
@@ -126,6 +126,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Nem</string>
+    <string name="dialog_yes">Igen</string>
     <string name="dialog_continue">Folytatás</string>
     <string name="dialog_processing">Feldolgozás...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Létrehoz</string>

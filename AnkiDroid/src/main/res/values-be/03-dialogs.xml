@@ -129,8 +129,8 @@
         <item quantity="many">Файлаў імпартавана: %1$d\nУсяго картак імпартавана: %2$d</item>
         <item quantity="other">Файлаў імпартавана: %1$d\nУсяго картак імпартавана: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD-картка запоўненая</string>
-    <string name="sd_card_almost_full_title">SD-картка амаль запоўненая</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Памяць запоўненая</string>
     <string name="no_space_to_downgrade_content">Для працягу праграме неабходна %s свабоднага месца. Вызваліце неабходнае месца на сваёй прыладзе</string>
     <string name="restore_backup_title">Аднавіць з рэзервовай копіі?</string>
@@ -140,6 +140,7 @@
     <string name="dialog_ok">Добра</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Не</string>
+    <string name="dialog_yes">Так</string>
     <string name="dialog_continue">Працягнуць</string>
     <string name="dialog_processing">Апрацоўка...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Стварыць</string>

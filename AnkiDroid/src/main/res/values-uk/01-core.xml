@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">так</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоди</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Переглядач карток</string>
@@ -186,8 +185,8 @@
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис та додайте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронізувати</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронізація тимчасово вимкнена</string>
+    <string name="button_upgrade" comment="Text of the sync button">Перенесення до зашифрованого сховища (scoped storage)</string>
     <string name="cancel_sync_confirm">Ви хочете скасувати синхронізацію?</string>
     <string name="continue_sync">Продовжити синхронізацію</string>
     <string name="sync_cancelled">Синхронізацію скасовано</string>

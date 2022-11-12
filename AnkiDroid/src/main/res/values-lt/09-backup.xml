@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Atsarginė kopija neišsaugota. SD kortelėje nepakanka vietos. Sumažinkite atsarginių kopijų skaičių arba ištrinkite keletą kitų failų.</string>
-    <string name="sd_space_warning">Jūsų SD kortelėje liko mažiau nei %d MB vietos.\nNorėdami neprarasti turimų duomenų, atlaisvinkite šiek tiek vietos.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">Atkurti iš atsarginės kopijos</string>
     <string name="backup_new_collection">Nauja kolekcija</string>
     <string name="backup_del_collection">Ištrinti kolekciją ir sukurti naują</string>

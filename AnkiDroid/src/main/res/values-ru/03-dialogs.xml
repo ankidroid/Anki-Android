@@ -129,8 +129,8 @@
         <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
         <item quantity="other">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">В хранилище нет места</string>
-    <string name="sd_card_almost_full_title">В хранилище почти нет места</string>
+    <string name="storage_full_title">Хранилище заполнено</string>
+    <string name="storage_almost_full_title">Хранилище почти заполнено</string>
     <string name="no_space_to_downgrade_title">Нет места</string>
     <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
@@ -138,8 +138,9 @@
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Подтвердить</string>
     <string name="dialog_no">Нет</string>
+    <string name="dialog_yes">Да</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
@@ -284,6 +285,6 @@
         \n\nThe private storage location will be %2$s
         \n\nPlease confirm that you will regularly make backups of this folder.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Резервное копирование</string>
+    <string name="remind_me_later">Напомнить позже</string>
 </resources>

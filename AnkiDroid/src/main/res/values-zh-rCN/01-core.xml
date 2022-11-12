@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">是</string>
     <!-- Navigation drawer items-->
     <string name="decks">牌组</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">卡片浏览器</string>
@@ -172,7 +171,7 @@
     <string name="empty_cloze_warning">编辑此卡牌记录并添加一些创建填空。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">暂时禁用了同步</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">迁移到作用域存储</string>
     <string name="cancel_sync_confirm">你想要取消同步吗？</string>
     <string name="continue_sync">继续同步</string>
     <string name="sync_cancelled">同步已取消</string>

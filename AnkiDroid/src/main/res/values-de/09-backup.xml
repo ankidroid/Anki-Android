@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Sicherung nicht gespeichert. Nicht genug Speicherplatz auf der SD-Karte. Geben Sie mehr Speicherplatz frei oder verringern Sie die Sicherungstiefe.</string>
-    <string name="sd_space_warning">Auf Ihrer SD-Karte sind weniger als %d MB frei.\nGeben Sie mehr Platz frei, um Datenverluste zu vermeiden.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">Von Sicherung wiederherstellen</string>
     <string name="backup_new_collection">Neue Sammlung</string>
     <string name="backup_del_collection">Sammlung löschen und neue erstellen</string>

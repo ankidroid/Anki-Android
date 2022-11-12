@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Да</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоды</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Список карточек</string>
@@ -187,7 +186,7 @@
     <string name="empty_cloze_warning">Правьте эту заметку и добавьте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронизация временно отключена</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Перенос хранилища</string>
     <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
     <string name="continue_sync">Продолжить синхронизацию</string>
     <string name="sync_cancelled">Синхронизация отменена</string>

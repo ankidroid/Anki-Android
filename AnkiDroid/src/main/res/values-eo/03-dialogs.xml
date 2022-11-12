@@ -115,8 +115,8 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD-karto estas plena</string>
-    <string name="sd_card_almost_full_title">SD-karto estas preskaŭ plena</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Mankas spaco</string>
     <string name="no_space_to_downgrade_content">AnkiDroid postulas %s da libera spaco por pluigi. Liberigu iom da spaco.</string>
     <string name="restore_backup_title">Ĉu restarigi sekurkopion?</string>
@@ -126,6 +126,7 @@
     <string name="dialog_ok">Bone</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Ne</string>
+    <string name="dialog_yes">Jes</string>
     <string name="dialog_continue">Pluigi</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Krei</string>

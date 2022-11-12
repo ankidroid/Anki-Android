@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">สำรับ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ตัวเลือกการ์ด</string>
