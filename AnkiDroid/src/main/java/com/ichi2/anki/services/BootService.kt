@@ -87,7 +87,7 @@ class BootService : BroadcastReceiver() {
                         ),
                         0
                     )
-                    val calendar = DeckOptions.reminderToCalendar(TimeManager.time, reminder)
+                    val calendar = DeckOptionsActivity.reminderToCalendar(TimeManager.time, reminder)
                     alarmManager.setRepeating(
                         AlarmManager.RTC_WAKEUP,
                         calendar.timeInMillis,

@@ -56,7 +56,7 @@ object ActivityList {
             get(VideoPlayer::class.java),
             get(MyAccount::class.java),
             get(Preferences::class.java),
-            get(DeckOptions::class.java),
+            get(DeckOptionsActivity::class.java),
             get(CropImageActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),

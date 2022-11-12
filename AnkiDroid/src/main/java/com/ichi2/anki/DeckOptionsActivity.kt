@@ -64,17 +64,17 @@ import java.util.*
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
 @KotlinCleanup("IDE lint")
-class DeckOptions :
-    AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
+class DeckOptionsActivity :
+    AppCompatPreferenceActivity<DeckOptionsActivity.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
 
-    inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
+    inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptionsActivity.DeckPreferenceHack>.AbstractPreferenceHack() {
         @Suppress("Deprecation")
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptionsActivity: DeckOptions // TODO: rename the class to DeckOptionsActivity
-            get() = this@DeckOptions
+        val deckOptionsActivity: DeckOptionsActivity
+            get() = this@DeckOptionsActivity
 
         @KotlinCleanup("scope function")
         override fun cacheValues() {
@@ -138,7 +138,7 @@ class DeckOptions :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                UIUtils.showThemedToast(this@DeckOptions, this@DeckOptions.resources.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
+                UIUtils.showThemedToast(this@DeckOptionsActivity, this@DeckOptionsActivity.resources.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
                 finish()
             }
         }
@@ -148,7 +148,7 @@ class DeckOptions :
         }
 
         fun confChangeHandler(timbering: String, block: Collection.() -> Unit) {
-            launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+            launch(getCoroutineExceptionHandler(this@DeckOptionsActivity)) {
                 preConfChange()
                 Timber.d(timbering)
                 try {
@@ -178,7 +178,7 @@ class DeckOptions :
             deckOptionsActivity.restartActivity()
         }
 
-        inner class Editor : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
+        inner class Editor : AppCompatPreferenceActivity<DeckOptionsActivity.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("DeckOptions - commit() changes back to database")
 
@@ -274,7 +274,7 @@ class DeckOptions :
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
                                 // Don't remove the options group if it's the default group
                                 UIUtils.showThemedToast(
-                                    this@DeckOptions,
+                                    this@DeckOptionsActivity,
                                     resources.getString(R.string.default_conf_delete_error), false
                                 )
                             } else {
@@ -285,7 +285,7 @@ class DeckOptions :
                                     e.log()
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    MaterialDialog(this@DeckOptions).show {
+                                    MaterialDialog(this@DeckOptionsActivity).show {
                                         message(R.string.full_sync_confirmation)
                                         positiveButton(R.string.dialog_ok) {
                                             col.modSchemaNoCheck()
@@ -301,7 +301,7 @@ class DeckOptions :
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
-                                launch(getCoroutineExceptionHandler(this@DeckOptions)) {
+                                launch(getCoroutineExceptionHandler(this@DeckOptionsActivity)) {
                                     preConfChange()
                                     try {
                                         withCol {

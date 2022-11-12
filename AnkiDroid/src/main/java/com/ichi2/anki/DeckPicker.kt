@@ -2318,7 +2318,7 @@ open class DeckPicker :
         } else {
             // otherwise open regular options
             val intent = if (BackendFactory.defaultLegacySchema) {
-                Intent(this@DeckPicker, DeckOptions::class.java).apply {
+                Intent(this@DeckPicker, DeckOptionsActivity::class.java).apply {
                     putExtra("did", did)
                 }
             } else {

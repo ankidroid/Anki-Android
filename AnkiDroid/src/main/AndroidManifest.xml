@@ -278,7 +278,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.DeckOptions"
+            android:name="com.ichi2.anki.DeckOptionsActivity"
             android:label="@string/deckpreferences_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
