@@ -14,7 +14,6 @@
 
 package com.ichi2.anki.ui.preferences.screens
 
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.preference.EditTextPreference
@@ -92,8 +91,8 @@ class NewBackendBackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider
  *
  *     backupLimitsPresenter.refresh()
  */
-context(PreferenceFragmentCompat) class BackupLimitsPresenter : DefaultLifecycleObserver {
-    private val viewModel: NewBackendBackupLimitsViewModel by viewModels()
+class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : DefaultLifecycleObserver {
+    private val viewModel: NewBackendBackupLimitsViewModel by fragment.viewModels()
 
     private lateinit var maxNumberOfBackupsPreference: IncrementerNumberRangePreferenceCompat
 
@@ -104,15 +103,15 @@ context(PreferenceFragmentCompat) class BackupLimitsPresenter : DefaultLifecycle
     private lateinit var monthlyBackupsToKeepPreference: IncrementerNumberRangePreferenceCompat
 
     override fun onCreate(owner: LifecycleOwner) {
-        addPreferencesFromResource(R.xml.preferences_backup_limits) // Hierarchies get merged
+        fragment.addPreferencesFromResource(R.xml.preferences_backup_limits) // Hierarchies get merged
 
-        maxNumberOfBackupsPreference = requirePreference(R.string.pref_backup_max_key)
+        maxNumberOfBackupsPreference = fragment.requirePreference(R.string.pref_backup_max_key)
 
-        backupsHelpPreference = requirePreference(R.string.pref_backups_help_key)
-        minutesBetweenAutomaticBackupsPreference = requirePreference(R.string.pref_minutes_between_automatic_backups_key)
-        dailyBackupsToKeepPreference = requirePreference(R.string.pref_daily_backups_to_keep_key)
-        weeklyBackupsToKeepPreference = requirePreference(R.string.pref_weekly_backups_to_keep_key)
-        monthlyBackupsToKeepPreference = requirePreference(R.string.pref_monthly_backups_to_keep_key)
+        backupsHelpPreference = fragment.requirePreference(R.string.pref_backups_help_key)
+        minutesBetweenAutomaticBackupsPreference = fragment.requirePreference(R.string.pref_minutes_between_automatic_backups_key)
+        dailyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_daily_backups_to_keep_key)
+        weeklyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_weekly_backups_to_keep_key)
+        monthlyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_monthly_backups_to_keep_key)
 
         minutesBetweenAutomaticBackupsPreference
             .launchWhenChanged<Int> { viewModel.updateBackupLimits { minimumIntervalMins = it } }
@@ -142,9 +141,11 @@ context(PreferenceFragmentCompat) class BackupLimitsPresenter : DefaultLifecycle
 
             preference.onClickListener = listener@{
                 when (val state = viewModel.flowOfState.value) {
-                    is State.Fetching -> showSnackbar("Fetching…")
-                    is State.Error.NoCollection -> showSnackbar("Collection does not exist")
-                    is State.Error.Exception -> showSnackbar(requireContext().getUserFriendlyErrorText(state.exception))
+                    is State.Fetching -> fragment.showSnackbar("Fetching…")
+                    is State.Error.NoCollection -> fragment.showSnackbar("Collection does not exist")
+                    is State.Error.Exception -> fragment.showSnackbar(
+                        text = fragment.requireContext().getUserFriendlyErrorText(state.exception)
+                    )
                     is State.Fetched -> return@listener ShouldShowDialog.Yes
                 }
                 return@listener ShouldShowDialog.No
@@ -153,7 +154,7 @@ context(PreferenceFragmentCompat) class BackupLimitsPresenter : DefaultLifecycle
 
         // We don't have any useful data in case the state isn't State.Fetched, but
         // we still need to trigger the summary providers. Setting dummy values is one simple way.
-        lifecycleScope.launch {
+        fragment.lifecycleScope.launch {
             viewModel.flowOfState.collect { state ->
                 val limits = if (state is State.Fetched) state.backupLimits else BackupLimits.getDefaultInstance()
                 minutesBetweenAutomaticBackupsPreference.setValue(limits.minimumIntervalMins)
@@ -183,13 +184,14 @@ context(PreferenceFragmentCompat) class BackupLimitsPresenter : DefaultLifecycle
     }
 
     fun observeLifecycle() {
-        lifecycle.addObserver(this)
+        fragment.lifecycle.addObserver(this)
     }
-}
 
-context(Fragment) private inline fun <reified T> Preference.launchWhenChanged(crossinline block: suspend (T) -> Unit) {
-    setOnPreferenceChangeListener { _, newValue ->
-        launchCatchingTask { block(newValue as T) } // T reified in order to make the cast checked
-        true
+    // T is reified in order to make the cast checked
+    private inline fun <reified T> Preference.launchWhenChanged(crossinline block: suspend (T) -> Unit) {
+        setOnPreferenceChangeListener { _, newValue ->
+            this@BackupLimitsPresenter.fragment.launchCatchingTask { block(newValue as T) }
+            true
+        }
     }
 }

@@ -16,11 +16,12 @@ package com.ichi2.anki.ui.dialogs.tools
 
 import android.app.AlertDialog
 import android.content.Context
+import androidx.annotation.StringRes
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
+open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
     lateinit var continuation: Continuation<DialogResult>
     private lateinit var checkedItems: BooleanArray
 
@@ -61,6 +62,29 @@ class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
     }
 }
 
+/**
+ * A clutch that delegates calls to [AlertDialog.Builder].
+ * All defined methods have the exact same signature.
+ *
+ * TODO When context receivers are finalized, remove this class and instead say:
+ *   suspend fun Context.awaitDialog(block: context(AsyncDialogBuilder, AlertDialog.Builder) () -> Unit): DialogResult {
+ *       val alertDialogBuilder = AlertDialog.Builder(this@Context)
+ *       val asyncDialogBuilder = AsyncDialogBuilder(alertDialogBuilder)
+ *       block(asyncDialogBuilder, alertDialogBuilder)
+ *       ...
+ *   }
+ */
+class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
+    /** @see AlertDialog.Builder.setTitle */
+    fun setTitle(@StringRes titleId: Int): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
+    /** @see AlertDialog.Builder.setTitle */
+    fun setTitle(title: CharSequence): AlertDialog.Builder = alertDialogBuilder.setTitle(title)
+    /** @see AlertDialog.Builder.setMessage */
+    fun setMessage(@StringRes messageId: Int): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
+    /** @see AlertDialog.Builder.setMessage */
+    fun setMessage(message: CharSequence): AlertDialog.Builder = alertDialogBuilder.setMessage(message)
+}
+
 sealed interface DialogResult {
     object Cancel : DialogResult
 
@@ -90,16 +114,16 @@ sealed interface DialogResult {
  * instead of using [AlertDialog.Builder] methods that take listeners,
  * use an [AsyncDialogBuilder] method of the same name without one.
  */
-suspend fun Context.awaitDialog(block: context(AsyncDialogBuilder, AlertDialog.Builder) () -> Unit): DialogResult {
-    val alertDialogBuilder = AlertDialog.Builder(this@Context)
-    val asyncDialogBuilder = AsyncDialogBuilder(alertDialogBuilder)
+suspend fun Context.awaitDialog(block: CompoundDialogBuilder.() -> Unit): DialogResult {
+    val alertDialogBuilder = AlertDialog.Builder(this)
+    val compoundDialogBuilder = CompoundDialogBuilder(alertDialogBuilder)
 
-    block(asyncDialogBuilder, alertDialogBuilder)
+    compoundDialogBuilder.block()
 
     alertDialogBuilder
-        .setOnCancelListener { asyncDialogBuilder.continuation.resume(DialogResult.Cancel) }
+        .setOnCancelListener { compoundDialogBuilder.continuation.resume(DialogResult.Cancel) }
         .create()
         .show()
 
-    return suspendCancellableCoroutine { asyncDialogBuilder.continuation = it }
+    return suspendCancellableCoroutine { compoundDialogBuilder.continuation = it }
 }

@@ -51,6 +51,8 @@ object CollectionManager {
      */
     private var collection: Collection? = null
 
+    private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
+
     private val robolectric = "robolectric" == Build.FINGERPRINT
 
     @VisibleForTesting
@@ -65,10 +67,21 @@ object CollectionManager {
      * TODO Allow suspendable blocks, rely on locking instead.
      *
      * TODO Disallow running functions that are supposed to be run inside the queue outside of it.
-     *   See [com.ichi2.anki.withQueue]
+     *   For instance, this can be done by marking a [block] with a context
+     *   that cannot be instantiated outside of this class:
+     *
+     *       suspend fun<T> withQueue(block: context(Queue) () -> T): T {
+     *          return withContext(collectionOperationsDispatcher) {
+     *              block(queue)
+     *          }
+     *      }
+     *
+     *   Then, only functions that are also marked can be run inside the block:
+     *
+     *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
     private suspend fun<T> withQueue(block: CollectionManager.() -> T): T {
-        return withContext(collectionOperationsDispatcher) {
+        return withContext(queue) {
             this@CollectionManager.block()
         }
     }
@@ -213,9 +226,12 @@ object CollectionManager {
         }
     }
 
-    context(Queue) fun deleteCollectionDirectory() {
-        ensureClosedInner(save = false)
-        getCollectionDirectory().deleteRecursively()
+    // TODO Move withQueue to call site
+    suspend fun deleteCollectionDirectory() {
+        withQueue {
+            ensureClosedInner(save = false)
+            getCollectionDirectory().deleteRecursively()
+        }
     }
 
     fun getCollectionDirectory() =
@@ -374,39 +390,6 @@ object CollectionManager {
     fun setTestDispatcher(dispatcher: CoroutineDispatcher) {
         // note: we avoid the call to .limitedParallelism() here,
         // as it does not seem to be compatible with the test scheduler
-        collectionOperationsDispatcher = dispatcher
-    }
-}
-
-private var collectionOperationsDispatcher = Dispatchers.IO.limitedParallelism(1)
-
-/**
- * A marker for functions that can only be run inside [withQueue], for instance,
- *
- *     context(Queue) fun foo() {}
- */
-class Queue private constructor() {
-    companion object { init { queue = Queue() } }
-}
-
-private lateinit var queue: Queue
-
-// This is silly, but I can't think of a better way to have a public Queue
-// and a private instance of it
-@Suppress("unused") private val forceQueueInitialization = Queue.Companion
-
-/**
- * Like [CollectionManager.withQueue], but also allows running functions marked with [Queue].
- * Experimental.
- *
- *     foo() // Error: No required context receiver found ...
- *
- *     withQueue {
- *         foo() // Ok
- *     }
- */
-suspend fun<T> withQueue(block: context(Queue) () -> T): T {
-    return withContext(collectionOperationsDispatcher) {
-        block(queue)
+        queue = dispatcher
     }
 }
