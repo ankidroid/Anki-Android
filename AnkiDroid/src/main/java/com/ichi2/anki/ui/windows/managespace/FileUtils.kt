@@ -103,11 +103,11 @@ private val Context.externalDirs: Set<File> get() =
 /**
  * Get the size of a file or a directory in bytes. Cancellable.
  */
-context(CoroutineScope) fun File.calculateSize(): Long {
+fun CoroutineScope.calculateSize(file: File): Long {
     ensureActive()
     return when {
-        isDirectory -> listFiles()?.sumOf { it.calculateSize() } ?: 0
-        else -> length()
+        file.isDirectory -> file.listFiles()?.sumOf(::calculateSize) ?: 0
+        else -> file.length()
     }
 }
 
@@ -126,12 +126,12 @@ class CanNotWriteToOrCreateFileException(val file: File) : Exception() {
     override val message get() = "Can not write to or create file: $file"
 }
 
-context(CollectionDirectoryProvider) suspend fun ensureCanWriteToOrCreateCollectionDirectory() {
+suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
     if (!withContext(Dispatchers.IO) { collectionDirectory.canWriteToOrCreate() })
         throw CanNotWriteToOrCreateFileException(collectionDirectory)
 }
 
-context(CollectionDirectoryProvider) suspend fun collectionDirectoryExists() =
+suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =
     withContext(Dispatchers.IO) { collectionDirectory.exists() }
 
 /********************************************* Etc ************************************************/

@@ -22,7 +22,6 @@ import android.app.Application
 import android.os.Build
 import android.text.format.Formatter
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.lifecycleScope
@@ -75,8 +74,8 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     private fun launchSearchForUnusedMedia() = viewModelScope.launch {
         flowOfDeleteUnusedMediaSize.ifCollectionDirectoryExistsEmit {
             withCol {
-                val unusedFiles = media.findUnusedMediaFiles()
-                val unusedFilesSize = unusedFiles.sumOf { file -> file.calculateSize() }
+                val unusedFiles = with(media) { findUnusedMediaFiles() }
+                val unusedFilesSize = unusedFiles.sumOf(::calculateSize)
                 Size.FilesAndBytes(unusedFiles, unusedFilesSize)
             }
         }
@@ -102,7 +101,7 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
         flowOfDeleteBackupsSize.ifCollectionDirectoryExistsEmit {
             withCol {
                 val backupFiles = BackupManager.getBackups(File(this.path)).toList()
-                val backupFilesSize = backupFiles.sumOf { file -> file.calculateSize() }
+                val backupFilesSize = backupFiles.sumOf(::calculateSize)
                 Size.FilesAndBytes(backupFiles, backupFilesSize)
             }
         }
@@ -121,13 +120,13 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     private fun launchCalculationOfCollectionSize() = viewModelScope.launch {
         flowOfDeleteCollectionSize.ifCollectionDirectoryExistsEmit {
             withContext(Dispatchers.IO) {
-                Size.Bytes(collectionDirectory.calculateSize())
+                Size.Bytes(calculateSize(collectionDirectory))
             }
         }
     }
 
     suspend fun deleteCollection() {
-        withQueue { CollectionManager.deleteCollectionDirectory() }
+        CollectionManager.deleteCollectionDirectory() // Executed in withQueue
 
         launchCalculationOfBackupsSize()
         launchCalculationOfSizeOfEverything()
@@ -184,7 +183,7 @@ class ManageSpaceFragment : SettingsFragment() {
     override val preferenceResource = R.xml.manage_space
     override val analyticsScreenNameConstant = "manageSpace"
 
-    private val backupLimitsPresenter = BackupLimitsPresenter().also { it.observeLifecycle() }
+    private val backupLimitsPresenter = BackupLimitsPresenter(this).also { it.observeLifecycle() }
 
     private val viewModel: ManageSpaceViewModel by viewModels()
 
@@ -213,7 +212,7 @@ class ManageSpaceFragment : SettingsFragment() {
 
     /************************************ Delete unused media *************************************/
 
-    context(CoroutineScope) private suspend fun onDeleteUnusedMediaClick() {
+    private suspend fun onDeleteUnusedMediaClick() {
         val size = viewModel.flowOfDeleteUnusedMediaSize.value
         if (size is Size.Error && size.exception is Media.MediaCheckRequiredException) {
             val mediaCheckPromptResult = requireContext().awaitDialog {
@@ -253,7 +252,7 @@ class ManageSpaceFragment : SettingsFragment() {
 
     /*************************************** Delete backups ***************************************/
 
-    context(CoroutineScope) private suspend fun onDeleteBackupsClick() {
+    private suspend fun onDeleteBackupsClick() {
         val size = viewModel.flowOfDeleteBackupsSize.value
         if (size is Size.FilesAndBytes) {
             val formatter = LocalizedUnambiguousBackupTimeFormatter()
@@ -286,7 +285,7 @@ class ManageSpaceFragment : SettingsFragment() {
     //   Note that this might be not quite trivial, as the activities might be visible to user.
     //   One way would be to have the activities register broadcast receivers that perform finish;
     //   Another would be maintaining weak references to them. Would be nice to find a better way.
-    context(CoroutineScope) private suspend fun onDeleteCollectionClick() {
+    private suspend fun onDeleteCollectionClick() {
         val size = viewModel.flowOfDeleteCollectionSize.value
         if (size is Size.Bytes) {
             val deleteCollectionPromptResult = requireContext().awaitDialog {
@@ -334,7 +333,7 @@ class ManageSpaceFragment : SettingsFragment() {
         }
     }
 
-    context(CoroutineScope) private suspend fun onDeleteEverythingClick() {
+    private suspend fun onDeleteEverythingClick() {
         val deleteEverythingPromptResult = requireContext().awaitDialog {
             setTitle(deleteEverythingDialogTitle)
             setMessage(deleteEverythingDialogMessage)
@@ -346,41 +345,41 @@ class ManageSpaceFragment : SettingsFragment() {
             viewModel.deleteEverything()
         }
     }
-}
 
-/**************************************************************************************************
- **************************************************************************************************
- **************************************************************************************************/
+    /**********************************************************************************************
+     ************************************* Misplaced methods **************************************
+     **********************************************************************************************/
 
-// TODO Android N and earlier, formatFileSize & formatShortFileSize use powers of 1024.
-//   Perhaps correct input so that powers of 1000 are used on every API level?
-context(Fragment) private fun TextWidgetPreference.setWidgetTextBy(size: Size) {
-    fun Long.toHumanReadableSize() = Formatter.formatShortFileSize(requireContext(), this)
+    // TODO Android N and earlier, formatFileSize & formatShortFileSize use powers of 1024.
+    //   Perhaps correct input so that powers of 1000 are used on every API level?
+    private fun TextWidgetPreference.setWidgetTextBy(size: Size) {
+        fun Long.toHumanReadableSize() = Formatter.formatShortFileSize(requireContext(), this)
 
-    widgetText = when (size) {
-        is Size.Calculating -> "Calcu-\nlating…"
-        is Size.Error -> size.widgetText
-        is Size.Bytes -> size.totalSize.toHumanReadableSize()
-        is Size.FilesAndBytes -> "${size.files.size} files \n${size.totalSize.toHumanReadableSize()}"
+        widgetText = when (size) {
+            is Size.Calculating -> "Calcu-\nlating…"
+            is Size.Error -> size.widgetText
+            is Size.Bytes -> size.totalSize.toHumanReadableSize()
+            is Size.FilesAndBytes -> "${size.files.size} files \n${size.totalSize.toHumanReadableSize()}"
+        }
+
+        isEnabled = !(
+            size is Size.Bytes && size.totalSize == 0L ||
+                size is Size.FilesAndBytes && size.files.isEmpty()
+            )
     }
 
-    isEnabled = !(
-        size is Size.Bytes && size.totalSize == 0L ||
-            size is Size.FilesAndBytes && size.files.isEmpty()
-        )
-}
-
-context(Fragment) private fun Preference.launchOnPreferenceClick(block: suspend CoroutineScope.() -> Unit) {
-    setOnPreferenceClickListener {
-        launchCatchingTask { block() }
-        true
+    private fun Preference.launchOnPreferenceClick(block: suspend CoroutineScope.() -> Unit) {
+        setOnPreferenceClickListener {
+            launchCatchingTask { block() }
+            true
+        }
     }
-}
 
-context(Fragment) private fun showSnackbarIfCalculatingOrError(size: Size) {
-    when (size) {
-        is Size.Calculating -> showSnackbar("Calculating…")
-        is Size.Error -> showSnackbar(requireContext().getUserFriendlyErrorText(size.exception))
-        else -> {}
+    private fun showSnackbarIfCalculatingOrError(size: Size) {
+        when (size) {
+            is Size.Calculating -> showSnackbar("Calculating…")
+            is Size.Error -> showSnackbar(requireContext().getUserFriendlyErrorText(size.exception))
+            else -> {}
+        }
     }
 }

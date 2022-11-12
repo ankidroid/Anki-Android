@@ -431,9 +431,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      *   The backend also provides a method for checking media, [BackendMedia.check];
      *   however it seems it performs normalization unconditionally.
      */
-    context(CoroutineScope)
     @Throws(MediaCheckRequiredException::class)
-    fun findUnusedMediaFiles(): List<File> {
+    fun CoroutineScope.findUnusedMediaFiles(): List<File> {
         val namesOfFilesUsedInNotes = mutableSetOf<String>()
 
         col.db.query("select mid, flds from notes").use { cursor: Cursor ->

@@ -97,7 +97,7 @@ subprojects {
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             kotlinOptions {
                 allWarningsAsErrors = fatalWarnings
-                freeCompilerArgs = ['-Xjvm-default=all', "-Xcontext-receivers"]
+                freeCompilerArgs = ['-Xjvm-default=all']
             }
         }
     }
