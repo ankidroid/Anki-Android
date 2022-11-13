@@ -19,24 +19,23 @@
 
     <com.ichi2.preferences.TextWidgetPreference
         android:key="@string/pref_delete_media_key"
-        android:title="Delete unused media files"
-        android:summary="Delete images and other media that are not prefixed with _ and are not references by any notes"
+        android:title="@string/pref__delete_unused_media_files__title"
+        android:summary="@string/pref__delete_unused_media_files__summary"
         />
 
     <com.ichi2.preferences.TextWidgetPreference
         android:key="@string/pref_delete_backups_key"
-        android:title="Delete backups"
+        android:title="@string/pref__delete_backups__title"
         />
 
     <com.ichi2.preferences.TextWidgetPreference
         android:key="@string/pref_delete_collection_key"
-        android:title="Delete collection"
-        android:summary="Delete collection, media, and backups. App settings are not deleted"
+        android:title="@string/pref__delete_collection__title"
+        android:summary="@string/pref__delete_collection__summary"
         />
 
+    <!-- Title and summary are set programmatically -->
     <com.ichi2.preferences.TextWidgetPreference
         android:key="@string/pref_delete_everything_key"
-        android:title="Delete everything"
-        android:summary="Delete collection, media, backups, and settings"
         />
 </PreferenceScreen>

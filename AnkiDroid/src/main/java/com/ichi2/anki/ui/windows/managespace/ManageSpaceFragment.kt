@@ -21,6 +21,7 @@ import android.app.ActivityManager
 import android.app.Application
 import android.os.Build
 import android.text.format.Formatter
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
@@ -47,7 +48,10 @@ sealed interface Size {
     object Calculating : Size
     class Bytes(val totalSize: Long) : Size
     class FilesAndBytes(val files: Collection<File>, val totalSize: Long) : Size
-    class Error(val exception: Exception, val widgetText: CharSequence = "⚠️") : Size
+    class Error(
+        val exception: Exception,
+        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error
+    ) : Size
 }
 
 /**************************************************************************************************
@@ -136,8 +140,9 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     /*************************************** Everything *******************************************/
 
-    // Retrieving app data size before Oreo is too complicated, skip for simplicity.
-    // See https://stackoverflow.com/a/36983630
+    // * Retrieving app data size before Oreo is too complicated, skip for simplicity.
+    //   See https://stackoverflow.com/a/36983630
+    // * Error exception is not exposed to user--it is always possible to delete app data.
     private fun launchCalculationOfSizeOfEverything() = viewModelScope.launch {
         flowOfDeleteEverythingSize.emit(Size.Calculating)
         flowOfDeleteEverythingSize.emit(
@@ -145,7 +150,10 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     Size.Bytes(app.getUserDataAndCacheSize())
                 } else {
-                    Size.Error(Exception("Not implemented"), widgetText = "🤷️")
+                    Size.Error(
+                        exception = Exception("Not implemented"),
+                        widgetTextId = R.string.pref__widget_text__not_available,
+                    )
                 }
             }
         )
@@ -216,7 +224,7 @@ class ManageSpaceFragment : SettingsFragment() {
         val size = viewModel.flowOfDeleteUnusedMediaSize.value
         if (size is Size.Error && size.exception is Media.MediaCheckRequiredException) {
             val mediaCheckPromptResult = requireContext().awaitDialog {
-                setMessage("Media check required to find unused media files")
+                setMessage(R.string.dialog__media_check_required__message)
                 setPositiveButton(R.string.check_media)
                 setNegativeButton(R.string.dialog_cancel)
             }
@@ -231,9 +239,9 @@ class ManageSpaceFragment : SettingsFragment() {
             val unusedFileNames = unusedFiles.map { it.name }
 
             val deleteFilesPromptResult = requireContext().awaitDialog {
-                setTitle("Delete unused media files")
+                setTitle(R.string.dialog__delete_unused_media_files__title)
                 setMultiChoiceItems(unusedFileNames, CheckedItems.All)
-                setPositiveButton(R.string.dialog_positive_delete_selected)
+                setPositiveButton(R.string.dialog_positive_delete)
                 setNegativeButton(R.string.dialog_cancel)
             }
 
@@ -260,9 +268,9 @@ class ManageSpaceFragment : SettingsFragment() {
             val backupNames = backupFiles.map { formatter.getTimeOfBackupAsText(it) }
 
             val chooseBackupsPromptResult = requireContext().awaitDialog {
-                setTitle("Delete backups")
+                setTitle(R.string.dialog__delete_backups__title)
                 setMultiChoiceItems(backupNames, CheckedItems.None)
-                setPositiveButton(R.string.dialog_positive_delete_selected)
+                setPositiveButton(R.string.dialog_positive_delete)
                 setNegativeButton(R.string.dialog_cancel)
             }
 
@@ -270,7 +278,7 @@ class ManageSpaceFragment : SettingsFragment() {
                 val checkedItems = chooseBackupsPromptResult.checkedItems
                 val backupsToDelete = backupFiles.filterIndexed { index, _ -> checkedItems[index] }
 
-                withProgress("Deleting backups…") {
+                withProgress(R.string.progress__deleting_backups) {
                     viewModel.deleteBackups(backupsToDelete)
                 }
             }
@@ -289,14 +297,14 @@ class ManageSpaceFragment : SettingsFragment() {
         val size = viewModel.flowOfDeleteCollectionSize.value
         if (size is Size.Bytes) {
             val deleteCollectionPromptResult = requireContext().awaitDialog {
-                setTitle("Delete collection 😱")
-                setMessage("Are you sure you want to delete your collection, media, and backups?")
+                setTitle(R.string.dialog__delete_collection__title)
+                setMessage(R.string.dialog__delete_collection__message)
                 setPositiveButton(R.string.dialog_positive_delete)
                 setNegativeButton(R.string.dialog_cancel)
             }
 
             if (deleteCollectionPromptResult is DialogResult.Ok) {
-                withProgress("Deleting collection…") {
+                withProgress(R.string.progress__deleting_collection) {
                     viewModel.deleteCollection()
                 }
                 backupLimitsPresenter.refresh()
@@ -308,28 +316,20 @@ class ManageSpaceFragment : SettingsFragment() {
 
     /************************************* Delete everything **************************************/
 
-    private lateinit var deleteEverythingDialogTitle: String
-    private lateinit var deleteEverythingDialogMessage: String
+    @StringRes private var deleteEverythingDialogTitle: Int = 0
+    @StringRes private var deleteEverythingDialogMessage: Int = 0
 
     private fun adjustDeleteEverythingStringsDependingOnCollectionLocation(preference: Preference) {
         if (viewModel.collectionDirectory.isInsideDirectoriesRemovedWithTheApp(requireContext())) {
-            preference.title = "Delete everything"
-            preference.summary = "Delete collection, media, backups, and settings"
-            deleteEverythingDialogTitle = "Delete everything 🤯"
-            deleteEverythingDialogMessage =
-                "Are you sure you want to delete all data? " +
-                "This includes your collection, media, backups and preferences." +
-                "\n\n" +
-                "Note that this will shut down this window."
+            preference.setTitle(R.string.pref__delete_everything__title)
+            preference.setSummary(R.string.pref__delete_everything__summary)
+            deleteEverythingDialogTitle = R.string.dialog__delete_everything__title
+            deleteEverythingDialogMessage = R.string.dialog__delete_everything__message
         } else {
-            preference.title = "Delete app data"
-            preference.summary = "Delete settings and other app data"
-            deleteEverythingDialogTitle = "Delete app data"
-            deleteEverythingDialogMessage =
-                "Are you sure you want to delete app data? " +
-                "This includes settings and other app data." +
-                "\n\n" +
-                "Note that this will shut down this window."
+            preference.setTitle(R.string.pref__delete_app_data__title)
+            preference.setSummary(R.string.pref__delete_app_data__summary)
+            deleteEverythingDialogTitle = R.string.dialog__delete_app_data__title
+            deleteEverythingDialogMessage = R.string.dialog__delete_app_data__message
         }
     }
 
@@ -356,10 +356,15 @@ class ManageSpaceFragment : SettingsFragment() {
         fun Long.toHumanReadableSize() = Formatter.formatShortFileSize(requireContext(), this)
 
         widgetText = when (size) {
-            is Size.Calculating -> "Calcu-\nlating…"
-            is Size.Error -> size.widgetText
+            is Size.Calculating -> getString(R.string.pref__widget_text__calculating)
+            is Size.Error -> getString(size.widgetTextId)
             is Size.Bytes -> size.totalSize.toHumanReadableSize()
-            is Size.FilesAndBytes -> "${size.files.size} files \n${size.totalSize.toHumanReadableSize()}"
+            is Size.FilesAndBytes -> resources.getQuantityString(
+                R.plurals.pref__widget_text__n_files_n_bytes,
+                size.files.size,
+                size.files.size,
+                size.totalSize.toHumanReadableSize()
+            )
         }
 
         isEnabled = !(
@@ -377,7 +382,7 @@ class ManageSpaceFragment : SettingsFragment() {
 
     private fun showSnackbarIfCalculatingOrError(size: Size) {
         when (size) {
-            is Size.Calculating -> showSnackbar("Calculating…")
+            is Size.Calculating -> showSnackbar(R.string.pref__etc__snackbar__calculating)
             is Size.Error -> showSnackbar(requireContext().getUserFriendlyErrorText(size.exception))
             else -> {}
         }
