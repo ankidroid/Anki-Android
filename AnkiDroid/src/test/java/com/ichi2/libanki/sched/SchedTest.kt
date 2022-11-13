@@ -472,17 +472,17 @@ class SchedTest : RobolectricTest() {
         note.setItem("Back", "two")
         col.addNote(note)
         // set the card up as a review card, due 8 days ago
-        @KotlinCleanup("use scope function")
-        var c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = (col.sched.today - 8).toLong()
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.ivl = 100
-        c.startTimer()
-        c.flush()
+        var c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = (col.sched.today - 8).toLong()
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            ivl = 100
+            startTimer()
+            flush()
+        }
         // save it for later use as well
         val cardcopy = c.clone()
         // failing it should put it in the learn queue with the default options
@@ -740,12 +740,14 @@ class SchedTest : RobolectricTest() {
         col.reset()
         assertNotNull(card)
         // should cope with rev cards being relearned
-        @KotlinCleanup("use apply")
-        c.due = 0
-        c.ivl = 100
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.flush()
+        c.apply {
+            due = 0
+            ivl = 100
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            flush()
+        }
+
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
@@ -779,17 +781,17 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        @KotlinCleanup("use scope function")
-        var c = note.cards()[0]
-        c.ivl = 100
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        // due in 25 days, so it's been waiting 75 days
-        c.due = (col.sched.today + 25).toLong()
-        c.mod = 1
-        c.factor = STARTING_FACTOR
-        c.startTimer()
-        c.flush()
+        var c = note.cards()[0].apply {
+            ivl = 100
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            // due in 25 days, so it's been waiting 75 days
+            due = (col.sched.today + 25).toLong()
+            mod = 1
+            factor = STARTING_FACTOR
+            startTimer()
+            flush()
+        }
         col.reset()
         assertEquals(Counts(0, 0, 0), col.sched.counts())
         @Suppress("UNUSED_VARIABLE")
@@ -876,12 +878,14 @@ class SchedTest : RobolectricTest() {
         c.load()
         assertEquals(4, col.sched.answerButtons(c).toLong())
         // add a sibling so we can test minSpace, etc
-        @KotlinCleanup("use apply")
         val c2 = c.clone()
-        c2.id = 0
-        c2.ord = 1
-        c2.due = 325
-        c2.flush()
+        c2.apply {
+            id = 0
+            ord = 1
+            due = 325
+            flush()
+        }
+
         // should be able to answer it
         c = card!!
         col.sched.answerCard(c, BUTTON_FOUR)
@@ -939,13 +943,14 @@ class SchedTest : RobolectricTest() {
         assertEquals(CARD_TYPE_NEW, c.type)
         assertEquals(QUEUE_TYPE_NEW, c.queue)
         // undue reviews should also be unaffected
-        @KotlinCleanup("use scope function")
-        c.ivl = 100
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        c.due = (col.sched.today + 25).toLong()
-        c.factor = STARTING_FACTOR
-        c.flush()
+        c.apply {
+            ivl = 100
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            due = (col.sched.today + 25).toLong()
+            factor = STARTING_FACTOR
+            flush()
+        }
         val cardcopy = c.clone()
         col.sched.rebuildDyn(did)
         col.reset()
@@ -1142,12 +1147,14 @@ class SchedTest : RobolectricTest() {
         note = col.newNote()
         note.setItem("Front", "three")
         col.addNote(note)
-        @KotlinCleanup("use scope function")
         val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = col.sched.today.toLong()
-        c.flush()
+        c.apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = col.sched.today.toLong()
+            flush()
+        }
+
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         col.sched.answerCard(card!!, BUTTON_ONE)
@@ -1163,12 +1170,13 @@ class SchedTest : RobolectricTest() {
             val note = col.newNote()
             note.setItem("Front", "num$i")
             col.addNote(note)
-            @KotlinCleanup("use scope function")
             val c = note.cards()[0]
-            c.type = CARD_TYPE_REV
-            c.queue = QUEUE_TYPE_REV
-            c.due = 0
-            c.flush()
+            c.apply {
+                type = CARD_TYPE_REV
+                queue = QUEUE_TYPE_REV
+                due = 0
+                flush()
+            }
         }
         // fail the first one
         col.reset()
@@ -1345,13 +1353,13 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        @KotlinCleanup("use scope function")
-        val c = note.cards()[0]
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        c.ivl = 100
-        c.due = 0
-        c.flush()
+        val c = note.cards()[0].apply {
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            ivl = 100
+            due = 0
+            flush()
+        }
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         col.sched.forgetCards(listOf(c.id))
@@ -1387,17 +1395,17 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        @KotlinCleanup("scope function")
-        val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = 0
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.ivl = 100
-        c.startTimer()
-        c.flush()
+        val c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = 0
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            ivl = 100
+            startTimer()
+            flush()
+        }
         col.reset()
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched._cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
@@ -1412,17 +1420,18 @@ class SchedTest : RobolectricTest() {
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
-        @KotlinCleanup("scope function")
-        var c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.ivl = 100
-        c.due = (col.sched.today - c.ivl).toLong()
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.startTimer()
-        c.flush()
+        var c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            ivl = 100
+            due = (col.sched.today - this.ivl).toLong()
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            startTimer()
+            flush()
+        }
+
         val conf = col.sched._cardConf(c)
         conf.getJSONObject("lapse").put("mult", 0.5)
         col.decks.save(conf)
