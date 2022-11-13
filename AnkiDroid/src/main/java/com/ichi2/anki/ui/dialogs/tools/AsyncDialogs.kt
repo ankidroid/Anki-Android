@@ -16,6 +16,7 @@ package com.ichi2.anki.ui.dialogs.tools
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.annotation.StringRes
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
@@ -23,6 +24,9 @@ import kotlin.coroutines.resume
 
 open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
     lateinit var continuation: Continuation<DialogResult>
+
+    var onShowListener: ((AlertDialog) -> Unit)? = null
+
     private lateinit var checkedItems: BooleanArray
 
     fun setNegativeButton(textResource: Int) {
@@ -48,17 +52,28 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
         class Some(val checkedItems: BooleanArray) : CheckedItems
     }
 
-    fun setMultiChoiceItems(items: List<CharSequence>, checkedItems: CheckedItems) {
+    fun setMultiChoiceItems(
+        items: List<CharSequence>,
+        checkedItems: CheckedItems,
+        disablePositiveButtonIfNoItemsChosen: Boolean = true,
+    ) {
         this.checkedItems = when (checkedItems) {
             is CheckedItems.All -> BooleanArray(items.size) { true }
             is CheckedItems.None -> BooleanArray(items.size) { false }
             is CheckedItems.Some -> checkedItems.checkedItems.clone()
         }
 
-        alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) {
-                _, position, isChecked ->
-            this.checkedItems[position] = isChecked
+        fun enableDisablePositiveButton(dialog: AlertDialog) {
+            dialog.getButton(BUTTON_POSITIVE).isEnabled = this.checkedItems.contains(true)
         }
+
+        alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) {
+                dialog, position, isChecked ->
+            this.checkedItems[position] = isChecked
+            if (disablePositiveButtonIfNoItemsChosen) enableDisablePositiveButton(dialog as AlertDialog)
+        }
+
+        if (disablePositiveButtonIfNoItemsChosen) onShowListener = ::enableDisablePositiveButton
     }
 }
 
@@ -123,6 +138,7 @@ suspend fun Context.awaitDialog(block: CompoundDialogBuilder.() -> Unit): Dialog
     alertDialogBuilder
         .setOnCancelListener { compoundDialogBuilder.continuation.resume(DialogResult.Cancel) }
         .create()
+        .apply { setOnShowListener { compoundDialogBuilder.onShowListener?.invoke(this) } }
         .show()
 
     return suspendCancellableCoroutine { compoundDialogBuilder.continuation = it }
