@@ -43,7 +43,7 @@ class ManageSpaceActivity : AnkiActivity() {
         enableToolbar().apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = "Manage space"
+            setTitle(R.string.pref__manage_space__screen_title)
         }
     }
 }

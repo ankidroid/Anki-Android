@@ -132,17 +132,17 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
         ).forEach { preference ->
             preference.summaryProvider = Preference.SummaryProvider<EditTextPreference> {
                 when (viewModel.flowOfState.value) {
-                    is State.Fetching -> "…"
-                    is State.Error.NoCollection -> "No collection"
-                    is State.Error.Exception -> "Error"
+                    is State.Fetching -> fragment.getString(R.string.pref__etc__summary__fetching)
+                    is State.Error.NoCollection -> fragment.getString(R.string.pref__etc__summary__no_collection)
+                    is State.Error.Exception -> fragment.getString(R.string.pref__etc__summary__error)
                     is State.Fetched -> preference.text
                 }
             }
 
             preference.onClickListener = listener@{
                 when (val state = viewModel.flowOfState.value) {
-                    is State.Fetching -> fragment.showSnackbar("Fetching…")
-                    is State.Error.NoCollection -> fragment.showSnackbar("Collection does not exist")
+                    is State.Fetching -> fragment.showSnackbar(R.string.pref__etc__snackbar__fetching)
+                    is State.Error.NoCollection -> fragment.showSnackbar(R.string.pref__etc__snackbar__no_collection)
                     is State.Error.Exception -> fragment.showSnackbar(
                         text = fragment.requireContext().getUserFriendlyErrorText(state.exception)
                     )

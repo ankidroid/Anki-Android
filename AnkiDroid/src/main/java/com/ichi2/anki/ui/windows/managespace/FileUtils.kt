@@ -20,6 +20,7 @@ import android.os.Build
 import android.os.storage.StorageManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import com.ichi2.anki.R
 import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
@@ -137,7 +138,11 @@ suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =
 /********************************************* Etc ************************************************/
 
 fun Context.getUserFriendlyErrorText(e: Exception): CharSequence =
-    when (e) {
-        is CanNotWriteToOrCreateFileException -> "Can not write to or create file: ${e.file}"
-        else -> e.localizedMessage ?: e.message ?: e::class.simpleName ?: "Error"
+    if (e is CanNotWriteToOrCreateFileException) {
+        getString(R.string.error__etc__cannot_write_to_or_create_file, e.file)
+    } else {
+        e.localizedMessage
+            ?: e.message
+            ?: e::class.simpleName
+            ?: getString(R.string.error__etc__unknown_error)
     }
