@@ -46,6 +46,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -2188,6 +2189,9 @@ end)  """
     }
 
     // Overridden: V1 also remove from dyns and lrn
+    /**
+     * Bury all cards with id in cids. Set as manual bury if [manual]
+     */
     @VisibleForTesting
     override fun buryCards(cids: LongArray, manual: Boolean) {
         if (!BackendFactory.defaultLegacySchema) {
@@ -2203,6 +2207,10 @@ end)  """
         )
     }
 
+    /**
+     * Unbury the cards of deck [did] and its descendants.
+     * @param type See [UnburyType]
+     */
     override fun unburyCardsForDeck(did: Long, type: UnburyType) {
         if (!BackendFactory.defaultLegacySchema) {
             super.unburyCardsForDeck(did, type)
@@ -2213,19 +2221,33 @@ end)  """
         unburyCardsForDeck(type, dids)
     }
 
+    /**
+     * Unbury the cards of some decks.
+     * @param type See [UnburyType]
+     * @param allDecks the decks from which cards should be unburied. If None, unbury for all decks.
+     * Only cards directly in a deck of this lists are considered, not subdecks.
+     */
     fun unburyCardsForDeck(type: UnburyType, allDecks: List<Long>?) {
-        val queue: String
-        queue = when (type) {
+        @Language("SQL")
+        val queue = when (type) {
             UnburyType.ALL -> queueIsBuriedSnippet()
             UnburyType.MANUAL -> "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED
             UnburyType.SIBLINGS -> "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED
         }
-        val sids = Utils.ids2str(allDecks ?: col.decks.active())
-        col.log(col.db.queryLongList("select id from cards where $queue and did in $sids"))
+        val deckConstraint = if (allDecks == null) {
+            ""
+        } else {
+            " and did in " + Utils.ids2str(allDecks)
+        }
+        col.log(col.db.queryLongList("select id from cards where $queue $deckConstraint"))
         col.db.execute(
-            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
+            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + deckConstraint,
             time.intTime(), col.usn()
         )
+    }
+
+    override fun unburyCards() {
+        unburyCardsForDeck(UnburyType.ALL, null)
     }
 
     /**

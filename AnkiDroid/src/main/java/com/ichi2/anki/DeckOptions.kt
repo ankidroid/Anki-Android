@@ -592,7 +592,6 @@ class DeckOptions :
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    @KotlinCleanup("scope functions")
     protected fun buildLists() {
         val deckConfPref = findPreference("deckConf") as ListPreference
         val confs = col.decks.allConf()
@@ -603,22 +602,29 @@ class DeckOptions :
             confValues[index] = deckConfig.getString("id")
             confLabels[index] = deckConfig.getString("name")
         }
-        deckConfPref.entries = confLabels
-        deckConfPref.entryValues = confValues
-        deckConfPref.value = pref.getString("deckConf", "0")
+
+        deckConfPref.apply {
+            entries = confLabels
+            entryValues = confValues
+            value = pref.getString("deckConf", "0")
+        }
 
         val newOrderPref = findPreference("newOrder") as ListPreference
-        newOrderPref.setEntries(R.array.new_order_labels)
-        newOrderPref.setEntryValues(R.array.new_order_values)
-        newOrderPref.value = pref.getString("newOrder", "0")
+        newOrderPref.apply {
+            setEntries(R.array.new_order_labels)
+            setEntryValues(R.array.new_order_values)
+            value = pref.getString("newOrder", "0")
+        }
 
         val leechActPref = findPreference("lapLeechAct") as ListPreference
-        leechActPref.setEntries(R.array.leech_action_labels)
-        leechActPref.setEntryValues(R.array.leech_action_values)
-        leechActPref.value = pref.getString(
-            "lapLeechAct",
-            Consts.LEECH_SUSPEND.toString()
-        )
+        leechActPref.apply {
+            setEntries(R.array.leech_action_labels)
+            setEntryValues(R.array.leech_action_values)
+            value = pref.getString(
+                "lapLeechAct",
+                Consts.LEECH_SUSPEND.toString()
+            )
+        }
     }
 
     private val isSchedV2: Boolean
