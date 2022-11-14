@@ -44,7 +44,7 @@ class ImageFieldTest {
         // This differs between AnkDesktop Version 2.0.51 and 2.1.22
         // 2.0:  "<img src=\"paste-abc.jpg\" />";
         // 2.1: (note: no trailing slash or space)
-        val expected = "<img src=\"paste-abc.jpg\">"
+        val expected = """<img src="paste-abc.jpg">"""
         assertThat(actual, equalTo(expected))
     }
 

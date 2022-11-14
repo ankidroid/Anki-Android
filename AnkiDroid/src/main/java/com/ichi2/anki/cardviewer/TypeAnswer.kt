@@ -194,7 +194,7 @@ class TypeAnswer(
         val diffEngine = DiffEngine()
         val sb = StringBuilder()
         fun append(@Language("HTML") html: String) = sb.append(html)
-        append(if (doNotUseCodeFormatting) "<div><span id=\"typeans\">" else "<div><code id=\"typeans\">")
+        append(if (doNotUseCodeFormatting) """<div><span id="typeans">""" else """<div><code id="typeans">""")
 
         // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
         if (userAnswer.isNotEmpty()) {
@@ -202,7 +202,7 @@ class TypeAnswer(
             if (userAnswer == correctAnswer) {
                 // and it was right.
                 append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)))
-                append("<span id=\"typecheckmark\">\u2714</span>") // Heavy check mark
+                append("""<span id="typecheckmark">\u2714</span>""") // Heavy check mark
             } else {
                 // Answer not correct.
                 // Only use the complex diff code when needed, that is when we have some typed text that is not
@@ -210,7 +210,7 @@ class TypeAnswer(
                 val diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer)
                 // We know we get back two strings.
                 append(Matcher.quoteReplacement(diffedStrings[0]))
-                append("<br><span id=\"typearrow\">&darr;</span><br>")
+                append("""<br><span id="typearrow">&darr;</span><br>""")
                 append(Matcher.quoteReplacement(diffedStrings[1]))
             }
         } else {

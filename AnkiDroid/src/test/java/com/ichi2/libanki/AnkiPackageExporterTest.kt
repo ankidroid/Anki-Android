@@ -146,7 +146,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
         temp.delete()
         val newFile = File(col.media.dir(), s)
         check(newFile.exists()) { "Could not create temp file" }
-        addNoteUsingBasicModel(String.format("<img src=\"%s\">", newFile.name), "Back")
+        addNoteUsingBasicModel(String.format("""<img src="%s">""", newFile.name), "Back")
         return newFile
     }
 

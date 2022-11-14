@@ -70,7 +70,7 @@ object ChessFilter {
                 }
             }
             try {
-                mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(" + String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + ");</script>")
+                mf.appendReplacement(sb, """<script type="text/javascript">document.write(""" + String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + """);</script>""")
             } catch (e: Exception) {
                 Timber.e(e, "ChessFilter exception: ")
             }

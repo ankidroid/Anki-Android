@@ -175,7 +175,7 @@ class CardHtml(
          */
         fun enrichWithQADiv(content: String?): String {
             val sb = StringBuilder()
-            sb.append("<div id=\"qa\">")
+            sb.append("""<div id="qa">""")
             sb.append(content)
             sb.append("</div>")
             return sb.toString()

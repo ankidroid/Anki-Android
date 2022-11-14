@@ -1,6 +1,8 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.api
 
+import org.intellij.lang.annotations.Language
+
 /**
  * Definitions of the basic with reverse model
  */
@@ -14,8 +16,19 @@ internal object Basic2Model {
     @JvmField // required for Java API
     internal val QFMT = arrayOf("{{Front}}", "{{Back}}")
     @JvmField // required for Java API
+    @Language("HTML")
     internal val AFMT = arrayOf(
-        "{{FrontSide}}\n\n<hr id=\"answer\">\n\n{{Back}}",
-        "{{FrontSide}}\n\n<hr id=\"answer\">\n\n{{Front}}"
+        """{{FrontSide}}
+    
+    |<hr id="answer">
+    
+    |{{Back}}
+        """.trimMargin(),
+        """{{FrontSide}}
+    
+    |<hr id="answer">
+    
+    |{{Back}}
+        """.trimMargin()
     )
 }
