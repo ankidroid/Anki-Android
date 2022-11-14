@@ -19,7 +19,6 @@ package com.ichi2.anki.ui.windows.managespace
 
 import android.app.ActivityManager
 import android.app.Application
-import android.os.Build
 import android.text.format.Formatter
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getSystemService
@@ -140,21 +139,11 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     /*************************************** Everything *******************************************/
 
-    // * Retrieving app data size before Oreo is too complicated, skip for simplicity.
-    //   See https://stackoverflow.com/a/36983630
-    // * Error exception is not exposed to user--it is always possible to delete app data.
     private fun launchCalculationOfSizeOfEverything() = viewModelScope.launch {
         flowOfDeleteEverythingSize.emit(Size.Calculating)
         flowOfDeleteEverythingSize.emit(
             withContext(Dispatchers.IO) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    Size.Bytes(app.getUserDataAndCacheSize())
-                } else {
-                    Size.Error(
-                        exception = Exception("Not implemented"),
-                        widgetTextId = R.string.pref__widget_text__not_available,
-                    )
-                }
+                Size.Bytes(app.getUserDataAndCacheSize())
             }
         )
     }

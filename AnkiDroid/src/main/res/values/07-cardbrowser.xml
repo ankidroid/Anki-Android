@@ -115,5 +115,5 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
 
-    <string name="card_info_ease_not_applicable" comment="TODO: Write comment">N/A</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

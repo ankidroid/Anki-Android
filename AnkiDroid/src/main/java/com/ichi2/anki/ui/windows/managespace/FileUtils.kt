@@ -16,6 +16,7 @@ package com.ichi2.anki.ui.windows.managespace
 
 import android.app.usage.StorageStatsManager
 import android.content.Context
+import android.content.pm.IPackageStatsObserver
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.annotation.RequiresApi
@@ -24,13 +25,21 @@ import com.ichi2.anki.R
 import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 /**
  * Get the size of user data and cache for the current package, in bytes.
  * This should amount to the sum of User data and Cache in App info -> Storage and cache.
- *
- * @see android.app.usage.StorageStats.getDataBytes
- *
+ */
+suspend fun Context.getUserDataAndCacheSize(): Long =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        getUserDataAndCacheSizeUsingStorageStatsManager()
+    } else {
+        getUserDataAndCacheSizeUsingGetPackageSizeInfo()
+    }
+
+/*
  * The logic was taken from this SO question: https://stackoverflow.com/q/43472398/#44708209
  * Asked & answered by android developer: https://stackoverflow.com/users/878126/android-developer
  *
@@ -41,7 +50,7 @@ import java.util.*
  *   See `com.android.packageinstaller.handheld.UninstallAlertDialogFragment#getAppDataSizeForUser`.
  */
 @RequiresApi(Build.VERSION_CODES.O)
-fun Context.getUserDataAndCacheSize(): Long {
+private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
     val storageManager = ContextCompat.getSystemService(this, StorageManager::class.java) ?: return 0
     val storageStatsManager = ContextCompat.getSystemService(this, StorageStatsManager::class.java) ?: return 0
     val currentUser = android.os.Process.myUserHandle()
@@ -52,6 +61,32 @@ fun Context.getUserDataAndCacheSize(): Long {
         .sumOf { uuid ->
             storageStatsManager.queryStatsForPackage(uuid, packageName, currentUser).dataBytes
         }
+}
+
+/*
+ * The logic was taken from this SO question: https://stackoverflow.com/q/36944194#36983630
+ * Asked by Chris Sherlock: https://stackoverflow.com/users/2992462/chris-sherlock
+ * Answered by Mattia Maestrini: https://stackoverflow.com/users/2837959/mattia-maestrini
+ */
+private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Long {
+    lateinit var continuation: Continuation<Long>
+
+    packageManager::class.java
+        .getMethod("getPackageSizeInfo", String::class.java, IPackageStatsObserver::class.java)
+        .invoke(
+            packageManager,
+            packageName,
+            object : IPackageStatsObserver.Stub() {
+                @Suppress("DEPRECATION") // PackageStats
+                override fun onGetStatsCompleted(packageStats: android.content.pm.PackageStats, succeeded: Boolean) {
+                    val totalCacheSize = packageStats.cacheSize + packageStats.externalCacheSize
+                    val totalDataSize = packageStats.dataSize + packageStats.externalDataSize
+                    continuation.resume(totalCacheSize + totalDataSize)
+                }
+            }
+        )
+
+    return suspendCancellableCoroutine { continuation = it }
 }
 
 /**

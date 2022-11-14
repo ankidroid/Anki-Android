@@ -408,10 +408,6 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="pref__widget_text__error"
         comment="Text in a small box on the end of a preference, indicating a generic error.
         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__not_available"
-        comment="Text in a small box on the end of a preference,
-        currently indicating that the fetching of the value has not been implemented.
-        Must be VERY short. Can be one or two lines.">N/A</string>
     <string name="pref__widget_text__calculating"
         comment="Text in a small box on the end of a preference,
         indicating that the value, such as folder size on disk, is being calculated.
