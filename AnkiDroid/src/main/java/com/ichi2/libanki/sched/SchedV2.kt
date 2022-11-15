@@ -1922,8 +1922,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
         // dynamic deck; override some attributes, use original deck for others
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        return dict.apply {
+        return JSONObject().apply {
             // original deck
             put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
             put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
@@ -1944,8 +1943,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
         // dynamic deck; override some attributes, use original deck for others
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        return dict.apply {
+        return JSONObject().apply {
             // original deck
             put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
             put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
