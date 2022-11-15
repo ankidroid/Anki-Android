@@ -194,7 +194,7 @@ class TypeAnswer(
         val diffEngine = DiffEngine()
         val sb = StringBuilder()
         fun append(@Language("HTML") html: String) = sb.append(html)
-        append(if (doNotUseCodeFormatting) "<div><span id=\"typeans\">" else "<div><code id=\"typeans\">")
+        append(if (doNotUseCodeFormatting) """<div><span id="typeans">""" else """<div><code id="typeans">""")
 
         // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
         if (userAnswer.isNotEmpty()) {

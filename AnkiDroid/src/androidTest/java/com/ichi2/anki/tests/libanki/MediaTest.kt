@@ -114,7 +114,7 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "bar.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao").toMutableList()
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src='foo.jpg'><img src="bar.jpg">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -129,13 +129,13 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao").toMutableList()
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src="foo.jpg">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "fo")
         actual =
-            mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao").toMutableList()
+            mTestCol!!.media.filesInStr(mid, """aoeu<img src="foo.jpg"><img class=yo src=fo>ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -153,8 +153,8 @@ class MediaTest : InstrumentedTest() {
             Media.escapeImages("<img src='http://foo.com'>")
         )
         assertEquals(
-            "<img src=\"foo%20bar.jpg\">",
-            Media.escapeImages("<img src=\"foo bar.jpg\">")
+            """<img src="foo%20bar.jpg">""",
+            Media.escapeImages("""<img src="foo bar.jpg">""")
         )
     }
 
@@ -197,7 +197,7 @@ class MediaTest : InstrumentedTest() {
     fun testAudioTags() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<audio src=yo>oeu"))
         assertEquals("aoeu", mTestCol!!.media.strip("a<audio src='yo'>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("a<audio src=\"yo\">oeu"))
+        assertEquals("aoeu", mTestCol!!.media.strip("""a<audio src="yo">oeu"""))
     }
 
     @Test
@@ -205,7 +205,7 @@ class MediaTest : InstrumentedTest() {
     fun testObjectTags() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<object data=yo>oeu"))
         assertEquals("aoeu", mTestCol!!.media.strip("a<object data='yo'>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("a<object data=\"yo\">oeu"))
+        assertEquals("aoeu", mTestCol!!.media.strip("""a<object data="yo">oeu"""))
     }
 
     private fun added(d: Collection?): List<String> {
