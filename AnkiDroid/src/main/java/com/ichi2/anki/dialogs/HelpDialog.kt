@@ -91,7 +91,7 @@ object HelpDialog {
         val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
         val allItems = arrayOf(
             LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
-            LinkItem(R.string.help_item_support_translate_ankidroid, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
+            LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
             LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
             rateAppItem,
             LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
