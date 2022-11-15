@@ -231,12 +231,14 @@ open class AnkiDroidApp : Application() {
          * Note: This will not be called if an API with a manual tag was called with a non-null tag
          */
         fun createStackElementTag(element: StackTraceElement): String {
-            var tag = element.className
-            val m = ANONYMOUS_CLASS.matcher(tag)
-            if (m.find()) {
-                tag = m.replaceAll("")
+            val el = element.className
+            val m = ANONYMOUS_CLASS.matcher(el)
+            val tag = if (m.find()) {
+                m.replaceAll("").substring(el.lastIndexOf('.') + 1)
+            } else {
+                el.substring(el.lastIndexOf('.') + 1)
             }
-            return tag.substring(tag.lastIndexOf('.') + 1)
+            return tag
         } // --- this is not present in the Timber.DebugTree copy/paste ---
 
         // We are in production and should not crash the app for a logging failure

@@ -539,9 +539,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
-            var ticker: String? = title
-            if (title == resources.getString(R.string.app_name)) {
-                ticker = message
+            val ticker: String? = if (title == resources.getString(R.string.app_name)) {
+                message
+            } else {
+                title
             }
             // Build basic notification
             val builder = NotificationCompat.Builder(
