@@ -204,9 +204,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         // This handles both CTRL+V and "Paste"
         if (id == android.R.id.paste) {
             if (hasImage(clipboard)) {
-                return onImagePaste(getImageUri(clipboard))
+                return onImagePaste(getImageUri(clipboard)!!)
             }
             return pastePlainText()
+            // return getImageUri(clipboard)
         }
         return super.onTextContextMenuItem(id)
     }
