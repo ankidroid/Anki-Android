@@ -1271,14 +1271,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    @KotlinCleanup("simplify with scope function on card")
     private fun _rescheduleGraduatingLapse(card: Card, early: Boolean) {
         if (early) {
             card.ivl = card.ivl + 1
         }
-        card.due = (mToday!! + card.ivl).toLong()
-        card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
+        card.apply {
+            due = (mToday!! + card.ivl).toLong()
+            queue = Consts.QUEUE_TYPE_REV
+            type = Consts.CARD_TYPE_REV
+        }
     }
 
     // Overridden: V1 has type rev for relearning
@@ -1342,13 +1343,14 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     /** Reschedule a new card that's graduated for the first time.
      * Overridden: V1 does not set type and queue */
-    @KotlinCleanup("simplify with scope function on card")
     private fun _rescheduleNew(card: Card, conf: JSONObject, early: Boolean) {
-        card.ivl = _graduatingIvl(card, conf, early)
-        card.due = (mToday!! + card.ivl).toLong()
-        card.factor = conf.getInt("initialFactor")
-        card.type = Consts.CARD_TYPE_REV
-        card.queue = Consts.QUEUE_TYPE_REV
+        card.apply {
+            ivl = _graduatingIvl(card, conf, early)
+            due = (mToday!! + card.ivl).toLong()
+            factor = conf.getInt("initialFactor")
+            type = Consts.CARD_TYPE_REV
+            queue = Consts.QUEUE_TYPE_REV
+        }
     }
 
     protected fun _logLrn(
@@ -1919,19 +1921,18 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             return conf.getJSONObject("new")
         }
         // dynamic deck; override some attributes, use original deck for others
-        @KotlinCleanup("simplify with return and scope function on dict")
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
-        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"))
-        // overrides
-        dict.put("separate", conf.getBoolean("separate"))
-        dict.put("order", Consts.NEW_CARDS_DUE)
-        dict.put("perDay", mReportLimit)
-        return dict
+        return JSONObject().apply {
+            // original deck
+            put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
+            put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
+            put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
+            put("delays", oconf.getJSONObject("new").getJSONArray("delays"))
+            // overrides
+            put("separate", conf.getBoolean("separate"))
+            put("order", Consts.NEW_CARDS_DUE)
+            put("perDay", mReportLimit)
+        }
     }
 
     // Overridden: different delays for filtered cards.
@@ -1941,18 +1942,17 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             return conf.getJSONObject("lapse")
         }
         // dynamic deck; override some attributes, use original deck for others
-        @KotlinCleanup("simplify with return and scope function on dict")
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        // original deck
-        dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
-        dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
-        dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
-        dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
-        dict.put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"))
-        // overrides
-        dict.put("resched", conf.getBoolean("resched"))
-        return dict
+        return JSONObject().apply {
+            // original deck
+            put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
+            put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
+            put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
+            put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
+            put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"))
+            // overrides
+            put("resched", conf.getBoolean("resched"))
+        }
     }
 
     protected fun _revConf(card: Card): JSONObject {

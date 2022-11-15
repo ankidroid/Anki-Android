@@ -2283,9 +2283,10 @@ open class DeckPicker :
             val due = mDeckListAdapter.due
             val res = resources
             if (col.cardCount() != -1) {
-                var time: String? = "-"
-                if (eta != -1 && eta != null) {
-                    time = Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+                val time: String? = if (eta != -1 && eta != null) {
+                    Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+                } else {
+                    "-"
                 }
                 if (due != null && supportActionBar != null) {
                     val subTitle: String = if (due == 0) {
