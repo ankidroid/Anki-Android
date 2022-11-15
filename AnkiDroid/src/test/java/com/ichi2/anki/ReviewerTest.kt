@@ -74,7 +74,7 @@ class ReviewerTest : RobolectricTest() {
     @RunInBackground
     fun exitCommandWorksAfterControlsAreBlocked() {
         ensureCollectionLoadIsSynchronous()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario ->
+        ActivityScenario.launchActivityForResult(Reviewer::class.java).use { scenario ->
             scenario.onActivity { reviewer: Reviewer ->
                 reviewer.blockControls(true)
                 reviewer.executeCommand(ViewerCommand.EXIT)
