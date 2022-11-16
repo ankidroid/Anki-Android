@@ -324,11 +324,11 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         imageFieldController!!.showCropDialog(content) { saveAndExit() }
     }
 
-    @KotlinCleanup("scope function")
     private fun saveAndExit(ignoreField: Boolean = false) {
-        val resultData = Intent()
-        resultData.putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
-        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
+        val resultData = Intent().apply {
+            putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
+            putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
+        }
         setResult(RESULT_OK, resultData)
         finishWithoutAnimation()
     }

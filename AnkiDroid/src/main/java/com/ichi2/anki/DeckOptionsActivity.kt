@@ -44,6 +44,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.set
 import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
@@ -76,52 +77,59 @@ class DeckOptionsActivity :
         val deckOptionsActivity: DeckOptionsActivity
             get() = this@DeckOptionsActivity
 
-        @KotlinCleanup("scope function")
         override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
                 mOptions = col.decks.confForDid(deck.getLong("id"))
 
-                mValues["name"] = deck.getString("name")
-                mValues["desc"] = deck.getString("desc")
-                mValues["deckConf"] = deck.getString("conf")
-                // general
-                mValues["maxAnswerTime"] = mOptions.getString("maxTaken")
-                mValues["showAnswerTimer"] = parseTimerValue(mOptions).toString()
-                mValues["autoPlayAudio"] = mOptions.getBoolean("autoplay").toString()
-                mValues["replayQuestion"] = mOptions.optBoolean("replayq", true).toString()
+                mValues.apply {
+                    set("name", deck.getString("name"))
+                    set("desc", deck.getString("desc"))
+                    set("deckConf", deck.getString("conf"))
+                    // general
+                    set("maxAnswerTime", mOptions.getString("maxTaken"))
+                    set("showAnswerTimer", parseTimerValue(mOptions).toString())
+                    set("autoPlayAudio", mOptions.getBoolean("autoplay").toString())
+                    set("replayQuestion", mOptions.optBoolean("replayq", true).toString())
+                }
+
                 // new
                 val newOptions = mOptions.getJSONObject("new")
-                mValues["newSteps"] = StepsPreference.convertFromJSON(newOptions.getJSONArray("delays"))
-                mValues["newGradIvl"] = newOptions.getJSONArray("ints").getString(0)
-                mValues["newEasy"] = newOptions.getJSONArray("ints").getString(1)
-                mValues["newFactor"] = (newOptions.getInt("initialFactor") / 10).toString()
-                mValues["newOrder"] = newOptions.getString("order")
-                mValues["newPerDay"] = newOptions.getString("perDay")
-                mValues["newBury"] = newOptions.optBoolean("bury", true).toString()
+                newOptions.apply {
+                    set("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")))
+                    set("newGradIvl", newOptions.getJSONArray("ints").getString(0))
+                    set("newEasy", newOptions.getJSONArray("ints").getString(1))
+                    set("newFactor", (newOptions.getInt("initialFactor") / 10).toString())
+                    set("newOrder", newOptions.getString("order"))
+                    set("newPerDay", newOptions.getString("perDay"))
+                    set("newBury", newOptions.optBoolean("bury", true).toString())
+                }
                 // rev
                 val revOptions = mOptions.getJSONObject("rev")
-                mValues["revPerDay"] = revOptions.getString("perDay")
-                mValues["easyBonus"] = String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ease4") * 100)
-                mValues["hardFactor"] = String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100)
-                mValues["revIvlFct"] = String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100)
-                mValues["revMaxIvl"] = revOptions.getString("maxIvl")
-                mValues["revBury"] = revOptions.optBoolean("bury", true).toString()
+                mValues.apply {
+                    set("revPerDay", revOptions.getString("perDay"))
+                    set("easyBonus", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ease4") * 100))
+                    set("hardFactor", String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100))
+                    set("revIvlFct", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100))
+                    set("revMaxIvl", revOptions.getString("maxIvl"))
+                    set("revBury", revOptions.optBoolean("bury", true).toString())
 
-                mValues["revUseGeneralTimeoutSettings"] = revOptions.optBoolean("useGeneralTimeoutSettings", true).toString()
-                mValues["revTimeoutAnswer"] = revOptions.optBoolean("timeoutAnswer", false).toString()
-                mValues["revTimeoutAnswerSeconds"] = revOptions.optInt("timeoutAnswerSeconds", 6).toString()
-                mValues["revTimeoutQuestionSeconds"] = revOptions.optInt("timeoutQuestionSeconds", 60).toString()
-
+                    set("revUseGeneralTimeoutSettings", revOptions.optBoolean("useGeneralTimeoutSettings", true).toString())
+                    set("revTimeoutAnswer", revOptions.optBoolean("timeoutAnswer", false).toString())
+                    set("revTimeoutAnswerSeconds", revOptions.optInt("timeoutAnswerSeconds", 6).toString())
+                    set("revTimeoutQuestionSeconds", revOptions.optInt("timeoutQuestionSeconds", 60).toString())
+                }
                 // lapse
                 val lapOptions = mOptions.getJSONObject("lapse")
-                mValues["lapSteps"] = StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays"))
-                mValues["lapNewIvl"] = String.format(Locale.ROOT, "%.0f", lapOptions.getDouble("mult") * 100)
-                mValues["lapMinIvl"] = lapOptions.getString("minInt")
-                mValues["lapLeechThres"] = lapOptions.getString("leechFails")
-                mValues["lapLeechAct"] = lapOptions.getString("leechAction")
-                // options group management
-                mValues["currentConf"] = col.decks.getConf(deck.getLong("conf"))!!.getString("name")
+                lapOptions.apply {
+                    set("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")))
+                    set("lapNewIvl", String.format(Locale.ROOT, "%.0f", lapOptions.getDouble("mult") * 100))
+                    set("lapMinIvl", lapOptions.getString("minInt"))
+                    set("lapLeechThres", lapOptions.getString("leechFails"))
+                    set("lapLeechAct", lapOptions.getString("leechAction"))
+                    // options group management
+                    set("currentConf", col.decks.getConf(deck.getLong("conf"))!!.getString("name"))
+                }
                 // reminders
                 if (mOptions.has("reminder")) {
                     val reminder = mOptions.getJSONObject("reminder")
