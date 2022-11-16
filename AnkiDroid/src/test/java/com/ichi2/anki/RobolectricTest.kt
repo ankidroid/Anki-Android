@@ -46,7 +46,6 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
@@ -519,7 +518,6 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @CheckResult
-    @KotlinCleanup("scope function")
     protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
         val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
         val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
