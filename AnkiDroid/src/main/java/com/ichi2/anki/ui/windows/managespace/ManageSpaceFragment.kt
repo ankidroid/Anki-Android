@@ -85,17 +85,21 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     }
 
     suspend fun performMediaCheck() {
-        withCol { media.performFullCheck() }
-
-        launchSearchForUnusedMedia()
+        try {
+            withCol { media.performFullCheck() }
+        } finally {
+            launchSearchForUnusedMedia()
+        }
     }
 
     suspend fun deleteMedia(filesNamesToDelete: List<String>) {
-        withCol { deleteMedia(this, filesNamesToDelete) }
-
-        launchCalculationOfSizeOfEverything()
-        launchCalculationOfCollectionSize()
-        launchSearchForUnusedMedia()
+        try {
+            withCol { deleteMedia(this, filesNamesToDelete) }
+        } finally {
+            launchCalculationOfSizeOfEverything()
+            launchCalculationOfCollectionSize()
+            launchSearchForUnusedMedia()
+        }
     }
 
     /***************************************** Backups ********************************************/
@@ -111,11 +115,13 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     }
 
     suspend fun deleteBackups(backupsToDelete: List<File>) {
-        withCol { BackupManager.deleteBackups(this, backupsToDelete) }
-
-        launchCalculationOfBackupsSize()
-        launchCalculationOfCollectionSize()
-        launchCalculationOfSizeOfEverything()
+        try {
+            withCol { BackupManager.deleteBackups(this, backupsToDelete) }
+        } finally {
+            launchCalculationOfBackupsSize()
+            launchCalculationOfCollectionSize()
+            launchCalculationOfSizeOfEverything()
+        }
     }
 
     /*************************************** Collection *******************************************/
@@ -129,12 +135,14 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     }
 
     suspend fun deleteCollection() {
-        CollectionManager.deleteCollectionDirectory() // Executed in withQueue
-
-        launchCalculationOfBackupsSize()
-        launchCalculationOfSizeOfEverything()
-        launchCalculationOfCollectionSize()
-        launchSearchForUnusedMedia()
+        try {
+            CollectionManager.deleteCollectionDirectory() // Executed in withQueue
+        } finally {
+            launchCalculationOfBackupsSize()
+            launchCalculationOfSizeOfEverything()
+            launchCalculationOfCollectionSize()
+            launchSearchForUnusedMedia()
+        }
     }
 
     /*************************************** Everything *******************************************/
@@ -293,10 +301,13 @@ class ManageSpaceFragment : SettingsFragment() {
             }
 
             if (deleteCollectionPromptResult is DialogResult.Ok) {
-                withProgress(R.string.progress__deleting_collection) {
-                    viewModel.deleteCollection()
+                try {
+                    withProgress(R.string.progress__deleting_collection) {
+                        viewModel.deleteCollection()
+                    }
+                } finally {
+                    backupLimitsPresenter.refresh()
                 }
-                backupLimitsPresenter.refresh()
             }
         } else {
             showSnackbarIfCalculatingOrError(size)
