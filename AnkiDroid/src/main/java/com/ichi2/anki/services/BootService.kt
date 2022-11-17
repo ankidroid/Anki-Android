@@ -114,9 +114,11 @@ class BootService : BroadcastReceiver() {
                 return
             }
             val calendar = time.calendar()
-            calendar[Calendar.HOUR_OF_DAY] = getRolloverHourOfDay(context)
-            calendar[Calendar.MINUTE] = 0
-            calendar[Calendar.SECOND] = 0
+            calendar.apply {
+                Calendar.HOUR_OF_DAY to getRolloverHourOfDay(context)
+                Calendar.MINUTE to 0
+                Calendar.SECOND to 0
+            }
             val notificationIntent = CompatHelper.compat.getImmutableBroadcastIntent(context, 0, Intent(context, NotificationService::class.java), 0)
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
