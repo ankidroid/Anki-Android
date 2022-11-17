@@ -103,11 +103,12 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
  left outer join old.log l using (fname)
  union
  select fname, null, 0, 1 from old.log where type=${Consts.CARD_TYPE_LRN};"""
-                @KotlinCleanup("scope function on db")
-                db!!.execute(sql)
-                db!!.execute("delete from meta")
-                db!!.execute("insert into meta select dirMod, usn from old.meta")
-                db!!.commit()
+                db!!.apply {
+                    execute(sql)
+                    execute("delete from meta")
+                    execute("insert into meta select dirMod, usn from old.meta")
+                    commit()
+                }
             } catch (e: Exception) {
                 // if we couldn't import the old db for some reason, just start anew
                 val sw = StringWriter()
@@ -414,16 +415,12 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * Illegal characters and paths
      * ***********************************************************
      */
-    @KotlinCleanup("one line function")
     fun stripIllegal(str: String): String {
-        val m = fIllegalCharReg.matcher(str)
-        return m.replaceAll("")
+        return fIllegalCharReg.matcher(str).replaceAll("")
     }
 
-    @KotlinCleanup("one line function")
     fun hasIllegal(str: String): Boolean {
-        val m = fIllegalCharReg.matcher(str)
-        return m.find()
+        return fIllegalCharReg.matcher(str).find()
     }
 
     @KotlinCleanup("fix reassignment")
@@ -555,10 +552,11 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             media.add(arrayOf(f, null, 0, 1))
         }
         // update media db
-        @KotlinCleanup("scope function on db")
-        db!!.executeMany("insert or replace into media values (?,?,?,?)", media)
-        db!!.execute("update meta set dirMod = ?", _mtime(dir()))
-        db!!.commit()
+        db!!.apply {
+            executeMany("insert or replace into media values (?,?,?,?)", media)
+            execute("update meta set dirMod = ?", _mtime(dir()))
+            commit()
+        }
     }
 
     private fun _changes(): Pair<List<String>, List<String>> {
@@ -685,13 +683,14 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         return db!!.queryScalar("select count() from media where dirty=1")
     }
 
-    @KotlinCleanup("scope function on db")
     open fun forceResync() {
-        db!!.execute("delete from media")
-        db!!.execute("update meta set lastUsn=0,dirMod=0")
-        db!!.execute("vacuum")
-        db!!.execute("analyze")
-        db!!.commit()
+        db!!.apply {
+            execute("delete from media")
+            execute("update meta set lastUsn=0,dirMod=0")
+            execute("vacuum")
+            execute("analyze")
+            commit()
+        }
     }
     /*
      * Media syncing: zips
