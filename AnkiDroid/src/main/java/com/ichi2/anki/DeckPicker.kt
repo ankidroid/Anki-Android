@@ -702,12 +702,12 @@ open class DeckPicker :
                 BadgeDrawableBuilder.removeBadge(menuItem)
             }
             SyncIconState.PendingChanges -> {
-                BadgeDrawableBuilder(resources)
+                BadgeDrawableBuilder(this)
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
                     .replaceBadge(menuItem)
             }
             SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
-                BadgeDrawableBuilder(resources)
+                BadgeDrawableBuilder(this)
                     .withText('!')
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
                     .replaceBadge(menuItem)
