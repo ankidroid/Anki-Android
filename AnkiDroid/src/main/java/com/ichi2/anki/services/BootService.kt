@@ -115,9 +115,9 @@ class BootService : BroadcastReceiver() {
             }
             val calendar = time.calendar()
             calendar.apply {
-                Calendar.HOUR_OF_DAY to getRolloverHourOfDay(context)
-                Calendar.MINUTE to 0
-                Calendar.SECOND to 0
+                set(Calendar.HOUR_OF_DAY, getRolloverHourOfDay(context))
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
             }
             val notificationIntent = CompatHelper.compat.getImmutableBroadcastIntent(context, 0, Intent(context, NotificationService::class.java), 0)
             alarmManager.setRepeating(
