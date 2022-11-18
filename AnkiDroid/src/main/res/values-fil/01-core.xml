@@ -46,16 +46,16 @@
 <resources>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kard browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Istatistika</string>
-    <string name="settings">Ang mga setting</string>
+    <string name="settings">Pagsasaayos</string>
     <string name="help">Tulong</string>
-    <string name="drawing">pagguhit</string>
+    <string name="drawing">Pagguhit</string>
     <string name="send_feedback">Magpadala ng tugun</string>
     <string name="studyoptions_due_today">Nakatakda ngayon:</string>
-    <string name="studyoptions_new_total">Bilang ng mga bagong Kard:</string>
-    <string name="studyoptions_total_cards">Kabuuan ng mga kard:</string>
-    <string name="studyoptions_eta">Tinatayang oras (minuto):</string>
+    <string name="studyoptions_new_total">Dami ng mga bagong card:</string>
+    <string name="studyoptions_total_cards">Dami ng mga card:</string>
+    <string name="studyoptions_eta">Tinatayang oras (min):</string>
     <string name="studyoptions_start">Pag-aaral</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>

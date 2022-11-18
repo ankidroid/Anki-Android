@@ -115,8 +115,8 @@
         <item quantity="one">Carte importate: %2$d</item>
         <item quantity="other">File importati: %1$d\nCarte importate in totale: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Spazio di archiviazione pieno</string>
+    <string name="storage_almost_full_title">Spazio di archiviazione quasi pieno</string>
     <string name="no_space_to_downgrade_title">Nessuno spazio</string>
     <string name="no_space_to_downgrade_content">AnkiDroid ha bisogno di %s di archiviazione, libera dello spazio per continuare</string>
     <string name="restore_backup_title">Ripristinare il backup?</string>
@@ -124,7 +124,7 @@
     <string name="restore_backup_choose_another">Scegli un altro</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Conferma</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Si</string>
     <string name="dialog_continue">Continua</string>
@@ -229,6 +229,7 @@
     <string name="help_item_support_develop_ankidroid">Sviluppa</string>
     <string name="help_item_support_rate_ankidroid">Valuta</string>
     <string name="help_item_support_other_ankidroid">Altro</string>
+    <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">Community</string>
     <string name="help_item_anki_forums">Forum di Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -259,13 +260,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Non puoi creare un sottomazzo per tutti i mazzi</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
+    <string name="scoped_storage_require_user_to_accept_risk">        A causa di variazioni alla privacy di Android, la tua posizione di archiviazione attuale sarà inaccessibile se l\'applicazione verrà disinstallata.
+        \n\nAbbiamo bisogno di migrare i tuoi dati in un luogo privato all\'app AnkiDroid.
+        \n\nI dati in questa posizione privata potrebbero essere cancellati se l\'applicazione venisse disinstallata.
+        \n\nLa tua posizione di archiviazione attuale è %1$s
+        \n\nLa posizione di archiviazione privata sarà %2$s
+        \n\nSi prega di confermare che si faranno backup regolari di questa cartella.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Backup manuale</string>
+    <string name="remind_me_later">Ricordamelo più tardi</string>
 </resources>

@@ -50,7 +50,7 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Sem resultados</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Geral</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
@@ -330,12 +330,12 @@
     <string name="type_in_answer_focus_summ">Focar automaticamente no campo \"tipo de resposta\" no revisor</string>
     <!-- About -->
     <string name="open_changelog">Abrir Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">Sobre</string>
+    <string name="contributors_title">Colaboradores</string>
+    <string name="about_contributors_description"><![CDATA[Estes são os nossos incríveis <a href=\"%1$s\">colaboradores</a>. Você também pode ajudar o AnkiDroid programando, traduzindo, doando e <a href=\"%2$s\">mais</a>!]]></string>
+    <string name="license">Licença</string>
+    <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Você pode apoiar o desenvolvimento de AnkiDroid <a href=\"%1$s\">doando</a>. Qualquer quantia é profundamente apreciada.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Adicionar gesto</string>
     <string name="binding_replace_gesture">Substituir gesto</string>
@@ -355,15 +355,15 @@
     <string name="bindings_already_bound">Já vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Ativar ‘%s\'</string>
+    <string name="use_rust_backend_title" maxLength="41">Usar o novo backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
     <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>
+    <string name="disable_dev_options">Desativar opções do desenvolvedor</string>
+    <string name="dev_options_warning">        Por favor, certifique-se antes de ativar as opções do desenvolvedor. Estas opções são perigosas e podem quebrar o aplicativo ou corromper sua coleção.\n\nNote que essas opções não são adequadas para a maioria dos usuários, portanto, não são traduzidas, elas permanecerão em inglês.
     </string>
 </resources>
