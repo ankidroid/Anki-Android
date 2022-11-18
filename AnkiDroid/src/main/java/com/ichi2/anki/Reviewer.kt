@@ -1505,13 +1505,12 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     /**
      * Inner class which implements the submenu for the Schedule button
-     *
-     * NOTE: this action provider doesn't handle the menu item being shown directly in the toolbar,
-     * if the menu item is set to appear in the toolbar, the onCreateActionView(MenuItem) needs to be
-     * overridden. See one of its siblings([BuryProvider] or [SuspendProvider]) for an example of an
-     * implementation.
      */
     internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
+
+        override fun onCreateActionView(forItem: MenuItem): View {
+            return createActionViewWith(context, forItem, R.menu.reviewer_schedule, ::onMenuItemClick) { true }
+        }
 
         override fun hasSubMenu(): Boolean {
             return true
