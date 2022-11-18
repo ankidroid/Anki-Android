@@ -41,7 +41,6 @@ import timber.log.Timber
 import java.io.File
 import java.text.DecimalFormat
 
-@KotlinCleanup("IDE-based lint")
 @KotlinCleanup("lateinit")
 class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCallback {
     private lateinit var mField: IField
@@ -167,33 +166,38 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.multimedia_edit_field_to_text) {
-            Timber.i("To text field button pressed")
-            toTextField()
-            return true
-        } else if (itemId == R.id.multimedia_edit_field_to_image) {
-            Timber.i("To image button pressed")
-            toImageField()
-            return true
-        } else if (itemId == R.id.multimedia_edit_field_to_audio) {
-            Timber.i("To audio recording button pressed")
-            toAudioRecordingField()
-            return true
-        } else if (itemId == R.id.multimedia_edit_field_to_audio_clip) {
-            Timber.i("To audio clip button pressed")
-            toAudioClipField()
-            return true
-        } else if (itemId == R.id.multimedia_edit_field_done) {
-            Timber.i("Save button pressed")
-            done()
-            return true
+        when (item.itemId) {
+            R.id.multimedia_edit_field_to_text -> {
+                Timber.i("To text field button pressed")
+                toTextField()
+                return true
+            }
+            R.id.multimedia_edit_field_to_image -> {
+                Timber.i("To image button pressed")
+                toImageField()
+                return true
+            }
+            R.id.multimedia_edit_field_to_audio -> {
+                Timber.i("To audio recording button pressed")
+                toAudioRecordingField()
+                return true
+            }
+            R.id.multimedia_edit_field_to_audio_clip -> {
+                Timber.i("To audio clip button pressed")
+                toAudioClipField()
+                return true
+            }
+            R.id.multimedia_edit_field_done -> {
+                Timber.i("Save button pressed")
+                done()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     @KotlinCleanup("rename: bChangeToText")
-    protected fun done() {
+    private fun done() {
         var bChangeToText = false
         if (mField.type === EFieldType.IMAGE) {
             if (mField.imagePath == null) {
@@ -226,28 +230,28 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         saveAndExit(bChangeToText)
     }
 
-    protected fun toAudioRecordingField() {
+    private fun toAudioRecordingField() {
         if (mField.type !== EFieldType.AUDIO_RECORDING) {
             val request = ChangeUIRequest.uiChange(AudioRecordingField())
             recreateEditingUi(request)
         }
     }
 
-    protected fun toAudioClipField() {
+    private fun toAudioClipField() {
         if (mField.type !== EFieldType.MEDIA_CLIP) {
             val request = ChangeUIRequest.uiChange(MediaClipField())
             recreateEditingUi(request)
         }
     }
 
-    protected fun toImageField() {
+    private fun toImageField() {
         if (mField.type !== EFieldType.IMAGE) {
             val request = ChangeUIRequest.uiChange(ImageField())
             recreateEditingUi(request)
         }
     }
 
-    protected fun toTextField() {
+    private fun toTextField() {
         if (mField.type !== EFieldType.TEXT) {
             val request = ChangeUIRequest.uiChange(TextField())
             recreateEditingUi(request)
@@ -316,7 +320,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         recreateEditingUi(ChangeUIRequest.fieldChange(newField))
     }
 
-    fun showLargeFileCropDialog(length: Float) {
+    private fun showLargeFileCropDialog(length: Float) {
         val imageFieldController = fieldController as BasicImageFieldController?
         val decimalFormat = DecimalFormat(".00")
         val size = decimalFormat.format(length.toDouble())
