@@ -388,9 +388,9 @@
         %1$d file multimediali rimasti per migrare.</string>
     <string name="migration_warning_risk_of_data_loss_if_no_update">Se reinstalli AnkiDroid, non sarà in grado di aprire la tua collezione.</string>
     <string name="migration_update_request_dialog_download_warning">Se disinstalli AnkiDroid, dovrai scaricare di nuovo la tua collezione completa.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_update_request">La politica di accesso all\'archivio Android ci richiede di cambiare dove memorizziamo la tua collezione. Quando i tuoi dati saranno stati migrati AnkiDroid sarà più veloce e i tuoi dati saranno più sicuri.
+    Non potrai sincronizzare durante la migrazione dell\'archivio.</string>
+    <string name="start_migration_progress_message">Avvio migrazione dell\'archivio. Potrai riprendere a usare AnkiDroid a breve.</string>
     <string name="migration_part_1_done_resume">Puoi riprendere l\'uso di AnkiDroid. \n La migrazione dell\'archivio continuerà in background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s non è un pacchetto addon javascript valido</string>

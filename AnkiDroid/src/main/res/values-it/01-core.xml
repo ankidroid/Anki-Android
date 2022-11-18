@@ -176,7 +176,7 @@
     <string name="empty_cloze_warning">Modifica questa nota e aggiungi alcuni eliminamenti di cloze. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizza</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronizzazione disattivata temporaneamente</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migra nell\'archiviazione scelta</string>
     <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
     <string name="continue_sync">Continua la sincronizzazione</string>
     <string name="sync_cancelled">Sincronizzazione annullata</string>

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">ダウンロードしたデータベースが壊れています。もう一度試してください。</string>
     <string name="sync_overwrite_error">ダウンロードしたファイルで、使用中のコレクションを上書きすることができませんでした。</string>
     <string name="sync_connection_error">接続がタイムアウトしました。インターネット接続に問題があるか、メディア用フォルダー内に非常に大きなファイルがあります。</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">内部ストレージにダウンロードしたファイルを保存できませんでした。ストレージが読み取り専用か、または、十分な空き容量がありません。</string>
     <string name="sync_error_invalid_sync_server">詳細設定のカスタム同期サーバーが無効です (%s). 有効なサーバーを入力するか、設定を無効にしてください。</string>
     <string name="sync_deletions_message">データの削除を同期しています...</string>
     <string name="sync_small_objects_message">小さなオブジェクトを同期しています...</string>
