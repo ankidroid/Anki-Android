@@ -40,11 +40,12 @@ class TextNoteExporter(
 
     @Throws(IOException::class)
     fun doExport(path: String?) {
-        val queryStr =
+        val queryStr = String.format(
             "SELECT guid, flds, tags from notes " +
                 "WHERE id in " +
-                "(SELECT nid from cards WHERE cards.id in $Utils.ids2str(cardIds()))"
-
+                "(SELECT nid from cards WHERE cards.id in %s)",
+            Utils.ids2str(cardIds())
+        )
         val data: MutableList<String?> = ArrayList()
         col.db.query(queryStr).use { cursor ->
             while (cursor.moveToNext()) {
