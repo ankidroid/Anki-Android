@@ -334,24 +334,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * Deletes the given field in the given model
-     */
-    class DeleteField(private val model: Model, private val field: JSONObject) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackGroundDeleteField")
-            try {
-                col.models.remField(model, field)
-                col.save()
-            } catch (e: ConfirmModSchemaException) {
-                // Should never be reached
-                e.log()
-                return false
-            }
-            return true
-        }
-    }
-
-    /**
      * Repositions the given field in the given model
      */
     class RepositionField(private val model: Model, private val field: JSONObject, private val index: Int) : TaskDelegate<Void, Boolean>() {
