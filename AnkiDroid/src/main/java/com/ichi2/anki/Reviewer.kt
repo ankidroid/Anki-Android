@@ -748,7 +748,11 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            if (col.undoName(resources) !="") {
+                undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            } else {
+                undoIcon.title = resources.getString(R.string.undo)
+            }    
         }
         if (undoEnabled) {
             mOnboarding.onUndoButtonEnabled()
