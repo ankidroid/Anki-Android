@@ -371,14 +371,14 @@ open class RobolectricTest : CollectionGetter {
 
     protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
         val model = col.models.byName((name)!!)
-            ?: throw IllegalArgumentException(String.format("Could not find model '%s'", name))
+            ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
         for ((i, field) in fields.withIndex()) {
             n.setField(i, field)
         }
-        check(col.addNote(n) != 0) { String.format("Could not add note: {%s}", fields.joinToString(separator = ", ")) }
+        check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
 
@@ -455,7 +455,7 @@ open class RobolectricTest : CollectionGetter {
         advanceRobolectricLooper()
         wait(timeoutMs.toLong())
         advanceRobolectricLooper()
-        if (!completed[0]) { throw IllegalStateException(String.format("Task %s didn't finish in %d ms", task.javaClass, timeoutMs)) }
+        if (!completed[0]) { throw IllegalStateException("Task ${task.javaClass} didn't finish in $timeoutMs ms") }
     }
 
     /**

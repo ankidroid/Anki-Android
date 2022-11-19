@@ -109,7 +109,7 @@ class SchedTest : RobolectricTest() {
                 return value
             }
         }
-        throw IllegalStateException(String.format("Could not find deck %s", didToFind))
+        throw IllegalStateException("Could not find deck $didToFind")
     }
 
     private fun getCardInDefaultDeck(s: Sched): Card? {

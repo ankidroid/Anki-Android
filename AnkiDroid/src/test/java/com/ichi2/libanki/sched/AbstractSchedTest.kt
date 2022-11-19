@@ -451,7 +451,7 @@ mw.col.sched.extendLimits(1, 0)
         val hasMatch = decks.all().stream().anyMatch { x: Deck -> name == x.getString("name") }
         @KotlinCleanup("remove .format")
         assertThat(
-            String.format("Deck %s should exist", name),
+            "Deck $name should exist",
             hasMatch,
             `is`(true)
         )
