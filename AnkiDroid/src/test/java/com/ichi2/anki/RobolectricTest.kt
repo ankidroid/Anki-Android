@@ -378,7 +378,7 @@ open class RobolectricTest : CollectionGetter {
         for ((i, field) in fields.withIndex()) {
             n.setField(i, field)
         }
-        check(col.addNote(n) != 0) { "Could not add note: ${fields.joinToString(separator = ", ")}" }
+        check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
 
