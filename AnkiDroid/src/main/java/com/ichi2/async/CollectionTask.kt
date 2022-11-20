@@ -28,8 +28,6 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
-import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
@@ -149,19 +147,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     override fun onCancelled() {
         TaskManager.removeTask(this)
         listener?.onCancelled()
-    }
-
-    class LoadDeckCounts : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckDueTreeNode>>? {
-            Timber.d("doInBackgroundLoadDeckCounts")
-            return try {
-                // Get due tree
-                col.sched.deckDueTree(collectionTask)
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundLoadDeckCounts - error")
-                null
-            }
-        }
     }
 
     class CheckDatabase : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
