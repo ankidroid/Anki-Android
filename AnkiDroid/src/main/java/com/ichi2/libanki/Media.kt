@@ -914,7 +914,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             fObjectRegExpU
         )
 
-        fun getCollectionMediaPath(collectionPath: String): String = collectionPath.replaceFirst("\\.anki2$".toRegex(), ".media")
+        fun getCollectionMediaPath(collectionPath: String): String {
+            return collectionPath.replaceFirst("\\.anki2$".toRegex(), ".media")
+        }
 
         /**
          * Percent-escape UTF-8 characters in local image filenames.
@@ -952,7 +954,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
          * (Anki2Importer needs this). This is needed because we didn't implement the "transformNames"
          * function and have delegated its job to the caller of this class.
          */
-        fun indexOfFname(p: Pattern): Int = if (p == fSoundRegexps) 2 else if (p == fImgAudioRegExpU) 2 else 3
+        fun indexOfFname(p: Pattern): Int {
+            return if (p == fSoundRegexps) 2 else if (p == fImgAudioRegExpU) 2 else 3
+        }
     }
 
     init {
