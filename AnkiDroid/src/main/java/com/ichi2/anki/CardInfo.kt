@@ -356,9 +356,10 @@ class CardInfo : AnkiActivity() {
 
             protected fun getCardType(c: Card, model: Model?): String? {
                 return try {
-                    var ord = c.ord
-                    if (c.model().isCloze) {
-                        ord = 0
+                    val ord = if (c.model().isCloze) {
+                        0
+                    } else {
+                        c.ord
                     }
                     model!!.getJSONArray("tmpls").getJSONObject(ord).getString("name")
                 } catch (e: Exception) {
