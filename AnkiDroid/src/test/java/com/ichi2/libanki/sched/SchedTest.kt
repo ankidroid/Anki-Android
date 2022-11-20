@@ -56,7 +56,6 @@ import kotlin.test.*
 import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 @RustCleanup("Remove, or add KotlinCleanup")
-@KotlinCleanup("is -> equalTo")
 @KotlinCleanup("fix ide lint issues")
 @RunWith(AndroidJUnit4::class)
 class SchedTest : RobolectricTest() {
@@ -66,7 +65,7 @@ class SchedTest : RobolectricTest() {
 
         val sched = Sched(col)
         val buriedCard = createBuriedCardInDefaultDeck()
-        assertThat(buriedCard.did, `is`(DEFAULT_DECK_ID))
+        assertThat(buriedCard.did, equalTo(DEFAULT_DECK_ID))
 
         assertThat("Card should be buried", getCardInDefaultDeck(sched), nullValue())
 
@@ -90,9 +89,9 @@ class SchedTest : RobolectricTest() {
 
         // Assert
         val dynamicDeck = getCountsForDid(dynDeck.toDouble())
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.lrnCount, `is`(0))
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.newCount, `is`(0))
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.revCount, `is`(0))
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.lrnCount, equalTo(0))
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.newCount, equalTo(0))
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.revCount, equalTo(0))
     }
 
     private fun markNextCardAsGood(sched: Sched) {
@@ -160,7 +159,7 @@ class SchedTest : RobolectricTest() {
             val currentTime = time.getInternalTimeMs()
             sched.answerCard(c!!, BUTTON_ONE)
             val timeAnswered = col.db.queryLongScalar("select id from revlog")
-            assertThat(timeAnswered, `is`(currentTime))
+            assertThat(timeAnswered, equalTo(currentTime))
         }
     }
 
@@ -200,7 +199,7 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_LRN, c.type)
-        assertThat(c.due, `is`(greaterThanOrEqualTo(t)))
+        assertThat(c.due, equalTo(greaterThanOrEqualTo(t)))
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -308,8 +307,8 @@ class SchedTest : RobolectricTest() {
         assertEquals(3, (c.left / 1000).toLong())
         // it should be due in 30 seconds
         val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
-        assertThat(t, `is`(greaterThanOrEqualTo(25L)))
-        assertThat(t, `is`(lessThanOrEqualTo(40L)))
+        assertThat(t, equalTo(greaterThanOrEqualTo(25L)))
+        assertThat(t, equalTo(lessThanOrEqualTo(40L)))
         // pass it once
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 3 minutes
@@ -499,8 +498,8 @@ class SchedTest : RobolectricTest() {
         assertEquals(1, c.ivl)
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
-        assertThat(c.due - TimeManager.time.intTime(), `is`(greaterThan(118L)))
+        assertThat(c.due, equalTo(greaterThanOrEqualTo(TimeManager.time.intTime())))
+        assertThat(c.due - TimeManager.time.intTime(), equalTo(greaterThan(118L)))
         // factor should have been decremented
         assertEquals(2300, c.factor)
         // check counters
@@ -751,7 +750,7 @@ class SchedTest : RobolectricTest() {
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
-        assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
+        assertThat(c.due, equalTo(greaterThanOrEqualTo(TimeManager.time.intTime())))
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_REV, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
