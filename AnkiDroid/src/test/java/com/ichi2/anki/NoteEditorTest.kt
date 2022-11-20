@@ -327,7 +327,7 @@ class NoteEditorTest : RobolectricTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
         editor.setCurrentlySelectedModel(col.models.byName("Basic")!!.getLong("id"))
         val field = editor.getFieldForTest(0)
-        field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", "<span style=\"color: red\">text</span>"))
+        field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())
         assertNotNull(field.clipboard!!.primaryClip)
 

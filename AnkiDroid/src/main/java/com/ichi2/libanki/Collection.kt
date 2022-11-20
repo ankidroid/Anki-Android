@@ -1161,7 +1161,7 @@ open class Collection(
             if ("q" == type && model.isCloze) {
                 if (Models._availClozeOrds(model, flist, false).isEmpty()) {
                     val link = String.format(
-                        "<a href=\"%s\">%s</a>",
+                        """<a href="%s">%s</a>""",
                         context.resources.getString(R.string.link_ankiweb_docs_cloze_deletion),
                         "help"
                     )
