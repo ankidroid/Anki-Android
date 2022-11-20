@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.LocaleList
-import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
@@ -45,6 +44,7 @@ import com.ichi2.utils.ClipboardUtil.getImageUri
 import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
 import kotlin.math.max
@@ -195,9 +195,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     override fun onSaveInstanceState(): Parcelable? {
         val state = super.onSaveInstanceState()
-        val savedState = SavedState(state)
-        savedState.ord = ord
-        return savedState
+        return SavedState(state, ord)
     }
 
     override fun onTextContextMenuItem(id: Int): Boolean {
@@ -253,34 +251,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     val isCapitalized: Boolean
         get() = this.inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
-    @KotlinCleanup("Use @Parcelize")
-    internal class SavedState : BaseSavedState {
-        var ord = 0
-
-        constructor(superState: Parcelable?) : super(superState)
-
-        override fun writeToParcel(out: Parcel, flags: Int) {
-            super.writeToParcel(out, flags)
-            out.writeInt(ord)
-        }
-
-        private constructor(source: Parcel) : super(source) {
-            ord = source.readInt()
-        }
-
-        companion object {
-            @JvmField // required field that makes Parcelables from a Parcel
-            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
-                override fun createFromParcel(source: Parcel): SavedState {
-                    return SavedState(source)
-                }
-
-                override fun newArray(size: Int): Array<SavedState?> {
-                    return arrayOfNulls(size)
-                }
-            }
-        }
-    }
+    @Parcelize
+    internal class SavedState(val state: Parcelable?, val ord: Int) : BaseSavedState(state)
 
     interface TextSelectionListener {
         fun onSelectionChanged(selStart: Int, selEnd: Int)
