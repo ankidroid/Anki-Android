@@ -193,12 +193,13 @@ class AbstractSchedTest : RobolectricTest() {
     }
 
     private inner class IncreaseToday {
-        private val mAId: Long
-        private val mBId: Long
-        private val mCId: Long
-        private val mDId: Long
-        private val mDecks: DeckManager
-        private val mSched: AbstractSched
+        private val mAId: Long = addDeck("A")
+        private val mBId: Long = addDeck("A::B")
+        private val mCId: Long = addDeck("A::B::C")
+        private val mDId: Long = addDeck("A::B::D")
+        private val mDecks: DeckManager = col.decks
+        private val mSched: AbstractSched = col.sched
+
         private fun assertNewCountIs(explanation: String, did: Long, expected: Int) {
             mDecks.select(did)
             mSched.resetCounts()
@@ -334,16 +335,6 @@ c = mw.col.decks.byName("A::B::C")
 mw.col.sched.extendLimits(1, 0)
 ```
              */
-        }
-
-        init {
-            @KotlinCleanup("remove init and initialize the properties directly")
-            mDecks = col.decks
-            mSched = col.sched
-            mAId = addDeck("A")
-            mBId = addDeck("A::B")
-            mCId = addDeck("A::B::C")
-            mDId = addDeck("A::B::D")
         }
     }
 
