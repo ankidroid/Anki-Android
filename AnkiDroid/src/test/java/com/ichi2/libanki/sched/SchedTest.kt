@@ -199,7 +199,7 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_LRN, c.type)
-        assertThat(c.due, `is`(greaterThanOrEqualTo(t)))
+        assertThat(c.due, greaterThanOrEqualTo(t))
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -307,8 +307,8 @@ class SchedTest : RobolectricTest() {
         assertEquals(3, (c.left / 1000).toLong())
         // it should be due in 30 seconds
         val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
-        assertThat(t, `is`(greaterThanOrEqualTo(25L)))
-        assertThat(t, `is`(lessThanOrEqualTo(40L)))
+        assertThat(t, greaterThanOrEqualTo(25L))
+        assertThat(t, lessThanOrEqualTo(40L))
         // pass it once
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 3 minutes
@@ -498,8 +498,8 @@ class SchedTest : RobolectricTest() {
         assertEquals(1, c.ivl)
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
-        assertThat(c.due - TimeManager.time.intTime(), `is`(greaterThan(118L)))
+        assertThat(c.due, greaterThanOrEqualTo(TimeManager.time.intTime()))
+        assertThat(c.due - TimeManager.time.intTime(), greaterThan(118L))
         // factor should have been decremented
         assertEquals(2300, c.factor)
         // check counters
@@ -699,7 +699,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(28080000, col.sched.nextIvl(c, BUTTON_FOUR))
         assertThat(
             without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_FOUR)),
-            `is`("10.8 mo")
+            equalTo("10.8 mo")
         )
     }
 
@@ -750,7 +750,7 @@ class SchedTest : RobolectricTest() {
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
-        assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
+        assertThat(c.due, greaterThanOrEqualTo(TimeManager.time.intTime()))
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_REV, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
