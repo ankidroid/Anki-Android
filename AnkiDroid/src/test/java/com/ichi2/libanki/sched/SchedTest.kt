@@ -199,7 +199,7 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_LRN, c.type)
-        assertThat(c.due, equalTo(greaterThanOrEqualTo(t)))
+        assertThat(c.due, `is`(greaterThanOrEqualTo(t)))
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -308,7 +308,7 @@ class SchedTest : RobolectricTest() {
         // it should be due in 30 seconds
         val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
         assertThat(t, `is`(greaterThanOrEqualTo(25L)))
-        assertThat(t, equalTo(lessThanOrEqualTo(40L)))
+        assertThat(t, `is`(lessThanOrEqualTo(40L)))
         // pass it once
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 3 minutes
@@ -499,7 +499,7 @@ class SchedTest : RobolectricTest() {
         // but because it's in the learn queue, its current due time should be in
         // the future
         assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
-        assertThat(c.due - TimeManager.time.intTime(), equalTo(greaterThan(118L)))
+        assertThat(c.due - TimeManager.time.intTime(), `is`(greaterThan(118L)))
         // factor should have been decremented
         assertEquals(2300, c.factor)
         // check counters
