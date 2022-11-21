@@ -103,11 +103,12 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
  left outer join old.log l using (fname)
  union
  select fname, null, 0, 1 from old.log where type=${Consts.CARD_TYPE_LRN};"""
-                @KotlinCleanup("scope function on db")
-                db!!.execute(sql)
-                db!!.execute("delete from meta")
-                db!!.execute("insert into meta select dirMod, usn from old.meta")
-                db!!.commit()
+                db!!.apply {
+                    execute(sql)
+                    execute("delete from meta")
+                    execute("insert into meta select dirMod, usn from old.meta")
+                    commit()
+                }
             } catch (e: Exception) {
                 // if we couldn't import the old db for some reason, just start anew
                 val sw = StringWriter()
@@ -139,9 +140,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
     }
 
     @KotlinCleanup("nullable if server == true, we don't do this in AnkiDroid so should be fine")
-    fun dir(): String {
-        return mDir!!
-    }
+    fun dir(): String = mDir!!
+
     /*
       Adding media
       ***********************************************************
@@ -298,9 +298,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    open fun check(): MediaCheckResult {
-        return check(null)
-    }
+    open fun check(): MediaCheckResult = check(null)
 
     private fun check(local: Array<File>?): MediaCheckResult {
         val mdir = File(dir())
@@ -406,25 +404,15 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * Copying on import
      * ***********************************************************
      */
-    open fun have(fname: String): Boolean {
-        return File(dir(), fname).exists()
-    }
+    open fun have(fname: String): Boolean = File(dir(), fname).exists()
 
     /**
      * Illegal characters and paths
      * ***********************************************************
      */
-    @KotlinCleanup("one line function")
-    fun stripIllegal(str: String): String {
-        val m = fIllegalCharReg.matcher(str)
-        return m.replaceAll("")
-    }
+    fun stripIllegal(str: String): String = fIllegalCharReg.matcher(str).replaceAll("")
 
-    @KotlinCleanup("one line function")
-    fun hasIllegal(str: String): Boolean {
-        val m = fIllegalCharReg.matcher(str)
-        return m.find()
-    }
+    fun hasIllegal(str: String): Boolean = fIllegalCharReg.matcher(str).find()
 
     @KotlinCleanup("fix reassignment")
     fun cleanFilename(fname: String): String {
@@ -441,9 +429,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
 
     /** This method only change things on windows. So it's the
      * identity here.  */
-    private fun _cleanWin32Filename(fname: String): String {
-        return fname
-    }
+    private fun _cleanWin32Filename(fname: String): String = fname
 
     @KotlinCleanup("Fix reassignment")
     private fun _cleanLongFilename(fname: String): String {
@@ -505,9 +491,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         }
     }
 
-    fun haveDirty(): Boolean {
-        return db!!.queryScalar("select 1 from media where dirty=1 limit 1") > 0
-    }
+    fun haveDirty(): Boolean = db!!.queryScalar("select 1 from media where dirty=1 limit 1") > 0
 
     /**
      * Returns the number of seconds from epoch since the last modification to the file in path. Important: this method
@@ -516,14 +500,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * @param path The path to the file we are checking. path can be a file or a directory.
      * @return The number of seconds (rounded down).
      */
-    private fun _mtime(path: String): Long {
-        val f = File(path)
-        return f.lastModified() / 1000
-    }
+    private fun _mtime(path: String): Long = File(path).lastModified() / 1000
 
-    private fun _checksum(path: String): String {
-        return Utils.fileChecksum(path)
-    }
+    private fun _checksum(path: String): String = Utils.fileChecksum(path)
 
     /**
      * Return dir mtime if it has changed since the last findChanges()
@@ -555,10 +534,11 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             media.add(arrayOf(f, null, 0, 1))
         }
         // update media db
-        @KotlinCleanup("scope function on db")
-        db!!.executeMany("insert or replace into media values (?,?,?,?)", media)
-        db!!.execute("update meta set dirMod = ?", _mtime(dir()))
-        db!!.commit()
+        db!!.apply {
+            executeMany("insert or replace into media values (?,?,?,?)", media)
+            execute("update meta set dirMod = ?", _mtime(dir()))
+            commit()
+        }
     }
 
     private fun _changes(): Pair<List<String>, List<String>> {
@@ -642,9 +622,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * Syncing related
      * ***********************************************************
      */
-    fun lastUsn(): Int {
-        return db!!.queryScalar("select lastUsn from meta")
-    }
+    fun lastUsn(): Int = db!!.queryScalar("select lastUsn from meta")
 
     fun setLastUsn(usn: Int) {
         db!!.execute("update meta set lastUsn = ?", usn)
@@ -677,21 +655,18 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         db!!.execute("delete from media where fname=?", fname)
     }
 
-    fun mediacount(): Int {
-        return db!!.queryScalar("select count() from media where csum is not null")
-    }
+    fun mediacount(): Int = db!!.queryScalar("select count() from media where csum is not null")
 
-    fun dirtyCount(): Int {
-        return db!!.queryScalar("select count() from media where dirty=1")
-    }
+    fun dirtyCount(): Int = db!!.queryScalar("select count() from media where dirty=1")
 
-    @KotlinCleanup("scope function on db")
     open fun forceResync() {
-        db!!.execute("delete from media")
-        db!!.execute("update meta set lastUsn=0,dirMod=0")
-        db!!.execute("vacuum")
-        db!!.execute("analyze")
-        db!!.commit()
+        db!!.apply {
+            execute("delete from media")
+            execute("update meta set lastUsn=0,dirMod=0")
+            execute("vacuum")
+            execute("analyze")
+            commit()
+        }
     }
     /*
      * Media syncing: zips
