@@ -223,7 +223,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    @KotlinCleanup("Make param non-null")
     private fun onImagePaste(imageUri: Uri?): Boolean {
         return if (imageUri == null) {
             false
