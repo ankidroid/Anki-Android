@@ -22,9 +22,6 @@ import java.lang.Exception
 import java.lang.StringBuilder
 import java.security.MessageDigest
 
-fun Byte.format(): String {
-    return if (this in 0..9) "0$this" else this.toString()
-}
 open class TestUtils {
     /** get the MD5 checksum (in hex) for the given filename  */
     companion object {
@@ -34,7 +31,7 @@ open class TestUtils {
             md.update(getFileContentsBytes(File(filename)))
             val hex = StringBuilder()
             for (b in md.digest()) {
-                hex.append(b.format())
+                hex.append(String.format("%02x", b))
             }
             return hex.toString()
         }
