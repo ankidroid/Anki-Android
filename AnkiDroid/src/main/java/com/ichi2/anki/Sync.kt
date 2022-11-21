@@ -81,7 +81,12 @@ fun DeckPicker.handleNewSync(
                     } catch (exc: Exception) {
                         when (exc) {
                             is UnknownHostException, is BackendNetworkException -> {
-                                showSnackbar(R.string.check_network)
+                                showSnackbar(R.string.check_network) {
+                                    setAction(R.string.sync_even_if_offline) {
+                                        Connection.allowLoginSyncOnNoConnection = true
+                                        sync()
+                                    }
+                                }
                                 Timber.i("No network exception")
                             }
                             else -> throw exc
