@@ -223,8 +223,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    private fun onImagePaste(imageUri: Uri): Boolean {
-        return mImageListener!!.onImagePaste(this, imageUri)
+    private fun onImagePaste(imageUri: Uri?): Boolean {
+        return if (imageUri == null) {
+            false
+        } else mImageListener!!.onImagePaste(this, imageUri)
     }
 
     override fun onRestoreInstanceState(state: Parcelable) {
