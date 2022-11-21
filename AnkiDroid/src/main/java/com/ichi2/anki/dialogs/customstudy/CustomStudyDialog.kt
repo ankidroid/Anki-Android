@@ -112,7 +112,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (ContextMenuOption.fromString(resources, charSequence.toString())) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
-                        val i = Intent(requireContext(), DeckOptions::class.java)
+                        val i = Intent(requireContext(), DeckOptionsActivity::class.java)
                         i.putExtra("did", requireArguments().getLong("did"))
                         requireActivity().startActivity(i)
                     }

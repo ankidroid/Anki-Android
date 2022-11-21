@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">是</string>
     <!-- Navigation drawer items-->
     <string name="decks">牌組</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">瀏覽卡牌</string>
@@ -173,7 +172,7 @@
     <string name="empty_cloze_warning">編輯此筆記，並新增一些克漏字測驗。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">暫時禁用同步</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">遷移到作用域存儲</string>
     <string name="cancel_sync_confirm">你要取消同步嗎？</string>
     <string name="continue_sync">繼續同步</string>
     <string name="sync_cancelled">同步已取消</string>

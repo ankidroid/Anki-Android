@@ -43,7 +43,6 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuActio
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.CollectionTask.DeleteField
 import com.ichi2.async.CollectionTask.RepositionField
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
@@ -267,7 +266,26 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     private fun deleteField() {
-        TaskManager.launchCollectionTask(DeleteField(mModel, mNoteFields.getJSONObject(currentPos)), changeFieldHandler())
+        launchCatchingTask {
+            Timber.d("doInBackGroundDeleteField")
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                val result = withCol {
+                    try {
+                        models.remField(mModel, mNoteFields.getJSONObject(currentPos))
+                        save()
+                        true
+                    } catch (e: ConfirmModSchemaException) {
+                        // Should never be reached
+                        e.log()
+                        false
+                    }
+                }
+                if (!result) {
+                    closeActivity()
+                }
+                initialize()
+            }
+        }
     }
 
     /*

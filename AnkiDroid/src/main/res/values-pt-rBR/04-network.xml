@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">O banco de dados baixado estava corrompido. Por favor, tente novamente.</string>
     <string name="sync_overwrite_error">Sua coleção atual não pôde ser substituída pelo arquivo baixado.</string>
     <string name="sync_connection_error">O tempo limite da conexão expirou. Sua conexão à internet está com problemas, ou você tem um arquivo muito grande na sua pasta de mídia.</string>
-    <string name="sync_write_access_error">O arquivo baixado não pôde ser salvo para o cartão SD. Ou o Cartão SD está montado em somente leitura ou não há espaço suficiente.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">O Servidor de Sincronização Personalizado em Configurações Avançadas é inválido (%s). Por favor, insira um servidor válido ou desative a configuração.</string>
     <string name="sync_deletions_message">Sincronizando remoções&#8230;</string>
     <string name="sync_small_objects_message">Sincronizando objetos pequenos&#8230;</string>

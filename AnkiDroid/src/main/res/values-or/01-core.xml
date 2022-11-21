@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ହଁ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ତାସଖଣ୍ଡଗୁଡ଼ିକ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>
@@ -152,7 +151,7 @@
     <string name="time_quantity_days">%d ଦି</string>
     <string name="time_quantity_days_hours">%1$d ଦି %2$d ଘ</string>
     <string name="time_quantity_months">%.1f ମା</string>
-    <string name="time_quantity_years">%.1f ବର୍ଷ</string>
+    <string name="time_quantity_years">%.1f ଵର୍ଷ</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡର ପୁନଃନିର୍ମାଣ&#8230;</string>
     <string name="rebuild_cram_label">ପୁନଃନିର୍ମାଣ</string>

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Baza de date descărcata a fost corupta. Vă rugăm să încercaţi din nou.</string>
     <string name="sync_overwrite_error">Colecţia curenta nu a putut fi rescrisa de fişierul descărcat</string>
     <string name="sync_connection_error">Conexiunea a expirat. Conexiunea la internet se confruntă cu probleme, fie ai un fisier foarte mare în folderul de mass-media.</string>
-    <string name="sync_write_access_error">Fişierul descărcat nu a putut fi salvat pe cardul SD. Cardul este montat doar-pentru-citire sau nu există spaţiu suficient.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Syncing deletions&#8230;</string>
     <string name="sync_small_objects_message">Syncing small objects&#8230;</string>

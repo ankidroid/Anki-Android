@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">eja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Matzos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigadore de cartas</string>
@@ -179,7 +178,7 @@
     <string name="empty_cloze_warning">Modìfica custa nota e annanghe unos cantos iscantzellamentos de cloze. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronizatzione disabilitada in manera temporànea.</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Tràmuda a sa memòria cun punna</string>
     <string name="cancel_sync_confirm">Chetes annullare sa sincronizatzione?</string>
     <string name="continue_sync">Sighi a sincronizare</string>
     <string name="sync_cancelled">Sincronizatzione annullada</string>

@@ -196,7 +196,7 @@
     <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
     <string name="export_success_message">ファイルを保存する場所を選択するか、ファイルを別のアプリと共有することができます。</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Anki パッケージを送信:</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[        こんにちは！
         <br/><br/>
@@ -369,15 +369,14 @@
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="sync_impossible_during_migration">移行が完了するまで同期は無効になっています。\nあと%1$d個のメディアファイルの移行を待っています。</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">AnkiDroidを再インストールすると、コレクションを開くことができなくなります。</string>
+    <string name="migration_update_request_dialog_download_warning">AnkiDroidをアンインストールする場合は、コレクションをもう一度ダウンロードする必要があります。</string>
+    <string name="migration_update_request">Android のストレージ アクセスポリシーが変更されたため、コレクションの保存場所を変更させていただくことになりました。 データの保存場所を移行すると、AnkiDroidはより高速に、安全にデータを処理できるようになります。
+    保存場所の移行中は同期できません。</string>
+    <string name="start_migration_progress_message">ストレージの移行を開始します。AnkiDroidの使用はまもなく再開できます。</string>
+    <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。
+\nストレージの移行はバックグラウンドで続行されます。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>

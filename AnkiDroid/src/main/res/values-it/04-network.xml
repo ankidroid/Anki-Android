@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Il database scaricato è corrotto. Riprova.</string>
     <string name="sync_overwrite_error">La tua collezione corrente non ha potuto essere sovrascritta con il file scaricato.</string>
     <string name="sync_connection_error">Connessione scaduta. Ci sono problemi con la connessione internet oppure hai un file molto grande nella tua cartella dei media.</string>
-    <string name="sync_write_access_error">Il file scaricato non ha potuto essere salvato sulla scheda SD. O la tua scheda SD è montata in sola lettura, o non c\'è spazio sufficiente.</string>
+    <string name="sync_write_access_error_on_storage">Non è stato possibile salvare il file scaricato nel tuo spazio di archiviazione. O lo spazio di archiviazione è di sola lettura o non c\'è abbastanza spazio.</string>
     <string name="sync_error_invalid_sync_server">Il server di sincronizzazione personalizzato in Impostazioni avanzate non è valido (%s). Inserire un server valido o disabilitare l\'impostazione.</string>
     <string name="sync_deletions_message">Sincronizzazione eliminazioni...</string>
     <string name="sync_small_objects_message">Sincronizzazione piccoli oggetti...</string>

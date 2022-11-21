@@ -19,7 +19,6 @@
 package com.ichi2.async
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
@@ -29,8 +28,6 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
-import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
@@ -150,19 +147,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     override fun onCancelled() {
         TaskManager.removeTask(this)
         listener?.onCancelled()
-    }
-
-    class LoadDeckCounts : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckDueTreeNode>>? {
-            Timber.d("doInBackgroundLoadDeckCounts")
-            return try {
-                // Get due tree
-                col.sched.deckDueTree(collectionTask)
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundLoadDeckCounts - error")
-                null
-            }
-        }
     }
 
     class CheckDatabase : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
@@ -335,24 +319,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /**
-     * Deletes the given field in the given model
-     */
-    class DeleteField(private val model: Model, private val field: JSONObject) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackGroundDeleteField")
-            try {
-                col.models.remField(model, field)
-                col.save()
-            } catch (e: ConfirmModSchemaException) {
-                // Should never be reached
-                e.log()
-                return false
-            }
-            return true
-        }
-    }
-
-    /**
      * Repositions the given field in the given model
      */
     class RepositionField(private val model: Model, private val field: JSONObject, private val index: Int) : TaskDelegate<Void, Boolean>() {
@@ -380,28 +346,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
             col.sched.reset()
             return null
-        }
-    }
-
-    companion object {
-        @JvmStatic
-        @VisibleForTesting
-        fun nonTaskUndo(col: Collection): Card? {
-            val sched = col.sched
-            val card = col.undo()
-            if (card == null) {
-                /* multi-card action undone, no action to take here */
-                Timber.d("Multi-select undo succeeded")
-            } else {
-                // cid is actually a card id.
-                // a review was undone,
-                /* card review undone, set up to review that card again */
-                Timber.d("Single card review undo succeeded")
-                card.startTimer()
-                col.reset()
-                sched.deferReset(card)
-            }
-            return card
         }
     }
 }

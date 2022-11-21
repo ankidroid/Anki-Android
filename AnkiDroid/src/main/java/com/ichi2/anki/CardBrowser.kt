@@ -63,7 +63,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
 import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote

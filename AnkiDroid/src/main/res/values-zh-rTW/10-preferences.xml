@@ -54,10 +54,10 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">一般</string>
     <string name="pref_cat_studying" maxLength="41">學習中</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">系統範圍</string>
     <string name="pref_cat_reviewing" maxLength="41">複習</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">計畫任務</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外觀</string>
     <string name="pref_cat_themes" maxLength="41">佈景</string>
@@ -132,9 +132,9 @@
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
     <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="metered_sync_title" maxLength="41">允許按流量計費的連接同步</string>
+    <string name="metered_sync_summary">禁用後，如果嘗試在按流量計費的連接上同步，將收到警告</string>
+    <string name="app_theme" maxLength="41">主題</string>
     <string name="day_theme" maxLength="41">白天主題</string>
     <string name="night_theme" maxLength="41">夜間主題</string>
     <string name="default_font" maxLength="41">預設字型</string>
@@ -183,7 +183,7 @@
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="new_timezone" maxLength="41">時區變更處理</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">午夜過後%s小時</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
@@ -203,8 +203,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 偵錯</string>
     <string name="html_javascript_debugging_summ">啟用控制 WebView 連線，並儲存卡片 HTML 到 AnkiDroid 資料夾</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">複習介面</string>
+    <string name="accessibility" maxLength="41">無障礙功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">粘貼PNG格式的圖像到剪贴板上</string>
     <string name="paste_as_png_summary">為了節省磁盤空間，Anki自動會粘貼JPG格式到剪贴板上。你也可以在設置裡面設定PNG格式。</string>

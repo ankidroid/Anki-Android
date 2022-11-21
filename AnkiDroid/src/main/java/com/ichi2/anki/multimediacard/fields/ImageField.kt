@@ -75,7 +75,7 @@ class ImageField : FieldBase(), IField {
         @VisibleForTesting
         fun formatImageFileName(file: File): String {
             return if (file.exists()) {
-                "<img src=\"${file.name}\">"
+                """<img src="${file.name}">"""
             } else {
                 ""
             }

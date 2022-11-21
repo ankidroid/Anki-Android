@@ -20,10 +20,3 @@ updates:
   - dependency-name: org.apache.commons:commons-compress
     versions:
     - ">= 1.12, < 1.22"
-  # We cannot use current versions of material-dialogs with Java. It went Kotlin-only.
-  - dependency-name: com.afollestad.material-dialogs:core
-    versions:
-    - ">= 2.a, < 3"
-  - dependency-name: com.afollestad.material-dialogs:core
-    versions:
-    - ">= 3.a, < 4"

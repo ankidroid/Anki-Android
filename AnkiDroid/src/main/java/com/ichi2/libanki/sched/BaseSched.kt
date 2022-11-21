@@ -113,7 +113,8 @@ abstract class BaseSched(val col: Collection) {
 
     /**
      * Unbury cards.
-     * @param type Which kind of cards should be unburied.
+     * @param type Which kind of cards should be unburied. See [UnburyType]
+     * @param did: the deck whose cards must be unburied
      */
     open fun unburyCardsForDeck(did: DeckId, type: UnburyType = UnburyType.ALL) {
         val mode = when (type) {
@@ -124,8 +125,24 @@ abstract class BaseSched(val col: Collection) {
         col.newBackend.backend.unburyDeck(deckId = did, mode = mode)
     }
 
+    /**
+     * Parameter to describe what kind of cards must be unburied.
+     */
     enum class UnburyType {
-        ALL, MANUAL, SIBLINGS
+        /**
+         * Represents all buried cards
+         */
+        ALL,
+
+        /**
+         * Represents cards that have been buried explicitly by the user using the reviewer
+         */
+        MANUAL,
+
+        /**
+         * Represents cards that were buried because they are the siblings of a reviewed cards.
+         */
+        SIBLINGS
     }
 
     /**
@@ -138,7 +155,7 @@ abstract class BaseSched(val col: Collection) {
     /**
      * Unbury all buried cards in all decks. Only used for tests.
      */
-    fun unburyCards() {
+    open fun unburyCards() {
         for (did in col.decks.allIds()) {
             unburyCardsForDeck(did)
         }

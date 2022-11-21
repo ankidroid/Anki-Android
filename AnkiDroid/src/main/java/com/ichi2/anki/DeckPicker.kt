@@ -91,7 +91,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.getBestDefaultRootDirect
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.migrateEssentialFiles
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.web.CustomSyncServer
@@ -234,6 +234,7 @@ open class DeckPicker :
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
+    private var loadDeckCounts: Job? = null
 
     init {
         ChangeManager.subscribe(this)
@@ -702,12 +703,12 @@ open class DeckPicker :
                 BadgeDrawableBuilder.removeBadge(menuItem)
             }
             SyncIconState.PendingChanges -> {
-                BadgeDrawableBuilder(resources)
+                BadgeDrawableBuilder(this)
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
                     .replaceBadge(menuItem)
             }
             SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
-                BadgeDrawableBuilder(resources)
+                BadgeDrawableBuilder(this)
                     .withText('!')
                     .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
                     .replaceBadge(menuItem)
@@ -939,7 +940,7 @@ open class DeckPicker :
         Timber.d("onPause()")
         mActivityPaused = true
         // The deck count will be computed on resume. No need to compute it now
-        TaskManager.cancelAllTasks(LoadDeckCounts::class.java)
+        loadDeckCounts?.cancel()
         super.onPause()
     }
 
@@ -2154,21 +2155,6 @@ open class DeckPicker :
         mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
 
-    private fun <T : AbstractDeckTreeNode> updateDeckListListener(): UpdateDeckListListener<T> {
-        return UpdateDeckListListener(this)
-    }
-
-    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
-        override fun actualOnPreExecute(context: DeckPicker) {
-            if (!context.colIsOpen()) {
-                context.showProgressBar()
-            }
-            Timber.d("Refreshing deck list")
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: List<TreeNode<T>>?) = context.onDecksLoaded(result)
-    }
-
     /**
      * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
      * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
@@ -2197,7 +2183,15 @@ open class DeckPicker :
                 }
             }
         } else {
-            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
+            loadDeckCounts?.cancel()
+            loadDeckCounts = launchCatchingTask {
+                Timber.d("Refreshing deck list")
+                withProgress {
+                    Timber.d("doInBackgroundLoadDeckCounts")
+                    val deckData = withCol { sched.deckDueTree(null) }
+                    onDecksLoaded(deckData)
+                }
+            }
         }
     }
 
@@ -2283,9 +2277,10 @@ open class DeckPicker :
             val due = mDeckListAdapter.due
             val res = resources
             if (col.cardCount() != -1) {
-                var time: String? = "-"
-                if (eta != -1 && eta != null) {
-                    time = Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+                val time: String? = if (eta != -1 && eta != null) {
+                    Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+                } else {
+                    "-"
                 }
                 if (due != null && supportActionBar != null) {
                     val subTitle: String = if (due == 0) {
@@ -2317,7 +2312,7 @@ open class DeckPicker :
         } else {
             // otherwise open regular options
             val intent = if (BackendFactory.defaultLegacySchema) {
-                Intent(this@DeckPicker, DeckOptions::class.java).apply {
+                Intent(this@DeckPicker, DeckOptionsActivity::class.java).apply {
                     putExtra("did", did)
                 }
             } else {

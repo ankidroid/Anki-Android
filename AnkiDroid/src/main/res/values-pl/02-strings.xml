@@ -353,11 +353,11 @@
     <string name="insert_mathjax">Wstaw równanie MathJax</string>
     <string name="insert_cloze">Luka do wypełnienia</string>
     <string name="note_editor_toolbar_icon">Tekst przycisku</string>
-    <string name="before_text">HTML po zaznaczonym tekście</string>
-    <string name="after_text">HTML przed zaznaczonym tekstem</string>
+    <string name="before_text">HTML przed zaznaczonym tekstem</string>
+    <string name="after_text">HTML za zaznaczonym tekstem</string>
     <string name="add_toolbar_item">Utwórz element paska narzędzi</string>
     <string name="edit_toolbar_item">Edytuj element paska narzędzi</string>
-    <string name="toolbar_item_explain_edit_or_remove">Wprowadź kod HTML który będzie wstawiony przed i po wybranym tekście\n\nPrzytrzymaj element paska narzędzi aby go usunąć</string>
+    <string name="toolbar_item_explain_edit_or_remove">Wprowadź kod HTML, który będzie wstawiony przed i po wybranym tekście\n\nPrzytrzymaj element paska narzędzi, aby go usunąć</string>
     <string name="remove_toolbar_item">Usunąć element paska narzędzi?</string>
     <string name="note_editor_paste_too_large">Obraz jest zbyt duży, aby go wkleić, proszę wstaw go ręcznie</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Kopia zapasowa Android w toku. Spróbuj ponownie</string>

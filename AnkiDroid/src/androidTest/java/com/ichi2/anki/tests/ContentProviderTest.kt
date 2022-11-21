@@ -371,7 +371,7 @@ class ContentProviderTest : InstrumentedTest() {
         var cursor = cr.query(
             FlashCardsContract.Note.CONTENT_URI_V2,
             null,
-            String.format("mid=%d", mModelId),
+            "mid=$mModelId",
             null,
             null
         )

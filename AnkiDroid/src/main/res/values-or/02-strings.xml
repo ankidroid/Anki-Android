@@ -221,7 +221,7 @@
     <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
-    <string name="steps_min_error">ଅତି କମରେ ୧ଟିଏ ପାହୁଣ୍ଡ ଆବଶ୍ୟକ</string>
+    <string name="steps_min_error">ଅତି କମରେ ୧ଟିଏ ପାହୁଣ୍ଡ ଆଵଶ୍ୟକ</string>
     <string name="sched_end">(ସମାପ୍ତି)</string>
     <string name="sched_unbury_action">ସେଗୁଡ଼ିକୁ ଦେଖିବା ପାଇଁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
     <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ପତ୍ରଗୁଡ଼ିକୁ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାହେଇଛି</string>
@@ -249,8 +249,8 @@
         <item quantity="other">%s ମାସ</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="one">%s ବର୍ଷ</item>
-        <item quantity="other">%s ବର୍ଷ</item>
+        <item quantity="one">%s ଵର୍ଷ</item>
+        <item quantity="other">%s ଵର୍ଷ</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
@@ -344,8 +344,8 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ ଅଟେ</string>
-    <string name="password_empty">ପାସ୍‍ୱାର୍ଡ଼ ଆବଶ୍ୟକ ଅଟେ</string>
+    <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆଵଶ୍ୟକ ଅଟେ</string>
+    <string name="password_empty">ପାସ୍‍ୱାର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->

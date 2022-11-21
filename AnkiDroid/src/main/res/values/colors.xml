@@ -141,7 +141,5 @@
     <color name="popup_background_theme_dark">#434343</color>
     <color name="popup_background_theme_black">#252525</color>
 
-    <color name="intro_center_separator">#dddddd</color>
-
 </resources>
 
