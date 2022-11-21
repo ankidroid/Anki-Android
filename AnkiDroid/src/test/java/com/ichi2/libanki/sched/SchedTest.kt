@@ -307,7 +307,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(3, (c.left / 1000).toLong())
         // it should be due in 30 seconds
         val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
-        assertThat(t, equalTo(greaterThanOrEqualTo(25L)))
+        assertThat(t, equalTo(25L))
         assertThat(t, equalTo(lessThanOrEqualTo(40L)))
         // pass it once
         col.sched.answerCard(c, BUTTON_TWO)
@@ -498,7 +498,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(1, c.ivl)
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertThat(c.due, equalTo(greaterThanOrEqualTo(TimeManager.time.intTime())))
+        assertThat(c.due, equalTo(TimeManager.time.intTime()))
         assertThat(c.due - TimeManager.time.intTime(), equalTo(greaterThan(118L)))
         // factor should have been decremented
         assertEquals(2300, c.factor)
@@ -750,7 +750,7 @@ class SchedTest : RobolectricTest() {
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
-        assertThat(c.due, equalTo(greaterThanOrEqualTo(TimeManager.time.intTime())))
+        assertThat(c.due, equalTo(TimeManager.time.intTime()))
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_REV, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
