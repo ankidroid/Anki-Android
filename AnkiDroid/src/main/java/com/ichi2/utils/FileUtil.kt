@@ -104,7 +104,7 @@ object FileUtil {
                 var totalBytes = 0L
                 var numberOfDirectories = 0
                 var numberOfFiles = 0
-                val directoriesToProcess = mutableListOf<File>(root)
+                val directoriesToProcess = mutableListOf(root)
                 while (directoriesToProcess.isNotEmpty()) {
                     val dir = directoriesToProcess.removeLast()
                     listFiles(dir).forEach {
