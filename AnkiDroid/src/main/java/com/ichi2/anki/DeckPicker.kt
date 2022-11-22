@@ -2207,7 +2207,7 @@ open class DeckPicker :
             showCollectionErrorDialog()
             return
         }
-        dueTree = result.map { x -> x.unsafeCastToType() }
+        dueTree = result.map { x -> TreeNode(x.value) }
         renderPage()
         // Update the mini statistics bar as well
         launchCatchingTask {
