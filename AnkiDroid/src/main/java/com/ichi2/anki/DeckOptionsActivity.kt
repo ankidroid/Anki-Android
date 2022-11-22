@@ -95,7 +95,7 @@ class DeckOptionsActivity :
 
                 // new
                 val newOptions = mOptions.getJSONObject("new")
-                newOptions.apply {
+                mValues.apply {
                     set("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")))
                     set("newGradIvl", newOptions.getJSONArray("ints").getString(0))
                     set("newEasy", newOptions.getJSONArray("ints").getString(1))
@@ -121,7 +121,7 @@ class DeckOptionsActivity :
                 }
                 // lapse
                 val lapOptions = mOptions.getJSONObject("lapse")
-                lapOptions.apply {
+                mValues.apply {
                     set("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")))
                     set("lapNewIvl", String.format(Locale.ROOT, "%.0f", lapOptions.getDouble("mult") * 100))
                     set("lapMinIvl", lapOptions.getString("minInt"))
