@@ -569,7 +569,7 @@ class DeckOptionsActivity :
                 val count = optionsGroupCount
                 // Escape "%" in groupName as it's treated as a token
                 groupName = groupName.replace("%".toRegex(), "%%")
-                pref?.summary = res.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count)
+                pref!!.summary = res.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count)
                 continue
             }
 
@@ -596,12 +596,12 @@ class DeckOptionsActivity :
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
         val subDeckCount = subdeckCount
-        findPreference("confSetSubdecks")?.summary = res.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount)
+        findPreference("confSetSubdecks").summary = res.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount)
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected fun buildLists() {
-        val deckConfPref = findPreference("deckConf") as? ListPreference
+        val deckConfPref = findPreference("deckConf") as ListPreference
         val confs = col.decks.allConf()
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
         val confValues = arrayOfNulls<String>(confs.size)
@@ -617,15 +617,15 @@ class DeckOptionsActivity :
             value = pref.getString("deckConf", "0")
         }
 
-        val newOrderPref = findPreference("newOrder") as? ListPreference
-        newOrderPref?.apply {
+        val newOrderPref = findPreference("newOrder") as ListPreference
+        newOrderPref.apply {
             setEntries(R.array.new_order_labels)
             setEntryValues(R.array.new_order_values)
             value = pref.getString("newOrder", "0")
         }
 
-        val leechActPref = findPreference("lapLeechAct") as? ListPreference
-        leechActPref?.apply {
+        val leechActPref = findPreference("lapLeechAct") as ListPreference
+        leechActPref.apply {
             setEntries(R.array.leech_action_labels)
             setEntryValues(R.array.leech_action_values)
             value = pref.getString(
