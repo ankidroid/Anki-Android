@@ -30,15 +30,6 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
     @VisibleForTesting
     val mActivity: Activity
 
-    /**
-     * The action to perform when clicking the associated menu item. By default this delegates to
-     * the activity's [Activity.onOptionsItemSelected] callback, but a custom action can be set and
-     * used instead.
-     */
-    var clickHandler: (Activity, MenuItem) -> Unit = { activity, menuItem ->
-        activity.onOptionsItemSelected(menuItem)
-    }
-
     override fun onCreateActionView(forItem: MenuItem): View {
         val actionView = ImageButton(context, null, R.attr.actionButtonStyle)
         TooltipCompat.setTooltipText(actionView, forItem.title)
@@ -51,7 +42,7 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
             if (!forItem.isEnabled) {
                 return@setOnClickListener
             }
-            clickHandler(mActivity, forItem)
+            mActivity.onOptionsItemSelected(forItem)
         }
         return actionView
     }
