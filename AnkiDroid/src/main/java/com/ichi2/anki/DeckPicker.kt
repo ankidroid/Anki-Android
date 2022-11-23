@@ -1211,11 +1211,6 @@ open class DeckPicker :
                     negativeButton(R.string.close) {
                         restartActivity()
                     }
-                    @Suppress("Deprecation")
-                    // TODO: Cleanup - Remove neutral button from here
-                    neutralButton {
-                        restartActivity()
-                    }
                     cancelOnTouchOutside(false)
                     cancelable(false)
                 }
