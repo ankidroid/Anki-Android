@@ -611,7 +611,7 @@ class DeckOptionsActivity :
             confLabels[index] = deckConfig.getString("name")
         }
 
-        deckConfPref?.apply {
+        deckConfPref.apply {
             entries = confLabels
             entryValues = confValues
             value = pref.getString("deckConf", "0")
