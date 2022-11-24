@@ -166,7 +166,6 @@ enum class ViewerCommand(val resourceId: Int) {
                 SHOW_HINT -> from(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
                 SHOW_ALL_HINTS -> from(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
                 ADD_NOTE -> from(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
-                // ToDo -> for new stuff
                 else -> ArrayList()
             }
 

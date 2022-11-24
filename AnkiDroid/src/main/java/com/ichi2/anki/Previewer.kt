@@ -246,7 +246,7 @@ class Previewer : AbstractFlashcardViewer() {
     private fun tryChangePreviewedCard(nextCard: Boolean): Boolean {
         val goalIndex = if (nextCard) mIndex + 1 else mIndex - 1
         return if (goalIndex < 0 || goalIndex >= mCardList.size) {
-            Timber.i("There is no " + (if (nextCard) "next" else "previous") + " card")
+            Timber.i("Card index ($goalIndex) out of bounds")
             false
         } else {
             changePreviewedCard(nextCard)
@@ -256,7 +256,6 @@ class Previewer : AbstractFlashcardViewer() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun changePreviewedCard(nextCard: Boolean) {
-        Timber.i("change previewed card - nextCard: $nextCard")
         mIndex = if (nextCard) mIndex + 1 else mIndex - 1
         currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
