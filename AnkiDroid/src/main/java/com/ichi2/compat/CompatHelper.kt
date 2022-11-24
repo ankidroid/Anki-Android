@@ -17,6 +17,7 @@ package com.ichi2.compat
 
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.os.Parcelable
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
@@ -82,6 +83,9 @@ class CompatHelper private constructor() {
 
         inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
             return compat.getParcelableExtra(this, name, T::class.java)
+        }
+        inline fun <reified T : Serializable> Bundle.getSerializableCompat(name: String): T? {
+            return compat.getSerializable(this, name, T::class.java)
         }
     }
 }

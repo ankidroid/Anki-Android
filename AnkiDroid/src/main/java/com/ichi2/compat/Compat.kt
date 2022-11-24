@@ -27,6 +27,7 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Bundle
 import android.os.Parcelable
 import android.widget.TimePicker
 import androidx.annotation.IntDef
@@ -91,7 +92,7 @@ interface Compat {
      * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
      */
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
-
+    fun <T : Serializable?> getSerializable(bundle: Bundle, name: String, clazz: Class<T>): T?
     /**
      * Copy file at path [source] to path [target]
      */
