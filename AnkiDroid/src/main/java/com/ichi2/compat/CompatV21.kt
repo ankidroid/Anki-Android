@@ -99,6 +99,13 @@ open class CompatV21 : Compat {
     override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
         packageManager.getPackageInfo(packageName, flags.value.toInt())
 
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Serializable?> getSerializable(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>
+    ): T? = bundle.getSerializable(key) as? T?
+
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {

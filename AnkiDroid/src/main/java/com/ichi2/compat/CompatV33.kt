@@ -40,6 +40,10 @@ open class CompatV33 : CompatV31(), Compat {
         return intent.getParcelableExtra(name, clazz)
     }
 
+    override fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T? {
+        return bundle.getSerializable(key, clazz)
+    }
+
     override fun <T> readSparseArray(
         parcel: Parcel,
         loader: ClassLoader,
