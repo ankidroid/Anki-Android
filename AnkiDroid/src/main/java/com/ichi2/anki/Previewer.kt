@@ -212,8 +212,17 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        /* do nothing */
-        return false
+        return when (which) {
+            ViewerCommand.SHOW_PREV_CARD -> {
+                tryChangePreviewedCard(false)
+                true
+            }
+            ViewerCommand.SHOW_NEXT_CARD -> {
+                tryChangePreviewedCard(true)
+                true
+            }
+            else -> false
+        }
     }
 
     override fun performReload() {
@@ -234,8 +243,20 @@ class Previewer : AbstractFlashcardViewer() {
         mNoteChanged = true
     }
 
+    private fun tryChangePreviewedCard(nextCard: Boolean): Boolean {
+        val goalIndex = if (nextCard) mIndex + 1 else mIndex - 1
+        return if (goalIndex < 0 || goalIndex >= mCardList.size) {
+            Timber.i("There is no " + (if (nextCard) "next" else "previous") + " card")
+            false
+        } else {
+            changePreviewedCard(nextCard)
+            true
+        }
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun changePreviewedCard(nextCard: Boolean) {
+        Timber.i("change previewed card - nextCard: $nextCard")
         mIndex = if (nextCard) mIndex + 1 else mIndex - 1
         currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()

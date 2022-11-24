@@ -69,7 +69,9 @@ enum class ViewerCommand(val resourceId: Int) {
     TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard),
     SHOW_HINT(R.string.gesture_show_hint),
     SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
-    ADD_NOTE(R.string.menu_add_note);
+    ADD_NOTE(R.string.menu_add_note),
+    SHOW_NEXT_CARD(R.string.gesture_preview_next_card),
+    SHOW_PREV_CARD(R.string.gesture_preview_previous_card);
 
     companion object {
         val allDefaultBindings: List<MappableBinding>
@@ -164,6 +166,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 SHOW_HINT -> from(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
                 SHOW_ALL_HINTS -> from(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
                 ADD_NOTE -> from(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
+                // ToDo -> for new stuff
                 else -> ArrayList()
             }
 
