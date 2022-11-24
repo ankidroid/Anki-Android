@@ -101,6 +101,18 @@ interface Compat {
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
     /**
+     * Returns the value associated with the given key, or `null` if:
+     * * No mapping of the desired type exists for the given key.
+     * * A `null` value is explicitly associated with the key.
+     * * The object is not of type {@code clazz}.
+     *
+     * @param key a String, or `null`
+     * @param clazz The expected class of the returned type
+     * @return a Serializable value, or `null`
+     */
+    fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
+
+    /**
      * Retrieve overall information about an application package that is
      * installed on the system.
      *

@@ -35,6 +35,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -85,7 +86,6 @@ class SharedDecksDownloadFragment : Fragment() {
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
     }
 
-    @Suppress("deprecation") // getSerializable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,7 +94,6 @@ class SharedDecksDownloadFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shared_decks_download, container, false)
     }
 
-    @Suppress("deprecation") // getSerializable
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -105,7 +104,7 @@ class SharedDecksDownloadFragment : Fragment() {
         mTryAgainButton = view.findViewById(R.id.try_again_deck_download)
         mCheckNetworkInfoText = view.findViewById(R.id.check_network_info_text)
 
-        val fileToBeDownloaded = arguments?.getSerializable(DOWNLOAD_FILE) as DownloadFile
+        val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         mDownloadManager = (activity as SharedDecksActivity).downloadManager
 
         downloadFile(fileToBeDownloaded)

@@ -83,6 +83,11 @@ class CompatHelper private constructor() {
         fun hasScrollKeys(): Boolean {
             return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
         }
+
+        inline fun <reified T : Serializable?> Bundle.getSerializableCompat(name: String): T? {
+            return compat.getSerializable(this, name, T::class.java)
+        }
+
         inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
             return compat.getSerializableExtra(this, name, T::class.java)
         }
