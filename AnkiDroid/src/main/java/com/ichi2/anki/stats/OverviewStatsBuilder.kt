@@ -262,13 +262,14 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
     }
 
     private fun _due(start: Int?, end: Int?, chunk: Int): List<IntArray> {
-        var lim = ""
-        if (start != null) {
-            lim += String.format(Locale.US, " and due-%d >= %d", col.sched.today, start)
-        }
-        if (end != null) {
-            lim += String.format(Locale.US, " and day < %d", end)
-        }
+        val lim =
+            if (start != null) {
+                String.format(Locale.US, " and due-%d >= %d", col.sched.today, start)
+            } else if (end != null) {
+                String.format(Locale.US, " and day < %d", end)
+            } else {
+                ""
+            }
         val d: MutableList<IntArray> = ArrayList()
         val query = "select (due-" + col.sched.today + ")/" + chunk + " as day,\n" +
             "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +

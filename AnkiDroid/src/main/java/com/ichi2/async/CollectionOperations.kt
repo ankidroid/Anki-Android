@@ -314,10 +314,8 @@ fun deleteMultipleNotes(
         // delete note
         val uniqueNoteIds = LongArray(notes.size)
         val notesArr = notes.toTypedArray()
-        var count = 0
-        for (note in notes) {
+        for ((count, note) in notes.withIndex()) {
             uniqueNoteIds[count] = note.id
-            count++
         }
         col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
         col.remNotes(uniqueNoteIds)
