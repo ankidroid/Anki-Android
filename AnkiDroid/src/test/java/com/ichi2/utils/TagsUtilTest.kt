@@ -12,6 +12,7 @@
  */
 package com.ichi2.utils
 
+import com.ichi2.testutils.AnkiAssert.assertEquals
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -143,8 +144,8 @@ class TagsUtilTest {
             assertTrue(TagsUtil.compareTag("aaa::bbbb", "aaa::bbb::trailing") > 0)
             assertTrue(TagsUtil.compareTag("aaa::bbbz::foo", "aaa::bbb::bar") > 0)
             assertTrue(TagsUtil.compareTag("aaa::bbb9::foo", "aaa::bbb::bar") > 0)
-            assertEquals(0, TagsUtil.compareTag("aaa::bbb", "aaa::bbb").toLong())
-            assertEquals(0, TagsUtil.compareTag("aAa::bbb", "aaa::bBb").toLong())
+            assertEquals(0, TagsUtil.compareTag("aaa::bbb", "aaa::bbb"))
+            assertEquals(0, TagsUtil.compareTag("aAa::bbb", "aaa::bBb"))
         }
     }
 }

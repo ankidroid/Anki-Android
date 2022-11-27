@@ -19,6 +19,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.TemporaryModel.ChangeType.*
 import com.ichi2.libanki.Model
+import com.ichi2.testutils.AnkiAssert.assertEquals
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
@@ -140,7 +141,7 @@ class TemporaryModelTest : RobolectricTest() {
         if (actual !is ArrayList<*>) {
             Assert.fail("actual array null or not the correct type")
         }
-        Assert.assertEquals("arrays didn't have the same length?", expected.size.toLong(), (actual as ArrayList<Array<Any?>?>).size.toLong())
+        assertEquals("arrays didn't have the same length?", expected.size, (actual as ArrayList<Array<Any?>?>).size)
         for (i in expected.indices) {
             if (actual[i] !is Array<Any?>) {
                 Assert.fail("actual array does not contain Object[] entries")

@@ -18,7 +18,7 @@ package com.ichi2.anki.multimediacard
 import android.media.MediaRecorder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import org.junit.Assert
+import com.ichi2.testutils.AnkiAssert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -74,6 +74,6 @@ class AudioRecorderAndroidTest : RobolectricTest() {
         val recordingHandler = InitHandlerWithError()
         mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
         mAudioRecorder.startRecording(targetContext, "testpath")
-        Assert.assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun.toLong())
+        assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun)
     }
 }

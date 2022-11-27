@@ -38,6 +38,7 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.AnkiAssert.assertEquals
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.assertThrowsSubclass
@@ -922,8 +923,8 @@ class JSONObjectTest {
         correctJsonObjectBasicCopy.putOpt("boolean_key", true)
         correctJsonObjectBasicCopy.putOpt("object_key", mCorrectJsonBasic)
 
-        Assert.assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key").toLong())
-        Assert.assertEquals(2L, correctJsonObjectBasicCopy.getLong("long_key"))
+        assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key"))
+        assertEquals(2, correctJsonObjectBasicCopy.getInt("long_key"))
         Assert.assertEquals(2.0, correctJsonObjectBasicCopy.getDouble("double_key"), 1e-10)
         Assert.assertTrue(correctJsonObjectBasicCopy.getBoolean("boolean_key"))
         Assert.assertEquals(mCorrectJsonBasic, correctJsonObjectBasicCopy["object_key"])

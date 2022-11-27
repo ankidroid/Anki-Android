@@ -86,6 +86,13 @@ object AnkiAssert {
         val minMax = SchedV2._fuzzIvlRange(targetIvl)
         return minMax.first <= c.ivl && c.ivl <= minMax.second
     }
+    fun assertEquals(left: Int, right: Int) {
+        Assert.assertEquals(left.toLong(), right.toLong())
+    }
+
+    fun assertEquals(message: String?, left: Int, right: Int) {
+        Assert.assertEquals(message, left.toLong(), right.toLong())
+    }
 }
 
 /** assertThrows, allowing for lambda shorthand
