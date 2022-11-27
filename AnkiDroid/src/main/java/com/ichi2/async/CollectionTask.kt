@@ -22,7 +22,6 @@ import android.content.Context
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -31,7 +30,6 @@ import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -315,24 +313,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             }
             return Computation.OK
-        }
-    }
-
-    /**
-     * Repositions the given field in the given model
-     */
-    class RepositionField(private val model: Model, private val field: JSONObject, private val index: Int) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundRepositionField")
-            try {
-                col.models.moveField(model, field, index)
-                col.save()
-            } catch (e: ConfirmModSchemaException) {
-                e.log()
-                // Should never be reached
-                return false
-            }
-            return true
         }
     }
 
