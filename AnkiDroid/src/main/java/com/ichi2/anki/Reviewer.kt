@@ -1030,7 +1030,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (actionBar != null) {
             if (mPrefShowETA) {
                 mEta = sched!!.eta(counts, false)
-                actionBar.subtitle = Utils.remainingTime(AnkiDroidApp.instance, (mEta * 60).toLong())
+                actionBar.subtitle = Utils.remainingTime(this, (mEta * 60).toLong())
             }
         }
         mNewCount = SpannableString(counts.new.toString())
