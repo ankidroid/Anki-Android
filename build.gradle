@@ -8,7 +8,7 @@ buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.7.21'
     ext.lint_version = '30.3.1'
-    ext.acra_version = '5.9.6'
+    ext.acra_version = '5.9.7'
     ext.ankidroid_backend_version = '0.1.15-anki2.1.54' // this is parsed in tools/setup-anki-backend.sh
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.9.1'
