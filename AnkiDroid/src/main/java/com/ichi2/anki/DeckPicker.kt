@@ -1484,6 +1484,43 @@ open class DeckPicker :
         )
     }
 
+    private fun checkDatabasePostTask(result: Pair<Boolean, CheckDatabaseResult?>?) {
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog!!.dismiss()
+        }
+        val databaseResult = result!!.second
+        if (databaseResult == null) {
+            if (result.first) {
+                Timber.w("Expected result data, got nothing")
+            } else {
+                handleDbError()
+            }
+            return
+        }
+        if (!result.first || databaseResult.failed) {
+            if (databaseResult.databaseLocked) {
+                handleDbLocked()
+            } else {
+                handleDbError()
+            }
+            return
+        }
+        val count = databaseResult.cardsWithFixedHomeDeckCount
+        if (count != 0) {
+            val message = resources.getString(R.string.integrity_check_fixed_no_home_deck, count)
+            showThemedToast(this@DeckPicker, message, false)
+        }
+        val msg: String
+        val shrunkInMb = (databaseResult.sizeChangeInKb / 1024.0).roundToLong()
+        msg = if (shrunkInMb > 0.0) {
+            resources.getString(R.string.check_db_acknowledge_shrunk, shrunkInMb.toInt())
+        } else {
+            resources.getString(R.string.check_db_acknowledge)
+        }
+        // Show result of database check and restart the app
+        showSimpleMessageDialog(msg, reload = true)
+    }
+
     /**
      * Schedules a background job to find missing, unused and invalid media files.
      * Shows a progress dialog while operation is running.
@@ -2619,40 +2656,7 @@ open class DeckPicker :
         }
 
         override fun onPostExecute(result: Pair<Boolean, CheckDatabaseResult?>?) {
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                mProgressDialog!!.dismiss()
-            }
-            val databaseResult = result!!.second
-            if (databaseResult == null) {
-                if (result.first) {
-                    Timber.w("Expected result data, got nothing")
-                } else {
-                    handleDbError()
-                }
-                return
-            }
-            if (!result.first || databaseResult.failed) {
-                if (databaseResult.databaseLocked) {
-                    handleDbLocked()
-                } else {
-                    handleDbError()
-                }
-                return
-            }
-            val count = databaseResult.cardsWithFixedHomeDeckCount
-            if (count != 0) {
-                val message = resources.getString(R.string.integrity_check_fixed_no_home_deck, count)
-                showThemedToast(this@DeckPicker, message, false)
-            }
-            val msg: String
-            val shrunkInMb = (databaseResult.sizeChangeInKb / 1024.0).roundToLong()
-            msg = if (shrunkInMb > 0.0) {
-                resources.getString(R.string.check_db_acknowledge_shrunk, shrunkInMb.toInt())
-            } else {
-                resources.getString(R.string.check_db_acknowledge)
-            }
-            // Show result of database check and restart the app
-            showSimpleMessageDialog(msg, reload = true)
+            checkDatabasePostTask(result)
         }
 
         /**
