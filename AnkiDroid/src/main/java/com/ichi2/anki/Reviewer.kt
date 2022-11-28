@@ -458,7 +458,11 @@ open class Reviewer : AbstractFlashcardViewer() {
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = Intent(this, DeckOptionsActivity::class.java)
+                val i = if (BackendFactory.defaultLegacySchema) {
+                    Intent(this, DeckOptionsActivity::class.java)
+                } else {
+                    com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
+                }
                 startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
             }
             R.id.action_select_tts -> {
