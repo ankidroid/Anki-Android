@@ -25,7 +25,6 @@ import com.ichi2.anki.AnkiSerialization.factory
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
@@ -145,22 +144,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     override fun onCancelled() {
         TaskManager.removeTask(this)
         listener?.onCancelled()
-    }
-
-    class CheckDatabase : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
-            Timber.d("doInBackgroundCheckDatabase")
-            // Don't proceed if collection closed
-            val result = col.fixIntegrity(TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.appResources))
-            return if (result.failed) {
-                // we can fail due to a locked database, which requires knowledge of the failure.
-                Pair(false, result)
-            } else {
-                // Close the collection and we restart the app to reload
-                CollectionHelper.instance.closeCollection(true, "Check Database Completed")
-                Pair(true, result)
-            }
-        }
     }
 
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, ImporterData>() {
