@@ -424,17 +424,19 @@ fun changeDeckMulti(
 
 fun checkDatabase(
     col: Collection,
-    collectionTask: ProgressSenderAndCancelListener<String>,
+    /* collectionTask: ProgressSenderAndCancelListener<String>, */
 ): Pair<Boolean, Collection.CheckDatabaseResult?> {
     Timber.d("doInBackgroundCheckDatabase")
     // Don't proceed if collection closed
-    val result = col.fixIntegrity(TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.appResources))
+    // TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.appResources)
+    val result = col.fixIntegrity(null)
     return if (result.failed) {
         // we can fail due to a locked database, which requires knowledge of the failure.
         Pair(false, result)
     } else {
         // Close the collection and we restart the app to reload
-        CollectionHelper.instance.closeCollection(true, "Check Database Completed")
+        // CollectionHelper.instance.closeCollection(true, "Check Database Completed")
+        col.close(save = true)
         Pair(true, result)
     }
 }

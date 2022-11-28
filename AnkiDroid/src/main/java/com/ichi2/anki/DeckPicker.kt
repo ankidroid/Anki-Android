@@ -1474,14 +1474,14 @@ open class DeckPicker :
     }
 
     private fun handleDatabaseCheckLegacy() {
-        TaskManager.launchCollectionTask(
-            object : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
-                override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
-                    return checkDatabase(col, collectionTask)
-                }
-            },
-            CheckDatabaseListener()
-        )
+        launchCatchingTask {
+            withProgressDialog(this@DeckPicker, null) { progressDialog ->
+                @Suppress("DEPRECATION")
+                progressDialog.setMessage(getString(R.string.check_db_message))
+                val result = withCol { checkDatabase(this) }
+                checkDatabasePostTask(result)
+            }
+        }
     }
 
     private fun checkDatabasePostTask(result: Pair<Boolean, CheckDatabaseResult?>?) {

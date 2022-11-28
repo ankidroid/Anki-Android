@@ -1484,13 +1484,13 @@ open class Collection(
 
     /** Fix possible problems and rebuild caches.  */
     @KotlinCleanup("Convert FunctionThrowable to ::method (as it was done in the Java)")
-    fun fixIntegrity(progressCallback: TaskManager.ProgressCallback<String>): CheckDatabaseResult {
+    fun fixIntegrity(@Suppress("UNUSED_PARAMETER") progressCallback: TaskManager.ProgressCallback<String>?): CheckDatabaseResult {
         var file = File(path)
         val result = CheckDatabaseResult(file.length())
-        val currentTask = intArrayOf(1)
+        @Suppress("UNUSED_VARIABLE") val currentTask = intArrayOf(1)
         // a few fixes are in all-models loops, the rest are one-offs
-        val totalTasks = models.all().size * 4 + 27
-        val notifyProgress = Runnable { fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) }
+        @Suppress("UNUSED_VARIABLE") val totalTasks = models.all().size * 4 + 27
+        val notifyProgress = Runnable { /* fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) */ }
         val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?> ->
             // DEFECT: notifyProgress will lag if an exception is thrown.
             try {

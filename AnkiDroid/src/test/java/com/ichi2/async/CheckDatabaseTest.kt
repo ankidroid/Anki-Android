@@ -17,24 +17,18 @@ package com.ichi2.async
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.Collection
 import com.ichi2.testutils.CollectionUtils
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
 class CheckDatabaseTest : RobolectricTest() {
     @Test
     fun checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase()
-        val result = object : TaskDelegate<String, Pair<Boolean, Collection.CheckDatabaseResult?>>() {
-            override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, Collection.CheckDatabaseResult?> {
-                return checkDatabase(col, collectionTask)
-            }
-        }.execTask(col, mock())
+        val result = checkDatabase(col)
         assertThat("The result should specify a failure", result.first, equalTo(false))
         val checkDbResult = result.second!!
         assertThat("The result should specify the database was locked", checkDbResult.databaseLocked)
