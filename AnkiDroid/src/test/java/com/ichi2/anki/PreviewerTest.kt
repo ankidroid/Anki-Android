@@ -100,8 +100,8 @@ class PreviewerTest : RobolectricTest() {
         val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
         val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
         val y = s.progress
-        previewer.changePreviewedCard(true)
-        previewer.changePreviewedCard(true)
+        previewer.showNextCard()
+        previewer.showNextCard()
         assertThat("Seekbar value when you preview two cards", y, equalTo(s.progress - 2))
         assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 3, 6)))
     }
@@ -112,12 +112,12 @@ class PreviewerTest : RobolectricTest() {
         val previewer = seekBarHelper()
         val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
         val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
-        previewer.changePreviewedCard(true)
-        previewer.changePreviewedCard(true)
+        previewer.showNextCard()
+        previewer.showNextCard()
         val y = s.progress
-        previewer.changePreviewedCard(false)
+        previewer.showPreviousCard()
         assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 2, 6)))
-        previewer.changePreviewedCard(false)
+        previewer.showPreviousCard()
         assertThat("Seekbar value when you go back two cards", s.progress, equalTo(y - 2))
         assertThat("Progress text at the beginning.", t.text, equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
     }

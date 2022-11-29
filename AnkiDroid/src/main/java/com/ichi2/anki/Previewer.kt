@@ -153,8 +153,8 @@ class Previewer : AbstractFlashcardViewer() {
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
         previewLayout = PreviewLayout.createAndDisplay(this, mToggleAnswerHandler)
-        previewLayout!!.setOnNextCard { changePreviewedCard(true) }
-        previewLayout!!.setOnPreviousCard { changePreviewedCard(false) }
+        previewLayout!!.setOnNextCard { showNextCard() }
+        previewLayout!!.setOnPreviousCard { showPreviousCard() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -214,11 +214,11 @@ class Previewer : AbstractFlashcardViewer() {
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         return when (which) {
             ViewerCommand.SHOW_PREV_CARD -> {
-                tryChangePreviewedCard(false)
+                showPreviousCard()
                 true
             }
             ViewerCommand.SHOW_NEXT_CARD -> {
-                tryChangePreviewedCard(true)
+                showNextCard()
                 true
             }
             else -> false
@@ -243,24 +243,29 @@ class Previewer : AbstractFlashcardViewer() {
         mNoteChanged = true
     }
 
-    private fun tryChangePreviewedCard(nextCard: Boolean): Boolean {
-        val goalIndex = if (nextCard) mIndex + 1 else mIndex - 1
-        return if (goalIndex < 0 || goalIndex >= mCardList.size) {
-            Timber.i("Card index ($goalIndex) out of bounds")
-            false
+    private fun isValidCardIndex(index: Int): Boolean {
+        return index >= 0 && index < mCardList.size
+    }
+
+    /**
+     * Change the currently displayed card to the card at the given index
+     */
+    private fun changePreviewedCard(idx: Int) {
+        if (isValidCardIndex(idx)) {
+            mIndex = idx
+            currentCard = col.getCard(mCardList[mIndex])
+            displayCardQuestion()
+            updateProgress()
         } else {
-            changePreviewedCard(nextCard)
-            true
+            Timber.i("Cannot set card index to $idx (out of bounds)")
         }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun changePreviewedCard(nextCard: Boolean) {
-        mIndex = if (nextCard) mIndex + 1 else mIndex - 1
-        currentCard = col.getCard(mCardList[mIndex])
-        displayCardQuestion()
-        updateProgress()
-    }
+    internal fun showNextCard() = changePreviewedCard(mIndex + 1)
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun showPreviousCard() = changePreviewedCard(mIndex - 1)
 
     private val mToggleAnswerHandler = View.OnClickListener {
         if (mShowingAnswer) {
