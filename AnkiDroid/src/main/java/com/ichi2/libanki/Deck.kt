@@ -53,4 +53,6 @@ class Deck : JSONObject {
         get() = getInt("dyn") == Consts.DECK_DYN
     val isStd: Boolean
         get() = getInt("dyn") == Consts.DECK_STD
+    val id: DeckId
+        get() = getLong("id")
 }
