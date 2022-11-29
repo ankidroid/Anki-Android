@@ -22,13 +22,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
 class CheckDatabaseTest : RobolectricTest() {
     @Test
     fun checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase()
-        val result = checkDatabase(col)
+        val result = checkDatabase(col, mock())
         assertThat("The result should specify a failure", result.first, equalTo(false))
         val checkDbResult = result.second!!
         assertThat("The result should specify the database was locked", checkDbResult.databaseLocked)

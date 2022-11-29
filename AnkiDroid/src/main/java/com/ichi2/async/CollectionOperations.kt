@@ -23,6 +23,7 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.Computation
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
@@ -424,12 +425,11 @@ fun changeDeckMulti(
 
 fun checkDatabase(
     col: Collection,
-    /* collectionTask: ProgressSenderAndCancelListener<String>, */
+    progressCallback: SendChannel<Collection.FixIntegrityProgress>
 ): Pair<Boolean, Collection.CheckDatabaseResult?> {
     Timber.d("doInBackgroundCheckDatabase")
     // Don't proceed if collection closed
-    // TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.appResources)
-    val result = col.fixIntegrity(null)
+    val result = col.fixIntegrity(progressCallback)
     return if (result.failed) {
         // we can fail due to a locked database, which requires knowledge of the failure.
         Pair(false, result)

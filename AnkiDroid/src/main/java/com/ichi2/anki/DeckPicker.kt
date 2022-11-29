@@ -123,6 +123,7 @@ import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -1475,12 +1476,20 @@ open class DeckPicker :
 
     private fun handleDatabaseCheckLegacy() {
         launchCatchingTask {
-            withProgressDialog(this@DeckPicker, null) { progressDialog ->
+            val result = withProgressDialog(this@DeckPicker, null) { progressDialog ->
                 @Suppress("DEPRECATION")
                 progressDialog.setMessage(getString(R.string.check_db_message))
-                val result = withCol { checkDatabase(this) }
-                checkDatabasePostTask(result)
+                withChannel<Collection.FixIntegrityProgress, Pair<Boolean, CheckDatabaseResult?>> { channel ->
+                    launch {
+                        for (progress in channel) {
+                            @Suppress("DEPRECATION")
+                            progressDialog.setMessage(getString(R.string.check_db_message) + " " + progress.current + " / " + progress.total)
+                        }
+                    }
+                    withCol { checkDatabase(this, channel) }
+                }
             }
+            checkDatabasePostTask(result)
         }
     }
 

@@ -40,7 +40,6 @@ import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask
 import com.ichi2.async.ProgressSender
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.exception.NoSuchDeckException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
@@ -55,6 +54,7 @@ import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
+import kotlinx.coroutines.channels.SendChannel
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
@@ -1484,13 +1484,15 @@ open class Collection(
 
     /** Fix possible problems and rebuild caches.  */
     @KotlinCleanup("Convert FunctionThrowable to ::method (as it was done in the Java)")
-    fun fixIntegrity(@Suppress("UNUSED_PARAMETER") progressCallback: TaskManager.ProgressCallback<String>?): CheckDatabaseResult {
+    fun fixIntegrity(progressCallback: SendChannel<FixIntegrityProgress>): CheckDatabaseResult {
         var file = File(path)
         val result = CheckDatabaseResult(file.length())
-        @Suppress("UNUSED_VARIABLE") val currentTask = intArrayOf(1)
+        val currentTask = intArrayOf(1)
         // a few fixes are in all-models loops, the rest are one-offs
-        @Suppress("UNUSED_VARIABLE") val totalTasks = models.all().size * 4 + 27
-        val notifyProgress = Runnable { /* fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) */ }
+        val totalTasks = models.all().size * 4 + 27
+        val notifyProgress = Runnable {
+            progressCallback.trySend(FixIntegrityProgress(current = currentTask[0]++, total = totalTasks))
+        }
         val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?> ->
             // DEFECT: notifyProgress will lag if an exception is thrown.
             try {
@@ -1687,6 +1689,11 @@ open class Collection(
         logProblems(result.problems)
         return result
     }
+
+    data class FixIntegrityProgress(
+        val current: Int,
+        val total: Int
+    )
 
     @KotlinCleanup(".toHashMap rather than HashSetInit UNLESS it proves to be a large performance gain")
     private fun resetInvalidDeckOptions(notifyProgress: Runnable): List<String?> {
@@ -2107,15 +2114,6 @@ open class Collection(
         db.execute("ANALYZE")
     }
 
-    private fun fixIntegrityProgress(
-        progressCallback: TaskManager.ProgressCallback<String>,
-        current: Int,
-        total: Int
-    ) {
-        progressCallback.publishProgress(
-            progressCallback.resources.getString(R.string.check_db_message) + " " + current + " / " + total
-        )
-    }
     /*
       Logging
       ***********************************************************
