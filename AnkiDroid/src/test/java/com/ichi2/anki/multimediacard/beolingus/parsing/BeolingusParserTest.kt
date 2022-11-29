@@ -49,7 +49,7 @@ class BeolingusParserTest {
         // Some transformations lose the Eszett: "ß".toUpperCase() == "SS".
         // Ensure that we don't do this.
         @Language("HTML")
-        val html = """<a href="/dings.cgi?speak=en/8/9/5wbPa4jy41_;text=Straße" """ +
+        val html = """<a href="/dings.cgi?speak=de/8/9/5wbPa4jy41_;text=Straße" """ +
             """onclick="return s(this)" onmouseover="return u('Straße')">""" +
             """<img src="/pics/s1.png" width="16" height="16" """ +
             """alt="[listen]" title="Straße" border="0" align="top" /></a>""".trimMargin()
