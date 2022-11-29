@@ -748,7 +748,17 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            if (col.undoAvailable()) {
+                // We arrive here if the last action which can be undone is retained.
+                //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
+                undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            } else {
+                // We arrive here if the last action which can be undone isn't retained.
+                // In this case, there is no object word for the verb, "Undo",
+                // so in some languages such as Japanese, which have pre/postpositional particle with the object,
+                // we need to use the string for just "Undo" instead of the string for "Undo %s".
+                undoIcon.title = resources.getString(R.string.undo)
+            }
         }
         if (undoEnabled) {
             mOnboarding.onUndoButtonEnabled()
