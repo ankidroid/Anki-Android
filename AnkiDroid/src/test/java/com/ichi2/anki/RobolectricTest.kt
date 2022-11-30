@@ -552,42 +552,12 @@ open class RobolectricTest : CollectionGetter {
             println("not annotated with junit, not setting up backend")
             return
         }
-        // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
-        // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
-        val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
-        val localBackendVersion = System.getenv("ANKIDROID_BACKEND_VERSION")
-        val supportedBackendVersion = BuildConfig.BACKEND_VERSION
-        if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != localBackendVersion) {
-                throw java.lang.IllegalStateException(
-                    """
-                        AnkiDroid backend testing library requires an update.
-                        Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v$localBackendVersion)
-                        And then set $\0ANKIDROID_BACKEND_VERSION to $supportedBackendVersion
-                        Or to update you can just run the script: sh tools/setup-anki-backend.sh
-                        For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
-                        Error: $\0ANKIDROID_BACKEND_VERSION: expected '$supportedBackendVersion', got '$localBackendVersion
-                    """.trimIndent()
-                )
-            }
-            // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
-            try {
-                RustBackendLoader.ensureSetup(backendPath)
-            } catch (e: UnsatisfiedLinkError) {
-                // java.lang.UnsatisfiedLinkError: /Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib:
-                // dlopen(/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib, 0x0001):
-                // tried: '/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib'
-                // (code signature in <3C55B9B3-1E8A-33F4-A43E-173BDB074DC5>
-                // '/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib'
-                // not valid for use in process: library load disallowed by system policy)
-
-                // Dialog with message:
-                // “librsdroid-0-1-11.dylib” can’t be opened because Apple cannot check it for malicious software.
-                // This software needs to be updated. Contact the developer for more information.
-                // [Show in Finder] [OK]
-                if (e.message.toString().contains("library load disallowed by system policy")) {
-                    throw IllegalStateException(
-                        """library load disallowed by system policy.
+        try {
+            RustBackendLoader.ensureSetup()
+        } catch (e: UnsatisfiedLinkError) {
+            if (e.message.toString().contains("library load disallowed by system policy")) {
+                throw IllegalStateException(
+                    """library load disallowed by system policy.
 "To fix:
 * Run the test such that the "developer cannot be verified" message appears
 * Press "OK" on the "Apple cannot check it for malicious software" prompt
@@ -596,29 +566,9 @@ open class RobolectricTest : CollectionGetter {
     Button is underneath the text: "librsdroid.dylib was blocked from use because it is not from an identified developer"
 * Press "OK" on the "Apple cannot check it for malicious software" prompt
 * Test should execute correctly"""
-                    )
-                }
-                throw e
+                )
             }
-        } else {
-            // default (no env variable): Extract the backend testing lib from the jar
-            try {
-                RustBackendLoader.ensureSetup(null)
-            } catch (e: UnsatisfiedLinkError) {
-                if (e.message.toString().contains("arm64e")) {
-                    // Giving the commands to user to add the required env variables
-                    val exception =
-                        """
-                            Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/$supportedBackendVersion and add the following environment variables to your device by using following commands: 
-                            export ANKIDROID_BACKEND_PATH={Path to the dylib file}
-                            export ANKIDROID_BACKEND_VERSION=$supportedBackendVersion
-                            Or to do setup automatically, run the script: sh tools/setup-anki-backend.sh
-                            For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
-                        """.trimIndent()
-                    throw IllegalStateException(exception, e)
-                }
-                throw e
-            }
+            throw e
         }
     }
 
