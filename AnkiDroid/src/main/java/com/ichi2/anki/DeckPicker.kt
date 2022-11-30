@@ -1377,7 +1377,6 @@ open class DeckPicker :
      * Show a simple snackbar message or notification if the activity is not in foreground
      * @param messageResource String resource for message
      */
-    @KotlinCleanup("nullOrEmpty")
     fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
             val res = AnkiDroidApp.appResources
