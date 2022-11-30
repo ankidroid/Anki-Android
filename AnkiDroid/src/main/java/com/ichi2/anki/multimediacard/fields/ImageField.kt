@@ -82,14 +82,14 @@ class ImageField : FieldBase(), IField {
         }
 
         @VisibleForTesting
-        @KotlinCleanup("remove ? from value")
-        fun getImageFullPath(col: Collection, value: String?): String {
+        fun getImageFullPath(col: Collection, value: String): String {
             val path = parseImageSrcFromHtml(value)
-            if ("" == path) {
-                return ""
+
+            return if (path.isNotEmpty()) {
+                "${col.media.dir()}/$path"
+            } else {
+                ""
             }
-            val mediaDir = col.media.dir() + "/"
-            return mediaDir + path
         }
 
         @VisibleForTesting
