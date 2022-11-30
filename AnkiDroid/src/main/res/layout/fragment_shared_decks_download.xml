@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/downloading_title" />
     
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/download_stats"
+        android:id="@+id/download_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/download_dialog_info_text"
-        tools:text="66 %, 42 seconds left (7 MBs/second)" />
+        tools:text="66 %" />
 
     <ProgressBar
         android:id="@+id/download_progress"
@@ -57,8 +57,31 @@
         android:scaleY="4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/download_stats"
+        app:layout_constraintTop_toBottomOf="@id/download_percentage"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/download_time_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/download_progress"
+        tools:text="42 seconds left" />
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/download_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/download_time_left"
+        tools:text="7 MB/s" />
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/check_network_info_text"

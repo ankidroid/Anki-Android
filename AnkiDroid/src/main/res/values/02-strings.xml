@@ -368,6 +368,32 @@
 
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
+
+    <plurals name="time_left_seconds">
+        <item quantity="one">%d second left</item>
+        <item quantity="other">%d seconds left</item>
+    </plurals>
+    <plurals name="time_left_minutes">
+        <item quantity="one">%d minute left</item>
+        <item quantity="other">%d minutes left</item>
+    </plurals>
+    <plurals name="time_left_hours">
+        <item quantity="one">%d hour left</item>
+        <item quantity="other">%d hours left</item>
+    </plurals>
+
+    <plurals name="download_speed_bytes_per_second">
+        <item quantity="one">%d byte/second</item>
+        <item quantity="other">%d bytes/second</item>
+    </plurals>
+    <plurals name="download_speed_kbs_per_second">
+        <item quantity="one">%d KB/second</item>
+        <item quantity="other">%d KBs/second</item>
+    </plurals>
+    <plurals name="download_speed_mbs_per_second">
+        <item quantity="one">%d MB/second</item>
+        <item quantity="other">%d MBs/second</item>
+    </plurals>
     
     <string name="download_deck">Download deck</string>
     <string name="try_again">Try Again</string>

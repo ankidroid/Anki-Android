@@ -64,8 +64,10 @@ class SharedDecksDownloadFragment : Fragment() {
     private lateinit var mCancelButton: Button
     private lateinit var mTryAgainButton: Button
     private lateinit var mImportDeckButton: Button
-    private lateinit var mDownloadStatsText: TextView
+    private lateinit var mDownloadPercentageText: TextView
     private lateinit var mDownloadProgressBar: ProgressBar
+    private lateinit var mDownloadTimeLeftText: TextView
+    private lateinit var mDownloadSpeedText: TextView
     private lateinit var mCheckNetworkInfoText: TextView
 
     /**
@@ -101,8 +103,10 @@ class SharedDecksDownloadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mDownloadStatsText = view.findViewById(R.id.download_stats)
+        mDownloadPercentageText = view.findViewById(R.id.download_percentage)
         mDownloadProgressBar = view.findViewById(R.id.download_progress)
+        mDownloadTimeLeftText = view.findViewById(R.id.download_time_left)
+        mDownloadSpeedText = view.findViewById(R.id.download_speed)
         mCancelButton = view.findViewById(R.id.cancel_shared_decks_download)
         mImportDeckButton = view.findViewById(R.id.import_shared_deck_button)
         mTryAgainButton = view.findViewById(R.id.try_again_deck_download)
@@ -254,7 +258,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
             if (isVisible) {
                 // Setting these since progress checker can stop before progress is updated to represent 100%
-                mDownloadStatsText.text = getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
+                mDownloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
                 mDownloadProgressBar.progress = DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE.toInt()
 
                 // Remove cancel button and show import deck button
@@ -306,7 +310,7 @@ class SharedDecksDownloadFragment : Fragment() {
         Timber.d("Starting download progress checker")
         mDownloadProgressChecker.run()
         mIsProgressCheckerRunning = true
-        mDownloadStatsText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
+        mDownloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
         mDownloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
     }
 
@@ -349,43 +353,42 @@ class SharedDecksDownloadFragment : Fragment() {
                 // Show download progress percentage up to 1 decimal place.
                 "%.1f".format(downloadProgress)
             }
+            mDownloadPercentageText.text = getString(R.string.percentage, percentageValue)
+
             val totalTimePassedInMillis = timeQuantumPassed * DOWNLOAD_PROGRESS_CHECK_DELAY
             val averageSpeedInBytesPerMillis = downloadedBytes / totalTimePassedInMillis
             val estimatedTimeRemainingInMillis = if (averageSpeedInBytesPerMillis != 0L) {
                 (totalBytes - downloadedBytes) / averageSpeedInBytesPerMillis
             } else {
                 0 // used to indicate no valid value
-            }
+            }.toInt()
             val estimatedTimeRemainingInSeconds = estimatedTimeRemainingInMillis / 1000
-            val estimatedTimeRemainingText = if (estimatedTimeRemainingInSeconds == 0L) {
+            val estimatedTimeRemainingText = if (estimatedTimeRemainingInSeconds == 0) {
                 ""
             } else if (estimatedTimeRemainingInSeconds < 60) {
-                "$estimatedTimeRemainingInSeconds second${if (estimatedTimeRemainingInSeconds != 1L) "s" else ""}"
+                resources.getQuantityString(R.plurals.time_left_seconds, estimatedTimeRemainingInSeconds, estimatedTimeRemainingInSeconds)
             } else if (estimatedTimeRemainingInSeconds < 3600) {
                 val estimatedTimeInMinutes = estimatedTimeRemainingInSeconds / 60
-                "$estimatedTimeInMinutes minute${if (estimatedTimeInMinutes != 1L) "s" else ""}"
+                resources.getQuantityString(R.plurals.time_left_minutes, estimatedTimeInMinutes, estimatedTimeInMinutes)
             } else {
                 val estimatedTimeInHours = estimatedTimeRemainingInSeconds / 3600
-                "$estimatedTimeInHours hour${if (estimatedTimeInHours != 1L) "s" else ""}"
+                resources.getQuantityString(R.plurals.time_left_hours, estimatedTimeInHours, estimatedTimeInHours)
             }
+            mDownloadTimeLeftText.text = estimatedTimeRemainingText
             // don't use averageSpeedInBytesPerMillis to calculate averageSpeedInBytesPerSecond
             // as that would make the minimum non-zero value of averageSpeedInBytesPerSecond at
             // least 1000
-            val averageSpeedInBytesPerSecond = ceil(downloadedBytes / (totalTimePassedInMillis / 1000.0)).toLong()
+            val averageSpeedInBytesPerSecond = ceil(downloadedBytes / (totalTimePassedInMillis / 1000.0)).toInt()
             val averageSpeedText = if (averageSpeedInBytesPerSecond < 1024) {
-                "$averageSpeedInBytesPerSecond byte${if (averageSpeedInBytesPerSecond != 1L) "s" else ""}"
+                resources.getQuantityString(R.plurals.download_speed_bytes_per_second, averageSpeedInBytesPerSecond, averageSpeedInBytesPerSecond)
             } else if (averageSpeedInBytesPerSecond < 1024 * 1024) {
                 val averageSpeedInKBPerSecond = averageSpeedInBytesPerSecond / 1024
-                "$averageSpeedInKBPerSecond KB${if (averageSpeedInKBPerSecond != 1L) "s" else ""}"
+                resources.getQuantityString(R.plurals.download_speed_kbs_per_second, averageSpeedInKBPerSecond, averageSpeedInKBPerSecond)
             } else {
                 val averageSpeedInMBPerSecond = averageSpeedInBytesPerSecond / (1024 * 1024)
-                "$averageSpeedInMBPerSecond MB${if (averageSpeedInMBPerSecond != 1L) "s" else ""}"
-            } + "/second"
-            mDownloadStatsText.text = getString(R.string.percentage, percentageValue) + if (estimatedTimeRemainingInSeconds != 0L) {
-                ", $estimatedTimeRemainingText left ($averageSpeedText)"
-            } else {
-                ""
+                resources.getQuantityString(R.plurals.download_speed_mbs_per_second, averageSpeedInMBPerSecond, averageSpeedInMBPerSecond)
             }
+            mDownloadSpeedText.text = averageSpeedText
             mDownloadProgressBar.progress = downloadProgress.toInt()
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
@@ -458,7 +461,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 // Update UI if download could not be successful
                 mTryAgainButton.visibility = View.VISIBLE
                 mCancelButton.visibility = View.GONE
-                mDownloadStatsText.text = getString(R.string.download_failed)
+                mDownloadPercentageText.text = getString(R.string.download_failed)
                 mDownloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
             }
         }
