@@ -103,7 +103,6 @@ import kotlin.math.min
 
 @Suppress("LeakingThis") // The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - not started")
-@KotlinCleanup("Add TextUtils.isNotNullOrEmpty accepting nulls and use it. Remove TextUtils import")
 open class CardBrowser :
     NavigationDrawerActivity(),
     SubtitleListener,
