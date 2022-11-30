@@ -2713,7 +2713,7 @@ open class CardBrowser :
         private const val PERSISTENT_STATE_FILE = "DeckPickerState"
         private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
-        @KotlinCleanup(".edit { }")
+
         fun clearLastDeckId() {
             val context: Context = AnkiDroidApp.instance
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
