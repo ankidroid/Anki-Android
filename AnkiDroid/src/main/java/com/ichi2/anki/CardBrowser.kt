@@ -2237,9 +2237,8 @@ open class CardBrowser :
     /**
      * Reloads the data of the cards, taking on their current values from the database.
      */
-    @KotlinCleanup("cards.isNullOrEmpty()")
-    protected fun reloadCards(cards: Array<Card>?) {
-        if (cards.isNullOrEmpty()) return
+    protected fun reloadCards(cards: Array<Card>) {
+        if (cards.isEmpty()) return
 
         val cardIds: MutableSet<Long> = HashSet()
         for (c in cards) {
