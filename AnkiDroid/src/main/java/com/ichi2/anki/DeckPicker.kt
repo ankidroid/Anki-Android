@@ -1209,7 +1209,7 @@ open class DeckPicker :
                         integrityCheck()
                     }
                     negativeButton(R.string.close) {
-                        restartActivity()
+                        recreate()
                     }
                     cancelOnTouchOutside(false)
                     cancelable(false)
@@ -1220,7 +1220,7 @@ open class DeckPicker :
                 Timber.i("Updated preferences with no integrity check - restarting activity")
                 // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                 // proceed
-                restartActivity()
+                recreate()
                 return
             }
 
@@ -1965,7 +1965,7 @@ open class DeckPicker :
                     if (intent.action == SdCardReceiver.MEDIA_EJECT) {
                         onSdCardNotMounted()
                     } else if (intent.action == SdCardReceiver.MEDIA_MOUNT) {
-                        restartActivity()
+                        recreate()
                     }
                 }
             }

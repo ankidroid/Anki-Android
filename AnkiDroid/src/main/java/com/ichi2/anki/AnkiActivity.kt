@@ -590,17 +590,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         )
     }
 
-    // Restart the activity
-    @KotlinCleanup("suggested by BrayanDSO that this is changed")
-    fun restartActivity() {
-        Timber.i("AnkiActivity -- restartActivity()")
-        val intent = Intent()
-        intent.setClass(this, this.javaClass)
-        intent.putExtras(Bundle())
-        startActivityWithoutAnimation(intent)
-        finishWithoutAnimation()
-    }
-
     /**
      * sets [.getSupportActionBar] and returns the action bar
      * @return The action bar which was created

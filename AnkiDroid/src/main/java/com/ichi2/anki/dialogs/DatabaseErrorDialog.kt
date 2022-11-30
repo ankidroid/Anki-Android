@@ -147,7 +147,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (mRepairValues[index]) {
                             0 -> {
-                                (activity as DeckPicker).restartActivity()
+                                (activity as DeckPicker).recreate()
                                 return@listItems
                             }
                             1 -> {
@@ -254,7 +254,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
-                            (activity as DeckPicker).restartActivity()
+                            (activity as DeckPicker).recreate()
                         } else {
                             (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
                         }
