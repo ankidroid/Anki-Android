@@ -94,11 +94,8 @@ class ImageField : FieldBase(), IField {
 
         @VisibleForTesting
         @CheckResult
-        @KotlinCleanup("remove ? from html")
-        fun parseImageSrcFromHtml(html: String?): String {
-            return if (html == null) {
-                ""
-            } else try {
+        fun parseImageSrcFromHtml(html: String): String {
+            return try {
                 val doc = Jsoup.parseBodyFragment(html)
                 val image = doc.selectFirst("img[src]") ?: return ""
                 image.attr("src")
