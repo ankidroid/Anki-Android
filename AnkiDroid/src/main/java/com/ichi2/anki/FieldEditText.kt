@@ -257,9 +257,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         fun onSelectionChanged(selStart: Int, selEnd: Int)
     }
 
-    @KotlinCleanup("non-null")
     fun interface ImagePasteListener {
-        fun onImagePaste(editText: EditText?, uri: Uri?): Boolean
+        fun onImagePaste(editText: EditText, uri: Uri?): Boolean
     }
 
     companion object {
