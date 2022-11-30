@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.pm.IPackageStatsObserver
 import android.os.Build
 import android.os.storage.StorageManager
+import android.os.storage.StorageVolume
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
@@ -43,6 +44,10 @@ suspend fun Context.getUserDataAndCacheSize(): Long =
  * The logic was taken from this SO question: https://stackoverflow.com/q/43472398/#44708209
  * Asked & answered by android developer: https://stackoverflow.com/users/878126/android-developer
  *
+ * Regarding obtaining valid storage volume UUID, see:
+ *   https://issuetracker.google.com/issues/62982912
+ *   https://stackoverflow.com/questions/48589109/invalid-uuid-of-storage-gained-from-android-storagemanager
+ *
  * TODO The below platform class uses a simpler approach:
  *       val appStorageUuid = packageManager.getApplicationInfo(packageName, 0).storageUuid
  *   The docstring of the method says, "Get number of bytes of the app data of the package".
@@ -51,13 +56,27 @@ suspend fun Context.getUserDataAndCacheSize(): Long =
  */
 @RequiresApi(Build.VERSION_CODES.O)
 private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
+    // See StorageManager#isFatVolumeIdentifier
+    fun String.isFatVolumeIdentifier() = length == 9 && this[4] == '-'
+
+    // See StorageManager#convert(java.lang.String)
+    fun String.fromFatVolumeIdentifierToUuid() =
+        UUID.fromString("fafafafa-fafa-5afa-8afa-fafa" + replace("-", ""))
+
+    fun StorageVolume.getValidUuid() = uuid.let { uuidish ->
+        when {
+            uuidish == null -> StorageManager.UUID_DEFAULT
+            uuidish.isFatVolumeIdentifier() -> uuidish.fromFatVolumeIdentifierToUuid()
+            else -> UUID.fromString(uuidish)
+        }
+    }
+
     val storageManager = ContextCompat.getSystemService(this, StorageManager::class.java) ?: return 0
     val storageStatsManager = ContextCompat.getSystemService(this, StorageStatsManager::class.java) ?: return 0
     val currentUser = android.os.Process.myUserHandle()
 
     return storageManager.storageVolumes
-        .map { volume -> volume.uuid?.let { UUID.fromString(it) } ?: StorageManager.UUID_DEFAULT }
-        .toSet()
+        .mapTo(mutableSetOf()) { volume -> volume.getValidUuid() }
         .sumOf { uuid ->
             storageStatsManager.queryStatsForPackage(uuid, packageName, currentUser).dataBytes
         }
