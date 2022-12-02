@@ -333,7 +333,7 @@
     <string name="about_contributors_description"><![CDATA[这些是我们非常棒的 <a href=\"%1$s\">贡献者</a>。您也可以通过贡献代码、翻译、捐赠和 <a href=\"%2$s\">更多</a> 来帮助AnkiDroid！]]></string>
     <string name="license">许可证</string>
     <string name="license_description"><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>许可证下发布，源代码位于 <a href=\"%3$s\">Github 上</a>]]></string>
-    <string name="donate_description"><![CDATA[您可以通过 <a href=\"%1$s\"> 捐赠 </a > 支持 AnkiDroid\ 的开发。我们感谢任何数额的捐赠。]]></string>
+    <string name="donate_description"><![CDATA[您可以通过 <a href=\"%1$s\"> 捐赠 </a > 支持 AnkiDroid 的开发。我们感谢任何数额的捐赠。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">添加手势</string>
     <string name="binding_replace_gesture">替换手势</string>
