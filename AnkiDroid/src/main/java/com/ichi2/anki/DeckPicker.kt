@@ -2195,7 +2195,8 @@ open class DeckPicker :
             showCollectionErrorDialog()
             return
         }
-        dueTree = result.map { x -> TreeNode(x.value) }
+        @Suppress("UNCHECKED_CAST")
+        dueTree = result as List<TreeNode<AbstractDeckTreeNode>>?
         renderPage()
         // Update the mini statistics bar as well
         launchCatchingTask {
