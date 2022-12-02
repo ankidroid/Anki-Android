@@ -138,7 +138,7 @@
     <string name="restore_backup_choose_another">Vybrat jinou</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Potvrdit</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Ano</string>
     <string name="dialog_continue">Pokračovat</string>
@@ -245,7 +245,7 @@
     <string name="help_item_support_develop_ankidroid">Vyvíjet</string>
     <string name="help_item_support_rate_ankidroid">Ohodnotit</string>
     <string name="help_item_support_other_ankidroid">Ostatní</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Přeložit</string>
     <string name="help_title_community">Komunita</string>
     <string name="help_item_anki_forums">Fóra Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -285,6 +285,6 @@
         \n\nUmístění vyhrazeného úložiště bude %2$s
         \n\nProsím potvrďte, že budete pravidelně zálohovat tuto složku.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Ruční záloha</string>
+    <string name="remind_me_later">Připomenout později</string>
 </resources>

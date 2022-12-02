@@ -168,7 +168,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、回答ボタンの誤タップを防ぎます</string>
     <string name="show_estimates" maxLength="41">回答ボタンに復習間隔を表示</string>
-    <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
+    <string name="show_estimates_summ">次に出題するまでの間隔を回答ボタンに表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">大きな回答ボタンを表示</string>
     <string name="show_large_answer_buttons_summ">回答ボタンを２行２列で表示します</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
@@ -355,7 +355,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
     <string name="use_rust_backend_summary">V3スケジューラーなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません</string>
-    <string name="use_rust_backend_warning">この機能を有効にすることによって、あなたのAnkiDroidのデータが完全に破損してしまうリスクが生じます。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも破損を波及させてしまう可能性があります。\n\nこの機能を試していただくことは歓迎いたしますが、必ず、AnkiWeb以外のバックアップをあらかじめ確保しておいてください。</string>
+    <string name="use_rust_backend_warning">この機能を有効にすることによって、あなたのAnkiDroidのデータが完全に破損してしまうリスクが生じます。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも破損を波及させてしまう可能性があります。\n\nこの機能を試していただくことは歓迎いたしますが、万一に備え、AnkiWeb以外にもコレクションのバックアップを作っておくことを強く推奨いたします。</string>
     <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>

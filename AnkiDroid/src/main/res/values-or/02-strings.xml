@@ -197,7 +197,7 @@
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
     <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_success_title">ସଂଗ୍ରହ ସଫଳତାର ସହିତ ରପ୍ତାନି ହେଲା</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
@@ -406,10 +406,10 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ଅଳ୍ପ ପଢ଼ିକରି</string>
     <string name="intro_ankidroid_tagline_two">ଅଧିକ ମନେ ରଖନ୍ତୁ</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_short_ankidroid_explanation">Ankiର ପତ୍ର ଅନୁସୂଚକ ଆପଣଙ୍କର ଦୁର୍ବଳ ସ୍ମୃତିକୁ ମଜବୁତ କରିବା ସହିତ ଆପଣଙ୍କୁ ଭଲଭାଵରେ ମନେ ଥିବା ସ୍ମୃତିକୁ ବି ସାଇତି ରଖି ସମୟ ସଞ୍ଚୟ କରେ</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ଆରମ୍ଭ କରିବା</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_sync_from_ankiweb">AnkiWeb ରୁ ସିଙ୍କ୍ କରିବା</string>
+    <string name="already_logged_in">ଆଗରୁ ଲଗ୍ ଇନ୍ କରିସାରିଛନ୍ତି</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">ତାସଖଣ୍ଡଟି ଵିଦ୍ୟମାନ ଅଛି</string>
     <string name="deck_created">Created deck</string>

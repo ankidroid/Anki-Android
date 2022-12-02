@@ -59,7 +59,7 @@
     <string name="studyoptions_start">ਪੜ੍ਹਾਈ</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ਫੈਲਾਓ</string>
-    <string name="collapse">Collapse</string>
+    <string name="collapse">لُکاؤ</string>
     <string name="study_more">ਹੋਰ ਅਧਿਐਨ ਕਰੋ</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
@@ -102,7 +102,7 @@
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Add</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">پایو</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
     <string name="menu_dismiss_note">Hide / delete</string>
