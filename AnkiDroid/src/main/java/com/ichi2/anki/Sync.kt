@@ -249,7 +249,8 @@ private suspend fun handleMediaSync(
         .setPositiveButton("Background") { _, _ -> }
         .show()
     try {
-        CollectionManager.getBackend().withProgress(
+        val backend = CollectionManager.getBackend()
+        backend.withProgress(
             extractProgress = {
                 if (progress.hasMediaSync()) {
                     text =
@@ -260,9 +261,7 @@ private suspend fun handleMediaSync(
                 dialog.setMessage(text)
             },
         ) {
-            withCol {
-                newBackend.syncMedia(auth)
-            }
+            backend.syncMedia(auth)
         }
     } finally {
         dialog.dismiss()
