@@ -56,7 +56,7 @@ class TemporaryModel(model: Model) {
         try {
             @Suppress("UNCHECKED_CAST")
             mTemplateChanges =
-                (bundle.getSerializableCompat("mTemplateChanges"))!!
+                (bundle.getSerializableCompat<ArrayList<Array<Any>>>("mTemplateChanges"))!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
