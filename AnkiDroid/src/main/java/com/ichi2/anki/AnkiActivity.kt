@@ -85,6 +85,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
+        Themes.systemIsInNightMode =
+            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        Themes.updateCurrentTheme()
         Themes.setTheme(this)
         Themes.disableXiaomiForceDarkMode(this)
         mPreviousTheme = Themes.currentTheme
@@ -282,7 +285,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         animation: Direction?
     ) {
         try {
-            launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation))
+            launcher.launch(
+                intent,
+                ActivityTransitionAnimation.getAnimationOptions(this, animation)
+            )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
             this.showSnackbar(R.string.activity_start_failed)
@@ -515,9 +521,14 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-
-    open fun showSimpleMessageDialog(message: String?, title: String = "", reload: Boolean = false) {
-        val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
+    @KotlinCleanup("make message non-null")
+    open fun showSimpleMessageDialog(
+        message: String?,
+        title: String = "",
+        reload: Boolean = false
+    ) {
+        val newFragment: AsyncDialogFragment =
+            SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
 
