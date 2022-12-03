@@ -301,7 +301,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         // TODO delete deck shortcut if the deck does not exist anymore
         // TODO don't start reviewing the default deck if a shortcut for a deleted deck is launched
         if (col.decks.get(did, _default = false) == null) {
-            Timber.d("selectDeckFromExtra() deckId '%d' doesn't exist", did)
+            Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return
         }
 
