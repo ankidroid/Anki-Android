@@ -34,13 +34,16 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.SyncErrorDialog
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import java.net.UnknownHostException
 
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
@@ -72,7 +75,24 @@ fun DeckPicker.handleNewSync(
             when (conflict) {
                 Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, syncMedia)
                 Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, syncMedia)
-                null -> handleNormalSync(deckPicker, auth, syncMedia)
+                null -> {
+                    try {
+                        handleNormalSync(deckPicker, auth, syncMedia)
+                    } catch (exc: Exception) {
+                        when (exc) {
+                            is UnknownHostException, is BackendNetworkException -> {
+                                showSnackbar(R.string.check_network) {
+                                    setAction(R.string.sync_even_if_offline) {
+                                        Connection.allowLoginSyncOnNoConnection = true
+                                        sync()
+                                    }
+                                }
+                                Timber.i("No network exception")
+                            }
+                            else -> throw exc
+                        }
+                    }
+                }
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out

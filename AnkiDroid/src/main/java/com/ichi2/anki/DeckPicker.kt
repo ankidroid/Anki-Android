@@ -1826,6 +1826,14 @@ open class DeckPicker :
                             dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url)
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
+                        ConnectionResultType.NETWORK_ERROR -> {
+                            showSnackbar(R.string.check_network) {
+                                setAction(R.string.sync_even_if_offline) {
+                                    Connection.allowLoginSyncOnNoConnection = true
+                                    sync()
+                                }
+                            }
+                        }
                         else -> {
                             if (result.isNotEmpty() && result[0] is Int) {
                                 val code = result[0] as Int
