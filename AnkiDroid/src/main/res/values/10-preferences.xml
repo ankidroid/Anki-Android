@@ -235,6 +235,7 @@
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_previewer" maxLength="41">Previewer commands</string>
 
 
     <!-- studyoptions -->

@@ -277,7 +277,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     private fun disableGestures(vararg gestures: Gesture) {
         val prefs = AnkiDroidApp.getSharedPrefs(targetContext)
-        for (command in ViewerCommand.values()) {
+        for (command in ViewerCommand.reviewerCommands) {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
                 if (mappableBinding.binding.gesture in gestures) {
                     command.removeBinding(prefs, mappableBinding)

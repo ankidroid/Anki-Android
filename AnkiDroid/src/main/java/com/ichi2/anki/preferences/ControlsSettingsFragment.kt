@@ -28,13 +28,17 @@ class ControlsSettingsFragment : SettingsFragment() {
         get() = "prefs.controls"
 
     override fun initSubscreen() {
-        val commandMappingCategory = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key)
-        addAllControlPreferencesToCategory(commandMappingCategory)
+        // Reviewer-specific commands
+        val commandMappingCategoryReviewer = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key)
+        // Previewer-specific commands
+        val commandMappingCategoryPreviewer = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key_previewer)
+        addAllControlPreferencesToCategory(commandMappingCategoryReviewer, ViewerCommand.reviewerCommands)
+        addAllControlPreferencesToCategory(commandMappingCategoryPreviewer, ViewerCommand.previewerCommands)
     }
 
     /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-    fun addAllControlPreferencesToCategory(category: PreferenceCategory) {
-        for (command in ViewerCommand.values()) {
+    fun addAllControlPreferencesToCategory(category: PreferenceCategory, commands: List<ViewerCommand>) {
+        for (command in commands) {
             val preference = ControlPreference(category.context).apply {
                 setTitle(command.resourceId)
                 key = command.preferenceKey

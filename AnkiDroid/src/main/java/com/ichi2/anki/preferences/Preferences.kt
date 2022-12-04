@@ -151,6 +151,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
                 .withResId(R.xml.preferences_controls)
                 .addBreadcrumb(getString(R.string.pref_cat_controls))
                 .addBreadcrumb(getString(R.string.controls_main_category))
+                .addBreadcrumb(getString(R.string.controls_previewer))
         }
 
         // Some preferences and categories are only shown conditionally,

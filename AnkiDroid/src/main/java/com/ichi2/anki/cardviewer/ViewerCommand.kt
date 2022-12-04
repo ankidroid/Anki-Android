@@ -78,6 +78,52 @@ enum class ViewerCommand(val resourceId: Int) {
             get() = Arrays.stream(values())
                 .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                 .collect(Collectors.toList())
+
+        val reviewerCommands: List<ViewerCommand>
+            get() = listOf(
+                SHOW_ANSWER,
+                FLIP_OR_ANSWER_EASE1,
+                FLIP_OR_ANSWER_EASE2,
+                FLIP_OR_ANSWER_EASE3,
+                FLIP_OR_ANSWER_EASE4,
+                FLIP_OR_ANSWER_RECOMMENDED,
+                FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED,
+                UNDO,
+                EDIT,
+                MARK,
+                BURY_CARD,
+                SUSPEND_CARD,
+                DELETE,
+                PLAY_MEDIA,
+                EXIT,
+                BURY_NOTE,
+                SUSPEND_NOTE,
+                TOGGLE_FLAG_RED,
+                TOGGLE_FLAG_ORANGE,
+                TOGGLE_FLAG_GREEN,
+                TOGGLE_FLAG_BLUE,
+                TOGGLE_FLAG_PINK,
+                TOGGLE_FLAG_TURQUOISE,
+                TOGGLE_FLAG_PURPLE,
+                UNSET_FLAG,
+                PAGE_UP,
+                PAGE_DOWN,
+                TAG,
+                CARD_INFO,
+                ABORT_AND_SYNC,
+                RECORD_VOICE,
+                REPLAY_VOICE,
+                TOGGLE_WHITEBOARD,
+                SHOW_HINT,
+                SHOW_ALL_HINTS,
+                ADD_NOTE
+            )
+
+        val previewerCommands: List<ViewerCommand>
+            get() = listOf(
+                SHOW_NEXT_CARD,
+                SHOW_PREV_CARD
+            )
     }
 
     val preferenceKey: String
@@ -166,6 +212,8 @@ enum class ViewerCommand(val resourceId: Int) {
                 SHOW_HINT -> from(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
                 SHOW_ALL_HINTS -> from(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
                 ADD_NOTE -> from(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
+                SHOW_NEXT_CARD -> from(keyCode(KeyEvent.KEYCODE_P, CardSide.BOTH))
+                SHOW_PREV_CARD -> from(keyCode(KeyEvent.KEYCODE_O, CardSide.BOTH))
                 else -> ArrayList()
             }
 
