@@ -95,6 +95,12 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         when (selectedOption) {
             DeckPickerContextMenuOption.DELETE_DECK -> {
                 Timber.i("Delete deck selected")
+
+                /* we can only disable the shortcut for now as it is restricted by Google https://issuetracker.google.com/issues/68949561?pli=1#comment4
+                 * if fixed or given free hand to delete the shortcut with the help of API update this method and use the new one
+                 */
+                (activity as DeckPicker).disableDeckAndChildrenShortcuts(deckId)
+
                 (activity as DeckPicker).confirmDeckDeletion(deckId)
             }
             DeckPickerContextMenuOption.DECK_OPTIONS -> {

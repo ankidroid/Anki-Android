@@ -2343,6 +2343,14 @@ open class DeckPicker :
         }
     }
 
+    /** Disables the shortcut of the deck and the children belonging to it.*/
+    fun disableDeckAndChildrenShortcuts(did: DeckId) {
+        val childDids = col.decks.childDids(did, col.decks.childMap()).map { it.toString() }
+        val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
+        val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
+        ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
+    }
+
     fun renameDeckDialog(did: DeckId) {
         val currentName = col.decks.name(did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
