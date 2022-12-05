@@ -152,12 +152,15 @@ class MediaCheckDialog : AsyncDialogFragment() {
             return f
         }
 
+        // TODO Instead of putting string arrays into the bundle,
+        //   make MediaCheckResult parcelable with @Parcelize and put it instead.
+        // TODO Extract keys to constants
         fun newInstance(dialogType: Int, checkList: MediaCheckResult): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
-            args.putStringArrayList("nohave", ArrayList(checkList.noHave.toMutableList()))
-            args.putStringArrayList("unused", ArrayList(checkList.unused.toMutableList()))
-            args.putStringArrayList("invalid", ArrayList(checkList.invalid.toMutableList()))
+            args.putStringArrayList("nohave", ArrayList(checkList.missingFileNames))
+            args.putStringArrayList("unused", ArrayList(checkList.unusedFileNames))
+            args.putStringArrayList("invalid", ArrayList(checkList.invalidFileNames))
             args.putInt("dialogType", dialogType)
             f.arguments = args
             return f

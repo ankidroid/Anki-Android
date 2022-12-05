@@ -592,9 +592,10 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add))
         advanceRobolectricLooperWithSleep()
         val ordinal = testEditor.viewPager.currentItem
-        var numAffectedCards = 0
-        if (!TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
-            numAffectedCards = col.models.tmplUseCount(testEditor.tempModel!!.model, ordinal)
+        val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
+            col.models.tmplUseCount(testEditor.tempModel!!.model, ordinal)
+        } else {
+            0
         }
         assertEquals(
             "Did not show dialog about adding template and it's card?",

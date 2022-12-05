@@ -43,6 +43,7 @@ class DrawingActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
+        setTitle(R.string.drawing)
         setContentView(R.layout.activity_drawing)
         enableToolbar()
         mColorPalette = findViewById(R.id.whiteboard_editor)

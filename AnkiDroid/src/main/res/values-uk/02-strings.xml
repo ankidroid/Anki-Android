@@ -113,7 +113,7 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
     <string name="discard_unsaved_changes">Закрити і втратити поточну інформацію?</string>
-    <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповність більше полів</string>
+    <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповніть більше полів</string>
     <string name="note_editor_no_first_field">Перше поле порожнє</string>
     <string name="note_editor_no_cloze_delations">Цей тип запису повинен містити пропуски</string>
     <string name="note_editor_no_cards_created_all_fields">Від поточного типу запису нема жодної картки. \nБудь ласка, оберіть інший тип запису чи натисніть «картки», додати поле підміни</string>
@@ -169,8 +169,8 @@
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">Додати \"%s\" до колекції? Це може зайняти багато часу</item>
-        <item quantity="few">Додати “%s” до колекції?  Це може зайняти багато часу</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="few">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
+        <item quantity="many">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
         <item quantity="other">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
     </plurals>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
@@ -197,23 +197,23 @@
     <string name="confirm_apkg_export">Вивантажити збірку у вигляді пакунку Anki ?</string>
     <string name="confirm_apkg_export_deck">Експортувати \"%s\" як файл apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="few">Export %d selected cards as apkg file?</item>
-        <item quantity="many">Export %d selected cards as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="one">Експортувати вибрану картку як файл apkg?</item>
+        <item quantity="few">Експортувати вибрані картки як файл apkg?</item>
+        <item quantity="many">Експортувати вибрані картки як файл apkg?</item>
+        <item quantity="other">Експортувати вибрані картки як файл apkg?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="few">Export %d selected notes as apkg file?</item>
-        <item quantity="many">Export %d selected notes as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="one">Експортувати вибраний запис як файл apkg?</item>
+        <item quantity="few">Експортувати вибрані записи як файл apkg?</item>
+        <item quantity="many">Експортувати вибрані записи як файл apkg?</item>
+        <item quantity="other">Експортувати вибрані записи як файл apkg?</item>
     </plurals>
     <string name="export_in_progress">Вивантаження пакунку Anki&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_success_title">Колекція успішно експортована</string>
     <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження...</string>
     <string name="export_save_apkg_successful">Пакунок Anki успішно збережено</string>
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
+    <string name="export_success_message">Ви можете вибрати місце розташування файлу, щоб зберегти його або поділитися ним з іншою програмою.</string>
     <string name="export_share_title">Надіслати пакет Anki використовуючи </string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
     <string name="export_email_text"><![CDATA[        Привіт!
@@ -223,8 +223,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_select_save_app">Виберіть куди зберегти файл</string>
+    <string name="export_select_share_app">Виберіть додаток, щоб поділитися</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
     <string name="menu__deck_options">Параметри колоди</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
@@ -410,15 +410,15 @@
     <string name="scoped_storage_postpone">Відкласти</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Нічого не знайдено</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="sync_impossible_during_migration">Синхронізація вимкнена до завершення перенесення\n
+        %1$d медіафайлів залишилося перенести.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Якщо ви перевстановите AnkiDroid, він не зможе відкрити вашу колекцію.</string>
+    <string name="migration_update_request_dialog_download_warning">Якщо ви видалите AnkiDroid, вам треба буде завантажити вашу повну колекцію ще раз.</string>
+    <string name="migration_update_request">Політика Android щодо доступу до сховища вимагає від нас змінити місце збереження вашої колекції. Після того як ваші дані буде перенесено, AnkiDroid буде швидшим, а ваші дані будуть безпечнішими.
+    Ви не зможете синхронізувати дані під час перенесення сховища.</string>
+    <string name="start_migration_progress_message">Починається перенесення сховища. Незабаром ви зможете продовжити використовувати AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Ви можете продовжити використовувати AnkiDroid.
+\nПеренесення сховища буде відбуватись у фоновому режимі.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не є дійсним пакетом доповнення javascript</string>
     <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
@@ -442,9 +442,9 @@
     <string name="deck_renamed">Перейменовано колоду</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Картки</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нотатки</string>
-    <string name="toggle_cards_notes">Перемкнути картки/нотатки</string>
-    <string name="toggle_browser_mode_help">Перемкнути показ карток або нотаток у браузері</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
+    <string name="toggle_cards_notes">Перемкнути картки/записи</string>
+    <string name="toggle_browser_mode_help">Перемкнути показ карток або записів у браузері</string>
     <string name="truncate_content_help">Скоротіть висоту кожного рядка браузера, щоб показати лише перші 3 рядки вмісту</string>
     <string name="browser_options_dialog_heading">Параметри браузера</string>
 </resources>

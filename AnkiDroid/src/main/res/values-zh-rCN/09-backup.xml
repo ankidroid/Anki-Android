@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">备份失败，因为 SD 卡剩余空间不足。\n\n请释放更多空间，或者调整备份数量。</string>
-    <string name="sd_space_warning">你的sd卡上剩余空间少于%d mb.\n请释放更多空间，以免数据丢失。</string>
+    <string name="backup_deck_no_storage_left">备份未保存。您的剩余存储空间不足。降低备份深度或删除其他文件。</string>
+    <string name="storage_warning">您的存储空间剩余不到 %d MB。\n释放一些空间以避免数据丢失。</string>
     <string name="backup_restore">恢复备份</string>
     <string name="backup_new_collection">新建集合</string>
     <string name="backup_del_collection">删除集合，并创建新集合</string>

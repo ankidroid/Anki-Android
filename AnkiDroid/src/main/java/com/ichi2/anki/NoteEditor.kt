@@ -31,6 +31,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
+import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -196,7 +197,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (isClozeType) {
                 return R.string.note_editor_no_cloze_delations
             }
-            if (TextUtils.isEmpty(getCurrentFieldText(0))) {
+            if (getCurrentFieldText(0).isEmpty()) {
                 return R.string.note_editor_no_first_field
             }
             return if (allFieldsHaveContent()) {
@@ -206,14 +207,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Otherwise, display "no cards created".
         }
 
-    private fun allFieldsHaveContent(): Boolean {
-        for (s in currentFieldStrings) {
-            if (TextUtils.isEmpty(s)) {
-                return false
-            }
-        }
-        return true
-    }
+    private fun allFieldsHaveContent() = currentFieldStrings.none { it.isNullOrEmpty() }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -1358,8 +1352,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return true
     }
 
-    private fun setMMButtonListener(mediaButton: ImageButton?, index: Int) {
-        mediaButton!!.setOnClickListener { v: View ->
+    private fun setMMButtonListener(mediaButton: ImageButton, index: Int) {
+        mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
                 val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
@@ -1757,31 +1751,29 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun addToolbarButton(buttonText: String, prefix: String, suffix: String) {
-        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
-            return
-        }
+        if (prefix.isEmpty() && suffix.isEmpty()) return
         val toolbarButtons = toolbarButtons
         toolbarButtons.add(CustomToolbarButton(toolbarButtons.size, buttonText, prefix, suffix))
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }
 
-    @KotlinCleanup(".isEmpty()")
     private fun editToolbarButton(
-        buttonTextParam: String,
-        prefixParam: String,
-        suffixParam: String,
+        buttonText: String,
+        prefix: String,
+        suffix: String,
         currentButton: CustomToolbarButton
     ) {
-        var buttonText: String? = buttonTextParam
-        var prefix: String? = prefixParam
-        var suffix: String? = suffixParam
-        buttonText = if (TextUtils.isEmpty(buttonText)) currentButton.buttonText else buttonText
-        prefix = if (TextUtils.isEmpty(prefix)) currentButton.prefix else prefix
-        suffix = if (TextUtils.isEmpty(suffix)) currentButton.suffix else suffix
         val toolbarButtons = toolbarButtons
-        val index = currentButton.index
-        toolbarButtons[index] = CustomToolbarButton(index, buttonText!!, prefix!!, suffix!!)
+        val currentButtonIndex = currentButton.index
+
+        toolbarButtons[currentButtonIndex] = CustomToolbarButton(
+            index = currentButtonIndex,
+            buttonText = buttonText.ifEmpty { currentButton.buttonText },
+            prefix = prefix.ifEmpty { currentButton.prefix },
+            suffix = suffix.ifEmpty { currentButton.suffix }
+        )
+
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }

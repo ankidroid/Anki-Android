@@ -179,16 +179,15 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     /** {@inheritDoc}  */
-    @KotlinCleanup("scope function")
     override fun newModel(name: String): Model {
         // caller should call save() after modifying
-        val m = Model(DEFAULT_MODEL)
-        m.put("name", name)
-        m.put("mod", time.intTime())
-        m.put("flds", JSONArray())
-        m.put("tmpls", JSONArray())
-        m.put("id", 0)
-        return m
+        return Model(DEFAULT_MODEL).apply {
+            put("name", name)
+            put("mod", time.intTime())
+            put("flds", JSONArray())
+            put("tmpls", JSONArray())
+            put("id", 0)
+        }
     }
 
     /** {@inheritDoc}  */
@@ -279,11 +278,10 @@ class Models(col: Collection) : ModelManager(col) {
     /*
      * Fields ***********************************************************************************************
      */
-    @KotlinCleanup("return directly + scope function")
     override fun newField(name: String): JSONObject {
-        val f = JSONObject(defaultField)
-        f.put("name", name)
-        return f
+        return JSONObject(defaultField).apply {
+            put("name", name)
+        }
     }
 
     override fun sortIdx(m: Model): Int {
@@ -320,7 +318,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     internal class TransformFieldAdd : TransformFieldVisitor {
-        @KotlinCleanup("remove arratOfNulls")
+        @KotlinCleanup("remove arrayOfNulls")
         override fun transform(fields: Array<String>): Array<String> {
             val f = arrayOfNulls<String>(fields.size + 1)
             System.arraycopy(fields, 0, f, 0, fields.size)

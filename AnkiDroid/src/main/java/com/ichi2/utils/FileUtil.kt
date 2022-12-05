@@ -51,11 +51,10 @@ object FileUtil {
      * @throws IOException
      */
     @Throws(IOException::class)
-    @KotlinCleanup("nonnull uri")
-    fun internalizeUri(uri: Uri?, internalFile: File, contentResolver: ContentResolver): File {
+    fun internalizeUri(uri: Uri, internalFile: File, contentResolver: ContentResolver): File {
         // If we got a real file name, do a copy from it
         val inputStream: InputStream = try {
-            contentResolver.openInputStream(uri!!)!!
+            contentResolver.openInputStream(uri)!!
         } catch (e: Exception) {
             Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
             throw e
@@ -105,7 +104,7 @@ object FileUtil {
                 var totalBytes = 0L
                 var numberOfDirectories = 0
                 var numberOfFiles = 0
-                val directoriesToProcess = mutableListOf<File>(root)
+                val directoriesToProcess = mutableListOf(root)
                 while (directoriesToProcess.isNotEmpty()) {
                     val dir = directoriesToProcess.removeLast()
                     listFiles(dir).forEach {

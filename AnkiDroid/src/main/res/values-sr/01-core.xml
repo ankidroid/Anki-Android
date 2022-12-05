@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">да</string>
     <!-- Navigation drawer items-->
     <string name="decks">Шпилови</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Прегледач картица</string>
@@ -248,4 +247,6 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>

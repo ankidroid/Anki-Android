@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Yedekleme başarısız. Hafıza kartında yeterli alan bulunmamaktadır. Yedekleme derinliğini düşürün veya bazı dosyaları kaldırın.</string>
-    <string name="sd_space_warning">SD kartınızda %d MB\'tan daha az yer var.\nVeri kaybını önlemek için biraz yer açın.</string>
+    <string name="backup_deck_no_storage_left">Yedek kaydedilmedi. Depolamanızda yeterli alan kalmamış. Yedek derinliğini düşürün ya da başka bazı dosyaları kaldırın.</string>
+    <string name="storage_warning">Depolamanızda %d MB\'tan az yer kalmış.\nVeri kaybını önlemek için biraz yer boşaltın.</string>
     <string name="backup_restore">Yedekten geri yükle</string>
     <string name="backup_new_collection">Yeni koleksiyon</string>
     <string name="backup_del_collection">Koleksiyonu silip yenisini oluştur</string>

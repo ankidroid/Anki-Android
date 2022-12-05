@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">డౌన్లోడ్ చేసిన డేటాబేస్ అవినీతికి గురైంది. దయచేసి మళ్లీ ప్రయత్నించండి.</string>
     <string name="sync_overwrite_error">మీ ప్రస్తుత సేకరణ ఫైల్ డౌన్లోడ్ చేసిన ఫైల్ ద్వారా భర్తీ చేయబడలేదు</string>
     <string name="sync_connection_error">కనెక్షన్ సమయం ముగిసింది. మీ ఇంటర్నెట్ కనెక్షన్ సమస్యలను ఎదుర్కొంటోంది లేదా మీ మీడియా ఫోల్డర్లో చాలా పెద్ద ఫైల్ని కలిగి ఉంది.</string>
-    <string name="sync_write_access_error">డౌన్లోడ్ చేసిన ఫైల్ SD కార్డుకు సేవ్ చేయబడలేదు. SD కార్డుకు తగినంత స్థలం లేద మోడ్లో మాత్రమే చదవబడుతుంది.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">తొలగింపులను సమకాలీకరిస్తోంది&#8230;</string>
     <string name="sync_small_objects_message">చిన్న అంశాలను సమకాలీకరిస్తోంది&#8230;</string>

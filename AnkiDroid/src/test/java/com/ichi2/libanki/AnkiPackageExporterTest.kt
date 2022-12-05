@@ -101,7 +101,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
         assertThat("Three files should exist", files, hasSize(3))
 
         // {"0":"filename.txt"}
-        val expected = String.format("{\"0\":\"%s\"}", tempFileInCollection.name)
+        val expected = "{\"0\":\"${tempFileInCollection.name}\"}"
         checkMediaExportStringIs(fileNames, expected)
     }
 
@@ -146,7 +146,7 @@ class AnkiPackageExporterTest : RobolectricTest() {
         temp.delete()
         val newFile = File(col.media.dir(), s)
         check(newFile.exists()) { "Could not create temp file" }
-        addNoteUsingBasicModel(String.format("<img src=\"%s\">", newFile.name), "Back")
+        addNoteUsingBasicModel("<img src=\"${newFile.name}\">", "Back")
         return newFile
     }
 

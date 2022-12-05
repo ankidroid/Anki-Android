@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">備份未儲存。記憶卡上無足夠剩餘空間。請降低備份深度或移除其他檔案。</string>
-    <string name="sd_space_warning">記憶卡少於%d mb的空間. 請釋放一些空間以避免資料遺失. </string>
+    <string name="backup_deck_no_storage_left">備份未保存。 您的剩餘存儲空間不足。 降低備份深度或删除其他檔案。</string>
+    <string name="storage_warning">您的存儲空間剩餘不到%dMB。 \n釋放一些空間以避免資料丟失。</string>
     <string name="backup_restore">從備份還原</string>
     <string name="backup_new_collection">新的集合</string>
     <string name="backup_del_collection">刪除集合，並建立新的集合</string>

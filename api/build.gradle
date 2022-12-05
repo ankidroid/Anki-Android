@@ -43,7 +43,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.robolectric:robolectric:4.8.2'
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
     lintChecks project(":lint-rules")

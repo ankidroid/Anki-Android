@@ -15,6 +15,13 @@ internal class BasicModel {
         @JvmField // required for API
         val QFMT = arrayOf("{{Front}}")
         @JvmField // required for API
-        val AFMT = arrayOf("{{FrontSide}}\n\n<hr id=\"answer\">\n\n{{Back}}")
+        val AFMT = arrayOf(
+            """{{FrontSide}}
+        
+        |<hr id="answer">
+        
+        |{{Back}}
+            """.trimMargin()
+        )
     }
 }

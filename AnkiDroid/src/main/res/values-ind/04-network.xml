@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Basisdata yang diunduh rusak. Silakan coba lagi.</string>
     <string name="sync_overwrite_error">Koleksimu saat ini tidak dapat ditimpa oleh berkas yang diunduh</string>
     <string name="sync_connection_error">Koneksi gagal. Antara koneksi internetmu bermasalah, atau kamu memiliki berkas yang sangat besar di folder mediamu.</string>
-    <string name="sync_write_access_error">Berkas yang diunduh tidak dapat disimpan ke kartu SD. Mungkin kartu memori terpasang hanya bisa dibaca atau ruang tidak cukup.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">Server Sinkronisasi Kostum di Pengaturan Lanjutan tidak valid (%s). Silakan masukkan server yang valid atau matikan pengaturan.</string>
     <string name="sync_deletions_message">Sinkronisasi deletasi kloza(titik-titik)&#8230;</string>
     <string name="sync_small_objects_message">Menyinkronkan objek kecil&#8230;</string>

@@ -17,18 +17,24 @@
 
 package com.ichi2.libanki
 
+import android.database.Cursor
 import android.database.SQLException
 import android.net.Uri
 import android.text.TextUtils
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ensureActive
+import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
+import java.text.Normalizer
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -103,11 +109,12 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
  left outer join old.log l using (fname)
  union
  select fname, null, 0, 1 from old.log where type=${Consts.CARD_TYPE_LRN};"""
-                @KotlinCleanup("scope function on db")
-                db!!.execute(sql)
-                db!!.execute("delete from meta")
-                db!!.execute("insert into meta select dirMod, usn from old.meta")
-                db!!.commit()
+                db!!.apply {
+                    execute(sql)
+                    execute("delete from meta")
+                    execute("insert into meta select dirMod, usn from old.meta")
+                    commit()
+                }
             } catch (e: Exception) {
                 // if we couldn't import the old db for some reason, just start anew
                 val sw = StringWriter()
@@ -139,9 +146,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
     }
 
     @KotlinCleanup("nullable if server == true, we don't do this in AnkiDroid so should be fine")
-    fun dir(): String {
-        return mDir!!
-    }
+    fun dir(): String = mDir!!
+
     /*
       Adding media
       ***********************************************************
@@ -293,14 +299,24 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
       Rebuilding DB
       ***********************************************************
      */
+
+    @VisibleForTesting
+    fun performFullCheck(): MediaCheckResult {
+        if (BackendFactory.defaultLegacySchema) {
+            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+            rebuildIfInvalid()
+            // A media check on AnkiDroid will also update the media db
+            findChanges(true)
+        }
+        return check()
+    }
+
     /**
      * Finds missing, unused and invalid media files
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    open fun check(): MediaCheckResult {
-        return check(null)
-    }
+    open fun check(): MediaCheckResult = check(null)
 
     private fun check(local: Array<File>?): MediaCheckResult {
         val mdir = File(dir())
@@ -316,9 +332,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                 @KotlinCleanup("simplify with first {}")
                 for (f in noteRefs) {
                     // if they're not, we'll need to fix them first
-                    if (f != Utils.nfcNormalized(f)) {
+                    if (f != Utils.nfcNormalized(f)) { // TODO Call Normalizer.isNormalized instead
                         _normalizeNoteRefs(nid)
-                        noteRefs = filesInStr(mid, flds)
+                        noteRefs = filesInStr(mid, flds) // TODO It seems that this does nothing; investigate
                         break
                     }
                 }
@@ -402,29 +418,59 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         note.flush()
     }
 
+    class MediaCheckRequiredException : Exception("Media check required")
+
+    /**
+     * Find unused media files. Cancellable.
+     * If any file names, or file references in notes, are not NFC-normalized,
+     * throws [MediaCheckRequiredException].
+     *
+     * TODO Consolidate this method and related media checking functionality.
+     *   This method does what the [check] method does, except this is cancellable,
+     *   does not change files in case of any problems, and is less broken.
+     *   The backend also provides a method for checking media, [BackendMedia.check];
+     *   however it seems it performs normalization unconditionally.
+     */
+    @Throws(MediaCheckRequiredException::class)
+    fun CoroutineScope.findUnusedMediaFiles(): List<File> {
+        val namesOfFilesUsedInNotes = mutableSetOf<String>()
+
+        col.db.query("select mid, flds from notes").use { cursor: Cursor ->
+            while (cursor.moveToNext()) {
+                ensureActive()
+                val modelId = cursor.getLong(0)
+                val fields = cursor.getString(1)
+                namesOfFilesUsedInNotes += filesInStr(modelId, fields)
+            }
+        }
+
+        val mediaDirectoryFiles = File(dir()).listFiles()?.filter { !it.isDirectory } ?: emptyList()
+
+        fun String.isNormalized() = Normalizer.isNormalized(this, Normalizer.Form.NFC)
+
+        val allNamesAreNormalized = namesOfFilesUsedInNotes.all { it.isNormalized() } &&
+            mediaDirectoryFiles.all { it.name.isNormalized() }
+
+        if (!allNamesAreNormalized) throw MediaCheckRequiredException()
+
+        val nonStaticMediaDirectoryFiles = mediaDirectoryFiles.filter { !it.name.startsWith("_") }
+
+        return nonStaticMediaDirectoryFiles.filter { it.name !in namesOfFilesUsedInNotes }
+    }
+
     /**
      * Copying on import
      * ***********************************************************
      */
-    open fun have(fname: String): Boolean {
-        return File(dir(), fname).exists()
-    }
+    open fun have(fname: String): Boolean = File(dir(), fname).exists()
 
     /**
      * Illegal characters and paths
      * ***********************************************************
      */
-    @KotlinCleanup("one line function")
-    fun stripIllegal(str: String): String {
-        val m = fIllegalCharReg.matcher(str)
-        return m.replaceAll("")
-    }
+    fun stripIllegal(str: String): String = fIllegalCharReg.matcher(str).replaceAll("")
 
-    @KotlinCleanup("one line function")
-    fun hasIllegal(str: String): Boolean {
-        val m = fIllegalCharReg.matcher(str)
-        return m.find()
-    }
+    fun hasIllegal(str: String): Boolean = fIllegalCharReg.matcher(str).find()
 
     @KotlinCleanup("fix reassignment")
     fun cleanFilename(fname: String): String {
@@ -441,9 +487,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
 
     /** This method only change things on windows. So it's the
      * identity here.  */
-    private fun _cleanWin32Filename(fname: String): String {
-        return fname
-    }
+    private fun _cleanWin32Filename(fname: String): String = fname
 
     @KotlinCleanup("Fix reassignment")
     private fun _cleanLongFilename(fname: String): String {
@@ -505,9 +549,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         }
     }
 
-    fun haveDirty(): Boolean {
-        return db!!.queryScalar("select 1 from media where dirty=1 limit 1") > 0
-    }
+    fun haveDirty(): Boolean = db!!.queryScalar("select 1 from media where dirty=1 limit 1") > 0
 
     /**
      * Returns the number of seconds from epoch since the last modification to the file in path. Important: this method
@@ -516,14 +558,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * @param path The path to the file we are checking. path can be a file or a directory.
      * @return The number of seconds (rounded down).
      */
-    private fun _mtime(path: String): Long {
-        val f = File(path)
-        return f.lastModified() / 1000
-    }
+    private fun _mtime(path: String): Long = File(path).lastModified() / 1000
 
-    private fun _checksum(path: String): String {
-        return Utils.fileChecksum(path)
-    }
+    private fun _checksum(path: String): String = Utils.fileChecksum(path)
 
     /**
      * Return dir mtime if it has changed since the last findChanges()
@@ -555,10 +592,11 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             media.add(arrayOf(f, null, 0, 1))
         }
         // update media db
-        @KotlinCleanup("scope function on db")
-        db!!.executeMany("insert or replace into media values (?,?,?,?)", media)
-        db!!.execute("update meta set dirMod = ?", _mtime(dir()))
-        db!!.commit()
+        db!!.apply {
+            executeMany("insert or replace into media values (?,?,?,?)", media)
+            execute("update meta set dirMod = ?", _mtime(dir()))
+            commit()
+        }
     }
 
     private fun _changes(): Pair<List<String>, List<String>> {
@@ -642,9 +680,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      * Syncing related
      * ***********************************************************
      */
-    fun lastUsn(): Int {
-        return db!!.queryScalar("select lastUsn from meta")
-    }
+    fun lastUsn(): Int = db!!.queryScalar("select lastUsn from meta")
 
     fun setLastUsn(usn: Int) {
         db!!.execute("update meta set lastUsn = ?", usn)
@@ -677,21 +713,18 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         db!!.execute("delete from media where fname=?", fname)
     }
 
-    fun mediacount(): Int {
-        return db!!.queryScalar("select count() from media where csum is not null")
-    }
+    fun mediacount(): Int = db!!.queryScalar("select count() from media where csum is not null")
 
-    fun dirtyCount(): Int {
-        return db!!.queryScalar("select count() from media where dirty=1")
-    }
+    fun dirtyCount(): Int = db!!.queryScalar("select count() from media where dirty=1")
 
-    @KotlinCleanup("scope function on db")
     open fun forceResync() {
-        db!!.execute("delete from media")
-        db!!.execute("update meta set lastUsn=0,dirMod=0")
-        db!!.execute("vacuum")
-        db!!.execute("analyze")
-        db!!.commit()
+        db!!.apply {
+            execute("delete from media")
+            execute("update meta set lastUsn=0,dirMod=0")
+            execute("vacuum")
+            execute("analyze")
+            commit()
+        }
     }
     /*
      * Media syncing: zips
@@ -1000,4 +1033,8 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
     }
 }
 
-data class MediaCheckResult(val noHave: List<String>, val unused: List<String>, val invalid: List<String>)
+data class MediaCheckResult(
+    val missingFileNames: List<String>,
+    val unusedFileNames: List<String>,
+    val invalidFileNames: List<String>,
+)

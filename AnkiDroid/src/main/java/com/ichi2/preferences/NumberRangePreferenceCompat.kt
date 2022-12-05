@@ -190,5 +190,13 @@ constructor(
         }
     }
 
+    enum class ShouldShowDialog { Yes, No }
+
+    var onClickListener: () -> ShouldShowDialog = { ShouldShowDialog.Yes }
+
+    override fun onClick() {
+        if (onClickListener() == ShouldShowDialog.Yes) { super.onClick() }
+    }
+
     override fun makeDialogFragment() = NumberRangeDialogFragmentCompat()
 }

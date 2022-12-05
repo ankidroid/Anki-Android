@@ -63,6 +63,22 @@ object CollectionManager {
      * does not happen.
      * It's important that the block is not suspendable - if it were, it would allow
      * multiple requests to be interleaved when a suspend point was hit.
+     *
+     * TODO Allow suspendable blocks, rely on locking instead.
+     *
+     * TODO Disallow running functions that are supposed to be run inside the queue outside of it.
+     *   For instance, this can be done by marking a [block] with a context
+     *   that cannot be instantiated outside of this class:
+     *
+     *       suspend fun<T> withQueue(block: context(Queue) () -> T): T {
+     *          return withContext(collectionOperationsDispatcher) {
+     *              block(queue)
+     *          }
+     *      }
+     *
+     *   Then, only functions that are also marked can be run inside the block:
+     *
+     *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
     private suspend fun<T> withQueue(block: CollectionManager.() -> T): T {
         return withContext(queue) {
@@ -210,10 +226,21 @@ object CollectionManager {
         }
     }
 
+    // TODO Move withQueue to call site
+    suspend fun deleteCollectionDirectory() {
+        withQueue {
+            ensureClosedInner(save = false)
+            getCollectionDirectory().deleteRecursively()
+        }
+    }
+
+    fun getCollectionDirectory() =
+        File(CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance))
+
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
     fun createCollectionPath(): String {
-        val dir = CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance)
+        val dir = getCollectionDirectory().path
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
     }

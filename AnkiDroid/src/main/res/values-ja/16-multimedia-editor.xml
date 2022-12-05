@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">高度な編集</string>
     <string name="multimedia_editor_popup_cloze">穴埋め問題</string>
     <string name="multimedia_editor_popup_clear_field">フィールドを消去</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">翻訳</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">読み込み</string>
     <string name="multimedia_editor_pron_looking_up">発音を検索しています...</string>

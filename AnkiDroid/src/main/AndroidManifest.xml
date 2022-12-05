@@ -38,6 +38,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
                 android:label="@string/read_write_permission_label"
@@ -81,7 +82,12 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
+        android:manageSpaceActivity=".ui.windows.managespace.ManageSpaceActivity"
         >
+        <activity
+            android:name=".ui.windows.managespace.ManageSpaceActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".DrawingActivity"
             android:label="@string/drawing"
             android:exported="false"
@@ -278,7 +284,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.DeckOptions"
+            android:name="com.ichi2.anki.DeckOptionsActivity"
             android:label="@string/deckpreferences_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"

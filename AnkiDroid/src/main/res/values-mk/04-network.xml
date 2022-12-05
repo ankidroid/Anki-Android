@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Преземената база на податоци е корумпирана. Ве молиме обидете се повторно.</string>
     <string name="sync_overwrite_error">Вашата тековна колекција не можеше да биде препишана од преземената датотека</string>
     <string name="sync_connection_error">Врската е завршена. Или вашата интернет конекција се соочува со проблеми, или имате многу голема датотека во вашата медиумска фолдер.</string>
-    <string name="sync_write_access_error">Преземената датотека не можеше да се зачува на SD картичката. Или картичката е монтирана само за читање или нема доволно простор.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Синхронизирање на бришењата&#8230;</string>
     <string name="sync_small_objects_message">Синхронизирање на мали објекти&#8230;</string>
