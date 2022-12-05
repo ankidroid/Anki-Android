@@ -49,8 +49,6 @@ jobs:
         exclude:
           - os: macos-latest
             legacy_schema: false
-          - os: windows-latest
-            legacy_schema: false
     runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
