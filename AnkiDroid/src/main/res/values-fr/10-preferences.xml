@@ -246,7 +246,7 @@
     <!-- Key Bindings -->
     <string name="keyboard">Clavier</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Mappage de commande</string>
+    <string name="controls_reviewer_category" maxLength="41">Mappage de commande</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Les modifications apportées aux options du groupe de paquets affecteront plusieurs paquets de cartes. Si vous souhaitez modifier uniquement le paquet actuel, veuillez d\'abord ajouter un nouveau groupe d\'options</string>
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>

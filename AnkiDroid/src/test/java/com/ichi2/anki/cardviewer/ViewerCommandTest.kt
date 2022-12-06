@@ -18,6 +18,7 @@ package com.ichi2.anki.cardviewer
 
 import com.google.common.base.Joiner
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ViewerCommandTest {
@@ -44,5 +45,21 @@ class ViewerCommandTest {
                 "binding_SHOW_ALL_HINTS, binding_ADD_NOTE, binding_SHOW_NEXT_CARD, binding_SHOW_PREV_CARD",
             names
         )
+    }
+
+    @Test
+    fun all_gesture_commands_are_used() {
+        val remainingCommands: MutableSet<ViewerCommand> = ViewerCommand.values().toHashSet()
+        for (command in ViewerCommand.reviewerCommands) {
+            remainingCommands.remove(command)
+        }
+        for (command in ViewerCommand.previewerCommands) {
+            remainingCommands.remove(command)
+        }
+        /*
+        When adding support for additional classes that use these gestures, be sure to update this to
+            ensure that all defined commands are used somewhere.
+         */
+        assertTrue("All ViewerCommand values must be inside reviewerCommands or previewerCommands (duplicates are allowed)", remainingCommands.isEmpty())
     }
 }

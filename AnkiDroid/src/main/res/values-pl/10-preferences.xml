@@ -246,7 +246,7 @@
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Przypisywanie poleceń</string>
+    <string name="controls_reviewer_category" maxLength="41">Przypisywanie poleceń</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Zmiany opcji grup talii będzie mieć wpływ na wiele talii. Jeśli chcesz zmienić tylko obecną talię, najpierw dodaj nowe ustawienie talii</string>
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>

@@ -77,7 +77,7 @@
     <string name="nav_drawer_gesture_key">gestureFullScreenNavigationDrawer</string>
     <string name="pref_swipe_sensitivity_key">swipeSensitivity</string>
     <string name="controls_command_mapping_cat_key">key_map_category</string>
-    <string name="controls_command_mapping_cat_key_previewer">key_map_category_previewer</string>
+    <string name="controls_command_mapping_cat_previewer_key">key_map_category_previewer</string>
     <!-- Accessibility -->
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>

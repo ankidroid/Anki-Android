@@ -31,13 +31,16 @@ class ControlsSettingsFragment : SettingsFragment() {
         // Reviewer-specific commands
         val commandMappingCategoryReviewer = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key)
         // Previewer-specific commands
-        val commandMappingCategoryPreviewer = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key_previewer)
-        addAllControlPreferencesToCategory(commandMappingCategoryReviewer, ViewerCommand.reviewerCommands)
-        addAllControlPreferencesToCategory(commandMappingCategoryPreviewer, ViewerCommand.previewerCommands)
+        val commandMappingCategoryPreviewer = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_previewer_key)
+        addControlsToCategory(commandMappingCategoryReviewer, ViewerCommand.reviewerCommands)
+        addControlsToCategory(commandMappingCategoryPreviewer, ViewerCommand.previewerCommands)
     }
 
-    /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-    fun addAllControlPreferencesToCategory(category: PreferenceCategory, commands: List<ViewerCommand>) {
+    /**
+     * Creates dynamically [ControlPreference] objects for each of the [commands] given,
+     * and add them to [category]
+     */
+    private fun addControlsToCategory(category: PreferenceCategory, commands: List<ViewerCommand>) {
         for (command in commands) {
             val preference = ControlPreference(category.context).apply {
                 setTitle(command.resourceId)

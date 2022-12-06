@@ -140,19 +140,30 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         }
 
         /**
-         * The command bindings preferences are created programmatically
-         * on [ControlsSettingsFragment.addAllControlPreferencesToCategory],
-         * so they should be added programmatically to the search index as well.
+         * @param commands list of ViewerCommands to add to the search index
+         * @param categoryTitleRes string resource for the title of the category
          */
-        for (command in ViewerCommand.values()) {
-            searchConfig.indexItem()
-                .withTitle(getString(command.resourceId))
-                .withKey(command.preferenceKey)
-                .withResId(R.xml.preferences_controls)
-                .addBreadcrumb(getString(R.string.pref_cat_controls))
-                .addBreadcrumb(getString(R.string.controls_main_category))
-                .addBreadcrumb(getString(R.string.controls_previewer))
+        fun indexSearchConfigItems(commands: List<ViewerCommand>, categoryTitleRes: Int) {
+            for (command in commands) {
+                searchConfig.indexItem()
+                    .withTitle(getString(command.resourceId))
+                    .withKey(command.preferenceKey)
+                    .withResId(R.xml.preferences_controls)
+                    .addBreadcrumb(getString(R.string.pref_cat_controls))
+                    .addBreadcrumb(getString(R.string.controls_reviewer_category))
+                    .addBreadcrumb(getString(categoryTitleRes))
+            }
         }
+        /**
+         * The command bindings preferences are created programmatically
+         * on [ControlsSettingsFragment.addControlsToCategory],
+         * so they should be added programmatically to the search index as well.
+         *
+         * When adding support for additional classes that use these gestures, be sure to update this to
+         * ensure that all commands can be correctly searched in the appropriate category.
+         */
+        indexSearchConfigItems(ViewerCommand.reviewerCommands, R.string.controls_reviewer_category)
+        indexSearchConfigItems(ViewerCommand.previewerCommands, R.string.controls_previewer_category)
 
         // Some preferences and categories are only shown conditionally,
         // so they should be searchable based on the same conditions

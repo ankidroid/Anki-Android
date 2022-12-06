@@ -246,7 +246,7 @@
     <!-- Key Bindings -->
     <string name="keyboard">کیبورد</string>
     <string name="bluetooth">بلوتوث</string>
-    <string name="controls_main_category" maxLength="41">نقشه برداری Command</string>
+    <string name="controls_reviewer_category" maxLength="41">نقشه برداری Command</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">تغییر این گروه اختیارات این دسته چندین دسته را تحت تأثیر قرار خواهد داد. اگر قصد اعمال تغییرات فقط بر روی این دسته را دارید، لطفاً ابتدا یک گروه اختیارات جدید اضافه کنید</string>
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
