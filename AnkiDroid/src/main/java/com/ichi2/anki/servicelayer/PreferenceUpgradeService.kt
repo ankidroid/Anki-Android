@@ -88,6 +88,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeCustomCollectionSyncUrl())
                 yield(UpgradeCustomSyncServerEnabled())
+                yield(UpgradeFetchMedia())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -408,6 +409,14 @@ object PreferenceUpgradeService {
                         customSyncServerEnabled && !customMediaSyncUrl.isNullOrEmpty()
                     )
                 }
+            }
+        }
+
+        internal class UpgradeFetchMedia : PreferenceUpgrade(9) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val fetchMediaSwitch = preferences.getBoolean("syncFetchesMedia", true)
+                val status = if (fetchMediaSwitch) "always" else "never"
+                preferences.edit { this.putString("syncFetchMedia", status) }
             }
         }
     }
