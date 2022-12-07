@@ -99,10 +99,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
         mDialog = MaterialDialog(requireActivity())
-            .neutralButton(R.string.dialog_cancel) // Shouldn't it be negative button?
+            .negativeButton(R.string.dialog_cancel)
             .customView(view = dialogView, noVerticalPadding = true)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-            (mDialog as MaterialDialog).negativeButton(R.string.restore_default) {
+            (mDialog as MaterialDialog).positiveButton(R.string.restore_default) {
                 onDeckSelected(null)
             }
         }
