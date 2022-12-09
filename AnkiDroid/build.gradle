@@ -234,7 +234,7 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:23.0.0'
+            force 'org.jetbrains:annotations:23.1.0'
         }
     }
 
