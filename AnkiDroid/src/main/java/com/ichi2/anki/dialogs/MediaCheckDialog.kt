@@ -51,28 +51,28 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 // Generate report
                 val report = StringBuilder()
                 if (invalid!!.isNotEmpty()) {
-                    report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size))
+                    report.append(String.format(resources.getString(R.string.check_media_invalid), invalid.size))
                 }
                 if (unused!!.isNotEmpty()) {
                     if (report.isNotEmpty()) {
                         report.append("\n")
                     }
-                    report.append(String.format(res().getString(R.string.check_media_unused), unused.size))
+                    report.append(String.format(resources.getString(R.string.check_media_unused), unused.size))
                 }
                 if (nohave!!.isNotEmpty()) {
                     if (report.isNotEmpty()) {
                         report.append("\n")
                     }
-                    report.append(String.format(res().getString(R.string.check_media_nohave), nohave.size))
+                    report.append(String.format(resources.getString(R.string.check_media_nohave), nohave.size))
                 }
                 if (report.isEmpty()) {
-                    report.append(res().getString(R.string.check_media_no_unused_missing))
+                    report.append(resources.getString(R.string.check_media_no_unused_missing))
                 }
 
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
                 val reportStr = """
-                    ${res().getString(R.string.check_media_db_updated)}
+                    ${resources.getString(R.string.check_media_db_updated)}
                     
                     $report
                 """.trimIndent()
@@ -115,17 +115,17 @@ class MediaCheckDialog : AsyncDialogFragment() {
     override val notificationMessage: String
         get() {
             return when (requireArguments().getInt("dialogType")) {
-                DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_warning)
-                DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.check_media_acknowledge)
-                else -> res().getString(R.string.app_name)
+                DIALOG_CONFIRM_MEDIA_CHECK -> resources.getString(R.string.check_media_warning)
+                DIALOG_MEDIA_CHECK_RESULTS -> resources.getString(R.string.check_media_acknowledge)
+                else -> resources.getString(R.string.app_name)
             }
         }
 
     override val notificationTitle: String
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
-                res().getString(R.string.check_media_title)
-            } else res().getString(R.string.app_name)
+                resources.getString(R.string.check_media_title)
+            } else resources.getString(R.string.app_name)
         }
 
     override val dialogHandlerMessage: Message
