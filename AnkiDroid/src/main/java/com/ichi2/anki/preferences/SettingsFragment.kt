@@ -22,9 +22,7 @@ import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.libanki.Collection
 import com.ichi2.preferences.DialogFragmentProvider
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -44,9 +42,6 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
         addPreferencesFromResource(preferenceResource)
         initSubscreen()
     }
-
-    protected val col: Collection?
-        get() = CollectionHelper.instance.getCol(requireContext())
 
     abstract fun initSubscreen()
 

@@ -21,10 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.*
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.snackbar.showSnackbar
@@ -44,7 +41,6 @@ class AppearanceSettingsFragment : SettingsFragment() {
         get() = "prefs.appearance"
 
     override fun initSubscreen() {
-        val col = col!!
         // Show error toast if the user tries to disable answer button without gestures on
         requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
             val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
@@ -164,18 +160,22 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
-            isChecked = col.get_config_boolean("estTimes")
-            setOnPreferenceChangeListener { newValue ->
-                col.set_config("estTimes", newValue)
+            launchWithCol {
+                isChecked = get_config_boolean("estTimes")
+                setOnPreferenceChangeListener { newValue ->
+                    set_config("estTimes", newValue)
+                }
             }
         }
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
-            isChecked = col.get_config_boolean("dueCounts")
-            setOnPreferenceChangeListener { newValue ->
-                col.set_config("dueCounts", newValue)
+            launchWithCol {
+                isChecked = get_config_boolean("dueCounts")
+                setOnPreferenceChangeListener { newValue ->
+                    set_config("dueCounts", newValue)
+                }
             }
         }
     }
