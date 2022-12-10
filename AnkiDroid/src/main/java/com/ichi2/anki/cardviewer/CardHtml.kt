@@ -52,8 +52,7 @@ class CardHtml(
 
         if (sideFor == Side.BACK && side == Side.FRONT) {
             if (answerSound == null) {
-                answerSound =
-                    Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
             }
             return answerSound!!
         }
@@ -76,8 +75,7 @@ class CardHtml(
             questionSound!!
         } else {
             if (answerSound == null) {
-                answerSound =
-                    Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
             }
             return answerSound!!
         }
@@ -130,12 +128,7 @@ class CardHtml(
     }
 
     companion object {
-        fun createInstance(
-            card: Card,
-            reload: Boolean,
-            side: Side,
-            context: HtmlGenerator
-        ): CardHtml {
+        fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, reload, side, context)
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
@@ -151,16 +144,7 @@ class CardHtml(
             // legacy (slow) function to return the answer without the front side
             fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
 
-            return CardHtml(
-                content,
-                card.ord,
-                nightModeInversion,
-                context,
-                side,
-                ::getAnswerWithoutFrontSideLegacy,
-                questionSound,
-                answerSound
-            )
+            return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
         }
 
         /**
@@ -169,12 +153,7 @@ class CardHtml(
          * Or warning if required
          * TODO: This is no longer entirely true as more post-processing occurs
          */
-        private fun displayString(
-            card: Card,
-            reload: Boolean,
-            side: Side,
-            context: HtmlGenerator
-        ): String {
+        private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
             if (side == Side.FRONT && card.isEmpty) {
                 return context.resources.getString(R.string.empty_card_warning)
             }
@@ -228,19 +207,13 @@ class CardHtml(
                 val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
                 // remove the first instance of audio contained in "{{FrontSide}}"
                 while (audioReferences.find()) {
-                    newAnswerContent = newAnswerContent.replaceFirst(
-                        Pattern.quote(audioReferences.group()).toRegex(), ""
-                    )
+                    newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()).toRegex(), "")
                 }
             }
             return newAnswerContent
         }
 
-        fun legacyGetTtsTags(
-            card: Card,
-            cardSide: Sound.SoundSide,
-            context: Context
-        ): List<TTSTag>? {
+        fun legacyGetTtsTags(card: Card, cardSide: Sound.SoundSide, context: Context): List<TTSTag>? {
             val cardSideContent: String = when {
                 Sound.SoundSide.QUESTION == cardSide -> card.q(true)
                 Sound.SoundSide.ANSWER == cardSide -> card.pureAnswer
@@ -249,10 +222,7 @@ class CardHtml(
                     return null
                 }
             }
-            return TtsParser.getTextsToRead(
-                cardSideContent,
-                context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
-            )
+            return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }
     }
 }

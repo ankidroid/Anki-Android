@@ -80,10 +80,7 @@ class CardAppearance(
     companion object {
         private val nightModeClassRegex = Regex("\\.night(?:_m|M)ode\\b")
 
-        fun create(
-            customFonts: ReviewerCustomFonts,
-            preferences: SharedPreferences
-        ): CardAppearance {
+        fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)
             val centerVertically = preferences.getBoolean("centerVertically", false)
