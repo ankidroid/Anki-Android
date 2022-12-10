@@ -113,12 +113,11 @@ class CardHtml(
 
     private fun getCardClass(requiresMathjax: Boolean): String {
         // CSS class for card-specific styling
-        val cardClass: String = if (requiresMathjax) {
+        return if (requiresMathjax) {
             context.cardAppearance.getCardClass(ord + 1) + " mathjax-needs-to-render"
         } else {
             context.cardAppearance.getCardClass(ord + 1)
         }
-        return cardClass
     }
 
     private fun getScripts(requiresMathjax: Boolean): String {
