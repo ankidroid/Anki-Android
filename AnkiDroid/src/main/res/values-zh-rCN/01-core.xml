@@ -231,4 +231,6 @@
         <item quantity="other">%1$d 张卡片 (0到期)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>

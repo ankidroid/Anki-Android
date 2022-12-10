@@ -30,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.assertThrows
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.not
@@ -108,8 +109,13 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             openContextMenuAndSelectItem(recyclerView, 3)
 
             val deckOptions = shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.DeckOptionsActivity", deckOptions.component!!.className)
-            assertEquals(deckId, deckOptions.getLongExtra("did", 1))
+            if (BackendFactory.defaultLegacySchema) {
+                assertEquals(
+                    "com.ichi2.anki.DeckOptionsActivity",
+                    deckOptions.component!!.className
+                )
+                assertEquals(deckId, deckOptions.getLongExtra("did", 1))
+            }
         }
     }
 

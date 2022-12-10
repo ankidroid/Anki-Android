@@ -44,13 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Veritabanını kontrol et</string>
+    <string name="check_db_title">Veritabanı kontrol edilsin mi?</string>
     <string name="check_db_warning">Bu uzun sürebilir</string>
     <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
     <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d MB küçültüldü.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
-    <string name="delete_deck_default_deck">Varsayılan deste silinemez.</string>
-    <string name="delete_deck_title">Desteyi Sil</string>
+    <string name="contextmenu_deckpicker_delete_deck">Desteyi sil</string>
+    <string name="delete_deck_default_deck">Varsayılan deste silinemez</string>
+    <string name="delete_deck_title">Deste silinsin mi?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
         <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
@@ -69,7 +69,7 @@
         <item quantity="other">%d kartın yeri değiştirildi</item>
     </plurals>
     <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
-    <string name="reset_card_dialog_message">Bu kart yeni kart sırasının sonuna koyulacak.</string>
+    <string name="reset_card_dialog_message">Bu kart yeni kart sırasının sonuna koyulacak</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kart sıfırlandı</item>
         <item quantity="other">%d kart sıfırlandı</item>
@@ -229,7 +229,7 @@
     <string name="help_item_support_develop_ankidroid">Geliştirme</string>
     <string name="help_item_support_rate_ankidroid">Dğerlendirme</string>
     <string name="help_item_support_other_ankidroid">Diğer</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Çevir</string>
     <string name="help_title_community">Topluluk</string>
     <string name="help_item_anki_forums">Anki Forumları</string>
     <string name="help_item_discord">Discord</string>

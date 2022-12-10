@@ -233,7 +233,7 @@ abstract class NavigationDrawerActivity :
             // because onDestroy() of old Activity interferes with TTS in new Activity
             finishWithoutAnimation()
         } else {
-            restartActivity()
+            recreate()
         }
     }
 

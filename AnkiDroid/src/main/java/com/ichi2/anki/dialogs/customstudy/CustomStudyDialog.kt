@@ -68,10 +68,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
+        val args = this.arguments ?: Bundle()
         args.apply {
             putInt("id", contextMenuAttribute.value)
             putLong("did", did)

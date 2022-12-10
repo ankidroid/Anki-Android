@@ -255,4 +255,6 @@
         <item quantity="other">%1$d карткі (0 для паўтору)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s копія</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>

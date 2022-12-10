@@ -169,8 +169,8 @@
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">Добавить «%s» в коллекцию? Это может занять много времени</item>
-        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="few">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
+        <item quantity="many">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
         <item quantity="other">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
     </plurals>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
@@ -204,8 +204,8 @@
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
-        <item quantity="few">Export %d selected notes as apkg file?</item>
-        <item quantity="many">Export %d selected notes as apkg file?</item>
+        <item quantity="few">Экспортировать %d выбранных записей как apkg файл?</item>
+        <item quantity="many">Экспортировать %d выбранных записей как apkg файл?</item>
         <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
     </plurals>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
@@ -414,8 +414,8 @@
         Осталось пернести %1$d медиафайлов.</string>
     <string name="migration_warning_risk_of_data_loss_if_no_update">Если вы переустановите AnkiDroid, он не сможет открыть вашу коллекцию.</string>
     <string name="migration_update_request_dialog_download_warning">Если вы удалите AnkiDroid, вам придется заново загрузить всю коллекцию.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
+    <string name="migration_update_request">Политика доступа к хранилищу Android требует, чтобы мы изменили место хранения вашей коллекции. Когда ваши данные будут перенесены, AnkiDroid будет работать быстрее, а ваши данные будут в большей безопасности.
+    Вы не сможете синхронизироваться во время переноса хранилища.</string>
     <string name="start_migration_progress_message">Начало перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
 \nПеренос хранилища будет продолжаться в фоновом режиме.</string>

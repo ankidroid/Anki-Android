@@ -46,14 +46,14 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Forma d\'enviar errors</string>
-    <string name="feedback_disclaimer">Avís: Nosaltres no apleguem cap informació personal com podrien ser la seva adreça de correu electrònic, número de telèfon, o la adreça IMEI del seu telèfon mòbil. En canvi, apleguem informació sobre el seu dispositiu, model i versió del seu Android, també errors reportats i els passos que van portar a que passesin.</string>
-    <string name="feedback_title">Suport per AnkiDroid</string>
-    <string name="feedback_default_text">Introduïu els comentaris o la informació sobre la natura dels errors que reporteu.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid ha trobat un problema; un informe està sent enviat als desenvolupadors&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
-    <string name="feedback_copy_debug">Copiar informació de depuració</string>
+    <string name="error_reporting_choice">Forma d\'enviar els informes d\'error</string>
+    <string name="feedback_disclaimer">Nota: No apleguem cap informació personal com ara la vostra adreça de correu electrònic, telèfon, o IMEI del mòbil. En canvi, apleguem informació sobre el vostre dispositiu, model i versió d\'Android, els errors dels que heu informat i els passos que hi van portar.</string>
+    <string name="feedback_title">Suport per a AnkiDroid</string>
+    <string name="feedback_default_text">Introduïu els comentaris o la informació sobre els errors dels que voleu informar.</string>
+    <string name="feedback_auto_toast_text">S\'ha produït un problema; s\'està enviant un informe als desenvolupadors&#8230;</string>
+    <string name="feedback_for_manual_toast_text">S\'ha preparat un informe per als desenvolupadors</string>
+    <string name="feedback_copy_debug">Copia les dades de depuració</string>
     <string name="feedback_report">Informa</string>
-    <string name="feedback_report_automatically">Enviar automàticament informes d\'error</string>
+    <string name="feedback_report_automatically">Envia automàticament informes d\'error</string>
     <string name="feedback_no_suitable_app_found">No s\'ha trobat cap aplicació adient. </string>
 </resources>

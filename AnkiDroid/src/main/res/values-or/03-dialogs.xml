@@ -47,7 +47,7 @@
     <string name="check_db_title">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="check_db_acknowledge">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏବଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d MB ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
+    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏଵଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d MB ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
     <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ କରନ୍ତୁ</string>
     <string name="delete_deck_default_deck">ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ବିଲୋପ କରାଯାଇପାରିବ ନାହିଁ</string>
     <string name="delete_deck_title">ତାସଖଣ୍ଡ ବିଲୋପ କରିବେ କି?</string>
@@ -89,7 +89,7 @@
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">ପୁନଃନିର୍ଦ୍ଧାରଣ କରିବା ଫଳରେ ଭବିଷ୍ୟତରେ ଅନୁସୂଚକ ପତ୍ରକୁ କିପରି ଵ୍ୟଵହାର କରିବ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ ହୋଇଯାଏ (ଅର୍ଥାତ୍ ସହଜତା %dକୁ ସେଟ୍ ହେବ)।</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ତାସଖଣ୍ଡଟି ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଏହାକୁ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
@@ -229,7 +229,7 @@
     <string name="help_item_support_develop_ankidroid">ବିକାଶ କରନ୍ତୁ</string>
     <string name="help_item_support_rate_ankidroid">ମୂଲ୍ୟାୟନ</string>
     <string name="help_item_support_other_ankidroid">ଅନ୍ୟ</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">ଅନୁଵାଦ କରନ୍ତୁ</string>
     <string name="help_title_community">ସମ୍ପ୍ରଦାୟ</string>
     <string name="help_item_anki_forums">Anki ଫୋରମ୍</string>
     <string name="help_item_discord">Discord</string>
@@ -246,7 +246,7 @@
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
         <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">ଆପଣଙ୍କ ସଂଯୋଜନା ମିଟର୍ ହେଉଛି। ଡାଟା ଅନ୍ତରଣରେ ଟଙ୍କା ଖର୍ଚ୍ଚ ହୋଇପାରେ</string>
     <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_rev">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_lrn">ଏହି ତାସଖଣ୍ଡରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
@@ -268,5 +268,5 @@
         \n\nPlease confirm that you will regularly make backups of this folder.
     </string>
     <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="remind_me_later">ମୋତେ ପରେ ମନେ ପକାଅ</string>
 </resources>

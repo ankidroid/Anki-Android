@@ -49,6 +49,7 @@ import java.io.InputStreamReader
 import java.io.OutputStream
 import java.io.StringWriter
 import java.io.UnsupportedEncodingException
+import java.net.UnknownHostException
 import java.util.Locale
 import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
@@ -220,7 +221,11 @@ open class HttpSyncer(
             throw RuntimeException(e)
         } catch (e: IOException) {
             Timber.e(e, "BasicHttpSyncer.sync: IOException")
-            throw RuntimeException(e)
+            if (e is UnknownHostException) {
+                throw e
+            } else {
+                throw RuntimeException(e)
+            }
         } finally {
             if (tmpFileBuffer != null && tmpFileBuffer.exists()) {
                 tmpFileBuffer.delete()

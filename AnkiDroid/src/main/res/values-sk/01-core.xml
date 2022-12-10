@@ -255,4 +255,6 @@
         <item quantity="other">%1$d kartičiek (0 na preskúšanie)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kópia</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>
