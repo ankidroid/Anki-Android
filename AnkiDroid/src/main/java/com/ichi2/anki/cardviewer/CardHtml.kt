@@ -52,7 +52,8 @@ class CardHtml(
 
         if (sideFor == Side.BACK && side == Side.FRONT) {
             if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound =
+                    Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
             }
             return answerSound!!
         }
@@ -75,7 +76,8 @@ class CardHtml(
             questionSound!!
         } else {
             if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound =
+                    Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
             }
             return answerSound!!
         }
@@ -111,9 +113,10 @@ class CardHtml(
 
     private fun getCardClass(requiresMathjax: Boolean): String {
         // CSS class for card-specific styling
-        var cardClass: String = context.cardAppearance.getCardClass(ord + 1)
-        if (requiresMathjax) {
-            cardClass += " mathjax-needs-to-render"
+        val cardClass: String = if (requiresMathjax) {
+            context.cardAppearance.getCardClass(ord + 1) + " mathjax-needs-to-render"
+        } else {
+            context.cardAppearance.getCardClass(ord + 1)
         }
         return cardClass
     }
@@ -128,7 +131,12 @@ class CardHtml(
     }
 
     companion object {
-        fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
+        fun createInstance(
+            card: Card,
+            reload: Boolean,
+            side: Side,
+            context: HtmlGenerator
+        ): CardHtml {
             val content = displayString(card, reload, side, context)
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
@@ -136,17 +144,24 @@ class CardHtml(
             val renderOutput = card.render_output()
             val questionAv = renderOutput.question_av_tags
             val answerAv = renderOutput.answer_av_tags
-            var questionSound: List<SoundOrVideoTag>? = null
-            var answerSound: List<SoundOrVideoTag>? = null
-            if (!BackendFactory.defaultLegacySchema) {
-                questionSound = questionAv.filterIsInstance(SoundOrVideoTag::class.java)
-                answerSound = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
-            }
+            val questionSound: List<SoundOrVideoTag>? =
+                if (!BackendFactory.defaultLegacySchema) questionAv.filterIsInstance(SoundOrVideoTag::class.java) else null
+            val answerSound: List<SoundOrVideoTag>? =
+                if (!BackendFactory.defaultLegacySchema) answerAv.filterIsInstance(SoundOrVideoTag::class.java) else null
 
             // legacy (slow) function to return the answer without the front side
             fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
 
-            return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
+            return CardHtml(
+                content,
+                card.ord,
+                nightModeInversion,
+                context,
+                side,
+                ::getAnswerWithoutFrontSideLegacy,
+                questionSound,
+                answerSound
+            )
         }
 
         /**
@@ -155,7 +170,12 @@ class CardHtml(
          * Or warning if required
          * TODO: This is no longer entirely true as more post-processing occurs
          */
-        private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
+        private fun displayString(
+            card: Card,
+            reload: Boolean,
+            side: Side,
+            context: HtmlGenerator
+        ): String {
             if (side == Side.FRONT && card.isEmpty) {
                 return context.resources.getString(R.string.empty_card_warning)
             }
@@ -209,13 +229,19 @@ class CardHtml(
                 val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
                 // remove the first instance of audio contained in "{{FrontSide}}"
                 while (audioReferences.find()) {
-                    newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()).toRegex(), "")
+                    newAnswerContent = newAnswerContent.replaceFirst(
+                        Pattern.quote(audioReferences.group()).toRegex(), ""
+                    )
                 }
             }
             return newAnswerContent
         }
 
-        fun legacyGetTtsTags(card: Card, cardSide: Sound.SoundSide, context: Context): List<TTSTag>? {
+        fun legacyGetTtsTags(
+            card: Card,
+            cardSide: Sound.SoundSide,
+            context: Context
+        ): List<TTSTag>? {
             val cardSideContent: String = when {
                 Sound.SoundSide.QUESTION == cardSide -> card.q(true)
                 Sound.SoundSide.ANSWER == cardSide -> card.pureAnswer
@@ -224,7 +250,10 @@ class CardHtml(
                     return null
                 }
             }
-            return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
+            return TtsParser.getTextsToRead(
+                cardSideContent,
+                context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
+            )
         }
     }
 }

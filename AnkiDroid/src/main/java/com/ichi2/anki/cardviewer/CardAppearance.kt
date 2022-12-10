@@ -23,7 +23,12 @@ import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 
 /** Responsible for calculating CSS and element styles and modifying content on a flashcard  */
-class CardAppearance(private val customFonts: ReviewerCustomFonts, private val cardZoom: Int, private val imageZoom: Int, private val centerVertically: Boolean) {
+class CardAppearance(
+    private val customFonts: ReviewerCustomFonts,
+    private val cardZoom: Int,
+    private val imageZoom: Int,
+    private val centerVertically: Boolean
+) {
     /** Below could be in a better abstraction.  */
     fun appendCssStyle(style: StringBuilder) {
         // Zoom cards
@@ -69,15 +74,16 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
         }
 
     fun getCardClass(oneBasedCardOrdinal: Int): String {
-        var cardClass = "card card$oneBasedCardOrdinal"
-        cardClass += getCssClasses()
-        return cardClass
+        return "card card$oneBasedCardOrdinal" + getCssClasses()
     }
 
     companion object {
         private val nightModeClassRegex = Regex("\\.night(?:_m|M)ode\\b")
 
-        fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
+        fun create(
+            customFonts: ReviewerCustomFonts,
+            preferences: SharedPreferences
+        ): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)
             val centerVertically = preferences.getBoolean("centerVertically", false)
