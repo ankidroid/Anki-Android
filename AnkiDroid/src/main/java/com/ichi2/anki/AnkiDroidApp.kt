@@ -121,9 +121,12 @@ open class AnkiDroidApp : Application() {
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(DebugTree())
-            LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
             Timber.plant(ProductionCrashReportingTree())
+        }
+        if (BuildConfig.ENABLE_LEAK_CANARY) {
+            LeakCanaryConfiguration.setInitialConfigFor(this)
+        } else {
             LeakCanaryConfiguration.disable()
         }
         Timber.tag(TAG)
