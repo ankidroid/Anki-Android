@@ -83,10 +83,12 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
-        android:manageSpaceActivity=".ui.windows.managespace.ManageSpaceActivity"
+        android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >
+        <!-- Probably because of a bug on the framework,
+        the full package path is needed for manageSpaceActivity -->
         <activity
-            android:name=".ui.windows.managespace.ManageSpaceActivity"
+            android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".DrawingActivity"
