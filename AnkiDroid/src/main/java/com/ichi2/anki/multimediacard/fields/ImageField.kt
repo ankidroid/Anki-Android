@@ -82,23 +82,20 @@ class ImageField : FieldBase(), IField {
         }
 
         @VisibleForTesting
-        @KotlinCleanup("remove ? from value")
-        fun getImageFullPath(col: Collection, value: String?): String {
+        fun getImageFullPath(col: Collection, value: String): String {
             val path = parseImageSrcFromHtml(value)
-            if ("" == path) {
-                return ""
+
+            return if (path.isNotEmpty()) {
+                "${col.media.dir()}/$path"
+            } else {
+                ""
             }
-            val mediaDir = col.media.dir() + "/"
-            return mediaDir + path
         }
 
         @VisibleForTesting
         @CheckResult
-        @KotlinCleanup("remove ? from html")
-        fun parseImageSrcFromHtml(html: String?): String {
-            return if (html == null) {
-                ""
-            } else try {
+        fun parseImageSrcFromHtml(html: String): String {
+            return try {
                 val doc = Jsoup.parseBodyFragment(html)
                 val image = doc.selectFirst("img[src]") ?: return ""
                 image.attr("src")

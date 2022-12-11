@@ -31,6 +31,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
@@ -48,6 +49,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
+import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
@@ -276,7 +278,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 if (col!!.decks.isDyn(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
-                    val i = Intent(activity, DeckOptionsActivity::class.java)
+                    val i = if (BackendFactory.defaultLegacySchema) {
+                        Intent(activity, DeckOptionsActivity::class.java)
+                    } else {
+                        com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
+                    }
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                     slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
@@ -384,6 +390,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             // Switch on or off unbury depending on if there are cards to unbury
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            // Set the proper click target for the undo button's ActionProvider
+            val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
+                menu.findItem(R.id.action_undo)
+            ) as? RtlCompliantActionProvider
+            undoActionProvider?.clickHandler = { _, menuItem -> onMenuItemClick(menuItem) }
             // Switch on or off undo depending on whether undo is available
             if (col == null || !col!!.undoAvailable()) {
                 menu.findItem(R.id.action_undo).isVisible = false

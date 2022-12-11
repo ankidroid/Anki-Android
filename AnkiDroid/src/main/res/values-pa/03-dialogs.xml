@@ -123,9 +123,9 @@
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
+    <string name="dialog_ok">ٹھیک اے</string>
     <string name="dialog_confirm">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">نہیں</string>
     <string name="dialog_yes">ਹਾ</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_processing">Processing...</string>
@@ -138,7 +138,7 @@
     <string name="dialog_positive_repair">Repair</string>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_positive_restore">Restore</string>
-    <string name="dialog_positive_set">Set</string>
+    <string name="dialog_positive_set">سیٹ</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>

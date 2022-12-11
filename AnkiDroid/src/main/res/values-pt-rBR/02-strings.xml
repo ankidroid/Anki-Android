@@ -193,7 +193,7 @@
         <item quantity="other">Exportar %d cartões selecionados como arquivo apkg?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="one">Exportar nota selecionada como arquivo apkg?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
     <string name="export_in_progress">Exportando arquivo Anki (.apkg)&#8230;</string>

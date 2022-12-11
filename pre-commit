@@ -55,8 +55,14 @@ runPrettier () {
         return 0
     fi
 
-    # Run prettier over all Javascript files
-    npx --yes prettier --ignore-unknown --write AnkiDroid/**/*.js
+    CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
+        if [ -z "$CHANGED_JS_FILES" ]; then
+            echo "No Javascript staged files. Hence, skipping pre-commit Prettier run."
+            return 0
+        fi;
+
+    # Prettify changed files
+    echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --write
 
     echo "Completed npx prettier run."
     echo "$CHANGED_JS_FILES" | while read -r file; do
@@ -67,5 +73,5 @@ runPrettier () {
 }
 
 runKtlint
-runPrettier
+runPrettier || :; # || to avoid cancelling the commit if there is an error with Prettier
 echo "Completed the pre-commit hook."

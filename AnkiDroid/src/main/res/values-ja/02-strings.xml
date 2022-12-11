@@ -65,7 +65,7 @@
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
     <string name="show_whiteboard">ホワイトボードを表示する</string>
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
-    <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
+    <string name="clear_whiteboard">ホワイトボードの内容を消去</string>
     <string name="replay_audio">音声・動画を再生</string>
     <string name="leech_suspend_notification">このカードは \"leech\" （無駄、習得困難） というタグが付けられ、保留されました</string>
     <string name="leech_notification">このカードに \"leech\" （無駄、習得困難） というタグを付けました</string>

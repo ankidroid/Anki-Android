@@ -115,7 +115,7 @@
         <item quantity="one">Kaarten geïmporteerd: %2$d</item>
         <item quantity="other">Geïmporteerde bestanden: %1$d\nTotaal kaarten: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
+    <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Geen ruimte</string>
     <string name="no_space_to_downgrade_content">AnkiDroid vereist %s vrije ruimte om door te gaan.  Gelieve ruimte vrij maken</string>
@@ -229,7 +229,7 @@
     <string name="help_item_support_develop_ankidroid">Ontwikkelen</string>
     <string name="help_item_support_rate_ankidroid">Beoordelen</string>
     <string name="help_item_support_other_ankidroid">Overige</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Vertaal</string>
     <string name="help_title_community">Gemeenschap</string>
     <string name="help_item_anki_forums">Anki-forums</string>
     <string name="help_item_discord">Discord</string>

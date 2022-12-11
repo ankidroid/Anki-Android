@@ -1209,12 +1209,7 @@ open class DeckPicker :
                         integrityCheck()
                     }
                     negativeButton(R.string.close) {
-                        restartActivity()
-                    }
-                    @Suppress("Deprecation")
-                    // TODO: Cleanup - Remove neutral button from here
-                    neutralButton {
-                        restartActivity()
+                        recreate()
                     }
                     cancelOnTouchOutside(false)
                     cancelable(false)
@@ -1225,7 +1220,7 @@ open class DeckPicker :
                 Timber.i("Updated preferences with no integrity check - restarting activity")
                 // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                 // proceed
-                restartActivity()
+                recreate()
                 return
             }
 
@@ -1382,7 +1377,6 @@ open class DeckPicker :
      * Show a simple snackbar message or notification if the activity is not in foreground
      * @param messageResource String resource for message
      */
-    @KotlinCleanup("nullOrEmpty")
     fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
             val res = AnkiDroidApp.appResources
@@ -1492,28 +1486,14 @@ open class DeckPicker :
         val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
             launchCatchingTask {
-                val result = withProgress(resources.getString(R.string.check_media_message)) { checkMedia() }
+                val result = withProgress(R.string.check_media_message) {
+                    withCol { media.performFullCheck() }
+                }
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
             }
         } else {
             requestStoragePermission()
         }
-    }
-
-    /**
-     * Finds missing, unused and invalid media files
-     *
-     * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
-     */
-    @VisibleForTesting
-    suspend fun checkMedia() = withCol {
-        if (BackendFactory.defaultLegacySchema) {
-            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-            media.rebuildIfInvalid()
-            // A media check on AnkiDroid will also update the media db
-            media.findChanges(true)
-        }
-        media.check()
     }
 
     override fun deleteUnused(unused: List<String>) {
@@ -1846,6 +1826,14 @@ open class DeckPicker :
                             dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url)
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
+                        ConnectionResultType.NETWORK_ERROR -> {
+                            showSnackbar(R.string.check_network) {
+                                setAction(R.string.sync_even_if_offline) {
+                                    Connection.allowLoginSyncOnNoConnection = true
+                                    sync()
+                                }
+                            }
+                        }
                         else -> {
                             if (result.isNotEmpty() && result[0] is Int) {
                                 val code = result[0] as Int
@@ -1985,7 +1973,7 @@ open class DeckPicker :
                     if (intent.action == SdCardReceiver.MEDIA_EJECT) {
                         onSdCardNotMounted()
                     } else if (intent.action == SdCardReceiver.MEDIA_MOUNT) {
-                        restartActivity()
+                        recreate()
                     }
                 }
             }
@@ -2207,7 +2195,8 @@ open class DeckPicker :
             showCollectionErrorDialog()
             return
         }
-        dueTree = result.map { x -> x.unsafeCastToType() }
+        @Suppress("UNCHECKED_CAST")
+        dueTree = result as List<TreeNode<AbstractDeckTreeNode>>?
         renderPage()
         // Update the mini statistics bar as well
         launchCatchingTask {

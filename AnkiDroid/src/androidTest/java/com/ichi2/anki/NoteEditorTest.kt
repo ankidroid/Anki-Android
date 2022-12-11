@@ -54,7 +54,7 @@ abstract class NoteEditorTest protected constructor() {
     fun before() {
         for (invalid in invalidSdksImpl) {
             Assume.assumeThat(
-                String.format("Test fails on Travis API %d", invalid),
+                "Test fails on Travis API $invalid",
                 Build.VERSION.SDK_INT,
                 Matchers.not(
                     Matchers.`is`(invalid)
