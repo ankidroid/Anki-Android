@@ -78,12 +78,12 @@ class ImportDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return res().getString(R.string.import_interrupted)
+            return resources.getString(R.string.import_interrupted)
         }
 
     override val notificationTitle: String
         get() {
-            return res().getString(R.string.import_title)
+            return resources.getString(R.string.import_title)
         }
 
     fun dismissAllDialogFragments() {
