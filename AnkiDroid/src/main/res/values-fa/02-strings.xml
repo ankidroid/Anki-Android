@@ -174,11 +174,11 @@
     <string name="import_log_file_cache_cleared">خطا در ورود فایل، احتمالاً به دلیل پاکسازی کش در هنگام پردازش.\nلطفاً دوباره تلاش کنید</string>
     <string name="import_succeeded_but_check_database">ورود داده موفقیت آمیز بود ولی پاکسازی بعد از ورود ناموفق بود. بعداً بررسی دیتابیس را اجرا کنید. دلیل اصلی: %s</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">خطا در ورود بسته\n\n%s</string>
     <string name="import_error_not_apkg_extension">فایل \"%s\" فاقد پسوند .apkg یا .colpkg است</string>
     <string name="import_error_load_imported_database">جایگزین دیتابیس آنکی (.anki2) هنوز پشتیبانی نشده است. لطفاً برای راهنمایی در مورد جایگزینی راهنما را بخوانید.</string>
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">copyFileToCache() با مشکل مواجه شد (احتمالاً به دلیل کمبود حافظه)</string>
     <string name="import_error_multiple_colpkg">چندین فایل colpkg انتخاب شده.</string>
     <string name="import_error_colpkg_apkg">هر دو apkg و colpkg فایل ها هم‌زمان انتخاب شده اند</string>
     <string name="import_stats_error">خطا ایجاد شد وقتی این فایل ها در حال وارد شدن بودند:\n%s</string>
@@ -189,12 +189,12 @@
     <string name="confirm_apkg_export">صدور مجموعه به‌صورت مجموعۀ آنکی؟</string>
     <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="one">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</item>
         <item quantity="other">Export %d selected cards as apkg file?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="one">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
     </plurals>
     <string name="export_in_progress">در حال صدور فایل مجموعۀ آنکی...</string>
     <string name="export_success_title">Collection exported successfully</string>
@@ -209,7 +209,6 @@
 با استفاده از یکی از عوامل در دسترس Anki، آن را باز کنید[2] و از آموزش آسان و کارآمد لذت ببرید!<br/><br/>
 [1] %1$s<br/>
 [2]%2$s]]></string>
-    <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="export_select_save_app">Select where to save file</string>
     <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
@@ -383,6 +382,15 @@
     <string name="scoped_storage_postpone">به تعویق انداختن</string>
     <string name="scoped_storage_migrate">مهاجرت</string>
     <string name="search_card_js_api_no_results">جست و جوی شما نتیجه‌ای نداشت</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s بسته ی JavaScript معتبری نیست</string>
     <string name="could_not_create_dir">ساخت فهرست %s ناموفق بود</string>

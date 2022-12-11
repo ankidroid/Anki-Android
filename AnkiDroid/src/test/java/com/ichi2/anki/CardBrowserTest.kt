@@ -523,6 +523,7 @@ class CardBrowserTest : RobolectricTest() {
         assertNotNull(shownDialog)
 
         cardBrowser.recreate()
+        advanceRobolectricUiLooper()
         val dialogAfterRecreate: Fragment? = cardBrowser.getDialogFragment()
         assertNull(dialogAfterRecreate)
     }

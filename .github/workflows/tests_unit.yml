@@ -2,6 +2,11 @@ name: Unit Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      clearCaches:
+        description: "Clear workflow caches where possible"
+        required: false
+        type: string
   pull_request:
     branches:
       - '**'
@@ -34,18 +39,22 @@ concurrency:
 
 jobs:
   unit:
-    name: JUnit Tests
+    name: JUnit Tests (${{ matrix.os}}, legacy_schema = ${{ matrix.legacy_schema }})
     timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        legacy_schema: [true, false]
+        exclude:
+          - os: macos-latest
+            legacy_schema: false
     runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
       - name: Configure Windows Pagefile
-        uses: al-cheb/configure-pagefile-action@v1.2
+        uses: al-cheb/configure-pagefile-action@v1.3
         if: matrix.os == 'windows-latest'
         with:
           minimum-size: 8GB
@@ -76,6 +85,15 @@ jobs:
           # Builds on other branches will only read from main branch cache writes
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+          gradle-home-cache-cleanup: true
+
+      - name: Clear Caches Optionally
+        if: "${{ github.event.inputs.clearCaches != '' }}"
+        shell: bash
+        run: |
+          du -sk ~/.gradle
+          rm -fr ~/.gradle
+          du -sk ~/.gradle || echo ~/.gradle is gone
 
       - name: Gradle Dependency Download
         uses: nick-invision/retry@v2
@@ -84,6 +102,9 @@ jobs:
           retry_wait_seconds: 60
           max_attempts: 3
           command: ./gradlew robolectricSdkDownload --daemon
+
+      - name: Set legacy schema property
+        run: echo "legacy_schema = ${{ matrix.legacy_schema }}" >> local.properties
 
       - name: Run Unit Tests
         uses: gradle/gradle-build-action@v2
@@ -96,13 +117,6 @@ jobs:
         with:
           arguments: --stop
 
-      - name: Submit Coverage
-        # This can fail on timeouts etc, wrap with retry
-        uses: nick-invision/retry@v2
+      - uses: codecov/codecov-action@v3
         with:
-          timeout_minutes: 10
-          retry_wait_seconds: 60
-          max_attempts: 3
-          continue_on_error: true #12501
-          shell: bash
-          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh
+          verbose: true

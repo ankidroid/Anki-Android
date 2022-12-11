@@ -31,6 +31,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
+import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -196,7 +197,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (isClozeType) {
                 return R.string.note_editor_no_cloze_delations
             }
-            if (TextUtils.isEmpty(getCurrentFieldText(0))) {
+            if (getCurrentFieldText(0).isEmpty()) {
                 return R.string.note_editor_no_first_field
             }
             return if (allFieldsHaveContent()) {
@@ -206,14 +207,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Otherwise, display "no cards created".
         }
 
-    private fun allFieldsHaveContent(): Boolean {
-        for (s in currentFieldStrings) {
-            if (TextUtils.isEmpty(s)) {
-                return false
-            }
-        }
-        return true
-    }
+    private fun allFieldsHaveContent() = currentFieldStrings.none { it.isNullOrEmpty() }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -1282,7 +1276,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val editLineView = editLines[i]
             mCustomViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText!!.setImagePasteListener { editText: EditText?, uri: Uri? ->
+            newEditText.setImagePasteListener { editText: EditText?, uri: Uri? ->
                 onImagePaste(
                     editText!!,
                     uri!!
@@ -1293,7 +1287,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
                 }
                 if (previous != null) {
-                    previous.lastViewInTabOrder!!.nextFocusForwardId = newEditText.id
+                    previous.lastViewInTabOrder.nextFocusForwardId = newEditText.id
                 }
             }
             previous = editLineView
@@ -1323,26 +1317,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
-                mediaButton!!.setBackgroundResource(icons[1])
+                mediaButton.setBackgroundResource(icons[1])
                 setRemapButtonListener(mediaButton, i)
-                toggleStickyButton!!.setBackgroundResource(0)
+                toggleStickyButton.setBackgroundResource(0)
             } else if (editModelMode && !allowFieldRemapping()) {
-                mediaButton!!.setBackgroundResource(0)
-                toggleStickyButton!!.setBackgroundResource(0)
+                mediaButton.setBackgroundResource(0)
+                toggleStickyButton.setBackgroundResource(0)
             } else {
                 // Use media editor button if not changing note type
-                mediaButton!!.setBackgroundResource(icons[0])
+                mediaButton.setBackgroundResource(icons[0])
                 setMMButtonListener(mediaButton, i)
                 if (addNote) {
                     // toggle sticky button
-                    toggleStickyButton!!.setBackgroundResource(icons[2])
+                    toggleStickyButton.setBackgroundResource(icons[2])
                     setToggleStickyButtonListener(toggleStickyButton, i)
                 } else {
-                    toggleStickyButton!!.setBackgroundResource(0)
+                    toggleStickyButton.setBackgroundResource(0)
                 }
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
+                previous.lastViewInTabOrder.nextFocusForwardId = R.id.CardEditorTagButton
             }
             mediaButton.contentDescription =
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
@@ -1358,8 +1352,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return true
     }
 
-    private fun setMMButtonListener(mediaButton: ImageButton?, index: Int) {
-        mediaButton!!.setOnClickListener { v: View ->
+    private fun setMMButtonListener(mediaButton: ImageButton, index: Int) {
+        mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
                 val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
@@ -1757,31 +1751,29 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun addToolbarButton(buttonText: String, prefix: String, suffix: String) {
-        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
-            return
-        }
+        if (prefix.isEmpty() && suffix.isEmpty()) return
         val toolbarButtons = toolbarButtons
         toolbarButtons.add(CustomToolbarButton(toolbarButtons.size, buttonText, prefix, suffix))
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }
 
-    @KotlinCleanup(".isEmpty()")
     private fun editToolbarButton(
-        buttonTextParam: String,
-        prefixParam: String,
-        suffixParam: String,
+        buttonText: String,
+        prefix: String,
+        suffix: String,
         currentButton: CustomToolbarButton
     ) {
-        var buttonText: String? = buttonTextParam
-        var prefix: String? = prefixParam
-        var suffix: String? = suffixParam
-        buttonText = if (TextUtils.isEmpty(buttonText)) currentButton.buttonText else buttonText
-        prefix = if (TextUtils.isEmpty(prefix)) currentButton.prefix else prefix
-        suffix = if (TextUtils.isEmpty(suffix)) currentButton.suffix else suffix
         val toolbarButtons = toolbarButtons
-        val index = currentButton.index
-        toolbarButtons[index] = CustomToolbarButton(index, buttonText!!, prefix!!, suffix!!)
+        val currentButtonIndex = currentButton.index
+
+        toolbarButtons[currentButtonIndex] = CustomToolbarButton(
+            index = currentButtonIndex,
+            buttonText = buttonText.ifEmpty { currentButton.buttonText },
+            prefix = prefix.ifEmpty { currentButton.prefix },
+            suffix = suffix.ifEmpty { currentButton.suffix }
+        )
+
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }

@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">അതെ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ഡെക്കുകൾ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">കാർഡ് ബ്രൗസർ</string>
@@ -177,6 +176,7 @@
     <string name="empty_cloze_warning">ഈ കുറിപ്പ് എഡിറ്റുചെയ്‌ത് കുറച്ച് ക്ലോസ് ഇല്ലാതാക്കലുകൾ ചേർക്കുക. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">സമന്വയിപ്പിക്കുക</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">സമന്വയം റദ്ദാക്കണോ?</string>
     <string name="continue_sync">സമന്വയം തുടരുക</string>
     <string name="sync_cancelled">സമന്വയം റദ്ദാക്കി</string>
@@ -239,4 +239,6 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>

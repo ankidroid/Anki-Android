@@ -33,7 +33,6 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Utils
 import timber.log.Timber
 
 /**
@@ -225,7 +224,7 @@ class Previewer : AbstractFlashcardViewer() {
             return
         }
         mIndex = getNextIndex(newCardList)
-        mCardList = Utils.collection2Array(newCardList)
+        mCardList = newCardList.toLongArray()
         currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
     }

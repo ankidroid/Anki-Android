@@ -38,6 +38,7 @@ class AnkiActivityTest : RobolectricTest() {
 
         val newConfig = Configuration(activity.resources.configuration)
         newConfig.uiMode = 33
+        activity.resources.configuration.uiMode = 33
         activity.onConfigurationChanged(newConfig)
 
         assertThat(Themes.currentTheme, equalTo(Theme.BLACK))

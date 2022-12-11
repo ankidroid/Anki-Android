@@ -158,13 +158,13 @@ class MissingImageHandlerTest {
 
     private fun getValidRequest(fileName: String): WebResourceRequest {
         // actual URL on Android 9
-        val url = String.format("file:///storage/emulated/0/AnkiDroid/collection.media/%s", fileName)
+        val url = "file:///storage/emulated/0/AnkiDroid/collection.media/$fileName"
         return getWebResourceRequest(url)
     }
 
     private fun getInvalidRequest(fileName: String): WebResourceRequest {
         // no collection.media in the URL
-        val url = String.format("file:///storage/emulated/0/AnkiDroid/%s", fileName)
+        val url = "file:///storage/emulated/0/AnkiDroid/$fileName"
         return getWebResourceRequest(url)
     }
 

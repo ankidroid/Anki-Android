@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
     <string name="multimedia_editor_popup_cloze">Invuloefening</string>
     <string name="multimedia_editor_popup_clear_field">Veld leegmaken</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">Vertaal</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Laad</string>
     <string name="multimedia_editor_pron_looking_up">Opzoeken van uitspraak</string>

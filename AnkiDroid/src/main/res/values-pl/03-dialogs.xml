@@ -129,8 +129,8 @@
         <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">Karta SD jest pełna</string>
-    <string name="sd_card_almost_full_title">Karta SD jest prawie pełna</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Brak miejsca</string>
     <string name="no_space_to_downgrade_content">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
     <string name="restore_backup_title">Odtworzyć kopię zapasową?</string>
@@ -138,7 +138,9 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Nie</string>
+    <string name="dialog_yes">Tak</string>
     <string name="dialog_continue">Kontynuuj</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>
@@ -243,6 +245,7 @@
     <string name="help_item_support_develop_ankidroid">Rozbuduj</string>
     <string name="help_item_support_rate_ankidroid">Oceń</string>
     <string name="help_item_support_other_ankidroid">Inne</string>
+    <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">Społeczność</string>
     <string name="help_item_anki_forums">Forum Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -274,4 +277,14 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

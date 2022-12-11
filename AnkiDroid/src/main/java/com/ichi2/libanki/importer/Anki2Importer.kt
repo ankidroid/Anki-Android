@@ -255,13 +255,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                                     update.add(arrayOf(nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data))
                                     dirty.add(nid)
                                 } else {
-                                    dupesIgnored.add(
-                                        String.format(
-                                            "%s: %s",
-                                            mCol.models.get(oldMid)!!.getString("name"),
-                                            flds.replace('\u001f', ',')
-                                        )
-                                    )
+                                    val modelName = mCol.models.get(oldMid)!!.getString("name")
+                                    val commaSeparatedFields = flds.replace('\u001f', ',')
+                                    dupesIgnored.add("$modelName: $commaSeparatedFields")
                                     mIgnoredGuids!!.add(guid)
                                 }
                             }
@@ -370,7 +366,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     /** Return local id for remote MID.  */
-    @KotlinCleanup("use scope function apply")
     private fun _mid(srcMid: Long): Long {
         // already processed this mid?
         if (mModelMap!!.containsKey(srcMid)) {
@@ -383,10 +378,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // missing from target col?
             if (!dst.models.have(mid)) {
                 // copy it over
-                val model = srcModel.deepClone()
-                model.put("id", mid)
-                model.put("mod", TimeManager.time.intTime())
-                model.put("usn", mCol.usn())
+                val model = srcModel.deepClone().apply {
+                    put("id", mid)
+                    put("mod", TimeManager.time.intTime())
+                    put("usn", mCol.usn())
+                }
                 dst.models.update(model)
                 break
             }
@@ -395,10 +391,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             val dstScm = dst.models.scmhash(dstModel!!)
             if (srcScm == dstScm) {
                 // they do; we can reuse this mid
-                val model = srcModel.deepClone()
-                model.put("id", mid)
-                model.put("mod", TimeManager.time.intTime())
-                model.put("usn", mCol.usn())
+                val model = srcModel.deepClone().apply {
+                    put("id", mid)
+                    put("mod", TimeManager.time.intTime())
+                    put("usn", mCol.usn())
+                }
                 dst.models.update(model)
                 break
             }

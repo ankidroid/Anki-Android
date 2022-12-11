@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">下载的数据库损坏，请重试。</string>
     <string name="sync_overwrite_error">您当前的集合不能被下载文件覆盖。</string>
     <string name="sync_connection_error">连接超时。可能是您的网络连接出了问题，或者您的媒体文件夹中有非常大的文件。</string>
-    <string name="sync_write_access_error">无法将已下载的文件保存到SD卡。可能因为您的SD卡挂载为只读或者是空间不足。</string>
+    <string name="sync_write_access_error_on_storage">无法将下载的文件保存到您的存储。要么是存储空间是只读的，要么空间不足。</string>
     <string name="sync_error_invalid_sync_server">高级设置中的自定义同步服务器无效（%s）。请输入一个有效的服务器，或禁用设置。</string>
     <string name="sync_deletions_message">删除&#8230;&#8230;</string>
     <string name="sync_small_objects_message">同步小对象&#8230;&#8230;</string>
@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">远程</string>
     <string name="force_full_sync_title">强制完全同步</string>
     <string name="force_full_sync_summary">在下一次同步时, 强制单方向的改变.</string>
-    <string name="force_full_sync_confirmation">强制完整同步</string>
+    <string name="force_full_sync_confirmation">强制完全同步</string>
     <string name="full_sync_confirmation">请求的改变需要在下次同步你的集合时上传整个数据库. 如果你还有在其他设备上未同步的复习或者其他改变, 他们将会丢失, 是否继续?</string>
     <string name="full_sync_confirmation_upgrade">因先前安装的AnkiDroid版本中Bug的原因，我们建议强制完全同步一次。</string>
     <string name="sync_error_407_proxy_required">需要代理身份验证。</string>
