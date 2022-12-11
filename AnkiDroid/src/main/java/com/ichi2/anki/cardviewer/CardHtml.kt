@@ -111,11 +111,11 @@ class CardHtml(
 
     private fun getCardClass(requiresMathjax: Boolean): String {
         // CSS class for card-specific styling
-        var cardClass: String = context.cardAppearance.getCardClass(ord + 1)
-        if (requiresMathjax) {
-            cardClass += " mathjax-needs-to-render"
+        return if (requiresMathjax) {
+            context.cardAppearance.getCardClass(ord + 1) + " mathjax-needs-to-render"
+        } else {
+            context.cardAppearance.getCardClass(ord + 1)
         }
-        return cardClass
     }
 
     private fun getScripts(requiresMathjax: Boolean): String {
@@ -136,12 +136,10 @@ class CardHtml(
             val renderOutput = card.render_output()
             val questionAv = renderOutput.question_av_tags
             val answerAv = renderOutput.answer_av_tags
-            var questionSound: List<SoundOrVideoTag>? = null
-            var answerSound: List<SoundOrVideoTag>? = null
-            if (!BackendFactory.defaultLegacySchema) {
-                questionSound = questionAv.filterIsInstance(SoundOrVideoTag::class.java)
-                answerSound = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
-            }
+            val questionSound: List<SoundOrVideoTag>? =
+                if (!BackendFactory.defaultLegacySchema) questionAv.filterIsInstance(SoundOrVideoTag::class.java) else null
+            val answerSound: List<SoundOrVideoTag>? =
+                if (!BackendFactory.defaultLegacySchema) answerAv.filterIsInstance(SoundOrVideoTag::class.java) else null
 
             // legacy (slow) function to return the answer without the front side
             fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
