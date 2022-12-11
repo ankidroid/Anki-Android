@@ -165,8 +165,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_SYNC_CORRUPT_COLLECTION -> {
                 dialog.show {
                     positiveButton(R.string.dialog_ok)
-                    // TODO: Check if this can be moved to negative button
-                    neutralButton(R.string.help) {
+                    negativeButton(R.string.help) {
                         (requireActivity() as AnkiActivity).openUrl(Uri.parse(getString(R.string.repair_deck)))
                     }
                     cancelable(false)
