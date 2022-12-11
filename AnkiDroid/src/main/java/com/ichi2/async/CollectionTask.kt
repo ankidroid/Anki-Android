@@ -19,28 +19,21 @@
 package com.ichi2.async
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
-import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
-import org.json.JSONException
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.util.*
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
 
@@ -154,19 +147,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         listener?.onCancelled()
     }
 
-    class LoadDeckCounts : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckDueTreeNode>>? {
-            Timber.d("doInBackgroundLoadDeckCounts")
-            return try {
-                // Get due tree
-                col.sched.deckDueTree(collectionTask)
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundLoadDeckCounts - error")
-                null
-            }
-        }
-    }
-
     class CheckDatabase : TaskDelegate<String, Pair<Boolean, CheckDatabaseResult?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
             Timber.d("doInBackgroundCheckDatabase")
@@ -183,15 +163,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("Use StringBuilder to concatenate the strings")
-    class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
+    class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, ImporterData>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): ImporterData {
             Timber.d("doInBackgroundImportAdd")
             val res = AnkiDroidApp.instance.baseContext.resources
 
             var impList = arrayListOf<AnkiPackageImporter>()
-            var errFlag = false
-            var errList: String? = null
+            val errBuilder = StringBuilder()
 
             for (path in pathList) {
                 val imp = AnkiPackageImporter(col, path)
@@ -201,12 +179,12 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     impList.add(imp)
                 } catch (e: ImportExportException) {
                     Timber.w(e)
-                    errFlag = true
-                    errList += File(path).name + "\n" + e.message + "\n"
+                    errBuilder.append(File(path).name, "\n", e.message, "\n")
                 }
             }
 
-            return Triple(if (impList.isEmpty()) null else impList, errFlag, errList)
+            val errList = if (errBuilder.isEmpty()) null else errBuilder.toString()
+            return ImporterData(if (impList.isEmpty()) null else impList, errList)
         }
     }
 
@@ -338,69 +316,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
-            Timber.d("doInBackgroundExportApkg")
-            try {
-                val exporter = if (did == null) {
-                    AnkiPackageExporter(col, includeSched, includeMedia)
-                } else {
-                    AnkiPackageExporter(col, did, includeSched, includeMedia)
-                }
-                exporter.exportInto(apkgPath, col.context)
-            } catch (e: FileNotFoundException) {
-                Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg")
-                return Pair(false, null)
-            } catch (e: IOException) {
-                Timber.e(e, "IOException in doInBackgroundExportApkg")
-                return Pair(false, null)
-            } catch (e: JSONException) {
-                Timber.e(e, "JSOnException in doInBackgroundExportApkg")
-                return Pair(false, null)
-            } catch (e: ImportExportException) {
-                Timber.e(e, "ImportExportException in doInBackgroundExportApkg")
-                return Pair(true, e.message)
-            }
-            return Pair(false, apkgPath)
-        }
-    }
-
-    /**
-     * Deletes the given field in the given model
-     */
-    class DeleteField(private val model: Model, private val field: JSONObject) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackGroundDeleteField")
-            try {
-                col.models.remField(model, field)
-                col.save()
-            } catch (e: ConfirmModSchemaException) {
-                // Should never be reached
-                e.log()
-                return false
-            }
-            return true
-        }
-    }
-
-    /**
-     * Repositions the given field in the given model
-     */
-    class RepositionField(private val model: Model, private val field: JSONObject, private val index: Int) : TaskDelegate<Void, Boolean>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Boolean {
-            Timber.d("doInBackgroundRepositionField")
-            try {
-                col.models.moveField(model, field, index)
-                col.save()
-            } catch (e: ConfirmModSchemaException) {
-                e.log()
-                // Should never be reached
-                return false
-            }
-            return true
-        }
-    }
-
     class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
             return col.emptyCids(collectionTask)
@@ -411,28 +326,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
             col.sched.reset()
             return null
-        }
-    }
-
-    companion object {
-        @JvmStatic
-        @VisibleForTesting
-        fun nonTaskUndo(col: Collection): Card? {
-            val sched = col.sched
-            val card = col.undo()
-            if (card == null) {
-                /* multi-card action undone, no action to take here */
-                Timber.d("Multi-select undo succeeded")
-            } else {
-                // cid is actually a card id.
-                // a review was undone,
-                /* card review undone, set up to review that card again */
-                Timber.d("Single card review undo succeeded")
-                card.startTimer()
-                col.reset()
-                sched.deferReset(card)
-            }
-            return card
         }
     }
 }

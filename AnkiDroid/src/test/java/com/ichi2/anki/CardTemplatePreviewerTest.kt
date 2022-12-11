@@ -305,13 +305,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing, equalTo(true))
     }
 
-    @KotlinCleanup("Change visibility to private")
-    protected fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
+    private fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
         return getFieldsAsBundleForPreview(fields, false)
     }
 
-    @KotlinCleanup("Change visibility to private")
-    protected fun assertTwoCards(testCardTemplatePreviewer: TestCardTemplatePreviewer) {
+    private fun assertTwoCards(testCardTemplatePreviewer: TestCardTemplatePreviewer) {
         assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
 

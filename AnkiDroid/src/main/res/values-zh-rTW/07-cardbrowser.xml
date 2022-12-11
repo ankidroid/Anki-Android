@@ -49,7 +49,7 @@
         <item quantity="other">已顯示 %d 張卡片</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d notes shown</item>
+        <item quantity="other">顯示了 %d 條筆記</item>
     </plurals>
     <string name="card_browser_all_decks">所有牌組</string>
     <string name="card_browser_delete_card">刪除筆記</string>
@@ -96,12 +96,12 @@
     <string name="card_browser_no_cards_in_deck">牌組 ‘%s’ 中未找到任何卡片</string>
     <string name="card_browser_search_all_decks">搜尋所有牌組</string>
     <string name="card_browser_unknown_deck_name">未知</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">截斷內容</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="other">Export cards</item>
+        <item quantity="other">匯出卡片</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="other">Export notes</item>
+        <item quantity="other">匯出筆記</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 卡片已刪除</item>

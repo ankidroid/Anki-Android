@@ -20,7 +20,6 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.web.CustomSyncServer
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -34,21 +33,21 @@ class HttpSyncerTest {
     fun defaultMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(null)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlNoHostNum))
     }
 
     @Test
     fun defaultMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(1)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlWithHostNum))
     }
 
     @Ignore("Not yet supported")
     @Test
     fun customMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(null)
-        setCustomServer(sCustomServerWithFormatting)
+        setCustomServer(customServerWithFormatting)
         val syncUrl = underTest.syncURL()
         assertThat(syncUrl, equalTo("https://sync.example.com/sync/"))
     }
@@ -57,7 +56,7 @@ class HttpSyncerTest {
     @Test
     fun customMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(1)
-        setCustomServer(sCustomServerWithFormatting)
+        setCustomServer(customServerWithFormatting)
         val syncUrl = underTest.syncURL()
         assertThat(syncUrl, equalTo("https://sync1.example.com/sync/"))
     }
@@ -65,7 +64,7 @@ class HttpSyncerTest {
     @Test
     fun unformattedCustomMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(null)
-        setCustomServer(sCustomServerWithNoFormatting)
+        setCustomServer(customServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
         assertThat(syncUrl, equalTo("https://sync.example.com/sync/"))
     }
@@ -73,7 +72,7 @@ class HttpSyncerTest {
     @Test
     fun unformattedCustomMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(1)
-        setCustomServer(sCustomServerWithNoFormatting)
+        setCustomServer(customServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
         assertThat(syncUrl, equalTo("https://sync.example.com/sync/"))
     }
@@ -83,7 +82,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(null)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlNoHostNum))
     }
 
     @Test
@@ -91,7 +90,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(1)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlWithHostNum))
     }
 
     private fun setCustomServerWithNoUrl() {
@@ -113,11 +112,10 @@ class HttpSyncerTest {
         return HttpSyncer(null, null, HostNum(hostNum))
     }
 
-    @KotlinCleanup("rename all")
     companion object {
-        private const val sCustomServerWithNoFormatting = "https://sync.example.com/sync/"
-        private const val sCustomServerWithFormatting = "https://sync%s.example.com/sync/"
-        private const val sDefaultUrlNoHostNum = "https://sync.ankiweb.net/sync/"
-        private const val sDefaultUrlWithHostNum = "https://sync1.ankiweb.net/sync/"
+        private const val customServerWithNoFormatting = "https://sync.example.com/sync/"
+        private const val customServerWithFormatting = "https://sync%s.example.com/sync/"
+        private const val defaultUrlNoHostNum = "https://sync.ankiweb.net/sync/"
+        private const val defaultUrlWithHostNum = "https://sync1.ankiweb.net/sync/"
     }
 }

@@ -17,8 +17,8 @@ package com.ichi2.libanki.sched
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.servicelayer.UndoService.Undo
-import com.ichi2.async.CollectionTask.Companion.nonTaskUndo
+import com.ichi2.anki.servicelayer.Undo
+import com.ichi2.anki.servicelayer.Undo.Companion.nonTaskUndo
 import com.ichi2.libanki.*
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
@@ -193,12 +193,13 @@ class AbstractSchedTest : RobolectricTest() {
     }
 
     private inner class IncreaseToday {
-        private val mAId: Long
-        private val mBId: Long
-        private val mCId: Long
-        private val mDId: Long
-        private val mDecks: DeckManager
-        private val mSched: AbstractSched
+        private val mAId: Long = addDeck("A")
+        private val mBId: Long = addDeck("A::B")
+        private val mCId: Long = addDeck("A::B::C")
+        private val mDId: Long = addDeck("A::B::D")
+        private val mDecks: DeckManager = col.decks
+        private val mSched: AbstractSched = col.sched
+
         private fun assertNewCountIs(explanation: String, did: Long, expected: Int) {
             mDecks.select(did)
             mSched.resetCounts()
@@ -335,16 +336,6 @@ mw.col.sched.extendLimits(1, 0)
 ```
              */
         }
-
-        init {
-            @KotlinCleanup("remove init and initialize the properties directly")
-            mDecks = col.decks
-            mSched = col.sched
-            mAId = addDeck("A")
-            mBId = addDeck("A::B")
-            mCId = addDeck("A::B::C")
-            mDId = addDeck("A::B::D")
-        }
     }
 
     /** Those test may be unintuitive, but they follow upstream as close as possible.  */
@@ -451,7 +442,7 @@ mw.col.sched.extendLimits(1, 0)
         val hasMatch = decks.all().stream().anyMatch { x: Deck -> name == x.getString("name") }
         @KotlinCleanup("remove .format")
         assertThat(
-            String.format("Deck %s should exist", name),
+            "Deck $name should exist",
             hasMatch,
             `is`(true)
         )

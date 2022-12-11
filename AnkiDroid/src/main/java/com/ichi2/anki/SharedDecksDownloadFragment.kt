@@ -21,7 +21,6 @@ import android.app.DownloadManager
 import android.content.*
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -36,6 +35,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 import java.io.File
@@ -169,7 +169,7 @@ class SharedDecksDownloadFragment : Fragment() {
         request.setTitle(currentFileName)
 
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, currentFileName)
+        request.setDestinationInExternalFilesDir(context, FileUtil.getDownloadDirectory(), currentFileName)
 
         return request
     }
@@ -382,7 +382,7 @@ class SharedDecksDownloadFragment : Fragment() {
             FileProvider.getUriForFile(
                 it,
                 it.applicationContext?.packageName + ".apkgfileprovider",
-                File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), mFileName.toString())
+                File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), mFileName.toString())
             )
         }
         Timber.d("File URI -> $fileUri")

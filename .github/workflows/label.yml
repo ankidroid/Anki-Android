@@ -18,7 +18,7 @@ jobs:
         script: |
           let removeLabelsList = [
             "Pending Merge", 
-            "Waiting For Feedback", 
+            "Needs Author Reply", 
             "Needs Review", 
             "Review High Priority", 
             "Needs Second Approval",

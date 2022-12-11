@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">עורך מתקדם</string>
     <string name="multimedia_editor_popup_cloze">זיהוי cloze</string>
     <string name="multimedia_editor_popup_clear_field">פינוי השדה</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">תרגום</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">טעינה</string>
     <string name="multimedia_editor_pron_looking_up">בדיקת היגוי</string>

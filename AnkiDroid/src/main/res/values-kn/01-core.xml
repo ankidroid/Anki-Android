@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ಹೌದು </string>
     <!-- Navigation drawer items-->
     <string name="decks">ಡೆಕ್ಸ್</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ಕಾರ್ಡ್ ಬ್ರೌಸರ್  </string>
@@ -177,6 +176,7 @@
     <string name="empty_cloze_warning">ಈ ಟಿಪ್ಪಣಿಯನ್ನು ಸಂಪಾದಿಸಿ ಮತ್ತು ಕೆಲವು ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳನ್ನು ಸೇರಿಸಿ. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ಸಿಂಕ್ ಅನ್ನು ರದ್ದುಗೊಳಿಸಲು ನೀವು ಬಯಸುವಿರಾ?</string>
     <string name="continue_sync">ಸಿಂಕ್ ಮುಂದುವರಿಸಿ</string>
     <string name="sync_cancelled">ಸಿಂಕ್ ರದ್ದುಗೊಂಡಿದೆ</string>
@@ -239,4 +239,6 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>

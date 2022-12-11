@@ -8,7 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class DeckOptionsTest : RobolectricTest() {
+class DeckOptionsActivityTest : RobolectricTest() {
     @Test
     fun changeHardFactor() {
         val col = col

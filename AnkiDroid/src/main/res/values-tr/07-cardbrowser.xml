@@ -100,12 +100,12 @@
     <string name="card_browser_unknown_deck_name">Bilinmeyen</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">İçeriği kırp</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Kartı dışarı aktar</item>
+        <item quantity="other">Kartları dışarı aktar</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Notu dışarı aktar</item>
+        <item quantity="other">Notları dışarı aktar</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kartı silindi</item>

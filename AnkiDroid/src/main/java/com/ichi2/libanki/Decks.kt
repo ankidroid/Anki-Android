@@ -624,15 +624,15 @@ class Decks(private val col: Collection) : DeckManager() {
         return ArrayList(mDconf!!.values)
     }
 
-    @KotlinCleanup("scope function")
     override fun confForDid(did: Long): DeckConfig {
         val deck = get(did, false)!!
         if (deck.has("conf")) {
             @KotlinCleanup("Clarify comment. It doesn't make sense when using :?")
             // fall back on default
             val conf = getConf(deck.getLong("conf")) ?: getConf(1L)!!
-            conf.put("dyn", DECK_STD)
-            return conf
+            return conf.apply {
+                put("dyn", DECK_STD)
+            }
         }
         // dynamic decks have embedded conf
         return DeckConfig(deck, DeckConfig.Source.DECK_EMBEDDED)

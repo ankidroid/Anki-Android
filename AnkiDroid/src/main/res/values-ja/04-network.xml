@@ -53,13 +53,13 @@
     <string name="menu_get_shared_decks">共有デッキをダウンロード</string>
     <string name="connection_error_message">ネットワークエラーが発生しました</string>
     <string name="not_logged_in_title">AnkiWebへのログイン</string>
-    <string name="login_create_account_message">サードパーティーのクラウド同期サービスを使用するため、このサービスのアカウントにログインする必要があります。（アカウントをお持ちでない場合は、ログイン画面の下部から新規登録の手続きが行えます。）</string>
+    <string name="login_create_account_message">サードパーティーのクラウド同期サービスを使用するため、そのサービスのアカウントにログインする必要があります。（アカウントをお持ちでない場合は、ログイン画面の下部から新規登録の手続きが行えます。）</string>
     <!-- MyAccount.kt -->
-    <string name="username">登録済みアカウントのメールアドレス</string>
+    <string name="username">登録済みのメールアドレス</string>
     <string name="password">パスワード</string>
     <string name="log_in">ログイン</string>
     <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
-    <string name="sign_up_not_affiliated">備考: AnkiWebはAnkiのサービスです。Ankiから独立して活動しているAnkiDroid開発グループが管理するものではありません。</string>
+    <string name="sign_up_not_affiliated">備考: AnkiWebはAnkiのサービスです。AnkiDroid開発グループが管理するものではありません。</string>
     <string name="sign_up">新規登録用ページに進む</string>
     <string name="logged_as">ログイン中のアカウント：</string>
     <string name="log_out">ログアウト</string>
@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">ダウンロードしたデータベースが壊れています。もう一度試してください。</string>
     <string name="sync_overwrite_error">ダウンロードしたファイルで、使用中のコレクションを上書きすることができませんでした。</string>
     <string name="sync_connection_error">接続がタイムアウトしました。インターネット接続に問題があるか、メディア用フォルダー内に非常に大きなファイルがあります。</string>
-    <string name="sync_write_access_error">SDカードにダウンロードしたファイルを保存できませんでした。SDカードは読み取り専用か、または、十分な空き容量がありません。</string>
+    <string name="sync_write_access_error_on_storage">内部ストレージにダウンロードしたファイルを保存できませんでした。ストレージが読み取り専用か、または、十分な空き容量がありません。</string>
     <string name="sync_error_invalid_sync_server">詳細設定のカスタム同期サーバーが無効です (%s). 有効なサーバーを入力するか、設定を無効にしてください。</string>
     <string name="sync_deletions_message">データの削除を同期しています...</string>
     <string name="sync_small_objects_message">小さなオブジェクトを同期しています...</string>

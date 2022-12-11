@@ -205,7 +205,6 @@
         [1]%1$s<br/>
         [2]%2$s
         ]]></string>
-    <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
     <string name="export_select_save_app">選擇文件保存位置</string>
     <string name="export_select_share_app">選擇要共亯的應用程序</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
@@ -372,6 +371,15 @@
     <string name="scoped_storage_postpone">延後</string>
     <string name="scoped_storage_migrate">遷移</string>
     <string name="search_card_js_api_no_results">搜尋沒有任何結果</string>
+    <string name="sync_impossible_during_migration">同步功能被禁用，直到遷移完成。\n
+        %1$d 個媒體檔案留待遷移。</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">如果您重新安裝AnkiDroid，它將無法打開您的牌組集。</string>
+    <string name="migration_update_request_dialog_download_warning">如果您卸載AnkiDroid，您需要再次下載您的全部牌組集。</string>
+    <string name="migration_update_request">Android存儲訪問策略要求我們更改存儲牌組集的位置。 遷移數據後，AnkiDroid將更快，您的數據將更安全。
+    您將無法在存儲遷移過程中同步。</string>
+    <string name="start_migration_progress_message">開始存儲遷移。 不久後您就可以繼續使用AnkiDroid啦。</string>
+    <string name="migration_part_1_done_resume">您可以繼續使用AnkiDroid了。
+\n存儲遷移將在後臺繼續。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s 不是一個有效的 JavaScript addon package</string>
     <string name="could_not_create_dir">無法建立目錄 %s</string>

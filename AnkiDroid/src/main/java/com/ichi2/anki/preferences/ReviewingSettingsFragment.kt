@@ -38,7 +38,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<ListPreference>(R.string.new_spread_preference).apply {
             setValueIndex(col.get_config_int("newSpread"))
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("newSpread", newValue as Int)
+                col.set_config("newSpread", (newValue as String).toInt())
             }
         }
 

@@ -47,14 +47,12 @@
     <string name="multimedia_editor_popup_text">進階編輯器</string>
     <string name="multimedia_editor_popup_cloze">克漏字測驗</string>
     <string name="multimedia_editor_popup_clear_field">清除欄位</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">翻譯</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">下載</string>
     <string name="multimedia_editor_pron_looking_up">查尋發音</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">發音無效</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">一次只支持一個單詞</string>
     <string name="multimedia_editor_word_search_try_lower_case">請嘗試使用小寫字元</string>
     <string name="multimedia_editor_poweredbeolingus">由 Beolingus 提供</string>
     <!-- Field editing general -->

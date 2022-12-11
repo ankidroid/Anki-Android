@@ -708,7 +708,7 @@ open class Collection(
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
     fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int, Int>>(Utils.collection2Array(nids), model)
+        return genCards<CollectionTask<Int, Int>>(nids.toLongArray(), model)
     }
 
     fun <T> genCards(
@@ -716,7 +716,7 @@ open class Collection(
         model: Model,
         task: T?
     ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        return genCards(Utils.collection2Array(nids), model, task)
+        return genCards(nids.toLongArray(), model, task)
     }
 
     fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
@@ -1161,7 +1161,7 @@ open class Collection(
             if ("q" == type && model.isCloze) {
                 if (Models._availClozeOrds(model, flist, false).isEmpty()) {
                     val link = String.format(
-                        "<a href=\"%s\">%s</a>",
+                        """<a href="%s">%s</a>""",
                         context.resources.getString(R.string.link_ankiweb_docs_cloze_deletion),
                         "help"
                     )

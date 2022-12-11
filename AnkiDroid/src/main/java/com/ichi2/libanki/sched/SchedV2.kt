@@ -46,6 +46,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -1270,14 +1271,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    @KotlinCleanup("simplify with scope function on card")
     private fun _rescheduleGraduatingLapse(card: Card, early: Boolean) {
         if (early) {
             card.ivl = card.ivl + 1
         }
-        card.due = (mToday!! + card.ivl).toLong()
-        card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
+        card.apply {
+            due = (mToday!! + card.ivl).toLong()
+            queue = Consts.QUEUE_TYPE_REV
+            type = Consts.CARD_TYPE_REV
+        }
     }
 
     // Overridden: V1 has type rev for relearning
@@ -1341,13 +1343,14 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     /** Reschedule a new card that's graduated for the first time.
      * Overridden: V1 does not set type and queue */
-    @KotlinCleanup("simplify with scope function on card")
     private fun _rescheduleNew(card: Card, conf: JSONObject, early: Boolean) {
-        card.ivl = _graduatingIvl(card, conf, early)
-        card.due = (mToday!! + card.ivl).toLong()
-        card.factor = conf.getInt("initialFactor")
-        card.type = Consts.CARD_TYPE_REV
-        card.queue = Consts.QUEUE_TYPE_REV
+        card.apply {
+            ivl = _graduatingIvl(card, conf, early)
+            due = (mToday!! + card.ivl).toLong()
+            factor = conf.getInt("initialFactor")
+            type = Consts.CARD_TYPE_REV
+            queue = Consts.QUEUE_TYPE_REV
+        }
     }
 
     protected fun _logLrn(
@@ -1918,19 +1921,18 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             return conf.getJSONObject("new")
         }
         // dynamic deck; override some attributes, use original deck for others
-        @KotlinCleanup("simplify with return and scope function on dict")
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
-        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"))
-        // overrides
-        dict.put("separate", conf.getBoolean("separate"))
-        dict.put("order", Consts.NEW_CARDS_DUE)
-        dict.put("perDay", mReportLimit)
-        return dict
+        return JSONObject().apply {
+            // original deck
+            put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
+            put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
+            put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
+            put("delays", oconf.getJSONObject("new").getJSONArray("delays"))
+            // overrides
+            put("separate", conf.getBoolean("separate"))
+            put("order", Consts.NEW_CARDS_DUE)
+            put("perDay", mReportLimit)
+        }
     }
 
     // Overridden: different delays for filtered cards.
@@ -1940,18 +1942,17 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             return conf.getJSONObject("lapse")
         }
         // dynamic deck; override some attributes, use original deck for others
-        @KotlinCleanup("simplify with return and scope function on dict")
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        // original deck
-        dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
-        dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
-        dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
-        dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
-        dict.put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"))
-        // overrides
-        dict.put("resched", conf.getBoolean("resched"))
-        return dict
+        return JSONObject().apply {
+            // original deck
+            put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
+            put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
+            put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
+            put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
+            put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"))
+            // overrides
+            put("resched", conf.getBoolean("resched"))
+        }
     }
 
     protected fun _revConf(card: Card): JSONObject {
@@ -2188,6 +2189,9 @@ end)  """
     }
 
     // Overridden: V1 also remove from dyns and lrn
+    /**
+     * Bury all cards with id in cids. Set as manual bury if [manual]
+     */
     @VisibleForTesting
     override fun buryCards(cids: LongArray, manual: Boolean) {
         if (!BackendFactory.defaultLegacySchema) {
@@ -2203,6 +2207,10 @@ end)  """
         )
     }
 
+    /**
+     * Unbury the cards of deck [did] and its descendants.
+     * @param type See [UnburyType]
+     */
     override fun unburyCardsForDeck(did: Long, type: UnburyType) {
         if (!BackendFactory.defaultLegacySchema) {
             super.unburyCardsForDeck(did, type)
@@ -2213,19 +2221,33 @@ end)  """
         unburyCardsForDeck(type, dids)
     }
 
+    /**
+     * Unbury the cards of some decks.
+     * @param type See [UnburyType]
+     * @param allDecks the decks from which cards should be unburied. If None, unbury for all decks.
+     * Only cards directly in a deck of this lists are considered, not subdecks.
+     */
     fun unburyCardsForDeck(type: UnburyType, allDecks: List<Long>?) {
-        val queue: String
-        queue = when (type) {
+        @Language("SQL")
+        val queue = when (type) {
             UnburyType.ALL -> queueIsBuriedSnippet()
             UnburyType.MANUAL -> "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED
             UnburyType.SIBLINGS -> "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED
         }
-        val sids = Utils.ids2str(allDecks ?: col.decks.active())
-        col.log(col.db.queryLongList("select id from cards where $queue and did in $sids"))
+        val deckConstraint = if (allDecks == null) {
+            ""
+        } else {
+            " and did in " + Utils.ids2str(allDecks)
+        }
+        col.log(col.db.queryLongList("select id from cards where $queue $deckConstraint"))
         col.db.execute(
-            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
+            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + deckConstraint,
             time.intTime(), col.usn()
         )
+    }
+
+    override fun unburyCards() {
+        unburyCardsForDeck(UnburyType.ALL, null)
     }
 
     /**
@@ -2237,11 +2259,9 @@ end)  """
             super.buryNote(nid)
             return
         }
-        val cids = Utils.collection2Array(
-            col.db.queryLongList(
-                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid
-            )
-        )
+        val cids = col.db.queryLongList(
+            "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid
+        ).toLongArray()
         buryCards(cids)
     }
 
@@ -2284,7 +2304,7 @@ end)  """
         }
         // then bury
         if (!toBury.isEmpty()) {
-            buryCards(Utils.collection2Array(toBury), false)
+            buryCards(toBury.toLongArray(), false)
         }
     }
     /*

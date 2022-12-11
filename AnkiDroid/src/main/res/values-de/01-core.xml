@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Stapel</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kartenübersicht</string>
@@ -177,6 +176,7 @@
     <string name="empty_cloze_warning">Bearbeiten Sie diese Notiz und fügen Sie einige Auslassungen hinzu. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronisation vorübergehend deaktiviert</string>
+    <string name="button_upgrade" comment="Text of the sync button">Zum eingegrenzten Speicher migrieren</string>
     <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
     <string name="continue_sync">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled">Synchronisation abgebrochen</string>
@@ -239,4 +239,6 @@
         <item quantity="other">%1$d Karten (0 fällig)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s Kopie</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>
