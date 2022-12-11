@@ -33,7 +33,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -61,8 +60,6 @@ import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.SyncStatus
 import timber.log.Timber
-
-private val i1 = R.string.no_browser_notification
 
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
 
@@ -421,7 +418,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         if (!AdaptionUtil.hasWebBrowser(this)) {
             val noBrowserNotification = resources.getString(R.string.no_browser_notification) + url
             @KotlinCleanup("check RTL with concat")
-            showSnackbar(noBrowserNotification, Snackbar.LENGTH_LONG, snackbarBuilder = null)
+            showThemedToast(
+                this,
+                resources.getString(R.string.no_browser_notification) + url,
+                false
+            )
             return
         }
         val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
