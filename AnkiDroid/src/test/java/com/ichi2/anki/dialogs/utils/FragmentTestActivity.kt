@@ -16,8 +16,10 @@
 package com.ichi2.anki.dialogs.utils
 
 import android.net.Uri
+import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
 import com.ichi2.utils.KotlinCleanup
 
@@ -31,6 +33,11 @@ class FragmentTestActivity : AnkiActivity() {
     override fun openUrl(url: Uri) {
         lastUrlOpened = url.toString()
         super.openUrl(url)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.deck_picker)
     }
 
     override fun showDialogFragment(newFragment: DialogFragment) {

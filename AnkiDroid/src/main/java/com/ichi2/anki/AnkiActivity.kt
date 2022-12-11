@@ -419,8 +419,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         // DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         // display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
+            val noBrowserNotification = resources.getString(R.string.no_browser_notification) + url
             @KotlinCleanup("check RTL with concat")
-            showSnackbar(resources.getString(R.string.no_browser_notification) + url, Snackbar.LENGTH_LONG)
+            showSnackbar(noBrowserNotification, Snackbar.LENGTH_LONG)
             return
         }
         val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
