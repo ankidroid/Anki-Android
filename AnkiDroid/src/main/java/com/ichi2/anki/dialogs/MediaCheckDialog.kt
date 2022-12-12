@@ -72,10 +72,10 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
                 val reportStr = """
-                    ${resources.getString(R.string.check_media_db_updated)}
+                    |${resources.getString(R.string.check_media_db_updated)}
                     
-                    $report
-                """.trimIndent()
+                    |$report
+                """.trimMargin().trimIndent()
                 val dialogBody = layoutInflater.inflate(R.layout.media_check_dialog_body, null) as LinearLayout
                 val reportTextView = dialogBody.findViewById<TextView>(R.id.reportTextView)
                 val fileListTextView = dialogBody.findViewById<TextView>(R.id.fileListTextView)
