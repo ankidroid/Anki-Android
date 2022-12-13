@@ -414,9 +414,12 @@ object PreferenceUpgradeService {
 
         internal class UpgradeFetchMedia : PreferenceUpgrade(9) {
             override fun upgrade(preferences: SharedPreferences) {
-                val fetchMediaSwitch = preferences.getBoolean("syncFetchesMedia", true)
+                val fetchMediaSwitch = preferences.getBoolean(RemovedPreferences.SYNC_FETCH_MEDIA, true)
                 val status = if (fetchMediaSwitch) "always" else "never"
-                preferences.edit { this.putString("syncFetchMedia", status) }
+                preferences.edit {
+                    remove(RemovedPreferences.SYNC_FETCH_MEDIA)
+                    putString("syncFetchMedia", status)
+                }
             }
         }
     }
@@ -425,4 +428,5 @@ object PreferenceUpgradeService {
 object RemovedPreferences {
     const val PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl"
     const val PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER = "useCustomSyncServer"
+    const val SYNC_FETCH_MEDIA = "syncFetchesMedia"
 }

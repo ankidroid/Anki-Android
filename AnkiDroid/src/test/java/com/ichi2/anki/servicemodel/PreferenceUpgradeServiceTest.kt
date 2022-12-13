@@ -199,4 +199,17 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo("http://foo/sync/"))
         assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
     }
+
+    @Test
+    fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
+        // enabled -> always
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCH_MEDIA, true) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
+        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("always"))
+
+        // disabled -> never
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCH_MEDIA, false) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
+        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("never"))
+    }
 }
