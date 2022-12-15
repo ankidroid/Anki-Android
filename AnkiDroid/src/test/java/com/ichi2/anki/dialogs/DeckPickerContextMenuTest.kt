@@ -58,13 +58,26 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
+    fun addCards() = runTest {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(recyclerView, 0)
+
+            assertDialogTitleEquals("Add")
+        }
+    }
+
+    @Test
     fun testBrowseCards() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val deckId = addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 0)
+            openContextMenuAndSelectItem(recyclerView, 1)
 
             val browser = shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
@@ -80,7 +93,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 1)
+            openContextMenuAndSelectItem(recyclerView, 2)
 
             assertDialogTitleEquals("Rename deck")
         }
@@ -93,7 +106,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 2)
+            openContextMenuAndSelectItem(recyclerView, 3)
 
             assertDialogTitleEquals("Create subdeck")
         }
@@ -106,7 +119,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 3)
+            openContextMenuAndSelectItem(recyclerView, 4)
 
             val deckOptions = shadowOf(this).nextStartedActivity!!
             if (BackendFactory.defaultLegacySchema) {
@@ -126,7 +139,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 7)
+            openContextMenuAndSelectItem(recyclerView, 8)
 
             assertThat(col.decks.allIds(), not(containsInAnyOrder(deckId)))
         }
@@ -139,7 +152,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 6)
+            openContextMenuAndSelectItem(recyclerView, 7)
 
             assertEquals(
                 "Deck 1",
@@ -161,7 +174,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             assertTrue(col.sched.haveBuried(deckId))
 
-            openContextMenuAndSelectItem(recyclerView, 6)
+            openContextMenuAndSelectItem(recyclerView, 7)
 
             assertFalse(col.sched.haveBuried(deckId))
         }
@@ -174,7 +187,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 4)
+            openContextMenuAndSelectItem(recyclerView, 5)
 
             assertDialogTitleEquals("Custom study")
         }
@@ -187,7 +200,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 5)
+            openContextMenuAndSelectItem(recyclerView, 6)
 
             assertDialogTitleEquals("Export")
         }
@@ -205,11 +218,11 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 2) // Empty
+            openContextMenuAndSelectItem(recyclerView, 3) // Empty
 
             assertTrue(allCardsInSameDeck(cardIds, 1))
 
-            openContextMenuAndSelectItem(recyclerView, 1) // Rebuild
+            openContextMenuAndSelectItem(recyclerView, 2) // Rebuild
 
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
