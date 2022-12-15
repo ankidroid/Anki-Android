@@ -30,7 +30,7 @@ abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not qu
     fun loadFirstCard() {
         if (!queue.isEmpty()) {
             // No need to reload. If the card was changed, reset would have been called and emptied the queue
-            queue[0]!!.loadQA(false, false)
+            queue[0]!!.loadQA(reload = false, browser = false)
         }
     }
 
@@ -60,7 +60,7 @@ abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not qu
     }
 
     fun shuffle(r: Random) {
-        Collections.shuffle(queue, r)
+        queue.shuffle(r)
     }
 
     fun listIterator(): MutableListIterator<T> {
