@@ -24,7 +24,6 @@ import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.StrictMock.Companion.strictMock
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -131,7 +130,6 @@ class OnRenderProcessGoneDelegateTest {
         callOnRenderProcessGone(delegate, delegate.target.webView)
     }
 
-    @KotlinCleanup("webview nullability")
     private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl, webView: WebView?) {
         val result = delegate.onRenderProcessGone(webView!!, crashDetail)
         assertThat("onRenderProcessGone should only return false if we want the app killed", result, equalTo(true))
