@@ -19,10 +19,9 @@ package com.ichi2.libanki.sched
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
-abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
+abstract class CardQueue<T : Card.Cache>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
     // sched.getCol is null.
     private val sched: AbstractSched?
 ) {
@@ -30,7 +29,7 @@ abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not qu
     fun loadFirstCard() {
         if (!queue.isEmpty()) {
             // No need to reload. If the card was changed, reset would have been called and emptied the queue
-            queue[0]!!.loadQA(reload = false, browser = false)
+            queue[0].loadQA(reload = false, browser = false)
         }
     }
 
@@ -41,7 +40,7 @@ abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not qu
 
     fun remove(cid: CardId): Boolean {
         // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
-        return queue.remove(col?.let { Card.Cache(it, cid) })
+        return queue.remove(col.let { Card.Cache(it, cid) })
     }
 
     fun add(elt: T) {
@@ -67,7 +66,6 @@ abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not qu
         return queue.listIterator()
     }
 
-    @KotlinCleanup("make non-null")
-    protected val col: Collection?
+    protected val col: Collection
         get() = sched!!.col
 }
