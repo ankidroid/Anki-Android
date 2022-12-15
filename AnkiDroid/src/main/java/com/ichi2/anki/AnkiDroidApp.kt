@@ -116,7 +116,9 @@ open class AnkiDroidApp : Application() {
             }
         }
         CrashReportService.initialize(this)
-        if (BuildConfig.DEBUG) {
+
+        val leakKeyValue = getSharedPrefs(this).getBoolean(R.string.pref_leak_canary_key.toString(), true)
+        if (BuildConfig.DEBUG && leakKeyValue) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(DebugTree())
             LeakCanaryConfiguration.setInitialConfigFor(this)

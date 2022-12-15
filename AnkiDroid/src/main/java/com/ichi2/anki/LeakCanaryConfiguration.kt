@@ -33,7 +33,7 @@ object LeakCanaryConfiguration {
             retainedVisibleThreshold = 0,
             referenceMatchers = AndroidReferenceMatchers.appDefaults,
             computeRetainedHeapSize = false,
-            maxStoredHeapDumps = 0,
+            maxStoredHeapDumps = 0
         )
     }
 

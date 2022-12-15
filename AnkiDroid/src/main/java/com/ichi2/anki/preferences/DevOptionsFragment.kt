@@ -86,6 +86,14 @@ class DevOptionsFragment : SettingsFragment() {
                 true
             }
         }
+        // Enable / Disable Leak Canary
+        requirePreference<SwitchPreference>(R.string.pref_leak_canary_key).setOnPreferenceChangeListener { newValue ->
+            if (newValue == true) {
+                LeakCanaryConfiguration.setInitialConfigFor(requireActivity().application)
+            } else {
+                LeakCanaryConfiguration.disable()
+            }
+        }
     }
 
     /**

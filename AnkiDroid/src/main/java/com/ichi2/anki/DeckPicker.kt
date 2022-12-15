@@ -2526,7 +2526,7 @@ open class DeckPicker :
             @Suppress("Deprecation")
             context.mProgressDialog = android.app.ProgressDialog(context).apply {
                 progress = mNumberOfCards
-                setTitle(R.string.emtpy_cards_finding)
+                setTitle(R.string.empty_cards_finding)
                 setCancelable(true)
                 show()
                 setOnCancelListener(onCancel)
