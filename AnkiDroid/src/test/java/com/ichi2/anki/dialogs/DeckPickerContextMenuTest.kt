@@ -24,10 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.internal.rtl.RtlTextView
-import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.R
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.*
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.assertThrows
 import net.ankiweb.rsdroid.BackendFactory
