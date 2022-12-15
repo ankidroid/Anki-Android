@@ -21,6 +21,8 @@
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
+    <string name="enable">Enable</string>
+    <string name="enabled_gestures">Enabled gestures</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)"

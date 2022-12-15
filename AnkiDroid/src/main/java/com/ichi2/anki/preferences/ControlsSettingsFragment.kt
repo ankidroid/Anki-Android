@@ -16,9 +16,11 @@
 package com.ichi2.anki.preferences
 
 import androidx.preference.PreferenceCategory
+import androidx.preference.SwitchPreference
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.preferences.ControlPreference
 
 class ControlsSettingsFragment : SettingsFragment() {
@@ -29,6 +31,12 @@ class ControlsSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         val commandMappingCategory = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key)
+        if (enableGestures) {
+            enableGestures = false
+            showSnackbar(R.string.enabled_gestures)
+            scrollToPreference(R.string.gestures_preference.toString())
+            requirePreference<SwitchPreference>(R.string.gestures_preference).isChecked = true
+        }
         addAllControlPreferencesToCategory(commandMappingCategory)
     }
 
@@ -42,5 +50,8 @@ class ControlsSettingsFragment : SettingsFragment() {
             }
             category.addPreference(preference)
         }
+    }
+    companion object {
+        var enableGestures: Boolean = false
     }
 }

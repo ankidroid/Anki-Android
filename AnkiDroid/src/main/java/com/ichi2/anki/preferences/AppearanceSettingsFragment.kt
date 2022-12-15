@@ -18,6 +18,8 @@ package com.ichi2.anki.preferences
 import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
+import androidx.fragment.app.commit
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
@@ -26,6 +28,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
+import com.ichi2.anki.preferences.ControlsSettingsFragment.Companion.enableGestures
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Utils
@@ -51,9 +54,11 @@ class AppearanceSettingsFragment : SettingsFragment() {
             if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
                 true
             } else {
-                // TODO add a button on the snackbar that leads directly to the
-                // Controls fragment and highlight the gesture preference
-                showSnackbar(R.string.full_screen_error_gestures)
+                showSnackbar(R.string.full_screen_error_gestures) {
+                    setAction(R.string.enable) {
+                        openControlsSettingsFragmentEnableGestures()
+                    }
+                }
                 false
             }
         }
@@ -62,9 +67,11 @@ class AppearanceSettingsFragment : SettingsFragment() {
             if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
                 true
             } else {
-                // TODO add a button on the snackbar that leads directly to the
-                // Controls fragment and highlight the gesture preference
-                showSnackbar(R.string.full_screen_error_gestures)
+                showSnackbar(R.string.full_screen_error_gestures) {
+                    setAction(R.string.enable) {
+                        openControlsSettingsFragmentEnableGestures()
+                    }
+                }
                 false
             }
         }
@@ -178,6 +185,14 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 col.set_config("dueCounts", newValue)
             }
         }
+    }
+
+    private fun openControlsSettingsFragmentEnableGestures() {
+        (requireActivity() as Preferences).supportFragmentManager.commit {
+            replace(R.id.settings_container, ControlsSettingsFragment())
+            addToBackStack(null)
+        }
+        enableGestures = true
     }
 
     /** Returns a list of the names of the installed custom fonts */
