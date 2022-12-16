@@ -57,6 +57,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  *
  * These tests should cover all supported operations for each URI.
  */
+@KotlinCleanup("is -> equalTo")
 @RunWith(Parameterized::class)
 class ContentProviderTest : InstrumentedTest() {
     @JvmField // required for Parameter
@@ -80,7 +81,7 @@ class ContentProviderTest : InstrumentedTest() {
     private val mTestDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
     private lateinit var mCreatedNotes: ArrayList<Uri>
     private var mModelId: Long = 0
-    private var mDummyFields: Array<String?> = arrayOfNulls<String>(1)
+    private var mDummyFields = arrayOfNulls<String>(1)
 
     /**
      * Initially create one note for each model.
@@ -95,7 +96,7 @@ class ContentProviderTest : InstrumentedTest() {
         assumeThat(defaultLegacySchema, equalTo(true))
         Timber.i("setUp()")
         mCreatedNotes = ArrayList()
-        val col: com.ichi2.libanki.Collection = col
+        val col = col
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
@@ -113,15 +114,15 @@ class ContentProviderTest : InstrumentedTest() {
         // Do not teardown if setup was aborted
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        val model: Model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        val model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
         mModelId = model.getLong("id")
-        val fields: List<String> = model.fieldsNames
+        val fields = model.fieldsNames
         // Use the names of the fields as test values for the notes which will be added
         mDummyFields = fields.toTypedArray()
         // create test decks and add one note for every deck
         mNumDecksBeforeTest = col.decks.count()
         for (fullName in TEST_DECKS) {
-            val path: Array<String> = Decks.path(fullName)
+            val path = Decks.path(fullName)
             var partialName: String? = ""
             /* Looping over all parents of full name. Adding them to
              * mTestDeckIds ensures the deck parents decks get deleted
@@ -134,7 +135,7 @@ class ContentProviderTest : InstrumentedTest() {
                 if (col.decks.byName(partialName!!) != null) {
                     continue
                 }
-                val did: Long = col.decks.id(partialName)
+                val did = col.decks.id(partialName)
                 mTestDeckIds.add(did)
                 mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
                 partialName += "::"
@@ -1171,8 +1172,8 @@ class ContentProviderTest : InstrumentedTest() {
 
         // get the first card due
         // ----------------------
-        val col: com.ichi2.libanki.Collection = col
-        val card: Card? = getFirstCardFromScheduler(col)
+        val col = col
+        val card = getFirstCardFromScheduler(col)
 
         // verify that the card is not already suspended
         assertNotEquals(
@@ -1182,25 +1183,27 @@ class ContentProviderTest : InstrumentedTest() {
         )
 
         // retain the card id, we will lookup the card after the update
-        val cardId: Long = card.id
+        val cardId = card.id
 
         // suspend it through the API
         // --------------------------
-        val cr: ContentResolver = contentResolver
-        val reviewInfoUri: Uri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId: Long = card.note().id
-        val cardOrd: Int = card.ord
-        val values: ContentValues = ContentValues().apply {
+        val cr = contentResolver
+        val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
+        val noteId = card.note().id
+        val cardOrd = card.ord
+        @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
+        val values = ContentValues().apply {
+            val suspend = 1
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.SUSPEND, CONTENT_VALUE_SUSPEND)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
         }
-        val updateCount: Int = cr.update(reviewInfoUri, values, null, null)
+        val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount)
 
         // verify that it did get suspended
         // --------------------------------
-        val cardAfterUpdate: Card = col.getCard(cardId)
+        val cardAfterUpdate = col.getCard(cardId)
         assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.queue)
 
         // cleanup, unsuspend card and reschedule
@@ -1285,7 +1288,6 @@ class ContentProviderTest : InstrumentedTest() {
         private const val TEST_FIELD_NAME = "TestFieldName"
         private const val TEST_FIELD_VALUE = "test field value"
         private const val TEST_TAG = "aldskfhewjklhfczmxkjshf"
-        private const val CONTENT_VALUE_SUSPEND = 1
 
         // In case of change in TEST_DECKS, change mTestDeckIds for efficiency
         private val TEST_DECKS = arrayOf(
