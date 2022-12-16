@@ -35,19 +35,20 @@ import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
-import org.junit.After
-import org.junit.Assert.*
-import org.junit.Assume.assumeThat
-import org.junit.Assume.assumeTrue
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
+import org.junit.Assume.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import timber.log.Timber
+import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 
@@ -1191,12 +1192,10 @@ class ContentProviderTest : InstrumentedTest() {
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.note().id
         val cardOrd = card.ord
-        @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
         val values = ContentValues().apply {
-            val suspend = 1
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, 1)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount)
