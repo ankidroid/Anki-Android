@@ -137,7 +137,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
     public override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
-            putAll(tempModel!!.toBundle())
+            tempModel?.let { putAll(it.toBundle()) }
             putLong(EDITOR_MODEL_ID, mModelId)
             putLong(EDITOR_NOTE_ID, mNoteId)
             putInt(EDITOR_START_ORD_ID, mStartingOrdId)
