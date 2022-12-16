@@ -765,7 +765,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 // We arrive here if the first stroke for whiteboard is done.
                 // We stay here even if the first stroke is undone.
                 //  (This works as a safeguard against unintentional undo
-                //   for before-whiteboard actions by consective tappings.)
+                //   for pre-whiteboard actions by consective tappings.)
                 // We leave here if whiteboard is inactive ("Disable whiteboard" or "Hide whiteboard")
                 //  or is reset ("Clear whiteboard")
                 val lastStroke = resources.getString(R.string.undo_action_whiteboard_last_stroke)
