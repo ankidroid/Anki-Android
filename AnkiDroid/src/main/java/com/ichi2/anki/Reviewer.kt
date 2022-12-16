@@ -763,8 +763,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             if (mShowWhiteboard && whiteboard != null && whiteboard!!.isUndoModeActive) {
                 // Show undo title for whiteboard mode
                 // We arrive here if the first stroke for whiteboard is done.
-                // We stay here even if the first stroke is undone. 
-                //  (This works as a safeguard against unintentional undo 
+                // We stay here even if the first stroke is undone.
+                //  (This works as a safeguard against unintentional undo
                 //   for before-whiteboard actions by consective tappings.)
                 // We leave here if whiteboard is inactive ("Disable whiteboard" or "Hide whiteboard")
                 //  or is reset ("Clear whiteboard")
