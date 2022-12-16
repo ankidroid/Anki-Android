@@ -17,6 +17,7 @@
 package com.ichi2.testutils
 
 import java.lang.reflect.Field
+import java.lang.reflect.Method
 import kotlin.reflect.KCallable
 import kotlin.reflect.full.createType
 
@@ -30,6 +31,17 @@ inline fun <reified T> KCallable<*>.isType() = returnType == T::class.createType
  */
 fun getJavaFieldAsAccessible(clazz: Class<*>, fieldName: String): Field {
     return clazz.getDeclaredField(fieldName).apply {
+        isAccessible = true
+    }
+}
+
+/**
+ * @param clazz Java class to get the field
+ * @param methodName name of the method
+ * @return a [Field] object with `isAccessible` set to true
+ */
+fun getJavaMethodAsAccessible(clazz: Class<*>, methodName: String, vararg parameterTypes: Class<*>): Method {
+    return clazz.getDeclaredMethod(methodName, *parameterTypes).apply {
         isAccessible = true
     }
 }
