@@ -35,20 +35,19 @@ import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
-import org.junit.*
-import org.junit.Assert.assertArrayEquals
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
-import org.junit.Assume.*
+import org.junit.After
+import org.junit.Assert.*
+import org.junit.Assume.assumeThat
+import org.junit.Assume.assumeTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import timber.log.Timber
-import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 
@@ -74,6 +73,7 @@ class ContentProviderTest : InstrumentedTest() {
 
     // Whether tear down should be executed. I.e. if set up was not cancelled.
     private var mTearDown = false
+
     @KotlinCleanup("lateinit")
     private var mNumDecksBeforeTest = 0
 
@@ -1174,8 +1174,8 @@ class ContentProviderTest : InstrumentedTest() {
 
         // get the first card due
         // ----------------------
-        val col = col
-        val card = getFirstCardFromScheduler(col)
+        val col: com.ichi2.libanki.Collection = col
+        val card: Card? = getFirstCardFromScheduler(col)
 
         // verify that the card is not already suspended
         assertNotEquals(
@@ -1185,27 +1185,25 @@ class ContentProviderTest : InstrumentedTest() {
         )
 
         // retain the card id, we will lookup the card after the update
-        val cardId = card.id
+        val cardId: Long = card.id
 
         // suspend it through the API
         // --------------------------
-        val cr = contentResolver
-        val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
-        val cardOrd = card.ord
-        @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
-        val values = ContentValues().apply {
-            val suspend = 1
+        val cr: ContentResolver = contentResolver
+        val reviewInfoUri: Uri = FlashCardsContract.ReviewInfo.CONTENT_URI
+        val noteId: Long = card.note().id
+        val cardOrd: Int = card.ord
+        val values: ContentValues = ContentValues().apply {
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, CONTENT_VALUE_SUSPEND)
         }
-        val updateCount = cr.update(reviewInfoUri, values, null, null)
+        val updateCount: Int = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount)
 
         // verify that it did get suspended
         // --------------------------------
-        val cardAfterUpdate = col.getCard(cardId)
+        val cardAfterUpdate: Card = col.getCard(cardId)
         assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.queue)
 
         // cleanup, unsuspend card and reschedule
@@ -1290,6 +1288,7 @@ class ContentProviderTest : InstrumentedTest() {
         private const val TEST_FIELD_NAME = "TestFieldName"
         private const val TEST_FIELD_VALUE = "test field value"
         private const val TEST_TAG = "aldskfhewjklhfczmxkjshf"
+        private const val CONTENT_VALUE_SUSPEND = 1
 
         // In case of change in TEST_DECKS, change mTestDeckIds for efficiency
         private val TEST_DECKS = arrayOf(
@@ -1307,6 +1306,7 @@ class ContentProviderTest : InstrumentedTest() {
         private val TEST_MODEL_AFMT = arrayOf("{{BACK}}", "{{FRONTS}}")
         private val TEST_NOTE_FIELDS = arrayOf("dis is za Fr0nt", "Te\$t")
         private const val TEST_MODEL_CSS = "styleeeee"
+
         @Suppress("SameParameterValue")
         private fun setupNewNote(
             col: com.ichi2.libanki.Collection,
