@@ -50,11 +50,10 @@ import java.util.regex.Pattern
 @KotlinCleanup("nullability")
 class Decks(private val col: Collection) : DeckManager() {
     @get:RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
-    @KotlinCleanup("lateinit")
     @get:VisibleForTesting
-    var decks: HashMap<Long, Deck>? = null
+    lateinit var decks: HashMap<Long, Deck>
         private set
-    private var mDconf: HashMap<Long, DeckConfig>? = null
+    private lateinit var mDconf: HashMap<Long, DeckConfig>
 
     // Never access mNameMap directly. Uses byName
     @KotlinCleanup("lateinit (it's set in load)")

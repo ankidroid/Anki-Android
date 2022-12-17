@@ -36,13 +36,8 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.io.BufferedInputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
-import java.util.Arrays
-import java.util.Locale
+import java.io.*
+import java.util.*
 import java.util.regex.Matcher
 
 @KotlinCleanup("IDE-lint")
@@ -56,10 +51,10 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
 
     private class NoteTriple(val nid: NoteId, val mod: Long, val mid: NoteTypeId)
 
-    private var mNotes: MutableMap<String, NoteTriple>? = null
-    private var mDecks: MutableMap<Long, Long>? = null
-    private var mModelMap: MutableMap<Long, Long>? = null
-    private var mIgnoredGuids: MutableSet<String>? = null
+    private lateinit var mNotes: MutableMap<String, NoteTriple>
+    private lateinit var mDecks: MutableMap<Long, Long>
+    private lateinit var mModelMap: MutableMap<Long, Long>
+    private lateinit var mIgnoredGuids: MutableSet<String>
     var dupes = 0
         private set
     var added = 0
