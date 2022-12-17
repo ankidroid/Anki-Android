@@ -30,7 +30,14 @@ import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.async.Connection.ConflictResolution.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.sync.*
+import com.ichi2.libanki.sync.CustomSyncServerUrlException
+import com.ichi2.libanki.sync.FullSyncer
+import com.ichi2.libanki.sync.HostNum
+import com.ichi2.libanki.sync.HttpSyncer
+import com.ichi2.libanki.sync.MediaSyncer
+import com.ichi2.libanki.sync.RemoteMediaServer
+import com.ichi2.libanki.sync.RemoteServer
+import com.ichi2.libanki.sync.Syncer
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NetworkUtils

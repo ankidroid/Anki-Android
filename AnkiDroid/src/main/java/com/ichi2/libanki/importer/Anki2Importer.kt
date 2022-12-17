@@ -36,8 +36,13 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.io.*
-import java.util.*
+import java.io.BufferedInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.util.Arrays
+import java.util.Locale
 import java.util.regex.Matcher
 
 @KotlinCleanup("IDE-lint")
