@@ -20,6 +20,7 @@ package com.ichi2.libanki
 import android.database.Cursor
 import android.database.SQLException
 import android.net.Uri
+import android.os.Parcelable
 import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CrashReportService
@@ -29,6 +30,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ensureActive
+import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
@@ -1032,9 +1034,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         }
     }
 }
-
+@Parcelize
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
     val invalidFileNames: List<String>,
-)
+) : Parcelable

@@ -15,6 +15,10 @@ import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import com.ichi2.libanki.MediaCheckResult
 
+private const val CHECK_LIST = "checkList"
+
+private const val DIALOG_TYPE = "dialogType"
+
 class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {
         fun showMediaCheckDialog(dialogType: Int)
@@ -28,7 +32,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
         super.onCreate(savedInstanceState)
         val dialog = MaterialDialog(requireActivity())
         dialog.title(text = notificationTitle)
-        return when (requireArguments().getInt("dialogType")) {
+        return when (requireArguments().getInt(DIALOG_TYPE)) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
                 dialog.show {
                     message(text = notificationMessage)
@@ -114,7 +118,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return when (requireArguments().getInt("dialogType")) {
+            return when (requireArguments().getInt(DIALOG_TYPE)) {
                 DIALOG_CONFIRM_MEDIA_CHECK -> resources.getString(R.string.check_media_warning)
                 DIALOG_MEDIA_CHECK_RESULTS -> resources.getString(R.string.check_media_acknowledge)
                 else -> resources.getString(R.string.app_name)
@@ -123,7 +127,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override val notificationTitle: String
         get() {
-            return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
+            return if (requireArguments().getInt(DIALOG_TYPE) == DIALOG_CONFIRM_MEDIA_CHECK) {
                 resources.getString(R.string.check_media_title)
             } else resources.getString(R.string.app_name)
         }
@@ -136,7 +140,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
             b.putStringArrayList("nohave", requireArguments().getStringArrayList("nohave"))
             b.putStringArrayList("unused", requireArguments().getStringArrayList("unused"))
             b.putStringArrayList("invalid", requireArguments().getStringArrayList("invalid"))
-            b.putInt("dialogType", requireArguments().getInt("dialogType"))
+            b.putInt(DIALOG_TYPE, requireArguments().getInt(DIALOG_TYPE))
             msg.data = b
             return msg
         }
@@ -147,21 +151,16 @@ class MediaCheckDialog : AsyncDialogFragment() {
         fun newInstance(dialogType: Int): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
-            args.putInt("dialogType", dialogType)
+            args.putInt(DIALOG_TYPE, dialogType)
             f.arguments = args
             return f
         }
 
-        // TODO Instead of putting string arrays into the bundle,
-        //   make MediaCheckResult parcelable with @Parcelize and put it instead.
-        // TODO Extract keys to constants
         fun newInstance(dialogType: Int, checkList: MediaCheckResult): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
-            args.putStringArrayList("nohave", ArrayList(checkList.missingFileNames))
-            args.putStringArrayList("unused", ArrayList(checkList.unusedFileNames))
-            args.putStringArrayList("invalid", ArrayList(checkList.invalidFileNames))
-            args.putInt("dialogType", dialogType)
+            args.putParcelable(CHECK_LIST, checkList)
+            args.putInt(DIALOG_TYPE, dialogType)
             f.arguments = args
             return f
         }
