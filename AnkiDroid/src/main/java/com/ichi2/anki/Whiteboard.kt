@@ -42,6 +42,8 @@ import com.ichi2.utils.KotlinCleanup
 import com.mrudultora.colorpicker.ColorPickerPopUp
 import timber.log.Timber
 import java.io.FileNotFoundException
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -85,6 +87,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        // Draw the current state of the canvas
         canvas.apply {
             drawColor(0)
             drawBitmap(mBitmap, 0f, 0f, mBitmapPaint)
@@ -321,11 +324,16 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     fun onClick(view: View) {
         when (view.id) {
+
             R.id.pen_color_white -> {
                 penColor = Color.WHITE
             }
             R.id.pen_color_black -> {
                 penColor = Color.BLACK
+            }
+            R.id.pen_color_yellow -> {
+                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
+                penColor = yellowPenColor
             }
             R.id.pen_color_red -> {
                 val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
@@ -339,9 +347,13 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
                 penColor = bluePenColor
             }
-            R.id.pen_color_yellow -> {
-                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
-                penColor = yellowPenColor
+            R.id.undo_draw -> {
+                if (!undoEmpty()) {
+                    undo()
+                }
+            }
+            R.id.clear_button -> {
+                clear()
             }
             R.id.pen_color_custom -> {
                 ColorPickerPopUp(context).run {
@@ -538,6 +550,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     init {
         val whitePenColorButton = activity.findViewById<Button>(R.id.pen_color_white)
         val blackPenColorButton = activity.findViewById<Button>(R.id.pen_color_black)
+
         if (!inverted) {
             whitePenColorButton.visibility = GONE
             blackPenColorButton.setOnClickListener { view: View -> onClick(view) }
@@ -562,9 +575,12 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
         // selecting pen color to draw
         mColorPalette = activity.findViewById(R.id.whiteboard_editor)
+        activity.findViewById<View>(R.id.undo_draw).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_red).setOnClickListener { view: View -> onClick(view) }
-        activity.findViewById<View>(R.id.pen_color_green).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.clear_button).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_white).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_custom).apply {
             setOnClickListener { view: View -> onClick(view) }
