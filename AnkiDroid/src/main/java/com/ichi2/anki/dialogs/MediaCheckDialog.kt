@@ -15,9 +15,9 @@ import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import com.ichi2.libanki.MediaCheckResult
 
-private const val CHECK_LIST = "checkList"
+private const val CHECK_LIST_KEY = "checkList"
 
-private const val DIALOG_TYPE = "dialogType"
+private const val DIALOG_TYPE_KEY = "dialogType"
 
 class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {
@@ -32,7 +32,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
         super.onCreate(savedInstanceState)
         val dialog = MaterialDialog(requireActivity())
         dialog.title(text = notificationTitle)
-        return when (requireArguments().getInt(DIALOG_TYPE)) {
+        return when (requireArguments().getInt(DIALOG_TYPE_KEY)) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
                 dialog.show {
                     message(text = notificationMessage)
@@ -49,9 +49,11 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_MEDIA_CHECK_RESULTS -> {
-                val nohave = requireArguments().getStringArrayList("nohave")
-                val unused = requireArguments().getStringArrayList("unused")
-                val invalid = requireArguments().getStringArrayList("invalid")
+                @Suppress("DEPRECATION") // getParcelable
+                val mediaCheckResult = requireArguments().getParcelable<MediaCheckResult>(CHECK_LIST_KEY)
+                val nohave = mediaCheckResult?.missingFileNames
+                val unused = mediaCheckResult?.unusedFileNames
+                val invalid = mediaCheckResult?.invalidFileNames
                 // Generate report
                 val report = StringBuilder()
                 if (invalid!!.isNotEmpty()) {
@@ -118,7 +120,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return when (requireArguments().getInt(DIALOG_TYPE)) {
+            return when (requireArguments().getInt(DIALOG_TYPE_KEY)) {
                 DIALOG_CONFIRM_MEDIA_CHECK -> resources.getString(R.string.check_media_warning)
                 DIALOG_MEDIA_CHECK_RESULTS -> resources.getString(R.string.check_media_acknowledge)
                 else -> resources.getString(R.string.app_name)
@@ -127,7 +129,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override val notificationTitle: String
         get() {
-            return if (requireArguments().getInt(DIALOG_TYPE) == DIALOG_CONFIRM_MEDIA_CHECK) {
+            return if (requireArguments().getInt(DIALOG_TYPE_KEY) == DIALOG_CONFIRM_MEDIA_CHECK) {
                 resources.getString(R.string.check_media_title)
             } else resources.getString(R.string.app_name)
         }
@@ -137,10 +139,12 @@ class MediaCheckDialog : AsyncDialogFragment() {
             val msg = Message.obtain()
             msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG
             val b = Bundle()
-            b.putStringArrayList("nohave", requireArguments().getStringArrayList("nohave"))
-            b.putStringArrayList("unused", requireArguments().getStringArrayList("unused"))
-            b.putStringArrayList("invalid", requireArguments().getStringArrayList("invalid"))
-            b.putInt(DIALOG_TYPE, requireArguments().getInt(DIALOG_TYPE))
+            @Suppress("DEPRECATION") // getParcelable
+            val mediaCheckResult = requireArguments().getParcelable<MediaCheckResult>(CHECK_LIST_KEY)
+            b.putStringArrayList("nohave", ArrayList(mediaCheckResult?.missingFileNames!!))
+            b.putStringArrayList("unused", ArrayList(mediaCheckResult.unusedFileNames))
+            b.putStringArrayList("invalid", ArrayList(mediaCheckResult.invalidFileNames))
+            b.putInt(DIALOG_TYPE_KEY, requireArguments().getInt(DIALOG_TYPE_KEY))
             msg.data = b
             return msg
         }
@@ -151,16 +155,16 @@ class MediaCheckDialog : AsyncDialogFragment() {
         fun newInstance(dialogType: Int): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
-            args.putInt(DIALOG_TYPE, dialogType)
+            args.putInt(DIALOG_TYPE_KEY, dialogType)
             f.arguments = args
             return f
         }
 
-        fun newInstance(dialogType: Int, checkList: MediaCheckResult): MediaCheckDialog {
+        fun newInstance(dialogType: Int, mediaCheckResult: MediaCheckResult): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
-            args.putParcelable(CHECK_LIST, checkList)
-            args.putInt(DIALOG_TYPE, dialogType)
+            args.putParcelable(CHECK_LIST_KEY, mediaCheckResult)
+            args.putInt(DIALOG_TYPE_KEY, dialogType)
             f.arguments = args
             return f
         }
