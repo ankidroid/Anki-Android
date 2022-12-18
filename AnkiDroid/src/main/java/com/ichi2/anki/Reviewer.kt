@@ -763,8 +763,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             if (undoIconId == R.drawable.eraser) {
-                val lastStroke = resources.getString(R.string.undo_action_whiteboard_last_stroke)
-                undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, lastStroke)
+                undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
             } else if (col.undoAvailable()) {
                 // We arrive here if the last action which can be undone is retained.
                 //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
