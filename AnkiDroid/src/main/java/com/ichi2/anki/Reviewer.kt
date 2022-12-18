@@ -760,7 +760,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            if (mShowWhiteboard && whiteboard != null && whiteboard!!.isUndoModeActive) {
+            if (undoIconId == R.drawable.eraser) {
                 // Show undo title for whiteboard mode
                 // We arrive here if the first stroke for whiteboard is done.
                 // We stay here even if the first stroke is undone.
