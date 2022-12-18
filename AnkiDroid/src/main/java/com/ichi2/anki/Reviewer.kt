@@ -745,7 +745,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         @DrawableRes val undoIconId: Int
         val undoEnabled: Boolean
         if (mShowWhiteboard && whiteboard != null && whiteboard?.isUndoModeActive == true) {
-            // Whiteboard is here and strokes have been added at some point
+            // We arrive here if the first stroke of whiteboard is done.
+            // We leave here when whiteboard is inactive (by "Disable whiteboard" or "Hide whiteboard")
+            //  or is reset (by "Clear whiteboard")
             undoIconId = R.drawable.eraser
             undoEnabled = !whiteboard!!.undoEmpty()
         } else {
@@ -761,13 +763,6 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             if (undoIconId == R.drawable.eraser) {
-                // Show undo title for whiteboard mode
-                // We arrive here if the first stroke for whiteboard is done.
-                // We stay here even if the first stroke is undone.
-                //  (This works as a safeguard against unintentional undo
-                //   for pre-whiteboard actions by consective tappings.)
-                // We leave here if whiteboard is inactive ("Disable whiteboard" or "Hide whiteboard")
-                //  or is reset ("Clear whiteboard")
                 val lastStroke = resources.getString(R.string.undo_action_whiteboard_last_stroke)
                 undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, lastStroke)
             } else if (col.undoAvailable()) {
