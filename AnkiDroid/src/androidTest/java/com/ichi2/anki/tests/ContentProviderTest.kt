@@ -31,23 +31,23 @@ import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.async.TaskManager.Companion.waitToFinish
-import com.ichi2.libanki.*
-import com.ichi2.utils.BlocksSchemaUpgrade
+import com.ichi2.libanki.*import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
-import org.junit.After
-import org.junit.Assert.*
-import org.junit.Assume.assumeThat
-import org.junit.Assume.assumeTrue
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
+import org.junit.Assume.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import timber.log.Timber
+import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 
@@ -58,6 +58,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  * These tests should cover all supported operations for each URI.
  */
 @RunWith(Parameterized::class)
+@KotlinCleanup("is -> equalTo")
 class ContentProviderTest : InstrumentedTest() {
     @JvmField // required for Parameter
     @Parameterized.Parameter
@@ -80,7 +81,7 @@ class ContentProviderTest : InstrumentedTest() {
     private val mTestDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
     private lateinit var mCreatedNotes: ArrayList<Uri>
     private var mModelId: Long = 0
-    private var mDummyFields: Array<String?> = arrayOfNulls<String>(1)
+    private var mDummyFields = arrayOfNulls<String>(1)
 
     /**
      * Initially create one note for each model.
@@ -1171,8 +1172,8 @@ class ContentProviderTest : InstrumentedTest() {
 
         // get the first card due
         // ----------------------
-        val col: com.ichi2.libanki.Collection = col
-        val card: Card? = getFirstCardFromScheduler(col)
+        val col = col
+        val card = getFirstCardFromScheduler(col)
 
         // verify that the card is not already suspended
         assertNotEquals(
@@ -1182,25 +1183,25 @@ class ContentProviderTest : InstrumentedTest() {
         )
 
         // retain the card id, we will lookup the card after the update
-        val cardId: Long = card.id
+        val cardId = card.id
 
         // suspend it through the API
         // --------------------------
-        val cr: ContentResolver = contentResolver
-        val reviewInfoUri: Uri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId: Long = card.note().id
-        val cardOrd: Int = card.ord
-        val values: ContentValues = ContentValues().apply {
+        val cr = contentResolver
+        val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
+        val noteId = card.note().id
+        val cardOrd = card.ord
+        val values = ContentValues().apply {
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.SUSPEND, CONTENT_VALUE_SUSPEND)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, 1)
         }
-        val updateCount: Int = cr.update(reviewInfoUri, values, null, null)
+        val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount)
 
         // verify that it did get suspended
         // --------------------------------
-        val cardAfterUpdate: Card = col.getCard(cardId)
+        val cardAfterUpdate = col.getCard(cardId)
         assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.queue)
 
         // cleanup, unsuspend card and reschedule
@@ -1285,7 +1286,6 @@ class ContentProviderTest : InstrumentedTest() {
         private const val TEST_FIELD_NAME = "TestFieldName"
         private const val TEST_FIELD_VALUE = "test field value"
         private const val TEST_TAG = "aldskfhewjklhfczmxkjshf"
-        private const val CONTENT_VALUE_SUSPEND = 1
 
         // In case of change in TEST_DECKS, change mTestDeckIds for efficiency
         private val TEST_DECKS = arrayOf(
