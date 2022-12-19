@@ -31,8 +31,7 @@ import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.async.TaskManager.Companion.waitToFinish
-import com.ichi2.libanki.*
-import com.ichi2.utils.BlocksSchemaUpgrade
+import com.ichi2.libanki.*import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert.*
@@ -59,6 +58,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  * These tests should cover all supported operations for each URI.
  */
 @RunWith(Parameterized::class)
+@KotlinCleanup("is -> equalTo")
 class ContentProviderTest : InstrumentedTest() {
     @JvmField // required for Parameter
     @Parameterized.Parameter
@@ -81,7 +81,7 @@ class ContentProviderTest : InstrumentedTest() {
     private val mTestDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
     private lateinit var mCreatedNotes: ArrayList<Uri>
     private var mModelId: Long = 0
-    private var mDummyFields: Array<String?> = arrayOfNulls<String>(1)
+    private var mDummyFields = arrayOfNulls<String>(1)
 
     /**
      * Initially create one note for each model.
