@@ -180,21 +180,21 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     /** When the next template is requested  */
     fun onNextTemplate() {
-        var index = templateIndex
+        val index = templateIndex
         if (!isNextBtnEnabled(index)) {
             return
         }
-        templateIndex = ++index
+        templateIndex = index + 1
         onTemplateIndexChanged()
     }
 
     /** When the previous template is requested  */
     fun onPreviousTemplate() {
-        var index = templateIndex
+        val index = templateIndex
         if (!isPrevBtnEnabled(index)) {
             return
         }
-        templateIndex = --index
+        templateIndex = index - 1
         onTemplateIndexChanged()
     }
 
