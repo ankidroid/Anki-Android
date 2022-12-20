@@ -31,7 +31,8 @@ import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.async.TaskManager.Companion.waitToFinish
-import com.ichi2.libanki.*import com.ichi2.utils.BlocksSchemaUpgrade
+import com.ichi2.libanki.*
+import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert.*
