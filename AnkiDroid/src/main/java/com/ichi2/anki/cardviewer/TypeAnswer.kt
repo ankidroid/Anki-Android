@@ -85,17 +85,13 @@ class TypeAnswer(
         correct = null
         val q = card.q(false)
         val m = PATTERN.matcher(q)
-        var clozeIdx = 0
         if (!m.find()) {
             return
         }
-        var fldTag = m.group(1)!!
         // if it's a cloze, extract data
-        if (fldTag.startsWith("cloze:")) {
-            // get field and cloze position
-            clozeIdx = card.ord + 1
-            fldTag = fldTag.split(":").toTypedArray()[1]
-        }
+        val clozeIdx = if (m.group(1)!!.startsWith("cloze:"))card.ord + 1 else 0
+        val fldTag = if (m.group(1)!!.startsWith("cloze:")) m.group(1)!!.split(":").toTypedArray()[1] else m.group(1)!!
+
         // loop through fields for a match
         val flds: JSONArray = card.model().getJSONArray("flds")
         for (fld in flds.jsonObjectIterable()) {
