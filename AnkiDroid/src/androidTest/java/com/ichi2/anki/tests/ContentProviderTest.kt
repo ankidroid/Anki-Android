@@ -31,7 +31,8 @@ import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.async.TaskManager.Companion.waitToFinish
-import com.ichi2.libanki.*import com.ichi2.utils.BlocksSchemaUpgrade
+import com.ichi2.libanki.*
+import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert.*
@@ -96,7 +97,7 @@ class ContentProviderTest : InstrumentedTest() {
         assumeThat(defaultLegacySchema, equalTo(true))
         Timber.i("setUp()")
         mCreatedNotes = ArrayList()
-        val col: com.ichi2.libanki.Collection = col
+        val col = col
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
@@ -114,15 +115,15 @@ class ContentProviderTest : InstrumentedTest() {
         // Do not teardown if setup was aborted
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        val model: Model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        val model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
         mModelId = model.getLong("id")
-        val fields: List<String> = model.fieldsNames
+        val fields = model.fieldsNames
         // Use the names of the fields as test values for the notes which will be added
         mDummyFields = fields.toTypedArray()
         // create test decks and add one note for every deck
         mNumDecksBeforeTest = col.decks.count()
         for (fullName in TEST_DECKS) {
-            val path: Array<String> = Decks.path(fullName)
+            val path = Decks.path(fullName)
             var partialName: String? = ""
             /* Looping over all parents of full name. Adding them to
              * mTestDeckIds ensures the deck parents decks get deleted
@@ -135,7 +136,7 @@ class ContentProviderTest : InstrumentedTest() {
                 if (col.decks.byName(partialName!!) != null) {
                     continue
                 }
-                val did: Long = col.decks.id(partialName)
+                val did = col.decks.id(partialName)
                 mTestDeckIds.add(did)
                 mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
                 partialName += "::"
