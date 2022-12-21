@@ -62,23 +62,23 @@ import java.time.Instant
 import java.time.ZoneOffset
 import java.util.*
 import kotlin.Throws
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 // please wait for #11808 to be merged before starting cleanup
-@KotlinCleanup("fix ide lints and improve kotlin code where possible")
 open class SchedV2Test : RobolectricTest() {
     open val v3 = false
 
-    fun ifV3(block: () -> Unit) {
+    private fun ifV3(block: () -> Unit) {
         if (v3) {
             block()
         }
     }
 
-    fun ifV2(block: () -> Unit) {
+    private fun ifV2(block: () -> Unit) {
         if (!v3) {
             block()
         }
@@ -112,16 +112,17 @@ open class SchedV2Test : RobolectricTest() {
 
          */
         val n = addNoteUsingBasicModel("Hello", "World")
-        val c = CollectionUtils.getOnlyElement(n.cards())
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.ivl = 25
-        c.due = 0
-        c.lapses = 5
-        c.factor = 1300
-        c.left = 1004
-        c.oDid = homeDeckId
-        c.did = dynId
+        val c = CollectionUtils.getOnlyElement(n.cards()).apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            ivl = 25
+            due = 0
+            lapses = 5
+            factor = 1300
+            left = 1004
+            oDid = homeDeckId
+            did = dynId
+        }
         c.flush()
         val v2 = SchedV2(col)
         val schedCard = v2.card!!
@@ -141,8 +142,8 @@ open class SchedV2Test : RobolectricTest() {
         'mod': 1587939720, 'nid': 1510928805161, 'odid': 1587920944107, 'odue': 0,
         'ord': 0, 'queue': 1, 'reps': 23, 'type': 3, 'usn': -1}
          */
-        MatcherAssert.assertThat(after.type, Matchers.equalTo(Consts.CARD_TYPE_RELEARNING))
-        MatcherAssert.assertThat(after.queue, Matchers.equalTo(Consts.QUEUE_TYPE_LRN))
+        MatcherAssert.assertThat(after.type, Matchers.equalTo(CARD_TYPE_RELEARNING))
+        MatcherAssert.assertThat(after.queue, Matchers.equalTo(QUEUE_TYPE_LRN))
         MatcherAssert.assertThat(after.left, Matchers.equalTo(1001))
         MatcherAssert.assertThat("ivl is reduced by 70%", after.ivl, Matchers.equalTo(17))
         MatcherAssert.assertThat("One lapse is added", after.lapses, Matchers.equalTo(6))
@@ -398,7 +399,7 @@ open class SchedV2Test : RobolectricTest() {
         val deck2 = addDeck("Default::foo")
         for (i in 0..29) {
             val note = col.newNote()
-            note.setItem("Front", Integer.toString(i))
+            note.setItem("Front", i.toString())
             if (i > 4) {
                 note.model().put("did", deck2)
             }
@@ -450,7 +451,7 @@ open class SchedV2Test : RobolectricTest() {
     @Throws(Exception::class)
     @KotlinCleanup("This is flaky just before 4AM")
     fun test_learnV2() {
-        if (v3 && Instant.now().atZone(ZoneOffset.UTC).getHour().let { it >= 2 && it < 4 }) {
+        if (v3 && Instant.now().atZone(ZoneOffset.UTC).hour.let { it in 2..3 }) {
             // The backend shifts the current time around rollover, and expects the frontend to
             // do so as well. This could potentially be done with TimeManager in the future.
             assumeThat(v3, equalTo(false))
@@ -477,7 +478,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(3, (c.left % 1000).toLong())
         ifV2 { Assert.assertEquals(3, (c.left / 1000).toLong()) }
         // it should be due in 30 seconds
-        val t = Math.round((c.due - time.intTime()).toFloat()).toLong()
+        val t = (c.due - time.intTime())
         MatcherAssert.assertThat(t, Matchers.greaterThanOrEqualTo(25L))
         MatcherAssert.assertThat(t, Matchers.lessThanOrEqualTo(40L))
         // pass it once
@@ -539,11 +540,12 @@ open class SchedV2Test : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0]
-        c.ivl = 100
-        c.due = col.sched.today.toLong()
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
+        var c = note.cards()[0].apply {
+            ivl = 100
+            due = col.sched.today.toLong()
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+        }
         c.flush()
 
         // fail the card
@@ -569,11 +571,12 @@ open class SchedV2Test : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0]
-        c.ivl = 100
-        c.due = col.sched.today.toLong()
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
+        var c = note.cards()[0].apply {
+            ivl = 100
+            due = col.sched.today.toLong()
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+        }
         c.flush()
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
@@ -691,14 +694,15 @@ open class SchedV2Test : RobolectricTest() {
         note.setItem("Back", "two")
         col.addNote(note)
         // set the card up as a review card, due 8 days ago
-        var c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = (col.sched.today - 8).toLong()
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.ivl = 100
+        var c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = (col.sched.today - 8).toLong()
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            ivl = 100
+        }
         c.startTimer()
         c.flush()
         // save it for later use as well
@@ -1128,14 +1132,16 @@ open class SchedV2Test : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0]
-        c.ivl = 100
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        // due in 25 days, so it's been waiting 75 days
-        c.due = (col.sched.today + 25).toLong()
-        c.mod = 1
-        c.factor = STARTING_FACTOR
+        var c = note.cards()[0].apply {
+            ivl = 100
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            // due in 25 days, so it's been waiting 75 days
+            due = (col.sched.today + 25).toLong()
+            mod = 1
+            factor = STARTING_FACTOR
+        }
+
         c.startTimer()
         c.flush()
         col.reset()
@@ -1155,7 +1161,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(4, col.sched.answerButtons(c).toLong())
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(
-            Math.round(75 * 1.2) * Stats.SECONDS_PER_DAY,
+            (75 * 1.2).roundToInt() * Stats.SECONDS_PER_DAY,
             col.sched.nextIvl(c, BUTTON_TWO)
         )
         val toLong = if (v3) {
@@ -1903,54 +1909,79 @@ open class SchedV2Test : RobolectricTest() {
          * @param addRev Determines whether to count the identifier of `revCount`.
          * @return
          */
-        @KotlinCleanup("reduce code")
         fun expectedTree(col: Collection, addRev: Boolean): List<TreeNode<DeckDueTreeNode>> {
             // deck IDs are based on the collection time. Changed to being hardcoded during Kotlin conversion.
             // These matched the previous Java data
             // These may want to be changed back
             val expected: MutableList<TreeNode<DeckDueTreeNode>> = ArrayList()
-            val caz = DeckDueTreeNode(
-                "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
-                1596783600480L,
-                0,
-                0,
-                0,
-                false,
-                false
+            val cazNode = TreeNode(
+                DeckDueTreeNode(
+                    "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
+                    1596783600480L,
+                    0,
+                    0,
+                    0,
+                    collapsed = false,
+                    filtered = false
+                )
             )
-            val ca = DeckDueTreeNode(
-                "cmxieunwoogyxsctnjmv::abcdefgh",
-                1596783600460L,
-                0,
-                0,
-                0,
-                false,
-                false
+            val caNode = TreeNode(
+                DeckDueTreeNode(
+                    "cmxieunwoogyxsctnjmv::abcdefgh",
+                    1596783600460L,
+                    0,
+                    0,
+                    0,
+                    collapsed = false,
+                    filtered = false
+                )
             )
-            val ci = DeckDueTreeNode(
-                "cmxieunwoogyxsctnjmv::INSBGDS",
-                1596783600500L,
-                0,
-                0,
-                0,
-                false,
-                false
+            val ciNode = TreeNode(
+                DeckDueTreeNode(
+                    "cmxieunwoogyxsctnjmv::INSBGDS",
+                    1596783600500L,
+                    0,
+                    0,
+                    0,
+                    collapsed = false,
+                    filtered = false
+                )
             )
-            val c = DeckDueTreeNode("cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0, false, false)
-            val defaul = DeckDueTreeNode("Default", 1, 0, 0, 0, false, false)
-            val s = DeckDueTreeNode("scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0, false, false)
-            val f = DeckDueTreeNode("blank::foobar", 1596783600540L, 0, 0, 0, false, false)
-            val b = DeckDueTreeNode("blank", 1596783600520L, 0, 0, 0, false, false)
-            val aBlank = DeckDueTreeNode("A::blank", 1596783600580L, 0, 0, 0, false, false)
-            val a = DeckDueTreeNode("A", 1596783600560L, 0, 0, 0, false, false)
-            val cazNode = TreeNode(caz)
-            val caNode = TreeNode(ca)
-            val ciNode = TreeNode(ci)
-            val cNode = TreeNode(c)
-            val fNode = TreeNode(f)
-            val bNode = TreeNode(b)
-            val aBlankNode = TreeNode(aBlank)
-            val aNode = TreeNode(a)
+            val cNode = TreeNode(
+                DeckDueTreeNode(
+                    "cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0,
+                    collapsed = false,
+                    filtered = false
+                )
+            )
+            val fNode = TreeNode(
+                DeckDueTreeNode(
+                    "blank::foobar", 1596783600540L, 0, 0, 0,
+                    collapsed = false,
+                    filtered = false
+                )
+            )
+            val bNode = TreeNode(
+                DeckDueTreeNode(
+                    "blank", 1596783600520L, 0, 0, 0,
+                    collapsed = false,
+                    filtered = false
+                )
+            )
+            val aBlankNode = TreeNode(
+                DeckDueTreeNode(
+                    "A::blank", 1596783600580L, 0, 0, 0,
+                    collapsed = false,
+                    filtered = false
+                )
+            )
+            val aNode = TreeNode(
+                DeckDueTreeNode(
+                    "A", 1596783600560L, 0, 0, 0,
+                    collapsed = false,
+                    filtered = false
+                )
+            )
 
             // add "caz" to "ca"
             caNode.children.add(cazNode)
@@ -1974,8 +2005,16 @@ open class SchedV2Test : RobolectricTest() {
             expected.add(aNode)
             expected.add(bNode)
             expected.add(cNode)
-            expected.add(TreeNode(defaul))
-            expected.add(TreeNode(s))
+            expected.add(TreeNode(DeckDueTreeNode("Default", 1, 0, 0, 0, collapsed = false, filtered = false)))
+            expected.add(
+                TreeNode(
+                    DeckDueTreeNode(
+                        "scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0,
+                        collapsed = false,
+                        filtered = false
+                    )
+                )
+            )
             return expected
         }
     }
