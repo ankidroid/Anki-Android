@@ -39,6 +39,8 @@ import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
@@ -281,7 +283,9 @@ private suspend fun handleMediaSync(
                 dialog.setMessage(text)
             },
         ) {
-            backend.syncMedia(auth)
+            withContext(Dispatchers.IO) {
+                backend.syncMedia(auth)
+            }
         }
     } finally {
         dialog.dismiss()
