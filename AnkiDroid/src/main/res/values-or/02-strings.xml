@@ -156,7 +156,7 @@
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି&#8230;</string>
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
-    <string name="delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ ହେଉଛି&#8230;</string>
+    <string name="delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
@@ -172,7 +172,7 @@
     <string name="import_log_failed_validate">ଏ.ପି.କେ.ଜି ର ବିଫଳ ବୈଧତା</string>
     <string name="import_log_insufficient_space_error">ପ୍ୟାକେଜ୍ ଆମଦାନୀ କରିବାକୁ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।\nଆବଶ୍ୟକ - %1$s \nଉପଲବ୍ଧ - %2$s.\n\nଅସୁବିଧା ହେଉଛି କି? ଯଦି ସମ୍ଭବ ଆପଣଙ୍କ ଫୋନରେ ସ୍ପେସ୍ ମୁକ୍ତ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ। ବୈକଳ୍ପିକ ଭାବରେ, ସିଙ୍କ୍ ଆମଦାନୀ ଅପେକ୍ଷା କମ୍ ସ୍ଥାନ ବ୍ୟବହାର କରେ। ଆପଣ ଅଧିକ ସ୍ପେସ୍ ଥିବା ଏକ ଡିଵାଇସ୍ (ଉଦାହରଣ ସ୍ୱରୂପ Anki Desktop) ସହ ପ୍ୟାକେଜ୍ ଆମଦାନୀ କରିବାକୁ ଚେଷ୍ଟା କରିପାରନ୍ତି ଏବଂ ତାପରେ ଏହାକୁ ଏହି ଡିଵାଇସରେ ସିଙ୍କ୍ କରିପାରିବେ।</string>
     <string name="import_log_file_cache_cleared">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ତ୍ରୁଟି, ପ୍ରକ୍ରିୟାକରଣ ସମୟରେ ସମ୍ଭବତଃ ଏକ କ୍ୟାଚ୍ ଖାଲି ହେଇଥାଇପାରେ।\nଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="import_succeeded_but_check_database">ଡାଟା ଆମଦାନୀ ସଫଳ ହେଲା କିନ୍ତୁ ଆମଦାନୀ ପରବର୍ତ୍ତୀ ସଫେଇ ବିଫଳ ହେଲା। ପରେ ଡାଟାବେସ୍ ଯାଞ୍ଚ ଚଲାନ୍ତୁ। ମୂଳ କାରଣ: %s</string>
+    <string name="import_succeeded_but_check_database">ଡାଟା ଆମଦାନୀ ସଫଳ ହେଲା କିନ୍ତୁ ଆମଦାନୀ ପରଵର୍ତ୍ତୀ ସଫେଇ ବିଫଳ ହେଲା। ପରେ ଡାଟାବେସ୍ ଯାଞ୍ଚ ଚଲାନ୍ତୁ। ମୂଳ କାରଣ: %s</string>
     <string name="import_error_corrupt_zip">apkg ଫାଇଲଟି ତ୍ରୁଟିଗ୍ରସ୍ତ ଅଟେ। ଦୟାକରି ଏହାକୁ ବିଲୋପ କରନ୍ତୁ ଏବଂ ପୁନଃ ଡାଉନଲୋଡ୍ କରନ୍ତୁ।\n\nମୂଳ କାରଣ: %s</string>
     <string name="import_error_handle_exception">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
@@ -186,7 +186,7 @@
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_include_schedule">ଅନୁସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
-    <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
+    <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Export selected card as apkg file?</item>
@@ -365,7 +365,7 @@
     <!-- Reviewer actions -->
     <string name="buried_card">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା</string>
     <string name="buried_note">ନୋଟ୍ ସ୍ଥଗିତ କରାଗଲା</string>
-    <string name="deleted_note">ନୋଟ୍ ବିଲୋପ କରାଗଲା</string>
+    <string name="deleted_note">ନୋଟ୍ ଵିଲୋପ କରାଗଲା</string>
     <string name="suspended_card">ପତ୍ର ନିଲମ୍ବିତ କରାଗଲା</string>
     <string name="suspended_note">ନୋଟ୍ ନିଲମ୍ବିତ କରାଗଲା</string>
     <!--  Note Editor Toggle Sticky  -->
