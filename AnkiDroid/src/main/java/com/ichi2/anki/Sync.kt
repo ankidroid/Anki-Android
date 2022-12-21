@@ -262,6 +262,7 @@ private suspend fun handleMediaSync(
     deckPicker: DeckPicker,
     auth: SyncAuth
 ) {
+    val backend = CollectionManager.getBackend()
     // TODO: show this in a way that is clear it can be continued in background,
     // but also warn user that media files will not be available until it completes.
     // TODO: provide a way for users to abort later, and see it's still going
@@ -269,9 +270,9 @@ private suspend fun handleMediaSync(
         .setTitle(TR.syncMediaLogTitle())
         .setMessage("")
         .setPositiveButton("Background") { _, _ -> }
+        .setOnCancelListener { cancelMediaSync(backend) }
         .show()
     try {
-        val backend = CollectionManager.getBackend()
         backend.withProgress(
             extractProgress = {
                 if (progress.hasMediaSync()) {
