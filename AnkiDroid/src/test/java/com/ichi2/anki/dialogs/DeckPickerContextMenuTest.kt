@@ -67,7 +67,6 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             assertEquals(1, visibleDeckCount)
             openContextMenuAndSelectItem(recyclerView, 0)
             assertEquals(1, col.cardCount(didA))
-
         }
     }
 
