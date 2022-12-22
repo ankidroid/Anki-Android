@@ -58,17 +58,16 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     fun addCards() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val models = col.models
-            val didA = addDeck("Test")
+            val didA = addDeck("Deck 1")
             updateDeckList()
+            col.decks.select(didA)
             val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
             basic!!.put("did", didA)
             addNoteUsingBasicModel("Front", "Back")
-            
             assertEquals(1, visibleDeckCount)
-
             openContextMenuAndSelectItem(recyclerView, 0)
+            assertEquals(1, col.cardCount(didA))
 
-            assertDialogTitleEquals("Add")
         }
     }
 
