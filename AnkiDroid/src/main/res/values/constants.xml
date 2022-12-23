@@ -251,9 +251,9 @@
     </string-array>
 
     <string-array name="sync_media_entries">
-        <item>@string/override_font_always</item>
-        <item>@string/only_wifi</item>
-        <item>@string/never</item>
+        <item>@string/sync_media_always</item>
+        <item>@string/sync_media_only_wifi</item>
+        <item>@string/sync_media_never</item>
     </string-array>
 
     <string name="sync_media_always_value">always</string>
