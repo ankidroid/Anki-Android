@@ -185,7 +185,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <style name="LegacyActionBarLight" parent="Theme_Light">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_light</item>
+        <item name="android:textColor">@color/text_color_secondary_light</item>
         <item name="android:textColorSecondary">@color/prefs_item_light_secondary</item>
     </style>
 
