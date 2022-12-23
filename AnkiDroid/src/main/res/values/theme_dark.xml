@@ -171,7 +171,7 @@
     <style name="LegacyActionBarDark" parent="Theme_Dark">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_dark</item>
+        <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
     </style>
 
