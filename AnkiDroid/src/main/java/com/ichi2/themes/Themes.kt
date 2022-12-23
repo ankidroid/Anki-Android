@@ -49,11 +49,8 @@ object Themes {
         context.setTheme(currentTheme.resId)
     }
 
-    /**
-     * Sets theme to the legacy version of [currentTheme]
-     */
-    fun setThemeLegacy(context: Context) {
-        context.setTheme(currentTheme.legacyResId)
+    fun setLegacyActionBar(context: Context) {
+        context.setTheme(R.style.ThemeOverlay_LegacyActionBar)
     }
 
     /**
