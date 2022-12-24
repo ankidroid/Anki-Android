@@ -46,7 +46,6 @@ import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
 import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
 import com.ichi2.ui.RtlCompliantActionProvider
@@ -679,12 +678,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 }
                 mFullNewCountThread = Thread {
                     val collection = col
-                    // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                    val query = "SELECT count(*) FROM cards WHERE did IN " +
-                        Utils.ids2str(collection!!.decks.active()) +
-                        " AND queue = " + Consts.QUEUE_TYPE_NEW
-                    val fullNewCount = collection.db.queryScalar(query)
-                    if (fullNewCount > 0) {
+                    val fullNewCount = collection?.sched?.totalNewForCurrentDeck()
+                    if (fullNewCount!! > 0) {
                         val setNewTotalText = Runnable { mTextNewTotal!!.text = fullNewCount.toString() }
                         if (!Thread.currentThread().isInterrupted) {
                             mTextNewTotal!!.post(setNewTotalText)
