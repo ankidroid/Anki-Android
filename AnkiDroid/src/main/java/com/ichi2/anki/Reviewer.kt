@@ -101,7 +101,7 @@ open class Reviewer :
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
-    private var mColorPalette: LinearLayout? = null
+    private lateinit var mColorPalette: LinearLayout
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -433,10 +433,10 @@ open class Reviewer :
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
-                if (mColorPalette!!.visibility == View.GONE) {
-                    mColorPalette!!.visibility = View.VISIBLE
+                if (mColorPalette.visibility == View.GONE) {
+                    mColorPalette.visibility = View.VISIBLE
                 } else {
-                    mColorPalette!!.visibility = View.GONE
+                    mColorPalette.visibility = View.GONE
                 }
                 updateWhiteboardEditorPosition()
             }
@@ -533,7 +533,7 @@ open class Reviewer :
         setWhiteboardEnabledState(prefWhiteboard)
         setWhiteboardVisibility(prefWhiteboard)
         if (!prefWhiteboard) {
-            mColorPalette!!.visibility = View.GONE
+            mColorPalette.visibility = View.GONE
         }
         refreshActionBar()
     }
@@ -814,7 +814,7 @@ open class Reviewer :
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 changePenColorIcon.isEnabled = false
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
-                mColorPalette!!.visibility = View.GONE
+                mColorPalette.visibility = View.GONE
             }
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
@@ -1055,16 +1055,16 @@ open class Reviewer :
         val layoutParams: RelativeLayout.LayoutParams
         when (mAnswerButtonsPosition) {
             "none", "top" -> {
-                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ABOVE)
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                mColorPalette!!.layoutParams = layoutParams
+                mColorPalette.layoutParams = layoutParams
             }
             "bottom" -> {
-                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                mColorPalette!!.layoutParams = layoutParams
+                mColorPalette.layoutParams = layoutParams
             }
         }
     }
