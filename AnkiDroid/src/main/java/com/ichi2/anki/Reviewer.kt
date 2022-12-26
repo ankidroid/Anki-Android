@@ -111,7 +111,7 @@ open class Reviewer :
     private lateinit var mTextBarNew: TextView
     private lateinit var mTextBarLearn: TextView
     private lateinit var mTextBarReview: TextView
-    protected lateinit var answerTimer: AnswerTimer
+    private lateinit var answerTimer: AnswerTimer
     private var mPrefHideDueCount = false
 
     // Whiteboard
@@ -127,7 +127,7 @@ open class Reviewer :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var audioView: AudioView? = null
         protected set
-    protected var tempAudioPath: String? = null
+    private var tempAudioPath: String? = null
 
     // ETA
     private var mEta = 0
@@ -1069,7 +1069,7 @@ open class Reviewer :
         }
     }
 
-    protected fun updateScreenCounts() {
+    private fun updateScreenCounts() {
         if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
@@ -1121,7 +1121,7 @@ open class Reviewer :
     }
 
     @VisibleForTesting
-    public override fun displayCardAnswer() {
+    override fun displayCardAnswer() {
         delayedHide(100)
         super.displayCardAnswer()
     }
@@ -1606,17 +1606,17 @@ open class Reviewer :
 
     inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
         @JavascriptInterface
-        override fun ankiGetNewCardCount(): String? {
+        override fun ankiGetNewCardCount(): String {
             return mNewCount.toString()
         }
 
         @JavascriptInterface
-        override fun ankiGetLrnCardCount(): String? {
+        override fun ankiGetLrnCardCount(): String {
             return mLrnCount.toString()
         }
 
         @JavascriptInterface
-        override fun ankiGetRevCardCount(): String? {
+        override fun ankiGetRevCardCount(): String {
             return mRevCount.toString()
         }
 
