@@ -770,7 +770,7 @@ open class Reviewer :
             } else {
                 // We arrive here if the last action which can be undone isn't retained.
                 // In this case, there is no object word for the verb, "Undo",
-                // so in some languages such as Japanese, which have pre/postpositional particle with the object,
+                // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                 // we need to use the string for just "Undo" instead of the string for "Undo %s".
                 undoIcon.title = resources.getString(R.string.undo)
             }
