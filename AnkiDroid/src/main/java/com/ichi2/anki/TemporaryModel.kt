@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Model
@@ -40,16 +41,10 @@ class TemporaryModel(model: Model) {
     @KotlinCleanup("make this a constructor property")
     val model: Model
 
-    @KotlinCleanup("use the bundleOf method")
-    fun toBundle(): Bundle {
-        val outState = Bundle()
-        outState.putString(
-            INTENT_MODEL_FILENAME,
-            saveTempModel(AnkiDroidApp.instance.applicationContext, model)
-        )
-        outState.putSerializable("mTemplateChanges", mTemplateChanges)
-        return outState
-    }
+    fun toBundle(): Bundle = bundleOf(
+        INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, model),
+        "mTemplateChanges" to mTemplateChanges
+    )
 
     @Suppress("deprecation") // getSerializable
     private fun loadTemplateChanges(bundle: Bundle) {
