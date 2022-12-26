@@ -6,7 +6,6 @@
     android:id="@+id/whiteboard_editor"
     android:visibility="gone">
 
-
     <Button
         android:id="@+id/pen_color_white"
         android:background="@color/white"
@@ -61,9 +60,5 @@
         android:id="@+id/pen_color_black"
         android:background="@color/black"
         style="@style/reviewer_whiteboard_editor_button_style"/>
-
-
-
-
-
+        
 </LinearLayout>
