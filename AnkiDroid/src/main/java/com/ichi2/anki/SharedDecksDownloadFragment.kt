@@ -59,7 +59,8 @@ class SharedDecksDownloadFragment : Fragment() {
     private var mHandler: Handler = Handler(Looper.getMainLooper())
     private var mIsProgressCheckerRunning = false
 
-    private var timeQuantumPassed = 0
+    // number of times download progress has been checked
+    private var mNumIterations = 0
 
     private lateinit var mCancelButton: Button
     private lateinit var mTryAgainButton: Button
@@ -161,7 +162,7 @@ class SharedDecksDownloadFragment : Fragment() {
         Timber.d("Download ID -> $mDownloadId")
         Timber.d("File name -> $mFileName")
         view?.findViewById<TextView>(R.id.downloading_title)?.text = getString(R.string.downloading_file, mFileName)
-        timeQuantumPassed = 0
+        mNumIterations = 0
         startDownloadProgressChecker()
     }
 
@@ -338,7 +339,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 return
             }
 
-            ++timeQuantumPassed
+            ++mNumIterations
 
             // Calculate download progress and display it in the ProgressBar.
             val downloadedBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
@@ -355,7 +356,7 @@ class SharedDecksDownloadFragment : Fragment() {
             }
             mDownloadPercentageText.text = getString(R.string.percentage, percentageValue)
 
-            val totalTimePassedInMillis = timeQuantumPassed * DOWNLOAD_PROGRESS_CHECK_DELAY
+            val totalTimePassedInMillis = mNumIterations * DOWNLOAD_PROGRESS_CHECK_DELAY
             val averageSpeedInBytesPerMillis = downloadedBytes / totalTimePassedInMillis
             val estimatedTimeRemainingInMillis = if (downloadProgressIntValue == 0 || downloadProgressIntValue == 100) {
                 0 // no useful estimate can be provided when nothing has been downloaded or when
