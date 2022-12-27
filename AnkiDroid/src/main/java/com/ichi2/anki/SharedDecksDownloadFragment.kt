@@ -357,7 +357,10 @@ class SharedDecksDownloadFragment : Fragment() {
 
             val totalTimePassedInMillis = timeQuantumPassed * DOWNLOAD_PROGRESS_CHECK_DELAY
             val averageSpeedInBytesPerMillis = downloadedBytes / totalTimePassedInMillis
-            val estimatedTimeRemainingInMillis = if (averageSpeedInBytesPerMillis != 0L) {
+            val estimatedTimeRemainingInMillis = if (downloadProgressIntValue == 0 || downloadProgressIntValue == 100) {
+                0 // no useful estimate can be provided when nothing has been downloaded or when
+                // download has finished
+            } else if (averageSpeedInBytesPerMillis != 0L) {
                 (totalBytes - downloadedBytes) / averageSpeedInBytesPerMillis
             } else {
                 0 // used to indicate no valid value
