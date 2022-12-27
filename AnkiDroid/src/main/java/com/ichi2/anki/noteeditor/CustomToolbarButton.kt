@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.noteeditor
 
-import android.text.TextUtils
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil.HashSetInit
@@ -70,7 +69,7 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
                 for (i in values.indices) {
                     values[i] = values[i].replace(Consts.FIELD_SEPARATOR, "")
                 }
-                ret.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+                ret.add(values.joinToString(Consts.FIELD_SEPARATOR))
             }
             return ret
         }

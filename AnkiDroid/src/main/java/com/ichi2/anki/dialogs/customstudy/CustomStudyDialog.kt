@@ -22,7 +22,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -328,7 +327,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             for (tag in selectedTags) {
                 arr.add("tag:'$tag'")
             }
-            sb.append("(").append(TextUtils.join(" or ", arr)).append(")")
+            sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
         createCustomStudySession(
             JSONArray(),

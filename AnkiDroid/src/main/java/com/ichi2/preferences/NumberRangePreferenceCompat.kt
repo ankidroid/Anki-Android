@@ -20,7 +20,6 @@ package com.ichi2.preferences
 import android.content.Context
 import android.text.InputFilter
 import android.text.InputType
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
@@ -104,7 +103,7 @@ constructor(
      * @return The input value within acceptable range.
      */
     private fun getValidatedRangeFromString(input: String): Int {
-        return if (TextUtils.isEmpty(input)) {
+        return if (input.isEmpty()) {
             min
         } else {
             try {

@@ -18,7 +18,6 @@
 package com.ichi2.libanki
 
 import android.content.ContentValues
-import android.text.TextUtils
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.libanki.utils.TimeManager
 import org.json.JSONObject
@@ -103,7 +102,7 @@ class Tags
                 tags.add(cursor.getString(0))
             }
         }
-        val tagSet = HashSet(split(TextUtils.join(" ", tags)))
+        val tagSet = HashSet(split(tags.joinToString(" ")))
         register(tagSet)
     }
 
@@ -139,7 +138,7 @@ class Tags
         }
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
-        return ArrayList(HashSet(split(TextUtils.join(" ", tags))))
+        return ArrayList(HashSet(split(tags.joinToString(" "))))
     }
     /*
      * Bulk addition/removal from notes
