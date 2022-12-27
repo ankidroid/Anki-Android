@@ -29,7 +29,6 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
-import android.text.TextUtils
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.View.OnTouchListener
@@ -708,7 +707,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun clipboardHasText(): Boolean {
-        return !TextUtils.isEmpty(getText(mClipboard))
+        return !getText(mClipboard).isNullOrEmpty()
     }
 
     /**
@@ -2558,7 +2557,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
         if (currentCard!!.note().tags != selectedTags) {
-            val tagString = TextUtils.join(" ", selectedTags)
+            val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note()
             note.setTagsFromStr(tagString)
             note.flush()

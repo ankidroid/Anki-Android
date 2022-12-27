@@ -17,7 +17,6 @@
 package com.ichi2.anki.servicemodel
 
 import android.content.SharedPreferences
-import android.text.TextUtils
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
@@ -122,10 +121,10 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         val buttons = HashUtil.HashSetInit<String>(2)
 
         var values = arrayOf(0, "<h1>", "</h1>")
-        buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+        buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
         values = arrayOf(1, "<p>", "</p>")
-        buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+        buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
         mPrefs.edit {
             putStringSet("note_editor_custom_buttons", buttons)

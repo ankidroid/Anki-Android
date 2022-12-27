@@ -24,7 +24,6 @@ import android.database.Cursor
 import android.database.MatrixCursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
-import android.text.TextUtils
 import android.webkit.MimeTypeMap
 import com.ichi2.anki.*
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -211,7 +210,7 @@ class CardContentProvider : ContentProvider() {
                 val query = selection ?: ""
                 val noteIds = col.findNotes(query)
                 if (noteIds.isNotEmpty()) {
-                    val sel = "id in (${TextUtils.join(",", noteIds)})"
+                    val sel = "id in (${noteIds.joinToString(",")})"
                     val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null)
                     col.db.database.query(sql)
                 } else {

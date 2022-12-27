@@ -26,7 +26,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Process
-import android.text.TextUtils
 import android.util.SparseArray
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.FlashCardsContract.AnkiMedia
@@ -694,7 +693,7 @@ public class AddContentApi(context: Context) {
                 Note.MID,
                 modelId,
                 Note.CSUM,
-                TextUtils.join(",", csums)
+                csums.joinToString(separator = ",")
             )
             val notesTableQuery = mResolver.query(
                 Note.CONTENT_URI_V2,

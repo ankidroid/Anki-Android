@@ -39,8 +39,8 @@ Sample:
         <annotationsPath>
           <root type="composite">
             <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/data/annotations.zip!/" type="simple" />
-            <root url="file://C:/GitHub/Anki-Android-David/annotations" type="simple" />
-```
+              <root url="file://C:/GitHub/Anki-Android-David/annotations" type="simple"/>
+```xml
 
 ## Future Goals
 
