@@ -71,8 +71,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     private fun shouldDisableExtendedTextUi(): Boolean {
-        val sp = AnkiDroidApp.getSharedPrefs(this.context)
-        return sp.getBoolean("disableExtendedTextUi", false)
+        return AnkiDroidApp.getSharedPrefs(this.context).getBoolean("disableExtendedTextUi", false)
     }
 
     @KotlinCleanup("Simplify")
