@@ -185,7 +185,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         setText(_content)
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         val state = super.onSaveInstanceState()
         val savedState = SavedState(state)
         savedState.ord = ord
