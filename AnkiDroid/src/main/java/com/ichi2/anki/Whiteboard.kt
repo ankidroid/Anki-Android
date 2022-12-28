@@ -42,7 +42,6 @@ import com.ichi2.utils.KotlinCleanup
 import com.mrudultora.colorpicker.ColorPickerPopUp
 import timber.log.Timber
 import java.io.FileNotFoundException
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -328,10 +327,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             R.id.pen_color_black -> {
                 penColor = Color.BLACK
             }
-            R.id.pen_color_yellow -> {
-                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
-                penColor = yellowPenColor
-            }
             R.id.pen_color_red -> {
                 val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
                 penColor = redPenColor
@@ -339,6 +334,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             R.id.pen_color_blue -> {
                 val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
                 penColor = bluePenColor
+            }
+            R.id.pen_color_yellow -> {
+                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
+                penColor = yellowPenColor
             }
             R.id.undo_draw -> {
                 if (!undoEmpty()) {
@@ -569,9 +568,9 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         mColorPalette = activity.findViewById(R.id.whiteboard_editor)
         activity.findViewById<View>(R.id.undo_draw).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_red).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.clear_button).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
-        activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_white).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_custom).apply {
             setOnClickListener { view: View -> onClick(view) }
