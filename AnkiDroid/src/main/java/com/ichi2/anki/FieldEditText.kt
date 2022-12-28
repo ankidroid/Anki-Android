@@ -229,9 +229,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             super.onRestoreInstanceState(state)
             return
         }
-        val ss = state
-        super.onRestoreInstanceState(ss.superState)
-        ord = ss.ord
+        super.onRestoreInstanceState(state.superState)
+        ord = state.ord
     }
 
     fun setCapitalize(value: Boolean) {
