@@ -2616,16 +2616,14 @@ open class CardBrowser :
                 withCol { changeDeckMulti(this, ids, newDid) }
             }
             if (result.succeeded()) {
-                Timber.d("Changed the SnackBar", "Snackbar")
-                val deckName = col.decks.name(mNewDid)
-                val message = getString(R.string.changed_deck_message, deckName)
-                showUndoSnackbar(message)
                 searchCards()
                 endMultiSelectMode()
-
                 cardsAdapter!!.notifyDataSetChanged()
                 invalidateOptionsMenu() // maybe the availability of undo changed
                 // snackbar to offer undo
+                val deckName = col.decks.name(mNewDid)
+                val message = getString(R.string.changed_deck_message, deckName)
+                showUndoSnackbar(message)
             } else {
                 Timber.i("changeDeckHandler failed, not offering undo")
                 displayCouldNotChangeDeck()
