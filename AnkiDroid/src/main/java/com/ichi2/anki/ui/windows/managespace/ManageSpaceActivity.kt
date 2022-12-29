@@ -33,13 +33,6 @@ class ManageSpaceActivity : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_space)
 
-        // TODO Without this preferences don't get visually disabled. Must be called after onCreate.
-        //   As I see it, legacy themes add action bar, which has no effect after onCreate,
-        //   and also set disabled text color, which does. Make it so this is not needed.
-        //   Comment by Brayan: For anyone else that wants to take this [task], just set
-        //   `textColorSecondary` on the default themes to the same color used by the legacy themes.
-        Themes.setThemeLegacy(this)
-
         enableToolbar().apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)

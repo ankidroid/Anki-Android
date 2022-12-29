@@ -490,7 +490,8 @@ class DeckOptionsActivity :
     // conversion to fragments tracked as #5019 in github
     @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Themes.setThemeLegacy(this)
+        Themes.setTheme(this)
+        Themes.setLegacyActionBar(this)
         super.onCreate(savedInstanceState)
 
         if (!isColInitialized()) {
