@@ -107,7 +107,7 @@
     <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
-    <string name="sync_media_always">Always</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
     <string name="sync_media_only_wifi">Only on Wi-Fi</string>
     <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
