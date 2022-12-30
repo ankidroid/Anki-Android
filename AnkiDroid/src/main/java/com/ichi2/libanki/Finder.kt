@@ -217,7 +217,7 @@ class Finder(private val col: Collection) {
             // failed command?
             @Suppress("NAME_SHADOWING")
             var txt = txt
-            if (txt.isNullOrEmpty()) {
+            if (txt?.isEmpty() == true) {
                 // if it was to be negated then we can just ignore it
                 if (isnot) {
                     isnot = false
