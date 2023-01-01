@@ -217,12 +217,12 @@ object LanguageUtil {
             tempLocaleCode = prefs.getLanguage()
             // If no code provided use the app language.
         }
-        if (tempLocaleCode?.isEmpty() == true) {
+        if (tempLocaleCode.isNullOrEmpty()) {
             // Fall back to (system) default only if that fails.
             tempLocaleCode = Locale.getDefault().toString()
         }
         // Language separators are '_' or '-' at different times in display/resource fetch
-        val locale: Locale = if (tempLocaleCode != null && ((tempLocaleCode.contains("_")) || (tempLocaleCode.contains("-")))) {
+        val locale: Locale = if ((tempLocaleCode.contains("_")) || (tempLocaleCode.contains("-"))) {
             try {
                 val localeParts = tempLocaleCode.split("[_-]".toRegex(), 2).toTypedArray()
                 Locale(localeParts[0], localeParts[1])
@@ -231,7 +231,7 @@ object LanguageUtil {
                 Locale(tempLocaleCode)
             }
         } else {
-            Locale(tempLocaleCode!!) // guaranteed to be non null
+            Locale(tempLocaleCode) // guaranteed to be non null
         }
         return locale
     }
