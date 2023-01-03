@@ -774,7 +774,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                         val csum = cur.getString(1)
                         fnames.add(fname)
                         val normName = Utils.nfcNormalized(fname)
-                        if (!csum.isEmpty()) {
+                        if (csum.isNotEmpty()) {
                             try {
                                 col.log("+media zip $fname")
                                 val file = File(dir(), fname)

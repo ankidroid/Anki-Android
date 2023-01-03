@@ -28,7 +28,6 @@ import android.preference.CheckBoxPreference
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
-import android.text.TextUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
@@ -259,7 +258,7 @@ class DeckOptionsActivity :
                             }
                             "confRename" -> {
                                 val newName = value as String
-                                if (!TextUtils.isEmpty(newName)) {
+                                if (newName.isNotEmpty()) {
                                     mOptions.put("name", newName)
                                 }
                             }
@@ -272,7 +271,7 @@ class DeckOptionsActivity :
                             }
                             "confAdd" -> {
                                 val newName = value as String
-                                if (!TextUtils.isEmpty(newName)) {
+                                if (newName.isNotEmpty()) {
                                     // New config clones current config
                                     val id = col.decks.confId(newName, mOptions.toString())
                                     deck.put("conf", id)
