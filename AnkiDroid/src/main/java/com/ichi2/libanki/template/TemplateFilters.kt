@@ -136,7 +136,7 @@ object TemplateFilters {
             @KotlinCleanup("maybe make non-null")
             var buf: String?
             buf = if (type == 'q') {
-                if (m.group(4)!!.isNotEmpty()) {
+                if (!m.group(4).isNullOrEmpty()) {
                     "[" + m.group(4) + "]"
                 } else {
                     CLOZE_DELETION_REPLACEMENT
