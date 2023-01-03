@@ -31,16 +31,17 @@ Annotations should now appear
 Sample:
 ```xml
 <jdk version="2">
-    <name value="Android API 28 Platform" />
-    <type value="Android SDK" />
-    <version value="java version &quot;1.8.0_112-release&quot;" />
-    <homePath value="C:\Users\David\AppData\Local\Android\Sdk" />
-    <roots>
+      <name value="Android API 28 Platform" />
+      <type value="Android SDK" />
+      <version value="java version &quot;1.8.0_112-release&quot;" />
+      <homePath value="C:\Users\David\AppData\Local\Android\Sdk" />
+      <roots>
         <annotationsPath>
           <root type="composite">
-             <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/data/annotations.zip!/" type="simple"/>
-             <root url="file://C:/GitHub/Anki-Android-David/annotations" type="simple"/>
+            <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/data/annotations.zip!/" type="simple" />
+            <root url="file://C:/GitHub/Anki-Android-David/annotations" type="simple" />
 ```
+
 ## Future Goals
 
 It would be ideal if these could be set on a per-project basis. I haven't had the time to determine whether this is possible.

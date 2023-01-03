@@ -424,7 +424,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             val parts = listOf(*Decks.path(name))
             val tmpname = parts.subList(1, parts.size).joinToString("::")
             name = mDeckPrefix
-            if (!tmpname.isEmpty()) {
+            if (tmpname.isNotEmpty()) {
                 name += "::$tmpname"
             }
         }

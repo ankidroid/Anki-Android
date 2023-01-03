@@ -68,7 +68,7 @@ object TemplateFilters {
         var filter = filterInput
         return if ("text" == filter) {
             // strip html
-            if (!txt.isEmpty()) {
+            if (txt.isNotEmpty()) {
                 Utils.stripHTML(txt)
             } else {
                 ""
@@ -82,7 +82,7 @@ object TemplateFilters {
             val split = filter.split("-").toTypedArray()
             filter = split[0]
             val extra = split[1]
-            if (!txt.isEmpty() && !extra.isEmpty()) {
+            if (txt.isNotEmpty() && extra.isNotEmpty()) {
                 clozeText(txt, extra, filter[1])
             } else {
                 ""
@@ -136,7 +136,7 @@ object TemplateFilters {
             @KotlinCleanup("maybe make non-null")
             var buf: String?
             buf = if (type == 'q') {
-                if (!m.group(4).isNullOrEmpty()) {
+                if (m.group(4)!!.isNotEmpty()) {
                     "[" + m.group(4) + "]"
                 } else {
                     CLOZE_DELETION_REPLACEMENT

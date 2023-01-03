@@ -213,7 +213,7 @@ object LanguageUtil {
      */
     fun getLocale(localeCode: String?, prefs: SharedPreferences): Locale {
         var tempLocaleCode = localeCode
-        if (tempLocaleCode == null || tempLocaleCode.isEmpty()) {
+        if (tempLocaleCode.isNullOrEmpty()) {
             tempLocaleCode = prefs.getLanguage()
             // If no code provided use the app language.
         }

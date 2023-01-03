@@ -192,7 +192,7 @@ class TagsDialog : AnalyticsDialogFragment {
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         toolbarAddItem.setOnMenuItemClickListener {
             val query = mToolbarSearchView!!.query.toString()
-            if (mToolbarSearchItem!!.isActionViewExpanded && !query.isEmpty()) {
+            if (mToolbarSearchItem!!.isActionViewExpanded && query.isNotEmpty()) {
                 addTag(query)
                 mToolbarSearchView!!.setQuery("", true)
             } else {

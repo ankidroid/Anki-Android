@@ -743,13 +743,13 @@ class Finder(private val col: Collection) {
                 "select c.id from cards c, notes n where c.nid=n.id and "
             }
             // combine with preds
-            sql += if (!preds.isEmpty()) {
+            sql += if (preds.isNotEmpty()) {
                 "($preds)"
             } else {
                 "1"
             }
             // order
-            if (!order.isEmpty()) {
+            if (order.isNotEmpty()) {
                 sql += " $order"
             }
             return sql

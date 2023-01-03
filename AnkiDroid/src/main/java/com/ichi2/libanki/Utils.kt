@@ -1123,7 +1123,7 @@ object Utils {
         for (kv in fields.entries) {
             var value = kv.value
             value = stripHTMLMedia(value).trim { it <= ' ' }
-            if (!value.isEmpty()) {
+            if (value.isNotEmpty()) {
                 nonempty_fields.add(kv.key)
             }
         }
