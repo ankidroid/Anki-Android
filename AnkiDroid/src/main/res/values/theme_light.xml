@@ -28,9 +28,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="colorPrimary">@color/theme_light_primary</item>
         <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
         <item name="colorAccent">@color/theme_light_accent</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorPrimary">@color/theme_light_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_light_secondary_text</item>
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="colorControlActivated">?attr/colorPrimary</item>
@@ -178,15 +177,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
-    <style name="LegacyActionBarLight" parent="Theme_Light">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_light</item>
-        <item name="android:textColorSecondary">@color/prefs_item_light_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

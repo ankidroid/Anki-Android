@@ -4,7 +4,6 @@
     <color name="theme_black_primary_dark">#000000</color>
     <color name="theme_black_primary_light">#151515</color>
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
-    <color name="theme_black_secondary_text">#a0a0a0</color>
     <color name="theme_black_row_current">#1a1a1a</color>
 
     <style name="Theme_Dark.Black">
@@ -12,9 +11,8 @@
         <item name="colorPrimary">@color/theme_black_primary_dark</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/material_blue_500</item>
-        <item name="android:textColor">@color/theme_black_primary_text</item>
-        <item name="android:textColorPrimary">@color/theme_black_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
         <item name="colorControlActivated">?attr/colorAccent</item>
@@ -139,14 +137,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_black_primary</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <style name="LegacyActionBarBlack" parent="Theme_Dark.Black">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_dark</item>
-        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

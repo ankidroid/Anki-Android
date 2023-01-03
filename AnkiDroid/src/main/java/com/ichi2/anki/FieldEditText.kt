@@ -70,15 +70,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
     }
 
-    @KotlinCleanup("Remove try-catch")
     private fun shouldDisableExtendedTextUi(): Boolean {
-        return try {
-            val sp = AnkiDroidApp.getSharedPrefs(this.context)
-            sp.getBoolean("disableExtendedTextUi", false)
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to get extended UI preference")
-            false
-        }
+        return AnkiDroidApp.getSharedPrefs(this.context).getBoolean("disableExtendedTextUi", false)
     }
 
     @KotlinCleanup("Simplify")
@@ -193,7 +186,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         setText(text)
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         val state = super.onSaveInstanceState()
         return SavedState(state, ord)
     }

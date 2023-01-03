@@ -14,9 +14,8 @@
         <item name="colorPrimary">@color/theme_dark_primary</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorAccent">@color/material_blue_400</item>
-        <item name="android:textColor">@color/theme_dark_primary_text</item>
-        <item name="android:textColorPrimary">@color/theme_dark_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
         <item name="colorControlActivated">?attr/colorAccent</item>
@@ -164,15 +163,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_dark_primary</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <!-- Legacy action bar  (used in Preferences with no explicit Toolbar) -->
-    <style name="LegacyActionBarDark" parent="Theme_Dark">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_dark</item>
-        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->
