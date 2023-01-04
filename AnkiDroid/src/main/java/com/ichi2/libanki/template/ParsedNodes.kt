@@ -19,8 +19,6 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
-@KotlinCleanup("fix hashCode issue suppression")
-@Suppress("EqualsOrHashCode")
 class ParsedNodes : ParsedNode {
     private val mChildren: List<ParsedNode?>
 
@@ -72,6 +70,10 @@ class ParsedNodes : ParsedNode {
             t += child
         }
         return "$t))"
+    }
+
+    override fun hashCode(): Int {
+        return mChildren.hashCode()
     }
 
     companion object {
