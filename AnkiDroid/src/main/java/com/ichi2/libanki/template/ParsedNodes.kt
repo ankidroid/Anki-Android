@@ -61,13 +61,8 @@ class ParsedNodes : ParsedNode {
         return mChildren == other.mChildren
     }
 
-    @KotlinCleanup("see if it can be removed if not simplify string and function")
     override fun toString(): String {
-        var t: String? = "new ParsedNodes(listOf("
-        for (child in mChildren) {
-            t += child
-        }
-        return "$t))"
+        return "new ParsedNodes(listOf(${mChildren.joinToString()}))"
     }
 
     override fun hashCode(): Int {
