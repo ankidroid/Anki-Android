@@ -17,7 +17,6 @@
 package com.wildplot.android.parsing.AtomTypes
 
 import com.ichi2.utils.KotlinCleanup
-import com.wildplot.android.parsing.AtomTypes.MathFunctionAtom.MathType
 import com.wildplot.android.parsing.Expression
 import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TopLevelParser
