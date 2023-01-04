@@ -16,7 +16,6 @@
 package com.ichi2.libanki.template
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 class ParsedNodes : ParsedNode {
@@ -33,14 +32,8 @@ class ParsedNodes : ParsedNode {
         mChildren = ArrayList(listOf(*nodes))
     }
 
-    @KotlinCleanup("simplify fun with any {}")
     override fun template_is_empty(nonempty_fields: Set<String>): Boolean {
-        for (child in mChildren) {
-            if (!child!!.template_is_empty(nonempty_fields)) {
-                return false
-            }
-        }
-        return true
+        return !mChildren.any { !it!!.template_is_empty(nonempty_fields) }
     }
 
     @Throws(TemplateError::class)
