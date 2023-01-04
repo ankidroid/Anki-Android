@@ -744,8 +744,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Undo button
         @DrawableRes val undoIconId: Int
         val undoEnabled: Boolean
-        val whiteboardShowsStrokesToUndo = mShowWhiteboard && whiteboard?.undoEmpty() == false
-        if (whiteboardShowsStrokesToUndo) {
+        val whiteboardIsShownAndHasStrokes = mShowWhiteboard && whiteboard?.undoEmpty() == false
+        if (whiteboardIsShownAndHasStrokes) {
             undoIconId = R.drawable.eraser
             undoEnabled = true
         } else {
@@ -759,7 +759,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            if (whiteboardShowsStrokesToUndo) {
+            if (whiteboardIsShownAndHasStrokes) {
                 undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
             } else if (col.undoAvailable()) {
                 undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
