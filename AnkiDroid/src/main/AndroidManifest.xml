@@ -20,7 +20,6 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.ichi2.anki"
           android:installLocation="auto"
           >
     <uses-feature android:name="android.hardware.camera" android:required="false" />

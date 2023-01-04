@@ -13,6 +13,8 @@ repositories {
 }
 android {
     compileSdkVersion 33
+    namespace "com.ichi2.anki.api"
+    testNamespace "com.ichi2.anki.api"
 
     defaultConfig {
         minSdkVersion 16
