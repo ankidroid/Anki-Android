@@ -80,13 +80,10 @@ class ParsedNodes : ParsedNode {
          * @return The list of node, as compactly as possible.
          */
         fun create(nodes: List<ParsedNode>): ParsedNode {
-            @KotlinCleanup("replace with when")
-            return if (nodes.isEmpty()) {
-                EmptyNode()
-            } else if (nodes.size == 1) {
-                nodes[0]
-            } else {
-                ParsedNodes(nodes)
+            return when {
+                nodes.isEmpty() -> EmptyNode()
+                nodes.size == 1 -> nodes[0]
+                else -> ParsedNodes(nodes)
             }
         }
     }
