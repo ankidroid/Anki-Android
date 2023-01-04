@@ -1,7 +1,7 @@
 android {
-    lintOptions {
+    lint {
         textReport true
-        textOutput "stdout"
+//        textOutput is stdout, see https://developer.android.com/reference/tools/gradle-api/7.3/com/android/build/api/dsl/Lint#textOutput()
         explainIssues false
         showAll true
         abortOnError = true
