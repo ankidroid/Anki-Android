@@ -16,7 +16,6 @@
 @file:Suppress("PackageName") // AtomTypes: copied from wildplot library
 package com.wildplot.android.parsing.AtomTypes
 
-import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.parsing.Expression
 import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TopLevelParser
@@ -24,7 +23,6 @@ import com.wildplot.android.parsing.TreeElement
 import kotlin.Throws
 import kotlin.math.*
 
-@KotlinCleanup("IDE Lint")
 class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) : TreeElement {
     enum class MathType {
         SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID
