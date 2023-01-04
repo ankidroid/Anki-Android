@@ -54,13 +54,11 @@ class ParsedNodes : ParsedNode {
         }
     }
 
-    @KotlinCleanup("fix parameter name issue")
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun equals(obj: Any?): Boolean {
-        if (obj !is ParsedNodes) {
+    override fun equals(other: Any?): Boolean {
+        if (other !is ParsedNodes) {
             return false
         }
-        return mChildren == obj.mChildren
+        return mChildren == other.mChildren
     }
 
     @KotlinCleanup("see if it can be removed if not simplify string and function")
