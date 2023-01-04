@@ -20,6 +20,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.text.TextUtils
 import androidx.browser.customtabs.CustomTabsService
+import com.ichi2.compat.Compat.ResolveInfoFlags
+import com.ichi2.compat.CompatHelper.Companion.resolveActivity
 import timber.log.Timber
 
 /**
@@ -57,7 +59,7 @@ object CustomTabsHelper {
         val pm = context.packageManager
         // Get default VIEW intent handler.
         val activityIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"))
-        val defaultViewHandlerInfo = pm.resolveActivity(activityIntent, 0)
+        val defaultViewHandlerInfo = pm.resolveActivity(activityIntent, ResolveInfoFlags.of(0))
         var defaultViewHandlerPackageName: String? = null
         if (defaultViewHandlerInfo != null) {
             defaultViewHandlerPackageName = defaultViewHandlerInfo.activityInfo.packageName
