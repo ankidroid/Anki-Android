@@ -22,6 +22,7 @@ import com.wildplot.android.parsing.ExpressionFormatException
 import com.wildplot.android.parsing.TopLevelParser
 import com.wildplot.android.parsing.TreeElement
 import kotlin.Throws
+import kotlin.math.*
 
 @KotlinCleanup("IDE Lint")
 class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) : TreeElement {
@@ -73,17 +74,17 @@ class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) :
         get() = if (hasSavedValue) {
             savedValue
         } else when (mathType) {
-            MathType.SIN -> Math.sin(expression!!.value)
-            MathType.COS -> Math.cos(expression!!.value)
-            MathType.TAN -> Math.tan(expression!!.value)
-            MathType.SQRT -> Math.sqrt(expression!!.value)
-            MathType.ACOS -> Math.acos(expression!!.value)
-            MathType.ASIN -> Math.asin(expression!!.value)
-            MathType.ATAN -> Math.atan(expression!!.value)
-            MathType.SINH -> Math.sinh(expression!!.value)
-            MathType.COSH -> Math.cosh(expression!!.value)
-            MathType.LOG -> Math.log10(expression!!.value)
-            MathType.LN -> Math.log(expression!!.value)
+            MathType.SIN -> sin(expression!!.value)
+            MathType.COS -> cos(expression!!.value)
+            MathType.TAN -> tan(expression!!.value)
+            MathType.SQRT -> sqrt(expression!!.value)
+            MathType.ACOS -> acos(expression!!.value)
+            MathType.ASIN -> asin(expression!!.value)
+            MathType.ATAN -> atan(expression!!.value)
+            MathType.SINH -> sinh(expression!!.value)
+            MathType.COSH -> cosh(expression!!.value)
+            MathType.LOG -> log10(expression!!.value)
+            MathType.LN -> ln(expression!!.value)
             MathType.INVALID -> throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
 
