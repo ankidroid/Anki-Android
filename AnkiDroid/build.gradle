@@ -208,7 +208,7 @@ android {
         coreLibraryDesugaringEnabled true
     }
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
+        resources.excludes.add 'META-INF/DEPENDENCIES'
     }
     ndkVersion "22.0.7026061"
 }
