@@ -143,7 +143,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
          * @param commands list of ViewerCommands to add to the search index
          * @param categoryTitleRes string resource for the title of the category
          */
-        fun indexSearchConfigItems(commands: List<ViewerCommand>, categoryTitleRes: Int) {
+        fun indexCommandsToCategory(commands: List<ViewerCommand>, categoryTitleRes: Int) {
             for (command in commands) {
                 searchConfig.indexItem()
                     .withTitle(getString(command.resourceId))
@@ -162,8 +162,8 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
          * When adding support for additional classes that use these gestures, be sure to update this to
          * ensure that all commands can be correctly searched in the appropriate category.
          */
-        indexSearchConfigItems(ViewerCommand.reviewerCommands, R.string.controls_reviewer_category)
-        indexSearchConfigItems(ViewerCommand.previewerCommands, R.string.controls_previewer_category)
+        indexCommandsToCategory(ViewerCommand.reviewerCommands, R.string.controls_reviewer_category)
+        indexCommandsToCategory(ViewerCommand.previewerCommands, R.string.controls_previewer_category)
 
         // Some preferences and categories are only shown conditionally,
         // so they should be searchable based on the same conditions
