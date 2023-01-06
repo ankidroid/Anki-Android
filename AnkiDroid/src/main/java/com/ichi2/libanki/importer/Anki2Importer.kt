@@ -17,7 +17,6 @@
 
 package com.ichi2.libanki.importer
 
-import android.text.TextUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
@@ -104,8 +103,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
             dst.media.db!!.database.beginTransaction()
-            if (!TextUtils.isEmpty(mDeckPrefix)) {
-                val id = dst.decks.id_safe(mDeckPrefix!!)
+            if (!mDeckPrefix.isNullOrEmpty()) {
+                val id = dst.decks.id_safe(mDeckPrefix)
                 dst.decks.select(id)
             }
             Timber.i("Preparing Import")
@@ -421,11 +420,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         val g = src.decks.get(did)
         var name = g.getString("name")
         // if there's a prefix, replace the top level deck
-        if (!TextUtils.isEmpty(mDeckPrefix)) {
+        if (!mDeckPrefix.isNullOrEmpty()) {
             val parts = listOf(*Decks.path(name))
-            val tmpname = TextUtils.join("::", parts.subList(1, parts.size))
-            name = mDeckPrefix!!
-            if (!TextUtils.isEmpty(tmpname)) {
+            val tmpname = parts.subList(1, parts.size).joinToString("::")
+            name = mDeckPrefix
+            if (tmpname.isNotEmpty()) {
                 name += "::$tmpname"
             }
         }
@@ -433,7 +432,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         var head: String? = ""
         val parents = listOf(*Decks.path(name))
         for (parent in parents.subList(0, parents.size - 1)) {
-            if (!TextUtils.isEmpty(head)) {
+            if (!head.isNullOrEmpty()) {
                 head += "::"
             }
             head += parent

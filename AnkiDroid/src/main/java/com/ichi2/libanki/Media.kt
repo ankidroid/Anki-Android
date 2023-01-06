@@ -20,7 +20,6 @@ package com.ichi2.libanki
 import android.database.Cursor
 import android.database.SQLException
 import android.net.Uri
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -265,7 +264,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             val buf = StringBuffer()
             m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(string)
             while (m.find()) {
-                if (!TextUtils.isEmpty(m.group(4))) {
+                if (!m.group(4).isNullOrEmpty()) {
                     m.appendReplacement(buf, "[$4]")
                 } else {
                     m.appendReplacement(buf, TemplateFilters.CLOZE_DELETION_REPLACEMENT)
@@ -775,7 +774,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                         val csum = cur.getString(1)
                         fnames.add(fname)
                         val normName = Utils.nfcNormalized(fname)
-                        if (!TextUtils.isEmpty(csum)) {
+                        if (csum.isNotEmpty()) {
                             try {
                                 col.log("+media zip $fname")
                                 val file = File(dir(), fname)

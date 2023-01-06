@@ -17,7 +17,6 @@
 package com.ichi2.libanki.stats
 
 import android.content.Context
-import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
@@ -184,7 +183,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         lims.add("did in " + _limit())
         val lim: String
         lim = if (!lims.isEmpty()) {
-            "where " + TextUtils.join(" and ", lims)
+            "where " + lims.joinToString(" and ")
         } else {
             ""
         }
@@ -216,7 +215,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
 
     private fun _deckAge(by: DeckAgeType): Long {
         var lim = _revlogLimit()
-        if (!TextUtils.isEmpty(lim)) {
+        if (lim.isNotEmpty()) {
             lim += " where $lim"
         }
         var t = 0.0
@@ -246,7 +245,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
     private fun getRevlogFilter(timespan: AxisType, inverseTimeSpan: Boolean): String {
         val lims = ArrayList<String>(2)
         val dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan)
-        if (!TextUtils.isEmpty(dayFilter)) {
+        if (dayFilter.isNotEmpty()) {
             lims.add(dayFilter)
         }
         var lim = _getDeckFilter().replace("[\\[\\]]".toRegex(), "")
@@ -257,7 +256,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
         lims.add("ease > 0")
         lim = "WHERE "
-        lim += TextUtils.join(" AND ", lims.toTypedArray())
+        lim += lims.toTypedArray().joinToString(" AND ")
         return lim
     }
 

@@ -26,7 +26,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.StatFs
-import android.text.TextUtils
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
@@ -1124,7 +1123,7 @@ object Utils {
         for (kv in fields.entries) {
             var value = kv.value
             value = stripHTMLMedia(value).trim { it <= ' ' }
-            if (!TextUtils.isEmpty(value)) {
+            if (value.isNotEmpty()) {
                 nonempty_fields.add(kv.key)
             }
         }
