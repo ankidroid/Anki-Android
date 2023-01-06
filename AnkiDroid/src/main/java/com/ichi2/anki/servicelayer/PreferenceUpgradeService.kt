@@ -32,7 +32,6 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Consts
-import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
 import java.util.*
@@ -352,9 +351,6 @@ object PreferenceUpgradeService {
                         putString("nightTheme", "3")
                     }
                     remove("invertedColors")
-                }
-                if (AnkiDroidApp.isInitialized) {
-                    Themes.updateCurrentTheme()
                 }
             }
         }
