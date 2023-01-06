@@ -993,77 +993,77 @@ class Decks(private val col: Collection) : DeckManager() {
 
         // not in libAnki
         const val DECK_SEPARATOR = "::"
-        @KotlinCleanup("Maybe use triple quotes and @language? for these properties")
+
         const val DEFAULT_DECK = (
             "" +
                 "{" +
-                "\"newToday\": [0, 0]," + // currentDay, count
-                "\"revToday\": [0, 0]," +
-                "\"lrnToday\": [0, 0]," +
-                "\"timeToday\": [0, 0]," + // time in ms
-                "\"conf\": 1," +
-                "\"usn\": 0," +
-                "\"desc\": \"\"," +
-                "\"dyn\": 0," + // anki uses int/bool interchangeably here
-                "\"collapsed\": false," +
-                "\"browserCollapsed\": false," + // added in beta11
-                "\"extendNew\": 0," +
-                "\"extendRev\": 0" +
+                """"newToday": [0, 0],""" + // currentDay, count
+                """"revToday": [0, 0],""" +
+                """"lrnToday": [0, 0],""" +
+                """"timeToday": [0, 0],""" + // time in ms
+                """"conf": 1,""" +
+                """"usn": 0,""" +
+                """"desc": "",""" +
+                """"dyn": 0,""" + // anki uses int/bool interchangeably here
+                """"collapsed": false,""" +
+                """"browserCollapsed": false,""" + // added in beta11
+                """"extendNew": 0,""" +
+                """"extendRev": 0""" +
                 "}"
             )
         private const val defaultDynamicDeck = (
             "" +
                 "{" +
-                "\"newToday\": [0, 0]," +
-                "\"revToday\": [0, 0]," +
-                "\"lrnToday\": [0, 0]," +
-                "\"timeToday\": [0, 0]," +
-                "\"collapsed\": false," +
-                "\"dyn\": 1," +
-                "\"desc\": \"\"," +
-                "\"usn\": 0," +
-                "\"delays\": null," +
-                "\"separate\": true," + // list of (search, limit, order); we only use first element for now
-                "\"terms\": [[\"\", 100, 0]]," +
-                "\"resched\": true," +
-                "\"previewDelay\": 10," +
-                "\"browserCollapsed\": false" +
+                """"newToday": [0, 0],""" +
+                """"revToday": [0, 0],""" +
+                """"lrnToday": [0, 0],""" +
+                """"timeToday": [0, 0],""" +
+                """"collapsed": false,""" +
+                """"dyn": 1,""" +
+                """"desc": "",""" +
+                """"usn": 0,""" +
+                """"delays": null,""" +
+                """"separate": true,""" + // list of (search, limit, order); we only use first element for now
+                """"terms": [["", 100, 0]],""" +
+                """"resched": true,""" +
+                """"previewDelay": 10,""" +
+                """"browserCollapsed": false""" +
                 "}"
             )
         const val DEFAULT_CONF = (
             "" +
                 "{" +
-                "\"name\": \"Default\"," +
-                "\"dyn\": false," + // previously optional. Default was false
-                "\"new\": {" +
-                "\"delays\": [1, 10]," +
-                "\"ints\": [1, 4, 7]," + // 7 is not currently used
-                "\"initialFactor\": " + Consts.STARTING_FACTOR + "," +
-                "\"order\": " + Consts.NEW_CARDS_DUE + "," +
-                "\"perDay\": 20," + // may not be set on old decks
-                "\"bury\": false" +
+                """"name": "Default",""" +
+                """"dyn": false,""" + // previously optional. Default was false
+                """"new": {""" +
+                """"delays": [1, 10],""" +
+                """"ints": [1, 4, 7],""" + // 7 is not currently used
+                """"initialFactor": """ + Consts.STARTING_FACTOR + "," +
+                """"order": """ + Consts.NEW_CARDS_DUE + "," +
+                """"perDay": 20,""" + // may not be set on old decks
+                """"bury": false""" +
                 "}," +
-                "\"lapse\": {" +
-                "\"delays\": [10]," +
-                "\"mult\": 0," +
-                "\"minInt\": 1," +
-                "\"leechFails\": 8," + // type 0=suspend, 1=tagonly
-                "\"leechAction\": " + Consts.LEECH_TAGONLY +
+                """"lapse": {""" +
+                """"delays": [10],""" +
+                """"mult": 0,""" +
+                """"minInt": 1,""" +
+                """"leechFails": 8,""" + // type 0=suspend, 1=tagonly
+                """"leechAction": """ + Consts.LEECH_TAGONLY +
                 "}," +
-                "\"rev\": {" +
-                "\"perDay\": 200," +
-                "\"ease4\": 1.3," +
-                "\"hardFactor\": 1.2," +
-                "\"ivlFct\": 1," +
-                "\"maxIvl\": 36500," + // may not be set on old decks
-                "\"bury\": false" +
+                """"rev": {""" +
+                """"perDay": 200,""" +
+                """"ease4": 1.3,""" +
+                """"hardFactor": 1.2,""" +
+                """"ivlFct": 1,""" +
+                """"maxIvl": 36500,""" + // may not be set on old decks
+                """"bury": false""" +
                 "}," +
-                "\"maxTaken\": 60," +
-                "\"timer\": 0," +
-                "\"autoplay\": true," +
-                "\"replayq\": true," +
-                "\"mod\": 0," +
-                "\"usn\": 0" +
+                """"maxTaken": 60,""" +
+                """"timer": 0,""" +
+                """"autoplay": true,""" +
+                """"replayq": true,""" +
+                """"mod": 0,""" +
+                """"usn": 0""" +
                 "}"
             )
         private val pathCache = HashMap<String, Array<String>>()
