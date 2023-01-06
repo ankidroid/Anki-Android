@@ -90,7 +90,7 @@ class Model : JSONObject {
         val fieldNames = fieldsNames
         val nonemptyFields: MutableSet<String> = HashUtil.HashSetInit(sfld.size)
         for (i in sfld.indices) {
-            if (!sfld[i].trim { it <= ' ' }.isEmpty()) {
+            if (sfld[i].trim { it <= ' ' }.isNotEmpty()) {
                 nonemptyFields.add(fieldNames[i])
             }
         }

@@ -215,7 +215,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
 
     private fun _deckAge(by: DeckAgeType): Long {
         var lim = _revlogLimit()
-        if (!lim.isEmpty()) {
+        if (lim.isNotEmpty()) {
             lim += " where $lim"
         }
         var t = 0.0
@@ -245,7 +245,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
     private fun getRevlogFilter(timespan: AxisType, inverseTimeSpan: Boolean): String {
         val lims = ArrayList<String>(2)
         val dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan)
-        if (!dayFilter.isEmpty()) {
+        if (dayFilter.isNotEmpty()) {
             lims.add(dayFilter)
         }
         var lim = _getDeckFilter().replace("[\\[\\]]".toRegex(), "")

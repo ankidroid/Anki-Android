@@ -852,7 +852,7 @@ class Sched(col: Collection) : SchedV2(col) {
         val limit = terms.getInt(1)
         val order = terms.getInt(2)
         val orderLimit: SortOrder = AfterSqlOrderBy(_dynOrder(order, limit))
-        if (!search.trim { it <= ' ' }.isEmpty()) {
+        if (search.trim { it <= ' ' }.isNotEmpty()) {
             search = String.format(Locale.US, "(%s)", search)
         }
         search =

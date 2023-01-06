@@ -54,7 +54,7 @@ object Shared {
      * @return See getTestDir.
      */
     private fun getTestDir(context: Context, name: String): File {
-        val suffix = if (!name.isEmpty()) {
+        val suffix = if (name.isNotEmpty()) {
             "-$name"
         } else {
             ""

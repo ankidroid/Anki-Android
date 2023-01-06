@@ -1777,7 +1777,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             val limit = term.getInt(1)
             val order = term.getInt(2)
             val orderLimit = _dynOrder(order, limit)
-            if (!search.trim { it <= ' ' }.isEmpty()) {
+            if (search.trim { it <= ' ' }.isNotEmpty()) {
                 search = String.format(Locale.US, "(%s)", search)
             }
             search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search)

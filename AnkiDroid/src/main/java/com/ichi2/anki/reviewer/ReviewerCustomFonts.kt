@@ -78,9 +78,9 @@ class ReviewerCustomFonts(context: Context) {
     private fun getDominantFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
         if (mDominantFontStyle == null) {
             mDominantFontStyle = getOverrideFontStyle(context, customFontsMap)
-            if (mDominantFontStyle?.isEmpty() == true) {
+            if (mDominantFontStyle.isNullOrEmpty()) {
                 mDominantFontStyle = getDefaultFontStyle(context, customFontsMap)
-                if (mDominantFontStyle?.isEmpty() == true) {
+                if (mDominantFontStyle.isNullOrEmpty()) {
                     mDominantFontStyle = themeFontStyle
                 }
             }

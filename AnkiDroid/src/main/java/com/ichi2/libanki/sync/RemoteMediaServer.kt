@@ -155,7 +155,7 @@ class RemoteMediaServer(
     @Throws(MediaSyncException::class)
     // NOTE: the original name of the method was _dataOnly which followed upstream naming
     private inline fun <reified T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
-        if (!resp.optString("err").isEmpty()) {
+        if (resp.optString("err").isNotEmpty()) {
             val err = resp.getString("err")
             col?.log("error returned: $err")
             throw MediaSyncException("SyncError:$err")
