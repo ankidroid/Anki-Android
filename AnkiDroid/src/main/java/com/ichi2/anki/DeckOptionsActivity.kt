@@ -22,7 +22,6 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.CheckBoxPreference
 import android.preference.ListPreference
@@ -49,8 +48,6 @@ import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.themeFollowsSystem
-import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NamedJSONComparator
@@ -476,20 +473,6 @@ class DeckOptionsActivity :
         override fun actualOnPreExecute(context: DeckPreferenceHack) = context.preConfChange()
 
         override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) = context.postConfChange()
-    }
-
-    @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val newNightModeStatus = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        // Check if theme should change
-        if (Themes.systemIsInNightMode != newNightModeStatus) {
-            Themes.systemIsInNightMode = newNightModeStatus
-            if (themeFollowsSystem()) {
-                updateCurrentTheme()
-                recreate()
-            }
-        }
     }
 
     // conversion to fragments tracked as #5019 in github

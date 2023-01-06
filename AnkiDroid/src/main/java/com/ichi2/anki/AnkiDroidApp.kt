@@ -22,7 +22,6 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Environment
@@ -42,7 +41,6 @@ import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
-import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -177,9 +175,6 @@ open class AnkiDroidApp : Application() {
 
         // Register for notifications
         mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
-        Themes.systemIsInNightMode =
-            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        Themes.updateCurrentTheme()
     }
 
     fun scheduleNotification() {
