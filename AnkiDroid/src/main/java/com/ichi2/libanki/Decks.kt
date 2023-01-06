@@ -79,9 +79,9 @@ class Decks(private val col: Collection) : DeckManager() {
             val deck = mNameMap[normalized] ?: return null
             val foundName = deck.getString("name")
             if (!equalName(name, foundName)) {
-                @KotlinCleanup("use triple quoted string")
+
                 CrashReportService.sendExceptionReport(
-                    "We looked for deck \"$name\" and instead got deck \"$foundName\".",
+                    """We looked for deck "$name" and instead got deck "$foundName".""",
                     "Decks - byName"
                 )
             }
