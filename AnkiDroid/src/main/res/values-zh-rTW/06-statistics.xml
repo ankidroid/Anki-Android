@@ -57,7 +57,7 @@
     <string name="stats_cards_intervals">卡片間隔</string>
     <string name="stats_cumulative_cards">累積卡片</string>
     <string name="stats_cumulative_answers">累積回答</string>
-    <string name="stats_cumulative_time_minutes">累積時間（分鐘）</string>
+    <string name="stats_cumulative_time_minutes">累積時間 (分鐘)</string>
     <string name="stats_cumulative_time_hours">累積小時</string>
     <string name="stats_cumulative">累積</string>
     <string name="stats_cumulative_percentage">累積百分比</string>
@@ -76,20 +76,20 @@
     <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">複習</string>
     <string name="stats_answer_type">回答類型</string>
     <string name="stats_today_again_count">重來數量：&lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_today_correct_count">（正確率：&lt;b&gt;%.1f%%&lt;/b&gt; ）</string>
+    <string name="stats_today_correct_count">(正確率：&lt;b&gt;%.1f%%&lt;/b&gt;)</string>
     <string name="stats_today_type_breakdown">新學習：&lt;b&gt;%1$d&lt;/b&gt;，複習：&lt;b&gt;%2$d&lt;/b&gt;，重新學習：&lt;b&gt;%3$d&lt;/b&gt;，過濾：&lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">熟練卡片回答正確率：%1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">今天未學習熟練卡片</string>
     <string name="stats_overview_forecast_total">全部： &lt;b&gt;%1$d&lt;/b&gt; 張卡片待複習</string>
     <string name="stats_overview_forecast_average">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 張卡片待複習/天</string>
     <string name="stats_overview_forecast_due_tomorrow">明天到期： &lt;b&gt;%1$d&lt;/b&gt; 張</string>
-    <string name="stats_overview_days_studied">打卡天數：%2$d／%3$d（&lt;b&gt;%1$d%%&lt;/b&gt;）</string>
+    <string name="stats_overview_days_studied">打卡天數：%2$d/%3$d (&lt;b&gt;%1$d%%&lt;/b&gt;)</string>
     <string name="stats_overview_reviews_per_day_studydays">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 張/天</string>
     <string name="stats_overview_reviews_per_day_all">如果你每天都學習，那麼每天只需複習 &lt;b&gt;%1$.1f&lt;/b&gt; 張卡片</string>
     <string name="stats_overview_total_time_in_period">總計：&lt;b&gt;%d&lt;/b&gt;分鐘</string>
     <string name="stats_overview_time_per_day_studydays">平均每天學習：&lt;b&gt;%1$.1f&lt;/b&gt;分鐘/天</string>
     <string name="stats_overview_time_per_day_all">如果你每天都學習， 那麼每天只需學習 &lt;b&gt;%1$.1f&lt;/b&gt; 分鐘</string>
-    <string name="stats_overview_average_answer_time">平均回答時間：&lt;b&gt;%1$.1fs&lt;/b&gt;（&lt;b&gt;%2$.2f&lt;/b&gt; 卡片/分鐘）</string>
+    <string name="stats_overview_average_answer_time">平均回答時間：&lt;b&gt;%1$.1fs&lt;/b&gt;(&lt;b&gt;%2$.2f&lt;/b&gt; 卡片/分鐘)</string>
     <string name="stats_overview_new_cards_per_day">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 張卡片／天</string>
     <string name="stats_overview_total_new_cards">全部：&lt;b&gt;%1$d&lt;/b&gt; 張卡片</string>
     <string name="stats_overview_average_interval">"平均間隔： "</string>
@@ -98,9 +98,9 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt;月</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt;天</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt;小時</string>
-    <string name="stats_overview_answer_buttons_learn">學習：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正確（%2$d / %3$d）</string>
-    <string name="stats_overview_answer_buttons_young">生疏卡片：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正確（%2$d / %3$d）</string>
-    <string name="stats_overview_answer_buttons_mature">熟練卡片：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正確（%2$d / %3$d）</string>
+    <string name="stats_overview_answer_buttons_learn">學習：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正確 (%2$d / %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">生疏卡片：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正確 (%2$d / %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">熟練卡片：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正確 (%2$d / %3$d)</string>
     <string name="stats_overview_card_types_total_cards">卡片合計：&lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_total_notes">筆記合計：&lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_lowest_ease">最低難易度：&lt;b&gt;%.0f%%&lt;/b&gt;</string>

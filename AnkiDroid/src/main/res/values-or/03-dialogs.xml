@@ -61,12 +61,12 @@
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>
-    <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
-    <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
-    <string name="reposition_card_not_new_error">କେବଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ରିପୋଜିସନ୍ କରାଯାଇପାରିବ</string>
+    <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
+    <string name="reposition_card_dialog_message">ଆରମ୍ଭ ଅଵସ୍ଥିତି:</string>
+    <string name="reposition_card_not_new_error">କେଵଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ପୁନଃଅଵସ୍ଥିତ କରିହେବ</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%dଟିଏ ପତ୍ର ରିପୋଜିସନ୍ କରାଗଲା</item>
-        <item quantity="other">%dଟି ପତ୍ର ରିପୋଜିସନ୍ କରାଗଲା</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃଅଵସ୍ଥିତ କରାଗଲା</item>
+        <item quantity="other">%dଟି ପତ୍ର ପୁନଃଅଵସ୍ଥିତ କରାଗଲା</item>
     </plurals>
     <string name="reset_card_dialog_title">ପତ୍ରର ପ୍ରଗତି ପୁନଃସେଟ୍ କର</string>
     <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>

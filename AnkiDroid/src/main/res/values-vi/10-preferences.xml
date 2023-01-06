@@ -47,10 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Đã tắt</string>
     <string name="enabled">Đã bật</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s giây</string>
+    <string name="pref_summary_minutes">%s phút</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Không có kết quả</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Chung</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
@@ -330,7 +330,7 @@
     <string name="open_changelog">Mở Changelog</string>
     <string name="pref_cat_about_title" maxLength="41">About</string>
     <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[Đây là <a href=\"%1$s\">cộng tác viên tuyệt vời của chúng tôi</a>. Bạn có thể hỗ trợ AnkiDroid bằng cách lập trình, dịch thuật, quyên góp và <a href=\"%2$s\">hơn thế nữa</a>!]]></string>
     <string name="license">License</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
@@ -352,7 +352,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">Tính năng thử nghiệm</string>
     <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>

@@ -57,7 +57,7 @@
     <string name="model_field_editor_rename">重新命名欄位</string>
     <string name="model_field_editor_language_hint">選擇鍵盤提示語言</string>
     <string name="model_field_editor_reposition_menu">修改字段位置</string>
-    <string name="model_field_editor_reposition">修改字段位置（輸入%1$d~%2$d的數值）</string>
+    <string name="model_field_editor_reposition">修改字段位置 (輸入%1$d~%2$d的數值)</string>
     <string name="model_field_editor_toggle_sticky">新增時記住最後輸入</string>
     <string name="model_field_editor_changing">更新欄位</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
@@ -76,8 +76,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">是否恢復預設值？</string>
     <string name="card_template_browser_appearance_saving_note">這些變更將在卡片模板被儲存時套用</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">牌組覆蓋(啟用)</string>
-    <string name="card_template_editor_deck_override_off">牌組覆蓋(禁用)</string>
+    <string name="card_template_editor_deck_override_on">牌組覆蓋 (啟用)</string>
+    <string name="card_template_editor_deck_override_off">牌組覆蓋 (停用)</string>
     <string name="model_manager_deck_override_added_message">將「%1$s」的預設牌組設為「%2$s」</string>
     <string name="model_manager_deck_override_removed_message">將｢%s｣預設牌組移除</string>
     <string name="deck_override_explanation">選擇要新增新的｢%s｣卡片牌組</string>
