@@ -50,7 +50,7 @@
     <string name="sync_error">خطأ بالمزامنة</string>
     <string name="vague_error" comment="Network error dialog title">خطأ</string>
     <string name="retry">إعادة المحاولة</string>
-    <string name="menu_get_shared_decks">احصل على شَدّات مشاركة</string>
+    <string name="menu_get_shared_decks">احصل على رزم مشاركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>
     <string name="not_logged_in_title">تسجيل الدخول إلى أنكي ويب</string>
     <string name="login_create_account_message">يجب تسجيل الدخول إلى حساب طرف ثالث لاستخدام خدمة المزامنة السحابية. تستطيع إنشاء واحد في الخطوة التالية.</string>
@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">قاعدة البيانات المحملة معطوبة. الرجاء المحاولة مرة أخرى.</string>
     <string name="sync_overwrite_error">لا يمكن استبدال مجموعتك الحالية بالملف المنزّل.</string>
     <string name="sync_connection_error">انتهت مهلة الاتصال. إما أن يكون هناك مشاكل في اتصالك بالإنترنت، أو أن يكون لديك ملف كبير جدًا في مجلد الوسائط.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">تعذر حفظ الملف المنزل إلى ذاكرة التخزين. قد تكون الذاكرة غير قابلة للكتابة أو لا يوجد مساحة كافية.</string>
     <string name="sync_error_invalid_sync_server">خادم المزامنة المخصص في الإعدادات المتقدمة غير صالح (%s). الرجاء إدخال خادم صالح، أو تعطيل الإعداد.</string>
     <string name="sync_deletions_message">مزامنة المحذوفات...</string>
     <string name="sync_small_objects_message">مزامنة القطع الصغيرة...</string>

@@ -256,7 +256,7 @@
         <item quantity="other">課題: %2$d枚 （%1$s）</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
+    <string name="apk_share_error">Anki用ファイル（*.apkg）の共有中にエラーが発生しました</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
