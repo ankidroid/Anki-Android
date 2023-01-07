@@ -440,6 +440,8 @@
     <string name="validation_deck_already_exists">Talia już istnieje</string>
     <string name="deck_created">Utworzono talię</string>
     <string name="deck_renamed">Zmieniono nazwę talii</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notatki</string>
