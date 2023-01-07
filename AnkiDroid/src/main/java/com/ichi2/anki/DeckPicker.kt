@@ -770,7 +770,7 @@ open class DeckPicker :
             }
             R.id.action_scoped_storage_migrate -> {
                 Timber.i("DeckPicker:: migrate button pressed")
-                offerToMigrate()
+                showDialogThatOffersToMigrateStorage()
                 return true
             }
             R.id.action_import -> {
@@ -2796,13 +2796,6 @@ open class DeckPicker :
                 openUrl(R.string.link_scoped_storage_faq)
             }
         }
-    }
-
-    /**
-     * Show a window offering the user to migrate, postpone or learn mose.
-     */
-    fun offerToMigrate() {
-        // TODO: Implements
     }
 
     /**
