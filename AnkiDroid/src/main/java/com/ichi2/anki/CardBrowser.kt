@@ -973,19 +973,8 @@ open class CardBrowser :
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
 
             menu.findItem(R.id.action_export_selected).apply {
-                if (BackendFactory.defaultLegacySchema) {
-                    this.isVisible = false
-                } else {
-                    // Only visible if new backend is being used
-                    this.isVisible = true
-
-                    // TODO: currently forcing plural use. This should be changed to use the correct singular/plural form
-                    this.title = if (inCardsMode) {
-                        resources.getQuantityString(R.plurals.card_browser_export_cards, 10)
-                    } else {
-                        resources.getQuantityString(R.plurals.card_browser_export_notes, 10)
-                    }
-                }
+                // Only visible if new backend is being used
+                this.isVisible = !BackendFactory.defaultLegacySchema
             }
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
@@ -1053,6 +1042,13 @@ open class CardBrowser :
             checkSelectedCardsJob = launchCatchingTask {
                 val result = withProgress { checkCardSelection(mCheckedCards) }
                 onSelectedCardsChecked(result)
+            }
+        }
+        mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
+            this.title = if (inCardsMode) {
+                resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
+            } else {
+                resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
