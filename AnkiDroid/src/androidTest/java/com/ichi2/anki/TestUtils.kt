@@ -17,8 +17,10 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import android.util.DisplayMetrics
+import android.content.res.Configuration
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.platform.app.InstrumentationRegistry
@@ -73,11 +75,12 @@ object TestUtils {
      */
     @Suppress("deprecation") // #9333: getDefaultDisplay & getMetrics
     val isScreenSw600dp: Boolean
+        @RequiresApi(Build.VERSION_CODES.R)
         get() {
-            val displayMetrics = DisplayMetrics()
-            activityInstance!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            val widthDp = displayMetrics.widthPixels / displayMetrics.density
-            val heightDp = displayMetrics.heightPixels / displayMetrics.density
+            activityInstance!!.baseContext.display
+            val metrics = activityInstance!!.windowManager.currentWindowMetrics
+            val widthDp = metrics.bounds.width() / Configuration.DENSITY_DPI_UNDEFINED
+            val heightDp = metrics.bounds.height() / Configuration.DENSITY_DPI_UNDEFINED
             val screenSw = Math.min(widthDp, heightDp)
             return screenSw >= 600
         }
