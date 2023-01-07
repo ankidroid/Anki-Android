@@ -67,8 +67,8 @@ class SharedDecksDownloadFragment : Fragment() {
     private lateinit var mImportDeckButton: Button
     private lateinit var mDownloadPercentageText: TextView
     private lateinit var mDownloadProgressBar: ProgressBar
-    private lateinit var mDownloadTimeLeftText: TextView
-    private lateinit var mDownloadSpeedText: TextView
+    private lateinit var downloadTimeLeftText: TextView
+    private lateinit var downloadSpeedText: TextView
     private lateinit var mCheckNetworkInfoText: TextView
 
     /**
@@ -106,8 +106,8 @@ class SharedDecksDownloadFragment : Fragment() {
 
         mDownloadPercentageText = view.findViewById(R.id.download_percentage)
         mDownloadProgressBar = view.findViewById(R.id.download_progress)
-        mDownloadTimeLeftText = view.findViewById(R.id.download_time_left)
-        mDownloadSpeedText = view.findViewById(R.id.download_speed)
+        downloadTimeLeftText = view.findViewById(R.id.download_time_left)
+        downloadSpeedText = view.findViewById(R.id.download_speed)
         mCancelButton = view.findViewById(R.id.cancel_shared_decks_download)
         mImportDeckButton = view.findViewById(R.id.import_shared_deck_button)
         mTryAgainButton = view.findViewById(R.id.try_again_deck_download)
@@ -378,7 +378,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 val estimatedTimeInHours = estimatedTimeRemainingInSeconds / 3600
                 resources.getQuantityString(R.plurals.time_left_hours, estimatedTimeInHours, estimatedTimeInHours)
             }
-            mDownloadTimeLeftText.text = estimatedTimeRemainingText
+            downloadTimeLeftText.text = estimatedTimeRemainingText
             // don't use averageSpeedInBytesPerMillis to calculate averageSpeedInBytesPerSecond
             // as that would make the minimum non-zero value of averageSpeedInBytesPerSecond at
             // least 1000
@@ -392,7 +392,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 val averageSpeedInMBPerSecond = averageSpeedInBytesPerSecond / (1024 * 1024)
                 resources.getQuantityString(R.plurals.download_speed_mbs_per_second, averageSpeedInMBPerSecond, averageSpeedInMBPerSecond)
             }
-            mDownloadSpeedText.text = averageSpeedText
+            downloadSpeedText.text = averageSpeedText
             mDownloadProgressBar.progress = downloadProgress.toInt()
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
