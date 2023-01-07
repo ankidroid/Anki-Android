@@ -124,7 +124,7 @@
     <string name="close">關閉</string>
     <string name="select">選擇</string>
     <string name="reordering_cards">正在重新排列卡片...</string>
-    <string name="field_remapping">%1$s (來自 \"%2$s\")</string>
+    <string name="field_remapping">%1$s (來自「%2$s」)</string>
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
     <string name="timebox_reached_title">達到計時器限制！</string>
     <plurals name="timebox_reached">
@@ -174,7 +174,7 @@
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
-    <string name="import_error_copy_to_cache">無法快取檔案（可能是儲存空間不夠）</string>
+    <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
     <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
     <string name="import_error_colpkg_apkg">無法同時選擇 apkg &amp; 和 colpkg 檔。</string>
     <string name="import_stats_error">匯入檔案時發生錯誤：\n「%s」</string>
@@ -401,6 +401,8 @@
     <string name="validation_deck_already_exists">該牌組已存在</string>
     <string name="deck_created">已創建牌組</string>
     <string name="deck_renamed">重命名的牌組</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">筆記</string>

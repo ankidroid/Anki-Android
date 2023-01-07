@@ -138,7 +138,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ପତ୍ର</string>
     <string name="note_editor_copy_note">ନୋଟ୍ କପି କରନ୍ତୁ</string>
-    <string name="card_editor_reposition_card">ରିପୋଜିସନ୍ କର</string>
+    <string name="card_editor_reposition_card">ପୁନଃଅଵସ୍ଥିତ କର</string>
     <string name="card_editor_reset_card">ପ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ପୂର୍ଵାଵଲୋକନ</string>
@@ -414,6 +414,8 @@
     <string name="validation_deck_already_exists">ତାସଖଣ୍ଡଟି ଵିଦ୍ୟମାନ ଅଛି</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ପତ୍ର</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>

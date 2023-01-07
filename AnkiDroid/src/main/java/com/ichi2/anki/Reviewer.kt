@@ -297,9 +297,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val did = extras.getLong("deckId", Long.MIN_VALUE)
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
-        // deckId does not exist, load default (#12910)
-        // TODO delete deck shortcut if the deck does not exist anymore
-        // TODO don't start reviewing the default deck if a shortcut for a deleted deck is launched
+        // deckId does not exist, load default
         if (col.decks.get(did, _default = false) == null) {
             Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return

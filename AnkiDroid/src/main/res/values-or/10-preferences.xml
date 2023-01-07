@@ -87,7 +87,7 @@
     <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
     <string name="full_screen_complete">ସିଷ୍ଟମ୍ ବାର୍ ଏବଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାନ୍ତୁ</string>
     <string name="full_screen_error_gestures">ଉତ୍ତର ବଟନଗୁଡ଼ିକୁ ଲୁଚାଇବା ପାଇଁ ଆପଣ ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରିବା ଆବଶ୍ୟକ </string>
-    <string name="answer_buttons_position" maxLength="41">ଉତ୍ତର ବଟନ୍ ଅବସ୍ଥାନ</string>
+    <string name="answer_buttons_position" maxLength="41">ଉତ୍ତର ବଟନ୍ ଅଵସ୍ଥାନ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ଶୀର୍ଷ</item>
         <item>ତଳ</item>
@@ -178,7 +178,7 @@
     <string name="show_eta" maxLength="41">ETA ଦେଖାନ୍ତୁ</string>
     <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାନ୍ତୁ</string>
     <string name="use_current" maxLength="41">ନୂଆ ପତ୍ରଗୁଡ଼ିକ ପାଇଁ ତାସଖଣ୍ଡ</string>
-    <string name="new_spread" maxLength="41">ନୂଆ ପତ୍ରର ପୋଜିସନ୍</string>
+    <string name="new_spread" maxLength="41">ନୂଆ ପତ୍ରର ଅଵସ୍ଥିତି</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="new_timezone" maxLength="41">ନୂତନ ସମୟମଣ୍ଡଳ ପରିଚାଳନା</string>
@@ -380,9 +380,9 @@
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">କେତୋଟି ଦୈନିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">କେତୋଟି ସାପ୍ତାହିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">କେତୋଟି ମାସିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
