@@ -24,7 +24,6 @@ import androidx.preference.SwitchPreference
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
-import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Theme
@@ -43,13 +42,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         val col = col!!
-        // Show error toast if the user tries to disable answer button without gestures on
-        requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, _: Any ->
-            true
-        }
-        requirePreference<ListPreference>(FullScreenMode.PREF_KEY).setOnPreferenceChangeListener { _, _: Any ->
-            true
-        }
+
         // Configure background
         mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
         mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
