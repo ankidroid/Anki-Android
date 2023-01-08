@@ -20,7 +20,6 @@ import android.app.Activity
 import android.content.res.Configuration
 import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.platform.app.InstrumentationRegistry
@@ -75,14 +74,15 @@ object TestUtils {
      */
     @Suppress("deprecation") // #9333: getDefaultDisplay & getMetrics
     val isScreenSw600dp: Boolean
-        @RequiresApi(Build.VERSION_CODES.R)
         get() {
-            activityInstance!!.baseContext.display
-            val bounds = activityInstance!!.windowManager.currentWindowMetrics.bounds
-            val widthDp = bounds.width() / Configuration.DENSITY_DPI_UNDEFINED
-            val heightDp = bounds.height() / Configuration.DENSITY_DPI_UNDEFINED
-            val screenSw = Math.min(widthDp, heightDp)
-            return screenSw >= 600
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                activityInstance!!.baseContext.display
+                val bounds = activityInstance!!.windowManager.currentWindowMetrics.bounds
+                val widthDp = bounds.width() / Configuration.DENSITY_DPI_UNDEFINED
+                val heightDp = bounds.height() / Configuration.DENSITY_DPI_UNDEFINED
+                val screenSw = Math.min(widthDp, heightDp)
+                screenSw >= 600
+            } else false
         }
 
     /**
