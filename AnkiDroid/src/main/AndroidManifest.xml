@@ -75,6 +75,7 @@
         android:windowSoftInputMode="adjustResize"
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
+        android:hasFragileUserData="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
