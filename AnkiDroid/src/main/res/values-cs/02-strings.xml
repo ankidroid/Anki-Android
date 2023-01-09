@@ -66,7 +66,7 @@
     <string name="show_whiteboard">Zobrazit tabuli</string>
     <string name="hide_whiteboard">Skrýt tabuli</string>
     <string name="clear_whiteboard">Smazat tabuli</string>
-    <string name="replay_audio">Přehrát audio</string>
+    <string name="replay_audio">Přehrát zvuk</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="corrupt_font">Poškozený soubor písma %s</string>
@@ -223,13 +223,12 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
     <string name="export_select_save_app">Vyberte, kam uložit soubor</string>
     <string name="export_select_share_app">Vyberte aplikaci pro sdílení</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
-    <string name="select_tts">Nastavit jazyk pro převod textu na řeč</string>
+    <string name="select_tts">Nastavit jazyk TTS</string>
     <string name="custom_study">Vlastní studium</string>
     <string name="more_options">Více</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
@@ -400,9 +399,9 @@
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Přesun úložiště</string>
     <string name="scoped_storage_initial_message">AnkiDroid musí přesunout svá data, aby splňoval nová pravidla ochrany osobních údajů Android
-\n\nPokud před migrací odinstalujete AnkiDroid, vaše data budou ztracena
-\n\nProsím proveďte migraci co nejdříve</string>
-    <string name="scoped_storage_terms_message">Migrace bude probíhat na pozadí. Během migrace nebudete moci synchronizovat\n\nPředpokládaná doba trvání: %s</string>
+\n\nPokud před přesunem dat odinstalujete AnkiDroid, vaše data budou ztracena
+\n\nProsím proveďte přesun dat co nejdříve</string>
+    <string name="scoped_storage_terms_message">Přesun dat bude probíhat na pozadí. Během přesunu dat nebudete moci synchronizovat\n\nPředpokládaná doba trvání: %s</string>
     <string name="scoped_storage_term_1">Zálohoval jsem svá data</string>
     <string name="scoped_storage_term_1_ankiweb">Nedávno jsem synchronizoval s AnkiWeb</string>
     <string name="scoped_storage_term_2">Během přesunu dat neodinstaluji aplikaci</string>
@@ -411,6 +410,15 @@
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Migrovat</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
+    <string name="sync_impossible_during_migration">Synchronizace je zakázána, dokud nebude dokončen přesun dat.\n
+        %1$d multimediálních souborů zbývá přesunout.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Pokud přeinstalujete AnkiDroid, nebude možné otevřít vaši kolekci.</string>
+    <string name="migration_update_request_dialog_download_warning">Pokud odinstalujete AnkiDroid, budete muset znovu stáhnout celou vaši kolekci.</string>
+    <string name="migration_update_request">Zásady přístupu k úložišti Android vyžadují změnu místa, kam se ukládá vaše kolekce. Až budou vaše data přesunuta, AnkiDroid bude rychlejší a vaše data budou ve větším bezpečí.
+    Během přesunu úložiště nebudete moci synchronizovat.</string>
+    <string name="start_migration_progress_message">Začíná přesun úložiště. Brzy můžete pokračovat v používání AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.
+\nPřesun úložiště bude pokračovat na pozadí.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s není platný balíček javascript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
@@ -432,6 +440,8 @@
     <string name="validation_deck_already_exists">Balíček existuje</string>
     <string name="deck_created">Balíček vytvořen</string>
     <string name="deck_renamed">Balíček přejmenován</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>

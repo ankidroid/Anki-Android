@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">已下載的資料庫已損壞。請再試一次。</string>
     <string name="sync_overwrite_error">所下載的檔案無法覆蓋你當前的集合</string>
     <string name="sync_connection_error">連線逾時。可能是你的網路連線有問題，或是你的媒體資料夾內有很大的檔案。</string>
-    <string name="sync_write_access_error">下載的檔案無法儲存到 SD 記憶卡。你的 SD 記憶卡裝載為唯讀，或者沒有足夠的空間。</string>
+    <string name="sync_write_access_error_on_storage">無法將下載的檔案保存到您的存儲。 存儲是只讀的，或者沒有足够的空間。</string>
     <string name="sync_error_invalid_sync_server">“進階設定”中的“自訂同步伺服器”無效 (%s)。請輸入有效的伺服器，或禁用設定。</string>
     <string name="sync_deletions_message">同步刪除...</string>
     <string name="sync_small_objects_message">同步小物件...</string>
@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">遠端</string>
     <string name="force_full_sync_title">強制完整同步</string>
     <string name="force_full_sync_summary">下一次同步時，強制單方面的修改</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">強制完全同步</string>
     <string name="full_sync_confirmation">此變動會使你下一次同步你的集合時，需要完整上傳你的資料庫。如果同步的話，你其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，你是否要繼續？</string>
     <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的程式錯誤，我們建議你強制完整同步一次。</string>
     <string name="sync_error_407_proxy_required">Proxy 要求認證。</string>
@@ -127,7 +127,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb 正在維護中。請在數分鐘後重試。</string>
     <string name="sync_error_504_gateway_timeout">接收到 504 網關逾時錯誤。</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">同步(完整)</string>
-    <string name="sync_menu_title_no_account">同步(登入)</string>
+    <string name="sync_menu_title_full_sync">同步 (完整)</string>
+    <string name="sync_menu_title_no_account">同步 (登入)</string>
     <string name="sync_error_unknown_host_readable">無法連結到 AnkiWeb。您的網路是否正常嗎？\n\n%s</string>
 </resources>

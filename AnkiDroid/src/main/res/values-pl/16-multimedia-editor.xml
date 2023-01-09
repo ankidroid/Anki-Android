@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">Zaawansowany edytor</string>
     <string name="multimedia_editor_popup_cloze">Luka do wypełnienia</string>
     <string name="multimedia_editor_popup_clear_field">Wyczyść pole</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">Przetłumacz</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Załaduj</string>
     <string name="multimedia_editor_pron_looking_up">Sprawdzanie wymowy</string>
@@ -80,8 +78,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Aparat</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Dźwięk</string>
+    <string name="multimedia_editor_import_video">Wideo</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Pobieranie</string>

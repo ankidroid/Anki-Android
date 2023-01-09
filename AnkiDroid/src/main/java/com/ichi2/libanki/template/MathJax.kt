@@ -15,8 +15,6 @@
  */
 package com.ichi2.libanki.template
 
-import com.ichi2.utils.KotlinCleanup
-
 object MathJax {
     // MathJax opening delimiters
     private val sMathJaxOpenings = arrayOf("\\(", "\\[")
@@ -24,7 +22,6 @@ object MathJax {
     // MathJax closing delimiters
     private val sMathJaxClosings = arrayOf("\\)", "\\]")
 
-    @KotlinCleanup("fix IDE lint issues")
     fun textContainsMathjax(txt: String): Boolean {
         // Do you have the first opening and then the first closing,
         // or the second opening and the second closing...?
@@ -39,9 +36,9 @@ object MathJax {
             // What if there are more than one thing?
             // Let's look for the first opening, and the last closing, and if they're in the right order,
             // we are good.
-            val first_opening_index = txt.indexOf(opening)
-            val last_closing_index = txt.lastIndexOf(closing)
-            if (first_opening_index != -1 && last_closing_index != -1 && first_opening_index < last_closing_index) {
+            val firstOpeningIndex = txt.indexOf(opening)
+            val lastClosingIndex = txt.lastIndexOf(closing)
+            if (firstOpeningIndex != -1 && lastClosingIndex != -1 && firstOpeningIndex < lastClosingIndex) {
                 return true
             }
         }

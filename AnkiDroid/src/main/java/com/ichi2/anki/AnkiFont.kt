@@ -60,14 +60,15 @@ class AnkiFont private constructor(val name: String, private val family: String,
          * @return A new AnkiFont object or null if the file can't be interpreted as typeface.
          */
         fun createAnkiFont(ctx: Context, filePath: String, fromAssets: Boolean): AnkiFont? {
-            var path = filePath
-            val fontFile = File(path)
+            val fontFile = File(filePath)
+            val path = if (fromAssets) {
+                fAssetPathPrefix + fontFile.name
+            } else {
+                filePath
+            }
             val name = Utils.splitFilename(fontFile.name)[0]
             var family = name
             val attributes: MutableList<String> = ArrayList(2)
-            if (fromAssets) {
-                path = fAssetPathPrefix + fontFile.name
-            }
             val tf = getTypeface(ctx, path) // unable to create typeface
                 ?: return null
             if (tf.isBold || name.lowercase().contains("bold")) {

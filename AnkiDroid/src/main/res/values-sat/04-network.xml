@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="sync_overwrite_error">ᱱᱤᱛᱚᱜᱽᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ ᱥᱟᱞᱟᱜ ᱛᱮ ᱵᱟᱝ ᱫᱩᱦᱲᱟ ᱚᱞ ᱲᱫᱟᱲᱮᱟᱜᱟ</string>
     <string name="sync_connection_error">ᱡᱚᱲᱟᱣ ᱚᱠᱛᱚ ᱵᱟᱦᱨᱮ ᱾ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱡᱚᱲᱟᱣ ᱰᱤᱜᱟᱹᱣ ᱮᱱᱟ, ᱟᱨ ᱵᱟᱝᱠᱦᱟᱱ ᱟᱢ ᱴᱷᱮᱱ ᱱᱟᱶᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱟᱨᱟᱝ ᱨᱚᱫ ᱢᱮᱰᱤᱭᱟ ᱛᱮᱦᱮᱸ ᱠᱚᱜᱽᱟ ᱾</string>
-    <string name="sync_write_access_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ SD ᱠᱟᱰ ᱨᱮ ᱵᱟᱝ ᱥᱟᱱᱪᱟᱣᱚᱜ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱫᱚ read-only ᱨᱮ ᱵᱟᱝ ᱢᱚᱩᱸᱴ ᱠᱟᱱᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱡᱟᱭᱜᱟ ᱠᱚᱢ ᱯᱟᱲᱟᱣᱮᱱᱟ ᱾</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">ᱮᱰᱵᱷᱟᱸᱥᱼᱰ ᱥᱟᱡᱟᱣ ᱠᱚ ᱨᱮ ᱠᱟᱹᱥᱴᱚᱢ ᱥᱭᱸᱠ ᱥᱟᱹᱨᱣᱟᱹᱨ ᱵᱷᱩᱞ ᱜᱮᱭᱟ (%s) ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱣᱮᱞᱤᱰ ᱥᱟᱹᱨᱣᱟᱹᱨ ᱟᱫᱮᱨ ᱢᱮ, ᱟᱨ ᱵᱟᱝ ᱥᱟᱡᱟᱣ ᱠᱷᱚᱱ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱾</string>
     <string name="sync_deletions_message">ᱜᱮᱫ ᱜᱤᱰᱤ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_small_objects_message">ᱠᱟᱴᱤᱡ ᱡᱤᱱᱤᱥ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>

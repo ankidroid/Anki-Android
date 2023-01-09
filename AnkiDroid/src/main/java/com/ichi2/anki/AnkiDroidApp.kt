@@ -43,6 +43,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Utils
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.utils.LanguageUtil.getCurrentLanguage
@@ -81,6 +82,7 @@ open class AnkiDroidApp : Application() {
     override fun onCreate() {
         BackendFactory.defaultLegacySchema = BuildConfig.LEGACY_SCHEMA
         try {
+            Os.setenv("PLATFORM", Utils.syncPlatform(), false)
             // enable debug logging of sync actions
             if (BuildConfig.DEBUG) {
                 Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false)
@@ -119,9 +121,12 @@ open class AnkiDroidApp : Application() {
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(DebugTree())
-            LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
             Timber.plant(ProductionCrashReportingTree())
+        }
+        if (BuildConfig.ENABLE_LEAK_CANARY) {
+            LeakCanaryConfiguration.setInitialConfigFor(this)
+        } else {
             LeakCanaryConfiguration.disable()
         }
         Timber.tag(TAG)
@@ -231,11 +236,8 @@ open class AnkiDroidApp : Application() {
          * Note: This will not be called if an API with a manual tag was called with a non-null tag
          */
         fun createStackElementTag(element: StackTraceElement): String {
-            var tag = element.className
-            val m = ANONYMOUS_CLASS.matcher(tag)
-            if (m.find()) {
-                tag = m.replaceAll("")
-            }
+            val m = ANONYMOUS_CLASS.matcher(element.className)
+            val tag = if (m.find()) m.replaceAll("") else element.className
             return tag.substring(tag.lastIndexOf('.') + 1)
         } // --- this is not present in the Timber.DebugTree copy/paste ---
 

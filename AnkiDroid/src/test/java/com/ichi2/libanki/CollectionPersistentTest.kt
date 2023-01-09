@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Test
@@ -32,8 +33,10 @@ class CollectionPersistentTest : RobolectricTest() {
 
     @Test
     fun beforeUploadDbIsV11() {
-        assumeThat(col.queryVer(), not(equalTo(11)))
-        col.beforeUpload()
-        assumeThat(Storage.getDatabaseVersion(targetContext, col.path), equalTo(11))
+        if (BackendFactory.defaultLegacySchema) {
+            assumeThat(col.queryVer(), not(equalTo(11)))
+            col.beforeUpload()
+            assumeThat(Storage.getDatabaseVersion(targetContext, col.path), equalTo(11))
+        }
     }
 }

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Pobrana baza danych jest uszkodzona. Spróbuj ponownie.</string>
     <string name="sync_overwrite_error">Sciągany plik nie może nadpisać twojej obecnej kolekcji.</string>
     <string name="sync_connection_error">Upłynął limit czasu połączenia. Albo połączenie z internetem napotyka problemy, albo masz bardzo duży plik w folderze media.</string>
-    <string name="sync_write_access_error">Nie udało się zapisać pobranego pliku na karcie SD. Karta SD jest zamontowana w trybie tylko do odczytu lub nie ma na niej miejsca.</string>
+    <string name="sync_write_access_error_on_storage">Pobrany plik nie może być zapisany w pamięci masowej. Pamięć jest tylko do odczytu lub nie ma wystarczającej ilości miejsca.</string>
     <string name="sync_error_invalid_sync_server">Ustawienia własnego serwera synchronizacji są nieprawidłowe (%s). Proszę poprawnie skonfigurować serwer lub wyłączyć tą opcję </string>
     <string name="sync_deletions_message">Synchronizacja usunięć...</string>
     <string name="sync_small_objects_message">Synchronizacja małych obiektów...</string>

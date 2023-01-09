@@ -139,31 +139,31 @@
         <item>Sat</item>
     </string-array>
     <string-array name="stats_eases_ticks">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
+        <item>۱</item>
+        <item>۲</item>
+        <item>۳</item>
+        <item>۴</item>
+        <item>۲</item>
+        <item>۳</item>
+        <item>۴</item>
+        <item>۱</item>
+        <item>۲</item>
+        <item>۳</item>
+        <item>۴</item>
     </string-array>
     <string-array name="stats_eases_ticks_schedv2">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
+        <item>۱</item>
+        <item>۲</item>
+        <item>۳</item>
+        <item>۴</item>
+        <item>۱</item>
+        <item>۲</item>
+        <item>۳</item>
+        <item>۴</item>
+        <item>۱</item>
+        <item>۲</item>
+        <item>۳</item>
+        <item>۴</item>
     </string-array>
     <plurals name="stats_today_cards">
         <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>

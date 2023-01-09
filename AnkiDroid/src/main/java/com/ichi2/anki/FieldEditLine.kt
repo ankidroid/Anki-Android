@@ -43,14 +43,11 @@ import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 class FieldEditLine : FrameLayout {
-    var editText: FieldEditText
-        private set
-    private var mLabel: TextView
-    var toggleSticky: ImageButton
-        private set
-    var mediaButton: ImageButton
-        private set
-    private var mExpandButton: ImageButton
+    val editText: FieldEditText
+    private val mLabel: TextView
+    val toggleSticky: ImageButton
+    val mediaButton: ImageButton
+    private val mExpandButton: ImageButton
     private var mName: String? = null
     private var mExpansionState = ExpansionState.EXPANDED
     private var mEnableAnimation = true

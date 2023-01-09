@@ -76,14 +76,14 @@
     <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
     <string name="reset_confirmation">Bütün durumlar sıfırlandı</string>
     <string name="card_zoom" maxLength="41">Kart yakınlaştırma</string>
-    <string name="image_zoom" maxLength="41">Görüntü yakınlaştırma</string>
+    <string name="image_zoom" maxLength="41">Resim yakınlaştırma</string>
     <string name="button_size" maxLength="41">Cevap düğmesi büyüklüğü</string>
     <string name="card_browser_font_size" maxLength="41">Kart tarayıcısı font ölçeği</string>
     <string name="card_browser_hide_media" maxLength="41">Kart gözatıcısında dosya isimlerini göster</string>
     <string name="card_browser_hide_media_summary">Kart gözatıcısı soru/cevap alanlarında medya dosyası isimlerini göster</string>
     <string name="col_path" maxLength="41">AnkiDroid dizini</string>
     <string name="fullscreen_review" maxLength="41">Tam ekran modu</string>
-    <string name="full_screen_off">Devre Dışı</string>
+    <string name="full_screen_off">Kapalı</string>
     <string name="full_screen_system">Sistem çubuklarını gizle</string>
     <string name="full_screen_complete">Sistem çubuklarını ve cevap butonlarını gizle</string>
     <string name="full_screen_error_gestures">Cevap butonlarını gizlemek için el hareketlerini açmalısınız</string>
@@ -226,21 +226,22 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Simülasyonun iterasyon sayısı</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Özel senkronizasyon sunucusu</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Kullanılmıyor</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Koleksiyon: %1$s\nMedya: %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">varsayılan</string>
+    <string name="custom_sync_server_help"><![CDATA[        AnkiWeb\'le senkronize etmeye bir alternatif olarak,
+        senkronizasyon için kendi sunucularınızı kullanabilirsiniz.
+        Koleksiyon veya medya sunucusu, ya da ikisini de belirleyebilirsiniz.
+        Ayarlanmazsa varsayılan AnkiWeb sunucuları kullanılır.
+        Örneğin, yalnızca yerel ağa bağlıyken koleksiyonu senkronize
+        etmek için Anki Masaüstü\'nün dahili senkronizasyon sunucusunu,
+        genel internet erişiminiz varken medyayı senkronize etmek için de
+        AnkiWeb\'i kullanabilirsiniz.
+        <a href="%s">Daha fazlasını öğren</a>
         <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        <br>Not: Önceki AnkiDroid sürümlerinin aksine,
+        senkronizasyon URL\'ini komple belirtmeniz gerekir,
+        örneğin: https://example.com:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Medya Senkronizasyon Url\'i</string>
     <!-- Key Bindings -->
@@ -365,4 +366,66 @@
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
     <string name="disable_dev_options">Geliştirici seçeneklerini kapat</string>
     <string name="dev_options_warning">        Lütfen geliştirici seçeneklerini açmadan önce emin olun. Bu seçenekler tehlikelidir ve uygulamayı ya da koleksiyonunuzu bozabilir.\n\nBu seçenekler çoğu kullanıcı için uygun değildir ve çevrilmezler, bu yüzden İngilizce olduklarını göz önünde bulundurun.</string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Yedekleme seçenekleri</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid düzenli aralıklarla koleksiyonunuzu yedekler.
+        Yedekler iki günden fazla eskidiğinde,
+        AnkiDroid disk alanı boşaltmak için bazılarını kaldırmaya başlar.
+        <br><br>
+        Unutmayın ki medya dosyaları yedeklenmez.
+        Emin olmak için, lütfen düzenli aralıklarla koleksiyonunuzu senkronize edin, ya da çıktılarını yedekleyin.
+        <br><br>
+        Deste listesi menüsünde yedekten geri yükleyebilir ve koleksiyonunuzu dışarı aktarabilirsiniz.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Otomatik yedeklemeler arası süre (dakika)</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Günde saklanacak yedek</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Haftada saklanacak yedek</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Ayda saklanacak yedek</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Alanı yönet</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Hata</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Hesap-\nlanıyor&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d dosya\n%2$s</item>
+        <item quantity="other">%1$d dosya\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Kullanılmayan medya dosyalarını sil</string>
+    <string name="pref__delete_unused_media_files__summary">_ ile başlamayan ve herhangi bir notta atıf yapılmayan resimleri ve diğer medyayı sil</string>
+    <string name="dialog__media_check_required__message">Kullanılmayan medya dosyalarını bulmak için bir medya kontrolü gerekiyor</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Kullanılmayan medya dosyalarını sil</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Yedekleri sil</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Yedekleri sil</string>
+    <string name="progress__deleting_backups">Yedekler siliniyor&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Koleksiyonu sil</string>
+    <string name="pref__delete_collection__summary">Koleksiyonu, medyayı, ve yedekleri sil. Uygulama ayarları silinmez</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Koleksiyonu sil</string>
+    <string name="dialog__delete_collection__message">Koleksiyon, medya ve yedeklerinizi silmek istediğinize emin misiniz?</string>
+    <string name="progress__deleting_collection">Koleksiyon siliniyor&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Her şeyi sil</string>
+    <string name="pref__delete_everything__summary">Koleksiyonu, medyayı, yedekleri, ve ayarları sil</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Her şeyi sil</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Bütün veriyi silmek istediğinize emin misiniz? Buna koleksiyonunuz, medyanız, yedekleriniz ve tercihleriniz dahildir.\n\nNot: Bu eylem pencereyi kapatacak.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Uygulama verisini sil</string>
+    <string name="pref__delete_app_data__summary">Ayarları ve diğer uygulama verisini sil</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Uygulama verisini sil</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Uygulama verisini silmek istediğinize emin misiniz? Buna ayarlar ve diğer uygulama verisi dahildir.\n\nNot: Bu eylem pencereyi kapatacak.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Koleksiyon yok</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Hata</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Okunuyor&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Hesaplanıyor&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksiyon mevcut değil</string>
 </resources>

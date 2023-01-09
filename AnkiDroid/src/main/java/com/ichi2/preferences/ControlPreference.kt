@@ -88,8 +88,9 @@ class ControlPreference : ListPreference {
     override fun callChangeListener(newValue: Any?): Boolean {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
+                val actionName = title
                 MaterialDialog(context).show {
-                    title(R.string.binding_add_gesture)
+                    title(text = actionName.toString())
 
                     val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
 
@@ -114,10 +115,11 @@ class ControlPreference : ListPreference {
                 }
             }
             ADD_KEY_INDEX -> {
+                val actionName = title
                 MaterialDialog(context).show {
                     val keyPicker: KeyPicker = KeyPicker.inflate(context)
                     customView(view = keyPicker.rootLayout)
-                    title(R.string.binding_add_key)
+                    title(text = actionName.toString())
 
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->

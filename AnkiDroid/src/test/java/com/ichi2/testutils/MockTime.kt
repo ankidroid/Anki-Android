@@ -21,7 +21,7 @@ import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 /** @param [step] Number of milliseconds between each call.
- * @param [time]: Time since epoch in MS. */
+ * @param [initTime]: Time since epoch in MS. */
 open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
     protected var time = initTime
         private set
@@ -48,12 +48,12 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
     }
 
     /** Add ms milliseconds  */
-    fun addMs(ms: Long) {
+    private fun addMs(ms: Long) {
         time += ms
     }
 
     /** add s seconds  */
-    fun addS(s: Long) {
+    private fun addS(s: Long) {
         addMs(s * 1000L)
     }
 
@@ -63,7 +63,7 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
     }
 
     /** add h hours */
-    fun addH(h: Long) {
+    private fun addH(h: Long) {
         addM(h * 60)
     }
 

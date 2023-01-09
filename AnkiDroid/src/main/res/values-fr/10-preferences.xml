@@ -74,7 +74,7 @@
     <string name="reset_languages" maxLength="41">Réinitialiser les langages</string>
     <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets</string>
     <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
-    <string name="reset_confirmation">Réinitialisation de tous les états</string>
+    <string name="reset_confirmation">Réinitialisation de toutes les informations</string>
     <string name="card_zoom" maxLength="41">Zoom de carte</string>
     <string name="image_zoom" maxLength="41">Zoom d\'image</string>
     <string name="button_size" maxLength="41">Taille des boutons de réponse</string>
@@ -226,21 +226,21 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombres d’essais de simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Serveur de synchronisation personnalisé</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilisé</string>
+    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection : %1$s\nMédia : %2$s</string>
+    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">par défaut</string>
+    <string name="custom_sync_server_help"><![CDATA[        En tant qu\'alternative à la synchronisation avec AnkiWeb,
+        vous pouvez utiliser vos propres serveurs pour la synchronisation.
+        Vous pouvez spécifier soit la collection soit le serveur de média, soit les deux.
+        Si non défini, les serveurs AnkiWeb par défaut seront utilisés à la place.
+        Par exemple, vous pouvez utiliser le serveur de synchronisation intégré à Anki
+        Desktop pour synchroniser la collection quand vous n\'avez qu\'un réseau local,
+        et AnkiWeb pour synchroniser les médias lorsque vous avez un accès général à Internet.
+        <a href="%s">En savoir plus</a>
         <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        <br>Note : contrairement aux versions précédentes d\'AnkiDroid,
+        vous devez spécifier l\'URL de synchronisation personnalisée,
+        par exemple : https://example. om:8080/sync/.]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchroniser l’URL</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Synchroniser l’URL pour les médias</string>
     <!-- Key Bindings -->
@@ -365,4 +365,66 @@
     <string name="dev_options_enabled_pref" maxLength="41">Activer les options de développement</string>
     <string name="disable_dev_options">Désactiver les options de développement</string>
     <string name="dev_options_warning">        S\'il vous plaît soyez sûr avant d\'activer les options de développement. Ces options sont dangereuses et peuvent casser l\'application ou corrompre votre collection.\n\nNotez que ces options ne sont pas adaptées à la majorité des utilisateurs et par conséquent, elles ne sont pas traduites, elles sont donc en anglais.</string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Options de sauvegarde</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid sauvegarde régulièrement vos collections.
+        Après que les sauvegardes sont âgées de plus de deux jours,
+        AnkiDroid va supprimer quelques-un pour libérer de l\'espace sur le disque.
+        <br><br>
+        Veuillez noter que les fichiers médias ne sont pas sauvegardées.
+        Pour plus de sécurité, veuillez synchroniser périodiquement votre collection, ou sauvegarder les exports de celles-ci.
+        <br><br>
+        Vous pouvez restaurer à partir d\'une sauvegarde et exporter votre collection depuis la liste des paquets.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes entre les sauvegardes automatiques</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Sauvegardes quotidiennes à conserver</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Sauvegardes hebdomadaires à conserver</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Sauvegardes mensuelles à conserver</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Gérer l\'espace</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Erreur</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcul \nen cours&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d fichier\n%2$s</item>
+        <item quantity="other">%1$d fichiers\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Supprimer les médias inutilisés</string>
+    <string name="pref__delete_unused_media_files__summary">Supprimer les images et les autres médias qui n\'ont pas _ pour préfixe et ne sont pas référencés par aucune note</string>
+    <string name="dialog__media_check_required__message">Une vérification des médias est requis pour trouver les fichiers médias inutilisés</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Supprimer les médias inutilisés</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Supprimer des sauvegardes</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Supprimer les sauvegardes</string>
+    <string name="progress__deleting_backups">Suppression des sauvegardes&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Supprimer la collection</string>
+    <string name="pref__delete_collection__summary">Supprimer la collection, les médias et les sauvegardes. Les paramètres de l\'application ne sont pas supprimés</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Supprimer la collection</string>
+    <string name="dialog__delete_collection__message">Êtes-vous sûr de vouloir supprimer vos collections, médias et sauvegardes ?</string>
+    <string name="progress__deleting_collection">Suppression de la collection&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Tout supprimer</string>
+    <string name="pref__delete_everything__summary">Supprimer les collections, médias, sauvegardes et paramètres</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Tout supprimer</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Êtes-vous sûr de vouloir tout supprimer ? Cela inclue vos collections, médias, sauvegardes et vos préférences.\n\nNote : cette action va fermer la fenêtre.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Supprimer les données de l\'application</string>
+    <string name="pref__delete_app_data__summary">Supprimer les paramètres et les autres données de l’application</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Supprimer les données de l’application</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Êtes-vous sûr de vouloir supprimer toutes les données de l\'application ? Cela inclue les paramètres et les autres données de l\'application.\n\n Note : cette action va fermer la fenêtre.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Aucune collection</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Erreur</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Récupération en  cours...</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calcul en cours&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">La collection n\'existe pas</string>
 </resources>

@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">oo</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mga deck</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser ng baraha</string>
@@ -183,6 +182,7 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">I-singkronisa</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Gusto mo bang kanselahin ang pagsisingkronisa?</string>
     <string name="continue_sync">Ipagpatuloy ang pagsisingkronisa</string>
     <string name="sync_cancelled">Ang pagsisingkronisa ay kinansela</string>
@@ -249,4 +249,6 @@ Burahin ang “%2$s” uri ng baraha, at ang %1$d mga baraha?</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
 </resources>

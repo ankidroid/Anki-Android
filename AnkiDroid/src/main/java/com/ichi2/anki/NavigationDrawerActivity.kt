@@ -105,7 +105,6 @@ abstract class NavigationDrawerActivity :
     }
 
     // Navigation drawer initialisation
-    @KotlinCleanup("use .apply on enableToolbar")
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout)
@@ -234,7 +233,7 @@ abstract class NavigationDrawerActivity :
             // because onDestroy() of old Activity interferes with TTS in new Activity
             finishWithoutAnimation()
         } else {
-            restartActivity()
+            recreate()
         }
     }
 

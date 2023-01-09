@@ -17,7 +17,6 @@ package com.ichi2.testutils
 
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.sched.SchedV2
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import org.junit.Assert
 import kotlin.test.junit5.JUnit5Asserter
@@ -81,10 +80,9 @@ object AnkiAssert {
         return s.replace("\u2068", "").replace("\u2069", "")
     }
 
-    @KotlinCleanup("scope function")
     fun checkRevIvl(c: Card, targetIvl: Int): Boolean {
         val minMax = SchedV2._fuzzIvlRange(targetIvl)
-        return minMax.first <= c.ivl && c.ivl <= minMax.second
+        return c.ivl in minMax.first..minMax.second
     }
 }
 

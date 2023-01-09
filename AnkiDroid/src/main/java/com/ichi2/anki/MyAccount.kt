@@ -37,7 +37,6 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.SyncStatus
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.net.UnknownHostException
@@ -90,7 +89,7 @@ open class MyAccount : AnkiActivity() {
         }
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
         initAllContentViews()
-        if (SyncStatus.isLoggedIn) {
+        if (isLoggedIn()) {
             switchToState(STATE_LOGGED_IN)
         } else {
             switchToState(STATE_LOG_IN)
@@ -102,7 +101,7 @@ open class MyAccount : AnkiActivity() {
         }
     }
 
-    fun attemptLogin() {
+    private fun attemptLogin() {
         val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
@@ -254,7 +253,7 @@ open class MyAccount : AnkiActivity() {
     /**
      * Listeners
      */
-    val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
+    private val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
         override fun onProgressUpdate(vararg values: Any?) {
             // Pass
         }
@@ -292,7 +291,7 @@ open class MyAccount : AnkiActivity() {
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
-                    if (!result.isNullOrEmpty() && result[0] is Exception) {
+                    if (result.isNotEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(
                             title = message,
                             message = getHumanReadableLoginErrorMessage(result[0] as Exception),

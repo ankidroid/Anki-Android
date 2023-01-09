@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">उन्नत संपादक</string>
     <string name="multimedia_editor_popup_cloze">क्लोज़ विलोपन</string>
     <string name="multimedia_editor_popup_clear_field">क्षेत्र साफ़ करें</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">अनुवाद करें</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">लोड करें</string>
     <string name="multimedia_editor_pron_looking_up">उच्चारण खोजा जा रहा है</string>

@@ -113,7 +113,6 @@
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
-    <string name="pref_backup_max_key">backupMax</string>
     <string name="enable_v3_sched_key">v3sched</string>
     <!-- Advanced statistics -->
     <string name="pref_advanced_statistics_screen_key">advancedStatisticsScreen</string>
@@ -140,4 +139,12 @@
     <string name="dev_options_enabled_msg">Enabled developer options</string>
     <!-- About -->
     <string name="about_screen_key">aboutScreen</string>
+
+    <!-- Backup limits -->
+    <string name="pref_backup_max_key">backupMax</string>
+    <string name="pref_backups_help_key">backups_help</string>
+    <string name="pref_minutes_between_automatic_backups_key">minutes_between_automatic_backups</string>
+    <string name="pref_daily_backups_to_keep_key">daily_backups_to_keep</string>
+    <string name="pref_weekly_backups_to_keep_key">weekly_backups_to_keep</string>
+    <string name="pref_monthly_backups_to_keep_key">monthly_backups_to_keep</string>
 </resources>

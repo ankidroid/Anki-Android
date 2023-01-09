@@ -43,7 +43,6 @@ import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
@@ -62,7 +61,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
-        setThemeLegacy(this)
 
         val actionBar = enableToolbar().apply {
             setHomeButtonEnabled(true)

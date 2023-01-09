@@ -17,7 +17,6 @@
 
 package com.ichi2.libanki.importer
 
-import android.text.TextUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
@@ -104,8 +103,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
             dst.media.db!!.database.beginTransaction()
-            if (!TextUtils.isEmpty(mDeckPrefix)) {
-                val id = dst.decks.id_safe(mDeckPrefix!!)
+            if (!mDeckPrefix.isNullOrEmpty()) {
+                val id = dst.decks.id_safe(mDeckPrefix)
                 dst.decks.select(id)
             }
             Timber.i("Preparing Import")
@@ -255,13 +254,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                                     update.add(arrayOf(nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data))
                                     dirty.add(nid)
                                 } else {
-                                    dupesIgnored.add(
-                                        String.format(
-                                            "%s: %s",
-                                            mCol.models.get(oldMid)!!.getString("name"),
-                                            flds.replace('\u001f', ',')
-                                        )
-                                    )
+                                    val modelName = mCol.models.get(oldMid)!!.getString("name")
+                                    val commaSeparatedFields = flds.replace('\u001f', ',')
+                                    dupesIgnored.add("$modelName: $commaSeparatedFields")
                                     mIgnoredGuids!!.add(guid)
                                 }
                             }
@@ -370,7 +365,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     /** Return local id for remote MID.  */
-    @KotlinCleanup("use scope function apply")
     private fun _mid(srcMid: Long): Long {
         // already processed this mid?
         if (mModelMap!!.containsKey(srcMid)) {
@@ -383,10 +377,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // missing from target col?
             if (!dst.models.have(mid)) {
                 // copy it over
-                val model = srcModel.deepClone()
-                model.put("id", mid)
-                model.put("mod", TimeManager.time.intTime())
-                model.put("usn", mCol.usn())
+                val model = srcModel.deepClone().apply {
+                    put("id", mid)
+                    put("mod", TimeManager.time.intTime())
+                    put("usn", mCol.usn())
+                }
                 dst.models.update(model)
                 break
             }
@@ -395,10 +390,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             val dstScm = dst.models.scmhash(dstModel!!)
             if (srcScm == dstScm) {
                 // they do; we can reuse this mid
-                val model = srcModel.deepClone()
-                model.put("id", mid)
-                model.put("mod", TimeManager.time.intTime())
-                model.put("usn", mCol.usn())
+                val model = srcModel.deepClone().apply {
+                    put("id", mid)
+                    put("mod", TimeManager.time.intTime())
+                    put("usn", mCol.usn())
+                }
                 dst.models.update(model)
                 break
             }
@@ -424,11 +420,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         val g = src.decks.get(did)
         var name = g.getString("name")
         // if there's a prefix, replace the top level deck
-        if (!TextUtils.isEmpty(mDeckPrefix)) {
+        if (!mDeckPrefix.isNullOrEmpty()) {
             val parts = listOf(*Decks.path(name))
-            val tmpname = TextUtils.join("::", parts.subList(1, parts.size))
-            name = mDeckPrefix!!
-            if (!TextUtils.isEmpty(tmpname)) {
+            val tmpname = parts.subList(1, parts.size).joinToString("::")
+            name = mDeckPrefix
+            if (tmpname.isNotEmpty()) {
                 name += "::$tmpname"
             }
         }
@@ -436,7 +432,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         var head: String? = ""
         val parents = listOf(*Decks.path(name))
         for (parent in parents.subList(0, parents.size - 1)) {
-            if (!TextUtils.isEmpty(head)) {
+            if (!head.isNullOrEmpty()) {
                 head += "::"
             }
             head += parent
