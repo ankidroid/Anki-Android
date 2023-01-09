@@ -155,6 +155,12 @@ class FieldEditLine : FrameLayout {
             mLabel.text = name
         }
 
+    var label: TextView
+        get() = mLabel
+        set(label) {
+            mLabel = label
+        }
+
     val lastViewInTabOrder: View
         get() = mExpandButton
 

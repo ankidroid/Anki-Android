@@ -7,6 +7,20 @@
         android:title="@string/search_view"
         android:queryBackground="@android:color/transparent"
         ankidroid:actionViewClass="android.widget.SearchView"
+        ankidroid:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/action_navigate_upward"
+        android:icon="@drawable/ic_baseline_arrow_upward_24"
+        android:title="@string/navigate_up"
+        android:visible="false"
+        ankidroid:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_navigate_downward"
+        android:icon="@drawable/ic_baseline_arrow_downward_24"
+        android:title="@string/navigate_down"
+        android:visible="false"
         ankidroid:showAsAction="always"/>
 
     <item

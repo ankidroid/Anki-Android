@@ -16,6 +16,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+@file:Suppress("NAME_SHADOWING")
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
@@ -100,6 +101,7 @@ import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
 import java.util.function.Consumer
+import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -114,8 +116,15 @@ import kotlin.math.roundToInt
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener {
+    /** Search View **/
     private lateinit var searchView: SearchView
     private lateinit var searchMenuItem: MenuItem
+    private var selectedEditLineView: Int = 0
+    private var listOfIndicesOfSelectedEditLines: ArrayList<String?> = ArrayList()
+    private var numberOfHighlightedEditLines: Int = 0
+    private var queryByFieldName: String? = ""
+    private var queryByFieldContent: String? = ""
+    private var scrollViewHeightScrolled: Int = 0
 
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
@@ -164,6 +173,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var sourceText: Array<String?>? = null
     private val mFieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
+    private var scrollView: ScrollView? = null
 
     // Use the same HTML if the same image is pasted multiple times.
     private var mPastedImageCache: HashMap<String, String> = HashMap()
@@ -909,6 +919,48 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         searchMenuItem = menu.findItem(R.id.menu_search)
         searchView = searchMenuItem.actionView as SearchView
 
+        val actionNavigateUpward = menu.findItem(R.id.action_navigate_upward)
+        val actionNavigateDownward = menu.findItem(R.id.action_navigate_downward)
+
+        scrollView = findViewById(R.id.CardEditorScroll)
+
+        actionNavigateDownward.setOnMenuItemClickListener {
+            selectedEditLineView = (numberOfHighlightedEditLines + selectedEditLineView + 1) % numberOfHighlightedEditLines
+            populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, queryByFieldName, queryByFieldContent, false)
+            scrollViewHeightScrolled += (scrollView?.scrollY!! + scrollView?.height!! / 20)
+            scrollViewHeightScrolled %= scrollView?.height!!
+            scrollView?.scrollBy(0, scrollViewHeightScrolled)
+            true
+        }
+
+        actionNavigateUpward.setOnMenuItemClickListener {
+            selectedEditLineView = (numberOfHighlightedEditLines + selectedEditLineView - 1) % numberOfHighlightedEditLines
+            populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, queryByFieldName, queryByFieldContent, false)
+            scrollViewHeightScrolled += (scrollView?.scrollY!! - scrollView?.height!! / 20)
+            scrollViewHeightScrolled %= scrollView?.height!!
+            scrollView?.scrollBy(0, scrollViewHeightScrolled)
+            true
+        }
+
+        searchMenuItem.setOnMenuItemClickListener {
+            searchView.onActionViewExpanded()
+            true
+        }
+
+        searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                menu.findItem(R.id.action_save).isVisible = false
+                menu.findItem(R.id.action_navigate_upward).isVisible = true
+                menu.findItem(R.id.action_navigate_downward).isVisible = true
+            } else {
+                populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, "", "", false)
+                menu.findItem(R.id.action_save).isVisible = true
+                menu.findItem(R.id.action_navigate_upward).isVisible = false
+                menu.findItem(R.id.action_navigate_downward).isVisible = false
+                selectedEditLineView = 0
+            }
+        }
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
@@ -916,10 +968,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
+                selectedEditLineView = 0
+                numberOfHighlightedEditLines = 0
+                listOfIndicesOfSelectedEditLines = ArrayList()
+
                 if (searchIn == SearchIn.FieldLabel) {
-                    populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, newText, "")
+//                    scrollView.scrollTo(0, scrollView.bottom)
+                    queryByFieldName = newText
+                    queryByFieldContent = ""
+                    populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, newText, "", true)
                 } else if (searchIn == SearchIn.FieldContents) {
-                    populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, "", newText)
+                    queryByFieldName = ""
+                    queryByFieldContent = newText
+                    populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()), false, "", newText, true)
                 }
                 return true
             }
@@ -1320,7 +1381,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return ret
         }
 
-    private fun populateEditFields(type: FieldChangeType, editModelMode: Boolean, queryByFieldName: String?, queryByFieldContent: String?) {
+    private fun populateEditFields(type: FieldChangeType, editModelMode: Boolean, queryByFieldName: String?, queryByFieldContent: String?, updateHighlightedTextList: Boolean) {
         val editLines = mFieldState.loadFieldEditLines(type)
         mFieldsLayoutContainer!!.removeAllViews()
         mCustomViewIds.clear()
@@ -1335,6 +1396,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         var previous: FieldEditLine? = null
         mCustomViewIds.ensureCapacity(editLines.size)
+
         for (i in editLines.indices) {
             val editLineView = editLines[i]
             mCustomViewIds.add(editLineView.id)
@@ -1412,15 +1474,38 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             ) {
 
                 val fieldContent = editLineView.editText.text.toString().removeNonSpacingMarks().lowercase()
-                val start = fieldContent.indexOf(queryByFieldContent)
-                val end = start + queryByFieldContent.length
+                val fieldName = editLineView.name.toString().removeNonSpacingMarks().lowercase()
 
-                val spannableString = SpannableString(editLineView.editText.text.toString())
-                spannableString.setSpan(BackgroundColorSpan(Color.YELLOW), start, end, 0)
+                val startOfFieldContent = fieldContent.indexOf(queryByFieldContent)
+                val endOfFieldContent = startOfFieldContent + queryByFieldContent.length
 
-                editLineView.editText.setText(spannableString)
-                mFieldsLayoutContainer!!.addView(editLineView)
+                val startOfFieldName = fieldName.indexOf(queryByFieldName)
+                val endOfFieldName = startOfFieldName + queryByFieldName.length
+
+                val spannableStringFieldContent = SpannableString(editLineView.editText.text.toString())
+                if (numberOfHighlightedEditLines == 0 || listOfIndicesOfSelectedEditLines[selectedEditLineView].equals(editLineView.name)) {
+                    spannableStringFieldContent.setSpan(BackgroundColorSpan(Color.RED), startOfFieldContent, endOfFieldContent, 0)
+                    scrollView?.scrollTo(0, editLineView.editText.bottom)
+                } else
+                    spannableStringFieldContent.setSpan(BackgroundColorSpan(Color.YELLOW), startOfFieldContent, endOfFieldContent, 0)
+
+                val spannableStringFieldName = SpannableString(editLineView.name.toString())
+                if (numberOfHighlightedEditLines == 0 || listOfIndicesOfSelectedEditLines[selectedEditLineView].equals(editLineView.name)) {
+                    spannableStringFieldName.setSpan(BackgroundColorSpan(Color.RED), startOfFieldName, endOfFieldName, 0)
+                    scrollView?.scrollTo(0, editLineView.editText.bottom)
+                } else
+                    spannableStringFieldName.setSpan(BackgroundColorSpan(Color.YELLOW), startOfFieldName, endOfFieldName, 0)
+
+                if (updateHighlightedTextList) {
+                    numberOfHighlightedEditLines++
+                    listOfIndicesOfSelectedEditLines.add(editLineView.name)
+                }
+
+                editLineView.editText.setText(spannableStringFieldContent)
+                editLineView.label.text = spannableStringFieldName
             }
+
+            mFieldsLayoutContainer!!.addView(editLineView)
         }
     }
 
@@ -1753,7 +1838,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         updateTags()
         updateCards(mEditorNote!!.model())
         updateToolbar()
-        populateEditFields(changeType, false, "", "")
+        populateEditFields(changeType, false, "", "", false)
         updateFieldsFromStickyText()
     }
 
@@ -2002,7 +2087,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      */
     private fun updateFieldsFromMap(newModel: Model?) {
         val type = FieldChangeType.refreshWithMap(newModel, mModelChangeFieldMap, shouldReplaceNewlines())
-        populateEditFields(type, true, "", "")
+        populateEditFields(type, true, "", "", false)
         updateCards(newModel)
     }
 
@@ -2101,7 +2186,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mDeckSpinnerSelection!!.updateDeckPosition(mCurrentEditedCard!!.did)
                 updateFieldsFromStickyText()
             } else {
-                populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false, "", "")
+                populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false, "", "", false)
                 updateCards(mCurrentEditedCard!!.model())
                 findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);

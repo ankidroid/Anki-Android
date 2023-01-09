@@ -2,4 +2,6 @@
 <resources>
     <string name="search_for_field_label">Search in field labels</string>
     <string name="search_for_field_content">Search in field contents</string>
+    <string name="navigate_up">navigate up</string>
+    <string name="navigate_down">navigate down</string>
 </resources>
