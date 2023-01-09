@@ -749,7 +749,6 @@ open class Reviewer : AbstractFlashcardViewer() {
             undoIconId = R.drawable.eraser
             undoEnabled = true
         } else {
-            // We can arrive here even if whiteboard is enabled if no stroke has ever been made
             undoIconId = R.drawable.ic_undo_white
             undoEnabled = colIsOpen() && col.undoAvailable()
         }
