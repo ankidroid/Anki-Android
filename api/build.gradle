@@ -22,6 +22,10 @@ android {
         buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.flashcards"'
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "READ_WRITE_PERMISSION", '"com.ichi2.anki.debug.permission.READ_WRITE_DATABASE"'
+            buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.debug.flashcards"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

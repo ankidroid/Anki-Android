@@ -77,6 +77,7 @@ android {
     buildTypes {
         debug {
             debuggable true
+            applicationIdSuffix ".debug"
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
             // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
@@ -107,6 +108,7 @@ android {
             // make the icon red if in debug mode
             resValue 'color', 'anki_foreground_icon_color_0', "#FFFF0000"
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
+            resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
         release {
             minifyEnabled true
@@ -115,6 +117,7 @@ android {
             signingConfig signingConfigs.release
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
+            resValue "string", "applicationId", defaultConfig.applicationId
         }
     }
 
