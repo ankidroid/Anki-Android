@@ -507,8 +507,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
             DialogHandler.storeMessage(newFragment.dialogHandlerMessage)
             // Show a basic notification to the user in the notification bar in the meantime
-            val title = newFragment.notificationTitle
-            val message = newFragment.notificationMessage
+            val title = resources.getString(R.string.import_title)
+            val message = resources.getString(R.string.import_interrupted)
             showSimpleNotification(title, message, channel)
         }
     }
