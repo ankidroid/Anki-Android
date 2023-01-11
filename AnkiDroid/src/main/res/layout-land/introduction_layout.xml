@@ -53,32 +53,40 @@
         app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
         app:layout_constraintBottom_toTopOf="@id/remember_more"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/get_started"
-        style="@style/LargeFilledButtonStyle"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/material_blue_500"
-        android:minWidth="200dp"
-        android:text="@string/intro_get_started"
+        app:layout_constraintTop_toBottomOf="@id/subtitle"
         app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/sync_profile"
-        app:layout_constraintTop_toBottomOf="@id/subtitle" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/sync_profile"
-        style="@style/LargeFilledButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/material_blue_500"
-        android:minWidth="200dp"
-        android:text="@string/intro_sync_from_ankiweb"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp"
-        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/get_started"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_marginTop="10dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/get_started"
+            style="@style/LargeFilledButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/material_blue_500"
+            android:minWidth="200dp"
+            android:text="@string/intro_get_started"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sync_profile"
+            style="@style/LargeFilledButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/material_blue_500"
+            android:minWidth="200dp"
+            android:text="@string/intro_sync_from_ankiweb"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"/>
+
+
+    </LinearLayout>
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/subtitle"
@@ -87,6 +95,7 @@
         android:maxWidth="500dp"
         android:paddingHorizontal="30dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/intro_short_ankidroid_explanation"
         android:textAlignment="center"
         android:textSize="18sp"
