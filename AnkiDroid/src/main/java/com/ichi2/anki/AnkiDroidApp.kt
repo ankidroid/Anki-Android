@@ -283,27 +283,6 @@ open class AnkiDroidApp : Application() {
     companion object {
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
         var INSTRUMENTATION_TESTING = false
-
-        /**
-         * Toggles Scoped Storage functionality introduced in later commits
-         *
-         *
-         * Can be set to true or false only by altering the declaration itself.
-         * This restriction ensures that this flag will only be used by developers for testing
-         *
-         *
-         * Set to false by default, so won't migrate data or use new scoped dirs
-         *
-         *
-         * If true, enables data migration & use of scoped dirs in later commits
-         *
-         *
-         * Should be set to true for testing Scoped Storage
-         *
-         *
-         * TODO: Should be removed once app is fully functional under Scoped Storage
-         */
-        var TESTING_SCOPED_STORAGE = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 

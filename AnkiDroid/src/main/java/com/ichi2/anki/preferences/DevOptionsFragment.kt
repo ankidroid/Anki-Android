@@ -77,15 +77,6 @@ class DevOptionsFragment : SettingsFragment() {
             OnboardingUtils.reset(requireContext())
             true
         }
-        // Use scoped storage
-        requirePreference<Preference>(getString(R.string.pref_scoped_storage_key)).apply {
-            setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE)
-            setOnPreferenceClickListener {
-                AnkiDroidApp.TESTING_SCOPED_STORAGE = true
-                (requireActivity() as Preferences).restartWithNewDeckPicker()
-                true
-            }
-        }
     }
 
     /**
