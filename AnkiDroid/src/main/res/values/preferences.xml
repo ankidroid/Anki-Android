@@ -133,7 +133,6 @@
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="pref_rust_backend_key">useRustBackend</string>
-    <string name="pref_scoped_storage_key">useScopedStorage</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- Messages displayed after the user enabled developer options, and warned remaining messages will be in English -->
     <string name="dev_options_enabled_msg">Enabled developer options</string>
