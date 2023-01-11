@@ -1579,11 +1579,11 @@ open class DeckPicker :
          * the sync server and starts syncing the data */
         fun doSync() {
             val alwaysValue = getString(R.string.sync_media_always_value)
-            val onlyWifiValue = getString(R.string.sync_media_only_wifi_value)
+            val onlyUnmeteredValue = getString(R.string.sync_media_only_unmetered_value)
 
             val syncMediaPrefValue = preferences.getString(getString(R.string.sync_fetch_media_key), alwaysValue)
             val syncMedia = syncMediaPrefValue == alwaysValue ||
-                (syncMediaPrefValue == onlyWifiValue && !isActiveNetworkMetered())
+                (syncMediaPrefValue == onlyUnmeteredValue && !isActiveNetworkMetered())
 
             if (!BackendFactory.defaultLegacySchema) {
                 handleNewSync(conflict, syncMedia)
