@@ -22,7 +22,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -30,7 +29,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
 
-@KotlinCleanup("Use ?.let{throw it}")
 @RunWith(AndroidJUnit4::class)
 class NoteEditorTabOrderTest : NoteEditorTest() {
     override val invalidSdks: List<Int>
@@ -87,9 +85,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
                 wrapped.set(t)
             }
         }
-        if (wrapped.get() != null) {
-            throw wrapped.get()!!
-        }
+        wrapped.get()?.let { throw it }
     }
 
     private fun ensureCollectionLoaded() {
