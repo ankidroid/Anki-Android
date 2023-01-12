@@ -23,12 +23,10 @@ import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.Matchers
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
-import java.util.ArrayList
 
 abstract class NoteEditorTest protected constructor() {
     @get:Rule
@@ -60,27 +58,12 @@ abstract class NoteEditorTest protected constructor() {
             )
         }
     }
-
-    private val invalidSdksImpl: List<Int>
-        get() {
-            // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
-            // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync
-            /*
-             java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
-             at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)
-              */
-            val invalid = Build.VERSION_CODES.N_MR1
-            val integers = ArrayList(listOf(invalid))
-            integers.addAll(invalidSdks!!)
-            return integers
-        }
-    protected open val invalidSdks: List<Int>?
-        get() = ArrayList()
+    protected open val invalidSdks: List<Int>? = emptyList()
+    private val invalidSdksImpl: List<Int> = listOf(Build.VERSION_CODES.N_MR1) + invalidSdks.orEmpty()
     protected val targetContext: Context
         get() = InstrumentationRegistry.getInstrumentation().targetContext
 
     init {
-        @KotlinCleanup("change to variable init")
         // Rules mean that we get a failure on API 25.
         // Even if we ignore the tests, the rules cause a failure.
         // We can't ignore the test in @BeforeClass ("Test run failed to complete. Expected 150 tests, received 149")
