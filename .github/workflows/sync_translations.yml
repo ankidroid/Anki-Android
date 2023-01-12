@@ -10,6 +10,7 @@ jobs:
   sync_translations:
     permissions:
       contents: write  # for Git to git push
+      pull-requests: write # create the PR with the new strings changes
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
     runs-on: macos-latest
@@ -53,7 +54,34 @@ jobs:
           echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
           echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
 
-      - name: Create PR for new translations if needed
+      - name: Check if there are new changes
+        id: tr_check
         run: |
+          git checkout i18n_sync
           COMMITS_COUNT=`git rev-list --count HEAD ^main`
           echo "$COMMITS_COUNT"
+          if [ "$COMMITS_COUNT" -gt 0 ]; then
+            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR for new changes
+        if: {{ steps.tr_check.outputs.HAS_CHANGES }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            var now = new Date();
+            const options = { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }
+            await github.rest.pulls.create({              
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Updated strings from Crowdin `now.toLocaleDateString("en-US", options)`",
+              head: "i18n_sync",
+              base: "main",
+              body: "
+                ## Purpose / Description
+  
+                Contains the changes to strings from Crowdin.",
+              maintainer_can_modify: true
+            })
