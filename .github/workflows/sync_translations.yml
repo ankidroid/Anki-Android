@@ -71,18 +71,18 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            var now = new Date();
+            const now = new Date();
+            console.log("1");
             const options = { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
-            
-            await github.rest.pulls.create({              
+            console.log("2");
+            const formattedDate = now.toLocaleDateString("en-US", options);
+            console.log("3");
+            github.rest.pulls.create({              
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: "Updated strings from Crowdin `now.toLocaleDateString("en-US", options)`",
+              title: "Updated strings from Crowdin " + formattedDate,
               head: "i18n_sync",
               base: "main",
-              body: "
-                ## Purpose / Description
-  
-                Contains the changes to strings from Crowdin.",
+              body: "Contains the newest strings changes from Crowdin.",
               maintainer_can_modify: true
             })
