@@ -67,7 +67,7 @@ jobs:
           fi
 
       - name: Create PR for new changes
-        if: {{ steps.tr_check.outputs.HAS_CHANGES }}
+        if: ${{ steps.tr_check.outputs.HAS_CHANGES }}
         uses: actions/github-script@v6
         with:
           script: |
