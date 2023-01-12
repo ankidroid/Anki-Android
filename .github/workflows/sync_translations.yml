@@ -52,3 +52,8 @@ jobs:
           git push --set-upstream origin +i18n_sync
           echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
           echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
+
+      - name: Create PR for new translations if needed
+        run: |
+          COMMITS_COUNT=`git rev-list --count HEAD ^main`
+          echo "$COMMITS_COUNT"
