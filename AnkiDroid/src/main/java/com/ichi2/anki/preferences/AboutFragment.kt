@@ -108,7 +108,7 @@ class AboutFragment : Fragment() {
         if (clipboardManager != null) {
             clipboardManager.setPrimaryClip(ClipData.newPlainText("$appName v$pkgVersionName", debugInfo))
             showSnackbar(
-                R.string.about_ankidroid_successfully_copied_debug,
+                R.string.about_ankidroid_successfully_copied_debug_info,
                 Snackbar.LENGTH_SHORT
             )
         } else {

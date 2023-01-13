@@ -304,7 +304,7 @@
     <string name="anki_js_error_code">(Error Code: %d)</string>
 
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Debug information was copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 
     <!-- Card Viewer -->
