@@ -160,11 +160,6 @@ class TagsList constructor(
      * @return true if the tag changed its check status
      * false if the tag was already checked or not in the list
      */
-    /**
-     * Mark a tag as checked tag.
-     * @see .check
-     */
-    @KotlinCleanup("fix the double documentation for this method")
     fun check(tag: String, processAncestors: Boolean = true): Boolean {
         if (!mAllTags.contains(tag)) {
             return false
