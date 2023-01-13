@@ -76,7 +76,7 @@ android {
     }
     buildTypes {
         debug {
-            versionNameSuffix ".debug"
+            versionNameSuffix "-debug"
             debuggable true
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
