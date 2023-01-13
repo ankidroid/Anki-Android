@@ -26,11 +26,8 @@ import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
-import com.ichi2.async.ProgressSenderAndCancelListener
-import com.ichi2.async.TaskDelegate
 import com.ichi2.compat.CompatHelper
 import com.ichi2.exceptions.AggregateException
-import com.ichi2.libanki.Collection
 import timber.log.Timber
 import java.io.File
 
@@ -55,7 +52,7 @@ typealias MigrationProgressListener = (NumberOfBytes) -> Unit
  * This also handles preemption, allowing media files to skip the queue
  * (if they're required for review)
  */
-open class MigrateUserData protected constructor(val source: Directory, val destination: Directory) : TaskDelegate<NumberOfBytes, Boolean>() {
+open class MigrateUserData protected constructor(val source: Directory, val destination: Directory) {
     companion object {
         /**
          * Creates an instance of [MigrateUserData] if valid, returns null if a migration is not in progress, or throws if data is invalid
@@ -478,9 +475,9 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @throws AggregateException If multiple exceptions were thrown when executing
      * @throws RuntimeException Various other failings if only a single exception was thrown
      */
-    override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): Boolean {
+    fun migrateFiles(progressListener: MigrationProgressListener): Boolean {
 
-        val context = initializeContext(collectionTask::doProgress)
+        val context = initializeContext(progressListener)
 
         // define the function here, so we can execute it on retry
         fun moveRemainingFiles() {
