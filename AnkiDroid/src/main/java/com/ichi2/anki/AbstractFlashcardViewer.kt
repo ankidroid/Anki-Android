@@ -50,6 +50,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -920,7 +921,7 @@ abstract class AbstractFlashcardViewer :
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
         dismiss(DeleteNote(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.deleted_note)
+            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note().numberOfCards()))
         }
     }
 
@@ -929,6 +930,15 @@ abstract class AbstractFlashcardViewer :
         duration: Int = Snackbar.LENGTH_SHORT
     ) {
         showSnackbarAboveAnswerButtons(textResource, duration) {
+            setAction(R.string.undo) { undo() }
+        }
+    }
+
+    private fun showSnackbarWithUndoButtonText(
+        text: String,
+        duration: Int = Snackbar.LENGTH_SHORT
+    ) {
+        showSnackbarAboveAnswerButtons(text, duration) {
             setAction(R.string.undo) { undo() }
         }
     }
@@ -1685,25 +1695,26 @@ abstract class AbstractFlashcardViewer :
 
     internal fun buryCard(): Boolean {
         return dismiss(BuryCard(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.buried_card)
+            showSnackbarWithUndoButton(R.string.card_buried)
         }
     }
 
     internal fun suspendCard(): Boolean {
         return dismiss(SuspendCard(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.suspended_card)
+            showSnackbarWithUndoButtonText(TR.studyingCardSuspended())
         }
     }
 
     internal fun suspendNote(): Boolean {
         return dismiss(SuspendNote(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.suspended_note)
+            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note().numberOfCards(), currentCard!!.note().numberOfCards())
+            showSnackbarWithUndoButtonText(noteSuspended)
         }
     }
 
     internal fun buryNote(): Boolean {
         return dismiss(BuryNote(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.buried_note)
+            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note().numberOfCards()))
         }
     }
 
