@@ -45,7 +45,7 @@
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">Always report</string>
     <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_ask_user">მკითხე</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <string name="leech_action_tag_only">მხოლოდ იარლიყი</string>
