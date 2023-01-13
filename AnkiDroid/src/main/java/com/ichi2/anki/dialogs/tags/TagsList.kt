@@ -298,10 +298,9 @@ class TagsList constructor(
         if (!mAllTags.contains(tag)) {
             return
         }
-        @KotlinCleanup("remove stream(), use kotlin iterators")
         getTagAncestors(tag)
-            .stream().filter { s: String -> !isChecked(s) }
-            .forEach { tagEntry: String -> setIndeterminate(tagEntry) }
+            .filterNot { isChecked(it) }
+            .forEach { setIndeterminate(it) }
     }
 
     /**
