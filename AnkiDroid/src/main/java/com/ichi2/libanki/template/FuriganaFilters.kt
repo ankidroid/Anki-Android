@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.libanki.template
 
-import com.ichi2.utils.KotlinCleanup
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -23,14 +22,11 @@ object FuriganaFilters {
     private val r = Pattern.compile(" ?([^ >]+?)\\[(.+?)]")
     private const val RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
 
-    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    @KotlinCleanup("handle the nullability of match.group")
     private fun noSound(match: Matcher, replacement: String): String {
-        return if (match.group(2).startsWith("sound:")) {
-            // return without modification
-            match.group(0)!!
+        return if (match.group(2)?.startsWith("sound:") == true) {
+            match.group(0) ?: ""
         } else {
-            r.matcher(match.group(0)!!).replaceAll(replacement)
+            r.matcher(match.group(0) ?: "").replaceAll(replacement)
         }
     }
 
