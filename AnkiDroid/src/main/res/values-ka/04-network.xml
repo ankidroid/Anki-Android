@@ -46,7 +46,7 @@
 -->
 <resources>
     <string name="youre_offline">ხაზგარეშე რეჟიმში ხართ</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">სცადე ხელახლა</string>
     <string name="sync_error">შეცდომა სინქრონიზაციისას</string>
     <string name="vague_error" comment="Network error dialog title">შეცდომა</string>
     <string name="retry">ხელახლა ცდა</string>
@@ -127,7 +127,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_full_sync">სინქრონიზაცია (სრული)</string>
     <string name="sync_menu_title_no_account">სინქრონიზაცია (ავტორიზაცია)</string>
     <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>
