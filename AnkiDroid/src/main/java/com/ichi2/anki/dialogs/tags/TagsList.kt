@@ -308,20 +308,17 @@ class TagsList constructor(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        @KotlinCleanup("use a lambda for the Comparator")
-        mAllTags.sortWith(
-            Comparator { lhs: String?, rhs: String? ->
-                val lhsRoot = getTagRoot(lhs!!)
-                val rhsRoot = getTagRoot(rhs!!)
-                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-                if (lhsChecked != rhsChecked) {
-                    if (lhsChecked) -1 else 1
-                } else {
-                    compareTag(lhs, rhs)
-                }
+        mAllTags.sortWith { lhs: String?, rhs: String? ->
+            val lhsRoot = getTagRoot(lhs!!)
+            val rhsRoot = getTagRoot(rhs!!)
+            val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
+            val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
+            if (lhsChecked != rhsChecked) {
+                if (lhsChecked) -1 else 1
+            } else {
+                compareTag(lhs, rhs)
             }
-        )
+        }
     }
 
     /**
