@@ -382,12 +382,13 @@
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
 
-    <!-- Reviewer actions -->
-    <string name="buried_card">Card buried</string>
-    <string name="buried_note">Note buried</string>
-    <string name="deleted_note">Note deleted</string>
-    <string name="suspended_card">Card suspended</string>
-    <string name="suspended_note">Note suspended</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
 
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
