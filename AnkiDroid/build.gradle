@@ -35,6 +35,7 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
+        resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
