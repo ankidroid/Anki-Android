@@ -116,6 +116,15 @@ android {
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
+            // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
+            if (project.hasProperty("customSuffix")) {
+                applicationIdSuffix project.property("customSuffix")
+            }
+            if (project.hasProperty("customName")) {
+                resValue "string", "app_name", project.property("customName")
+            }
+
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
             resValue "string", "applicationId", defaultConfig.applicationId
