@@ -76,6 +76,7 @@ android {
     }
     buildTypes {
         debug {
+            versionNameSuffix "-debug"
             debuggable true
             applicationIdSuffix ".debug"
             splits.abi.universalApk = true // Build universal APK for debug always
