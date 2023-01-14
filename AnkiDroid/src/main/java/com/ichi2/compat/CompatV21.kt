@@ -28,6 +28,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.os.Parcel
 import android.os.Parcelable
@@ -66,6 +67,10 @@ open class CompatV21 : Compat {
 
     override fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
         return parcel.readSparseArray(loader)
+    }
+
+    override fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>? {
+        return bundle.getParcelableArrayList(key)
     }
 
     override fun <T : Serializable?> getSerializableExtra(
