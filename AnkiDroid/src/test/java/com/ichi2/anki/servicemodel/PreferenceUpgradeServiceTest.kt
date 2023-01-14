@@ -203,12 +203,12 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
         // enabled -> always
-        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCH_MEDIA, true) }
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
         assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("always"))
 
         // disabled -> never
-        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCH_MEDIA, false) }
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
         assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("never"))
     }
