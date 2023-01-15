@@ -15,20 +15,17 @@
  */
 package com.ichi2.testutils
 
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert
 import org.junit.Test
-import java.lang.AssertionError
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
 
 class AnkiAssertTest {
     // We're not going to use the class under test to verify that these are working.
     @Test
     fun assertThrowsNoException() {
         try {
-            AnkiAssert.assertThrows({}, IllegalStateException::class.java)
+            AnkiAssert.assertThrows(IllegalStateException::class.java) {}
             Assert.fail("No exception thrown")
         } catch (e: AssertionError) {
             assertThat(e.message, containsString("Expected exception: IllegalStateException"))
@@ -40,7 +37,7 @@ class AnkiAssertTest {
     fun assertThrowsWrongException() {
         val toThrow = IllegalArgumentException()
         try {
-            AnkiAssert.assertThrows({ throw toThrow }, IllegalStateException::class.java)
+            AnkiAssert.assertThrows(IllegalStateException::class.java) { throw toThrow }
             Assert.fail("No exception thrown")
         } catch (e: AssertionError) {
             assertThat(e.message, containsString("Expected 'IllegalStateException' got 'IllegalArgumentException'"))
@@ -53,7 +50,7 @@ class AnkiAssertTest {
     fun assertThrowsSameException() {
         val ex = IllegalStateException()
 
-        val exception = AnkiAssert.assertThrows({ throw ex }, IllegalStateException::class.java)
+        val exception = AnkiAssert.assertThrows(IllegalStateException::class.java) { throw ex }
 
         assertThat(exception, sameInstance(ex))
     }

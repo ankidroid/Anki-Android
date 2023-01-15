@@ -51,9 +51,9 @@ object AnkiAssert {
         }
     }
 
-    fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
+    fun <T : Throwable?> assertThrows(clazz: Class<T>, block: () -> Unit): T {
         try {
-            r.run()
+            block()
             Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
         } catch (t: Throwable) {
             if (t.javaClass == clazz) {
@@ -96,8 +96,8 @@ object AnkiAssert {
  *
  * @see TestException if a test-only exception is needed
  * */
-inline fun <reified T : Throwable> assertThrows(r: Runnable): T =
-    AnkiAssert.assertThrows(r, T::class.java)
+inline fun <reified T : Throwable> assertThrows(noinline block: () -> Unit): T =
+    AnkiAssert.assertThrows(T::class.java, block)
 
 /**
  * [assertThrows], accepting subclasses of the exception type
