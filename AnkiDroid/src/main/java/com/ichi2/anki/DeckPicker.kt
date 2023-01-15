@@ -2875,6 +2875,19 @@ open class DeckPicker :
         val timeSinceLastPostponed = TimeManager.time.intTime() - migrationWasLastPostponedAt
         return timeSinceLastPostponed > POSTPONE_MIGRATION_INTERVAL_DAYS * 24 * 60 * 60
     }
+
+    /**
+     * Open a dialog telling the user there is not enough space to do a full back-up.
+     * This consider that a full back-up also exports media.
+     * Invite them to free space or manually back-up.
+     */
+    fun showInsufficientSpaceDialog(requiredSpaceInMB: Long, freeSpaceInMB: Long) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.dialogs_insufficient_space_title)
+            .setMessage(getString(R.string.insufficient_space_dialog_insufficient_space_dialog, requiredSpaceInMB, freeSpaceInMB))
+            .setPositiveButton(R.string.dialog_ok) { _, _ -> }
+            .show()
+    }
 }
 
 const val USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP = "user accept the risk of migration without a backup"

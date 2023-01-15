@@ -285,4 +285,7 @@
     <string name="remind_me_later">Remind me later</string>
 
 
+    <!-- Scoped storage migration -->
+    <string name="dialogs_insufficient_space_title" comment="Title of an alert letting the user know they don't have enough room left on their device to do a full back-up of their collection">Insufficient space</string>
+    <string name="insufficient_space_dialog_insufficient_space_dialog">A full backup requires %1$d MB free space.\n\n You only have %2$d MB available. Please free up more space, or use another way to backup.</string>
 </resources>
