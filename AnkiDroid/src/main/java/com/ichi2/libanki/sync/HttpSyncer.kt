@@ -55,6 +55,7 @@ import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
 import java.util.zip.GZIPOutputStream
 import javax.net.ssl.SSLException
+import kotlin.math.min
 
 /**
  * # HTTP syncing tools
@@ -63,7 +64,6 @@ import javax.net.ssl.SSLException
  * - 502: ankiweb down
  * - 503/504: server too busy
  */
-@KotlinCleanup("IDE-lint")
 open class HttpSyncer(
     /**
      * Synchronization.
@@ -74,7 +74,7 @@ open class HttpSyncer(
     hostNum: HostNum
 ) {
     val bytesSent = AtomicLong()
-    val bytesReceived = AtomicLong()
+    private val bytesReceived = AtomicLong()
 
     @Volatile
     var nextSendS: Long = 1024
@@ -128,7 +128,7 @@ open class HttpSyncer(
     fun req(method: String?, fobj: InputStream? = null, comp: Int = 6): Response {
         var tmpFileBuffer: File? = null
         return try {
-            val bdry = "--" + BOUNDARY
+            val bdry = "--$BOUNDARY"
             val buf = StringWriter()
             // post vars
             postVars["c"] = if (comp != 0) 1 else 0
@@ -275,7 +275,7 @@ open class HttpSyncer(
     fun stream2String(stream: InputStream?, maxSize: Int): String {
         val rd: BufferedReader
         return try {
-            rd = BufferedReader(InputStreamReader(stream, "UTF-8"), if (maxSize == -1) 4096 else Math.min(4096, maxSize))
+            rd = BufferedReader(InputStreamReader(stream, "UTF-8"), if (maxSize == -1) 4096 else min(4096, maxSize))
             var line: String
             val sb = StringBuilder()
             while (rd.readLine().also { line = it } != null && (maxSize == -1 || sb.length < maxSize)) {
@@ -329,7 +329,7 @@ open class HttpSyncer(
 
     init {
         @KotlinCleanup("combined declaration and initialization")
-        checksumKey = Utils.checksum(java.lang.Float.toString(Random().nextFloat())).substring(0, 8)
+        checksumKey = Utils.checksum(Random().nextFloat().toString()).substring(0, 8)
         @KotlinCleanup("move to constructor")
         this.con = con
         @KotlinCleanup("combined declaration and initialization")

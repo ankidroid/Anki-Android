@@ -35,7 +35,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.text.format.Formatter
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -206,7 +205,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 }
                 setPreviewImage(mViewModel.imagePath, maxImageSize)
             } else {
-                if (!TextUtils.isEmpty(mPreviousImagePath)) {
+                if (!mPreviousImagePath.isNullOrEmpty()) {
                     revertToPreviousImage()
                 }
                 // cropImage can give us more information. Not sure it is actionable so for now just log it.
@@ -366,7 +365,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             // Restore the old version of the image if the user cancelled
             when (requestCode) {
                 ACTIVITY_TAKE_PICTURE ->
-                    if (!TextUtils.isEmpty(mPreviousImagePath)) {
+                    if (!mPreviousImagePath.isNullOrEmpty()) {
                         revertToPreviousImage()
                     }
                 else -> {}
@@ -432,7 +431,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i(
             "handleSelectImageIntent() Intent: %s. extras: %s",
             data,
-            if (data.extras == null) "null" else TextUtils.join(", ", data.extras!!.keySet())
+            if (data.extras == null) "null" else data.extras!!.keySet().joinToString(", ")
         )
 
         val selectedImage = getImageUri(mActivity, data)

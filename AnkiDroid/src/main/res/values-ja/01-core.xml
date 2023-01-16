@@ -45,15 +45,15 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">デッキリスト</string>
+    <string name="decks">単語帳</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
-    <string name="statistics">統計情報</string>
+    <string name="statistics">統計</string>
     <string name="settings">設定</string>
     <string name="help">ヘルプ</string>
     <string name="drawing">手書き</string>
-    <string name="send_feedback">フィードバック</string>
+    <string name="send_feedback">フィードバックを送信</string>
     <string name="studyoptions_due_today">今日の課題:</string>
-    <string name="studyoptions_new_total">新規カード:</string>
+    <string name="studyoptions_new_total">新しいカードの枚数:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
     <string name="studyoptions_start">学習開始</string>
@@ -85,7 +85,7 @@
     <string name="hide_answer">解答を非表示</string>
     <string name="ease_button_again">やり直し</string>
     <string name="ease_button_hard">難しい</string>
-    <string name="ease_button_good">適度</string>
+    <string name="ease_button_good">正解</string>
     <string name="ease_button_easy">簡単</string>
     <string name="studyoptions_congrats_undo">%s を元に戻す</string>
     <string name="menu_import">インポート</string>
@@ -232,5 +232,5 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
 </resources>

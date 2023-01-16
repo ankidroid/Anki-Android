@@ -35,7 +35,7 @@ internal object Utils {
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
     private const val FIELD_SEPARATOR = '\u001f'.toString()
 
-    // TODO: Add contract for null -> null and non-null to non-null.
+    // TODO: Add contract for null -> null and non-null to non-null when kotlin contracts become stable/out of experimental phase
     fun joinFields(list: Array<String>?): String? {
         return list?.joinToString(FIELD_SEPARATOR)
     }

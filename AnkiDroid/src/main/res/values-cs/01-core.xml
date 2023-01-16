@@ -52,7 +52,7 @@
     <string name="help">Nápověda</string>
     <string name="drawing">Kreslení</string>
     <string name="send_feedback">Odeslat zpětnou vazbu</string>
-    <string name="studyoptions_due_today">Dnes k zopakování:</string>
+    <string name="studyoptions_due_today">Dnes ke zkoušení:</string>
     <string name="studyoptions_new_total">Celkem nových karet:</string>
     <string name="studyoptions_total_cards">Celkem karet:</string>
     <string name="studyoptions_eta">Odhadovaný čas (min):</string>
@@ -256,5 +256,5 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
 </resources>

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
 import android.text.Spanned
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -193,7 +192,7 @@ class TagsDialog : AnalyticsDialogFragment {
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         toolbarAddItem.setOnMenuItemClickListener {
             val query = mToolbarSearchView!!.query.toString()
-            if (mToolbarSearchItem!!.isActionViewExpanded && !TextUtils.isEmpty(query)) {
+            if (mToolbarSearchItem!!.isActionViewExpanded && query.isNotEmpty()) {
                 addTag(query)
                 mToolbarSearchView!!.setQuery("", true)
             } else {

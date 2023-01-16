@@ -69,9 +69,7 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
         }
 
     fun getCardClass(oneBasedCardOrdinal: Int): String {
-        var cardClass = "card card$oneBasedCardOrdinal"
-        cardClass += getCssClasses()
-        return cardClass
+        return "card card$oneBasedCardOrdinal" + getCssClasses()
     }
 
     companion object {

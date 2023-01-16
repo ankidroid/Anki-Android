@@ -56,7 +56,6 @@ import kotlin.test.*
 import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 @RustCleanup("Remove, or add KotlinCleanup")
-@KotlinCleanup("fix ide lint issues")
 @RunWith(AndroidJUnit4::class)
 class SchedTest : RobolectricTest() {
     @Test
@@ -234,7 +233,7 @@ class SchedTest : RobolectricTest() {
         var note: Note
         for (i in 0..29) {
             note = col.newNote()
-            note.setItem("Front", Integer.toString(i))
+            note.setItem("Front", i.toString())
             if (i > 4) {
                 note.model().put("did", deck2)
             }
@@ -306,13 +305,13 @@ class SchedTest : RobolectricTest() {
         assertEquals(3, (c.left % 1000).toLong())
         assertEquals(3, (c.left / 1000).toLong())
         // it should be due in 30 seconds
-        val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
+        val t = (c.due - TimeManager.time.intTime())
         assertThat(t, greaterThanOrEqualTo(25L))
         assertThat(t, lessThanOrEqualTo(40L))
         // pass it once
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 3 minutes
-        assertEquals(Math.round((c.due - TimeManager.time.intTime()).toFloat()).toFloat(), 179f, 1f)
+        assertEquals((c.due - TimeManager.time.intTime()).toFloat(), 179f, 1f)
         assertEquals(2, (c.left % 1000).toLong())
         assertEquals(2, (c.left / 1000).toLong())
         // check log is accurate

@@ -452,9 +452,7 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            return if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
-                getAppSpecificExternalAnkiDroidDirectory(context)
-            } else legacyAnkiDroidDirectory
+            return getAppSpecificExternalAnkiDroidDirectory(context)
         }
 
         /**
@@ -466,7 +464,7 @@ open class CollectionHelper {
          *
          * @return Absolute path to the AnkiDroid directory in primary shared/external storage
          */
-        private val legacyAnkiDroidDirectory: String
+        val legacyAnkiDroidDirectory: String
             get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath
 
         /**

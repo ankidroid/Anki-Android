@@ -34,6 +34,8 @@ android {
         buildConfigField "Boolean", "LEGACY_SCHEMA", "true"
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
+        buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
+        resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
@@ -56,8 +58,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600191
-        versionName="2.16alpha91"
+        versionCode=21600192
+        versionName="2.16alpha92"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -75,7 +77,9 @@ android {
     }
     buildTypes {
         debug {
+            versionNameSuffix "-debug"
             debuggable true
+            applicationIdSuffix ".debug"
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
             // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
@@ -93,6 +97,12 @@ android {
                 if (localProperties["legacy_schema"] != null) {
                     buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
+                // allow disabling leak canary
+                if (localProperties["enable_leak_canary"] != null) {
+                    buildConfigField "Boolean", "ENABLE_LEAK_CANARY", localProperties["enable_leak_canary"]
+                } else {
+                    buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "true"
+                }
             } else {
                 testCoverageEnabled true
             }
@@ -100,14 +110,25 @@ android {
             // make the icon red if in debug mode
             resValue 'color', 'anki_foreground_icon_color_0', "#FFFF0000"
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
+            resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
         release {
             minifyEnabled true
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
+            // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
+            if (project.hasProperty("customSuffix")) {
+                applicationIdSuffix project.property("customSuffix")
+            }
+            if (project.hasProperty("customName")) {
+                resValue "string", "app_name", project.property("customName")
+            }
+
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
+            resValue "string", "applicationId", defaultConfig.applicationId
         }
     }
 
@@ -234,7 +255,7 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:23.0.0'
+            force 'org.jetbrains:annotations:23.1.0'
         }
     }
 
@@ -268,7 +289,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.21.10' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.21.12' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -324,7 +345,7 @@ dependencies {
     api project(":api")
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.mockito:mockito-inline:4.9.0'
+    testImplementation 'org.mockito:mockito-inline:4.10.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'

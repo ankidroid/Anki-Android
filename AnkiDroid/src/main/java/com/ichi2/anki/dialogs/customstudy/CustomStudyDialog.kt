@@ -22,7 +22,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -68,10 +67,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
+        val args = this.arguments ?: Bundle()
         args.apply {
             putInt("id", contextMenuAttribute.value)
             putLong("did", did)
@@ -331,7 +327,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             for (tag in selectedTags) {
                 arr.add("tag:'$tag'")
             }
-            sb.append("(").append(TextUtils.join(" or ", arr)).append(")")
+            sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
         createCustomStudySession(
             JSONArray(),
@@ -483,7 +479,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
+        requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }

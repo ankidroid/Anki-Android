@@ -7,6 +7,7 @@
 package com.ichi2.anki
 
 import android.net.Uri
+import com.ichi2.anki.api.BuildConfig
 
 /**
  * The contract between AnkiDroid and applications. Contains definitions for the supported URIs and
@@ -85,8 +86,8 @@ import android.net.Uri
  * ```
  */
 public object FlashCardsContract {
-    public const val AUTHORITY: String = "com.ichi2.anki.flashcards"
-    public const val READ_WRITE_PERMISSION: String = "com.ichi2.anki.permission.READ_WRITE_DATABASE"
+    public const val AUTHORITY: String = BuildConfig.AUTHORITY
+    public const val READ_WRITE_PERMISSION: String = BuildConfig.READ_WRITE_PERMISSION
 
     /**
      * A content:// style uri to the authority for the flash card provider

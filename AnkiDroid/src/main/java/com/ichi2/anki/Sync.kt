@@ -39,6 +39,8 @@ import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
@@ -260,6 +262,7 @@ private suspend fun handleMediaSync(
     deckPicker: DeckPicker,
     auth: SyncAuth
 ) {
+    val backend = CollectionManager.getBackend()
     // TODO: show this in a way that is clear it can be continued in background,
     // but also warn user that media files will not be available until it completes.
     // TODO: provide a way for users to abort later, and see it's still going
@@ -267,9 +270,9 @@ private suspend fun handleMediaSync(
         .setTitle(TR.syncMediaLogTitle())
         .setMessage("")
         .setPositiveButton("Background") { _, _ -> }
+        .setOnCancelListener { cancelMediaSync(backend) }
         .show()
     try {
-        val backend = CollectionManager.getBackend()
         backend.withProgress(
             extractProgress = {
                 if (progress.hasMediaSync()) {
@@ -281,7 +284,9 @@ private suspend fun handleMediaSync(
                 dialog.setMessage(text)
             },
         ) {
-            backend.syncMedia(auth)
+            withContext(Dispatchers.IO) {
+                backend.syncMedia(auth)
+            }
         }
     } finally {
         dialog.dismiss()

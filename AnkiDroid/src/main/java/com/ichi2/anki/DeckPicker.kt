@@ -33,7 +33,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.*
 import android.provider.Settings
-import android.text.TextUtils
 import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
@@ -771,7 +770,7 @@ open class DeckPicker :
             }
             R.id.action_scoped_storage_migrate -> {
                 Timber.i("DeckPicker:: migrate button pressed")
-                offerToMigrate()
+                showDialogThatOffersToMigrateStorage()
                 return true
             }
             R.id.action_import -> {
@@ -2344,6 +2343,14 @@ open class DeckPicker :
         }
     }
 
+    /** Disables the shortcut of the deck and the children belonging to it.*/
+    fun disableDeckAndChildrenShortcuts(did: DeckId) {
+        val childDids = col.decks.childDids(did, col.decks.childMap()).map { it.toString() }
+        val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
+        val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
+        ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
+    }
+
     fun renameDeckDialog(did: DeckId) {
         val currentName = col.decks.name(did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
@@ -2706,13 +2713,13 @@ open class DeckPicker :
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
         fun joinSyncMessages(dialogMessage: String?, syncMessage: String?): String? {
             // If both strings have text, separate them by a new line, otherwise return whichever has text
-            return if (!TextUtils.isEmpty(dialogMessage) && !TextUtils.isEmpty(syncMessage)) {
+            return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
                 """
      $dialogMessage
      
      $syncMessage
                 """.trimIndent()
-            } else if (!TextUtils.isEmpty(dialogMessage)) {
+            } else if (!dialogMessage.isNullOrEmpty()) {
                 dialogMessage
             } else {
                 syncMessage
@@ -2789,13 +2796,6 @@ open class DeckPicker :
                 openUrl(R.string.link_scoped_storage_faq)
             }
         }
-    }
-
-    /**
-     * Show a window offering the user to migrate, postpone or learn mose.
-     */
-    fun offerToMigrate() {
-        // TODO: Implements
     }
 
     /**

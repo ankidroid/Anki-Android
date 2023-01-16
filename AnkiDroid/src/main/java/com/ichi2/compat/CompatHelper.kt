@@ -17,7 +17,10 @@ package com.ichi2.compat
 
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
+import android.util.SparseArray
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
 import com.ichi2.compat.CompatHelper.Companion.compat
@@ -82,6 +85,14 @@ class CompatHelper private constructor() {
 
         inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
             return compat.getParcelableExtra(this, name, T::class.java)
+        }
+
+        inline fun <reified T : Parcelable> Bundle.getParcelableArrayListCompat(key: String, clazz: Class<T>): ArrayList<T>? {
+            return compat.getParcelableArrayList(this, key, clazz)
+        }
+
+        inline fun <reified T> Parcel.readSparseArrayCompat(loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
+            return compat.readSparseArray(this, loader, clazz)
         }
     }
 }

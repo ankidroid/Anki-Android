@@ -12,7 +12,6 @@
  */
 package com.ichi2.libanki
 
-import android.text.TextUtils
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.FileOperation
@@ -76,9 +75,9 @@ class TextNoteExporterTest(
                 row.add(exporter.processText(field))
             }
             if (includeTags) {
-                row.add(TextUtils.join(" ", note.tags))
+                row.add(note.tags.joinToString(" "))
             }
-            val expected = TextUtils.join("\t", row)
+            val expected = row.joinToString("\t")
             Assert.assertEquals(expected, line)
         }
     }

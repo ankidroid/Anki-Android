@@ -197,7 +197,7 @@
         <item quantity="other">Export %d selected cards as apkg file?</item>
     </plurals>
     <string name="export_in_progress">در حال صدور فایل مجموعۀ آنکی...</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_success_title">پیکربندی با موفقیت صادر شد</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای apkg در دسترس است. صرفه جویی در...</string>
     <string name="export_save_apkg_successful">بسته Anki با موفقیت ذخیره شد</string>
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
@@ -412,6 +412,8 @@
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>

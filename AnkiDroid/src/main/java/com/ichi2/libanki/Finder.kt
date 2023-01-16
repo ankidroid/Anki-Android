@@ -19,7 +19,6 @@
 package com.ichi2.libanki
 
 import android.database.SQLException
-import android.text.TextUtils
 import androidx.annotation.CheckResult
 import com.ichi2.libanki.SortOrder.*
 import com.ichi2.libanki.stats.Stats
@@ -218,7 +217,7 @@ class Finder(private val col: Collection) {
             // failed command?
             @Suppress("NAME_SHADOWING")
             var txt = txt
-            if (TextUtils.isEmpty(txt)) {
+            if (txt.isNullOrEmpty()) {
                 // if it was to be negated then we can just ignore it
                 if (isnot) {
                     isnot = false
@@ -318,7 +317,7 @@ class Finder(private val col: Collection) {
         }
         if (order is AfterSqlOrderBy) {
             val query = order.customOrdering
-            return if (TextUtils.isEmpty(query)) {
+            return if (query.isEmpty()) {
                 _order(NoOrdering())
             } else {
                 // custom order string provided
@@ -633,7 +632,7 @@ class Finder(private val col: Collection) {
                 }
             }
         }
-        return TextUtils.join(" or ", lims.toTypedArray())
+        return lims.toTypedArray().joinToString(" or ")
     }
 
     private fun _findField(field: String, `val`: String): String? {
@@ -744,13 +743,13 @@ class Finder(private val col: Collection) {
                 "select c.id from cards c, notes n where c.nid=n.id and "
             }
             // combine with preds
-            sql += if (!TextUtils.isEmpty(preds)) {
+            sql += if (preds.isNotEmpty()) {
                 "($preds)"
             } else {
                 "1"
             }
             // order
-            if (!TextUtils.isEmpty(order)) {
+            if (order.isNotEmpty()) {
                 sql += " $order"
             }
             return sql
@@ -921,7 +920,7 @@ class Finder(private val col: Collection) {
                     var `val` = flds[ord]
                     `val` = Utils.stripHTMLMedia(`val`)
                     // empty does not count as duplicate
-                    if (TextUtils.isEmpty(`val`)) {
+                    if (`val`.isEmpty()) {
                         continue
                     }
                     if (!vals.containsKey(`val`)) {

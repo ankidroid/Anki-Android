@@ -254,11 +254,10 @@ class ModelBrowser : AnkiActivity() {
             }
         }.toList()
 
-        // TODO Instead of appending " copy", a string template should be used instead.
         fun ModelInfo.makeSuggestedName(): String {
             val suggestion = when (this) {
                 is StandardModelInfo -> name
-                else -> name + " " + resources.getString(R.string.model_clone_suffix)
+                else -> "$name ${resources.getString(R.string.model_clone_suffix)}"
             }
 
             val alreadyExists = infos.any { it is UserModelInfo && it.name == suggestion }

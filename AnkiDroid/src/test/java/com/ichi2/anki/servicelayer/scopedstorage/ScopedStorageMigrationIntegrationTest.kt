@@ -59,7 +59,10 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
     @Test
     fun `Valid migration`() {
+        setLegacyStorage()
+
         underTest = MigrateUserDataTester.create()
+
         // use all the real components on a real collection.
         val inputDirectory = File(col.path).parentFile!!
         File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
@@ -87,6 +90,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
     @Test
     fun `Migration without space fails`() {
+        setLegacyStorage()
         // use all the real components on a real collection.
         val inputDirectory = File(col.path).parentFile!!
         File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
