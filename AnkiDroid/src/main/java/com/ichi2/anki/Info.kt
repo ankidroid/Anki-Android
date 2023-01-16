@@ -37,6 +37,10 @@ import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import timber.log.Timber
 
+private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
+
+private const val GITHUB_COMMITS = "https://github.com/ankidroid/Anki-Android/commits/main"
+
 /**
  * Shows an about box, which is a small HTML page.
  */
@@ -122,7 +126,9 @@ class Info : AnkiActivity() {
                         view: WebView?,
                         request: WebResourceRequest?
                     ): Boolean {
-                        if (request?.url.toString() == "https://docs.ankidroid.org/changelog.html" || request?.url.toString() == "https://github.com/ankidroid/Anki-Android/commits/main") {
+                        // Excludes the url that are opened inside the changelog.html
+                        // and redirect the user to the browser
+                        if (request?.url.toString() in arrayListOf(CHANGE_LOG_URL, GITHUB_COMMITS)) {
                             return false
                         }
                         Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString())).apply {
