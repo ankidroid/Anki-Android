@@ -114,7 +114,6 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
-import com.ichi2.themes.Themes
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
@@ -716,7 +715,9 @@ open class DeckPicker :
                 BadgeDrawableBuilder.removeBadge(menuItem)
             }
         }
-        menuItem.iconAlpha = if (syncIcon == SyncIconState.Disabled) Themes.ALPHA_ICON_DISABLED_LIGHT else Themes.ALPHA_ICON_ENABLED_LIGHT
+        if (syncIcon == SyncIconState.Disabled) {
+            menuItem.setIcon(R.drawable.ic_sync_lock_24)
+        }
     }
 
     @VisibleForTesting
