@@ -52,7 +52,7 @@
     <string name="help">Nápověda</string>
     <string name="drawing">Kreslení</string>
     <string name="send_feedback">Odeslat zpětnou vazbu</string>
-    <string name="studyoptions_due_today">Dnes k zopakování:</string>
+    <string name="studyoptions_due_today">Dnes ke zkoušení:</string>
     <string name="studyoptions_new_total">Celkem nových karet:</string>
     <string name="studyoptions_total_cards">Celkem karet:</string>
     <string name="studyoptions_eta">Odhadovaný čas (min):</string>

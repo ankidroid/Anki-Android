@@ -548,7 +548,6 @@ open class CardBrowser :
 
     fun searchWithFilterQuery(filterQuery: String) {
         mSearchTerms = filterQuery
-
         mSearchView!!.setQuery(mSearchTerms, true)
         searchCards()
     }
@@ -1803,7 +1802,7 @@ open class CardBrowser :
             mSearchTerms.isNotEmpty() -> "$flagSearchTerm $mSearchTerms"
             else -> flagSearchTerm
         }
-        searchCards()
+        searchWithFilterQuery(mSearchTerms)
     }
 
     internal abstract class ListenerWithProgressBar<Progress, Result>(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Progress, Result>(browser) {

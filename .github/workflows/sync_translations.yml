@@ -10,6 +10,7 @@ jobs:
   sync_translations:
     permissions:
       contents: write  # for Git to git push
+      pull-requests: write # to create the PR with changes
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
     runs-on: macos-latest
@@ -52,3 +53,38 @@ jobs:
           git push --set-upstream origin +i18n_sync
           echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
           echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
+
+      - name: Check if there are strings changes
+        id: tr_check
+        run: |
+          git checkout i18n_sync
+          COMMITS_COUNT=`git rev-list --count HEAD ^main`
+          if [ "$COMMITS_COUNT" -gt 0 ]; then
+            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR for strings changes if needed
+        if: ${{ steps.tr_check.outputs.HAS_CHANGES }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const now = new Date();
+            // Date format used: YYYY/MM/DD HH:MM , UTC time(ex: 2023/01/13 08:38) 
+            const formattedDate = 
+              now.getUTCFullYear() + "/" + 
+              ("0" + (now.getUTCMonth() + 1)).slice(-2) + "/" +
+              ("0" + now.getUTCDate()).slice(-2) + " " + 
+              ("0" + now.getUTCHours()).slice(-2) + ":" +
+              ("0" + now.getUTCMinutes()).slice(-2);
+              
+            github.rest.pulls.create({              
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Updated strings from Crowdin " + formattedDate,
+              head: "i18n_sync",
+              base: "main",
+              body: "Contains the newest strings changes from Crowdin.",
+              maintainer_can_modify: true
+            });

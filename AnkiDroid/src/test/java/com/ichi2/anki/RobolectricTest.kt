@@ -288,7 +288,7 @@ open class RobolectricTest : CollectionGetter {
      * Returns an instance of [SharedPreferences] using the test context
      * @see [editPreferences] for editing
      */
-    protected fun getPreferences(): SharedPreferences {
+    fun getPreferences(): SharedPreferences {
         return AnkiDroidApp.getSharedPrefs(targetContext)
     }
 

@@ -39,6 +39,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
@@ -51,6 +52,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
@@ -116,9 +118,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return arguments.getString(SUMMARY_MESSAGE)
     }
 
-    @Suppress("deprecation") // getParcelableArrayList
-    private fun getDeckNames(arguments: Bundle) =
-        arguments.getParcelableArrayList<SelectableDeck>(DECK_NAMES)!! as ArrayList<SelectableDeck>
+    private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> =
+        arguments.getParcelableArrayListCompat(DECK_NAMES, SelectableDeck::class.java)!!
 
     private val title: String
         get() = requireArguments().getString(TITLE)!!

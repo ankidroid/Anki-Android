@@ -27,7 +27,10 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
+import android.util.SparseArray
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
@@ -75,6 +78,8 @@ interface Compat {
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
+    fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>?
+    fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>?
 
     /**
      * Retrieve extended data from the intent.

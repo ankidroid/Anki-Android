@@ -397,7 +397,7 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ଅଵ୍ୟଵହୃତ ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକୁ ଵିଲୋପ କରିଦେବା</string>
     <string name="pref__delete_unused_media_files__summary">ସମସ୍ତ ପ୍ରତିଛଵି ଓ ଅନ୍ୟ ମିଡ଼ିଆ ଯେଉଁଥିରେ _ ଉପସର୍ଗ ଭାଵେ ନାହିଁ ଆଉ କୌଣସି ନୋଟ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହୋଇନି ଵିଲୋପ ହେବ</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="dialog__media_check_required__message">ଅଵ୍ୟଵହୃତ ମିଡ଼ିଆ ଫାଇଲ୍ ଖୋଜିବା ପାଇଁ ଗୋଟିଏ ମିଡ଼ିଆ ଯାଞ୍ଚ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ଅଵ୍ୟଵହୃତ ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକୁ ଵିଲୋପ କରିଦେବେ</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ବ୍ୟାକଅପଗୁଡ଼ିକୁ ଵିଲୋପ କରିବା</string>
@@ -405,20 +405,20 @@
     <string name="progress__deleting_backups">ବ୍ୟାକଅପଗୁଡ଼ିକ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">ସଂଗ୍ରହ ଵିଲୋପ କରିଦେବା</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="pref__delete_collection__summary">ସଂଗ୍ରହ, ମିଡ଼ିଆ, ଏଵଂ ବ୍ୟାକଅପ୍ ଵିଲୋପ କରିବା। ଆପ୍ ସେଟିଂସ୍ ଵିଲୋପ ହୁଏନାହିଁ</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">ସଂଗ୍ରହ ଵିଲୋପ କରିଦେବେ</string>
-    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
+    <string name="dialog__delete_collection__message">ଆପଣ ଆପଣଙ୍କ ସଂଗ୍ରହ, ମିଡ଼ିଆ, ଏଵଂ ବ୍ୟାକଅପ୍ ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ?</string>
     <string name="progress__deleting_collection">ସଂଗ୍ରହ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ସବୁକିଛି ଵିଲୋପ କରିଦେବା</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__summary">ସଂଗ୍ରହ, ମିଡ଼ିଆ, ବ୍ୟାକଅପ୍, ଏଵଂ ସେଟିଂସ୍ ଵିଲୋପ କରିବା</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ସବୁକିଛି ଵିଲୋପ କରିଦେବେ</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ସବୁ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ଆପଣଙ୍କ ସଂଗ୍ରହ, ମିଡ଼ିଆ, ବ୍ୟାକଅପ୍ ଏଵଂ ଅଗ୍ରାଧିକାର ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କ୍ରିୟାଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ସବୁ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ଆପଣଙ୍କ ସଂଗ୍ରହ, ମିଡ଼ିଆ, ବ୍ୟାକଅପ୍ ଏଵଂ ଅଗ୍ରାଧିକାର ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କୃତ୍ୟଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ଆପ୍ ଡାଟା ଵିଲୋପ କରିଦେବା</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="pref__delete_app_data__summary">ସେଟିଂସ୍ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବା</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ଆପ୍ ଡାଟା ଵିଲୋପ କରିଦେବେ</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ସେଟିଂସ୍ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କ୍ରିୟାଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ସେଟିଂସ୍ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କୃତ୍ୟଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->

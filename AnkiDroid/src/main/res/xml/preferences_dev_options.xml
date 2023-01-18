@@ -48,10 +48,6 @@
         android:key="@string/pref_show_onboarding_key"
         android:defaultValue="false"/>
     <Preference
-        android:title="Enable Scoped Storage"
-        android:summary="UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE"
-        android:key="@string/pref_scoped_storage_key"/>
-    <Preference
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
