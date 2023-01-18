@@ -395,6 +395,9 @@ open class DeckPicker :
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
+        asyncMessageContent = resources.getString(R.string.import_interrupted)
+        asyncMessageTitle = resources.getString(R.string.import_title)
+
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
             val appIntro = Intent(this, IntroductionActivity::class.java)
@@ -2679,6 +2682,13 @@ open class DeckPicker :
     }
 
     companion object {
+
+        /** Import Error variable so to access the resource directory without
+         * causing a crash
+         */
+        lateinit var asyncMessageContent: String
+        lateinit var asyncMessageTitle: String
+
         /**
          * Result codes from other activities
          */
