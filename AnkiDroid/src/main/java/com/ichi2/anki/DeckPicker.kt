@@ -131,6 +131,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
 import kotlin.math.roundToLong
+import kotlin.system.measureTimeMillis
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
@@ -2775,12 +2776,16 @@ open class DeckPicker :
             return
         }
         launchCatchingTask {
-            withProgress(getString(R.string.start_migration_progress_message)) {
-                withContext(Dispatchers.IO) {
-                    migrateEssentialFiles(baseContext)
+            val elapsedMillisDuringEssentialFilesMigration = measureTimeMillis {
+                withProgress(getString(R.string.start_migration_progress_message)) {
+                    withContext(Dispatchers.IO) {
+                        migrateEssentialFiles(baseContext)
+                    }
                 }
             }
-            showSnackbar(R.string.migration_part_1_done_resume)
+            if (elapsedMillisDuringEssentialFilesMigration > 800) {
+                showSnackbar(R.string.migration_part_1_done_resume)
+            }
             startMigrateUserDataService()
         }
     }
