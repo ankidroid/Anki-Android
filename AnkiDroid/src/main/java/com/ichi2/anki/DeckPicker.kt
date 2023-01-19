@@ -713,10 +713,8 @@ open class DeckPicker :
             }
             SyncIconState.Disabled -> {
                 BadgeDrawableBuilder.removeBadge(menuItem)
+                menuItem.setIcon(R.drawable.ic_sync_lock_24)
             }
-        }
-        if (syncIcon == SyncIconState.Disabled) {
-            menuItem.setIcon(R.drawable.ic_sync_lock_24)
         }
     }
 
