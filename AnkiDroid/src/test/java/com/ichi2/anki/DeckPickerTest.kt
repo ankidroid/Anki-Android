@@ -623,4 +623,19 @@ class DeckPickerTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun hasShownAppIntroTest() {
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            scenario.onActivity { deckPicker: DeckPicker ->
+                // Default
+                assertEquals(true, deckPicker.hasShownAppIntro())
+                // Set INTRODUCTION_SLIDES_SHOWN true to emulate app has shown introduction slides
+                AnkiDroidApp.getSharedPrefs(targetContext).edit {
+                    putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
+                }
+                assertEquals(false, deckPicker.hasShownAppIntro())
+            }
+        }
+    }
 }

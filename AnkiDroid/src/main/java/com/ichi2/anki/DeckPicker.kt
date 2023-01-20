@@ -160,8 +160,6 @@ const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
 @KotlinCleanup("lots to do")
-@NeedsTest("On a new startup, the App Intro is displayed")
-@NeedsTest("If the collection has been created, the app intro is not displayed")
 @NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :
     NavigationDrawerActivity(),
@@ -488,7 +486,8 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
     }
 
-    private fun hasShownAppIntro(): Boolean {
+    @VisibleForTesting
+    fun hasShownAppIntro(): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
 
         // if moving from 2.15 to 2.16 then we do not want to show the intro
