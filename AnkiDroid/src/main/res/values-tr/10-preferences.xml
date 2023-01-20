@@ -295,7 +295,7 @@
     <string name="deck_conf_manage" maxLength="41">Grup yönetimi</string>
     <string name="deck_conf_manage_summ">Ayar grupları ekle ve değiştir</string>
     <string name="deck_conf_current_group" maxLength="41">Şu anki grup</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Adını değiştir</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Yeniden adlandır</string>
     <string name="deck_conf_reset" maxLength="41">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Yapılandırma ekle</string>

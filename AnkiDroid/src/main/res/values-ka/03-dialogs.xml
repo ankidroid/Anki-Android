@@ -218,20 +218,20 @@
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Using AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_item_anki_manual">Anki-ს ინსტრუქცია</string>
+    <string name="help_item_ankidroid_faq">ხშირად დასმული კითხვები AnkiDroid-ზე</string>
     <string name="help_title_get_help">დახმარების მიღება</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">AnkiDroid-ის მხარდაჭერა</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_opencollective_donate">ფინანსური მხარდაჭერა</string>
     <string name="help_item_support_develop_ankidroid">განავითარე</string>
     <string name="help_item_support_rate_ankidroid">შეფასება</string>
     <string name="help_item_support_other_ankidroid">სხვა</string>
     <string name="multimedia_editor_trans_translate">თარგმნა</string>
     <string name="help_title_community">საზოგადოება</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">Anki-ს ფორუმი</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
