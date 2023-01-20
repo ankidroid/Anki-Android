@@ -30,15 +30,13 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 
-class TemporaryModel(model: Model) {
+class TemporaryModel(val model: Model) {
     enum class ChangeType {
         ADD, DELETE
     }
 
     private var mTemplateChanges = ArrayList<Array<Any>>()
     var editedModelFileName: String? = null
-    @KotlinCleanup("make this a constructor property")
-    val model: Model
 
     @KotlinCleanup("use the bundleOf method")
     fun toBundle(): Bundle {
@@ -458,6 +456,5 @@ class TemporaryModel(model: Model) {
 
     init {
         Timber.d("Constructor called with model")
-        this.model = model
     }
 }
