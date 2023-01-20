@@ -1560,14 +1560,22 @@ open class DeckPicker :
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
+
+        fun shouldFetchMedia(): Boolean {
+            val always = getString(R.string.sync_media_always_value)
+            val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
+            val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
+            return shouldFetchMedia == always ||
+                (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
+        }
+
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
-            val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, syncMedia)
+                handleNewSync(conflict, shouldFetchMedia())
             } else {
-                val data = arrayOf(hkey, syncMedia, conflict, HostNumFactory.getInstance(baseContext))
+                val data = arrayOf(hkey, shouldFetchMedia(), conflict, HostNumFactory.getInstance(baseContext))
                 Connection.sync(mSyncListener, Connection.Payload(data))
             }
         }
