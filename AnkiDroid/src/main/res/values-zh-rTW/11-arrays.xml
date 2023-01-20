@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">新卡片在複習卡片之前</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">當單字卡沒有指定字型時</string>
-    <string name="override_font_always">總是</string>
+    <string name="override_font_always" comment="Option to always override font">總是</string>
     <!-- theme labels -->
     <string name="theme_follow_system">依據系統設置</string>
     <!-- day_theme_labels -->

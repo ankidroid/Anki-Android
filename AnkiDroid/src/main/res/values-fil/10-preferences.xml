@@ -125,12 +125,14 @@
     <string name="tts_summ">Binabasa ang tanong at sagot kung walang sound file na kasama</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Kunin ang media sa pag-sync</string>
-    <string name="sync_fetch_missing_media_summ">Awtomatikong makuha ang nawawalang media kapag naka-sync</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Hindi naka-log in</string>
     <string name="automatic_sync_choice" maxLength="41">Awtomatikong pag-synchronize</string>
     <string name="automatic_sync_choice_summ">Awtomatikong i-sync sa start / exit ng app kung ang huling pag-sync ay higit sa 10
          minuto ang nakalipas.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

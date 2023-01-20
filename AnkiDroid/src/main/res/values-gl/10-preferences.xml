@@ -125,12 +125,14 @@
     <string name="tts_summ">Ler en voz alta as preguntas e respostas se non existe ficheiro de son</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Obter multimedia ao sincronizar</string>
-    <string name="sync_fetch_missing_media_summ">Obter automaticamente os medios que faltan ao sincronizar</string>
     <string name="sync_account" maxLength="41">Conta AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Sen sesión iniciada</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar autom. ao iniciar/saír da aplicación se pasaron máis de 10
         minutos dende a última sincronización.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

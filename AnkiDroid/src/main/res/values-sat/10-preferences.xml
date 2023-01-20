@@ -125,11 +125,13 @@
     <string name="tts_summ">ᱟᱱᱡᱚᱢ ᱨᱮᱫ ᱵᱟᱝ ᱛᱟᱦᱮᱱ ᱠᱷᱟᱱ ᱠᱩᱠᱞᱤ ᱟᱨ ᱛᱮᱞᱟ ᱡᱩᱨ ᱛᱮ ᱯᱟᱲᱦᱟᱣᱢᱮ</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">ᱟᱹᱭ-ᱢᱤ. ᱡᱷᱚᱜ ᱢᱮᱰ. ᱟᱹᱜᱩᱭᱼᱟ</string>
-    <string name="sync_fetch_missing_media_summ">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭ-ᱢᱤ. ᱡᱷᱚᱜ ᱟᱫ ᱠᱚ ᱢᱮᱰ.ᱤᱭᱟ ᱟᱹᱜᱩᱭᱼᱟ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ᱠᱷᱟᱛᱟ</string>
     <string name="sync_account_summ_logged_out">ᱵᱟᱝ ᱵᱚᱞᱚᱣᱟᱠ</string>
     <string name="automatic_sync_choice" maxLength="41">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="automatic_sync_choice_summ">ᱟᱭᱩᱨ ᱢᱤᱫ ᱢᱮ ᱡᱚᱫᱤ ᱑᱐ ᱴᱤᱡ ᱠᱷᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱮᱫ ᱠᱷᱟᱱ ᱮᱯ ᱮᱛᱚᱦᱚ ᱟᱨ ᱵᱚᱸᱫ ᱢᱟᱲᱟᱝ ᱨᱮ</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">ᱥᱭᱸᱠᱨᱚᱱᱟᱭᱡᱮᱥᱚᱱ ᱥᱴᱟᱴᱟᱹᱥ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="sync_status_badge_summ">ᱡᱩᱫᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱟᱹᱯᱞᱚᱰ ᱜᱟᱱᱚᱜ ᱠᱷᱟᱱ ᱥᱭᱸᱠ ᱟᱭᱠᱚᱱ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

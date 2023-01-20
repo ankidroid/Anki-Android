@@ -125,12 +125,14 @@
     <string name="tts_summ">Чытае пытанні і адказы, калі аўдыяфайл адсутнічае</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Спампоўваць медыяфайлы</string>
-    <string name="sync_fetch_missing_media_summ">Аўтаматычна атрымліваць адсутныя медыяфайлы, падчас сінхранізацыі</string>
     <string name="sync_account" maxLength="41">Уліковы запіс AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не ўвайшлі ў сістэму</string>
     <string name="automatic_sync_choice" maxLength="41">Аўтаматычная сінхранізацыя</string>
     <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
         калі з часу апошняй сінхранізацыі мінула больш чым 10 хвілін.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Адлюстроўваць статус сінхранізацыі</string>
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="metered_sync_title" maxLength="41">Дазволіць сінхранізацыю пры тарыфікацыі злучэння</string>

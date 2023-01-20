@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">学习新卡片后再复习</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">当卡片中没有指定字体时</string>
-    <string name="override_font_always">总是</string>
+    <string name="override_font_always" comment="Option to always override font">总是</string>
     <!-- theme labels -->
     <string name="theme_follow_system">跟随系统</string>
     <!-- day_theme_labels -->

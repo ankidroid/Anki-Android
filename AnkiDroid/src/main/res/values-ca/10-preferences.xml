@@ -125,11 +125,13 @@
     <string name="tts_summ">Llegeix en veu alta les preguntes i respostes si no s\'inclou arxiu de so</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Recupera els media en sincronitzar</string>
-    <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten en sincronitzar.</string>
     <string name="sync_account" maxLength="41">Compte d\'AnkiWeb</string>
     <string name="sync_account_summ_logged_out">No heu iniciat sessió</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Mostra l\'estat de sincronització</string>
     <string name="sync_status_badge_summ">Canvia la icona de sincronització quan es puguin pujar canvis</string>
     <string name="metered_sync_title" maxLength="41">Permet la sincronització a les connexions mesurades</string>

@@ -125,12 +125,14 @@
     <string name="tts_summ">Perskaitomas klausimas ir atsakymas, jei nėra įkeltas joks garso failas</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Sinchronizuojant parsiųsti laikmenas</string>
-    <string name="sync_fetch_missing_media_summ">Sinchronizuojant, automatiškai parsiųsti trūkstamas laikmenas</string>
     <string name="sync_account" maxLength="41">„AnkiWeb“ paskyra</string>
     <string name="sync_account_summ_logged_out">Esate neprisijungę</string>
     <string name="automatic_sync_choice" maxLength="41">Automatinis sinchronizavimas</string>
     <string name="automatic_sync_choice_summ">Sinchronizuoti automatiškai įjungiant/išjungiant programą, jei paskutinis sinchronizavimas vyko prieš daugiau nei 10
         minučių.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
