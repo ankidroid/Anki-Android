@@ -18,12 +18,12 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.utils.BundleUtils.getSerializableWithCast
-import com.ichi2.utils.KotlinCleanup
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -39,15 +39,14 @@ class TemporaryModel(val model: Model) {
     private var mTemplateChanges = ArrayList<Array<Any>>()
     var editedModelFileName: String? = null
 
-    @KotlinCleanup("use the bundleOf method")
     fun toBundle(): Bundle {
-        val outState = Bundle()
-        outState.putString(
-            INTENT_MODEL_FILENAME,
-            saveTempModel(AnkiDroidApp.instance.applicationContext, model)
+
+        val fileName = saveTempModel(AnkiDroidApp.instance.applicationContext, model)
+
+        return bundleOf(
+            INTENT_MODEL_FILENAME to fileName,
+            "mTemplateChanges" to mTemplateChanges
         )
-        outState.putSerializable("mTemplateChanges", mTemplateChanges)
-        return outState
     }
 
     @Suppress("deprecation") // getSerializable
