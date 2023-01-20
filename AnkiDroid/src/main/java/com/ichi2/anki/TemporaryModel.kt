@@ -205,11 +205,6 @@ class TemporaryModel(val model: Model) {
 
     val templateChanges: ArrayList<Array<Any>>
         get() {
-            @KotlinCleanup("from the code it seems mTemplateChanges is indeed not null, if true remove this check")
-            @Suppress("SENSELESS_COMPARISON")
-            if (mTemplateChanges == null) {
-                mTemplateChanges = ArrayList()
-            }
             return mTemplateChanges
         }
 
