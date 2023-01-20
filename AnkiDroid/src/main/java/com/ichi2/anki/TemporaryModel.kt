@@ -444,8 +444,4 @@ class TemporaryModel(val model: Model) {
             return -1
         }
     }
-
-    init {
-        Timber.d("Constructor called with model")
-    }
 }
