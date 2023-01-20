@@ -125,11 +125,13 @@
     <string name="tts_summ">Lue kysymys ja vausta, jos äänitiedosto ei tule mukana</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Hae media synkronointi</string>
-    <string name="sync_fetch_missing_media_summ">Hakee automaattisesti puuttuvat mediat kun synkronoidaan.</string>
     <string name="sync_account" maxLength="41">AnkiWeb tili</string>
     <string name="sync_account_summ_logged_out">Ei kirjautuneena</string>
     <string name="automatic_sync_choice" maxLength="41">Automaattinen synkronointi</string>
     <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

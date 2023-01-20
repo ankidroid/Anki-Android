@@ -125,12 +125,14 @@
     <string name="tts_summ">Читај питање/одговор, ако нема прикључене звучне датотеке</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Додај медије</string>
-    <string name="sync_fetch_missing_media_summ">Аутоматски додај недостајуће медија датотеке при синхронизацији.</string>
     <string name="sync_account" maxLength="41">AnkiWeb налог</string>
     <string name="sync_account_summ_logged_out">Нисте ауторизовани</string>
     <string name="automatic_sync_choice" maxLength="41">Аутоматска синхронизација</string>
     <string name="automatic_sync_choice_summ">Синхронизуј аутоматски на старт/излаз, ако је од последње синхронизације прошло више
         од 10 минута.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

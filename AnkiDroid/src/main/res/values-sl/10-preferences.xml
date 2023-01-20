@@ -125,12 +125,14 @@
     <string name="tts_summ">Prebere vprašanje in odgovor, če ni zvočne datoteke</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Pridobi predst. ob sinhr.</string>
-    <string name="sync_fetch_missing_media_summ">Samodejno pridobi manjkajočo predstavnost ob sinhronizaciji</string>
     <string name="sync_account" maxLength="41">Račun AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Niste prijavljeni</string>
     <string name="automatic_sync_choice" maxLength="41">Samodejna sinhronizacija</string>
     <string name="automatic_sync_choice_summ">Samodejni sinhroniziraj ob zagonu/zapiranju programa, če je bila
         zadnja sinhronizacija pred več kot 10-mi minutami.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

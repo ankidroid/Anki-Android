@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Novaj kartoj antaŭ ripetataj</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Kiam neniu tiparo difinita por kartoj</string>
-    <string name="override_font_always">Ĉiam</string>
+    <string name="override_font_always" comment="Option to always override font">Ĉiam</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Laŭ operaciumo</string>
     <!-- day_theme_labels -->

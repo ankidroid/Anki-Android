@@ -125,11 +125,13 @@
     <string name="tts_summ">कोई ध्वनि फ़ाइल शामिल है, तो प्रश्न और उत्तर बाहर पढ़ता है</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">मीडिया को सिंक पर लाएं</string>
-    <string name="sync_fetch_missing_media_summ">सिंक्रनाइज़ करते समय गुम मीडिया स्वचालित रूप से लाएं</string>
     <string name="sync_account" maxLength="41">AnkiWeb खाता</string>
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
     <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
