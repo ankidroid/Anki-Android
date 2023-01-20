@@ -105,7 +105,7 @@
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
     <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>
-    <string name="custom_study_review_forgotten">Unutulmuş kartları tekrarla</string>
+    <string name="custom_study_review_forgotten">Unutulan kartları gözden geçir</string>
     <string name="custom_study_review_ahead">Önceden çalış</string>
     <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
     <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
@@ -223,7 +223,7 @@
     <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
     <string name="steps_min_error">En az bir adım gerekiyor</string>
     <string name="sched_end">(bitiş)</string>
-    <string name="sched_unbury_action">Onları şimdi görmek için menüden \"Görünür Yap\"a dokunun.</string>
+    <string name="sched_unbury_action">Onları şimdi görmek için menüden \"Gizlemeyi geri al\"a dokunun.</string>
     <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
@@ -413,9 +413,9 @@
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deste var</string>
     <string name="deck_created">Deste oluşturuldu</string>
-    <string name="deck_renamed">Destenin adı değiştirildi</string>
+    <string name="deck_renamed">Deste yeniden adlandırıldı</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Deste silindi. Lütfen kısayolu kaldırın</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
