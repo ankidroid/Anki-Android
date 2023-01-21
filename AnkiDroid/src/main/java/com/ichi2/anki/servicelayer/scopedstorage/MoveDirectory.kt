@@ -36,19 +36,6 @@ import java.io.File
 
 data class MoveDirectory(val source: Directory, val destination: File) : Operation() {
     override fun execute(context: MigrationContext): List<Operation> {
-
-        // This seems unlikely to happen. Both paths need to be on the same mount point
-        // We use directory.exists() to ensure that this operation doesn't occur twice. renameTo
-        // is likely to be expensive, so we use the creation of the target directory to mark
-        // that the rename previously failed
-        if (context.attemptRename && !destination.exists() && rename(source, destination)) {
-            Timber.d("successfully renamed '$source' to '$destination'")
-            return operationCompleted()
-        } else {
-            // mark in the context that rename should not be attempted again for any sub-operations
-            context.attemptRename = false
-        }
-
         if (!createDirectory(context)) {
             return operationCompleted()
         }

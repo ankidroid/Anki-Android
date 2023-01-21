@@ -168,9 +168,12 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          */
         abstract fun reportProgress(transferred: NumberOfBytes)
         /**
-         * Whether [File#renameTo] should be attempted
+         * Whether [File#renameTo] should be attempted for files.
          *
-         * In scoped storage, this is typically false, as we may be moving between mount points
+         * This is not attempted for directories: very unlikely to work as we're copying across
+         * mount points.
+         * Android has internal logic which recovers renames from /storage/emulated
+         * But this hasn't worked for me for folders
          */
         var attemptRename: Boolean = true
 
