@@ -84,10 +84,14 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
         }
 
         // attempt a quick rename
-        if (context.attemptRename && sourceFile.renameTo(destinationFile)) {
-            Timber.d("move successful from '$sourceFile' to '$destinationFile'")
-            context.reportProgress(destinationFile.length())
-            return operationCompleted()
+        if (context.attemptRename) {
+            if (sourceFile.renameTo(destinationFile)) {
+                Timber.d("fast move successful from '$sourceFile' to '$destinationFile'")
+                context.reportProgress(destinationFile.length())
+                return operationCompleted()
+            } else {
+                context.attemptRename = false
+            }
         }
 
         // copy the file, and delete the source.
