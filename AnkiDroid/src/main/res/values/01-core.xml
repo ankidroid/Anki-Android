@@ -235,4 +235,10 @@
         comment="Generic message about an unknown error, to be shown in snackbars and such"
         translatable="false"
         >@string/webview_crash_unknown</string>
+
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>
