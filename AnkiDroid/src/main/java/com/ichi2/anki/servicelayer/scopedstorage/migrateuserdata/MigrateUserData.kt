@@ -32,6 +32,14 @@ import timber.log.Timber
 import java.io.File
 
 typealias NumberOfBytes = Long
+
+fun NumberOfBytes.toKB(): Int {
+    return ((this / 1024).toInt())
+}
+
+fun NumberOfBytes.toMB(): Int {
+    return this.toKB() / 1024
+}
 /**
  * Function that is executed when one file is migrated, with the number of bytes moved.
  * Called with 0 when the file is already present in destination (i.e. successful move with no byte copied)
@@ -292,7 +300,9 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     open class Executor(private val operations: ArrayDeque<Operation>) {
         /** Whether [terminate] was called. Once this is called, a new instance should be used */
-        private var terminated: Boolean = false
+        var terminated: Boolean = false
+            private set
+
         /**
          * A list of operations to be executed before [operations]
          * [operations] should only be executed if this list is clear
@@ -377,7 +387,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @param progressReportParam A function, called for each file that is migrated, with the number of bytes of the file.
      */
     open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: MigrationProgressListener) : MigrationContext() {
-        val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty()
+        val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty() && !executor.terminated
 
         /**
          * The reason that the the execution of the whole migration was terminated early
