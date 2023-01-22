@@ -903,8 +903,9 @@ open class DeckPicker :
         super.onResume()
         refreshState()
         // Migration
-        if (migrationCompleted)
+        if (migrationCompleted) {
             migrationSuccessDialog()
+        }
         migrationCompleted = false
     }
 
