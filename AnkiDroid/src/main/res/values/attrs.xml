@@ -130,6 +130,8 @@
     <attr name="buttonShadowColor" format="color"/>
     <attr name="buttonRippleColor" format="color"/>
     <attr name="buttonForegroundColor" format="color"/>
+    <attr name="largeButtonBorderColor" format="color"/>
+    <attr name="wideButtonBackgroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>

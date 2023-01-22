@@ -98,6 +98,8 @@
         <item name="buttonShadowColor">#bdbdbd</item>
         <item name="buttonRippleColor">#BABABA</item>
         <item name="buttonForegroundColor">#757575</item>
+        <item name="largeButtonBorderColor">@color/white</item>
+        <item name="wideButtonBackgroundColor">@color/material_blue_grey_900</item>
         <!-- FAB -->
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
