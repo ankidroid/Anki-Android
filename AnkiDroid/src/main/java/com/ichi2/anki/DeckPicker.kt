@@ -213,6 +213,9 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
 
+    /** Flag to indicate migration is completed and show the alert dialog */
+    private var migrationCompleted = false
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -900,6 +903,20 @@ open class DeckPicker :
         super.onResume()
         refreshState()
         // Migration
+        if (migrationCompleted)
+            migrationSuccessDialog()
+        migrationCompleted = false
+    }
+
+    private fun migrationSuccessDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.migration_success_title))
+        builder.setMessage(getString(R.string.migration_success_message))
+        builder.setPositiveButton(R.string.dialog_ok) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     fun refreshState() {
@@ -2795,6 +2812,8 @@ open class DeckPicker :
      */
     fun startMigrateUserDataService() {
         // TODO
+        // AlertDialog to be shown after the migration is completed
+        migrationSuccessDialog()
     }
 
     /**

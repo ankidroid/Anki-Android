@@ -284,5 +284,8 @@
     <string name="manual_backup">Manual backup</string>
     <string name="remind_me_later">Remind me later</string>
 
+    <string name="migration_success_message">Scoped storage migration completed successfully!</string>
+    <string name="migration_success_title">Updated successfully</string>
+
 
 </resources>
