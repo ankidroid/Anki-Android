@@ -40,6 +40,7 @@ class DevOptionsFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
         get() = "prefs.dev_options"
 
+    // this is used to launch the ACTION_OPEN_DOCUMENT_TREE intent to select folder from the device
     private var onFolderPermissionActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.e("onFolderPermissionActivityResult: resultCode=${result.resultCode}")
         if (result.resultCode == Activity.RESULT_OK) {
@@ -51,6 +52,7 @@ class DevOptionsFragment : SettingsFragment() {
         }
     }
 
+    // after getting the uri of selected folder we are using this function to retains permission to read and write in the returned folder
     private fun askReadWriteFolderPermission(uri: Uri) {
         val contentResolver = requireActivity().applicationContext.contentResolver
         val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
@@ -101,6 +103,7 @@ class DevOptionsFragment : SettingsFragment() {
             OnboardingUtils.reset(requireContext())
             true
         }
+        // For Give Folder Permission
         requirePreference<Preference>(getString(R.string.pref_give_folder_permission_key)).setOnPreferenceClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
             try {
