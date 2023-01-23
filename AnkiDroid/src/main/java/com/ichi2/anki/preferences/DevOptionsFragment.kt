@@ -15,7 +15,13 @@
  */
 package com.ichi2.anki.preferences
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
@@ -33,6 +39,24 @@ class DevOptionsFragment : SettingsFragment() {
         get() = R.xml.preferences_dev_options
     override val analyticsScreenNameConstant: String
         get() = "prefs.dev_options"
+
+    private var onFolderPermissionActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        Timber.e("onFolderPermissionActivityResult: resultCode=${result.resultCode}")
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data.also { uri ->
+                askReadWriteFolderPermission(uri!!)
+            }
+        } else {
+            Timber.tag("OnFolderPerm").d("onFolderPermissionActivityResult Result Not Ok")
+        }
+    }
+
+    private fun askReadWriteFolderPermission(uri: Uri) {
+        val contentResolver = requireActivity().applicationContext.contentResolver
+        val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        contentResolver.takePersistableUriPermission(uri, takeFlags)
+    }
 
     override fun initSubscreen() {
         val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
@@ -75,6 +99,18 @@ class DevOptionsFragment : SettingsFragment() {
         // Reset onboarding
         requirePreference<Preference>(getString(R.string.pref_reset_onboarding_key)).setOnPreferenceClickListener {
             OnboardingUtils.reset(requireContext())
+            true
+        }
+        requirePreference<Preference>(getString(R.string.pref_give_folder_permission_key)).setOnPreferenceClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+            try {
+                onFolderPermissionActivityResult.launch(
+                    intent
+                )
+            } catch (e: ActivityNotFoundException) {
+                Timber.w(e)
+                showSnackbar(R.string.activity_start_failed)
+            }
             true
         }
     }
