@@ -13,7 +13,7 @@
 <a href="https://discord.gg/qjzcRTx"><img src="https://img.shields.io/discord/368267295601983490"></img></a>
 <a href="https://github.com/ankidroid/Anki-Android/blob/main/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 
-# AnkiDroid
+# AnkiDroid chandni
 A semi-official port of the open source [Anki](https://apps.ankiweb.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!
 
 <img src="docs/graphics/logos/ankidroid_logo.png" align="right" width="40%" height="100%"></img>
