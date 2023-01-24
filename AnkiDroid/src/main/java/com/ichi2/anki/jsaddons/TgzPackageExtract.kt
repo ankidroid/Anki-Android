@@ -37,7 +37,6 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import android.text.format.Formatter
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Utils
 import org.apache.commons.compress.archivers.ArchiveException
@@ -68,23 +67,8 @@ import java.util.zip.GZIPInputStream
  * https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream
  */
 
-/**
- * addons path typealias, the path is some-addon path inside addons directory
- * The path structure of some-addon
- *
- * AnkiDroid
- *   - addons
- *       - some-addon
- *           - package
- *               - index.js
- *               - README.md
- *       - some-another-addon
- */
-typealias AddonsPackageDir = File
-
 class TgzPackageExtract(private val context: Context) {
     private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
-    private var requiredMinSpace: Long = 0
     private var availableSpace: Long = 0
 
     private val BUFFER = 512
@@ -111,53 +95,6 @@ class TgzPackageExtract(private val context: Context) {
             }
         }
         return GZIP_SIGNATURE.contentEquals(signature)
-    }
-
-    /**
-     * Untar and ungzip a tar.gz file to a AnkiDroid/addons directory.
-     *
-     * @param tarballFile the .tgz file to extract
-     * @param addonsPackageDir the addons package directory, the path is addon path inside addons directory
-     *                         e.g. AnkiDroid/addons/some-addon/
-     * @return the temp directory.
-     * @throws FileNotFoundException if .tgz file or ungzipped file i.e. .tar file not found
-     * @throws IOException
-     */
-    @Throws(Exception::class)
-    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
-
-        require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
-
-        try {
-            compat.createDirectories(addonsPackageDir)
-        } catch (e: IOException) {
-            UIUtils.showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
-            Timber.w(e)
-            return
-        }
-
-        // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
-        requiredMinSpace = tarballFile.length() * 2
-        availableSpace = Utils.determineBytesAvailable(addonsPackageDir.canonicalPath)
-        InsufficientSpaceException.throwIfInsufficientSpace(context, requiredMinSpace, availableSpace)
-
-        // If space available then unGZip it
-        val tarTempFile = unGzip(tarballFile, addonsPackageDir)
-        tarTempFile.deleteOnExit()
-
-        // Make sure we have sufficient free space
-        val unTarSize = calculateUnTarSize(tarTempFile)
-        InsufficientSpaceException.throwIfInsufficientSpace(context, unTarSize, availableSpace)
-
-        try {
-            // If space available then unTar it
-            unTar(tarTempFile, addonsPackageDir)
-        } catch (e: IOException) {
-            Timber.w("Failed to unTar file")
-            safeDeleteAddonsPackageDir(addonsPackageDir)
-        } finally {
-            tarTempFile.delete()
-        }
     }
 
     /**
@@ -345,7 +282,7 @@ class TgzPackageExtract(private val context: Context) {
      * @param tarFile File of unknown total uncompressed size
      * @return total untar size of tar file
      */
-    private fun calculateUnTarSize(tarFile: File): Long {
+    fun calculateUnTarSize(tarFile: File): Long {
         var unTarSize: Long = 0
 
         FileInputStream(tarFile).use { inputStream ->
@@ -392,12 +329,5 @@ class TgzPackageExtract(private val context: Context) {
                 }
             }
         }
-    }
-
-    private fun safeDeleteAddonsPackageDir(addonsPackageDir: AddonsPackageDir) {
-        if (addonsPackageDir.parent != "addons") {
-            return
-        }
-        addonsPackageDir.deleteRecursively()
     }
 }

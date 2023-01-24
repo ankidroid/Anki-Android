@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2021 Mani infinyte01@gmail.com                                         *
+ * Copyright (c) 2022 Mani infinyte01@gmail.com                                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,8 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.ShadowStatFs
-import com.ichi2.utils.FileOperation.Companion.getFileResource
-import junit.framework.TestCase.assertTrue
+import com.ichi2.utils.FileOperation
 import org.apache.commons.compress.archivers.ArchiveException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingDirectory
@@ -34,23 +33,20 @@ import java.io.File
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class TgzPackageExtractTest : RobolectricTest() {
+class AddonStorageTest : RobolectricTest() {
+    private lateinit var addonStorage: AddonStorage
     private lateinit var tarballPath: String
-    private lateinit var addonDir: File
-    private lateinit var addonPackage: TgzPackageExtract
+    private lateinit var addonName: String
 
     @Before
     override fun setUp() {
         super.setUp()
-
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
         ShadowStatFs.markAsNonEmpty(File(currentAnkiDroidDirectory))
-        addonPackage = TgzPackageExtract(targetContext)
-        addonDir = File(currentAnkiDroidDirectory, "addons")
-        tarballPath = getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")
-        if (!addonDir.exists()) {
-            addonDir.mkdirs()
-        }
+
+        addonName = "valid-ankidroid-js-addon-test"
+        addonStorage = AddonStorage(targetContext)
+        tarballPath = FileOperation.getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")
     }
 
     @After
@@ -60,64 +56,41 @@ class TgzPackageExtractTest : RobolectricTest() {
     }
 
     /**
-     * Test if the file is valid GZip file
-     * @throws IOException
-     */
-    @Test
-    @Throws(IOException::class)
-    fun isGzipTest() {
-        // test if file is tar gzip
-        assertTrue(addonPackage.isGzip(File(tarballPath)))
-    }
-
-    /**
-     * Test if .tar file unTar successfully to temp folder
+     * Test if extracted file exists in the output folder.
+     * The current test will extract in .tgz in following structure
+     * tempAddonDir
+     * - package
+     *  - index.js
+     *  - README.md
+     *  - package.json
      *
      * @throws IOException
      * @throws ArchiveException
      */
     @Test
     @Throws(IOException::class, ArchiveException::class)
-    fun unTarTest() {
-
-        // first unGzip .tgz file to .tar
-        val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
-
-        // unTar .tar file to temp folder, it is same as extract of files to tempAddonDir
-        addonPackage.unTar(unGzipFile, addonDir)
+    fun extractTarGzipToAddonDirTest() {
+        // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file
+        addonStorage.extractTarGzipToAddonDir(File(tarballPath), addonName)
 
         // test if package folder exists
-        val packagePath = File(addonDir, "package")
-        assertThat(packagePath, anExistingDirectory())
+        // e.g. AnkiDroid/addons/valid-addon/package/
+        val packageDir = addonStorage.getSelectedAddonPackageDir(addonName)
+        assertThat(packageDir, anExistingDirectory())
 
         // test if index.js extracted successfully
-        val indexJsPath = File(packagePath, "index.js")
-        assertThat(indexJsPath, anExistingFile())
+        // e.g. AnkiDroid/addons/valid-addon/package/index.js
+        val indexJs = addonStorage.getSelectedAddonIndexJs(addonName)
+        assertThat(indexJs, anExistingFile())
 
         // test if README.md extracted successfully
-        val readmePath = File(packagePath, "README.md")
-        assertThat(readmePath, anExistingFile())
+        // e.g. AnkiDroid/addons/valid-addon/package/README.md
+        val readme = addonStorage.getSelectedAddonReadme(addonName)
+        assertThat(readme, anExistingFile())
 
         // test if package.json extracted successfully
-        val packageJsonPath = File(packagePath, "package.json")
-        assertThat(packageJsonPath, anExistingFile())
-    }
-
-    /**
-     * Test if .tgz file successfully unGzipped
-     * i.e. .tgz changed to .tar file
-     *
-     * @throws IOException
-     */
-    @Test
-    @Throws(IOException::class)
-    fun unGzipTest() {
-        val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
-
-        // test if unGzip successfully return tar file
-        assertThat(unGzipFile, anExistingFile())
-
-        // test if .tgz file changed to .tar file
-        assertTrue(File(unGzipFile.toString()).absolutePath.endsWith(".tar"))
+        // e.g. AnkiDroid/addons/valid-addon/package/package.json
+        val packageJson = addonStorage.getSelectedAddonPackageJson(addonName)
+        assertThat(packageJson, anExistingFile())
     }
 }
