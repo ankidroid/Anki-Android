@@ -201,10 +201,7 @@ class TemporaryModel(val model: Model) {
         }
     }
 
-    val templateChanges: ArrayList<Array<Any>>
-        get() {
-            return mTemplateChanges
-        }
+    val templateChanges: ArrayList<Array<Any>> = mTemplateChanges
 
     /**
      * Adjust the ordinals in our accrued change list so that any pending adds have the correct
