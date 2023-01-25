@@ -91,6 +91,7 @@
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>
     <string name="pref_cat_workarounds_key">category_workarounds</string>
     <string name="pref_ankidroid_directory_key">deckPath</string>
+    <string name="pref_reset_to_default_directory_path_key">set_to_default_deck_path</string>
     <string name="disable_hardware_render_key">softwareRender</string>
     <string name="safe_display_key">safeDisplay</string>
     <string name="use_input_tag_key">useInputTag</string>

@@ -71,6 +71,20 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
         }
 
+        // Reset Directory path to default path
+        requirePreference<Preference>(R.string.pref_reset_to_default_directory_path_key).setOnPreferenceClickListener {
+            val defaultPath = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())
+            requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).text = defaultPath
+            try {
+                CollectionHelper.initializeAnkiDroidDirectory(defaultPath)
+                (requireActivity() as Preferences).restartWithNewDeckPicker()
+                true
+            } catch (e: StorageAccessException) {
+                Timber.e(e, "Could not initialize directory: %s", defaultPath)
+                false
+            }
+        }
+
         // Third party apps
         requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
             (requireActivity() as AnkiActivity).openUrl(R.string.link_third_party_api_apps)

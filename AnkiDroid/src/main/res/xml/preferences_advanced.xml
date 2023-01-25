@@ -32,6 +32,10 @@
             android:key="@string/pref_ankidroid_directory_key"
             android:title="@string/col_path"
             app1:useSimpleSummaryProvider="true"/>
+        <Preference
+            android:key="@string/pref_reset_to_default_directory_path_key"
+            android:summary="@string/default_directory_path_summ"
+            android:title="@string/resets_to_default_path"/>
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
             android:defaultValue="8"
             android:key="@string/pref_backup_max_key"

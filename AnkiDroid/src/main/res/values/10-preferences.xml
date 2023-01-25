@@ -59,6 +59,7 @@
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
+    <string name="resets_to_default_path" maxLength="41">Reset to default path</string>
     <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Hide the system bars</string>
@@ -99,6 +100,7 @@
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity" maxLength="41">Swipe sensitivity</string>
     <string name="tts" maxLength="41">Text to speech</string>
+    <string name="default_directory_path_summ">Resets directory path to its default path</string>
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
