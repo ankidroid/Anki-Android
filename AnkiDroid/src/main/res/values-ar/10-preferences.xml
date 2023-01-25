@@ -125,11 +125,13 @@
     <string name="tts_summ">يقرأ السؤال والجواب إذا لم يكن هناك ملف صوتي</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">جلب الوسائط أثناء المزامنة</string>
-    <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائيًا عند المزامنة</string>
     <string name="sync_account" maxLength="41">حساب أنكي ويب</string>
     <string name="sync_account_summ_logged_out">لست مسجلًا الدخول</string>
     <string name="automatic_sync_choice" maxLength="41">مزامنة تلقائية</string>
     <string name="automatic_sync_choice_summ">مزامنة تلقائية عند بدء/إغلاق التطبيق إذا مضى على المزامنة الأخيرة        أكثر من 10 دقائق.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">عرض حالة المزامنة</string>
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
     <string name="metered_sync_title" maxLength="41">السماح بالمزامنة على الاتصالات المحدودة</string>

@@ -125,11 +125,13 @@
     <string name="tts_summ">Läser upp fråga och svar om ingen ljudfil ingår</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Hämta media vid synkronisering</string>
-    <string name="sync_fetch_missing_media_summ">Hämta automatiskt saknade media vid synkning.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ej inloggad</string>
     <string name="automatic_sync_choice" maxLength="41">Automatisk synkronering</string>
     <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Visa synkroniseringsstatus</string>
     <string name="sync_status_badge_summ">Ändra synkroniseringsikon när ändringar kan laddas upp</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

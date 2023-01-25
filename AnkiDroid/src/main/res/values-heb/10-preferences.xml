@@ -125,12 +125,14 @@
     <string name="tts_summ">מקריא את השאלה ואת התשובה אם אין קובץ קול</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">הורדת קבצי מדיה בסנכרון</string>
-    <string name="sync_fetch_missing_media_summ">הורדה אוטומטית של קבצי מדיה בזמן הסנכרון</string>
     <string name="sync_account" maxLength="41">חשבון AnkiWeb</string>
     <string name="sync_account_summ_logged_out">לא התחברת לחשבון</string>
     <string name="automatic_sync_choice" maxLength="41">סנכרון אוטומטי</string>
     <string name="automatic_sync_choice_summ">סנכרון אוטומטי עם התחלה/יציאה של האפליקציה אם הסנכרון האחרון היה יותר מלפני-10
        דקות.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">הצג מצב סנכרון</string>
     <string name="sync_status_badge_summ">שנה את סמל הסנכרון כאשר ניתן להעלות שינויים</string>
     <string name="metered_sync_title" maxLength="41">אפשר סנכרון בחיבורים מדורגים</string>

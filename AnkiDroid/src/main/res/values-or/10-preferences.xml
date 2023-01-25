@@ -63,7 +63,7 @@
     <string name="pref_cat_themes" maxLength="41">ଥିମ୍</string>
     <string name="pref_cat_fonts" maxLength="41">ଫଣ୍ଟ</string>
     <string name="pref_cat_gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ</string>
-    <string name="pref_cat_controls" maxLength="41">ନିୟନ୍ତ୍ରଣଗୁଡ଼ିକ</string>
+    <string name="pref_cat_controls" maxLength="41">ନିୟନ୍ତ୍ରଣ</string>
     <string name="pref_cat_advanced" maxLength="41">ଵିକଶିତ</string>
     <string name="pref_cat_workarounds" maxLength="41">କାର୍ଯ୍ୟକ୍ଷେତ୍ର</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
-    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="metered_sync_title" maxLength="41">ମିଟର୍ ସଂଯୋଜନାଗୁଡ଼ିକରେ ସିଙ୍କ୍ କରିବାକୁ ଦେବା</string>
@@ -158,12 +160,12 @@
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="safe_display" maxLength="41">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
-    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଵାଇସଗୁଡ଼ିକ ଏହା ଲୋଡ଼ି ପାରନ୍ତି।</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରିଦେଇ ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ଵ୍ୟଵହାର କରିବା। E-ink ଡିଵାଇସଗୁଡ଼ିକ ଏହା ଲୋଡ଼ି ପାରନ୍ତି।</string>
     <string name="disable_extended_text_ui" maxLength="41">ଗୋଟିଏ-କ୍ଷେତ୍ର ସମ୍ପାଦନା ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
-    <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
+    <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ଵିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାଵରେ କେନ୍ଦ୍ରିତ କରିରଖିବା</string>
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
@@ -177,7 +179,7 @@
     <string name="show_progress_summ">ବଳକା ପତ୍ରସଂଖ୍ୟା ଦେଖାନ୍ତୁ</string>
     <string name="show_eta" maxLength="41">ETA ଦେଖାନ୍ତୁ</string>
     <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାନ୍ତୁ</string>
-    <string name="use_current" maxLength="41">ନୂଆ ପତ୍ରଗୁଡ଼ିକ ପାଇଁ ତାସଖଣ୍ଡ</string>
+    <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ ତାସଖଣ୍ଡ</string>
     <string name="new_spread" maxLength="41">ନୂଆ ପତ୍ରର ଅଵସ୍ଥିତି</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
@@ -252,7 +254,7 @@
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">ତାସଖଣ୍ଡ ବର୍ଣ୍ଣନା (କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ କୁ ପ୍ରଭାବିତ କରେ)</string>
-    <string name="deck_conf_group" maxLength="41">ବିକଳ୍ପ ଗୋଷ୍ଠୀ</string>
+    <string name="deck_conf_group" maxLength="41">ଵିକଳ୍ପ ଗୋଷ୍ଠୀ</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ</item>
         <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି</item>
@@ -316,7 +318,7 @@
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ଵିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ଵିଜ୍ଞପ୍ତି ସକ୍ଷମ କରିବା</string>
     <string name="deck_conf_reminders_time" maxLength="41">…ରେ ମନେ ପକାନ୍ତୁ</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
@@ -361,9 +363,9 @@
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
     <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
-    <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
-    <string name="disable_dev_options">ଡେଵେଲପର୍ ବିକଳ୍ପ ଅକ୍ଷମ କରିବା</string>
+    <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ</string>
+    <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
+    <string name="disable_dev_options">ଡେଵେଲପର୍ ଵିକଳ୍ପ ଅକ୍ଷମ କରିବା</string>
     <string name="dev_options_warning">        ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା ପୂର୍ବରୁ ଦୟାକରି ନିଶ୍ଚିତ ହୁଅନ୍ତୁ। ଏଇ ବିକଳ୍ପଗୁଡ଼ିକ ବିପଜ୍ଜନକ ଏବଂ ଆପ୍ ଭାଙ୍ଗିପାରନ୍ତି କିମ୍ବା ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଭ୍ରଷ୍ଟ କରିପାରନ୍ତି।\n\nଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ଏହି ବିକଳ୍ପଗୁଡ଼ିକ ଅଧିକାଂଶ ଉପଭୋକ୍ତାଙ୍କ ପାଇଁ ଉପଯୁକ୍ତ ନୁହେଁ ଏବଂ ସେଥିପାଇଁ ଅନୁବାଦ କରାନଯାଇ ଇଂରାଜୀରେ ହି ଥାଏ।
     </string>
     <!-- #######################################################################################

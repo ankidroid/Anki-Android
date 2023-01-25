@@ -125,11 +125,13 @@
     <string name="tts_summ">音声ファイルが含まれていない場合に、質問と解答を読み上げます</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">メディアの同期</string>
-    <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像・音声・動画）ファイルを自動的に取得します</string>
     <string name="sync_account" maxLength="41">AnkiWebアカウント</string>
     <string name="sync_account_summ_logged_out">ログインしていません</string>
     <string name="automatic_sync_choice" maxLength="41">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
     <string name="metered_sync_title" maxLength="41">Wi-Fi接続時以外の同期を許可</string>
@@ -377,18 +379,18 @@
         バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面のメニューから行えます。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">毎日保存するバックアップの数:</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">毎週保存するバックアップの数:</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">毎月保存するバックアップの数:</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">容量を管理</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">エラー</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">計算\n中&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d つのファイル\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">未使用メディアファイルを削除</string>
@@ -403,11 +405,11 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">コレクションを削除</string>
-    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
+    <string name="dialog__delete_collection__message">コレクションを削除しますか?</string>
     <string name="progress__deleting_collection">コレクションを削除しています&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">すべて削除</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__summary">コレクション、メディア、バックアップ、設定を削除する</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">すべて削除</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->

@@ -125,11 +125,13 @@
     <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Eşitlemede medyayı aktar</string>
-    <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
     <string name="sync_account" maxLength="41">AnkiWeb hesabı</string>
     <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
     <string name="automatic_sync_choice" maxLength="41">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
     <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
@@ -295,7 +297,7 @@
     <string name="deck_conf_manage" maxLength="41">Grup yönetimi</string>
     <string name="deck_conf_manage_summ">Ayar grupları ekle ve değiştir</string>
     <string name="deck_conf_current_group" maxLength="41">Şu anki grup</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Adını değiştir</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Yeniden adlandır</string>
     <string name="deck_conf_reset" maxLength="41">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Yapılandırma ekle</string>

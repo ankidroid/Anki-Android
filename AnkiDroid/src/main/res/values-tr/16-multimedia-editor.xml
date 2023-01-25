@@ -46,7 +46,7 @@
     <string name="multimedia_editor_popup_audio">Ses kaydet</string>
     <string name="multimedia_editor_popup_text">Gelişmiş düzenleyici</string>
     <string name="multimedia_editor_popup_cloze">Boşluk doldurma</string>
-    <string name="multimedia_editor_popup_clear_field">Açık alan</string>
+    <string name="multimedia_editor_popup_clear_field">Alanı sil</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Yükle</string>
     <string name="multimedia_editor_pron_looking_up">Telaffuza bakılıyor</string>

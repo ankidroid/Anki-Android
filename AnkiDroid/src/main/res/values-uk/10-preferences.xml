@@ -125,12 +125,14 @@
     <string name="tts_summ">Читає питання та відповіді, якщо відсутній аудіофайл</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Завантажувати медіафайли</string>
-    <string name="sync_fetch_missing_media_summ">Автоматично завантажувати відсутні медіафайли під час синхронізації</string>
     <string name="sync_account" maxLength="41">Профіль AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>

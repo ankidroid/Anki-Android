@@ -125,11 +125,13 @@
     <string name="tts_summ">Elparoli demandon kaj respondon se neniu sonaĵo estas inkluzivita</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Elŝuti aŭdvidaĵojn dum samtempigado</string>
-    <string name="sync_fetch_missing_media_summ">Aŭtomate elŝuti mankajn aŭdvidaĵojn dum sinkronigado</string>
     <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ne ensalutinta</string>
     <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

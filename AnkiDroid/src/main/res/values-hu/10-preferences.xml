@@ -125,12 +125,14 @@
     <string name="tts_summ">Felolvassa a kérdést és a választ, ha nincs csatolt hangfájl</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Média letöltése szinkronizáláskor</string>
-    <string name="sync_fetch_missing_media_summ">Automatikusan töltse le a hiányzó médiát, amikor szinkronizál.</string>
     <string name="sync_account" maxLength="41">AnkiWeb fiók</string>
     <string name="sync_account_summ_logged_out">Nem vagy bejelentkezve</string>
     <string name="automatic_sync_choice" maxLength="41">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Szinkronizálás állapotának megjelenítése</string>
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

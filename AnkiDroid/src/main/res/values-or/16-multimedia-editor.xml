@@ -93,7 +93,7 @@
     <string name="multimedia_editor_progress_wait_title">ଅପେକ୍ଷା କର</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି</string>
-    <string name="multimedia_editor_svg_preview">ପୂର୍ବାବଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
+    <string name="multimedia_editor_svg_preview">ପୂର୍ଵାଵଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="multimedia_editor_png_paste_error">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିକୁ png ରେ ରୂପାନ୍ତର କରିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s କ୍ଷେତ୍ରରେ ମଲ୍ଟିମିଡ଼ିଆ ବିଷୟବସ୍ତୁ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
     <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>

@@ -125,11 +125,13 @@
     <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Stáhnout multimédia při synchronizaci</string>
-    <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="metered_sync_title" maxLength="41">Povolit synchronizaci na měřeném připojení</string>

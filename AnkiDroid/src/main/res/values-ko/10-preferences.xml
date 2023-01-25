@@ -125,11 +125,13 @@
     <string name="tts_summ">질문과 정답에 사운드 파일이 없을 경우 자동으로 읽어주기</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">동기화할 때 미디어파일 가져오기</string>
-    <string name="sync_fetch_missing_media_summ">동기화 할때 누락된 미디어를 자동으로 검색하여 가져오기합니다.</string>
     <string name="sync_account" maxLength="41">AnkiWeb 계정</string>
     <string name="sync_account_summ_logged_out">로그인 하지 않음</string>
     <string name="automatic_sync_choice" maxLength="41">자동 동기화</string>
     <string name="automatic_sync_choice_summ">마지막 동기화로부터 10분이 넘었을 경우 앱 시작 및 종료시 자동으로 동기화</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>

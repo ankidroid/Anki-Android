@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Neue Karten vor Wiederholungen</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Falls keine Schriftart auf Karten angegeben</string>
-    <string name="override_font_always">Immer</string>
+    <string name="override_font_always" comment="Option to always override font">Immer</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Wie System</string>
     <!-- day_theme_labels -->
