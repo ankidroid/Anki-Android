@@ -355,7 +355,7 @@ class TemporaryModel(val model: Model) {
         /** Clear any temp model files saved into internal cache directory  */
         fun clearTempModelFiles(): Int {
             var deleteCount = 0
-            for (c in AnkiDroidApp.instance.cacheDir.listFiles()!!) {
+            for (c in AnkiDroidApp.instance.cacheDir.listFiles() ?: arrayOf()) {
                 val absolutePath = c.absolutePath
                 if (absolutePath.contains("editedTemplate") && absolutePath.endsWith("json")) {
                     if (!c.delete()) {
