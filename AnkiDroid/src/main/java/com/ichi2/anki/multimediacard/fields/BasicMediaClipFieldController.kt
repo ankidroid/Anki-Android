@@ -31,8 +31,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.ExceptionUtil.executeSafe
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 
@@ -94,16 +92,10 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), resultCode)
     }
 
-    @KotlinCleanup("make data non-null")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
-            executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                handleMediaSelection(data!!)
-            }
-        }
-        if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_VIDEO_CLIP) {
-            executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                handleMediaSelection(data!!)
+        if (resultCode != Activity.RESULT_CANCELED) {
+            when (requestCode) {
+                ACTIVITY_SELECT_AUDIO_CLIP, ACTIVITY_SELECT_VIDEO_CLIP -> data?.let { handleMediaSelection(it) }
             }
         }
     }
