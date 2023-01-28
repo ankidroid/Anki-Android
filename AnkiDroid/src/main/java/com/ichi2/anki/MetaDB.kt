@@ -64,7 +64,7 @@ object MetaDB {
         try {
             mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null)
             if (mMetaDb.needUpgrade(DATABASE_VERSION))
-                    mMetaDb = upgradeDB(it, DATABASE_VERSION)
+                mMetaDb = upgradeDB(mMetaDb, DATABASE_VERSION)
             Timber.v("Opening MetaDB")
         } catch (e: Exception) {
             Timber.e(e, "Error opening MetaDB ")
@@ -137,16 +137,15 @@ object MetaDB {
 
     /** Open the meta-db but only if it currently closed.  */
     private fun openDBIfClosed(context: Context) {
-        if (!isDBOpen()) {
+        if (::mMetaDb.isInitialized && !isDBOpen()) {
             openDB(context)
         }
     }
 
     /** Close the meta-db.  */
     fun closeDB() {
-        if (isDBOpen()) {
-            mMetaDb!!.close()
-            mMetaDb = null
+        if (::mMetaDb.isInitialized && isDBOpen()) {
+            mMetaDb.close()
             Timber.d("Closing MetaDB")
         }
     }
@@ -155,7 +154,7 @@ object MetaDB {
     fun resetDB(context: Context): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.run {
+            mMetaDb.run {
                 execSQL("DROP TABLE IF EXISTS languages;")
                 Timber.i("MetaDB:: Resetting all language assignment")
                 execSQL("DROP TABLE IF EXISTS whiteboardState;")
@@ -180,7 +179,7 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting all language assignments")
-            mMetaDb!!.run {
+            mMetaDb.run {
                 execSQL("DROP TABLE IF EXISTS languages;")
                 upgradeDB(this, DATABASE_VERSION)
             }
@@ -196,7 +195,7 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting widget status")
-            mMetaDb!!.run {
+            mMetaDb.run {
                 execSQL("DROP TABLE IF EXISTS widgetStatus;")
                 execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
                 upgradeDB(this, DATABASE_VERSION)
@@ -219,7 +218,7 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             if ("" == getLanguage(context, did, ord, qa)) {
-                mMetaDb!!.execSQL(
+                mMetaDb.execSQL(
                     "INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);",
                     arrayOf<Any>(
                         did, ord, qa.int, language
@@ -227,7 +226,7 @@ object MetaDB {
                 )
                 Timber.v("Store language for deck %d", did)
             } else {
-                mMetaDb!!.execSQL(
+                mMetaDb.execSQL(
                     "UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;",
                     arrayOf<Any>(
                         language, did, ord, qa.int
@@ -252,7 +251,7 @@ object MetaDB {
         var language = ""
         val query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1"
         try {
-            mMetaDb!!.rawQuery(
+            mMetaDb.rawQuery(
                 query,
                 arrayOf(
                     java.lang.Long.toString(did),
@@ -279,7 +278,7 @@ object MetaDB {
     fun resetDeckLanguages(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.execSQL("DELETE FROM languages WHERE did = ?;", arrayOf(did))
+            mMetaDb.execSQL("DELETE FROM languages WHERE did = ?;", arrayOf(did))
             Timber.i("MetaDB:: Resetting language assignment for deck %d", did)
             return true
         } catch (e: Exception) {
@@ -296,7 +295,7 @@ object MetaDB {
     fun getWhiteboardState(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
+            mMetaDb.rawQuery(
                 "SELECT state FROM whiteboardState  WHERE did = ?",
                 arrayOf(java.lang.Long.toString(did))
             ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
@@ -316,7 +315,7 @@ object MetaDB {
         val state = if (whiteboardState) 1 else 0
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = mMetaDb
             metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did = ?",
                 arrayOf(java.lang.Long.toString(did))
@@ -348,7 +347,7 @@ object MetaDB {
     fun getWhiteboardVisibility(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
+            mMetaDb.rawQuery(
                 "SELECT visible FROM whiteboardState WHERE did = ?",
                 arrayOf(java.lang.Long.toString(did))
             ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
@@ -368,7 +367,7 @@ object MetaDB {
         val isVisibleState = if (isVisible) 1 else 0
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = mMetaDb
             metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did  = ?",
                 arrayOf(java.lang.Long.toString(did))
@@ -398,7 +397,7 @@ object MetaDB {
     fun getWhiteboardPenColor(context: Context, did: DeckId): WhiteboardPenColor {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
+            mMetaDb.rawQuery(
                 "SELECT lightpencolor, darkpencolor FROM whiteboardState WHERE did = ?",
                 arrayOf(java.lang.Long.toString(did))
             ).use { cur ->
@@ -424,7 +423,7 @@ object MetaDB {
         openDBIfClosed(context)
         val columnName = if (isLight) "lightpencolor" else "darkpencolor"
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = mMetaDb
             metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did  = ?",
                 arrayOf(java.lang.Long.toString(did))
@@ -456,7 +455,7 @@ object MetaDB {
         openDBIfClosed(context)
         var cursor: Cursor? = null
         try {
-            cursor = mMetaDb!!.query(
+            cursor = mMetaDb.query(
                 "smallWidgetStatus", arrayOf("due", "eta"),
                 null, null, null, null, null
             )
@@ -479,7 +478,7 @@ object MetaDB {
         val due = 0
         try {
             cursor =
-                mMetaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null)
+                mMetaDb.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null)
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0)
             }
@@ -519,7 +518,7 @@ object MetaDB {
     }
 
     fun close() {
-        mMetaDb?.run {
+        mMetaDb.run {
             try {
                 close()
             } catch (e: Exception) {
@@ -553,5 +552,5 @@ object MetaDB {
         }
     }
 
-    private fun isDBOpen() = mMetaDb?.isOpen == true
+    private fun isDBOpen() = mMetaDb.isOpen
 }
