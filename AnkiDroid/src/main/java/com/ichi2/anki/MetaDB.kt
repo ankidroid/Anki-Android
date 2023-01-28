@@ -48,7 +48,7 @@ object MetaDB {
     private val quotePattern = Pattern.compile("[\"']")
 
     /** The database object used by the meta-db.  */
-    private var mMetaDb: SQLiteDatabase? = null
+    private lateinit var mMetaDb: SQLiteDatabase
 
     /** Remove any pairs of quotes from the given text.  */
     private fun stripQuotes(textParam: String): String {
@@ -59,15 +59,12 @@ object MetaDB {
     }
 
     /** Open the meta-db  */
-    @KotlinCleanup("scope function or lateinit db")
+
     private fun openDB(context: Context) {
         try {
-            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null).let {
-                if (it.needUpgrade(DATABASE_VERSION))
-                    upgradeDB(it, DATABASE_VERSION)
-                else
-                    it
-            }
+            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null)
+            if (mMetaDb.needUpgrade(DATABASE_VERSION))
+                    mMetaDb = upgradeDB(it, DATABASE_VERSION)
             Timber.v("Opening MetaDB")
         } catch (e: Exception) {
             Timber.e(e, "Error opening MetaDB ")
