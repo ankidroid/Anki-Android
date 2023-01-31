@@ -695,7 +695,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         return try {
             BufferedInputStream(FileInputStream(path), MEDIAPICKLIMIT * 2)
         } catch (e: IOException) {
-            Timber.w(e)
             null
         }
     }
