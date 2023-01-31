@@ -200,6 +200,25 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     }
 
     @Test
+    fun succeeds_if_copied_file_already_exists_but_is_zero_length() {
+        // part of #13170: This can occur if the phone is turned off before the copy completes
+        val source = addUntrackedMediaFile("hello-oo", listOf("hello.txt"))
+        val destinationFile = addUntrackedMediaFile("", listOf("world.txt")).file
+
+        val sizeToTransfer = source.length()
+        assertThat("The file to transfer should exist", sizeToTransfer, not(equalTo(0)))
+        assertThat("destination file should be zero length", destinationFile.length(), equalTo(0))
+
+        MoveFile(source, destinationFile)
+            .execute()
+
+        assertThat("source file should be deleted", source.file.exists(), equalTo(false))
+        assertThat("destination file should not be deleted", destinationFile.exists(), equalTo(true))
+        assertThat("progress was reported", executionContext.progress.single(), equalTo(sizeToTransfer))
+        assertThat("file content is transferred", getContent(destinationFile), equalTo("hello-oo"))
+    }
+
+    @Test
     fun error_if_source_and_destination_are_same() {
         val source = addUntrackedMediaFile("hello-oo", listOf("hello.txt"))
         val destinationFile = source.file
