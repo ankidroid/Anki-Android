@@ -39,15 +39,10 @@ class TemporaryModel(val model: Model) {
     private var mTemplateChanges = ArrayList<Array<Any>>()
     var editedModelFileName: String? = null
 
-    fun toBundle(): Bundle {
-
-        val fileName = saveTempModel(AnkiDroidApp.instance.applicationContext, model)
-
-        return bundleOf(
-            INTENT_MODEL_FILENAME to fileName,
-            "mTemplateChanges" to mTemplateChanges
-        )
-    }
+    fun toBundle(): Bundle = bundleOf(
+        INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, model),
+        "mTemplateChanges" to mTemplateChanges
+    )
 
     @Suppress("deprecation") // getSerializable
     private fun loadTemplateChanges(bundle: Bundle) {
