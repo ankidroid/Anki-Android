@@ -21,8 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.customSyncBase
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.web.CustomSyncServer
 
 /**
  * Fragment with preferences related to syncing
@@ -57,17 +57,12 @@ class SyncSettingsFragment : SettingsFragment() {
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
             val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
-            val collectionSyncUrl = CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(preferences)
-            val mediaSyncUrl = CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(preferences)
+            val url = customSyncBase(preferences)
 
-            if (collectionSyncUrl == null && mediaSyncUrl == null) {
+            if (url == null) {
                 getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
             } else {
-                getString(
-                    R.string.custom_sync_server_summary_both_or_either_of_the_two_servers_used,
-                    collectionSyncUrl ?: getString(R.string.custom_sync_server_summary_placeholder_default),
-                    mediaSyncUrl ?: getString(R.string.custom_sync_server_summary_placeholder_default)
-                )
+                url
             }
         }
     }

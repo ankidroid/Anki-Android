@@ -164,15 +164,11 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun logout() {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        preferences.edit {
-            putString("username", "")
-            putString("hkey", "")
+        launchCatchingTask {
+            syncLogout(baseContext)
+            getInstance(this@MyAccount).reset()
+            switchToState(STATE_LOG_IN)
         }
-        getInstance(this).reset()
-        //  force media resync on deauth
-        col.media.forceResync()
-        switchToState(STATE_LOG_IN)
     }
 
     private fun resetPassword() {

@@ -21,6 +21,7 @@ import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.libanki.Collection
 import net.ankiweb.rsdroid.BackendFactory
@@ -47,7 +48,13 @@ enum class SyncStatus {
                 return NO_ACCOUNT
             }
             if (!BackendFactory.defaultLegacySchema) {
-                return syncStatusFromRequired(col.newBackend.backend.syncStatus(auth).required)
+                val output = col.newBackend.backend.syncStatus(auth)
+                if (output.hasNewEndpoint()) {
+                    AnkiDroidApp.getSharedPrefs(context).edit {
+                        putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+                    }
+                }
+                return syncStatusFromRequired(output.required)
             }
             if (col.schemaChanged()) {
                 return FULL_SYNC

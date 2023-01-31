@@ -93,7 +93,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgres
 import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -525,10 +524,6 @@ open class DeckPicker :
             }
         } else {
             requestStoragePermission()
-        }
-
-        if (!BackendFactory.defaultLegacySchema) {
-            CustomSyncServer.setOrUnsetEnvironmentalVariablesForBackend(this)
         }
     }
 

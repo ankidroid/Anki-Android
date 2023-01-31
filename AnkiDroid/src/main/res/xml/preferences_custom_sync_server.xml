@@ -8,17 +8,12 @@
     android:title="@string/custom_sync_server_title"
     android:key="@string/pref_custom_sync_server_screen_key">
     <com.ichi2.preferences.HtmlHelpPreference
-        android:summary="@string/custom_sync_server_help"
+        android:summary="@string/custom_sync_server_help2"
         app:substitution1="@string/link_custom_sync_server_help_learn_more_en"
         search:ignore="true" />
     <com.ichi2.preferences.VersatileTextWithASwitchPreference
         android:key="@string/custom_sync_server_collection_url_key"
         android:title="@string/custom_sync_server_base_url_title"
-        android:inputType="textUri"
-        app:useSimpleSummaryProvider="true" />
-    <com.ichi2.preferences.VersatileTextWithASwitchPreference
-        android:key="@string/custom_sync_server_media_url_key"
-        android:title="@string/custom_sync_server_media_url_title"
         android:inputType="textUri"
         app:useSimpleSummaryProvider="true" />
 </PreferenceScreen>
