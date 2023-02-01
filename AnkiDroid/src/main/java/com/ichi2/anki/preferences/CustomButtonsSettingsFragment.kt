@@ -31,6 +31,9 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
         get() = "prefs.custom_buttons"
 
     override fun initSubscreen() {
+
+        //checking commit
+
         // Reset toolbar button customizations
         val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
         resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
