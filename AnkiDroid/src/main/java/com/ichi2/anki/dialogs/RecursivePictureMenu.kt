@@ -33,13 +33,13 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
 import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
 class RecursivePictureMenu : DialogFragment() {
-    @Suppress("deprecation") // getParcelableArrayList
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val items: List<Item> = requireArguments().getParcelableArrayList("bundle")!!
+        val items: List<Item> = requireArguments().getParcelableArrayListCompat("bundle", Item::class.java)!!
         val title = requireContext().getString(requireArguments().getInt("titleRes"))
         val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

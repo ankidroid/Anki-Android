@@ -32,7 +32,7 @@
     <string name="toast_last_model">ଆପଣ ଆପଣଙ୍କର ଶେଷ ନୋଟ୍ ପ୍ରକାର ବିଲୋପ କରିପାରିବେ ନାହିଁ</string>
     <string name="toast_last_field">ନୋଟ୍ ପ୍ରକାରର ଅତିକମରେ ଗୋଟିଏ କ୍ଷେତ୍ର ଥିବା ଆବଶ୍ୟକ</string>
     <string name="toast_empty_name">ଆପଣ ଗୋଟିଏ ନାମ ପ୍ରବେଶ କରିବା ଜରୁରୀ</string>
-    <string name="toast_duplicate_field">କ୍ଷେତ୍ର ନାମ ଆଗରୁ ବ୍ୟବହୃତ</string>
+    <string name="toast_duplicate_field">କ୍ଷେତ୍ର ନାଁଟି ଆଗରୁ ଵ୍ୟଵହାର ହୋଇଛି</string>
     <string name="toast_out_of_range">ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏକ ବୈଧ ମୂଲ୍ୟ ପ୍ରବେଶ କରିବେ</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
@@ -55,11 +55,11 @@
     <!--Field Editing-->
     <string name="model_field_editor_title">କ୍ଷେତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="model_field_editor_add">କ୍ଷେତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="model_field_editor_delete">କ୍ଷେତ୍ର ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="model_field_editor_delete">କ୍ଷେତ୍ରଟି ଵିଲୋପ କରିବା</string>
     <string name="model_field_editor_rename">କ୍ଷେତ୍ରଟିର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="model_field_editor_language_hint">କୀବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
-    <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ର ରିପୋଜିସନ୍ କରନ୍ତୁ</string>
-    <string name="model_field_editor_reposition">କ୍ଷେତ୍ର ରିପୋଜିସନ୍ କରିବା (%1$d–%2$d ମଧ୍ୟରେ ଏକ ମୂଲ୍ୟ ପ୍ରବେଶ କରନ୍ତୁ)</string>
+    <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
+    <string name="model_field_editor_reposition">କ୍ଷେତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବେ (%1$d–%2$d ମଧ୍ୟରେ ଗୋଟେ ମୂଲ୍ୟ ପ୍ରଵେଶ କରନ୍ତୁ)</string>
     <string name="model_field_editor_toggle_sticky">ଯୋଡ଼ିବା ସମୟରେ ଶେଷ ଇନପୁଟ୍ ମନେରଖ</string>
     <string name="model_field_editor_changing">କ୍ଷେତ୍ରଗୁଡିକ ଅଦ୍ୟତନ କରୁଛି</string>
     <string name="model_field_editor_sort_field">ଏହି କ୍ଷେତ୍ର ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>

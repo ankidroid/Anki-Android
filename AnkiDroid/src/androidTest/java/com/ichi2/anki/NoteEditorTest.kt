@@ -30,10 +30,9 @@ import org.junit.Before
 import org.junit.Rule
 import java.util.ArrayList
 
-@KotlinCleanup("fix ide lint issues")
 abstract class NoteEditorTest protected constructor() {
     @get:Rule
-    var runtimePermissionRule =
+    var runtimePermissionRule: GrantPermissionRule? =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     @get:Rule
@@ -41,20 +40,19 @@ abstract class NoteEditorTest protected constructor() {
         noteEditorIntent
     )
 
-    @KotlinCleanup("simplify property getter with apply and direct return")
     private val noteEditorIntent: Intent
         get() {
-            val intent = Intent(targetContext, NoteEditor::class.java)
-            intent.component = ComponentName(targetContext, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-            return intent
+            return Intent(targetContext, NoteEditor::class.java).apply {
+                component = ComponentName(targetContext, NoteEditor::class.java)
+                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            }
         }
 
     @Before
     fun before() {
         for (invalid in invalidSdksImpl) {
             Assume.assumeThat(
-                String.format("Test fails on Travis API %d", invalid),
+                "Test fails on Travis API $invalid",
                 Build.VERSION.SDK_INT,
                 Matchers.not(
                     Matchers.`is`(invalid)
@@ -63,8 +61,7 @@ abstract class NoteEditorTest protected constructor() {
         }
     }
 
-    @KotlinCleanup("Simplify property getter: too many lists created")
-    protected val invalidSdksImpl: List<Int>
+    private val invalidSdksImpl: List<Int>
         get() {
             // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
             // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync

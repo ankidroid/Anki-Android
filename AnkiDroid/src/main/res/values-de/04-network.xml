@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Die heruntergeladene Datenbank war fehlerhaft. Bitte versuchen Sie es erneut.</string>
     <string name="sync_overwrite_error">Ihre aktuelle Sammlung konnte durch die heruntergeladene Datei nicht überschrieben werden</string>
     <string name="sync_connection_error">Verbindung nach Wartezeit abgebrochen. Entweder gibt es Probleme mit Ihrer Internetverbindung oder Sie haben eine sehr große Datei in Ihrem Medienordner.</string>
-    <string name="sync_write_access_error">Die heruntergeladene Datei konnte nicht auf der SD-Karte gespeichert werden. Entweder ist diese schreibgeschützt eingehängt oder verfügt nicht über genügend freien Speicherplatz.</string>
+    <string name="sync_write_access_error_on_storage">Die heruntergeladene Datei konnte nicht in Ihrem Speicher gespeichert werden. Entweder ist dieser schreibgeschützt oder verfügt nicht über ausreichend freien Speicherplatz.</string>
     <string name="sync_error_invalid_sync_server">Der Custom Sync Server in den erweiterten Einstellungen ist ungültig (%s). Bitte geben Sie einen gültigen Server ein oder deaktivieren Sie die Einstellung.</string>
     <string name="sync_deletions_message">Löschungen werden synchronisiert &#8230;</string>
     <string name="sync_small_objects_message">Synchronisiere kleine Objekte&#8230;</string>

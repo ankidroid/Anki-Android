@@ -18,7 +18,6 @@
 package com.ichi2.libanki
 
 import android.content.ContentValues
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
@@ -399,7 +398,7 @@ open class Card : Cloneable {
                 members.add("'${f.name}': N/A")
             }
         }
-        return TextUtils.join(",  ", members)
+        return members.joinToString(",  ")
     }
 
     override fun equals(other: Any?): Boolean {

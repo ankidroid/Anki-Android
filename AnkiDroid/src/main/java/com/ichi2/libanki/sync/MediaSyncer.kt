@@ -17,7 +17,6 @@
 package com.ichi2.libanki.sync
 
 import android.database.SQLException
-import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.MediaSyncException
@@ -128,23 +127,23 @@ class MediaSyncer(
                     String.format(
                         Locale.US,
                         "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
-                        if (TextUtils.isEmpty(lsum)) "" else lsum!!.subSequence(0, 4),
-                        if (TextUtils.isEmpty(rsum)) "" else rsum!!.subSequence(0, 4),
+                        if (lsum.isNullOrEmpty()) "" else lsum.subSequence(0, 4),
+                        if (rsum.isNullOrEmpty()) "" else rsum.subSequence(0, 4),
                         ldirty,
                         rusn,
                         fname
                     )
                 )
-                if (!TextUtils.isEmpty(rsum)) {
+                if (!rsum.isNullOrEmpty()) {
                     // added/changed remotely
-                    if (TextUtils.isEmpty(lsum) || lsum != rsum) {
+                    if (lsum.isNullOrEmpty() || lsum != rsum) {
                         col.log("will fetch")
                         need.add(fname)
                     } else {
                         col.log("have same already")
                     }
                     col.media.markClean(listOf(fname))
-                } else if (!TextUtils.isEmpty(lsum)) {
+                } else if (!lsum.isNullOrEmpty()) {
                     // deleted remotely
                     if (ldirty == 0) {
                         col.log("delete local")

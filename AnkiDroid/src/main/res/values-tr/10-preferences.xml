@@ -125,11 +125,13 @@
     <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Eşitlemede medyayı aktar</string>
-    <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
     <string name="sync_account" maxLength="41">AnkiWeb hesabı</string>
     <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
     <string name="automatic_sync_choice" maxLength="41">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
     <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
@@ -295,7 +297,7 @@
     <string name="deck_conf_manage" maxLength="41">Grup yönetimi</string>
     <string name="deck_conf_manage_summ">Ayar grupları ekle ve değiştir</string>
     <string name="deck_conf_current_group" maxLength="41">Şu anki grup</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Adını değiştir</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Yeniden adlandır</string>
     <string name="deck_conf_reset" maxLength="41">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Yapılandırma ekle</string>
@@ -366,4 +368,66 @@
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
     <string name="disable_dev_options">Geliştirici seçeneklerini kapat</string>
     <string name="dev_options_warning">        Lütfen geliştirici seçeneklerini açmadan önce emin olun. Bu seçenekler tehlikelidir ve uygulamayı ya da koleksiyonunuzu bozabilir.\n\nBu seçenekler çoğu kullanıcı için uygun değildir ve çevrilmezler, bu yüzden İngilizce olduklarını göz önünde bulundurun.</string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Yedekleme seçenekleri</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid düzenli aralıklarla koleksiyonunuzu yedekler.
+        Yedekler iki günden fazla eskidiğinde,
+        AnkiDroid disk alanı boşaltmak için bazılarını kaldırmaya başlar.
+        <br><br>
+        Unutmayın ki medya dosyaları yedeklenmez.
+        Emin olmak için, lütfen düzenli aralıklarla koleksiyonunuzu senkronize edin, ya da çıktılarını yedekleyin.
+        <br><br>
+        Deste listesi menüsünde yedekten geri yükleyebilir ve koleksiyonunuzu dışarı aktarabilirsiniz.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Otomatik yedeklemeler arası süre (dakika)</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Günde saklanacak yedek</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Haftada saklanacak yedek</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Ayda saklanacak yedek</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Alanı yönet</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Hata</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Hesap-\nlanıyor&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d dosya\n%2$s</item>
+        <item quantity="other">%1$d dosya\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Kullanılmayan medya dosyalarını sil</string>
+    <string name="pref__delete_unused_media_files__summary">_ ile başlamayan ve herhangi bir notta atıf yapılmayan resimleri ve diğer medyayı sil</string>
+    <string name="dialog__media_check_required__message">Kullanılmayan medya dosyalarını bulmak için bir medya kontrolü gerekiyor</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Kullanılmayan medya dosyalarını sil</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Yedekleri sil</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Yedekleri sil</string>
+    <string name="progress__deleting_backups">Yedekler siliniyor&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Koleksiyonu sil</string>
+    <string name="pref__delete_collection__summary">Koleksiyonu, medyayı, ve yedekleri sil. Uygulama ayarları silinmez</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Koleksiyonu sil</string>
+    <string name="dialog__delete_collection__message">Koleksiyon, medya ve yedeklerinizi silmek istediğinize emin misiniz?</string>
+    <string name="progress__deleting_collection">Koleksiyon siliniyor&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Her şeyi sil</string>
+    <string name="pref__delete_everything__summary">Koleksiyonu, medyayı, yedekleri, ve ayarları sil</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Her şeyi sil</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Bütün veriyi silmek istediğinize emin misiniz? Buna koleksiyonunuz, medyanız, yedekleriniz ve tercihleriniz dahildir.\n\nNot: Bu eylem pencereyi kapatacak.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Uygulama verisini sil</string>
+    <string name="pref__delete_app_data__summary">Ayarları ve diğer uygulama verisini sil</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Uygulama verisini sil</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Uygulama verisini silmek istediğinize emin misiniz? Buna ayarlar ve diğer uygulama verisi dahildir.\n\nNot: Bu eylem pencereyi kapatacak.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Koleksiyon yok</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Hata</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Okunuyor&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Hesaplanıyor&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksiyon mevcut değil</string>
 </resources>

@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Ammestura cartas noas e revisiones</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Semper</string>
-    <string name="override_font_always">Cando su caràtere no est dislindadu in sas cartas mnemònicas</string>
+    <string name="override_font_always" comment="Option to always override font">Cando su caràtere no est dislindadu in sas cartas mnemònicas</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Sighi su sistema</string>
     <!-- day_theme_labels -->

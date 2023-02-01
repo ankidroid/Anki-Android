@@ -29,7 +29,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
 import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
@@ -190,7 +189,8 @@ class FilteredDeckOptions :
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
-        setThemeLegacy(this)
+        Themes.setTheme(this)
+        Themes.setLegacyActionBar(this)
         super.onCreate(savedInstanceState)
         UsageAnalytics.sendAnalyticsScreenView(this)
         if (!isColInitialized()) {

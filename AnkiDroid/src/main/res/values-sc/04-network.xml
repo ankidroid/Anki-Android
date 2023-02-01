@@ -88,7 +88,7 @@
     <string name="sync_remote_db_error">Sa base de datos iscarrigada fiat corrùmpida. Torra a proare.</string>
     <string name="sync_overwrite_error">Sa colletzione atuale tua no est istadu possìbile a la subraiscrìere cun su documentu iscarrigadu</string>
     <string name="sync_connection_error">Connessione iscadida. O tenes problemas de connessione a ìnternet o tenes unu documentu mannu meda in sa cartella multimediale tua.</string>
-    <string name="sync_write_access_error">No est istadu possìbile sarvare su documentu iscarrigadu in s\'ischeda SD. O s\'ischeda est montada in modalidade de leghidura ebbia o non b\'at tretu bastante a intro.</string>
+    <string name="sync_write_access_error_on_storage">No est istadu possìbile sarvare su documentu iscarrigadu in sa mamòria tua. O sa memòria est montada in modalidade de leghidura ebbia o non b\'at tretu bastante a intro.</string>
     <string name="sync_error_invalid_sync_server">Su serbidore de sincronizatzione personalizadu in sas impostatziones avantzadas no est vàlidu (%s). Inserta·nde unu vàlidu o disabìlita s\'impostatzione.</string>
     <string name="sync_deletions_message">Sincronizende sos iscantzellamentos&#8230;</string>
     <string name="sync_small_objects_message">Sincronizende ogetos minores&#8230;</string>

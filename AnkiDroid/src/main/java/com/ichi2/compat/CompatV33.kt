@@ -20,11 +20,18 @@ import android.annotation.TargetApi
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
+import android.util.SparseArray
 import java.io.Serializable
 
 @TargetApi(33)
 open class CompatV33 : CompatV31(), Compat {
+    override fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>? {
+        return bundle.getParcelableArrayList(key, clazz)
+    }
+
     override fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T? {
         return intent.getSerializableExtra(name, className)
     }
@@ -35,5 +42,13 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: Compat.ResolveInfoFlags): ResolveInfo? {
         return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+    }
+
+    override fun <T> readSparseArray(
+        parcel: Parcel,
+        loader: ClassLoader,
+        clazz: Class<T>
+    ): SparseArray<T>? {
+        return parcel.readSparseArray(loader, clazz)
     }
 }

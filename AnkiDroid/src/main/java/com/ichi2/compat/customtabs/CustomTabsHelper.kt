@@ -18,7 +18,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.text.TextUtils
 import androidx.browser.customtabs.CustomTabsService
 import com.ichi2.compat.Compat.ResolveInfoFlags
 import com.ichi2.compat.CompatHelper.Companion.resolveActivity
@@ -83,7 +82,7 @@ object CustomTabsHelper {
             sPackageNameToUse = null
         } else if (packagesSupportingCustomTabs.size == 1) {
             sPackageNameToUse = packagesSupportingCustomTabs[0]
-        } else if (!TextUtils.isEmpty(defaultViewHandlerPackageName) &&
+        } else if (!defaultViewHandlerPackageName.isNullOrEmpty() &&
             !hasSpecializedHandlerIntents(context, activityIntent) &&
             packagesSupportingCustomTabs.contains(defaultViewHandlerPackageName)
         ) {

@@ -113,7 +113,7 @@
         <item quantity="other">تمت إعادة جدولة %d بطاقة</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">تجري إعادة جدولة بطاقة جديدة. تحول إعادة الجدولة البطاقات الجديدة إلى بطاقات مراجعة. استخدم خيار «تغيير الموضع» لتغيير موضع بطاقة جديدة في صف البطاقات الجديدة</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">تعيد إعادة الجدولة تعيين طريقة تعامل المجدول مع البطاقة في المستقبل (سيتم تعيين السهولة إلى %d%%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">ستغير إعادة الجدولة طريقة المجدول في التعامل مع البطاقة في المستقبل (سيتم ضبط السهولة إلى %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">اختر الرزمة في مدير الملفات أو زر صفحة حول:تنزيلات لاستيرادها</string>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
@@ -143,8 +143,8 @@
         <item quantity="many">الملفات المستوردة: %1$d\nمجمل البطاقات المستوردة: %2$d</item>
         <item quantity="other">الملفات المستوردة: %1$d\nمجمل البطاقات المستوردة: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">بطاقة الـSD ممتلئة</string>
-    <string name="sd_card_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
+    <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
+    <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
     <string name="no_space_to_downgrade_title">لا توجد مساحة</string>
     <string name="no_space_to_downgrade_content">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
@@ -152,8 +152,9 @@
     <string name="restore_backup_choose_another">اختر نسخة أخرى</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">تأكيد</string>
     <string name="dialog_no">لا</string>
+    <string name="dialog_yes">نعم</string>
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_processing">تجري المعالجة...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
@@ -260,6 +261,7 @@
     <string name="help_item_support_develop_ankidroid">تطوير</string>
     <string name="help_item_support_rate_ankidroid">تقييم</string>
     <string name="help_item_support_other_ankidroid">غير ذلك</string>
+    <string name="multimedia_editor_trans_translate">ترجمة</string>
     <string name="help_title_community">المجتمع</string>
     <string name="help_item_anki_forums">منتديات أنكي</string>
     <string name="help_item_discord">Discord</string>
@@ -294,13 +296,7 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">لا يمكنك إنشاء رزمة فرعية لكل الرزم</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
-    </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="scoped_storage_require_user_to_accept_risk">        بسبب تغييرات تتعلق بالخصوصية في أندرويد، سيصبح مكان تخزين البيانات الحالي غير متاح للوصول إذا حذفت التطبيق.        \n\nنحتاج لنقل بياناتك إلى موقع خاص بتطبيق أنكيدرويد.        \n\nقد تُحذف البيانات في ذلك الموقع الخاص إذا حذفت التطبيق.        \nموقع التخزين الحالي هو %1$s        \n\nالموقع الخاص سيصبح %2$s        \n\nيرجى تأكيد أنك ستأخذ نسخ احتياطية بانتظام لهذا المجلد.    </string>
+    <string name="manual_backup">نسخ احتياطي يدوي</string>
+    <string name="remind_me_later">ذكرني لاحقًا</string>
 </resources>

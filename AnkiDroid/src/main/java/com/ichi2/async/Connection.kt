@@ -274,6 +274,12 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 if (ret == null) {
                     return genericError(data)
                 }
+                if (NETWORK_ERROR == ret.first) {
+                    data.success = false
+                    data.resultType = ret.first
+                    data.result = arrayOf(ret.second)
+                    return data
+                }
                 if (NO_CHANGES != ret.first && SUCCESS != ret.first) {
                     data.success = false
                     data.resultType = ret.first

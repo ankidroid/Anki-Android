@@ -33,7 +33,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.IllegalStateException
 
 @RunWith(AndroidJUnit4::class)
 class ImportUtilsTest : RobolectricTest() {
@@ -74,7 +73,6 @@ class ImportUtilsTest : RobolectricTest() {
 
         // COULD_BE_BETTER: Strip off the file path
         return testFileImporter.cacheFileName
-            ?: throw IllegalStateException("No filename created")
     }
 
     @Test
@@ -121,8 +119,7 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     class TestFileImporter(private val fileName: String?) : FileImporter() {
-        @KotlinCleanup("lateinit")
-        var cacheFileName: String? = null
+        lateinit var cacheFileName: String
             private set
 
         override fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {

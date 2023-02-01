@@ -28,8 +28,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
-        // FIXME this should be super.onCreateDialog(Bundle), no?
-        super.onCreate(savedInstanceState)
+        super.onCreateDialog(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)
             contentNullable(notificationMessage)

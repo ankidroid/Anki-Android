@@ -20,7 +20,10 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.ResolveInfoFlags
 import android.content.pm.ResolveInfo
 import android.os.Build
+import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
+import android.util.SparseArray
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
 import com.ichi2.compat.CompatHelper.Companion.compat
@@ -89,6 +92,14 @@ class CompatHelper private constructor() {
 
         fun PackageManager.resolveActivity(intent: Intent, flags: Compat.ResolveInfoFlags): ResolveInfo? {
             return compat.resolveActivity(this, intent, flags)
+        }
+
+        inline fun <reified T : Parcelable> Bundle.getParcelableArrayListCompat(key: String, clazz: Class<T>): ArrayList<T>? {
+            return compat.getParcelableArrayList(this, key, clazz)
+        }
+
+        inline fun <reified T> Parcel.readSparseArrayCompat(loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
+            return compat.readSparseArray(this, loader, clazz)
         }
     }
 }

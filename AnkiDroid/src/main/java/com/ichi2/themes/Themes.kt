@@ -19,6 +19,7 @@
 package com.ichi2.themes
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
@@ -48,11 +49,8 @@ object Themes {
         context.setTheme(currentTheme.resId)
     }
 
-    /**
-     * Sets theme to the legacy version of [currentTheme]
-     */
-    fun setThemeLegacy(context: Context) {
-        context.setTheme(currentTheme.legacyResId)
+    fun setLegacyActionBar(context: Context) {
+        context.setTheme(R.style.ThemeOverlay_LegacyActionBar)
     }
 
     /**
@@ -73,6 +71,23 @@ object Themes {
         } else {
             Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!)
         }
+    }
+
+    enum class ThemeChanged { Yes, No }
+
+    fun updateCurrentThemeByUiMode(uiMode: Int): ThemeChanged {
+        val systemIsInNightMode =
+            uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+        if (Themes.systemIsInNightMode != systemIsInNightMode) {
+            Themes.systemIsInNightMode = systemIsInNightMode
+            if (themeFollowsSystem()) {
+                updateCurrentTheme()
+                return ThemeChanged.Yes
+            }
+        }
+
+        return ThemeChanged.No
     }
 
     /**

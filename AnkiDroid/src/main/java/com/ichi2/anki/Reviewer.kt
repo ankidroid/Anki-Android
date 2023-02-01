@@ -297,6 +297,12 @@ open class Reviewer : AbstractFlashcardViewer() {
         val did = extras.getLong("deckId", Long.MIN_VALUE)
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
+        // deckId does not exist, load default
+        if (col.decks.get(did, _default = false) == null) {
+            Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
+            return
+        }
+
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
             col.clearUndo()
@@ -458,7 +464,11 @@ open class Reviewer : AbstractFlashcardViewer() {
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = Intent(this, DeckOptions::class.java)
+                val i = if (BackendFactory.defaultLegacySchema) {
+                    Intent(this, DeckOptionsActivity::class.java)
+                } else {
+                    com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
+                }
                 startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
             }
             R.id.action_select_tts -> {
@@ -748,7 +758,17 @@ open class Reviewer : AbstractFlashcardViewer() {
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            if (col.undoAvailable()) {
+                // We arrive here if the last action which can be undone is retained.
+                //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
+                undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            } else {
+                // We arrive here if the last action which can be undone isn't retained.
+                // In this case, there is no object word for the verb, "Undo",
+                // so in some languages such as Japanese, which have pre/postpositional particle with the object,
+                // we need to use the string for just "Undo" instead of the string for "Undo %s".
+                undoIcon.title = resources.getString(R.string.undo)
+            }
         }
         if (undoEnabled) {
             mOnboarding.onUndoButtonEnabled()
@@ -1030,7 +1050,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (actionBar != null) {
             if (mPrefShowETA) {
                 mEta = sched!!.eta(counts, false)
-                actionBar.subtitle = Utils.remainingTime(AnkiDroidApp.instance, (mEta * 60).toLong())
+                actionBar.subtitle = Utils.remainingTime(this, (mEta * 60).toLong())
             }
         }
         mNewCount = SpannableString(counts.new.toString())
@@ -1505,13 +1525,12 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     /**
      * Inner class which implements the submenu for the Schedule button
-     *
-     * NOTE: this action provider doesn't handle the menu item being shown directly in the toolbar,
-     * if the menu item is set to appear in the toolbar, the onCreateActionView(MenuItem) needs to be
-     * overridden. See one of its siblings([BuryProvider] or [SuspendProvider]) for an example of an
-     * implementation.
      */
     internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
+
+        override fun onCreateActionView(forItem: MenuItem): View {
+            return createActionViewWith(context, forItem, R.menu.reviewer_schedule, ::onMenuItemClick) { true }
+        }
 
         override fun hasSubMenu(): Boolean {
             return true

@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Säkerhetskopiering kunde inte utföras på grund av otillräckligt utrymme på SD-kortet. Frigör utrymme eller minska djupet på säkerhetskopian.</string>
-    <string name="sd_space_warning">Mindre än %d mb utrymme kvar på ditt SD-kort.\nFrigör utrymme för att undvika dataförlust.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">Återställ från säkerhetskopia</string>
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Ta bort samling och skapa en ny</string>
