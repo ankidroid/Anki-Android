@@ -1888,7 +1888,7 @@ open class CardBrowser :
     }
 
     private fun showUndoSnackbar(message: CharSequence) {
-        showSnackbar(message, Snackbar.LENGTH_SHORT) {
+        showSnackbar(message, Snackbar.LENGTH_LONG) {
             setAction(R.string.undo) { TaskManager.launchCollectionTask(Undo().toDelegate(), mUndoHandler) }
             mUndoSnackbar = this
         }
