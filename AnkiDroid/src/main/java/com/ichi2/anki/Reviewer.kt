@@ -118,6 +118,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     // Whiteboard
     var prefWhiteboard = false
+    private var mPrefAnswerButtonPosition: String? = "bottom"
 
     @get:CheckResult
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -436,6 +437,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     mColorPalette!!.visibility = View.GONE
                 }
+                updateAnswerButtonPosition()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -1040,6 +1042,26 @@ open class Reviewer : AbstractFlashcardViewer() {
     override fun updateActionBar() {
         super.updateActionBar()
         updateScreenCounts()
+    }
+
+    private fun updateAnswerButtonPosition() {
+        mPrefAnswerButtonPosition = super.restorePreferences()
+            .getString("answerButtonPosition", "bottom")
+        val layoutParams: RelativeLayout.LayoutParams
+        when (mPrefAnswerButtonPosition) {
+            "none", "top" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ABOVE)
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+            "bottom" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+        }
     }
 
     protected fun updateScreenCounts() {
