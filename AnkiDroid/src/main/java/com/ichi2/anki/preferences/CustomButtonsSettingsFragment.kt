@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.VisibleForTesting
@@ -32,32 +33,42 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Reset toolbar button customizations
+
         val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
         resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            AnkiDroidApp.getSharedPrefs(requireContext()).edit {
-                remove("customButtonUndo")
-                remove("customButtonScheduleCard")
-                remove("customButtonEditCard")
-                remove("customButtonTags")
-                remove("customButtonAddCard")
-                remove("customButtonReplay")
-                remove("customButtonCardInfo")
-                remove("customButtonSelectTts")
-                remove("customButtonDeckOptions")
-                remove("customButtonMarkCard")
-                remove("customButtonToggleMicToolBar")
-                remove("customButtonBury")
-                remove("customButtonSuspend")
-                remove("customButtonFlag")
-                remove("customButtonDelete")
-                remove("customButtonEnableWhiteboard")
-                remove("customButtonSaveWhiteboard")
-                remove("customButtonWhiteboardPenColor")
-                remove("customButtonClearWhiteboard")
-                remove("customButtonShowHideWhiteboard")
-            }
-            // #9263: refresh the screen to display the changes
-            refreshScreen()
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(R.string.alert_title)
+                .setMessage(R.string.alert_message)
+                .setPositiveButton(R.string.alert_positive) { _, _ ->
+                    // make these changes when clicked
+                    AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                        remove("customButtonUndo")
+                        remove("customButtonScheduleCard")
+                        remove("customButtonEditCard")
+                        remove("customButtonTags")
+                        remove("customButtonAddCard")
+                        remove("customButtonReplay")
+                        remove("customButtonCardInfo")
+                        remove("customButtonSelectTts")
+                        remove("customButtonDeckOptions")
+                        remove("customButtonMarkCard")
+                        remove("customButtonToggleMicToolBar")
+                        remove("customButtonBury")
+                        remove("customButtonSuspend")
+                        remove("customButtonFlag")
+                        remove("customButtonDelete")
+                        remove("customButtonEnableWhiteboard")
+                        remove("customButtonSaveWhiteboard")
+                        remove("customButtonWhiteboardPenColor")
+                        remove("customButtonClearWhiteboard")
+                        remove("customButtonShowHideWhiteboard")
+                    }
+                    refreshScreen()
+                }
+                .setNegativeButton(R.string.alert_negative) { _, _ ->
+                    // Do nothing
+                }
+                .show()
             true
         }
     }
