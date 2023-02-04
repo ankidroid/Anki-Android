@@ -39,7 +39,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle(R.string.alert_title)
                 .setMessage(R.string.alert_message)
-                .setPositiveButton(R.string.alert_positive) { _, _ ->
+                .setPositiveButton(R.string.dialog_yes) { _, _ ->
                     // make these changes when clicked on preference
                     AnkiDroidApp.getSharedPrefs(requireContext()).edit {
                         remove("customButtonUndo")
@@ -65,7 +65,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                     }
                     refreshScreen()
                 }
-                .setNegativeButton(R.string.alert_negative) { _, _ ->
+                .setNegativeButton(R.string.dialog_no) { _, _ ->
                     // Do nothing
                 }
                 .show()
