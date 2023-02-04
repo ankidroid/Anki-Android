@@ -40,7 +40,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
             builder.setTitle(R.string.alert_title)
                 .setMessage(R.string.alert_message)
                 .setPositiveButton(R.string.alert_positive) { _, _ ->
-                    // make these changes when clicked
+                    // make these changes when clicked on preference
                     AnkiDroidApp.getSharedPrefs(requireContext()).edit {
                         remove("customButtonUndo")
                         remove("customButtonScheduleCard")
