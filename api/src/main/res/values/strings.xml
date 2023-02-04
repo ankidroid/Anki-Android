@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">ProviderAPI</string>
-
-<!-- for alert dialog in appearances   -->
-    <string name="alert_title">Confirm Reset</string>
-    <string name="alert_message">Are you sure you want to reset all custom toolbar buttons?</string>
-    <string name="alert_positive">Yes</string>
-    <string name="alert_negative">No</string>
 </resources>
