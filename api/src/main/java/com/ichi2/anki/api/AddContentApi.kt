@@ -618,7 +618,8 @@ public class AddContentApi(context: Context) {
             // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
             val queryFormat = "${modelFieldList[0]}:\"%%s\" note:\"$modelName\""
             for (outputPos in keys.indices) {
-                val selection = String.format(queryFormat, keys[outputPos])
+                val selection = "$queryFormat${keys[outputPos]}"
+
                 val query = mResolver.query(
                     Note.CONTENT_URI,
                     PROJECTION,
@@ -690,10 +691,7 @@ public class AddContentApi(context: Context) {
             // Query for notes that have specified model and checksum of first field matches
             val sel = String.format(
                 Locale.US,
-                "%s=%d and %s in (%s)",
-                Note.MID,
-                modelId,
-                Note.CSUM,
+                "$Note.MID=$modelId and $Note.CSUM in (%s)",
                 TextUtils.join(",", csums)
             )
             val notesTableQuery = mResolver.query(

@@ -231,7 +231,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             arrayOf(
                                 String.format(
                                     Locale.US,
-                                    "rated:%d:1", n
+                                    "rated:$n:1"
                                 ),
                                 Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM
                             ),
@@ -244,7 +244,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             arrayOf(
                                 String.format(
                                     Locale.US,
-                                    "prop:due<=%d", n
+                                    "prop:due<=$n"
                                 ),
                                 Consts.DYN_MAX_SIZE, Consts.DYN_DUE
                             ),
