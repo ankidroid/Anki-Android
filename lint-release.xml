@@ -63,6 +63,9 @@
     <issue id="ImplicitSamInstance" severity="fatal" />
     <issue id="DrawAllocation" severity="fatal" />
 
+    <!-- new with AGP7.4+, tracking in https://github.com/ankidroid/Anki-Android/issues/13197 -->
+    <issue id="MonochromeLauncherIcon" severity="ignore" />
+
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 
