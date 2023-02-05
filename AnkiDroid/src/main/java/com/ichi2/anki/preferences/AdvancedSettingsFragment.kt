@@ -22,6 +22,8 @@ import android.content.pm.PackageManager
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
+import androidx.preference.Preference
+import androidx.preference.SwitchPreference
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -30,6 +32,7 @@ import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
+import com.ichi2.preferences.EditTextPreferenceWithDefault
 import com.ichi2.utils.show
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -49,8 +52,9 @@ class AdvancedSettingsFragment : SettingsFragment() {
         removeUnnecessaryAdvancedPrefs()
 
         // Check that input is valid before committing change in the collection path
-        requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
+        requirePreference<EditTextPreferenceWithDefault>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             disableIfStorageMigrationInProgress()
+            setDefaultValue(CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()))
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val newPath = newValue as String
                 try {

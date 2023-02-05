@@ -27,7 +27,7 @@
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/pref_cat_advanced"
     android:key="@string/pref_advanced_screen_key">
-        <EditTextPreference
+        <com.ichi2.preferences.EditTextPreferenceWithDefault
             android:defaultValue="/sdcard/AnkiDroid"
             android:key="@string/pref_ankidroid_directory_key"
             android:title="@string/col_path"

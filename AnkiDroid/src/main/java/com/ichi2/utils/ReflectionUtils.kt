@@ -15,6 +15,19 @@
  */
 package com.ichi2.utils
 
+import java.lang.reflect.Field
+
 inline fun <reified T> getInstanceFromClassName(javaClassName: String): T {
     return Class.forName(javaClassName).newInstance() as T
+}
+
+/**
+ * @param clazz Java class to get the field
+ * @param fieldName name of the field
+ * @return a [Field] object with `isAccessible` set to true
+ */
+fun getJavaFieldAsAccessible(clazz: Class<*>, fieldName: String): Field {
+    return clazz.getDeclaredField(fieldName).apply {
+        isAccessible = true
+    }
 }

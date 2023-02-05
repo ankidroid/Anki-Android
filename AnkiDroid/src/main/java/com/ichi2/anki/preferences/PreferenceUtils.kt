@@ -18,6 +18,7 @@ package com.ichi2.anki.preferences
 import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.ichi2.utils.getJavaFieldAsAccessible
 
 /**
  * Sets the callback to be invoked when this preference is changed by the user
@@ -49,4 +50,8 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(k
 inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(@StringRes resId: Int): T {
     val key = getString(resId)
     return requirePreference(key)
+}
+
+fun Preference.getDefaultValue(): Any? {
+    return getJavaFieldAsAccessible(Preference::class.java, "mDefaultValue").get(this)
 }
