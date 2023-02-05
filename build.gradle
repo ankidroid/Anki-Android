@@ -11,7 +11,7 @@ buildscript {
     ext.acra_version = '5.9.7'
     ext.ankidroid_backend_version = '0.1.15-anki2.1.54' // this is parsed in tools/setup-anki-backend.sh
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.9.1'
+    ext.junit_version = '5.9.2'
     ext.coroutines_version = '1.6.4'
     ext.fragments_version = "1.5.5"
     ext.espresso_version = '3.5.1'
