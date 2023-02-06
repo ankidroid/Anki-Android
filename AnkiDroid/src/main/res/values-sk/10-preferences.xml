@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Povoliť dotykové gestá v rohoch obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigačné menu v režime celej obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otvoriť navigačné menu, keď sa tiahne doprava kdekoľvek na obrazovke</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Posun hore</string>
     <string name="gestures_swipe_down" maxLength="41">Posun dole</string>
     <string name="gestures_swipe_left" maxLength="41">Posun doľava</string>

@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannello di navigazione a schermo intero</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Apri il pannello di navigazione quando scorri a destra da qualsiasi punto dello schermo</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Scorri su</string>
     <string name="gestures_swipe_down" maxLength="41">Scorri giù</string>
     <string name="gestures_swipe_left" maxLength="41">Scorri a sinistra</string>

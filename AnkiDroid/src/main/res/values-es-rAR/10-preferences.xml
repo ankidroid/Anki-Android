@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel de navegación a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir el cajón de navegación cuando se desliza a la derecha desde cualquier lugar de la pantalla</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down" maxLength="41">Deslizar hacia abajo</string>
     <string name="gestures_swipe_left" maxLength="41">Deslizar hacia la izquierda</string>
