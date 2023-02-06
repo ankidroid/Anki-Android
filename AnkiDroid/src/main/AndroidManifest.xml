@@ -413,13 +413,11 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
-        <!-- TODO: Fix LockedOrientationActivity - introduction_layout.xml -->
+
         <activity android:name=".IntroductionActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="userPortrait"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            tools:ignore="LockedOrientationActivity" />
+            android:configChanges="keyboardHidden|screenSize|locale" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
