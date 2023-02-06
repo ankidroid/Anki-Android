@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>
     <string name="gestures_fullscreen_nav_drawer_summary">從屏幕上任何地方向右劃，可以打開導航的抽屜。</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">向上撥動</string>
     <string name="gestures_swipe_down" maxLength="41">向下撥動</string>
     <string name="gestures_swipe_left" maxLength="41">向左撥動</string>

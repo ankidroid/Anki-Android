@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Permiti sos gestos tàtiles in sos àngulos de s\'ischermu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannellu de navigatzione a ischermu intreu</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Aberi su pannellu de navigatzione cando trìsinas cara a dereta dae cale si siat puntu de s\'ischermu</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Trìsina cara a artu</string>
     <string name="gestures_swipe_down" maxLength="41">Trìsina cara a bassu</string>
     <string name="gestures_swipe_left" maxLength="41">Trìsina cara a manca</string>
