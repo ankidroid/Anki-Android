@@ -230,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastní synchronizační server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nepoužívá se</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Kolekce: %1$s\nMultimédia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">výchozí</string>
-    <string name="custom_sync_server_help"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
-        můžete pro synchronizaci použít vlastní servery.
-        Můžete zadat server pro kolekci, multimédia, nebo obojí.
-        Jestliže nejsou nastaveny, použijí se místo toho výchozí AnkiWeb servery.
-        Například, můžete použít synchronizační server vestavěný v Anki
-        Desktop, abyste synchronizovali kolekci, když jste pouze v místní síti,
-        a AnkiWeb, abyste synchronizovali multimédia, když máte přístup k internetu.
-        <a href="%s">Dozvědět se více</a>
-        <br>
-        <br>Poznámka: na rozdíl od předchozích verzí AnkiDroid
-        musíte zadat úplnou adresu URL pro synchronizaci,
-        například: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronizovat url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Sync url pro média</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>

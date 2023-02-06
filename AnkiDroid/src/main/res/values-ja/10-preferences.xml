@@ -230,21 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">指定なし</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">コレクション: %1$s\nメディア: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">既定</string>
-    <string name="custom_sync_server_help"><![CDATA[        AnkiWebとの同期の代わりに、
-        独自のサーバーを使用して同期を行うこともできます。
-        コレクションサーバーとメディアサーバーのどちらか、または両方を指定することができます。
-        設定しない場合は、デフォルトのAnkiWebサーバーが使用されます。
-        例えば、ローカルネットワークにしかアクセスできない場合はAnki Desktopに組み込まれた同期サーバーを使用してコレクションを同期し、
-        一般的なインターネットアクセスが可能な場合はAnkiWebを使用してメディアを同期する、といったことが可能です。
-        詳細は<a href="%s">こちら</a>をご覧ください。
-        <br>
-        <br>【注意】以前のバージョンのAnkiDroidの場合とは異なり、
-        カスタマイズのための同期URLを完全な形で指定する必要があります。
-        （例: https://example.com:8080/sync/ )]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
