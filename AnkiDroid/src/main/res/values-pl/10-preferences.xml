@@ -230,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nie używane</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Kolekcja: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">domyślne</string>
-    <string name="custom_sync_server_help"><![CDATA[        Jako alternatywa dla synchronizacji z AnkiWeb,
-        możesz użyć własnych serwerów do synchronizacji.
-        Możesz określić kolekcję lub serwer multimedialny lub oba te elementy.
-        Jeśli nie ustawione, zamiast tego zostaną użyte domyślne serwery AnkiWeb.
-        Na przykład, możesz użyć serwera synchronizacji wbudowanego w Anki
-        na komputery do synchronizacji kolekcji gdy masz tylko sieć lokalną,
-        i AnkiWeb do synchronizacji multimediów, gdy masz ogólny dostęp do Internetu.
-        <a href="%s">Dowiedz się więcej</a>
-        <br>
-        <br>Uwaga: w przeciwieństwie do poprzednich wersji AnkiDroid,
-        musisz określić pełny adres URL synchronizacji,
-        na przykład: https://example. om:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Adres url synchronizacji</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Adres url synchronizacji mediów</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
     <string name="bluetooth">Bluetooth</string>

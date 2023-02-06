@@ -230,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସୀଙ୍କ୍ ସର୍ଵର୍</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ଵ୍ୟଵହାର ହୋଇନାହିଁ</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">ସଂଗ୍ରହ: %1$s\nମିଡ଼ିଆ: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">ଡିଫଲ୍ଟ</string>
-    <string name="custom_sync_server_help"><![CDATA[        AnkiWeb ସହ ସୀଙ୍କ୍ରୋନାଇଜ୍ କରିବାର ଏକ ଵିକଳ୍ପ ଭାଵରେ,
-        ଆପଣ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍ ପାଇଁ ଆପଣଙ୍କ ନିଜ ସର୍ଵର୍ ଵ୍ୟଵହାର କରିପାରନ୍ତି।
-        ଆପଣ ସଂଗ୍ରହ କିମ୍ୱା ମିଡ଼ିଆ ସର୍ଵର୍, କିମ୍ୱା ଉଭୟ ନିର୍ଦ୍ଧିଷ୍ଟ କରିପାରନ୍ତି।
-        ନିର୍ଦ୍ଦିଷ୍ଟ ନହୋଇଥିଲେ, ଏହା ବଦଳରେ ଡିଫଲ୍ଟ AnkiWeb ସର୍ଵର୍ ଵ୍ୟଵହାର ହେବ।
-        ଉଦାହରଣ ସ୍ୱରୂପ, ଆପଣଙ୍କ ପାଖରେ କେଵଳ ଏକ ସ୍ଥାନୀୟ ନେଟୱର୍କ ଥିଲେ, 
-        ଆପଣ ସଂଗ୍ରହ ସୀଙ୍କ୍ କରିବାଲାଗି Anki Desktopରେ ନିର୍ମିତ ସୀଙ୍କ୍ ସର୍ଵରକୁ,
-        ଆଉ ମିଡ଼ିଆ ସୀଙ୍କ୍ ପାଇଁ ସାଧାରଣ ଇଣ୍ଟର୍ନେଟ୍ ସଂଯୋଗ ଥିବା ସମୟରେ AnkiWebକୁ ଉପଯୋଗ କରିପାରିବେ।
-        <a href="%s">ଅଧିକ ଜାଣନ୍ତୁ</a>
-        <br>
-        <br>ଟିପ୍ପଣୀ: ପୂର୍ଵ AnkiDroid ସଂସ୍କରଣ ତୁଳନାରେ,
-        ଆପଣଙ୍କୁ ସମ୍ପୂର୍ଣ୍ଣ କଷ୍ଟମ୍ ସୀଙ୍କ୍ URL ନିର୍ଦ୍ଦିଷ୍ଟ କରିବାକୁ ପଡ଼ିବ,
-        ଉଦାହରଣ ସ୍ୱରୂପ: https://example.com:8080/sync/।]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">ସୀଙ୍କ୍ url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସୀଙ୍କ୍ url</string>
     <!-- Key Bindings -->
     <string name="keyboard">କୀବୋର୍ଡ୍</string>
     <string name="bluetooth">Bluetooth</string>
