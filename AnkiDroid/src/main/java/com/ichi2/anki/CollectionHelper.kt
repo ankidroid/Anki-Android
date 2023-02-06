@@ -453,7 +453,7 @@ open class CollectionHelper {
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
             return if (!BuildConfig.LEGACY_STORAGE) {
-                getAppSpecificExternalAnkiDroidDirectory(context)
+                File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
             } else {
                 legacyAnkiDroidDirectory
             }
