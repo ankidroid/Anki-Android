@@ -49,7 +49,7 @@
     <string name="drawer_close">Lukk navigasjonspanelet</string>
     <string name="CardEditorCardDeck">Kortstokk:</string>
     <string name="CardEditorNoteDeck">Kortstokk:</string>
-    <string name="CardEditorModel">Type:</string>
+    <string name="CardEditorModel">Slag:</string>
     <string name="CardEditorTags">Etiketter: %1$s</string>
     <string name="CardEditorCards">Kort: %1$s</string>
     <string name="tag_name">Etikettnavn</string>
