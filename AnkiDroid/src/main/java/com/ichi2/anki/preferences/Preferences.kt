@@ -32,6 +32,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
@@ -51,7 +52,10 @@ import java.util.*
 /**
  * Preferences dialog.
  */
-class Preferences : AnkiActivity(), SearchPreferenceResultListener {
+class Preferences :
+    AnkiActivity(),
+    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+    SearchPreferenceResultListener {
     val searchConfiguration: SearchConfiguration by lazy { configureSearchBar() }
     lateinit var searchView: PreferencesSearchView
 
@@ -111,6 +115,21 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         searchView.searchConfiguration = searchConfiguration
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference
+    ): Boolean {
+        val fragment = supportFragmentManager.fragmentFactory.instantiate(
+            classLoader, pref.fragment!!
+        )
+        fragment.arguments = pref.extras
+        supportFragmentManager.commit {
+            replace(R.id.settings_container, fragment)
+            addToBackStack(null)
+        }
+        return true
     }
 
     /**
