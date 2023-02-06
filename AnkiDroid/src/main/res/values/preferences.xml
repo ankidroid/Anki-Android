@@ -85,8 +85,7 @@
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
-    <string name="custom_sync_server_collection_url_key">customCollectionSyncUrl</string>
-    <string name="custom_sync_server_media_url_key">syncMediaUrl</string>
+    <string name="custom_sync_server_collection_url_key">syncBaseUrl</string>
     <!-- Advanced -->
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>
     <string name="pref_cat_workarounds_key">category_workarounds</string>

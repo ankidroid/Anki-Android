@@ -14,17 +14,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-// This is a minimal example of integrating the new backend sync code into AnkiDroid.
-// Work is required to make it robust: error handling, showing progress in the GUI instead
-// of the console, keeping the screen on, preventing the user from interacting while syncing,
-// etc.
-//
-// BackendFactory.defaultLegacySchema must be false to use this code.
-//
-
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import anki.sync.SyncAuth
@@ -39,6 +32,7 @@ import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
+import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
@@ -47,15 +41,59 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 import java.net.UnknownHostException
 
+object SyncPreferences {
+    const val HKEY = "hkey"
+    const val USERNAME = "username"
+    const val CURRENT_SYNC_URI = "currentSyncUri"
+    const val CUSTOM_SYNC_URI = "syncBaseUrl"
+    const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
+    // Used in the legacy schema path
+    const val HOSTNUM = "hostNum"
+}
+
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
-    val hkey = preferences.getString("hkey", null)
-    val hostNum = HostNumFactory.getInstance(baseContext).hostNum
+    val hkey = preferences.getString(SyncPreferences.HKEY, null)
+    val currentEndpoint = preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)
+    val customEndpoint = if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+        preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+    } else {
+        null
+    }
+    val resolvedEndpoint = currentEndpoint ?: customEndpoint
     return hkey?.let {
         syncAuth {
             this.hkey = hkey
-            this.hostNumber = hostNum ?: 0
+            if (resolvedEndpoint != null) {
+                this.endpoint = resolvedEndpoint
+            }
         }
+    }
+}
+
+fun customSyncBase(preferences: SharedPreferences): String? {
+    return if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+        val uri = preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+        if (uri.isNullOrEmpty()) {
+            null
+        } else {
+            uri
+        }
+    } else {
+        null
+    }
+}
+
+suspend fun syncLogout(context: Context) {
+    val preferences = AnkiDroidApp.getSharedPrefs(context)
+    preferences.edit {
+        remove(SyncPreferences.HKEY)
+        remove(SyncPreferences.USERNAME)
+        remove(SyncPreferences.CURRENT_SYNC_URI)
+        remove(SyncPreferences.HOSTNUM)
+    }
+    withCol {
+        media.forceResync()
     }
 }
 
@@ -64,7 +102,7 @@ fun DeckPicker.syncAuth(): SyncAuth? {
  * Returning true does not guarantee that the user actually synced recently,
  * or even that the ankiweb account is still valid.
  */
-fun isLoggedIn() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getString("hkey", "")!!.isNotEmpty()
+fun isLoggedIn() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
 
 fun DeckPicker.handleNewSync(
     conflict: Connection.ConflictResolution?,
@@ -126,8 +164,8 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
 private fun updateLogin(context: Context, username: String, hkey: String?) {
     val preferences = AnkiDroidApp.getSharedPrefs(context)
     preferences.edit {
-        putString("username", username)
-        putString("hkey", hkey)
+        putString(SyncPreferences.USERNAME, username)
+        putString(SyncPreferences.HKEY, hkey)
     }
 }
 
@@ -152,7 +190,12 @@ private suspend fun handleNormalSync(
         withCol { newBackend.syncCollection(auth) }
     }
 
-    // Save current host number
+    if (output.hasNewEndpoint()) {
+        AnkiDroidApp.getSharedPrefs(deckPicker).edit {
+            putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+        }
+    }
+    // Save current host number (legacy)
     HostNumFactory.getInstance(deckPicker).hostNum = output.hostNumber
 
     when (output.required) {
