@@ -437,7 +437,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     mColorPalette!!.visibility = View.GONE
                 }
-                updateAnswerButtonPosition()
+                updateWhiteboardEditorPosition()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -1044,8 +1044,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         updateScreenCounts()
     }
 
-    private fun updateAnswerButtonPosition() {
-        mPrefAnswerButtonPosition = super.restorePreferences()
+    private fun updateWhiteboardEditorPosition() {
+        mPrefAnswerButtonPosition = AnkiDroidApp.getSharedPrefs(this)
             .getString("answerButtonPosition", "bottom")
         val layoutParams: RelativeLayout.LayoutParams
         when (mPrefAnswerButtonPosition) {
