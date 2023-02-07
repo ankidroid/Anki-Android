@@ -33,6 +33,7 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
@@ -1425,6 +1426,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
+    // TODO: #12770 toggleStickyButtonのalpha値の設定をViewの初期化時にも走らせる
     private fun onToggleStickyText(toggleStickyButton: ImageButton?, index: Int) {
         val text = mEditFields!![index]!!.fieldText
         if (mToggleStickyText[index] == null) {
@@ -1437,17 +1439,22 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
+    // TODO: #12770 保存時にこの処理が走る条件をみる→ピン留めの状態をみているはず こっちが重要なのかも
     private fun saveToggleStickyMap() {
+        Log.d("#12770 saveToggle", mToggleStickyText.toString())
         for ((key) in mToggleStickyText) {
             mToggleStickyText[key] = mEditFields!![key]!!.fieldText
         }
     }
 
+    // TODO: #12770 保存時にこの処理が走る条件をみる→ピン留めの状態をみているはず 必ずアップデートされてる？
     private fun updateFieldsFromStickyText() {
+        Log.d("#12770 updateFields", mToggleStickyText.toString())
         for ((key, value) in mToggleStickyText) {
             // handle fields for different note type with different size
             if (key < mEditFields!!.size) {
                 mEditFields!![key]!!.setText(value)
+                Log.d("#12770 updated", key.toString() + ": " + value.toString())
             }
         }
     }
