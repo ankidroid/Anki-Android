@@ -39,7 +39,7 @@ import java.io.File
  */
 internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File) : Operation() {
     override fun execute(context: MigrationContext): List<Operation> {
-        val destinationExists = destinationFile.exists()
+        var destinationExists = destinationFile.exists()
 
         if (destinationExists && destinationFile.isDirectory) {
             context.reportError(
@@ -54,6 +54,14 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
 
         if (handledEquivalentFileContent(destinationExists, context)) {
             return operationCompleted()
+        }
+
+        // destination exists, does NOT match content, and is 0-length
+        // delete it and let the transfer occur again.
+        if (destinationExists && destinationFile.length() == 0L) {
+            // TODO: #13170 - extend this for when destinationFile is an exact subset of sourceFile
+            destinationExists = !destinationFile.delete()
+            Timber.w("(conflict) Deleted empty file in destination. Deletion result: %b", destinationExists)
         }
 
         // destination exists, and does NOT match content: throw an exception
@@ -76,10 +84,14 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
         }
 
         // attempt a quick rename
-        if (context.attemptRename && sourceFile.renameTo(destinationFile)) {
-            Timber.d("move successful from '$sourceFile' to '$destinationFile'")
-            context.reportProgress(destinationFile.length())
-            return operationCompleted()
+        if (context.attemptRename) {
+            if (sourceFile.renameTo(destinationFile)) {
+                Timber.d("fast move successful from '$sourceFile' to '$destinationFile'")
+                context.reportProgress(destinationFile.length())
+                return operationCompleted()
+            } else {
+                context.attemptRename = false
+            }
         }
 
         // copy the file, and delete the source.

@@ -45,67 +45,67 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">Kortstokker</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortoversikt</string>
+    <string name="decks">Kortleikar</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortoversyn</string>
     <string name="statistics">Statistikk</string>
-    <string name="settings">Oppsett</string>
+    <string name="settings">Innstillingar</string>
     <string name="help">Hjelp</string>
-    <string name="drawing">Tegning</string>
+    <string name="drawing">Teikning</string>
     <string name="send_feedback">Send tilbakemelding</string>
-    <string name="studyoptions_due_today">Forfaller i dag:</string>
-    <string name="studyoptions_new_total">Totalt nye kort:</string>
-    <string name="studyoptions_total_cards">Totalt antall kort:</string>
-    <string name="studyoptions_eta">Tidsestimat (min.):</string>
-    <string name="studyoptions_start">Studer nå</string>
+    <string name="studyoptions_due_today">Går ut i dag:</string>
+    <string name="studyoptions_new_total">Mengd nye kort:</string>
+    <string name="studyoptions_total_cards">Mengd kort:</string>
+    <string name="studyoptions_eta">Truleg tidslengd (min):</string>
+    <string name="studyoptions_start">Gransk</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>
-    <string name="study_more">Studer mer</string>
+    <string name="study_more">Gransk meir</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d kort i kø (%2$s)</item>
         <item quantity="other">%1$d kort i kø (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minutt igjen</item>
-        <item quantity="other">%d minutter igjen</item>
+        <item quantity="one">%d minutt att</item>
+        <item quantity="other">%d minutt att</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d time %2$d gjenstår</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d time %2$d att</item>
+        <item quantity="other">%1$d timar %2$d att</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d dag %2$d gjenstår</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d dag %2$d att</item>
+        <item quantity="other">%1$d dagar %2$d att</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Samlingen er tom</string>
-    <string name="no_cards_placeholder_description">Begynn å legge til nye kort\nved å bruke + ikonet.</string>
+    <string name="no_cards_placeholder_title">Samlinga er tom</string>
+    <string name="no_cards_placeholder_description">Trykk på + for\nå leggja til kort</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">%1$d kort studert i %2$s i dag</item>
-        <item quantity="other">%1$d kort studert i %2$s i dag</item>
+        <item quantity="one">Granska %1$d kort i %2$s i dag</item>
+        <item quantity="other">Granska %1$d kort i %2$s i dag</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Skriv svar</string>
+    <string name="type_answer_hint">Rit svaret her</string>
     <string name="show_answer">Vis svaret</string>
     <string name="hide_answer">Skjul svaret</string>
     <string name="ease_button_again">Igjen</string>
-    <string name="ease_button_hard">Vanskelig</string>
-    <string name="ease_button_good">Bra</string>
+    <string name="ease_button_hard">Tungt</string>
+    <string name="ease_button_good">Greitt</string>
     <string name="ease_button_easy">Lett</string>
     <string name="studyoptions_congrats_undo">Angre %s</string>
-    <string name="menu_import">Importer</string>
+    <string name="menu_import">Før inn</string>
     <string name="undo">Angre</string>
     <string name="undo_action_review">siste gjennomgang</string>
     <string name="undo_action_change_deck_multi">endre kortstokker</string>
-    <string name="move_all_to_deck">Flytt alle til kortstokk</string>
+    <string name="move_all_to_deck">Flytt valde kort til kortleik</string>
     <string name="unbury">Grav opp igjen</string>
-    <string name="rename_deck">Gi kortstokk nytt navn</string>
-    <string name="create_shortcut">Opprett snarvei</string>
-    <string name="browse_cards">Bla gjennom kort</string>
+    <string name="rename_deck">Døyp om kortleiken</string>
+    <string name="create_shortcut">Lag ein snarveg</string>
+    <string name="browse_cards">Blad igjennom kort</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Legg til</string>
     <string name="menu_add_note">Legg til notat</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniser konto</string>
-    <string name="menu_dismiss_note">Gjem / slett</string>
+    <string name="menu_dismiss_note">Skjul / slett</string>
     <string name="menu_bury_card">Begrav kort</string>
     <string name="menu_bury_note">Begrav notat</string>
     <string name="menu_suspend_card">Suspender kort</string>
@@ -129,14 +129,14 @@
     <string name="menu_mark_note">Marker notat</string>
     <string name="menu_unmark_note">Fjern notatmarkering</string>
     <string name="menu_toggle_mic_tool_bar">Sjekk uttalen</string>
-    <string name="new_deck">Lag kortstokk</string>
+    <string name="new_deck">Lag ein kortleik</string>
     <string name="new_dynamic_deck">Lag en filtrert kortstokk</string>
-    <string name="directory_inaccessible">AnkiDroid-mappen er utilgjengelig</string>
+    <string name="directory_inaccessible">AnkiDroid-mappa er utilgjengeleg</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Vær så snill å gi AnkiDroid \'Lagring\' tillatelsen</string>
+    <string name="startup_no_storage_permission">Gjev AnkiDroid tilgjenge til «lagring» for å halda fram</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -146,25 +146,25 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d t %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d t %2$d min</string>
     <string name="time_quantity_hours">%d t</string>
     <string name="time_quantity_days">%d d</string>
     <string name="time_quantity_days_hours">%1$d d %2$d t</string>
-    <string name="time_quantity_months">%.1f må</string>
+    <string name="time_quantity_months">%.1f md.</string>
     <string name="time_quantity_years">%.1f år</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Den filtrerte kortstokken bygges om...</string>
     <string name="rebuild_cram_label">Gjenoppbygg</string>
     <string name="empty_cram_label">Tøm</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Lag ein underkortleik</string>
     <string name="empty_filtered_deck">Den filtrerte kortstokken tømmes...</string>
     <string name="custom_study_deck_name">Tilpasset studiesesjon</string>
     <string name="custom_study_deck_exists">Gi den eksisterende tilpassede studiestokken nytt navn først</string>
-    <string name="empty_deck">Denne kortstokken er tom</string>
+    <string name="empty_deck">Denne kortleiken er tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">Denne kortstokken er tom. Bruk +-knappen for å legge til nytt innhold.</string>
+    <string name="invalid_deck_name">Ugildt namn på kortleik</string>
+    <string name="studyoptions_empty">Denne kortleiken er tom. Trykk på +-knappen for å leggja til nytt innhald.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
@@ -181,12 +181,12 @@
     <string name="continue_sync">Fortsett synkronisering</string>
     <string name="sync_cancelled">Synkronisering Avbrutt</string>
     <string name="sync_cancel_message">Avbryter...\nDet kan ta en stund.</string>
-    <string name="export">Eksporter</string>
-    <string name="export_collection">Eksporter samling</string>
-    <string name="export_deck">Eksporter kortstokk</string>
+    <string name="export">Før ut</string>
+    <string name="export_collection">Før ut samlinga</string>
+    <string name="export_deck">Før ut kortleiken</string>
     <string name="nothing">Ingenting</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Korttyper</string>
+    <string name="title_activity_template_editor">Kortslag</string>
     <string name="card_template_editor_front">Framsidemal</string>
     <string name="card_template_editor_back">Baksidemal</string>
     <string name="card_template_editor_styling">Formgivning</string>
@@ -219,7 +219,7 @@
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">Mer informasjon</string>
+    <string name="more_information">Fleire opplysingar</string>
     <string name="no_field">Funnet \'{{%1$s}}\', men det er ikke noe felt som heter \'%1$s\'.</string>
     <string name="closed_tag_not_open">Funnet \'{{/%1$s}}\', men mangler \'{{#%1$s}}\' eller \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">Mangler \'}}\' i \'%s\'.</string>
@@ -233,7 +233,7 @@
     <string name="sync_conflict_remote_confirm_new">Erstatt samlingen din på AnkiDroid med samlingen din fra AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Erstatt samlingen din på AnkiWeb med samlingen din fra AnkiDroid?</string>
     <string name="sync_conflict_title_new">Velg samling å beholde</string>
-    <string name="sync_conflict_replace_title">Erstatt samling</string>
+    <string name="sync_conflict_replace_title">Byt ut samlinga</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d kort (0 forfalt)</item>
         <item quantity="other">%1$d kort (0 forfalt)</item>
@@ -241,4 +241,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopi</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

@@ -65,48 +65,6 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
     }
 
     @Test
-    fun test_fast_rename() {
-        val source = createTransientDirectory().withTempFile("tmp.txt")
-        val destinationFile = generateDestinationDirectoryRef()
-        executionContext.attemptRename = true
-
-        val ret = moveDirectory(source, destinationFile).execute()
-
-        assertThat("fast rename returns no operations", ret, empty())
-        assertThat("source directory should not exist", source.exists(), equalTo(false))
-        assertThat("destination directory should exist", destinationFile.exists(), equalTo(true))
-        assertThat("file should be copied", File(destinationFile, "tmp.txt").exists(), equalTo(true))
-    }
-
-    @Test
-    fun failed_rename_avoids_further_renames() {
-        // This is a performance optimization,
-        val source = createTransientDirectory().withTempFile("tmp.txt")
-        val destinationFile = generateDestinationDirectoryRef()
-        var renameCalled = 0
-
-        executionContext.logExceptions = true
-        // don't actually move the directory, or we'd have a problem
-        val moveDirectory = spy(moveDirectory(source, destinationFile)) {
-            doAnswer { renameCalled++; return@doAnswer false }.whenever(it).rename(any(), any())
-        }
-
-        assertThat("rename was true", executionContext.attemptRename, equalTo(true))
-
-        moveDirectory.execute()
-
-        assertThat("rename is now false", executionContext.attemptRename, equalTo(false))
-        assertThat("rename was called", renameCalled, equalTo(1))
-
-        moveDirectory.execute()
-
-        assertThat("rename was not called again", renameCalled, equalTo(1))
-
-        assertThat(executionContext.exceptions, hasSize(0))
-        assertThat("source was not copied", File(source, "tmp.txt").exists(), equalTo(true))
-    }
-
-    @Test
     fun a_move_failure_is_not_fatal() {
         val source = createTransientDirectory()
             .withTempFile("foo.txt")

@@ -74,7 +74,7 @@
     <string name="sync_uploading_message">მიმდინარეობს ატვირთვა...</string>
     <string name="sync_downloading_message">მიმდინარეობს ჩამოტვირთვა&#8230;</string>
     <string name="sync_title">სინქრონიზაცია</string>
-    <string name="sync_log_uploading_message">Full sync from local</string>
+    <string name="sync_log_uploading_message">სრული სინქრონიზაცია ლოკალურიდან</string>
     <string name="sync_log_clocks_unsynchronized">თქვენი მოწყობილობის საათი არასწორია %1$d წამით%2$s. დარწმუნდით, რომ დაყენებულია სწორი თარიღი, დრო და სასაათო სარტყელი და ხელახლა სცადეთ სინქრონიზაცია.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
     <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>

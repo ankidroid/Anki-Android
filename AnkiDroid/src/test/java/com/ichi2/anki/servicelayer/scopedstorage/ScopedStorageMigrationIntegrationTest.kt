@@ -39,7 +39,7 @@ import kotlin.io.path.pathString
 import kotlin.test.fail
 
 // PERF: Some of these do not need a collection
-/** Test for [MigrateUserData.execTask] */
+/** Test for [MigrateUserData.migrateFiles] */
 @RunWith(AndroidJUnit4::class)
 class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
@@ -210,7 +210,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     private fun MigrateUserDataTester.execTask(): Boolean {
-        return this.execTask(mock(), mock())
+        return this.migrateFiles(mock())
     }
 }
 
