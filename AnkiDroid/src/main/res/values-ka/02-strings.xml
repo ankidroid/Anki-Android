@@ -65,7 +65,7 @@
     <string name="disable_whiteboard">დაფის გამორთვა</string>
     <string name="show_whiteboard">დაფის ჩვენება</string>
     <string name="hide_whiteboard">დაფის დამალვა</string>
-    <string name="clear_whiteboard">დაფის წაშლა</string>
+    <string name="clear_whiteboard">დაფის გასუფთავება</string>
     <string name="replay_audio">ხმის თავიდან ჩართვა</string>
     <string name="leech_suspend_notification">ბარათი მოინიშნა როგორც სწავლის შემაფერხებელი ბარათი და Anki მას ამიერიდან გამოტოვებს</string>
     <string name="leech_notification">ბარათი შემაფერხებლად მოინიშნა</string>

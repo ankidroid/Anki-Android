@@ -404,8 +404,8 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Não foi possível acessar a coleção. Tente novamente!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Estudar menos</string>
-    <string name="intro_ankidroid_tagline_two">Lembrar mais</string>
+    <string name="intro_ankidroid_tagline_one">Estude menos</string>
+    <string name="intro_ankidroid_tagline_two">Lembre mais</string>
     <string name="intro_short_ankidroid_explanation">O agendador de cartões de Anki economiza tempo, fortalecendo suas memórias mais fracas e preservando suas mais fortes</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Comece Agora</string>
     <string name="intro_sync_from_ankiweb">Sincronizar do AnkiWeb</string>

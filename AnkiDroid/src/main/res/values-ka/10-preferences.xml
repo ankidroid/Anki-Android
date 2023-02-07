@@ -54,7 +54,7 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ზოგადი</string>
     <string name="pref_cat_studying" maxLength="41">სწავლა</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">მთელი სისტემის მასშტაბით</string>
     <string name="pref_cat_reviewing" maxLength="41">გადახედვა</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">სინქრონიზაცია</string>
     <string name="pref_cat_scheduling" maxLength="41">სწავლის განრიგი</string>
@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">არცერთი</string>
     <string name="gestures_swipe_up" maxLength="41">ამოსმა</string>
     <string name="gestures_swipe_down" maxLength="41">ჩამოსმა</string>
     <string name="gestures_swipe_left" maxLength="41">მარცხნივ გასმა</string>
@@ -180,21 +180,21 @@
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta" maxLength="41">სავარაუდოდ დარჩენილი დროის ჩვენება</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
     <string name="new_spread" maxLength="41">New card position</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="new_timezone" maxLength="41">ახალი სასაათო სარტყლის გათვალისწინება</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">შუაღამე</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+    <string name="pref_keep_screen_on_summ">ეკრანის თვითგამორთვის გამორთვა</string>
     <string name="convert_fen_text" maxLength="41">Chess notation support</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
-    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API-ს ჩართვა</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
@@ -202,12 +202,12 @@
     <string name="custom_buttons_setting_if_room">ჩვენება ადგილის არსებობის შემთხვევაში</string>
     <string name="custom_buttons_setting_menu_only">მხოლოდ მენიუ</string>
     <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
     <string name="accessibility" maxLength="41">მარტივი წვდომა</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
