@@ -33,39 +33,16 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Reset toolbar button customizations
-
         val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
         resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle(R.string.alert_title)
-                .setMessage(R.string.alert_message)
-                .setPositiveButton(R.string.dialog_yes) { _, _ ->
-                    // make these changes when clicked on preference
-                    AnkiDroidApp.getSharedPrefs(requireContext()).edit {
-                        remove("customButtonUndo")
-                        remove("customButtonScheduleCard")
-                        remove("customButtonEditCard")
-                        remove("customButtonTags")
-                        remove("customButtonAddCard")
-                        remove("customButtonReplay")
-                        remove("customButtonCardInfo")
-                        remove("customButtonSelectTts")
-                        remove("customButtonDeckOptions")
-                        remove("customButtonMarkCard")
-                        remove("customButtonToggleMicToolBar")
-                        remove("customButtonBury")
-                        remove("customButtonSuspend")
-                        remove("customButtonFlag")
-                        remove("customButtonDelete")
-                        remove("customButtonEnableWhiteboard")
-                        remove("customButtonSaveWhiteboard")
-                        remove("customButtonWhiteboardPenColor")
-                        remove("customButtonClearWhiteboard")
-                        remove("customButtonShowHideWhiteboard")
-                    }
+            builder.setMessage(R.string.custom_btn_reset_alert_message)
+                .setPositiveButton(R.string.custom_btn_reset_alert_positive) { _, _ ->
+                    // changes made when clicked on preference
+                    removeButtons()
                     refreshScreen()
                 }
-                .setNegativeButton(R.string.dialog_no) { _, _ ->
+                .setNegativeButton(R.string.custom_btn_reset_alert_negative) { _, _ ->
                     // Do nothing
                 }
                 .show()
@@ -87,6 +64,31 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
             }
         }
         return allKeys
+    }
+
+    private fun removeButtons() {
+        AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+            remove("customButtonUndo")
+            remove("customButtonScheduleCard")
+            remove("customButtonEditCard")
+            remove("customButtonTags")
+            remove("customButtonAddCard")
+            remove("customButtonReplay")
+            remove("customButtonCardInfo")
+            remove("customButtonSelectTts")
+            remove("customButtonDeckOptions")
+            remove("customButtonMarkCard")
+            remove("customButtonToggleMicToolBar")
+            remove("customButtonBury")
+            remove("customButtonSuspend")
+            remove("customButtonFlag")
+            remove("customButtonDelete")
+            remove("customButtonEnableWhiteboard")
+            remove("customButtonSaveWhiteboard")
+            remove("customButtonWhiteboardPenColor")
+            remove("customButtonClearWhiteboard")
+            remove("customButtonShowHideWhiteboard")
+        }
     }
 
     companion object {

@@ -236,8 +236,9 @@
         translatable="false"
         >@string/webview_crash_unknown</string>
 
-    <!-- for alert dialog in appearances   -->
-    <string name="alert_title">Confirm Reset</string>
-    <string name="alert_message">Are you sure you want to reset all custom toolbar buttons?</string>
+    <!-- for alert dialog in appearances(custom button reset)-->
+    <string name="custom_btn_reset_alert_message">Reset Custom Buttons</string>
+    <string name="custom_btn_reset_alert_positive">OK</string>
+    <string name="custom_btn_reset_alert_negative">CANCEL</string>
 
 </resources>
