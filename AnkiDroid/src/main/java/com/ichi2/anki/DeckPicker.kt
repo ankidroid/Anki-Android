@@ -36,6 +36,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -92,6 +93,7 @@ import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.ServiceConnection
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
+import com.ichi2.anki.viewmodels.MigrationProgressViewModel
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -201,6 +203,9 @@ open class DeckPicker :
     // Flag to keep track of startup error
     private var mStartupError = false
     private var mEmptyCardTask: Cancellable? = null
+
+    // MigrationProgress Dialog state flow viewModel
+    private val progressViewModel by viewModels<MigrationProgressViewModel>()
 
     /** See [OptionsMenuState]. */
     @VisibleForTesting
@@ -2477,22 +2482,22 @@ open class DeckPicker :
      * Show a dialog that explains no sync can occur during migration.
      */
     private fun warnNoSyncDuringMigration() {
-        // TODO: handle value updates
-        // Note: migrationService shouldn't be null in normal operation
-        val text = migrationService.instance?.let { service ->
-            return@let service.totalToTransfer?.let { totalToTransfer ->
-                "\n\n" + getString(R.string.migration_transferred_size, service.currentProgress.toMB().toFloat(), totalToTransfer.toMB().toFloat())
-            }
-        }
         // TODO: maybe handle onStorageMigrationCompleted()
-        // TODO: sync_impossible_during_migration needs changing
-        AlertDialog.Builder(this).show {
-            message(text = resources.getString(R.string.sync_impossible_during_migration, 5) + text)
-            positiveButton(R.string.dialog_ok)
-            negativeButton(R.string.scoped_storage_learn_more) {
-                openUrl(R.string.link_scoped_storage_faq)
+        migrationService.instance?.let { service ->
+            service.totalToTransfer?.let { totalToTransfer ->
+                lifecycleScope.launch {
+                    while (migrationService.instance?.totalToTransfer != null) {
+                        progressViewModel.migrationProgressFlow.value = MigrationProgress(
+                            service.currentProgress.toMB(),
+                            totalToTransfer.toMB()
+                        )
+                        delay(100)
+                    }
+                }
             }
         }
+        val progressDialog = MigrationProgressDialogFragment()
+        progressDialog.show(supportFragmentManager, "MigrationProgressDialogFragment")
     }
 
     /**
