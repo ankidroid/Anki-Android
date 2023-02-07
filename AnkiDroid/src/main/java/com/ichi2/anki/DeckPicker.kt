@@ -39,6 +39,7 @@ import android.view.*
 import android.view.View.OnLongClickListener
 import android.view.WindowManager.BadTokenException
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -51,6 +52,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -94,6 +96,7 @@ import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.ServiceConnection
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
+import com.ichi2.anki.viewmodels.MigrationProgressViewModel
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -119,15 +122,14 @@ import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
+import java.lang.Runnable
 import kotlin.math.abs
 import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
@@ -203,6 +205,9 @@ open class DeckPicker :
     // Flag to keep track of startup error
     private var mStartupError = false
     private var mEmptyCardTask: Cancellable? = null
+
+    // MigrationProgress Dialog state flow viewModel
+    private val progressViewModel by viewModels<MigrationProgressViewModel>()
 
     /** See [OptionsMenuState]. */
     @VisibleForTesting
@@ -2901,22 +2906,22 @@ open class DeckPicker :
      * Show a dialog that explains no sync can occur during migration.
      */
     private fun warnNoSyncDuringMigration() {
-        // TODO: handle value updates
-        // Note: migrationService shouldn't be null in normal operation
-        val text = migrationService.instance?.let { service ->
-            return@let service.totalToTransfer?.let { totalToTransfer ->
-                "\n\n" + getString(R.string.migration_transferred_size, service.currentProgress.toMB().toFloat(), totalToTransfer.toMB().toFloat())
-            }
-        }
         // TODO: maybe handle onStorageMigrationCompleted()
-        // TODO: sync_impossible_during_migration needs changing
-        MaterialDialog(this).show {
-            message(text = resources.getString(R.string.sync_impossible_during_migration, 5) + text)
-            positiveButton(res = R.string.dialog_ok)
-            negativeButton(res = R.string.scoped_storage_learn_more) {
-                openUrl(R.string.link_scoped_storage_faq)
+        migrationService.instance?.let { service ->
+            service.totalToTransfer?.let { totalToTransfer ->
+                lifecycleScope.launch {
+                    while (migrationService.instance?.totalToTransfer != null) {
+                        progressViewModel.migrationProgressFlow.value = MigrationProgress(
+                            service.currentProgress.toMB(),
+                            totalToTransfer.toMB()
+                        )
+                        delay(100)
+                    }
+                }
             }
         }
+        val progressDialog = MigrationProgressDialogFragment()
+        progressDialog.show(supportFragmentManager, "MigrationProgressDialogFragment")
     }
 
     /**

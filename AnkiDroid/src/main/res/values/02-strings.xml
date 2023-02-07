@@ -405,10 +405,9 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_migration_progress">Syncing is disabled until storage migration is completed.\n%1$s%% migrated.</string>
 
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
 
     <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
     <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
