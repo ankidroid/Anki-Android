@@ -39,7 +39,29 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
             builder.setMessage(R.string.custom_btn_reset_alert_message)
                 .setPositiveButton(R.string.custom_btn_reset_alert_positive) { _, _ ->
                     // changes made when clicked on preference
-                    removeButtons()
+                    AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                        remove("customButtonUndo")
+                        remove("customButtonScheduleCard")
+                        remove("customButtonEditCard")
+                        remove("customButtonTags")
+                        remove("customButtonAddCard")
+                        remove("customButtonReplay")
+                        remove("customButtonCardInfo")
+                        remove("customButtonSelectTts")
+                        remove("customButtonDeckOptions")
+                        remove("customButtonMarkCard")
+                        remove("customButtonToggleMicToolBar")
+                        remove("customButtonBury")
+                        remove("customButtonSuspend")
+                        remove("customButtonFlag")
+                        remove("customButtonDelete")
+                        remove("customButtonEnableWhiteboard")
+                        remove("customButtonSaveWhiteboard")
+                        remove("customButtonWhiteboardPenColor")
+                        remove("customButtonClearWhiteboard")
+                        remove("customButtonShowHideWhiteboard")
+                    }
+                    refreshScreen()
                 }
                 .setNegativeButton(R.string.custom_btn_reset_alert_negative) { _, _ ->
                     // Do nothing
@@ -63,32 +85,6 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
             }
         }
         return allKeys
-    }
-
-    private fun removeButtons() {
-        AnkiDroidApp.getSharedPrefs(requireContext()).edit {
-            remove("customButtonUndo")
-            remove("customButtonScheduleCard")
-            remove("customButtonEditCard")
-            remove("customButtonTags")
-            remove("customButtonAddCard")
-            remove("customButtonReplay")
-            remove("customButtonCardInfo")
-            remove("customButtonSelectTts")
-            remove("customButtonDeckOptions")
-            remove("customButtonMarkCard")
-            remove("customButtonToggleMicToolBar")
-            remove("customButtonBury")
-            remove("customButtonSuspend")
-            remove("customButtonFlag")
-            remove("customButtonDelete")
-            remove("customButtonEnableWhiteboard")
-            remove("customButtonSaveWhiteboard")
-            remove("customButtonWhiteboardPenColor")
-            remove("customButtonClearWhiteboard")
-            remove("customButtonShowHideWhiteboard")
-        }
-        refreshScreen()
     }
 
     companion object {
