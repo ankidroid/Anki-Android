@@ -40,7 +40,6 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                 .setPositiveButton(R.string.custom_btn_reset_alert_positive) { _, _ ->
                     // changes made when clicked on preference
                     removeButtons()
-                    refreshScreen()
                 }
                 .setNegativeButton(R.string.custom_btn_reset_alert_negative) { _, _ ->
                     // Do nothing
@@ -89,6 +88,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
             remove("customButtonClearWhiteboard")
             remove("customButtonShowHideWhiteboard")
         }
+        refreshScreen()
     }
 
     companion object {
