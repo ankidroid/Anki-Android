@@ -22,7 +22,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -52,6 +51,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -67,10 +67,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
+        val args = this.arguments ?: Bundle()
         args.apply {
             putInt("id", contextMenuAttribute.value)
             putLong("did", did)
@@ -112,8 +109,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (ContextMenuOption.fromString(resources, charSequence.toString())) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
-                        val i = Intent(requireContext(), DeckOptions::class.java)
-                        i.putExtra("did", requireArguments().getLong("did"))
+                        val deckId = requireArguments().getLong("did")
+                        val i = if (BackendFactory.defaultLegacySchema) {
+                            Intent(requireContext(), DeckOptionsActivity::class.java).apply {
+                                putExtra("did", deckId)
+                            }
+                        } else {
+                            com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
+                        }
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {
@@ -324,7 +327,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             for (tag in selectedTags) {
                 arr.add("tag:'$tag'")
             }
-            sb.append("(").append(TextUtils.join(" or ", arr)).append(")")
+            sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
         createCustomStudySession(
             JSONArray(),
@@ -476,7 +479,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
+        requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }

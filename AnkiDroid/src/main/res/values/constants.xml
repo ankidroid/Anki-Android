@@ -20,8 +20,6 @@
         WARNING: These values here match static values defined in Deck.java DO
         NOT edit them, unless you change their corresponding values
     -->
-    <!-- App name -->
-    <string name="app_name" comment="The name of the app">AnkiDroid</string>
     <!-- Used in deck preferences -->
     <string-array name="custom_button_labels">
         <item>@string/custom_buttons_setting_always_show</item>
@@ -248,6 +246,22 @@
     <string-array name="night_theme_values">
         <item>3</item>
         <item>4</item>
+    </string-array>
+
+    <string-array name="sync_media_entries">
+        <item>@string/sync_media_always</item>
+        <item>@string/sync_media_only_unmetered</item>
+        <item>@string/sync_media_never</item>
+    </string-array>
+
+    <string name="sync_media_always_value">always</string>
+    <string name="sync_media_only_unmetered_value">only_unmetered</string>
+    <string name="sync_media_never_value">never</string>
+
+    <string-array name="sync_media_values">
+        <item>@string/sync_media_always_value</item>
+        <item>@string/sync_media_only_unmetered_value</item>
+        <item>@string/sync_media_never_value</item>
     </string-array>
 
     <!-- Preferences headers summaries -->

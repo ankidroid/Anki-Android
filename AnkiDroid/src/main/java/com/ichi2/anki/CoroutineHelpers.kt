@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
@@ -133,7 +134,11 @@ fun FragmentActivity.launchCatchingTask(
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit
-): Job = requireActivity().launchCatchingTask(errorMessage, block)
+): Job {
+    return lifecycle.coroutineScope.launch {
+        requireActivity().runCatchingTask(errorMessage) { block() }
+    }
+}
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
@@ -212,7 +217,7 @@ suspend fun <T> FragmentActivity.withProgress(
  * Starts the progress dialog after 600ms so that quick operations don't just show
  * flashes of a dialog.
  */
-suspend fun <T> FragmentActivity.withProgress(
+suspend fun <T> Activity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
     op: suspend () -> T
 ): T = withProgressDialog(
@@ -224,9 +229,21 @@ suspend fun <T> FragmentActivity.withProgress(
     op()
 }
 
+/** @see withProgress(String, ...) */
+suspend fun <T> Fragment.withProgress(message: String, block: suspend () -> T): T =
+    requireActivity().withProgress(message, block)
+
+/** @see withProgress(String, ...) */
+suspend fun <T> Activity.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
+    withProgress(resources.getString(messageId), block)
+
+/** @see withProgress(String, ...) */
+suspend fun <T> Fragment.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
+    requireActivity().withProgress(messageId, block)
+
 @Suppress("Deprecation") // ProgressDialog deprecation
 private suspend fun <T> withProgressDialog(
-    context: FragmentActivity,
+    context: Activity,
     onCancel: (() -> Unit)?,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
@@ -326,7 +343,7 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     }
     val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
         MaterialDialog(this).show {
-            message(text = TR.deckConfigWillRequireFullSync())
+            message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
             positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
             negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
             onCancel { coroutine.resume(false) }

@@ -414,6 +414,8 @@ Du wirst nicht in der Lage sein, Anki während der Speichermigration zu synchron
     <string name="validation_deck_already_exists">Stapel existiert bereits</string>
     <string name="deck_created">Stapel wurde erstellt</string>
     <string name="deck_renamed">Stapel wurde umbenannt</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck würde gelöscht. Bitte den Shortcut entfernen</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>

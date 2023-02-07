@@ -19,7 +19,6 @@
 package com.ichi2.libanki.sched
 
 import android.database.SQLException
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
@@ -169,7 +168,7 @@ class Sched(col: Collection) : SchedV2(col) {
             // new
             var nlim = _deckNewLimitSingle(deck, false)
             var rlim = _deckRevLimitSingle(deck, false)
-            if (!TextUtils.isEmpty(p)) {
+            if (!p.isNullOrEmpty()) {
                 val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
                 Assert.that(
@@ -853,7 +852,7 @@ class Sched(col: Collection) : SchedV2(col) {
         val limit = terms.getInt(1)
         val order = terms.getInt(2)
         val orderLimit: SortOrder = AfterSqlOrderBy(_dynOrder(order, limit))
-        if (!TextUtils.isEmpty(search.trim { it <= ' ' })) {
+        if (search.trim { it <= ' ' }.isNotEmpty()) {
             search = String.format(Locale.US, "(%s)", search)
         }
         search =

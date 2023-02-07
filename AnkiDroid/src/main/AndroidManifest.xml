@@ -38,8 +38,9 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
+    <permission android:name="${applicationId}.permission.READ_WRITE_DATABASE"
                 android:label="@string/read_write_permission_label"
                 android:description="@string/read_write_permission_description"
                 android:protectionLevel="dangerous"
@@ -74,6 +75,7 @@
         android:windowSoftInputMode="adjustResize"
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
+        android:hasFragileUserData="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
@@ -81,7 +83,14 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
+        android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >
+        <!-- Probably because of a bug on the framework,
+        the full package path is needed for manageSpaceActivity -->
+        <activity
+            android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".DrawingActivity"
             android:label="@string/drawing"
             android:exported="false"
@@ -271,25 +280,25 @@
             android:label="@string/settings"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
-            android:theme="@style/LegacyActionBarLight"
+            android:theme="@style/Theme_Light"
             >
             <intent-filter>
                 <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.DeckOptions"
+            android:name="com.ichi2.anki.DeckOptionsActivity"
             android:label="@string/deckpreferences_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
-            android:theme="@style/LegacyActionBarLight"
+            android:theme="@style/Theme_Light"
             />
         <activity
             android:name=".FilteredDeckOptions"
             android:label="@string/deckpreferences_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
-            android:theme="@style/LegacyActionBarLight"
+            android:theme="@style/Theme_Light"
             />
         <activity
             android:name="com.ichi2.anki.Info"
@@ -404,13 +413,11 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
-        <!-- TODO: Fix LockedOrientationActivity - introduction_layout.xml -->
+
         <activity android:name=".IntroductionActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="userPortrait"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            tools:ignore="LockedOrientationActivity" />
+            android:configChanges="keyboardHidden|screenSize|locale" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
@@ -511,7 +518,7 @@
 
         <provider
             android:name=".provider.CardContentProvider"
-            android:authorities="com.ichi2.anki.flashcards"
+            android:authorities="${applicationId}.flashcards"
             android:enabled="true"
             android:exported="true"
             >
@@ -520,7 +527,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.ichi2.anki.apkgfileprovider"
+            android:authorities="${applicationId}.apkgfileprovider"
             android:grantUriPermissions="true"
             android:exported="false"
             >

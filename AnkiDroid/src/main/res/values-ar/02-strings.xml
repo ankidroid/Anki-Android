@@ -61,7 +61,7 @@
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">حفظ السبورة</string>
-    <string name="enable_whiteboard">تمكين السبورة</string>
+    <string name="enable_whiteboard">تفعيل السبورة</string>
     <string name="disable_whiteboard">تعطيل السبورة</string>
     <string name="show_whiteboard">إظهار السبورة</string>
     <string name="hide_whiteboard">إخفاء السبورة</string>
@@ -90,9 +90,9 @@
         <item>ملحوظة</item>
         <item>سؤال</item>
         <item>وسوم</item>
-        <item>سقطات</item>
+        <item>هفوات</item>
         <item>مراجعات</item>
-        <item>الفاصل الزمني</item>
+        <item>التباعد</item>
         <item>سهولة</item>
         <item>تاريخ الاستحقاق</item>
         <item>تاريخ تعديل البطاقة</item>
@@ -101,7 +101,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">تطبيق</string>
-    <string name="filter_by_flags">مؤشرات</string>
+    <string name="filter_by_flags">أعلام</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
     <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
@@ -109,10 +109,10 @@
     <string name="custom_study_review_ahead">المراجعة مبكرًا</string>
     <string name="custom_study_random_selection">ادرس مجموعة بطاقات عشوائية</string>
     <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
-    <string name="custom_study_limit_tags">قصر على وسوم معينة</string>
+    <string name="custom_study_limit_tags">اقتصر على وسوم معينة</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">تحرير الملحوظة</string>
-    <string name="discard_unsaved_changes">هل أنت متأكد من الإغلاق وخسران المدخلات الحالية؟</string>
+    <string name="cardeditor_title_edit_card">تعديل الملحوظة</string>
+    <string name="discard_unsaved_changes">هل تريد الغلق وفقد المدخلات الحالية؟</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
     <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
     <string name="note_editor_no_cloze_delations">يجب أن يحتوي نوع الملحوظة هذا على عبارات ملء فراغات</string>
@@ -122,7 +122,7 @@
     <string name="saving_model">حفظ نوع الملحوظة</string>
     <string name="save">حفظ</string>
     <string name="close">إغلاق</string>
-    <string name="select">تحديد</string>
+    <string name="select">حدد</string>
     <string name="reordering_cards">إعادة ترتيب البطاقات&#8230;</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
@@ -181,7 +181,7 @@
         <item quantity="many">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
         <item quantity="other">هل تريد استيراد الملفات التالية:\n%s\nقد يستغرق هذا وقتًا طويلًا.</item>
     </plurals>
-    <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>
+    <string name="import_log_no_apkg">ملف حزمة أنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
     <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
     <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
@@ -247,7 +247,7 @@
     <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
     <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>
     <string name="sched_end">(النهاية)</string>
-    <string name="sched_unbury_action">لرؤيتها انقر «نكش» في القائمة</string>
+    <string name="sched_unbury_action">لرؤيتها اختر عنصر «إخراج» من القائمة</string>
     <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
@@ -379,8 +379,8 @@
     <string name="insert_mathjax">إضافة معادلة MathJax</string>
     <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
     <string name="note_editor_toolbar_icon">نص الزر</string>
-    <string name="before_text">HTML قبل المحدد</string>
-    <string name="after_text">HTML بعد المحدد</string>
+    <string name="before_text">HTML قبل التحديد</string>
+    <string name="after_text">HTML بعد التحديد</string>
     <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
     <string name="edit_toolbar_item">تعديل عنصر شريط الأدوات</string>
     <string name="toolbar_item_explain_edit_or_remove">أدخل أكواد HTML التي يجب إضافتها قبل النص المحدد وبعده.\n\nاضغط ضغطة مطولة على عنصر بشريط الأدوات لتعديله أو حذفه.</string>
@@ -390,8 +390,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_error">حدث خطأ عند إضافة الاختصار: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">رسمَلة الجُمَل</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">شريط تمرير لشريط الأدوات</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ضع الجمل في حروف كبيرة</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">شريط تمرير</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -415,7 +415,7 @@
     <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
     <string name="home">الصفحة الرئيسية</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">دفن البطاقة</string>
+    <string name="buried_card">بطاقة مدفونة</string>
     <string name="buried_note">ملحوظة مدفونة</string>
     <string name="deleted_note">ملحوظة محذوفة</string>
     <string name="suspended_card">بطاقة معلقة</string>
@@ -463,6 +463,8 @@
     <string name="validation_deck_already_exists">سلام </string>
     <string name="deck_created">كيفية </string>
     <string name="deck_renamed">Minato </string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>

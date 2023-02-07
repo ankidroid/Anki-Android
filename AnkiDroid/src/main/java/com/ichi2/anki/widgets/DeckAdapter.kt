@@ -17,8 +17,6 @@
 package com.ichi2.anki.widgets
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +52,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private val mDeckNameDynColor: Int
     private val mExpandImage: Drawable?
     private val mCollapseImage: Drawable?
-    private val mNoExpander: Drawable = ColorDrawable(Color.TRANSPARENT)
     private var currentDeckId: DeckId = 0
 
     // Listeners
@@ -253,7 +250,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 expander.contentDescription = expander.context.getString(R.string.collapse)
             }
         } else {
-            expander.setImageDrawable(mNoExpander)
+            expander.visibility = View.INVISIBLE
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         }
         // Add some indenting for each nested level

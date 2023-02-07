@@ -38,5 +38,5 @@
     <string name="cloze_model_name">କ୍ଲୋଜ୍</string>
     <string name="basic_typing_model_name">ମୌଳିକ (ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ)</string>
     <string name="forward_reverse_model_name">ମୌଳିକ (ଏବଂ ଓଲଟା ପତ୍ର)</string>
-    <string name="forward_optional_reverse_model_name">ମୌଳିକ (ବୈକଲ୍ପିକ ଓଲଟା ପତ୍ର)</string>
+    <string name="forward_optional_reverse_model_name">ମୌଳିକ (ଵୈକଳ୍ପିକ ଓଲଟା ପତ୍ର)</string>
 </resources>

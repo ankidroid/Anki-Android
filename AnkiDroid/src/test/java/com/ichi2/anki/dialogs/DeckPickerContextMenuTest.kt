@@ -30,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.assertThrows
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.not
@@ -57,7 +58,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testBrowseCards() {
+    fun testBrowseCards() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val deckId = addDeck("Deck 1")
             updateDeckList()
@@ -73,7 +74,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testRenameDeck() {
+    fun testRenameDeck() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             addDeck("Deck 1")
             updateDeckList()
@@ -86,7 +87,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testCreateSubdeck() {
+    fun testCreateSubdeck() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             addDeck("Deck 1")
             updateDeckList()
@@ -99,7 +100,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testShowDeckOptions() {
+    fun testShowDeckOptions() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val deckId = addDeck("Deck 1")
             updateDeckList()
@@ -108,13 +109,18 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             openContextMenuAndSelectItem(recyclerView, 3)
 
             val deckOptions = shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.DeckOptions", deckOptions.component!!.className)
-            assertEquals(deckId, deckOptions.getLongExtra("did", 1))
+            if (BackendFactory.defaultLegacySchema) {
+                assertEquals(
+                    "com.ichi2.anki.DeckOptionsActivity",
+                    deckOptions.component!!.className
+                )
+                assertEquals(deckId, deckOptions.getLongExtra("did", 1))
+            }
         }
     }
 
     @Test
-    fun testDeleteDeck() {
+    fun testDeleteDeck() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val deckId = addDeck("Deck 1")
             updateDeckList()
@@ -127,7 +133,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testCreateShortcut() {
+    fun testCreateShortcut() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             addDeck("Deck 1")
             updateDeckList()
@@ -143,7 +149,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testUnbury() {
+    fun testUnbury() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             TimeManager.reset()
             val deckId = addDeck("Deck 1")
@@ -162,7 +168,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testCustomStudy() {
+    fun testCustomStudy() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             addDeck("Deck 1")
             updateDeckList()
@@ -175,7 +181,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun testExportDeck() {
+    fun testExportDeck() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             addDeck("Deck 1")
             updateDeckList()

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">La base de données téléchargée est corrompue. Merci d’essayer de nouveau.</string>
     <string name="sync_overwrite_error">Votre collection actuelle ne peut pas être écrasée par le fichier téléchargé.</string>
     <string name="sync_connection_error">La connexion a expiré. Vérifiez votre connexion internet, ou peut-être avez-vous un très gros fichier dans votre dossier de médias ?</string>
-    <string name="sync_write_access_error">Le fichier téléchargé n’a pas pu être sauvegardé sur la carte SD. Soit votre carte SD est montée en lecture seule soit il n’y a pas assez d’espace libre dessus.</string>
+    <string name="sync_write_access_error_on_storage">Le fichier téléchargé n\'a pas pu être sauvegardé. Soit la mémoire est en lecture seule soit il n\'y a pas assez de mémoire libre.</string>
     <string name="sync_error_invalid_sync_server">Le serveur de synchronisation personnalisé dans les paramètres avancés n\'est pas valide (%s). Veuillez entrer un serveur valide ou désactiver le paramètre.</string>
     <string name="sync_deletions_message">Synchronisation des suppressions...</string>
     <string name="sync_small_objects_message">Synchronisation des petits objets...</string>

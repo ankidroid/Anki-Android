@@ -12,7 +12,6 @@
  */
 package com.ichi2.libanki
 
-import android.text.TextUtils
 import com.ichi2.utils.KotlinCleanup
 import java.io.BufferedWriter
 import java.io.FileOutputStream
@@ -63,11 +62,11 @@ class TextNoteExporter(
                     row.add(tags.trim())
                 }
                 @KotlinCleanup("use kotlin joinToString function")
-                data.add(TextUtils.join("\t", row))
+                data.add(row.joinToString("\t"))
             }
         }
         count = data.size
-        val out = TextUtils.join("\n", data)
+        val out = data.joinToString("\n")
         BufferedWriter(
             OutputStreamWriter(
                 FileOutputStream(path),

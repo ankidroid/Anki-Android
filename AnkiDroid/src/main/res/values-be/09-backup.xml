@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Не хапае вольнага месца для захавання рэзервовай копіі. Паменшыце глыбіню рэзервавання або выдаліце непатрэбныя файлы.</string>
-    <string name="sd_space_warning">Засталося менш за %d МБ на вашай SD-картцы.\nВызваліце крыху месца, каб пазбегнуць страты даных.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">У вашым сховішчы засталося менш за %d МБ.\nВызваліце крыху месца, каб пазбегнуць страты даных.</string>
     <string name="backup_restore">Аднавіць з рэзервовай копіі</string>
     <string name="backup_new_collection">Новая калекцыя</string>
     <string name="backup_del_collection">Выдаліць калекцыю і стварыць новую</string>

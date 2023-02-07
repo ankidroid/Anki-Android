@@ -28,10 +28,13 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
+import android.os.Parcel
 import android.os.Parcelable
 import android.os.Vibrator
 import android.provider.MediaStore
+import android.util.SparseArray
 import android.widget.TimePicker
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -60,6 +63,14 @@ open class CompatV21 : Compat {
     // Until API31 the MediaRecorder constructor was default, ignoring the Context
     override fun getMediaRecorder(context: Context): MediaRecorder {
         return MediaRecorder()
+    }
+
+    override fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
+        return parcel.readSparseArray(loader)
+    }
+
+    override fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>? {
+        return bundle.getParcelableArrayList(key)
     }
 
     override fun <T : Serializable?> getSerializableExtra(

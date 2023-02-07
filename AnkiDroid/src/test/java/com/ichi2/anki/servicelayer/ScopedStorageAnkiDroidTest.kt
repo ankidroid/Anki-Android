@@ -21,6 +21,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
+import com.ichi2.anki.servicelayer.scopedstorage.setLegacyStorage
 import com.ichi2.libanki.Collection
 import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.testutils.TestException
@@ -96,7 +97,10 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
     /**
      * Accessing the collection ensure the creation of the collection.
      */
-    private fun setupCol(): Collection = col
+    private fun setupCol(): Collection {
+        setLegacyStorage()
+        return col
+    }
 
     private fun getBestRootDirectory(): File {
         val collectionPath = AnkiDroidApp.getSharedPrefs(targetContext).getString(CollectionHelper.PREF_COLLECTION_PATH, null)!!

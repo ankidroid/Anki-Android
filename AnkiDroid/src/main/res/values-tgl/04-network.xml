@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">May sira ang nai-download na talahanayan ng datos. Mangyaring subukang muli.</string>
     <string name="sync_overwrite_error">Ang iyong kasalukuyang koleksyon ay hindi mapatungan ng nai-download na file</string>
     <string name="sync_connection_error">Ang koneksyon ay nag-time out. Maaring may mga problema sa iyong koneksyon sa internet, o mayroon kang isang napakalaking file sa iyong media folder.</string>
-    <string name="sync_write_access_error">Ang na-download na file ay hindi mai-save sa SD card. Maaaring ang card ay naka-mount bilang read-only o walang sapat na puwang.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Isini-singkronisa ang pagbura&#8230;</string>
     <string name="sync_small_objects_message">Isini-singkronisa ang maliliit na objects&#8230;</string>

@@ -30,7 +30,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.util.Log
@@ -1914,7 +1913,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun tagsAsString(tags: List<String>): String {
-        return TextUtils.join(" ", tags)
+        return tags.joinToString(" ")
     }
 
     private val currentlySelectedModel: Model?

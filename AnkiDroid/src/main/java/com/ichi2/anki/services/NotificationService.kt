@@ -54,7 +54,7 @@ class NotificationService : BroadcastReceiver() {
                     Channel.GENERAL.id
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                    .setSmallIcon(R.drawable.ic_stat_notify)
+                    .setSmallIcon(R.drawable.ic_star_notify)
                     .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText)

@@ -20,7 +20,6 @@ import android.content.SharedPreferences
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
-import androidx.core.net.toUri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -30,7 +29,6 @@ import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.HashSetInit
@@ -82,12 +80,10 @@ object PreferenceUpgradeService {
             /** Returns all instances of preference upgrade classes */
             internal fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence<PreferenceUpgrade> {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
-                yield(RemoveLegacyMediaSyncUrl())
                 yield(UpdateNoteEditorToolbarPrefs())
                 yield(UpgradeGesturesToControls())
                 yield(UpgradeDayAndNightThemes())
-                yield(UpgradeCustomCollectionSyncUrl())
-                yield(UpgradeCustomSyncServerEnabled())
+                yield(UpgradeFetchMedia())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -186,19 +182,6 @@ object PreferenceUpgradeService {
         }
 
         protected abstract fun upgrade(preferences: SharedPreferences)
-
-        /**
-         * msync is a legacy URL which does not use the hostnum for load balancing
-         * It was the default value in the "custom sync server" preference
-         */
-        internal class RemoveLegacyMediaSyncUrl : PreferenceUpgrade(3) {
-            override fun upgrade(preferences: SharedPreferences) {
-                val mediaSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
-                if (mediaSyncUrl?.startsWith("https://msync.ankiweb.net") == true) {
-                    preferences.edit { remove(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL) }
-                }
-            }
-        }
 
         /**
          * update toolbar buttons with new preferences, when button text empty or null then it adds the index as button text
@@ -371,42 +354,13 @@ object PreferenceUpgradeService {
             }
         }
 
-        internal class UpgradeCustomCollectionSyncUrl : PreferenceUpgrade(7) {
+        internal class UpgradeFetchMedia : PreferenceUpgrade(9) {
             override fun upgrade(preferences: SharedPreferences) {
-                val oldUrl = preferences.getString(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE, null)
-                var newUrl: String? = null
-
-                if (oldUrl != null && oldUrl.isNotBlank()) {
-                    try {
-                        newUrl = oldUrl.toUri().buildUpon().appendPath("sync").toString() + "/"
-                    } catch (e: Exception) {
-                        Timber.e(e, "Error constructing new sync URL from '%s'", oldUrl)
-                    }
-                }
-
+                val fetchMediaSwitch = preferences.getBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true)
+                val status = if (fetchMediaSwitch) "always" else "never"
                 preferences.edit {
-                    remove(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE)
-                    if (newUrl != null) putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, newUrl)
-                }
-            }
-        }
-
-        internal class UpgradeCustomSyncServerEnabled : PreferenceUpgrade(8) {
-            override fun upgrade(preferences: SharedPreferences) {
-                val customSyncServerEnabled = preferences.getBoolean(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false)
-                val customCollectionSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, null)
-                val customMediaSyncUrl = preferences.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
-
-                preferences.edit {
-                    remove(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER)
-                    putBoolean(
-                        CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED,
-                        customSyncServerEnabled && !customCollectionSyncUrl.isNullOrEmpty()
-                    )
-                    putBoolean(
-                        CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED,
-                        customSyncServerEnabled && !customMediaSyncUrl.isNullOrEmpty()
-                    )
+                    remove(RemovedPreferences.SYNC_FETCHES_MEDIA)
+                    putString("syncFetchMedia", status)
                 }
             }
         }
@@ -414,6 +368,5 @@ object PreferenceUpgradeService {
 }
 
 object RemovedPreferences {
-    const val PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl"
-    const val PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER = "useCustomSyncServer"
+    const val SYNC_FETCHES_MEDIA = "syncFetchesMedia"
 }

@@ -29,7 +29,6 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
-import android.text.TextUtils
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.View.OnTouchListener
@@ -72,7 +71,7 @@ import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -708,7 +707,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun clipboardHasText(): Boolean {
-        return !TextUtils.isEmpty(getText(mClipboard))
+        return !getText(mClipboard).isNullOrEmpty()
     }
 
     /**
@@ -2558,7 +2557,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
         if (currentCard!!.note().tags != selectedTags) {
-            val tagString = TextUtils.join(" ", selectedTags)
+            val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note()
             note.setTagsFromStr(tagString)
             note.flush()

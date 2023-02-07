@@ -59,6 +59,8 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
 
+        setLegacyStorage()
+
         // we need to access 'col' before we start
         col.basicCheck()
         destinationPath = File(Path(targetContext.getExternalFilesDir(null)!!.canonicalPath, "AnkiDroid-1").pathString)

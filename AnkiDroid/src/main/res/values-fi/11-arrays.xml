@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Uudet kortit ennen kertauksia</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Kun korteille ei ole määritelty kirjasintyyppiä</string>
-    <string name="override_font_always">Aina</string>
+    <string name="override_font_always" comment="Option to always override font">Aina</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->

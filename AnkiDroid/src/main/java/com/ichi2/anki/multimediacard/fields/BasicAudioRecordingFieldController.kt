@@ -55,7 +55,6 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
             mTempAudioPath = generateTempAudioFile(mActivity)
         }
 
-        // FIXME: We should move this outside the scrollview as it should always be on the screen.
         mAudioView = createRecorderInstance(
             context = mActivity,
             resPlay = R.drawable.ic_play_arrow_white_24dp,

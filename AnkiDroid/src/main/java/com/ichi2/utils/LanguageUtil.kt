@@ -17,7 +17,6 @@ package com.ichi2.utils
 
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.text.TextUtils
 import androidx.core.os.ConfigurationCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.preferences.Preferences
@@ -214,16 +213,16 @@ object LanguageUtil {
      */
     fun getLocale(localeCode: String?, prefs: SharedPreferences): Locale {
         var tempLocaleCode = localeCode
-        if (tempLocaleCode == null || TextUtils.isEmpty(tempLocaleCode)) {
+        if (tempLocaleCode.isNullOrEmpty()) {
             tempLocaleCode = prefs.getLanguage()
             // If no code provided use the app language.
         }
-        if (TextUtils.isEmpty(tempLocaleCode)) {
+        if (tempLocaleCode.isNullOrEmpty()) {
             // Fall back to (system) default only if that fails.
             tempLocaleCode = Locale.getDefault().toString()
         }
         // Language separators are '_' or '-' at different times in display/resource fetch
-        val locale: Locale = if (tempLocaleCode != null && (tempLocaleCode.contains("_") || tempLocaleCode.contains("-"))) {
+        val locale: Locale = if ((tempLocaleCode.contains("_")) || (tempLocaleCode.contains("-"))) {
             try {
                 val localeParts = tempLocaleCode.split("[_-]".toRegex(), 2).toTypedArray()
                 Locale(localeParts[0], localeParts[1])
@@ -232,7 +231,7 @@ object LanguageUtil {
                 Locale(tempLocaleCode)
             }
         } else {
-            Locale(tempLocaleCode!!) // guaranteed to be non null
+            Locale(tempLocaleCode) // guaranteed to be non null
         }
         return locale
     }

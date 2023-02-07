@@ -5,16 +5,23 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@RustCleanup("remove")
 @RunWith(AndroidJUnit4::class)
 class ClozeTest : RobolectricTest() {
     @Test
     fun testCloze() {
+        if (!BackendFactory.defaultLegacySchema) {
+            // cloze generation is exercised by the backend tests already, and also in
+            // ModelTest.kt
+            return
+        }
         val d = col
         var f = d.newNote(d.models.byName("Cloze")!!)
         val name = f.model().getString("name")

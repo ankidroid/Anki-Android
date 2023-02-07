@@ -904,7 +904,6 @@ class DecksV16(private val col: CollectionV16) :
         return DeckV16.Generic(this)
     }
 
-    val Deck.id: DeckId get() = this.getLong("id")
     val Deck.name: str get() = this.getString("name")
     val Deck.conf: Long get() = this.getLong("conf")
 }

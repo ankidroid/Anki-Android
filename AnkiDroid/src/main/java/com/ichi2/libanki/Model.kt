@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki
 
-import android.text.TextUtils
 import androidx.annotation.CheckResult
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
@@ -91,7 +90,7 @@ class Model : JSONObject {
         val fieldNames = fieldsNames
         val nonemptyFields: MutableSet<String> = HashUtil.HashSetInit(sfld.size)
         for (i in sfld.indices) {
-            if (!TextUtils.isEmpty(sfld[i].trim { it <= ' ' })) {
+            if (sfld[i].trim { it <= ' ' }.isNotEmpty()) {
                 nonemptyFields.add(fieldNames[i])
             }
         }

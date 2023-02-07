@@ -85,6 +85,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
+        Themes.systemIsInNightMode =
+            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        Themes.updateCurrentTheme()
         Themes.setTheme(this)
         Themes.disableXiaomiForceDarkMode(this)
         mPreviousTheme = Themes.currentTheme
@@ -123,15 +126,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val newNightModeStatus =
-            newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        // Check if theme should change
-        if (Themes.systemIsInNightMode != newNightModeStatus) {
-            Themes.systemIsInNightMode = newNightModeStatus
-            if (Themes.themeFollowsSystem()) {
-                Themes.updateCurrentTheme()
-                recreate()
-            }
+        if (Themes.updateCurrentThemeByUiMode(newConfig.uiMode) == Themes.ThemeChanged.Yes) {
+            recreate()
         }
     }
 
@@ -289,7 +285,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         animation: Direction?
     ) {
         try {
-            launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation))
+            launcher.launch(
+                intent,
+                ActivityTransitionAnimation.getAnimationOptions(this, animation)
+            )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
             this.showSnackbar(R.string.activity_start_failed)
@@ -522,9 +521,14 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-
-    open fun showSimpleMessageDialog(message: String?, title: String = "", reload: Boolean = false) {
-        val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
+    @KotlinCleanup("make message non-null")
+    open fun showSimpleMessageDialog(
+        message: String?,
+        title: String = "",
+        reload: Boolean = false
+    ) {
+        val newFragment: AsyncDialogFragment =
+            SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
 
@@ -539,16 +543,17 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
-            var ticker: String? = title
-            if (title == resources.getString(R.string.app_name)) {
-                ticker = message
+            val ticker: String? = if (title == resources.getString(R.string.app_name)) {
+                message
+            } else {
+                title
             }
             // Build basic notification
             val builder = NotificationCompat.Builder(
                 this,
                 channel.id
             )
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
@@ -594,17 +599,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             DIALOG_FRAGMENT_TAG,
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
-    }
-
-    // Restart the activity
-    @KotlinCleanup("suggested by BrayanDSO that this is changed")
-    fun restartActivity() {
-        Timber.i("AnkiActivity -- restartActivity()")
-        val intent = Intent()
-        intent.setClass(this, this.javaClass)
-        intent.putExtras(Bundle())
-        startActivityWithoutAnimation(intent)
-        finishWithoutAnimation()
     }
 
     /**

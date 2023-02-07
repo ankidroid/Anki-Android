@@ -86,7 +86,7 @@
         tools:text="AnkiDroid is released under the GPL-3.0 and AGPL-3.0 licenses, with the source code available on GitHub" />
 
     <TextView
-        android:id="@+id/about_license_title"
+        android:id="@+id/about_donate_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

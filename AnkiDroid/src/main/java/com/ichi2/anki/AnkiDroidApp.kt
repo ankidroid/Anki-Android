@@ -43,6 +43,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Utils
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.utils.LanguageUtil.getCurrentLanguage
@@ -81,6 +82,7 @@ open class AnkiDroidApp : Application() {
     override fun onCreate() {
         BackendFactory.defaultLegacySchema = BuildConfig.LEGACY_SCHEMA
         try {
+            Os.setenv("PLATFORM", Utils.syncPlatform(), false)
             // enable debug logging of sync actions
             if (BuildConfig.DEBUG) {
                 Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false)
@@ -119,9 +121,12 @@ open class AnkiDroidApp : Application() {
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(DebugTree())
-            LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
             Timber.plant(ProductionCrashReportingTree())
+        }
+        if (BuildConfig.ENABLE_LEAK_CANARY) {
+            LeakCanaryConfiguration.setInitialConfigFor(this)
+        } else {
             LeakCanaryConfiguration.disable()
         }
         Timber.tag(TAG)
@@ -231,11 +236,8 @@ open class AnkiDroidApp : Application() {
          * Note: This will not be called if an API with a manual tag was called with a non-null tag
          */
         fun createStackElementTag(element: StackTraceElement): String {
-            var tag = element.className
-            val m = ANONYMOUS_CLASS.matcher(tag)
-            if (m.find()) {
-                tag = m.replaceAll("")
-            }
+            val m = ANONYMOUS_CLASS.matcher(element.className)
+            val tag = if (m.find()) m.replaceAll("") else element.className
             return tag.substring(tag.lastIndexOf('.') + 1)
         } // --- this is not present in the Timber.DebugTree copy/paste ---
 
@@ -281,27 +283,6 @@ open class AnkiDroidApp : Application() {
     companion object {
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
         var INSTRUMENTATION_TESTING = false
-
-        /**
-         * Toggles Scoped Storage functionality introduced in later commits
-         *
-         *
-         * Can be set to true or false only by altering the declaration itself.
-         * This restriction ensures that this flag will only be used by developers for testing
-         *
-         *
-         * Set to false by default, so won't migrate data or use new scoped dirs
-         *
-         *
-         * If true, enables data migration & use of scoped dirs in later commits
-         *
-         *
-         * Should be set to true for testing Scoped Storage
-         *
-         *
-         * TODO: Should be removed once app is fully functional under Scoped Storage
-         */
-        var TESTING_SCOPED_STORAGE = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 
