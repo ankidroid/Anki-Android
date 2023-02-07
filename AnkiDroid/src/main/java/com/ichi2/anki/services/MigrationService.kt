@@ -126,7 +126,7 @@ class MigrationService : Service() {
             context,
             Channel.SCOPED_STORAGE_MIGRATION.id
         )
-            .setSmallIcon(R.drawable.ic_stat_notify)
+            .setSmallIcon(R.drawable.ic_star_notify)
             .setContentTitle(context.resources.getString(R.string.migrating_data_message))
             .setContentText(context.resources.getString(R.string.migration_transferred_size, 0f, sourceSize / 1024f))
             .setPriority(NotificationCompat.PRIORITY_LOW)
