@@ -236,8 +236,8 @@
         translatable="false"
         >@string/webview_crash_unknown</string>
 
-    <!-- for alert dialog in appearances(custom button reset)-->
-    <string name="custom_btn_reset_alert_message">Reset Custom Buttons</string>
+    <!-- alert dialog in appearances (custom button reset)-->
+    <string name="custom_btn_reset_alert_message">RESET the Custom Buttons</string>
     <string name="custom_btn_reset_alert_positive">OK</string>
     <string name="custom_btn_reset_alert_negative">CANCEL</string>
 
