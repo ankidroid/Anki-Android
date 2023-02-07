@@ -200,7 +200,7 @@
     <string name="background_image_removed">Background image removed</string>
     <string name="no_image_selected">No image selected</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
+    <string name="error_deleting_image">შეცდომა სურათის წაშლისას</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>

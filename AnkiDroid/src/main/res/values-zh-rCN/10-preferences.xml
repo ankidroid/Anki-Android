@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏导航抽屉</string>
     <string name="gestures_fullscreen_nav_drawer_summary">从屏幕上的任何地方向右滑动时打开导航抽屉</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">无</string>
     <string name="gestures_swipe_up" maxLength="41">向上滑动</string>
     <string name="gestures_swipe_down" maxLength="41">向下滑动</string>
     <string name="gestures_swipe_left" maxLength="41">向左滑动</string>
@@ -230,10 +230,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        作为与AnkiWeb同步的替代方法，
+        您可以使用自己的服务器进行同步。
+        如果未设置，将使用默认AnkiWeb服务器。
+        <a href="%s">了解更多</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
     <!-- Key Bindings -->
