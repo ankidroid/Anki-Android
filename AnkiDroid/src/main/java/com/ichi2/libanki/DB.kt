@@ -105,7 +105,7 @@ class DB(db: SupportSQLiteDatabase) {
     }
 
     // Allows to avoid using new Object[]
-    fun query(@Language("SQL") query: String?, vararg selectionArgs: Any): Cursor {
+    fun query(@Language("SQL") query: String, vararg selectionArgs: Any): Cursor {
         return database.query(query, selectionArgs)
     }
 
@@ -115,7 +115,7 @@ class DB(db: SupportSQLiteDatabase) {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    fun queryScalar(@Language("SQL") query: String?, vararg selectionArgs: Any): Int {
+    fun queryScalar(@Language("SQL") query: String, vararg selectionArgs: Any): Int {
         var cursor: Cursor? = null
         val scalar: Int
         try {
@@ -286,7 +286,7 @@ class DB(db: SupportSQLiteDatabase) {
                 SupportSQLiteOpenHelperCallback(1)
             )
             db.disableWriteAheadLogging()
-            db.query("PRAGMA synchronous = 2", null)
+            db.query("PRAGMA synchronous = 2")
             return DB(db)
         }
 

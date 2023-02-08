@@ -60,7 +60,7 @@ class Finder(private val col: Collection) {
         val sql = _query(preds, order)
         Timber.v("Search query '%s' is compiled as '%s'.", query, sql)
         try {
-            col.db.database.query(sql, args).use { cur ->
+            col.db.database.query(sql, args ?: emptyArray()).use { cur ->
                 while (cur.moveToNext()) {
                     res.add(cur.getLong(0))
                 }
@@ -120,7 +120,7 @@ class Finder(private val col: Collection) {
             "select distinct(n.id) from cards c, notes n where c.nid=n.id and $preds"
         }
         try {
-            col.db.database.query(sql, args).use { cur ->
+            col.db.database.query(sql, args ?: emptyArray()).use { cur ->
                 while (cur.moveToNext()) {
                     res.add(cur.getLong(0))
                 }
