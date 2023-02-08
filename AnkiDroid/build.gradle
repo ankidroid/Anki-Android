@@ -381,13 +381,3 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
-
-android {
-    testOptions {
-        kotlinOptions {
-            freeCompilerArgs += [
-                    '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
-            ]
-        }
-    }
-}
