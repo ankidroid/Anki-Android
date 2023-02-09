@@ -185,12 +185,11 @@ open class Collection(
 
     init {
         media = initMedia()
+        tags = initTags()
         val created = reopen()
         log(path, VersionUtils.pkgVersionName)
         // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo()
-        tags = initTags()
-        load()
         if (crt == 0L) {
             crt = UIUtils.getDayStart(TimeManager.time) / 1000
         }
@@ -457,6 +456,7 @@ open class Collection(
         return if (dbClosed) {
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
+            load()
             media.connect()
             _openLog()
             if (afterFullSync) {
