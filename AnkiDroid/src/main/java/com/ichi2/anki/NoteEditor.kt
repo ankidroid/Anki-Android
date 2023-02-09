@@ -1412,6 +1412,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
+        if (currentFields.getJSONObject(index).getBoolean("sticky"))
+            mToggleStickyText.getOrPut(index) { "" }
         if (mToggleStickyText[index] == null) {
             toggleStickyButton!!.background.alpha = 64
         } else {
