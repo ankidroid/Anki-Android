@@ -324,7 +324,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             val ret = fullSyncServer.download()
                             if (SUCCESS == ret) {
                                 data.success = true
-                                col.reopen()
+                                col.reopen(afterFullSync = true)
                             }
                             if (SUCCESS != ret) {
                                 Timber.w("Sync - fullsync - download failed")
