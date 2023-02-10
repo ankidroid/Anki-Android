@@ -118,7 +118,6 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     // Whiteboard
     var prefWhiteboard = false
-    private var mPrefAnswerButtonPosition: String? = "bottom"
 
     @get:CheckResult
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)

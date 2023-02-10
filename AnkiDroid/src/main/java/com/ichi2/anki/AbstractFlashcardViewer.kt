@@ -189,6 +189,7 @@ abstract class AbstractFlashcardViewer :
     protected var topBarLayout: RelativeLayout? = null
     private val mClipboard: ClipboardManager? = null
     private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
+    protected var mPrefAnswerButtonPosition: String? = "bottom"
 
     /** set when [currentCard] is */
     private var mCardSoundConfig: CardSoundConfig? = null
