@@ -628,7 +628,7 @@ open class DeckPicker :
 
     fun displayDatabaseFailure() {
         Timber.i("Displaying database error")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_ERROR)
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
