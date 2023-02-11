@@ -1044,10 +1044,10 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun updateWhiteboardEditorPosition() {
-        mPrefAnswerButtonPosition = AnkiDroidApp.getSharedPrefs(this)
+        mAnswerButtonsPosition = AnkiDroidApp.getSharedPrefs(this)
             .getString("answerButtonPosition", "bottom")
         val layoutParams: RelativeLayout.LayoutParams
-        when (mPrefAnswerButtonPosition) {
+        when (mAnswerButtonsPosition) {
             "none", "top" -> {
                 layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ABOVE)
