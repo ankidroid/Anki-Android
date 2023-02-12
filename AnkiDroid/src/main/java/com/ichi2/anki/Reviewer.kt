@@ -436,6 +436,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     mColorPalette!!.visibility = View.GONE
                 }
+                updateWhiteboardEditorPosition()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -1040,6 +1041,26 @@ open class Reviewer : AbstractFlashcardViewer() {
     override fun updateActionBar() {
         super.updateActionBar()
         updateScreenCounts()
+    }
+
+    private fun updateWhiteboardEditorPosition() {
+        mAnswerButtonsPosition = AnkiDroidApp.getSharedPrefs(this)
+            .getString("answerButtonPosition", "bottom")
+        val layoutParams: RelativeLayout.LayoutParams
+        when (mAnswerButtonsPosition) {
+            "none", "top" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ABOVE)
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+            "bottom" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+        }
     }
 
     protected fun updateScreenCounts() {
