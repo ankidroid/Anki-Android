@@ -698,6 +698,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 displayErrorSavingNote()
                 return
             }
+            if (getCurrentFieldText(0).isEmpty()) {
+                displayErrorSavingNote()
+                return
+            }
 
             // load all of the fields into the note
             for (f in mEditFields!!) {
