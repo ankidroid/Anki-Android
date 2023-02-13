@@ -1602,7 +1602,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mEditorNote!!.values()[0] = oldValue
     }
 
-    @KotlinCleanup("remove 'requireNoNulls'")
     private val fieldsText: String
         get() {
             val fields = arrayOfNulls<String>(mEditFields!!.size)
