@@ -22,8 +22,6 @@ class MockReviewerUi : ReviewerUi {
     override var isDisplayingAnswer = false
         private set
 
-    override fun isActionButton(id: Int): Boolean = throw UnsupportedOperationException()
-
     override val controlBlocked: ControlBlock?
         get() = null
 

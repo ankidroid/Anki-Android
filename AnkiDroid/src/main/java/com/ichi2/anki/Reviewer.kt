@@ -155,8 +155,6 @@ open class Reviewer :
         }
     }
 
-    override fun isActionButton(id: Int): Boolean = mToolbar.isActionButton(id)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -200,8 +198,8 @@ open class Reviewer :
             if (actualValue == CardMarker.FLAG_NONE) {
                 return CardMarker.FLAG_NONE
             }
-            val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_FLAG)
-            return if (isShownInActionBar && !mPrefFullscreenReview) {
+            val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton == true
+            return if (shownAsToolbarButton && !mPrefFullscreenReview) {
                 CardMarker.FLAG_NONE
             } else actualValue
         }
@@ -227,10 +225,10 @@ open class Reviewer :
         if (!markValue) {
             return false
         }
-        val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_MARK)
-        // If we don't know, show it.
-        // Otherwise, if it's in the action bar, don't show it again.
-        return !isShownInActionBar || mPrefFullscreenReview
+
+        // If we don't know: assume it's not shown
+        val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_MARK)?.isActionButton == true
+        return !shownAsToolbarButton || mPrefFullscreenReview
     }
 
     protected open fun onMark(card: Card?) {
