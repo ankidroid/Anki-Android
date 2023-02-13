@@ -27,9 +27,7 @@ import android.net.Uri
 import android.webkit.MimeTypeMap
 import com.ichi2.anki.*
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
-import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -43,6 +41,7 @@ import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -1265,19 +1264,7 @@ class CardContentProvider : ContentProvider() {
     }
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
-     * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted  */
-    private fun knownRogueClient(): Boolean {
-        val pm = context!!.packageManager
-        return try {
-            val callingPi = pm.getPackageInfoCompat(callingPackage!!, PackageInfoFlagsCompat.of(PackageManager.GET_PERMISSIONS.toLong())) ?: return false
-            if (callingPi.requestedPermissions == null) {
-                false
-            } else {
-                !listOf(*callingPi.requestedPermissions).contains(FlashCardsContract.READ_WRITE_PERMISSION)
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-            Timber.w(e)
-            false
-        }
-    }
+     * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest */
+    private fun knownRogueClient(): Boolean =
+        !context!!.arePermissionsDefinedInManifest(callingPackage!!, FlashCardsContract.READ_WRITE_PERMISSION)
 }
