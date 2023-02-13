@@ -68,14 +68,6 @@ class Toolbar : FrameLayout {
     private val mCustomButtons: MutableList<View> = ArrayList()
     private val mRows: MutableList<LinearLayout> = ArrayList()
 
-    /**
-     * TODO HACK until API 21 - can be removed once tested.
-     *
-     * inside NoteEditor: use [insertItem] instead of accessing this
-     * and remove [R.id.note_editor_toolbar_button_cloze] from [R.layout.note_editor_toolbar]
-     */
-    var clozeIcon: View? = null
-        private set
     private var mStringPaint: Paint? = null
 
     constructor(context: Context) : super(context)
@@ -92,7 +84,6 @@ class Toolbar : FrameLayout {
         }
         mToolbar = findViewById(R.id.editor_toolbar_internal)
         mToolbarLayout = findViewById(R.id.toolbar_layout)
-        clozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze)
         setupDefaultButtons()
     }
 
