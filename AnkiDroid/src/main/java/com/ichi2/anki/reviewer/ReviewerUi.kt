@@ -15,7 +15,6 @@
  */
 
 package com.ichi2.anki.reviewer
-import androidx.annotation.IdRes
 
 interface ReviewerUi {
     /** How to block UI buttons.  */
@@ -37,5 +36,4 @@ interface ReviewerUi {
     val controlBlocked: ControlBlock?
     val isControlBlocked: Boolean
     val isDisplayingAnswer: Boolean
-    fun isActionButton(@IdRes id: Int): Boolean
 }

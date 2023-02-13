@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewer
 import android.content.SharedPreferences
 import android.view.Menu
 import androidx.annotation.IdRes
+import androidx.appcompat.view.menu.MenuItemImpl
 import com.ichi2.anki.R
 
 class ActionButtons(private val reviewerUi: ReviewerUi) {
@@ -35,7 +36,7 @@ class ActionButtons(private val reviewerUi: ReviewerUi) {
         mMenu = menu
     }
 
-    fun isShownInActionBar(@IdRes id: Int): Boolean = reviewerUi.isActionButton(id)
+    fun findMenuItem(@IdRes resId: Int) = mMenu?.findItem(resId) as? MenuItemImpl
 
     companion object {
         @IdRes
