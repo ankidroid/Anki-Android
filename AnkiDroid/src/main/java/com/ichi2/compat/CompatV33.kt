@@ -48,6 +48,6 @@ open class CompatV33 : CompatV31(), Compat {
         return parcel.readSparseArray(loader, clazz)
     }
 
-    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
         packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.value))
 }

@@ -39,6 +39,10 @@ object VersionUtils {
             val context: Context = applicationInstance ?: return AnkiDroidApp.TAG
             try {
                 val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY)
+                if (pInfo == null) {
+                    Timber.w("Couldn't find package named %s", context.packageName)
+                    return pkgName
+                }
                 pkgName = context.getString(pInfo.applicationInfo.labelRes)
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.e(e, "Couldn't find package named %s", context.packageName)
@@ -54,7 +58,7 @@ object VersionUtils {
             var pkgVersion = "?"
             val context: Context = applicationInstance ?: return pkgVersion
             try {
-                val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY)
+                val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY) ?: return pkgVersion
                 pkgVersion = pInfo.versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.e(e, "Couldn't find package named %s", context.packageName)
@@ -70,6 +74,10 @@ object VersionUtils {
             val context: Context = applicationInstance ?: return 0
             try {
                 val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY)
+                if (pInfo == null) {
+                    Timber.w("getPackageInfo failed")
+                    return 0
+                }
                 val versionCode = PackageInfoCompat.getLongVersionCode(pInfo)
                 Timber.d("getPkgVersionCode() is %s", versionCode)
                 return versionCode

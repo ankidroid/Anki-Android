@@ -100,7 +100,7 @@ object AdaptionUtil {
     private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
         return if (packageName != null) {
             try {
-                val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY)
+                val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) ?: return false
                 info.applicationInfo != null &&
                     info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {

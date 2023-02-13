@@ -107,7 +107,7 @@ class CompatHelper private constructor() {
          * @throws NameNotFoundException if no such package is available to the caller.
          */
         @Throws(NameNotFoundException::class)
-        fun Context.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+        fun Context.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             this.packageManager.getPackageInfoCompat(packageName, flags)
 
         /**
@@ -118,7 +118,7 @@ class CompatHelper private constructor() {
          * @throws NameNotFoundException if no such package is available to the caller.
          */
         @Throws(NameNotFoundException::class)
-        fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+        fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             compat.getPackageInfo(this, packageName, flags)
     }
 }

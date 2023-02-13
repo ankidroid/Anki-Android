@@ -96,7 +96,7 @@ open class CompatV21 : Compat {
         return intent.getParcelableExtra<T>(name)
     }
 
-    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo =
+    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
         packageManager.getPackageInfo(packageName, flags.value.toInt())
 
     // Until API 26 do the copy using streams
