@@ -54,6 +54,7 @@
             android:id="@+id/note_editor_toolbar_button_bold"
             app:srcCompat="@drawable/ic_format_bold_black_24dp"
             android:contentDescription="@string/format_insert_bold"
+            android:tooltipText="@string/format_insert_bold"
             android:tag="b"
             style="@style/note_editor_toolbar_button" />
 
@@ -61,6 +62,7 @@
             android:id="@+id/note_editor_toolbar_button_italic"
             app:srcCompat="@drawable/ic_format_italic_black_24dp"
             android:contentDescription="@string/format_insert_italic"
+            android:tooltipText="@string/format_insert_italic"
             android:tag="i"
             style="@style/note_editor_toolbar_button" />
 
@@ -68,6 +70,7 @@
             android:id="@+id/note_editor_toolbar_button_underline"
             app:srcCompat="@drawable/ic_format_underlined_black_24dp"
             android:contentDescription="@string/format_insert_underline"
+            android:tooltipText="@string/format_insert_underline"
             android:tag="u"
             style="@style/note_editor_toolbar_button" />
 
@@ -75,6 +78,7 @@
             android:id="@+id/note_editor_toolbar_button_horizontal_rule"
             app:srcCompat="@drawable/ic_horizontal_rule_black_24dp"
             android:contentDescription="@string/insert_horizontal_line"
+            android:tooltipText="@string/insert_horizontal_line"
             android:tag="r"
             style="@style/note_editor_toolbar_button" />
 
@@ -82,12 +86,14 @@
             android:id="@+id/note_editor_toolbar_button_title"
             app:srcCompat="@drawable/ic_format_title_black_24dp"
             android:contentDescription="@string/insert_heading"
+            android:tooltipText="@string/insert_heading"
             android:tag="h"
             style="@style/note_editor_toolbar_button" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_font_size"
             android:contentDescription="@string/format_font_size"
+            android:tooltipText="@string/format_font_size"
             app:srcCompat="@drawable/ic_format_font_size_24dp"
             android:tag="f"
             style="@style/note_editor_toolbar_button" />
@@ -96,6 +102,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_insert_mathjax"
             android:contentDescription="@string/insert_mathjax"
+            android:tooltipText="@string/insert_mathjax"
             app:srcCompat="@drawable/ic_add_equation_black_24dp"
             android:tag="m"
             style="@style/note_editor_toolbar_button" />
