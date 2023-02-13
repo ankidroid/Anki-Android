@@ -414,7 +414,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun showSomethingWentWrong() {
-        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
+        try {
+            UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
+        } catch (e: Exception) {
+            // ignore. A NullPointerException may occur in Robolectric
+            Timber.w(e, "Failed to display toast")
+        }
     }
 
     private fun showSVGPreviewToast() {
