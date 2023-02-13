@@ -26,6 +26,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -148,7 +149,7 @@ class Toolbar : FrameLayout {
         val context = context
         val button = AppCompatImageButton(context)
         button.id = id
-        button.background = drawable
+        button.setImageDrawable(drawable)
 
         /*
             Style didn't work
@@ -158,10 +159,13 @@ class Toolbar : FrameLayout {
         */
 
         // apply style
-        val margin = convertDpToPixel(8F, context).toInt()
-        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val background = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, background, true)
+        button.setBackgroundResource(background.resourceId)
+        // Use layout size from R.style.note_editor_toolbar_button
+        val layoutSize = convertDpToPixel(44F, context).toInt()
+        val params = LinearLayout.LayoutParams(layoutSize, layoutSize)
         params.gravity = Gravity.CENTER
-        params.setMargins(margin, margin / 2, margin, margin / 2)
         button.layoutParams = params
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
