@@ -179,7 +179,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * When onReceive() is called, open the deck file in AnkiDroid to import it.
      */
     private var mOnComplete: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent?) {
             Timber.i("Download might be complete now, verify and continue with import")
 
             fun verifyDeckIsImportable() {
@@ -391,7 +391,7 @@ class SharedDecksDownloadFragment : Fragment() {
         try {
             context?.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
-            UIUtils.showThemedToast(context, R.string.something_wrong, false)
+            context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
             Timber.w(e)
         }
     }
@@ -407,12 +407,12 @@ class SharedDecksDownloadFragment : Fragment() {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
-                UIUtils.showThemedToast(activity, R.string.import_log_no_apkg, false)
+                context?.let { UIUtils.showThemedToast(it, R.string.import_log_no_apkg, false) }
                 // Go back if file is not a deck and cannot be imported
                 activity?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
-                UIUtils.showThemedToast(activity, R.string.something_wrong, false)
+                context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
                 // Update UI if download could not be successful
                 mTryAgainButton.visibility = View.VISIBLE
                 mCancelButton.visibility = View.GONE
