@@ -30,7 +30,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -1610,7 +1609,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             for (i in mEditFields!!.indices) {
                 fields[i] = getCurrentFieldText(i)
             }
-            return Utils.joinFields(fields.requireNoNulls())
+            return Utils.joinFields(fields)
         }
 
     /** Returns the value of the field at the given index  */
