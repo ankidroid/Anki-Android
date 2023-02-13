@@ -34,6 +34,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.children
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
@@ -101,6 +103,17 @@ class Toolbar : FrameLayout {
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
         findViewById<View>(R.id.note_editor_toolbar_button_font_size).setOnClickListener { displayFontSizeDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
+
+        /**
+         * TODO Redundant workaround until API 26
+         * We can't use XML attributes to set tooltip text on API 21
+         * This method can be completely removed after a minSDKVersion bump to API 26 since it is
+         * redundant with the android:tooltipText attribute in [R.layout.note_editor_toolbar]
+         */
+        val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
+        for (button in parentLayout.children) {
+            TooltipCompat.setTooltipText(button, button.contentDescription)
+        }
     }
 
     /**
