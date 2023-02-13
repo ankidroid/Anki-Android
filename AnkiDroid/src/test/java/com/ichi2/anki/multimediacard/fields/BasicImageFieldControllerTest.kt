@@ -93,6 +93,9 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
     @Test
     fun invalidImageResultDoesNotCrashController() {
+        // TODO: This started failing after API 30:
+        //  showThemedToast threw an NPE. Diagnose the underlying issue.
+
         val controller = validControllerNoImage
         controller.registryToUse = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
