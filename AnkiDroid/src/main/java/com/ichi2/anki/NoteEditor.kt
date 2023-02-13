@@ -1689,7 +1689,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             toolbar.visibility = View.VISIBLE
         }
         toolbar.clearCustomItems()
-        val clozeIcon = toolbar.clozeIcon
         if (mEditorNote!!.model().isCloze) {
             val clozeFormatter = Toolbar.TextFormatter { s: String ->
                 val stringFormat = Toolbar.StringFormat()
@@ -1704,10 +1703,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 stringFormat
             }
-            clozeIcon!!.setOnClickListener { toolbar.onFormat(clozeFormatter) }
-            clozeIcon.visibility = View.VISIBLE
-        } else {
-            clozeIcon!!.visibility = View.GONE
+
+            val clozeDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_cloze_black_24dp, null)
+            clozeDrawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+            val clozeButton = toolbar.insertItem(0, clozeDrawable, Runnable { toolbar.onFormat(clozeFormatter) })
+            clozeButton.contentDescription = resources.getString(R.string.insert_cloze)
         }
         val buttons = toolbarButtons
         for (b in buttons) {
