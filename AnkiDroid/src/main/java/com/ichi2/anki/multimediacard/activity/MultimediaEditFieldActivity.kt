@@ -35,9 +35,9 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.utils.CheckCameraPermission
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 import timber.log.Timber
 import java.io.File
 import java.text.DecimalFormat
@@ -110,7 +110,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
 
         // Request permission to use the camera if image field
-        if (field is ImageField && CheckCameraPermission.manifestContainsPermission(this) &&
+        if (field is ImageField && this.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.CAMERA) &&
             !Permissions.canUseCamera(this)
         ) {
             Timber.d("Requesting Camera Permissions")

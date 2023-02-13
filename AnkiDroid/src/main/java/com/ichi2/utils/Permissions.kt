@@ -19,7 +19,12 @@ package com.ichi2.utils
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.GET_PERMISSIONS
 import androidx.core.content.ContextCompat
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.PackageInfoFlagsCompat
+import timber.log.Timber
+import java.lang.Exception
 
 object Permissions {
     fun canUseCamera(context: Context): Boolean {
@@ -67,4 +72,43 @@ object Permissions {
     fun canUseWakeLock(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.WAKE_LOCK)
     }
+
+    /**
+     * Detects if permissions are defined via <uses-permission> in the Manifest.
+     * This does **not** mean the permission has been granted.
+     * Intention is to be used when a permissions may be changed by build flavours
+     *
+     * Example:
+     * * Amazon => no camera
+     * * Play => no 'manage external storage'
+     *
+     * @param permissions One or more permission strings, typically defined in [Manifest.permission]
+     * @return `true` if all permissions were granted. `false` otherwise, or if an error occurs.
+     */
+    fun Context.arePermissionsDefinedInManifest(packageName: String, vararg permissions: String): Boolean {
+        try {
+            val requestedPermissions = getPermissionsDefinedInManifest(packageName) ?: return false
+            return permissions.all { requestedPermissions.contains(it) }
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+        return false
+    }
+
+    private fun Context.getPermissionsDefinedInManifest(packageName: String): Array<out String>? {
+        return try {
+            // requestedPermissions => <uses-permission> in manifest
+            val flags = PackageInfoFlagsCompat.of(GET_PERMISSIONS.toLong())
+            getPackageInfoCompat(packageName, flags)!!.requestedPermissions
+        } catch (e: Exception) {
+            Timber.w(e)
+            null
+        }
+    }
+
+    /**
+     * @see Context.arePermissionsDefinedInManifest
+     */
+    fun Context.arePermissionsDefinedInAnkiDroidManifest(vararg permissions: String) =
+        this.arePermissionsDefinedInManifest(this.packageName, *permissions)
 }
