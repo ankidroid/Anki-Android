@@ -34,7 +34,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.children
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -43,6 +42,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -104,16 +104,8 @@ class Toolbar : FrameLayout {
         findViewById<View>(R.id.note_editor_toolbar_button_font_size).setOnClickListener { displayFontSizeDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
 
-        /**
-         * TODO Redundant workaround until API 26
-         * We can't use XML attributes to set tooltip text on API 21
-         * This method can be completely removed after a minSDKVersion bump to API 26 since it is
-         * redundant with the android:tooltipText attribute in [R.layout.note_editor_toolbar]
-         */
         val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
-        for (button in parentLayout.children) {
-            TooltipCompat.setTooltipText(button, button.contentDescription)
-        }
+        CompatHelper.compat.addTooltipText(parentLayout.children)
     }
 
     /**
