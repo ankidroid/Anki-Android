@@ -81,7 +81,7 @@ object UsageAnalytics {
         installDefaultExceptionHandler()
         val userPrefs = AnkiDroidApp.getSharedPrefs(context)
         optIn = userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false)
-        userPrefs.registerOnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences, key: String ->
+        userPrefs.registerOnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences, key: String? ->
             if (key == ANALYTICS_OPTIN_KEY) {
                 val newValue = sharedPreferences.getBoolean(key, false)
                 Timber.i("Setting analytics opt-in to: %b", newValue)
