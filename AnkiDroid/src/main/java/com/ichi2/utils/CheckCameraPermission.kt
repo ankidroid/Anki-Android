@@ -27,11 +27,11 @@ import java.util.*
 object CheckCameraPermission {
     fun manifestContainsPermission(context: Context): Boolean {
         try {
-            val requestedPermissions = context.getPackageInfoCompat(
+            val packageInfo = context.getPackageInfoCompat(
                 context.packageName,
                 PackageInfoFlagsCompat.of(PackageManager.GET_PERMISSIONS.toLong())
-            ).requestedPermissions
-            if (Arrays.toString(requestedPermissions).contains("android.permission.CAMERA")) {
+            ) ?: return false
+            if (Arrays.toString(packageInfo.requestedPermissions).contains("android.permission.CAMERA")) {
                 return true
             }
         } catch (e: Exception) {

@@ -105,9 +105,11 @@ interface Compat {
      * installed on the system.
      *
      * @see PackageManager.getPackageInfo
+     * @throws NameNotFoundException if no such package is available to the caller.
+     * * Can be null: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/ComputerEngine.java;drc=c4ad8bc669e66262a00798b57132347a0d0aa2ac;bpv=1;bpt=1;l=1705?q=getPackageInfoInternal&ss=android&gsn=getPackageInfoInternalBody&gs=kythe%3A%2F%2Fandroid.googlesource.com%2Fplatform%2Fsuperproject%3Flang%3Djava%3Fpath%3Dcom.android.server.pm.ComputerEngine%23977e4a94695fef516f4b2d9fa73dea77cfaf06eff40c6fb3ec9bd80c6e18a08f
      */
     @Throws(NameNotFoundException::class)
-    fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo
+    fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo?
 
     /**
      * Copy file at path [source] to path [target]

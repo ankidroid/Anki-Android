@@ -1273,7 +1273,7 @@ class CardContentProvider : ContentProvider() {
     private fun knownRogueClient(): Boolean {
         val pm = context!!.packageManager
         return try {
-            val callingPi = pm.getPackageInfoCompat(callingPackage!!, PackageInfoFlagsCompat.of(PackageManager.GET_PERMISSIONS.toLong()))
+            val callingPi = pm.getPackageInfoCompat(callingPackage!!, PackageInfoFlagsCompat.of(PackageManager.GET_PERMISSIONS.toLong())) ?: return false
             if (callingPi.requestedPermissions == null) {
                 false
             } else !listOf(*callingPi.requestedPermissions).contains(FlashCardsContract.READ_WRITE_PERMISSION)
