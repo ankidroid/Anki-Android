@@ -58,6 +58,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
                 } catch (e: StorageAccessException) {
+                    // TODO: Request MANAGE_EXTERNAL_STORAGE
                     Timber.e(e, "Could not initialize directory: %s", newPath)
                     AlertDialog.Builder(requireContext()).show {
                         setTitle(R.string.dialog_collection_path_not_dir)

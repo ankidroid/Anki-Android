@@ -22,11 +22,13 @@ import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidFolder.*
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.contains
+import org.hamcrest.core.IsInstanceOf.instanceOf
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -107,59 +109,63 @@ class InitialActivityTest : RobolectricTest() {
     @Config(sdk = [BEFORE_Q])
     @Test
     fun startupBeforeQ() {
-        val expectedPermissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val policy = selectAnkiDroidFolder()
+        val expectedPermissions = arrayOf(
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
 
-        // force a safe startup
+        // force a safe startup before Q
         assertThat(
-            (policy as AnkiDroidFolder.PublicFolder).requiredPermissions.asIterable(),
-            Matchers.contains(*expectedPermissions)
+            (selectAnkiDroidFolder(false) as PublicFolder).requiredPermissions.asIterable(),
+            contains(*expectedPermissions)
+        )
+        assertThat(
+            (selectAnkiDroidFolder(true) as PublicFolder).requiredPermissions.asIterable(),
+            contains(*expectedPermissions)
         )
     }
 
-//    @Config(sdk = [Q])
-//    @Test
-//    fun startupQ() {
-//        val withoutManageStorage = queryCollectionDataRetentionPolicy(false)
-//        val withManageStorage = queryCollectionDataRetentionPolicy(true)
-//
-//        assertThat(
-//            withoutManageStorage,
-//            IsInstanceOf.instanceOf(CollectionDataRetentionPolicy.Unsafe::class.java)
-//        )
-//        assertThat(
-//            withManageStorage,
-//            IsInstanceOf.instanceOf(CollectionDataRetentionPolicy.Unsafe::class.java)
-//        )
-//    }
-//
-//    @SuppressLint("InlinedApi")
-//    @Config(sdk = [AFTER_Q])
-//    @Test
-//    fun startupAfterQManage() {
-//        val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
-//        val withManageStorage = queryCollectionDataRetentionPolicy(canManageExternalStorage = true)
-//
-//        assertThat(
-//            (withManageStorage as CollectionDataRetentionPolicy.AttemptSafeStartup).permissions.asIterable(),
-//            Matchers.contains(*expectedPermissions)
-//        )
-//    }
-//
-//    @Config(sdk = [AFTER_Q])
-//    @Test
-//    fun startupAfterQNoManage() {
-//        val withManageStorage = queryCollectionDataRetentionPolicy(canManageExternalStorage = false)
-//
-//        assertThat(
-//            withManageStorage,
-//            IsInstanceOf.instanceOf(CollectionDataRetentionPolicy.Unsafe::class.java)
-//        )
-//    }
+    @Config(sdk = [Q])
+    @Test
+    fun startupQ() {
+        assertThat(
+            selectAnkiDroidFolder(false),
+            instanceOf(DeleteOnUninstall::class.java)
+        )
+        assertThat(
+            selectAnkiDroidFolder(true),
+            instanceOf(DeleteOnUninstall::class.java)
+        )
+    }
+
+    @SuppressLint("InlinedApi")
+    @Config(sdk = [R_OR_AFTER])
+    @Test
+    fun startupAfterQWithManageExternalStorage() {
+        val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+
+        selectAnkiDroidFolder(
+            canManageExternalStorage = true
+        ).let {
+            assertThat(
+                (it as PublicFolder).requiredPermissions.asIterable(),
+                contains(*expectedPermissions)
+            )
+        }
+    }
+
+    @Config(sdk = [R_OR_AFTER])
+    @Test
+    fun startupAfterQWithoutManageExternalStorage() {
+        assertThat(
+            selectAnkiDroidFolder(canManageExternalStorage = false),
+            instanceOf(DeleteOnUninstall::class.java)
+        )
+    }
 
     companion object {
         const val BEFORE_Q = Build.VERSION_CODES.Q - 1
-//        const val Q = Build.VERSION_CODES.Q
-//        const val AFTER_Q = Build.VERSION_CODES.Q + 1
+        const val Q = Build.VERSION_CODES.Q
+        const val R_OR_AFTER = Build.VERSION_CODES.R
     }
 }

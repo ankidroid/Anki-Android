@@ -235,6 +235,21 @@ object ScopedStorageService {
     }
 
     /**
+     * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
+     * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
+     * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
+     *
+     * @param setCollectionPath if `false`, null is returned. This stops an infinite loop
+     * if `isLegacyStorage` is called when obtaining the collection path
+     */
+    fun isLegacyStorage(context: Context, setCollectionPath: Boolean): Boolean? {
+        if (!setCollectionPath && !AnkiDroidApp.getSharedPrefs(context).contains(CollectionHelper.PREF_COLLECTION_PATH)) {
+            return null
+        }
+        return isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
+    }
+
+    /**
      * @return `true` if [currentDirPath] is a Legacy Storage Directory.
      */
     fun isLegacyStorage(currentDirPath: String, context: Context): Boolean {
@@ -269,8 +284,12 @@ object ScopedStorageService {
     }
 
     fun migrationStatus(context: Context): Status {
-        if (!isLegacyStorage(context) && !userMigrationIsInProgress(context)) {
+        if ((!isLegacyStorage(context) && !userMigrationIsInProgress(context))) {
             return Status.COMPLETED
+        }
+
+        if (Permissions.allFileAccessPermissionGranted(context)) {
+            return Status.NOT_NEEDED
         }
 
         if (!Permissions.hasStorageAccessPermission(context)) {
@@ -293,6 +312,7 @@ object ScopedStorageService {
         REQUIRES_PERMISSION,
         PERMISSION_FAILED,
         IN_PROGRESS,
-        COMPLETED
+        COMPLETED,
+        NOT_NEEDED
     }
 }

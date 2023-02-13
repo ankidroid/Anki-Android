@@ -19,7 +19,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         //noinspection OldTargetApi
-        targetSdkVersion 29
+        targetSdkVersion 30
         buildConfigField "String", "READ_WRITE_PERMISSION", '"com.ichi2.anki.permission.READ_WRITE_DATABASE"'
         buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.flashcards"'
     }
