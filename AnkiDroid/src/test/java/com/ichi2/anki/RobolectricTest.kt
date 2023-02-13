@@ -330,9 +330,9 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @Throws(JSONException::class)
-    protected fun getCurrentDatabaseModelCopy(modelName: String?): Model {
+    protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
         val collectionModels = col.models
-        return Model(collectionModels.byName(modelName!!).toString().trim { it <= ' ' })
+        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
