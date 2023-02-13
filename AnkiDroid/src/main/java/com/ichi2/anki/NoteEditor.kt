@@ -1603,14 +1603,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mEditorNote!!.values()[0] = oldValue
     }
 
-    @KotlinCleanup("remove 'requireNoNulls'")
     private val fieldsText: String
         get() {
             val fields = arrayOfNulls<String>(mEditFields!!.size)
             for (i in mEditFields!!.indices) {
                 fields[i] = getCurrentFieldText(i)
             }
-            return Utils.joinFields(fields.requireNoNulls())
+            return Utils.joinFields(fields)
         }
 
     /** Returns the value of the field at the given index  */

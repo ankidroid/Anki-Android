@@ -517,7 +517,7 @@ object Utils {
      * Fields
      * ***********************************************************************************************
      */
-    fun joinFields(list: Array<String>): String {
+    fun joinFields(list: Array<String?>): String {
         val result = StringBuilder(128)
         for (i in 0 until list.size - 1) {
             result.append(list[i]).append("\u001f")
