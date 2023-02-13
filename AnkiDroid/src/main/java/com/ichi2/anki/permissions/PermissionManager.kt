@@ -16,14 +16,18 @@
 
 package com.ichi2.anki.permissions
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
-import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
+import androidx.annotation.RequiresApi
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
 import com.ichi2.utils.Permissions
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -37,7 +41,7 @@ import java.lang.ref.WeakReference
  * Some logic may be re-executed on startup, and therefore the callback is unnecessary.
 */
 class PermissionManager private constructor(
-    activity: ComponentActivity,
+    activity: AnkiActivity,
     val permissions: Array<String>,
     private val useCallbackIfActivityRecreated: Boolean,
     // callback must be supplied here to allow for recreation of the activity if destroyed
@@ -73,6 +77,14 @@ class PermissionManager private constructor(
         return PermissionsCheckResult(permissions)
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun willRequestManageExternalStorage(context: Context): Boolean {
+        val requiresManageExternalStoragePermission = permissions.contains(MANAGE_EXTERNAL_STORAGE)
+        val isManageExternalStorageGranted = Permissions.hasPermission(context, MANAGE_EXTERNAL_STORAGE)
+
+        return requiresManageExternalStoragePermission && !isManageExternalStorageGranted
+    }
+
     /**
      * Launches a permission dialog. [callback] is executed after it is closed.
      * Should be called if [PermissionsCheckResult.requiresPermissionDialog] is true
@@ -83,6 +95,18 @@ class PermissionManager private constructor(
         if (!permissions.any()) {
             throw IllegalStateException("permissions should be non-empty/requiresPermissionDialog was not called")
         }
+
+        val activity = activityRef.get() ?: throw Exception("activity disposed")
+
+        // 'Manage External Storage' needs special-casing as launchPermissionDialog can't request it
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && willRequestManageExternalStorage(activity)) {
+            // Open an external screen and close the activity.
+            // Accepting this permission closes the app
+            UIUtils.showThemedToast(activity, R.string.startup_no_storage_permission, false)
+            activity.finishActivityAndShowManageAllFilesScreen()
+            return
+        }
+
         Timber.i("Showing dialog to request: '%s'", permissions.joinToString(", "))
         permissionDialogLauncher.launch(permissions)
     }
@@ -97,13 +121,16 @@ class PermissionManager private constructor(
     }
 
     companion object {
+        @RequiresApi(Build.VERSION_CODES.R)
+        private const val MANAGE_EXTERNAL_STORAGE = android.Manifest.permission.MANAGE_EXTERNAL_STORAGE
+
         /**
          * This ** must be called unconditionally, as part of AnkiDroid initialization path.
          * This is because we can't know whether we'll be receiving the result of the activity requesting the permissions.
          * We typically call it by assigning its result to a field during initialization of an activity.
          */
         fun register(
-            activity: ComponentActivity,
+            activity: AnkiActivity,
             permissions: Array<String>,
             useCallbackIfActivityRecreated: Boolean,
             callback: (permissionDialogResult: PermissionsRequestRawResults) -> Unit
@@ -113,16 +140,47 @@ class PermissionManager private constructor(
 }
 
 /**
- * Closes the activity and opens the Android settings page for AnkiDroid
+ * Closes the activity. Opens the Android settings for AnkiDroid if the phone provide this feature.
  * Lets a user grant any missing permissions which have been permanently denied
  * We finish the activity as setting permissions terminates the app
  */
 fun AnkiActivity.finishActivityAndShowAppPermissionManagementScreen() {
     this.finishWithoutAnimation()
+    showAppPermissionManagementScreen()
+}
+
+private fun AnkiActivity.showAppPermissionManagementScreen() {
     this.startActivityWithoutAnimation(
         Intent(
             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
             Uri.fromParts("package", this.packageName, null)
         )
     )
+}
+
+/**
+ * Closes the activity and opens the Android 'MANAGE_ALL_FILES' page if the phone provides this feature.
+ */
+@RequiresApi(Build.VERSION_CODES.R)
+fun AnkiActivity.finishActivityAndShowManageAllFilesScreen() {
+    // This screen is simpler than the one from displayAppPermissionManagementScreen:
+    // In 'AppPermissionManagement' a user has to go to permissions -> storage -> 'allow management of all files' -> dialog warning
+    // In 'ManageAllFiles': a user selects the app which has permission
+    // We finish the activity as setting permissions terminates the app
+    this.finishWithoutAnimation()
+
+    val intent = Intent(
+        Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+        Uri.fromParts("package", this.packageName, null)
+    )
+
+    // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]
+    // In some cases, a matching Activity may not exist, so ensure you safeguard against this.
+
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivityWithoutAnimation(intent)
+    } else {
+        // This also allows management of the all files permission (worse UI)
+        showAppPermissionManagementScreen()
+    }
 }

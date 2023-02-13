@@ -230,7 +230,7 @@ open class DeckPicker :
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
-    private val startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
+    private lateinit var startupStoragePermissionManager: StartupStoragePermissionManager
 
     // used for check media
     private val checkMediaStoragePermissionCheck = PermissionManager.register(
@@ -318,6 +318,8 @@ open class DeckPicker :
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
+
+        startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
 
         asyncMessageContent = resources.getString(R.string.import_interrupted)
         asyncMessageTitle = resources.getString(R.string.import_title)
@@ -464,8 +466,13 @@ open class DeckPicker :
             }
             // If legacy storage is being used, ensure storage permission is obtained in order to access Legacy Directories
             ScopedStorageService.Status.REQUIRES_PERMISSION -> {
-                Timber.i("postponing startup code - dialog shown")
-                startupStoragePermissionManager.displayStoragePermissionDialog()
+                // if a dialog was not shown, continue
+                val storagePermissionsResult = startupStoragePermissionManager.checkPermissions()
+                if (storagePermissionsResult.requiresPermissionDialog) {
+                    Timber.i("postponing startup code - dialog shown")
+                    startupStoragePermissionManager.displayStoragePermissionDialog()
+                    return true
+                }
                 return false
             }
             ScopedStorageService.Status.PERMISSION_FAILED -> {
@@ -474,7 +481,7 @@ open class DeckPicker :
                 return false
             }
             // App is already using Scoped Storage Directory for user data, no need to migrate & can proceed with startup
-            ScopedStorageService.Status.COMPLETED -> return false
+            ScopedStorageService.Status.COMPLETED, ScopedStorageService.Status.NOT_NEEDED -> return false
         }
     }
 
@@ -728,7 +735,7 @@ open class DeckPicker :
         if (!BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn()) {
             return false
         }
-        return isLegacyStorage(context) && !userMigrationIsInProgress(context)
+        return isLegacyStorage(context) && !userMigrationIsInProgress(context) && !Permissions.allFileAccessPermissionGranted(context)
     }
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
