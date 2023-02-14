@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
@@ -114,4 +115,35 @@ object InitialActivity {
         SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
         DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
     }
+}
+
+/**
+ * Whether we should try a startup with a permission dialog + folder which is safe from uninstalling
+ * or go straight into AnkiDroid
+ */
+sealed interface AnkiDroidFolder {
+    /**
+     * AnkiDroid will use the folder ~/AnkiDroid by default
+     * To access it, we must first get [requiredPermissions].
+     * This folder is not deleted when the user uninstalls the app, which reduces the risk of data loss,
+     * but increase the risk of space used on their storage when they don't want to.
+     * It can not be used on the play store starting with Sdk 30.
+     **/
+    class PublicFolder(val requiredPermissions: Array<String>) : AnkiDroidFolder
+}
+
+/**
+ * Returns in which folder AnkiDroid data is saved.
+ * [AnkiDroidFolder.PublicFolder] is preferred, as it reduce risk of data loss.
+ * When impossible, we use the app-specific directory.
+ * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
+ */
+fun selectAnkiDroidFolder(): AnkiDroidFolder {
+    // match previous AnkiDroid behaviour - force the use of ~/AnkiDroid, since it's fast & safe.
+    return AnkiDroidFolder.PublicFolder(
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    )
 }
