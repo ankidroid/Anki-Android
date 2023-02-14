@@ -21,7 +21,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.WindowManager.BadTokenException
-import com.ichi2.anki.AnkiActivity
 import timber.log.Timber
 
 class StyledProgressDialog(context: Context?) : Dialog(context!!) {
@@ -32,21 +31,6 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
         } catch (e: BadTokenException) {
             Timber.e(e, "Could not show dialog")
         }
-    }
-
-    @Suppress("unused_parameter")
-    fun setMax(max: Int) {
-        // TODO
-    }
-
-    @Suppress("unused_parameter")
-    fun setProgress(progress: Int) {
-        // TODO
-    }
-
-    @Suppress("unused_parameter")
-    fun setProgressStyle(style: Int) {
-        // TODO
     }
 
     @Suppress("Deprecation") // ProgressDialog deprecation
@@ -71,15 +55,6 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
                 setOnCancelListener(cancelListener)
                 show()
                 setCanceledOnTouchOutside(cancelable)
-            }
-        }
-
-        @Suppress("unused")
-        private fun animationEnabled(context: Context): Boolean {
-            return if (context is AnkiActivity) {
-                context.animationEnabled()
-            } else {
-                true
             }
         }
     }
