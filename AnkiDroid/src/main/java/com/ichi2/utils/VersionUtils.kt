@@ -102,7 +102,7 @@ object VersionUtils {
      */
     val isReleaseVersion: Boolean
         get() {
-            val versionCode = java.lang.Long.toString(pkgVersionCode)
+            val versionCode = pkgVersionCode.toString()
             Timber.d("isReleaseVersion() versionCode: %s", versionCode)
             return versionCode[versionCode.length - 3] == '3'
         }
