@@ -50,7 +50,7 @@ object InitialActivity {
             CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
             CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
             CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED
-            CollectionHelper.CollectionOpenFailure.NO_STORAGE -> StartupFailure.DISK_FULL
+            CollectionHelper.CollectionOpenFailure.DISK_FULL -> StartupFailure.DISK_FULL
             null -> {
                 // if getColSafe returned null, this should never happen
                 null

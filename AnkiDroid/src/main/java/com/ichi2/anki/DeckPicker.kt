@@ -633,7 +633,7 @@ open class DeckPicker :
     }
     fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_FULL_DISK)
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DISK_FULL)
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation

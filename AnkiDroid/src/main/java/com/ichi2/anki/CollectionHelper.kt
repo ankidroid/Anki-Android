@@ -139,7 +139,7 @@ open class CollectionHelper {
             Timber.w(e)
             null
         } catch (e: SQLiteFullException) {
-            lastOpenFailure = CollectionOpenFailure.NO_STORAGE
+            lastOpenFailure = CollectionOpenFailure.DISK_FULL
             Timber.w(e)
             null
         } catch (e: Exception) {
@@ -282,7 +282,7 @@ open class CollectionHelper {
     }
 
     enum class CollectionOpenFailure {
-        FILE_TOO_NEW, CORRUPT, LOCKED, NO_STORAGE
+        FILE_TOO_NEW, CORRUPT, LOCKED, DISK_FULL
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
