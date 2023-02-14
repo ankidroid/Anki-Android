@@ -51,7 +51,7 @@ open class CompatV21 : Compat {
     }
 
     // Until API26, tooltips cannot be defined declaratively in layouts
-    override fun addTooltipText(views: Sequence<View>) {
+    override fun addTooltipTextsFromContentDescription(views: Sequence<View>) {
         for (view in views) {
             TooltipCompat.setTooltipText(view, view.contentDescription)
         }

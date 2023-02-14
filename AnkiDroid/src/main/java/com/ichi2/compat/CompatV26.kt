@@ -41,7 +41,7 @@ open class CompatV26 : CompatV23(), Compat {
         NotificationChannels.setup(context)
     }
 
-    override fun addTooltipText(views: Sequence<View>) { /* Nothing to do API26+ */
+    override fun addTooltipTextsFromContentDescription(views: Sequence<View>) { /* Nothing to do API26+ */
     }
 
     @Suppress("DEPRECATION")

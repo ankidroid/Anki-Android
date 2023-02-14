@@ -105,7 +105,7 @@ class Toolbar : FrameLayout {
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
 
         val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
-        CompatHelper.compat.addTooltipText(parentLayout.children)
+        CompatHelper.compat.addTooltipTextsFromContentDescription(parentLayout.children)
     }
 
     /**
@@ -168,8 +168,8 @@ class Toolbar : FrameLayout {
         context.theme.resolveAttribute(android.R.attr.selectableItemBackground, background, true)
         button.setBackgroundResource(background.resourceId)
         // Use layout size from R.style.note_editor_toolbar_button
-        val layoutSize = convertDpToPixel(44F, context).toInt()
-        val params = LinearLayout.LayoutParams(layoutSize, layoutSize)
+        val buttonSize = convertDpToPixel(44F, context).toInt()
+        val params = LinearLayout.LayoutParams(buttonSize, buttonSize)
         params.gravity = Gravity.CENTER
         button.layoutParams = params
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
