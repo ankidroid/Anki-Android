@@ -70,6 +70,7 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
                 setCancelable(cancelable)
                 setOnCancelListener(cancelListener)
                 show()
+                setCanceledOnTouchOutside(cancelable)
             }
         }
 
