@@ -207,7 +207,7 @@ object CollectionManager {
      * Automatically called by [withCol]. Can be called directly to ensure collection
      * is loaded at a certain point in time, or to ensure no errors occur.
      */
-    suspend fun ensureOpen() {
+    private suspend fun ensureOpen() {
         withQueue {
             ensureOpenInner()
         }
@@ -239,7 +239,7 @@ object CollectionManager {
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
-    fun createCollectionPath(): String {
+    private fun createCollectionPath(): String {
         val dir = getCollectionDirectory().path
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
@@ -248,7 +248,7 @@ object CollectionManager {
     /**
      * Like [withQueue], but can be used in a synchronous context.
      *
-     * Note: Because [runBlocking] inside [runTest] will lead to
+     * Note: Because [runBlocking] inside `RobolectricTest.runTest` will lead to
      * deadlocks, this will not block when run under Robolectric,
      * and there is no guarantee about concurrent access.
      */
