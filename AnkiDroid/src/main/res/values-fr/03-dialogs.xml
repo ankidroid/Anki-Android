@@ -94,6 +94,7 @@
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
     <string name="intent_aedict_empty">La catégorie « default » est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>

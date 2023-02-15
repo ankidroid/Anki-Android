@@ -94,6 +94,7 @@
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ବର୍ଗ ଯୋଡ଼ନ୍ତୁ</string>

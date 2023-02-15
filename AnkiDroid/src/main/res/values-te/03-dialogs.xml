@@ -94,6 +94,7 @@
     <string name="answering_error_title">డేటాబేస్ లోపం</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">నివేదన లోపం</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>

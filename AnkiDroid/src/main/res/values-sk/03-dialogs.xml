@@ -106,6 +106,7 @@
     <string name="answering_error_title">Chyba databázy</string>
     <string name="answering_error_message">Zápis zbierky zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa toto stáva častejšie, skúste kontrolu databázy, opravu zbierky alebo jej obnovu zo zálohy. Ak to chcete urobiť, stlačte  “možnosti” .\n\Alebo to mohla byť tiež AnkiDroid chyba; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Naozaj chcete skúsiť opraviť databázu?\n\nPred začatím pokusu o opravenie bude vytvorená kópia v podpriečinku \"%s\".</string>
     <string name="intent_aedict_empty">Kategória \"predvolený\" je prázdna</string>
     <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>

@@ -118,6 +118,7 @@
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>

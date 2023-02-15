@@ -88,6 +88,7 @@
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
     <string name="answering_error_report">エラーを報告する</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
     <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
