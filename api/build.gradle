@@ -12,6 +12,8 @@ repositories {
     mavenCentral()
 }
 android {
+
+    namespace 'com.ichi2.anki.api'
     compileSdkVersion 33
 
     defaultConfig {
