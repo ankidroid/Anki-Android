@@ -94,6 +94,7 @@
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
     <string name="answering_error_report">Segnala errori</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Vuoi veramente provare a riparare il database?\n\nPrima di iniziare il tentativo, verrà creata una copia nella sottocartella \'%s\'.</string>
     <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>

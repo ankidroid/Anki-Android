@@ -88,6 +88,7 @@
     <string name="answering_error_title">데이터베이스 오류</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">오류 보고하기</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
     <string name="intent_aedict_empty">\'기본값\' 카테고리가 비어 있습니다</string>
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>

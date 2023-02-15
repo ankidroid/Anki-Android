@@ -94,6 +94,7 @@
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>

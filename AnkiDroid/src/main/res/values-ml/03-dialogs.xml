@@ -94,6 +94,7 @@
     <string name="answering_error_title">ഡാറ്റാബേസ് പിശക്</string>
     <string name="answering_error_message">ശേഖരത്തിലേക്ക് എഴുതുന്നത് പരാജയപ്പെട്ടു. ഡാറ്റാബേസ് കേടായതാകാം അല്ലെങ്കിൽ ഡിസ്കിൽ വേണ്ടത്ര ശൂന്യമായ ഇടം ഉണ്ടാകണമെന്നില്ല. \n\n ഇത് പലപ്പോഴും സംഭവിക്കുകയാണെങ്കിൽ, ഡാറ്റാബേസ് പരിശോധിക്കാനോ ശേഖരം നന്നാക്കാനോ ബാക്കപ്പിൽ നിന്ന് പുന സ്ഥാപിക്കാനോ ശ്രമിക്കുക. അതിനായി “ഓപ്ഷനുകൾ” സ്‌പർശിക്കുക. \n\ അല്ലെങ്കിൽ ഇത് ഒരു അങ്കിഡ്രോയിഡ് ബഗ് ആകാം; പിശക് റിപ്പോർട്ടുചെയ്യുക, അതുവഴി ഞങ്ങൾക്ക് ഇത് പരിശോധിക്കാൻ കഴിയും.</string>
     <string name="answering_error_report">റിപ്പോർട്ട് പിശക്</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">ഡാറ്റാബേസ് നന്നാക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ? \n\n ശ്രമം ആരംഭിക്കുന്നതിന് മുമ്പ്, “%s” എന്ന സബ്ഫോൾഡറിൽ ഒരു പകർപ്പ് സൃഷ്ടിക്കപ്പെടും.</string>
     <string name="intent_aedict_empty">വിഭാഗം “സ്ഥിരസ്ഥിതി” ശൂന്യമാണ്</string>
     <string name="intent_aedict_category">AnkiDroid- ലേക്ക് കാർഡുകൾ ചേർക്കുന്നതിന് എല്ലാ നോട്ട്പാഡ് വിഭാഗങ്ങളും നീക്കംചെയ്യുക അല്ലെങ്കിൽ “സ്ഥിരസ്ഥിതി” എന്ന് പേരുള്ള ഒന്ന് ചേർക്കുക</string>

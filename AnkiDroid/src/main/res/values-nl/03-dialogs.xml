@@ -94,6 +94,7 @@
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Weet u zeker dat wilt proberen de database te repareren?\n\nVoordat dit wordt geprobeerd, wordt een kopie gemaakt in de submap \'%s\'.</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>

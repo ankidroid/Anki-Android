@@ -88,6 +88,7 @@
     <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
     <string name="answering_error_report">Laporkan galat</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Apakah kamu benar-benar ingin memperbaiki basisdata?\n\nSebelum memulai, salinan akan dibuat ke dalam subfolder \'%s\'.</string>
     <string name="intent_aedict_empty">Kategori \'awalan\' kosong</string>
     <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>

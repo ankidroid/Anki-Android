@@ -94,6 +94,7 @@
     <string name="answering_error_title">Databasfel</string>
     <string name="answering_error_message">Ett fel uppstod när data skrevs till samlingen. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ den från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nAnnars kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
     <string name="answering_error_report">Rapportera fel</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>

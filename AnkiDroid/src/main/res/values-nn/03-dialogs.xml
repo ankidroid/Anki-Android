@@ -94,6 +94,7 @@
     <string name="answering_error_title">Databasefeil</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Rapporter feil</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Vil du virkelig prøve å reparere databasen?\n\nEn kopi vil bli opprettet i undermappen \'%s\' før forsøket starter.</string>
     <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
     <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>

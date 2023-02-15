@@ -94,6 +94,7 @@
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>

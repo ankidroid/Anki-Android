@@ -94,6 +94,7 @@
     <string name="answering_error_title">Mali sa database</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">I-ulat ang error</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Gusto ma bang subukan ang pag-aayos ng database?\n\nBago simulan ang pagtatangka, isang kopya ang lilikhain sa subfolder na \"%s\".</string>
     <string name="intent_aedict_empty">Walang laman ang kategoryang \"default\"</string>
     <string name="intent_aedict_category">Upang magdagdag ng mga baraha sa AnkiDroid alisin ang lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>

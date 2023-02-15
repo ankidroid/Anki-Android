@@ -94,6 +94,7 @@
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन विफल रहा। डेटाबेस दूषित हो सकता है या डिस्क पर पर्याप्त खाली स्थान नहीं हो सकता है। \n\n यदि यह अधिक बार होता है, तो डेटाबेस की जाँच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। इसके लिए \"विकल्प\" स्पर्श करें। \n या यह एक एंकॉइड बग भी हो सकता है; कृपया त्रुटि रिपोर्ट करें ताकि हम इसकी जांच कर सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">क्या आप वास्तव में डेटाबेस को सुधारने का प्रयास करना चाहते हैं? \n\nBefore प्रयास प्रारंभ कर रहा है, एक प्रतिलिपि सबफ़ोल्डर \"%s\" में बनाया जाएगा ।</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
