@@ -56,7 +56,7 @@
     <string name="login_create_account_message">Bulut senkronizasyon hizmetini kullanmak için üçüncü parti bir hesaba giriş yapmanız gerekiyor. Hesabı bir sonraki adımda açabilirsiniz.</string>
     <!-- MyAccount.kt -->
     <string name="username">Eposta adresi</string>
-    <string name="password">Şifre</string>
+    <string name="password">Parola</string>
     <string name="log_in">Giriş yap</string>
     <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
     <string name="sign_up_not_affiliated">Not: AnkiWeb, AnkiDroid\'le bağlı değildir</string>
@@ -64,7 +64,7 @@
     <string name="logged_as">Şu adla giriş yapıldı:</string>
     <string name="log_out">Çıkış yap</string>
     <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
-    <string name="invalid_username_password">Geçersiz eposta adresi veya şifre</string>
+    <string name="invalid_username_password">Geçersiz eposta adresi veya parolası</string>
     <string name="reset_password">Parolayı Sıfırla</string>
     <string name="lost_mail_instructions">E-postanızı mı unuttunuz?</string>
     <!-- AndroidManifest.xml -->

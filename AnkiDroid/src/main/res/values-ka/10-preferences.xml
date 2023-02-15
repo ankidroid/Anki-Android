@@ -77,12 +77,12 @@
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom" maxLength="41">ბარათის ზომა</string>
     <string name="image_zoom" maxLength="41">სურათის ზომა</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
+    <string name="button_size" maxLength="41">პასუხის ღილაკის ზომა</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
+    <string name="fullscreen_review" maxLength="41">სრულეკრანიანი რეჟიმი</string>
     <string name="full_screen_off">გამორთულია</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
@@ -93,7 +93,7 @@
         <item>ქვევით</item>
         <item>არცერთი</item>
     </string-array>
-    <string name="gestures" maxLength="41">Enable gestures</string>
+    <string name="gestures" maxLength="41">ჟესტების ჩართვა</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_corner_touch" maxLength="41">9-წერტილიანი შეხება</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
@@ -177,7 +177,7 @@
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress" maxLength="41">Show remaining</string>
+    <string name="show_progress" maxLength="41">დარჩენილის ჩვენება</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta" maxLength="41">სავარაუდოდ დარჩენილი დროის ჩვენება</string>
     <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
@@ -258,10 +258,10 @@
     <string name="deck_conf_reminders" maxLength="41">შეხსენებები</string>
     <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
     <string name="deck_conf_order" maxLength="41">თანმიმდევრობა</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">New cards/day</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">ახალი ბარათი/დღეში</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
     <string name="deck_conf_days">XXX დღე</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Easy interval</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">შუალედი მარტივი ბარათებისთვის</string>
     <string name="deck_conf_start_ease" maxLength="41">Starting ease</string>
     <string name="deck_conf_max_rev" maxLength="41">Maximum reviews/day</string>
     <string name="deck_conf_new_bury" maxLength="41">Bury related new cards</string>
@@ -271,11 +271,11 @@
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">ზოგადი პარამეტრების გამოყენება</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">ბონუსი \"მარტივისთვის\"</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_hard_factor" maxLength="41">შუალედი რთული ბარათებისთვის</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Interval modifier</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maximum interval</string>
+    <string name="deck_conf_max_ivl" maxLength="41">მაქსიმალური შუალედი</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">New interval</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimum interval</string>
+    <string name="deck_conf_min_ivl" maxLength="41">მინიმალური შუალედი</string>
     <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
     <string name="deck_conf_fails">XXX lapse(s)</string>
     <string name="deck_conf_leech_action" maxLength="41">Leech action</string>
@@ -285,9 +285,9 @@
     <string name="deck_conf_autoplay" maxLength="41">Automatically play audio</string>
     <string name="deck_conf_replayq" maxLength="41">Replay question</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
-    <string name="deck_conf_manage" maxLength="41">Group management</string>
+    <string name="deck_conf_manage" maxLength="41">ჯგუფების მართვა</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group" maxLength="41">Current group</string>
+    <string name="deck_conf_current_group" maxLength="41">მიმდინარე ჯგუფი</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">გადარქმევა</string>
     <string name="deck_conf_reset" maxLength="41">ნაგულისხმევის აღდგენა</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
@@ -304,7 +304,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
     <string name="deck_conf_cram_limit" maxLength="41">ზღვარი</string>
-    <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">ბარათების არჩევის კრიტერიუმი</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">გადადება</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
@@ -349,7 +349,7 @@
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">ექსპერიმენტალური</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
+    <string name="experimental_pref_confirmation" maxLength="41">\"%s-ს\" ჩართვა</string>
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
@@ -375,15 +375,15 @@
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">ყოველკვირეული სარეზერვო ასლების შენახვა</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">ყოველთვიური სარეზერვო ასლების შენახვა</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">მეხსიერების სივრცის მართვა</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">შეცდომა</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">გამო-\nთვლა&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d files\n%2$s</item>
@@ -394,7 +394,7 @@
     <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">სარეზერვო ასლების წაშლა</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
     <string name="progress__deleting_backups">Deleting backups&#8230;</string>
     <!-- Delete collection -->
@@ -409,15 +409,15 @@
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ყველაფრის წაშლა</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">აპლიკაციის მონაცემების წაშლა</string>
     <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">აპლიკაციის მონაცემების წაშლა</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">კოლექცია არ არსებობს</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">შეცდომა</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">მიმდინარეობს ამორჩევა&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">მიმდინარეობს გამოთვლა&#8230;</string>

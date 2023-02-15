@@ -230,10 +230,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">خادم مزامنة مخصص</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">غير مستخدم</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        كبديل للمزامنة مع أنكي ويب،
+        تستطيع استخدام خادمك الخاص للمزامنة.
+        إذا لم يتم ضبطه، سيتم استخدام خادم أنكي ويب بشكل افتراضي.
+        <a href="%s">تعلم المزيد</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">رابط المزامنة</string>
     <!-- Key Bindings -->

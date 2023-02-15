@@ -98,9 +98,9 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; თვე</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; დღე</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; საათი</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_learn">ისწავლება: &lt;b&gt;%1$.2f%%&lt;/b&gt; სწორი (%2$d / %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">ნორჩი: &lt;b&gt;%1$.2f%%&lt;/b&gt; სწორი (%2$d / %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">ძველი: &lt;b&gt;%1$.2f%%&lt;/b&gt; სწორი (%2$d / %3$d)</string>
     <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_lowest_ease">უმცირესი სიადვილე: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
@@ -121,7 +121,7 @@
     <string name="stats_review_intervals">შუალედები</string>
     <string name="stats_breakdown">დეტალური დაშლა (საათი)</string>
     <string name="stats_weekly_breakdown">დეტალური დაშლა (კვირის დღე)</string>
-    <string name="stats_answer_buttons">პასუხების ღილაკები</string>
+    <string name="stats_answer_buttons">პასუხის ღილაკები</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>
