@@ -35,7 +35,6 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
-        buildConfigField "Boolean", "LEGACY_STORAGE", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         resValue "string", "app_name", "AnkiDroid"
 
@@ -108,10 +107,6 @@ android {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", localProperties["enable_leak_canary"]
                 } else {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "true"
-                }
-                // allow setting legacy storage on install
-                if (localProperties["legacy_storage"] != null) {
-                    buildConfigField "Boolean", "LEGACY_STORAGE", localProperties["legacy_storage"]
                 }
             } else {
                 testCoverageEnabled true
