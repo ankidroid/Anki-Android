@@ -324,7 +324,9 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             val ret = fullSyncServer.download()
                             if (SUCCESS == ret) {
                                 data.success = true
-                                col.reopen(afterFullSync = true)
+                                // Note: we don't set afterFullSync here, as that assumes the new schema
+                                // has already reopened the collection in the backend.
+                                col.reopen()
                             }
                             if (SUCCESS != ret) {
                                 Timber.w("Sync - fullsync - download failed")
