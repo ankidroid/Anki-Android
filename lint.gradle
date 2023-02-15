@@ -6,7 +6,7 @@ android {
         explainIssues false
         lintConfig file('../lint-release.xml')
         showAll true
-        textOutput file('stdout')
+        // To output the lint report to stdout set textReport=true, and leave textOutput unset.
         textReport true
         warningsAsErrors true
     }
