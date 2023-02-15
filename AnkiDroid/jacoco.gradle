@@ -8,8 +8,8 @@ jacoco {
 }
 
 android {
-    jacoco {
-        version = "0.8.8"
+    testCoverage {
+        jacocoVersion '0.8.8'
     }
 }
 
