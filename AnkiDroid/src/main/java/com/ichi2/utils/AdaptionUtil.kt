@@ -16,7 +16,6 @@
 package com.ichi2.utils
 
 import android.app.ActivityManager
-import android.content.ComponentName
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -50,7 +49,7 @@ object AdaptionUtil {
             Timber.w(e)
             false
         }
-    val isRunningUnderFirebaseTestLab: Boolean
+    private val isRunningUnderFirebaseTestLab: Boolean
         get() = try {
             isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
         } catch (e: Exception) {
@@ -121,26 +120,6 @@ object AdaptionUtil {
     val isXiaomiRestrictedLearningDevice by lazy {
         "Xiaomi".equals(Build.MANUFACTURER, ignoreCase = true) &&
             ("Archytas".equals(Build.PRODUCT, ignoreCase = true) || "Archimedes".equals(Build.PRODUCT, ignoreCase = true))
-    }
-
-    fun canUseContextMenu(): Boolean {
-        return !isRunningMiui
-    }
-
-    private val isRunningMiui by lazy {
-        val ctx: Context = AnkiDroidApp.instance
-        (
-            isIntentResolved(ctx, Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT)) ||
-                isIntentResolved(ctx, Intent().setComponent(ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"))) ||
-                isIntentResolved(ctx, Intent("miui.intent.action.POWER_HIDE_MODE_APP_LIST").addCategory(Intent.CATEGORY_DEFAULT)) ||
-                isIntentResolved(ctx, Intent().setComponent(ComponentName("com.miui.securitycenter", "com.miui.powercenter.PowerSettings")))
-            )
-    }
-
-    // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
-    @Suppress("deprecation") // resolveActivity
-    private fun isIntentResolved(ctx: Context, intent: Intent): Boolean {
-        return ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
     }
 
     /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
