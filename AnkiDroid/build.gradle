@@ -383,6 +383,8 @@ dependencies {
 }
 
 android {
+
+    namespace 'com.ichi2.anki'
     testOptions {
         kotlinOptions {
             freeCompilerArgs += [
