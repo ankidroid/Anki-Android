@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.annotation.VisibleForTesting
 import anki.backend.backendError
 import com.ichi2.libanki.Collection
@@ -25,6 +24,7 @@ import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
+import com.ichi2.utils.isRobolectric
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
@@ -52,8 +52,6 @@ object CollectionManager {
     private var collection: Collection? = null
 
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
-
-    private val robolectric = "robolectric" == Build.FINGERPRINT
 
     @VisibleForTesting
     var emulateOpenFailure = false
@@ -253,7 +251,7 @@ object CollectionManager {
      * and there is no guarantee about concurrent access.
      */
     private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
-        return if (robolectric) {
+        return if (isRobolectric) {
             block(this)
         } else {
             runBlocking {

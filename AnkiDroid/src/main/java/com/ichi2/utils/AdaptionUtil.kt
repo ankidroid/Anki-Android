@@ -146,3 +146,5 @@ object AdaptionUtil {
             return true
         }
 }
+
+val isRobolectric get() = Build.FINGERPRINT?.startsWith("robolectric") ?: false
