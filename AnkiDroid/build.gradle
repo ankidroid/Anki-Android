@@ -206,9 +206,6 @@ android {
     compileOptions {
         coreLibraryDesugaringEnabled true
     }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-    }
     ndkVersion "22.0.7026061"
 }
 
@@ -384,6 +381,12 @@ dependencies {
 
 android {
 
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
     namespace 'com.ichi2.anki'
     testOptions {
         kotlinOptions {
