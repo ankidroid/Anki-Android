@@ -47,8 +47,7 @@ class TemporaryModel(val model: Model) {
     @Suppress("deprecation") // getSerializable
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
-            mTemplateChanges =
-                (bundle.getSerializableWithCast("mTemplateChanges") as ArrayList<Array<Any>>)
+            mTemplateChanges = bundle.getSerializableWithCast("mTemplateChanges")
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
