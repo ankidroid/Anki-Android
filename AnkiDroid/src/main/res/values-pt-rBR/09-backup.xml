@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">Backup não foi salvo. Espaço insuficiente no seu armazenamento. Diminua a profundidade do backup ou remova alguns outros arquivos.</string>
+    <string name="storage_warning">Menos de %d MB de espaço de armazenamento. \nLibere algum espaço para evitar a perda de dados.</string>
     <string name="backup_restore">Restaurar do backup</string>
     <string name="backup_new_collection">Nova coleção</string>
     <string name="backup_del_collection">Excluir coleção e criar uma nova</string>

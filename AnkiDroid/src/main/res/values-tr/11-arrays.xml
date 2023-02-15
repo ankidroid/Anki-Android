@@ -113,6 +113,6 @@
     <string name="gesture_show_all_hints">Tüm İpuçlarını Göster</string>
     <string name="record_voice">Ses kaydet</string>
     <string name="replay_voice">Sesi tekrar oynat</string>
-    <string name="automatic_answer_option_2">Zor (mevcut değilse iyi)</string>
-    <string name="automatic_answer_option_4">Kolay (Müsait değilse iyi)</string>
+    <string name="automatic_answer_option_2">Zor (mevcut değilse İyi)</string>
+    <string name="automatic_answer_option_4">Kolay (mevcut değilse İyi)</string>
 </resources>

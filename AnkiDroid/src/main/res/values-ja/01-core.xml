@@ -171,7 +171,7 @@
     <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">同期が一時的に無効になっています</string>
-    <string name="button_upgrade" comment="Text of the sync button">データを対象範囲別ストレージへ移動</string>
+    <string name="button_upgrade" comment="Text of the sync button">データ保存先を対象範囲別ストレージへ移行</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
     <string name="sync_cancelled">同期がキャンセルされました</string>
@@ -235,7 +235,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <!-- Scoped Storage Migration -->
     <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migration_successful_message">移行に成功しました</string>
+    <string name="migration_failed_message">移行に失敗しました</string>
+    <string name="migration_transferred_size">%2$.0f MB 中 %1$.0f MB を移行しました</string>
 </resources>
