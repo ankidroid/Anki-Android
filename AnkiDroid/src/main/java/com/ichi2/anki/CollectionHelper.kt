@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.database.sqlite.SQLiteFullException
 import android.os.Environment
 import android.text.format.Formatter
 import androidx.annotation.CheckResult
@@ -135,6 +136,10 @@ open class CollectionHelper {
             null
         } catch (e: BackendDbFileTooNewException) {
             lastOpenFailure = CollectionOpenFailure.FILE_TOO_NEW
+            Timber.w(e)
+            null
+        } catch (e: SQLiteFullException) {
+            lastOpenFailure = CollectionOpenFailure.DISK_FULL
             Timber.w(e)
             null
         } catch (e: Exception) {
@@ -277,7 +282,7 @@ open class CollectionHelper {
     }
 
     enum class CollectionOpenFailure {
-        FILE_TOO_NEW, CORRUPT, LOCKED
+        FILE_TOO_NEW, CORRUPT, LOCKED, DISK_FULL
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

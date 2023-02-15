@@ -337,6 +337,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                 }
             }
+            DIALOG_DISK_FULL -> {
+                dialog.show {
+                    contentNullable(message)
+                    positiveButton(R.string.close) {
+                        exit()
+                    }
+                }
+            }
             else -> null!!
         }
     }
@@ -358,6 +366,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 resources.getString(R.string.access_collection_failed_message, resources.getString(R.string.link_help))
             }
             DIALOG_DB_ERROR -> resources.getString(R.string.answering_error_message)
+            DIALOG_DISK_FULL -> resources.getString(R.string.storage_full_message)
             DIALOG_REPAIR_COLLECTION -> resources.getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
             DIALOG_RESTORE_BACKUP -> resources.getString(R.string.backup_restore_no_backups)
             DIALOG_NEW_COLLECTION -> resources.getString(R.string.backup_del_collection_question)
@@ -398,6 +407,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_DB_LOCKED -> resources.getString(R.string.database_locked_title)
             INCOMPATIBLE_DB_VERSION -> resources.getString(R.string.incompatible_database_version_title)
             DIALOG_DB_ERROR -> resources.getString(R.string.answering_error_title)
+            DIALOG_DISK_FULL -> resources.getString(R.string.storage_full_title)
             else -> resources.getString(R.string.answering_error_title)
         }
 
@@ -434,7 +444,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         /** If the database is at a version higher than what we can currently handle  */
         const val INCOMPATIBLE_DB_VERSION = 10
-
+        /** If the disk space is full **/
+        const val DIALOG_DISK_FULL = 11
         // public flag which lets us distinguish between inaccessible and corrupt database
         var databaseCorruptFlag = false
 
