@@ -259,6 +259,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
     }
 
+    @Deprecated("Deprecated in Java")
     @Suppress("deprecation") // onActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Timber.d("onActivityResult()")
