@@ -100,6 +100,7 @@
     <string name="answering_error_title">Грешка базе података</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Извести о грешци</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Да ли заиста желите да обновите базу података?\n\nДо почетка обнављања, копија базе података ће бити смештена у фасциклу \'%s\'.</string>
     <string name="intent_aedict_empty">Категорија \'подразумевано\' је празна</string>
     <string name="intent_aedict_category">При додавању карата AnkiDroid уклања све категорије бележница или додаје једну са именом \'default\'</string>

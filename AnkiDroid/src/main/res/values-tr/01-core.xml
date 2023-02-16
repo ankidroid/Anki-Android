@@ -174,7 +174,7 @@
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="empty_cloze_warning">Bu notu düzenleyip doldurulacak boşluklar ekleyin. (%1$s)</string>
-    <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
+    <string name="button_sync" comment="Text of the sync button">Eşitleme</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Senkronizasyon geçici olarak devredışı</string>
     <string name="button_upgrade" comment="Text of the sync button">Kapsamlı depolamaya geç</string>
     <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>

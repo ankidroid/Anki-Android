@@ -82,15 +82,11 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.getColorFromAttr
+import com.ichi2.utils.*
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
-import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
-import com.ichi2.utils.iconAlpha
-import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
-import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.update
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -99,7 +95,9 @@ import java.lang.ref.WeakReference
 import java.util.function.Consumer
 
 @KotlinCleanup("too many to count")
-open class Reviewer : AbstractFlashcardViewer() {
+open class Reviewer :
+    AbstractFlashcardViewer(),
+    ReviewerUi {
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
@@ -200,8 +198,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             if (actualValue == CardMarker.FLAG_NONE) {
                 return CardMarker.FLAG_NONE
             }
-            val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_FLAG)
-            return if (isShownInActionBar != null && isShownInActionBar && !mPrefFullscreenReview) {
+            val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton == true
+            return if (shownAsToolbarButton && !mPrefFullscreenReview) {
                 CardMarker.FLAG_NONE
             } else actualValue
         }
@@ -227,10 +225,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (!markValue) {
             return false
         }
-        val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_MARK)
-        // If we don't know, show it.
-        // Otherwise, if it's in the action bar, don't show it again.
-        return isShownInActionBar == null || !isShownInActionBar || mPrefFullscreenReview
+
+        // If we don't know: assume it's not shown
+        val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_MARK)?.isActionButton == true
+        return !shownAsToolbarButton || mPrefFullscreenReview
     }
 
     protected open fun onMark(card: Card?) {
@@ -436,6 +434,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     mColorPalette!!.visibility = View.GONE
                 }
+                updateWhiteboardEditorPosition()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -1040,6 +1039,26 @@ open class Reviewer : AbstractFlashcardViewer() {
     override fun updateActionBar() {
         super.updateActionBar()
         updateScreenCounts()
+    }
+
+    private fun updateWhiteboardEditorPosition() {
+        mAnswerButtonsPosition = AnkiDroidApp.getSharedPrefs(this)
+            .getString("answerButtonPosition", "bottom")
+        val layoutParams: RelativeLayout.LayoutParams
+        when (mAnswerButtonsPosition) {
+            "none", "top" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ABOVE)
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+            "bottom" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+        }
     }
 
     protected fun updateScreenCounts() {

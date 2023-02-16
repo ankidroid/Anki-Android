@@ -621,14 +621,19 @@ open class DeckPicker :
                 }
                 cancelable(false)
             }
+            DISK_FULL -> displayNoStorageError()
             DB_ERROR -> displayDatabaseFailure()
             else -> displayDatabaseFailure()
         }
     }
 
     fun displayDatabaseFailure() {
-        Timber.i("Displaying database error")
+        Timber.i("Displaying database failure")
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+    }
+    fun displayNoStorageError() {
+        Timber.i("Displaying no storage error")
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DISK_FULL)
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation

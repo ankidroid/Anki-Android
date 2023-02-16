@@ -242,8 +242,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Die Datei %s kann nicht erstellt oder überschrieben werden</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migrating_data_message">Daten migrieren</string>
+    <string name="migration_successful_message">Migration erfolgreich</string>
+    <string name="migration_failed_message">Migration fehlgeschlagen</string>
+    <string name="migration_transferred_size">%1$.0f MB von %2$.0f MB migriert</string>
 </resources>

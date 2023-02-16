@@ -99,16 +99,6 @@
             app:srcCompat="@drawable/ic_add_equation_black_24dp"
             android:tag="m"
             style="@style/note_editor_toolbar_button" />
-
-        <!-- We can't dynamically add this on API 16,
-         which is a shame, as we need the note editor to know the cloze ordinal
-         so make it invisible and bring it back and add the listener when appropriate -->
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/note_editor_toolbar_button_cloze"
-            android:visibility="gone"
-            android:contentDescription="@string/insert_cloze"
-            app:srcCompat="@drawable/ic_cloze_black_24dp"
-            style="@style/note_editor_toolbar_button" />
     </LinearLayout>
     </LinearLayout>
 </HorizontalScrollView>

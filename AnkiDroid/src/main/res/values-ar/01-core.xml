@@ -227,7 +227,7 @@
         <item quantity="zero">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
         <item quantity="one">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقة متعلقة بها؟</item>
         <item quantity="two">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقات متعلقة بها؟</item>
-        <item quantity="few">هل تريد حذف نوع البطاقة ”%2$s“، والبطاقات %1$d المتعلقة بها؟</item>
+        <item quantity="few">هل تريد حذف نوع البطاقة ”%2$s“، والبطاقات الـ%1$d المتعلقة بها؟</item>
         <item quantity="many">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
         <item quantity="other">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
     </plurals>
@@ -274,8 +274,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">يتعذر تعديل أو إنشاء ملف %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migrating_data_message">نقل بياناتك</string>
+    <string name="migration_successful_message">تم النقل بنجاح</string>
+    <string name="migration_failed_message">فشلت عملية النقل</string>
+    <string name="migration_transferred_size">تم نقل %1$.0f ميغابايت من %2$.0f ميغابايت</string>
 </resources>

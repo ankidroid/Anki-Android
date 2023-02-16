@@ -250,7 +250,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
                     if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
-                        showThemedToast(context, R.string.cannot_create_subdeck_for_all_decks, true)
+                        context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
                     } else {
                         showSubDeckDialog(deckName)
                     }

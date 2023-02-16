@@ -95,9 +95,9 @@
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
-        <item name="buttonShadowColor">#bdbdbd</item>
+        <item name="buttonShadowColor">#726B6B</item>
         <item name="buttonRippleColor">#BABABA</item>
-        <item name="buttonForegroundColor">#757575</item>
+        <item name="buttonForegroundColor">#363636</item>
         <!-- FAB -->
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->

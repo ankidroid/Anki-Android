@@ -45,7 +45,7 @@
 
 -->
 <resources>
-    <string name="youre_offline">Você está off-line</string>
+    <string name="youre_offline">Você está offline</string>
     <string name="sync_even_if_offline">Tentar Mesmo Assim</string>
     <string name="sync_error">Erro de sincronização</string>
     <string name="vague_error" comment="Network error dialog title">Erro</string>
@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">O banco de dados baixado estava corrompido. Por favor, tente novamente.</string>
     <string name="sync_overwrite_error">Sua coleção atual não pôde ser substituída pelo arquivo baixado.</string>
     <string name="sync_connection_error">O tempo limite da conexão expirou. Sua conexão à internet está com problemas, ou você tem um arquivo muito grande na sua pasta de mídia.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">O arquivo baixado não pôde ser salvo em seu armazenamento. O Armazenamento não permite salvar dados ou não há espaço suficiente.</string>
     <string name="sync_error_invalid_sync_server">O Servidor de Sincronização Personalizado em Configurações Avançadas é inválido (%s). Por favor, insira um servidor válido ou desative a configuração.</string>
     <string name="sync_deletions_message">Sincronizando remoções&#8230;</string>
     <string name="sync_small_objects_message">Sincronizando objetos pequenos&#8230;</string>
@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">Remota</string>
     <string name="force_full_sync_title">Forçar sincronização completa</string>
     <string name="force_full_sync_summary">Na próxima sincronização, forçar alterações em uma direção</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Forçar sincronização completa</string>
     <string name="full_sync_confirmation">A alteração solicitada exigirá um envio completo do banco de dados na próxima vez que você sincronizar sua coleção. Todas as revisões e demais alterações realizadas em outro dispositivo que ainda não foram sincronizadas aqui serão perdidas. Continuar?</string>
     <string name="full_sync_confirmation_upgrade">Devido a um bug na versão anteriormente instalada do AnkiDroid, é recomendado forçar uma sincronização completa.</string>
     <string name="sync_error_407_proxy_required">Autenticação de proxy necessária.</string>

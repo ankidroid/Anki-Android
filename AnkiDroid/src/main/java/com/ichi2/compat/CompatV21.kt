@@ -20,6 +20,8 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -93,6 +95,10 @@ open class CompatV21 : Compat {
     ): T? {
         return intent.getParcelableExtra<T>(name)
     }
+
+    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
+        packageManager.getPackageInfo(packageName, flags.value.toInt())
+
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {

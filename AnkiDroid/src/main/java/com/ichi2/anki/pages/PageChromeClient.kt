@@ -24,22 +24,22 @@ import com.ichi2.anki.UIUtils
 
 open class PageChromeClient : WebChromeClient() {
     override fun onJsAlert(
-        view: WebView?,
+        view: WebView,
         url: String?,
         message: String?,
         result: JsResult?
     ): Boolean {
-        UIUtils.showThemedToast(view?.context, message, shortLength = true)
+        UIUtils.showThemedToast(view.context, message ?: "", shortLength = true)
         return true
     }
 
     override fun onJsConfirm(
-        view: WebView?,
+        view: WebView,
         url: String?,
         message: String?,
         result: JsResult?
     ): Boolean {
-        MaterialDialog(view!!.context).show {
+        MaterialDialog(view.context).show {
             message?.let { message(text = message) }
             positiveButton(R.string.dialog_ok) { result?.confirm() }
             negativeButton(R.string.dialog_cancel) { result?.cancel() }

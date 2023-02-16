@@ -408,7 +408,7 @@
     <string name="scoped_storage_select_all_terms">Abyste mohli pokračovat, prosím přijměte všechny body</string>
     <string name="scoped_storage_learn_more">Zjistit více</string>
     <string name="scoped_storage_postpone">Odložit</string>
-    <string name="scoped_storage_migrate">Migrovat</string>
+    <string name="scoped_storage_migrate">Přesunout</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
     <string name="sync_impossible_during_migration">Synchronizace je zakázána, dokud nebude dokončen přesun dat.\n
         %1$d multimediálních souborů zbývá přesunout.</string>

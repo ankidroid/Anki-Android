@@ -21,6 +21,8 @@ import android.content.pm.PackageManager
 import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.lang.NullPointerException
 
@@ -31,13 +33,16 @@ object VersionUtils {
     /**
      * Get package name as defined in the manifest.
      */
-    @Suppress("deprecation") // getPackageInfo
     val appName: String
         get() {
             var pkgName = AnkiDroidApp.TAG
             val context: Context = applicationInstance ?: return AnkiDroidApp.TAG
             try {
-                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY)
+                if (pInfo == null) {
+                    Timber.w("Couldn't find package named %s", context.packageName)
+                    return pkgName
+                }
                 pkgName = context.getString(pInfo.applicationInfo.labelRes)
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.e(e, "Couldn't find package named %s", context.packageName)
@@ -48,13 +53,12 @@ object VersionUtils {
     /**
      * Get the package versionName as defined in the manifest.
      */
-    @Suppress("deprecation") // getPackageInfo
     val pkgVersionName: String
         get() {
             var pkgVersion = "?"
             val context: Context = applicationInstance ?: return pkgVersion
             try {
-                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY) ?: return pkgVersion
                 pkgVersion = pInfo.versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.e(e, "Couldn't find package named %s", context.packageName)
@@ -65,12 +69,15 @@ object VersionUtils {
     /**
      * Get the package versionCode as defined in the manifest.
      */
-    @Suppress("deprecation") // getPackageInfo
     val pkgVersionCode: Long
         get() {
             val context: Context = applicationInstance ?: return 0
             try {
-                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY)
+                if (pInfo == null) {
+                    Timber.w("getPackageInfo failed")
+                    return 0
+                }
                 val versionCode = PackageInfoCompat.getLongVersionCode(pInfo)
                 Timber.d("getPkgVersionCode() is %s", versionCode)
                 return versionCode
@@ -102,7 +109,7 @@ object VersionUtils {
      */
     val isReleaseVersion: Boolean
         get() {
-            val versionCode = java.lang.Long.toString(pkgVersionCode)
+            val versionCode = pkgVersionCode.toString()
             Timber.d("isReleaseVersion() versionCode: %s", versionCode)
             return versionCode[versionCode.length - 3] == '3'
         }

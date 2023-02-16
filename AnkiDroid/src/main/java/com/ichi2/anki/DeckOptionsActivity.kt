@@ -558,9 +558,7 @@ class DeckOptionsActivity :
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    @KotlinCleanup("remove reduntant val res = resources")
     override fun updateSummaries() {
-        val res = resources
         // for all text preferences, set summary as current database value
         for (key in pref.mValues.keys) {
             val pref = findPreference(key)
@@ -569,7 +567,7 @@ class DeckOptionsActivity :
                 val count = optionsGroupCount
                 // Escape "%" in groupName as it's treated as a token
                 groupName = groupName.replace("%".toRegex(), "%%")
-                pref!!.summary = res.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count)
+                pref!!.summary = resources.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count)
                 continue
             }
 
@@ -596,7 +594,7 @@ class DeckOptionsActivity :
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
         val subDeckCount = subdeckCount
-        findPreference("confSetSubdecks").summary = res.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount)
+        findPreference("confSetSubdecks").summary = resources.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount)
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019

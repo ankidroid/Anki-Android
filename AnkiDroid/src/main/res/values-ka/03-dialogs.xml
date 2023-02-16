@@ -94,13 +94,14 @@
     <string name="answering_error_title">მონაცემთა ბაზის შეცდომა</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">შეცდომის შეტყობინება</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">კატეგორია „ნაგულისხმევი“ ცარიელია</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">ახალი ბარათი დასტაში: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_rev_extend">დღევანდელი გადახედვების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">X დღით ადრე სწავლა:</string>
     <string name="custom_study_random">დასტიდან x ბარათის შემთხვევით ამორჩევა:</string>
@@ -236,7 +237,7 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">კონფიდენციალურობა</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid-ის კონფიდენციალურობის პოლიტიკა</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>

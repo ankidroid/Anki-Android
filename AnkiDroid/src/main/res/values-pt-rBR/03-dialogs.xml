@@ -94,6 +94,7 @@
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Você realmente deseja tentar reparar o banco de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \"%s\".</string>
     <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar cards ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>

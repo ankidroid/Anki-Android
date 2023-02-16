@@ -64,7 +64,7 @@
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_decide_by_note_type">შენიშვნის ტიპის მიხედვით გადაწყვეტა</string>
     <!-- new_spread_labels -->
     <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
     <string name="new_spread_new_after_review">New cards after reviews</string>
@@ -95,7 +95,7 @@
     <string name="gesture_answer_4">პასუხის ღილაკი 4</string>
     <string name="gesture_answer_green">Answer recommended (green)</string>
     <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_play">Play media</string>
+    <string name="gesture_play">მედიაფაილების დაკვრა</string>
     <string name="gesture_abort_learning">სწავლის შეწყვეტა</string>
     <string name="gesture_flag_red">წითელი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_orange">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>

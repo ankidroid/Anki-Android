@@ -94,6 +94,7 @@
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>

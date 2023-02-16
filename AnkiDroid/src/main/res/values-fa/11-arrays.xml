@@ -45,7 +45,7 @@
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">هميشه گزارش بده</string>
     <string name="error_reporting_choice_never_report">هرگز گزارش نده</string>
-    <string name="error_reporting_choice_ask_user">بپرس</string>
+    <string name="error_reporting_choice_ask_user">بپرس  ازم</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <string name="leech_action_tag_only">تنها برچسب</string>

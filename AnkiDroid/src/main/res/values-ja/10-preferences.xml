@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">どこでもドロワー</string>
     <string name="gestures_fullscreen_nav_drawer_summary">画面上のどこからでも、右にスワイプするとナビゲーションドロワーが開きます</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">なし</string>
     <string name="gestures_swipe_up" maxLength="41">上にスワイプ</string>
     <string name="gestures_swipe_down" maxLength="41">下にスワイプ</string>
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>

@@ -194,7 +194,7 @@
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">Exportar nota selecionada como arquivo apkg?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Exportar %d notas selecionadas como arquivo apkg?</item>
     </plurals>
     <string name="export_in_progress">Exportando arquivo Anki (.apkg)&#8230;</string>
     <string name="export_success_title">Coleção exportada com sucesso</string>
