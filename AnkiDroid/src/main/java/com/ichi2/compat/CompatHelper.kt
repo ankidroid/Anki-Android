@@ -68,6 +68,7 @@ class CompatHelper private constructor() {
          */
         val compat get() = instance.compatValue
 
+        @Suppress("unused")
         val isChromebook: Boolean
             get() = (
                 "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
@@ -88,6 +89,7 @@ class CompatHelper private constructor() {
             return compat.getSerializable(this, name, T::class.java)
         }
 
+        @Suppress("unused")
         inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
             return compat.getSerializableExtra(this, name, T::class.java)
         }

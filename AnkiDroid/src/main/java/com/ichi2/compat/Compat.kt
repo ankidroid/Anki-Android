@@ -159,7 +159,7 @@ interface Compat {
      * @throws SecurityException If a security manager exists and its SecurityManager.checkRead(String)
      * method denies read access to the directory
      * @throws FileNotFoundException if the file do not exists
-     * @throws NotDirectoryException if the file could not otherwise be opened because it is not
+     * @throws java.nio.file.NotDirectoryException if the file could not otherwise be opened because it is not
      * a directory (optional specific exception), (starting at API 26)
      * @throws IOException – if an I/O error occurs
      */
@@ -187,7 +187,7 @@ interface Compat {
             Intent.FILL_IN_ACTION, Intent.FILL_IN_DATA, Intent.FILL_IN_CATEGORIES, Intent.FILL_IN_COMPONENT, Intent.FILL_IN_PACKAGE, Intent.FILL_IN_SOURCE_BOUNDS, Intent.FILL_IN_SELECTOR, Intent.FILL_IN_CLIP_DATA
         ]
     )
-    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+    @Retention(AnnotationRetention.SOURCE)
     annotation class PendingIntentFlags
 
     /**
@@ -267,7 +267,7 @@ interface Compat {
      * @param directory A directory.
      * @return a FileStream over file and directory of this directory.
      * null in case of trouble. This stream must be closed explicitly when done with it.
-     * @throws NotDirectoryException if the file exists and is not a directory (starting at API 26)
+     * @throws java.nio.file.NotDirectoryException if the file exists and is not a directory (starting at API 26)
      * @throws FileNotFoundException if the file do not exists
      * @throws IOException if files can not be listed. On non existing or non-directory file up to API 25. This also occurred on an existing directory because of permission issue
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
