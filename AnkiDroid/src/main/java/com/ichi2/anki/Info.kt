@@ -30,6 +30,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
@@ -131,8 +132,17 @@ class Info : AnkiActivity() {
                         if (request?.url.toString() in arrayListOf(CHANGE_LOG_URL, GITHUB_COMMITS)) {
                             return false
                         }
-                        Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString())).apply {
-                            startActivity(this)
+                        if (!AdaptionUtil.hasWebBrowser(this@Info)) {
+                            // snackbar can't be used here as it's a webview and lack coordinator layout
+                            UIUtils.showThemedToast(
+                                this@Info,
+                                resources.getString(R.string.no_browser_notification) + request?.url.toString(),
+                                false
+                            )
+                        } else {
+                            Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString())).apply {
+                                startActivity(this)
+                            }
                         }
                         return true
                     }
