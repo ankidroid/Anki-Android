@@ -18,8 +18,10 @@
 
 package com.ichi2.anki
 
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
+import com.ichi2.themes.Themes
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
@@ -160,9 +162,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Full Screen
         assertThat(javaScriptFunction.ankiIsInFullscreen(), equalTo(reviewer.isFullscreen))
         // Top bar
-        assertThat(javaScriptFunction.ankiIsTopbarShown(), equalTo(reviewer.prefShowTopbar))
+        val prefShowTopbar = getPreferences().getBoolean("showTopbar", true)
+        assertThat(javaScriptFunction.ankiIsTopbarShown(), equalTo(prefShowTopbar))
         // Night Mode
-        assertThat(javaScriptFunction.ankiIsInNightMode(), equalTo(reviewer.isInNightMode))
+        assertThat(javaScriptFunction.ankiIsInNightMode(), equalTo(Themes.currentTheme.isNightMode))
     }
 
     @Test
@@ -239,6 +242,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val sched = CollectionHelper.instance.getCol(ApplicationProvider.getApplicationContext())?.sched
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
@@ -259,7 +263,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(4))
+        assertThat(sched?.cardCount(), equalTo(4))
 
         // ----------
         // Bury Note
@@ -269,7 +273,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(3))
+        assertThat(sched?.cardCount(), equalTo(3))
 
         // -------------
         // Suspend Card
@@ -279,7 +283,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(2))
+        assertThat(sched?.cardCount(), equalTo(2))
 
         // -------------
         // Suspend Note
@@ -289,7 +293,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(reviewer.sched!!.cardCount(), equalTo(1))
+        assertThat(sched?.cardCount(), equalTo(1))
     }
 
     private fun createTestScript(apiName: String): String {

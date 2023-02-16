@@ -27,6 +27,7 @@ import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.reviewer.EaseButton
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
@@ -35,6 +36,7 @@ import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
+import com.ichi2.themes.Themes
 import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.runBlocking
 import org.json.JSONException
@@ -220,22 +222,45 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     // behavior change ankiGetNextTime1...4
     @JavascriptInterface
     open fun ankiGetNextTime1(): String {
-        return activity.easeButton1!!.nextTime
+        val easeButton1 = EaseButton(
+            AbstractFlashcardViewer.EASE_1,
+            activity.findViewById(R.id.flashcard_layout_ease1),
+            activity.findViewById(R.id.ease1),
+            activity.findViewById(R.id.nextTime1)
+        ).apply { setListeners(activity.mEaseHandler) }
+        return easeButton1.nextTime
     }
 
     @JavascriptInterface
     open fun ankiGetNextTime2(): String {
-        return activity.easeButton2!!.nextTime
+        val easeButton2 = EaseButton(
+            AbstractFlashcardViewer.EASE_2,
+            activity.findViewById(R.id.flashcard_layout_ease2),
+            activity.findViewById(R.id.ease2),
+            activity.findViewById(R.id.nextTime2)
+        ).apply { setListeners(activity.mEaseHandler) }
+        return easeButton2.nextTime
     }
 
     @JavascriptInterface
     open fun ankiGetNextTime3(): String {
-        return activity.easeButton3!!.nextTime
+        val easeButton3 = EaseButton(
+            AbstractFlashcardViewer.EASE_3,
+            activity.findViewById(R.id.flashcard_layout_ease3),
+            activity.findViewById(R.id.ease3),
+            activity.findViewById(R.id.nextTime3)
+        ).apply { setListeners(activity.mEaseHandler) }
+        return easeButton3.nextTime
     }
 
     @JavascriptInterface
     open fun ankiGetNextTime4(): String {
-        return activity.easeButton4!!.nextTime
+        val easeButton4 = EaseButton(
+            AbstractFlashcardViewer.EASE_4,
+            activity.findViewById(R.id.flashcard_layout_ease4),
+            activity.findViewById(R.id.ease4), activity.findViewById(R.id.nextTime4)
+        ).apply { setListeners(activity.mEaseHandler) }
+        return easeButton4.nextTime
     }
 
     @JavascriptInterface
@@ -323,12 +348,12 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiIsTopbarShown(): Boolean {
-        return activity.prefShowTopbar
+        return AnkiDroidApp.getSharedPrefs(activity).getBoolean("showTopbar", true)
     }
 
     @JavascriptInterface
     fun ankiIsInNightMode(): Boolean {
-        return activity.isInNightMode
+        return Themes.currentTheme.isNightMode
     }
 
     @JavascriptInterface

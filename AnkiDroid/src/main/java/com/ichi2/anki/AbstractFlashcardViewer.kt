@@ -96,7 +96,6 @@ import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import com.ichi2.utils.iconAttr
 import kotlinx.coroutines.Job
@@ -115,7 +114,6 @@ import java.util.function.Function
 import java.util.function.Supplier
 import kotlin.math.abs
 
-@KotlinCleanup("lots to deal with")
 abstract class AbstractFlashcardViewer :
     NavigationDrawerActivity(),
     ReviewerUi,
@@ -138,8 +136,7 @@ abstract class AbstractFlashcardViewer :
     /**
      * Variables to hold preferences
      */
-    @KotlinCleanup("internal for AnkiDroidJsApi")
-    internal var prefShowTopbar = false
+    private var prefShowTopbar = false
     protected var fullscreenMode = DEFAULT
         private set
     private var mRelativeButtonSize = 0
@@ -178,14 +175,10 @@ abstract class AbstractFlashcardViewer :
     protected var answerField: FixedEditText? = null
     protected var flipCardLayout: LinearLayout? = null
     private var easeButtonsLayout: LinearLayout? = null
-    @KotlinCleanup("internal for AnkiDroidJsApi")
-    internal var easeButton1: EaseButton? = null
-    @KotlinCleanup("internal for AnkiDroidJsApi")
-    internal var easeButton2: EaseButton? = null
-    @KotlinCleanup("internal for AnkiDroidJsApi")
-    internal var easeButton3: EaseButton? = null
-    @KotlinCleanup("internal for AnkiDroidJsApi")
-    internal var easeButton4: EaseButton? = null
+    protected var easeButton1: EaseButton? = null
+    protected var easeButton2: EaseButton? = null
+    protected var easeButton3: EaseButton? = null
+    protected var easeButton4: EaseButton? = null
     protected var topBarLayout: RelativeLayout? = null
     private val mClipboard: ClipboardManager? = null
     private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
@@ -224,9 +217,7 @@ abstract class AbstractFlashcardViewer :
     private var mViewerUrl: String? = null
     private var mAssetLoader: WebViewAssetLoader? = null
     private val mFadeDuration = 300
-    @KotlinCleanup("made internal for tests")
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal var sched: AbstractSched? = null
+    protected var sched: AbstractSched? = null
     protected val mSoundPlayer = Sound()
 
     /**
@@ -284,6 +275,7 @@ abstract class AbstractFlashcardViewer :
         private var mHasBeenTouched = false
         private var mTouchX = 0f
         private var mTouchY = 0f
+        private val clickActionThreshold = 200
         override fun onTouch(view: View, event: MotionEvent): Boolean {
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Save states when button pressed
@@ -299,7 +291,7 @@ abstract class AbstractFlashcardViewer :
                 val diffX = abs(event.rawX - mTouchX)
                 val diffY = abs(event.rawY - mTouchY)
                 // If a click is not coming then we reset the touch
-                if (diffX > Companion.CLICK_ACTION_THRESHOLD || diffY > Companion.CLICK_ACTION_THRESHOLD) {
+                if (diffX > clickActionThreshold || diffY > clickActionThreshold) {
                     mHasBeenTouched = false
                 }
             }
@@ -348,7 +340,8 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mEaseHandler = SelectEaseHandler()
+    // internal for AnkiDroidJsAPI
+    internal val mEaseHandler = SelectEaseHandler()
 
     @get:VisibleForTesting
     protected open val elapsedRealTime: Long
@@ -536,6 +529,65 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
+
+        topBarLayout = findViewById(R.id.top_bar)
+        mCardFrame = findViewById(R.id.flashcard)
+        mCardFrameParent = mCardFrame!!.parent as ViewGroup
+        mTouchLayer = findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(mGestureListener) }
+        mCardFrame!!.removeAllViews()
+        answerField = findViewById(R.id.answer_field)
+        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip).apply { setOnClickListener(mFlipCardListener) }
+
+        // Initialize swipe
+        gestureDetector = GestureDetector(this, mGestureDetectorImpl)
+        easeButtonsLayout = findViewById(R.id.ease_buttons)
+        easeButton1 = EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1)).apply { setListeners(mEaseHandler) }
+        easeButton2 = EaseButton(EASE_2, findViewById(R.id.flashcard_layout_ease2), findViewById(R.id.ease2), findViewById(R.id.nextTime2)).apply { setListeners(mEaseHandler) }
+        easeButton3 = EaseButton(EASE_3, findViewById(R.id.flashcard_layout_ease3), findViewById(R.id.ease3), findViewById(R.id.nextTime3)).apply { setListeners(mEaseHandler) }
+        easeButton4 = EaseButton(EASE_4, findViewById(R.id.flashcard_layout_ease4), findViewById(R.id.ease4), findViewById(R.id.nextTime4)).apply { setListeners(mEaseHandler) }
+
+        if (animationEnabled()) {
+            val flipCard = findViewById<Button>(R.id.flip_card)
+            flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
+        }
+
+        val answerButtonsPosition = AnkiDroidApp.getSharedPrefs(this).getString(
+            getString(R.string.answer_buttons_position_preference),
+            "bottom"
+        )
+        mAnswerButtonsPosition = answerButtonsPosition
+        val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
+        val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
+        val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
+        val whiteboardContainerParams = whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
+        val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
+        val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
+        when (answerButtonsPosition) {
+            "top" -> {
+                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                answerArea.removeView(answerField)
+                answerArea.addView(answerField, 1)
+            }
+            "bottom",
+            "none" -> {
+                whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                touchLayerContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+            }
+            else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
+        }
+        answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
+        answerArea.layoutParams = answerAreaParams
+        whiteboardContainer.layoutParams = whiteboardContainerParams
+        mCardFrame!!.layoutParams = flashcardContainerParams
+        mTouchLayer!!.layoutParams = touchLayerContainerParams
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -943,32 +995,14 @@ abstract class AbstractFlashcardViewer :
     }
 
     // Set the content view to the one provided and initialize accessors.
-    @KotlinCleanup("Move a lot of these to onCreate()")
     protected open fun initLayout() {
-        topBarLayout = findViewById(R.id.top_bar)
-        mCardFrame = findViewById(R.id.flashcard)
-        mCardFrameParent = mCardFrame!!.parent as ViewGroup
-        mTouchLayer = findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(mGestureListener) }
-        mCardFrame!!.removeAllViews()
-
-        // Initialize swipe
-        gestureDetector = GestureDetector(this, mGestureDetectorImpl)
-        easeButtonsLayout = findViewById(R.id.ease_buttons)
-        easeButton1 = EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1)).apply { setListeners(mEaseHandler) }
-        easeButton2 = EaseButton(EASE_2, findViewById(R.id.flashcard_layout_ease2), findViewById(R.id.ease2), findViewById(R.id.nextTime2)).apply { setListeners(mEaseHandler) }
-        easeButton3 = EaseButton(EASE_3, findViewById(R.id.flashcard_layout_ease3), findViewById(R.id.ease3), findViewById(R.id.nextTime3)).apply { setListeners(mEaseHandler) }
-        easeButton4 = EaseButton(EASE_4, findViewById(R.id.flashcard_layout_ease4), findViewById(R.id.ease4), findViewById(R.id.nextTime4)).apply { setListeners(mEaseHandler) }
         if (!mShowNextReviewTime) {
             easeButton1!!.hideNextReviewTime()
             easeButton2!!.hideNextReviewTime()
             easeButton3!!.hideNextReviewTime()
             easeButton4!!.hideNextReviewTime()
         }
-        val flipCard = findViewById<Button>(R.id.flip_card)
-        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip).apply { setOnClickListener(mFlipCardListener) }
-        if (animationEnabled()) {
-            flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
-        }
+
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
             val params = flipCardLayout!!.layoutParams
             params.height = params.height * mRelativeButtonSize / 100
@@ -983,47 +1017,7 @@ abstract class AbstractFlashcardViewer :
             val params = flipCardLayout!!.layoutParams
             params.height = mInitialFlipCardHeight * 2
         }
-        answerField = findViewById(R.id.answer_field)
         initControls()
-
-        // Position answer buttons
-        val answerButtonsPosition = AnkiDroidApp.getSharedPrefs(this).getString(
-            getString(R.string.answer_buttons_position_preference),
-            "bottom"
-        )
-        mAnswerButtonsPosition = answerButtonsPosition
-        val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
-        val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
-        val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
-        val whiteboardContainerParams = whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
-        val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
-        val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
-        when (answerButtonsPosition) {
-            "top" -> {
-                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
-                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
-                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
-                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
-                answerArea.removeView(answerField)
-                answerArea.addView(answerField, 1)
-            }
-            "bottom",
-            "none" -> {
-                whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
-                flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
-                touchLayerContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
-                answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-            }
-            else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
-        }
-        answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
-        answerArea.layoutParams = answerAreaParams
-        whiteboardContainer.layoutParams = whiteboardContainerParams
-        mCardFrame!!.layoutParams = flashcardContainerParams
-        mTouchLayer!!.layoutParams = touchLayerContainerParams
     }
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
@@ -1431,8 +1425,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @KotlinCleanup("internal for AnkiDroidJsApi")
-    internal val isInNightMode: Boolean
+    private val isInNightMode: Boolean
         get() = Themes.currentTheme.isNightMode
 
     private fun updateCard(content: CardHtml) {
@@ -1915,6 +1908,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal open inner class MyGestureDetector : SimpleOnGestureListener() {
+        private val noGestureBorderDip = 24
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             Timber.d("onFling")
 
@@ -1943,7 +1937,7 @@ abstract class AbstractFlashcardViewer :
         private fun isTouchingEdge(e1: MotionEvent): Boolean {
             val height = mTouchLayer!!.height
             val width = mTouchLayer!!.width
-            val margin = Companion.NO_GESTURE_BORDER_DIP * resources.displayMetrics.density + 0.5f
+            val margin = noGestureBorderDip * resources.displayMetrics.density + 0.5f
             return e1.x < margin || e1.y < margin || height - e1.y < margin || width - e1.x < margin
         }
 
@@ -2544,10 +2538,6 @@ abstract class AbstractFlashcardViewer :
     override val isControlBlocked: Boolean
         get() = controlBlocked !== ControlBlock.UNBLOCKED
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @KotlinCleanup("move to test class as extension")
-    val correctTypedAnswer get() = typeAnswer!!.correct
-
     internal fun showTagsDialog() {
         val tags = ArrayList(col.tags.all())
         val selTags = ArrayList(currentCard!!.note().tags)
@@ -2613,14 +2603,6 @@ abstract class AbstractFlashcardViewer :
 
         /** Handle providing help for "Image Not Found"  */
         private val mMissingImageHandler = MissingImageHandler()
-
-        @KotlinCleanup("moved from MyGestureDetector")
-        // Android design spec for the size of the status bar.
-        private const val NO_GESTURE_BORDER_DIP = 24
-
-        @KotlinCleanup("moved from SelectEaseHandler")
-        // maximum screen distance from initial touch where we will consider a click related to the touch
-        private const val CLICK_ACTION_THRESHOLD = 200
 
         /**
          * @return if [gesture] is a swipe, a transition to the same direction of the swipe

@@ -17,6 +17,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SHOW_ANSW
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl
+import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
@@ -42,6 +43,9 @@ import java.util.stream.Stream
 @RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
+
+    private val correctTypedAnswer = createInstance(getPreferences()).correct
+
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Int? = null
         private var mLastTime = 0
@@ -106,7 +110,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, equalTo("World"))
+        assertThat(correctTypedAnswer, equalTo("World"))
 
         waitForAsyncTasksToComplete()
 
@@ -119,7 +123,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, equalTo("David"))
+        assertThat(correctTypedAnswer, equalTo("David"))
     }
 
     @Test
@@ -129,7 +133,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, equalTo("World"))
+        assertThat(correctTypedAnswer, equalTo("World"))
 
         viewer.displayCardAnswer()
 
@@ -146,7 +150,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, equalTo("David"))
+        assertThat(correctTypedAnswer, equalTo("David"))
         assertThat(viewer.cardContent, not(containsString("World")))
         assertThat(viewer.cardContent, containsString("David"))
     }
