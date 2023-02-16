@@ -22,11 +22,10 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.LanguageUtil.getStringByLocale
 import com.ichi2.utils.LanguageUtil.getSystemLocale
 import kotlinx.coroutines.runBlocking
-import java.util.*
 
 class GeneralSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -37,7 +36,7 @@ class GeneralSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         val col = col!!
         // Build languages
-        initializeLanguageDialog()
+        initializeLanguagePref()
 
         // Deck for new cards
         // Represents in the collections pref "addToCur": i.e.
@@ -80,35 +79,19 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
     }
 
-    @NeedsTest("")
-    private fun initializeLanguageDialog() {
-        val languageSelection = requirePreference<ListPreference>(R.string.pref_language_key)
+    private fun initializeLanguagePref() {
+        val sortedLanguages = LanguageUtil.APP_LANGUAGES.toSortedMap(java.lang.String.CASE_INSENSITIVE_ORDER)
+        val systemLocale = getSystemLocale()
 
-        val items: MutableMap<String, String> = TreeMap(java.lang.String.CASE_INSENSITIVE_ORDER)
-        for (localeCode in LanguageUtil.APP_LANGUAGES) {
-            val loc = LanguageUtil.getLocale(localeCode)
-            items[loc.getDisplayName(loc)] = loc.toString()
-        }
-        val languageDialogLabels = arrayOfNulls<CharSequence>(items.size + 1)
-        val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
-        languageDialogLabels[0] = resources.getString(R.string.language_system)
-        languageDialogValues[0] = "${getSystemLocale()}"
-        val itemsList = items.toList()
-        for (i in 1..itemsList.size) {
-            languageDialogLabels[i] = itemsList[i - 1].first
-            languageDialogValues[i] = itemsList[i - 1].second
-        }
+        requirePreference<ListPreference>(R.string.pref_language_key).apply {
+            entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
+            entryValues = arrayOf("$systemLocale", *sortedLanguages.values.toTypedArray())
+            setOnPreferenceChangeListener { newValue ->
+                LanguageUtil.setDefaultBackendLanguages(newValue as String)
+                runBlocking { CollectionManager.discardBackend() }
 
-        languageSelection.entries = languageDialogLabels
-        languageSelection.entryValues = languageDialogValues
-
-        // It's only possible to change the language by recreating the activity,
-        // so do it if the language has changed.
-        languageSelection.setOnPreferenceChangeListener { newValue ->
-            LanguageUtil.setDefaultBackendLanguages(newValue as String)
-            runBlocking { CollectionManager.discardBackend() }
-
-            requireActivity().recreate()
+                requireActivity().recreate()
+            }
         }
     }
 }

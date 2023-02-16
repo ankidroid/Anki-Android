@@ -35,8 +35,7 @@ import java.util.*
 class LanguageUtilsTest {
     @Test
     fun testNoLanguageIsRemoved() {
-        val languages = LanguageUtil.APP_LANGUAGES.toHashSet()
-        Collections.addAll(languages, *LanguageUtil.APP_LANGUAGES)
+        val languages = LanguageUtil.APP_LANGUAGES.values
         val previousLanguages = PREVIOUS_LANGUAGES.toMutableList()
         previousLanguages.removeAll(previousLanguageExclusions)
         for (language in previousLanguages) {
@@ -46,7 +45,7 @@ class LanguageUtilsTest {
 
     @Test
     fun testCurrentLanguagesHaveNotChanged() {
-        val actual = LanguageUtil.APP_LANGUAGES.toList()
+        val actual = LanguageUtil.APP_LANGUAGES.values
         assertThat(
             "Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES",
