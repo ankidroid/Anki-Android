@@ -15,9 +15,13 @@
 */
 package com.ichi2.utils
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.content.res.Resources
+import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.preferences.Preferences
 import net.ankiweb.rsdroid.BackendFactory
@@ -32,100 +36,100 @@ object LanguageUtil {
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
      * Please note 'yue' is special, it is 'yu' on CrowdIn, and mapped in import specially to 'yue' */
-    val APP_LANGUAGES = arrayOf(
-        "af", // Afrikaans / Afrikaans
-        "am", // Amharic / አማርኛ
-        "ar", // Arabic / العربية
-        "az", // Azerbaijani / azərbaycan
-        "be", // Belarusian / беларуская
-        "bg", // Bulgarian / български
-        "bn", // Bangla / বাংলা
-        "ca", // Catalan / català
-        "ckb", // Central Kurdish / کوردیی ناوەندی
-        "cs", // Czech / čeština
-        "da", // Danish / dansk
-        "de", // German / Deutsch
-        "el", // Greek / Ελληνικά
-        "en", // English / English
-        "eo", // Esperanto / esperanto
-        "es-AR", // Spanish (Argentina) / español (Argentina)
-        "es-ES", // Spanish (Spain) / español (España)
-        "et", // Estonian / eesti
-        "eu", // Basque / euskara
-        "fa", // Persian / فارسی
-        "fi", // Finnish / suomi
-        "fil", // Filipino / Filipino
-        "fr", // French / français
-        "fy-NL", // Western Frisian (Netherlands) / Frysk (Nederlân)
-        "ga-IE", // Irish (Ireland) / Gaeilge (Éire)
-        "gl", // Galician / galego
-        "got", // Gothic / Gothic
-        "gu-IN", // Gujarati (India) / ગુજરાતી (ભારત)
-        "heb", // Hebrew / עברית
-        "hi", // Hindi / हिन्दी
-        "hr", // Croatian / hrvatski
-        "hu", // Hungarian / magyar
-        "hy-AM", // Armenian (Armenia) / հայերեն (Հայաստան)
-        "ind", // Indonesian / Indonesia
-        "is", // Icelandic / íslenska
-        "it", // Italian / italiano
-        "ja", // Japanese / 日本語
-        "jv", // Javanese / Jawa
-        "ka", // Georgian / ქართული
-        "kk", // Kazakh / қазақ тілі
-        "km", // Khmer / ខ្មែរ
-        "kn", // Kannada / ಕನ್ನಡ
-        "ko", // Korean / 한국어
-        "ku", // Kurdish / kurdî
-        "ky", // Kyrgyz / кыргызча
-        "lt", // Lithuanian / lietuvių
-        "lv", // Latvian / latviešu
-        "mk", // Macedonian / македонски
-        "ml-IN", // Malayalam (India) / മലയാളം (ഇന്ത്യ)
-        "mn", // Mongolian / монгол
-        "mr", // Marathi / मराठी
-        "ms", // Malay / Melayu
-        "my", // Burmese / မြန်မာ
-        "nl", // Dutch / Nederlands
-        "nn-NO", // Norwegian Nynorsk (Norway) / nynorsk (Noreg)
-        "no", // Norwegian / norsk
-        "or", // Odia / ଓଡ଼ିଆ
-        "pa-IN", // Punjabi (India) / ਪੰਜਾਬੀ (ਭਾਰਤ)
-        "pl", // Polish / polski
-        "pt-BR", // Portuguese (Brazil) / português (Brasil)
-        "pt-PT", // Portuguese (Portugal) / português (Portugal)
-        "ro", // Romanian / română
-        "ru", // Russian / русский
-        "sat", // Santali / Santali
-        "sc", // Sardinian / Sardinian
-        "sk", // Slovak / slovenčina
-        "sl", // Slovenian / slovenščina
-        "sq", // Albanian / shqip
-        "sr", // Serbian / српски
-        "ss", // Swati / Swati
-        "sv-SE", // Swedish (Sweden) / svenska (Sverige)
-        "sw", // Swahili / Kiswahili
-        "ta", // Tamil / தமிழ்
-        "te", // Telugu / తెలుగు
-        "tg", // Tajik / тоҷикӣ
-        "tgl", // Tagalog / Tagalog
-        "th", // Thai / ไทย
-        "ti", // Tigrinya / ትግርኛ
-        "tn", // Tswana / Tswana
-        "tr", // Turkish / Türkçe
-        "ts", // Tsonga / Tsonga
-        "tt-RU", // Tatar (Russia) / татар (Россия)
-        "uk", // Ukrainian / українська
-        "ur-PK", // Urdu (Pakistan) / اردو (پاکستان)
-        "uz", // Uzbek / o‘zbek
-        "ve", // Venda / Venda
-        "vi", // Vietnamese / Tiếng Việt
-        "wo", // Wolof / Wolof
-        "xh", // Xhosa / isiXhosa
-        "yue", // Cantonese / 粵語
-        "zh-CN", // Chinese (China) / 中文 (中国)
-        "zh-TW", // Chinese (Taiwan) / 中文 (台灣)
-        "zu", // Zulu / isiZulu
+    val APP_LANGUAGES = mapOf(
+        "Afrikaans" to "af", // Afrikaans
+        "አማርኛ" to "am", // Amharic
+        "العربية" to "ar", // Arabic
+        "azərbaycan" to "az", // Azerbaijani
+        "беларуская" to "be", // Belarusian
+        "български" to "bg", // Bulgarian
+        "বাংলা" to "bn", // Bangla
+        "català" to "ca", // Catalan
+        "کوردیی ناوەندی" to "ckb", // Central Kurdish
+        "čeština" to "cs", // Czech
+        "dansk" to "da", // Danish
+        "Deutsch" to "de", // German
+        "Ελληνικά" to "el", // Greek
+        "English" to "en", // English
+        "esperanto" to "eo", // Esperanto
+        "español (Argentina)" to "es-AR", // Spanish (Argentina)
+        "español (España)" to "es-ES", // Spanish (Spain)
+        "eesti" to "et", // Estonian
+        "euskara" to "eu", // Basque
+        "فارسی" to "fa", // Persian
+        "suomi" to "fi", // Finnish
+        "Filipino" to "fil", // Filipino
+        "français" to "fr", // French
+        "Frysk (Nederlân)" to "fy-NL", // Western Frisian (Netherlands)
+        "Gaeilge (Éire)" to "ga-IE", // Irish (Ireland)
+        "galego" to "gl", // Galician
+        "Gothic" to "got", // Gothic
+        "ગુજરાતી (ભારત)" to "gu-IN", // Gujarati (India)
+        "עברית" to "heb", // Hebrew
+        "हिन्दी" to "hi", // Hindi
+        "hrvatski" to "hr", // Croatian
+        "magyar" to "hu", // Hungarian
+        "հայերեն (Հայաստան)" to "hy-AM", // Armenian (Armenia)
+        "Indonesia" to "ind", // Indonesian
+        "íslenska" to "is", // Icelandic
+        "italiano" to "it", // Italian
+        "日本語" to "ja", // Japanese
+        "Jawa" to "jv", // Javanese
+        "ქართული" to "ka", // Georgian
+        "қазақ тілі" to "kk", // Kazakh
+        "ខ្មែរ" to "km", // Khmer
+        "ಕನ್ನಡ" to "kn", // Kannada
+        "한국어" to "ko", // Korean
+        "kurdî" to "ku", // Kurdish
+        "кыргызча" to "ky", // Kyrgyz
+        "lietuvių" to "lt", // Lithuanian
+        "latviešu" to "lv", // Latvian
+        "македонски" to "mk", // Macedonian
+        "മലയാളം (ഇന്ത്യ)" to "ml-IN", // Malayalam (India)
+        "монгол" to "mn", // Mongolian
+        "मराठी" to "mr", // Marathi
+        "Melayu" to "ms", // Malay
+        "မြန်မာ" to "my", // Burmese
+        "Nederlands" to "nl", // Dutch
+        "nynorsk (Noreg)" to "nn-NO", // Norwegian Nynorsk (Norway)
+        "norsk" to "no", // Norwegian
+        "ଓଡ଼ିଆ" to "or", // Odia
+        "ਪੰਜਾਬੀ (ਭਾਰਤ)" to "pa-IN", // Punjabi (India)
+        "polski" to "pl", // Polish
+        "Português (Brasil)" to "pt-BR", // Portuguese (Brazil)
+        "Português (Portugal)" to "pt-PT", // Portuguese (Portugal)
+        "română" to "ro", // Romanian
+        "русский" to "ru", // Russian
+        "Santali" to "sat", // Santali
+        "Sardinian" to "sc", // Sardinian
+        "slovenčina" to "sk", // Slovak
+        "slovenščina" to "sl", // Slovenian
+        "shqip" to "sq", // Albanian
+        "српски" to "sr", // Serbian
+        "Swati" to "ss", // Swati
+        "svenska (Sverige)" to "sv-SE", // Swedish (Sweden)
+        "Kiswahili" to "sw", // Swahili
+        "தமிழ்" to "ta", // Tamil
+        "తెలుగు" to "te", // Telugu
+        "тоҷикӣ" to "tg", // Tajik
+        "Tagalog" to "tgl", // Tagalog
+        "ไทย" to "th", // Thai
+        "ትግርኛ" to "ti", // Tigrinya
+        "Tswana" to "tn", // Tswana
+        "Türkçe" to "tr", // Turkish
+        "Tsonga" to "ts", // Tsonga
+        "татар (Россия)" to "tt-RU", // Tatar (Russia)
+        "українська" to "uk", // Ukrainian
+        "اردو (پاکستان)" to "ur-PK", // Urdu (Pakistan)
+        "o‘zbek" to "uz", // Uzbek
+        "Venda" to "ve", // Venda
+        "Tiếng Việt" to "vi", // Vietnamese
+        "Wolof" to "wo", // Wolof
+        "isiXhosa" to "xh", // Xhosa
+        "粵語" to "yue", // Cantonese
+        "中文 (中国)" to "zh-CN", // Chinese (China)
+        "中文 (台灣)" to "zh-TW", // Chinese (Taiwan)
+        "isiZulu" to "zu", // Zulu
     )
 
     /** Backend languages; may not include recently added ones.
@@ -275,4 +279,16 @@ object LanguageUtil {
      * @return the language defined by the preferences, or otherwise the default locale
      */
     fun SharedPreferences.getCurrentLanguage(): String = getString(Preferences.LANGUAGE, null) ?: Locale.getDefault().language
+
+    /** @return string defined with [stringRes] on the specified [locale] */
+    fun Context.getStringByLocale(@StringRes stringRes: Int, locale: Locale, vararg formatArgs: Any): String {
+        val configuration = Configuration(resources.configuration)
+        configuration.setLocale(locale)
+        return createConfigurationContext(configuration).resources.getString(stringRes, *formatArgs)
+    }
+
+    /** @return string defined with [stringRes] on the specified [locale] */
+    fun Fragment.getStringByLocale(@StringRes stringRes: Int, locale: Locale, vararg formatArgs: Any): String {
+        return requireContext().getStringByLocale(stringRes, locale, *formatArgs)
+    }
 }
