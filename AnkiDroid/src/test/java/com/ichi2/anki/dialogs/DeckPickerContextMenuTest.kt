@@ -29,6 +29,7 @@ import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
 import com.ichi2.testutils.assertThrows
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
@@ -50,6 +51,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Before
     fun before() {
         getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        setupSpaceForBackup(this.targetContext)
     }
 
     @Test
@@ -152,6 +154,9 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     fun testUnbury() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             TimeManager.reset()
+            // stop 'next day' code running, which calls 'unbury'
+            updateDeckList()
+
             val deckId = addDeck("Deck 1")
             col.models.byName("Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard()
@@ -159,7 +164,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            assertTrue(col.sched.haveBuried(deckId))
+            assertTrue(col.sched.haveBuried(deckId), "Deck should have buried cards")
 
             openContextMenuAndSelectItem(recyclerView, 6)
 
@@ -229,6 +234,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
         cardIds.all { col.getCard(it).did == deckId }
 
     private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
         contextMenu.postDelayed({
             contextMenu.findViewHolderForAdapterPosition(0)!!
                 .itemView.performLongClick()
