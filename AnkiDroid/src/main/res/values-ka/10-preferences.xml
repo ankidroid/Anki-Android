@@ -54,8 +54,8 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ზოგადი</string>
     <string name="pref_cat_studying" maxLength="41">სწავლა</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
-    <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
+    <string name="pref_cat_system_wide" maxLength="41">მთელი სისტემის მასშტაბით</string>
+    <string name="pref_cat_reviewing" maxLength="41">გადახედვა</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">სინქრონიზაცია</string>
     <string name="pref_cat_scheduling" maxLength="41">სწავლის განრიგი</string>
     <string name="pref_cat_whiteboard" maxLength="41">დაფა</string>
@@ -65,18 +65,18 @@
     <string name="pref_cat_gestures" maxLength="41">ჟესტები</string>
     <string name="pref_cat_controls" maxLength="41">მართვა</string>
     <string name="pref_cat_advanced" maxLength="41">დამატებითი</string>
-    <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
-    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="pref_cat_workarounds" maxLength="41">გამოსავლები</string>
+    <string name="pref_cat_plugins" maxLength="41">დანამატები</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
+    <string name="whiteboard_stroke_width" maxLength="41">ხაზის სისქე</string>
     <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom" maxLength="41">Card zoom</string>
-    <string name="image_zoom" maxLength="41">Image zoom</string>
+    <string name="card_zoom" maxLength="41">ბარათის ზომა</string>
+    <string name="image_zoom" maxLength="41">სურათის ზომა</string>
     <string name="button_size" maxLength="41">Answer button size</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_none" maxLength="41">არცერთი</string>
     <string name="gestures_swipe_up" maxLength="41">ამოსმა</string>
     <string name="gestures_swipe_down" maxLength="41">ჩამოსმა</string>
     <string name="gestures_swipe_left" maxLength="41">მარცხნივ გასმა</string>
@@ -125,12 +126,14 @@
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
-    <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing</string>
     <string name="sync_account" maxLength="41">AnkiWeb ანგარიში</string>
-    <string name="sync_account_summ_logged_out">Not logged in</string>
+    <string name="sync_account_summ_logged_out">არ ხართ შესული</string>
     <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">ყოველთვის</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">არასდროს</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
@@ -143,7 +146,7 @@
     <string name="language" maxLength="41">ენა</string>
     <string name="language_system">სისტემის ენა</string>
     <string name="notification_pref" maxLength="41">შეტყობინებები</string>
-    <string name="notification_pref_title" maxLength="41">Notify when</string>
+    <string name="notification_pref_title" maxLength="41">შეტყობინება როცა</string>
     <string name="never_notify">Never notify</string>
     <string name="notify_when_pending">Pending messages available</string>
     <string name="notification_minimum_cards_due">More than %d cards due</string>
@@ -176,35 +179,35 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">სავარაუდოდ დარჩენილი დროის ჩვენება</string>
+    <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
     <string name="new_spread" maxLength="41">New card position</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="new_timezone" maxLength="41">ახალი სასაათო სარტყლის გათვალისწინება</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">შუაღამე</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+    <string name="pref_keep_screen_on_summ">ეკრანის თვითგამორთვის გამორთვა</string>
     <string name="convert_fen_text" maxLength="41">Chess notation support</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
-    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API-ს ჩართვა</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">Always show</string>
-    <string name="custom_buttons_setting_if_room">Show if room</string>
-    <string name="custom_buttons_setting_menu_only">Menu only</string>
+    <string name="custom_buttons_setting_if_room">ჩვენება ადგილის არსებობის შემთხვევაში</string>
+    <string name="custom_buttons_setting_menu_only">მხოლოდ მენიუ</string>
     <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
     <string name="accessibility" maxLength="41">მარტივი წვდომა</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
@@ -227,23 +230,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">ნაგულისხმევი</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">არ არის გამოყენებაში</string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">სინქრონიზაციის URL</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <!-- Key Bindings -->
     <string name="keyboard">კლავიატურა</string>
     <string name="bluetooth">Bluetooth</string>
@@ -259,10 +252,10 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">ახალი ბარათები</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">გადახედვები</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">გადავიწყებული ბარათები</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ზოგადი</string>
-    <string name="deck_conf_reminders" maxLength="41">Reminders</string>
+    <string name="deck_conf_reminders" maxLength="41">შეხსენებები</string>
     <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
     <string name="deck_conf_order" maxLength="41">თანმიმდევრობა</string>
     <string name="deck_conf_new_cards_day" maxLength="41">New cards/day</string>
@@ -277,7 +270,7 @@
     <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">ზოგადი პარამეტრების გამოყენება</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Easy bonus</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">ბონუსი \"მარტივისთვის\"</string>
     <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Interval modifier</string>
     <string name="deck_conf_max_ivl" maxLength="41">Maximum interval</string>
@@ -310,7 +303,7 @@
     <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
     <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
+    <string name="deck_conf_cram_limit" maxLength="41">ზღვარი</string>
     <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">გადადება</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
@@ -338,11 +331,11 @@
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">ჟესტის დამატება</string>
     <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_key">კლავიშის დამატება</string>
+    <string name="binding_replace_key">კლავიშის შეცვლა</string>
+    <string name="key_picker_default_press_key">დააჭირეთ ნებისმიერ კლავიშს</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">კითხვა</string>
@@ -426,7 +419,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">შეცდომა</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">მიმდინარეობს ამორჩევა&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">მიმდინარეობს გამოთვლა&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
 </resources>

@@ -86,14 +86,16 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.ScopedStorageService.getBestDefaultRootDirectory
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
-import com.ichi2.anki.servicelayer.ScopedStorageService.migrateEssentialFiles
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.Undo
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.toMB
+import com.ichi2.anki.services.MigrationService
+import com.ichi2.anki.services.ServiceConnection
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -131,6 +133,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
 import kotlin.math.roundToLong
+import kotlin.system.measureTimeMillis
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
@@ -234,6 +237,15 @@ open class DeckPicker :
     @VisibleForTesting
     var createMenuJob: Job? = null
     private var loadDeckCounts: Job? = null
+
+    private val migrationService: ServiceConnection<MigrationService> = object : ServiceConnection<MigrationService>() {
+        override fun onServiceConnected(service: MigrationService) {
+            service.migrationCompletedListener = { onStorageMigrationCompleted() }
+        }
+        override fun onServiceDisconnected(service: MigrationService) {
+            service.migrationCompletedListener = null
+        }
+    }
 
     init {
         ChangeManager.subscribe(this)
@@ -506,10 +518,58 @@ open class DeckPicker :
     }
 
     /**
+     * The first call in showing dialogs for startup
+     *
+     * Attempts startup if storage permission has been acquired, else, it requests the permission
+     *
+     * If the migration is in progress, it starts the service if not running
+     *
+     * See: #5304
+     * @return true: Interrupt startup. `false`: continue as normal
+     */
+    open fun startingStorageMigrationInterruptsStartup(): Boolean {
+        val migrationStatus = ScopedStorageService.migrationStatus(this)
+        Timber.i("migration status: %s", migrationStatus)
+        when (migrationStatus) {
+            ScopedStorageService.Status.NEEDS_MIGRATION -> {
+                // TODO: we should propose a migration, but not yet (alpha users should opt in)
+                // If the migration was proposed too soon, don't show it again and startup normally.
+                // TODO: This logic needs thought
+                // showDialogThatOffersToMigrateStorage(onPostpone = {
+                //     // Unblocks the UI if opened from changing the deck path
+                //     updateDeckList()
+                //     invalidateOptionsMenu()
+                //     handleStartup(skipStorageMigration = true)
+                // })
+                return false // TODO: Allow startup normally
+            }
+            ScopedStorageService.Status.IN_PROGRESS -> {
+                startMigrateUserDataService()
+                return false
+            }
+            // If legacy storage is being used, ensure storage permission is obtained in order to access Legacy Directories
+            ScopedStorageService.Status.REQUIRES_PERMISSION -> {
+                requestStoragePermission()
+                return true
+            }
+            ScopedStorageService.Status.PERMISSION_FAILED -> {
+                // TODO: Handle "user reinstalled & kept data" scenario.
+                //  (Or edge case of permission removal)
+                return false
+            }
+            // App is already using Scoped Storage Directory for user data, no need to migrate & can proceed with startup
+            ScopedStorageService.Status.COMPLETED -> return false
+        }
+    }
+
+    /**
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
      */
     fun handleStartup() {
+        if (startingStorageMigrationInterruptsStartup()) return
+
+        Timber.d("handleStartup: Continuing. unaffected by storage migration")
         if (hasStorageAccessPermission(this)) {
             val failure = InitialActivity.getStartupFailureType(this)
             mStartupError = if (failure == null) {
@@ -524,10 +584,6 @@ open class DeckPicker :
             }
         } else {
             requestStoragePermission()
-        }
-
-        if (!BackendFactory.defaultLegacySchema) {
-            CustomSyncServer.setOrUnsetEnvironmentalVariablesForBackend(this)
         }
     }
 
@@ -770,7 +826,7 @@ open class DeckPicker :
             }
             R.id.action_scoped_storage_migrate -> {
                 Timber.i("DeckPicker:: migrate button pressed")
-                showDialogThatOffersToMigrateStorage()
+                showDialogThatOffersToMigrateStorage(onPostpone = null)
                 return true
             }
             R.id.action_import -> {
@@ -935,6 +991,18 @@ open class DeckPicker :
         mFloatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
     }
 
+    fun onStorageMigrationCompleted() {
+        migrationService.unbind(this)
+        invalidateOptionsMenu() // reapply the sync icon
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (userMigrationIsInProgress(this)) {
+            migrationService.bind(this, MigrationService::class.java)
+        }
+    }
+
     override fun onPause() {
         Timber.d("onPause()")
         mActivityPaused = true
@@ -946,6 +1014,7 @@ open class DeckPicker :
     override fun onStop() {
         Timber.d("onStop()")
         super.onStop()
+        migrationService.unbind(this)
         if (colIsOpen()) {
             WidgetStatus.update(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
@@ -1560,14 +1629,22 @@ open class DeckPicker :
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
+
+        fun shouldFetchMedia(): Boolean {
+            val always = getString(R.string.sync_media_always_value)
+            val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
+            val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
+            return shouldFetchMedia == always ||
+                (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
+        }
+
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
-            val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, syncMedia)
+                handleNewSync(conflict, shouldFetchMedia())
             } else {
-                val data = arrayOf(hkey, syncMedia, conflict, HostNumFactory.getInstance(baseContext))
+                val data = arrayOf(hkey, shouldFetchMedia(), conflict, HostNumFactory.getInstance(baseContext))
                 Connection.sync(mSyncListener, Connection.Payload(data))
             }
         }
@@ -2767,13 +2844,22 @@ open class DeckPicker :
             return
         }
         launchCatchingTask {
-            withProgress(getString(R.string.start_migration_progress_message)) {
-                withContext(Dispatchers.IO) {
-                    migrateEssentialFiles(baseContext)
+            val elapsedMillisDuringEssentialFilesMigration = measureTimeMillis {
+                withProgress(getString(R.string.start_migration_progress_message)) {
+                    withContext(Dispatchers.IO) {
+                        loadDeckCounts?.cancel()
+                        CollectionHelper.instance.closeCollection(false, "migration to scoped storage")
+                        ScopedStorageService.migrateEssentialFiles(baseContext)
+
+                        updateDeckList()
+                        handleStartup()
+                        startMigrateUserDataService()
+                    }
                 }
             }
-            showSnackbar(R.string.migration_part_1_done_resume)
-            startMigrateUserDataService()
+            if (elapsedMillisDuringEssentialFilesMigration > 800) {
+                showSnackbar(R.string.migration_part_1_done_resume)
+            }
         }
     }
 
@@ -2781,16 +2867,26 @@ open class DeckPicker :
      * Start migrating the user data. Assumes that
      */
     fun startMigrateUserDataService() {
-        // TODO
+        // TODO: Handle lack of disk space - most common error
+        Timber.i("Starting Migrate User Data Service")
+        migrationService.startForeground(this, MigrationService::class.java)
     }
 
     /**
      * Show a dialog that explains no sync can occur during migration.
      */
     private fun warnNoSyncDuringMigration() {
-        // TODO: Fetch and display real numbers
+        // TODO: handle value updates
+        // Note: migrationService shouldn't be null in normal operation
+        val text = migrationService.instance?.let { service ->
+            return@let service.totalToTransfer?.let { totalToTransfer ->
+                "\n\n" + getString(R.string.migration_transferred_size, service.currentProgress.toMB().toFloat(), totalToTransfer.toMB().toFloat())
+            }
+        }
+        // TODO: maybe handle onStorageMigrationCompleted()
+        // TODO: sync_impossible_during_migration needs changing
         MaterialDialog(this).show {
-            message(text = resources.getString(R.string.sync_impossible_during_migration, 5))
+            message(text = resources.getString(R.string.sync_impossible_during_migration, 5) + text)
             positiveButton(res = R.string.dialog_ok)
             negativeButton(res = R.string.scoped_storage_learn_more) {
                 openUrl(R.string.link_scoped_storage_faq)
@@ -2832,7 +2928,8 @@ open class DeckPicker :
     /**
      * Show a dialog offering to migrate, postpone or learn more.
      */
-    fun showDialogThatOffersToMigrateStorage() {
+    fun showDialogThatOffersToMigrateStorage(onPostpone: (() -> Unit)?) {
+        Timber.i("Displaying dialog to migrate storage")
         if (userMigrationIsInProgress(baseContext)) {
             // This should not occur. We should have not called the function in this case.
             return
@@ -2859,6 +2956,7 @@ open class DeckPicker :
                 getString(R.string.scoped_storage_postpone)
             ) { _, _ ->
                 setMigrationWasLastPostponedAtToNow()
+                onPostpone?.invoke()
             }.addScopedStorageLearnMoreLinkAndShow(message)
     }
 

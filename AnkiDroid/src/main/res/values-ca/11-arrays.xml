@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Cartes noves abans de revisions</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Quan cap font està especificada en les flashcards</string>
-    <string name="override_font_always">Sempre</string>
+    <string name="override_font_always" comment="Option to always override font">Sempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Segueix el sistema</string>
     <!-- day_theme_labels -->

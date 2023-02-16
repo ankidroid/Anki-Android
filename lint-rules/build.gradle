@@ -5,6 +5,10 @@ repositories {
     mavenCentral()
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11
+}
+
 dependencies {
     compileOnly "com.android.tools.lint:lint-api:$lint_version"
     compileOnly "com.android.tools.lint:lint:$lint_version"

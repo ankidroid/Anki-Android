@@ -49,32 +49,32 @@
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Unseen</string>
     <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Relearn</string>
-    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Learn</string>
+    <string name="statistics_buried">دفن</string>
+    <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">دوبارہ سیکھیں</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">سیکھیں</string>
     <string name="statistics_cram">Cram</string>
-    <string name="stats_cards" comment="Title to use in stats pages">Cards</string>
+    <string name="stats_cards" comment="Title to use in stats pages">کارڈز</string>
     <string name="stats_cards_intervals">Cards with given interval</string>
-    <string name="stats_cumulative_cards">Cumulative cards</string>
-    <string name="stats_cumulative_answers">Cumulative answers</string>
-    <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
-    <string name="stats_cumulative_time_hours">Cumulative hours</string>
-    <string name="stats_cumulative">Cumulative</string>
-    <string name="stats_cumulative_percentage">Cumulative percentage</string>
+    <string name="stats_cumulative_cards">مجموعی کارڈز</string>
+    <string name="stats_cumulative_answers">مجموعی جوابات</string>
+    <string name="stats_cumulative_time_minutes">مجموعی منٹ</string>
+    <string name="stats_cumulative_time_hours">مجموعی گھنٹے</string>
+    <string name="stats_cumulative">مجموعی</string>
+    <string name="stats_cumulative_percentage">مجموعی فیصد</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
-    <string name="stats_answers">Answers</string>
-    <string name="stats_minutes">Minutes</string>
-    <string name="stats_hours">Hours</string>
-    <string name="stats_percentage">Percentage</string>
-    <string name="stats_period_month">1 month</string>
-    <string name="stats_period_year">1 year</string>
-    <string name="stats_period_lifetime">deck life</string>
-    <string name="stats_deck_collection">collection</string>
-    <string name="stats_time_of_day">Time of day</string>
-    <string name="stats_day_of_week">Day of week</string>
-    <string formatted="false" name="stats_percentage_correct">% correct</string>
-    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Reviews</string>
-    <string name="stats_answer_type">Answer type</string>
+    <string name="stats_answers">جوابات</string>
+    <string name="stats_minutes">منٹ</string>
+    <string name="stats_hours">گھنٹے</string>
+    <string name="stats_percentage">فیصد</string>
+    <string name="stats_period_month">1 مہینہ</string>
+    <string name="stats_period_year">1 سال</string>
+    <string name="stats_period_lifetime">ڈیک کی زندگی</string>
+    <string name="stats_deck_collection">مجموعہ</string>
+    <string name="stats_time_of_day">دن کا وقت</string>
+    <string name="stats_day_of_week">ہفتے کے دن</string>
+    <string formatted="false" name="stats_percentage_correct">% درست</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">جائزے</string>
+    <string name="stats_answer_type">جواب کی قسم</string>
     <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
     <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
@@ -93,7 +93,7 @@
     <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
     <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
     <string name="stats_overview_average_interval">"Average interval: "</string>
-    <string name="stats_overview_longest_interval">"Longest interval: "</string>
+    <string name="stats_overview_longest_interval">"سب سے طویل وقفہ: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
@@ -120,23 +120,23 @@
     <string name="stats_added" comment="Label of the number of added card">Added</string>
     <string name="stats_review_intervals">Intervals</string>
     <string name="stats_breakdown">Hourly breakdown</string>
-    <string name="stats_weekly_breakdown">Weekly breakdown</string>
-    <string name="stats_answer_buttons">Answer buttons</string>
+    <string name="stats_weekly_breakdown">ہفتہ وار خرابی</string>
+    <string name="stats_answer_buttons">جواب کے بٹن</string>
     <string-array name="stats_day_time_strings">
-        <item>4AM</item>
-        <item>10AM</item>
-        <item>4PM</item>
-        <item>10PM</item>
-        <item>3AM</item>
+        <item>۴A.M</item>
+        <item>۱۰A.M</item>
+        <item>۴P.M</item>
+        <item>۱۰P.M</item>
+        <item>۳A.M</item>
     </string-array>
     <string-array name="stats_week_days">
-        <item>Sun</item>
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
+        <item>اتوار</item>
+        <item>پیر</item>
+        <item>منگل</item>
+        <item>بدھ</item>
+        <item>جمعرات</item>
+        <item>جمعہ</item>
+        <item>ہفتہ</item>
     </string-array>
     <string-array name="stats_eases_ticks">
         <item>1</item>

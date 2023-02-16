@@ -118,7 +118,6 @@ import kotlin.math.abs
 @KotlinCleanup("lots to deal with")
 abstract class AbstractFlashcardViewer :
     NavigationDrawerActivity(),
-    ReviewerUi,
     ViewerCommand.CommandProcessor,
     TagsDialogListener,
     WhiteboardMultiTouchMethods,
@@ -147,7 +146,7 @@ abstract class AbstractFlashcardViewer :
     private var mScrollingButtons = false
     private var mGesturesEnabled = false
     private var mLargeAnswerButtons = false
-    private var mAnswerButtonsPosition: String? = "bottom"
+    protected var mAnswerButtonsPosition: String? = "bottom"
     private var mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
@@ -242,7 +241,7 @@ abstract class AbstractFlashcardViewer :
     private val mCardLock: ReadWriteLock = ReentrantReadWriteLock()
 
     /** whether controls are currently blocked, and how long we expect them to be  */
-    override var controlBlocked = ControlBlock.SLOW
+    open var controlBlocked = ControlBlock.SLOW
 
     /** Preference: Whether the user wants press back twice to return to the main screen"  */
     private var mExitViaDoubleTapBack = false
@@ -2538,10 +2537,10 @@ abstract class AbstractFlashcardViewer :
         GetCard().runWithHandler(answerCardHandler(false))
     }
 
-    override val isDisplayingAnswer
+    val isDisplayingAnswer
         get() = displayAnswer
 
-    override val isControlBlocked: Boolean
+    open val isControlBlocked: Boolean
         get() = controlBlocked !== ControlBlock.UNBLOCKED
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

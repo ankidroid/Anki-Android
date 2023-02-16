@@ -553,7 +553,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 this,
                 channel.id
             )
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))

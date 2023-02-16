@@ -55,5 +55,7 @@ class PeripheralKeymapTest {
 
         override val isDisplayingAnswer: Boolean
             get() = false
+
+        override fun isActionButton(id: Int): Boolean = throw UnsupportedOperationException()
     }
 }

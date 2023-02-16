@@ -57,8 +57,8 @@
     <string name="cram_deck_conf_order_random">შემთხვევით</string>
     <string name="cram_deck_conf_order_increasing_intervals">ზრდადი შუალედები</string>
     <string name="cram_deck_conf_order_decreasing_intervals">კლებადი შუალედები</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
+    <string name="cram_deck_conf_order_most_lapsed">ყველაზე ხშირად გადავიწყებული</string>
+    <string name="cram_deck_conf_order_order_added">დამატების თანმიმდევრობა</string>
     <string name="cram_deck_conf_order_order_due">Order due</string>
     <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">New cards before reviews</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always">ყოველთვის</string>
+    <string name="override_font_always" comment="Option to always override font">ყოველთვის</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -105,8 +105,8 @@
     <string name="gesture_flag_turquoise">ფირუზისფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_purple">იისფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_remove">დროშის მოძრობა</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_page_up">გვერდით მაღლა</string>
+    <string name="gesture_page_down">გვერდით დაბლა</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">დაფის ჩართვა/გამორთვა</string>
     <string name="gesture_show_hint">მინიშნების ჩვენება</string>

@@ -7,17 +7,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.7.22'
-    ext.lint_version = '30.3.1'
+    ext.lint_version = '30.4.1'
     ext.acra_version = '5.9.7'
-    ext.ankidroid_backend_version = '0.1.18-anki2.1.55' // this is parsed in tools/setup-anki-backend.sh
+    ext.ankidroid_backend_version = '0.1.20-anki2.1.57'
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.9.1'
+    ext.junit_version = '5.9.2'
     ext.coroutines_version = '1.6.4'
     ext.fragments_version = "1.5.5"
-    ext.espresso_version = '3.5.0'
+    ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
-    ext.androidx_test_junit_version = '1.1.4'
-    ext.robolectric_version = '4.9.1'
+    ext.androidx_test_junit_version = '1.1.5'
+    ext.robolectric_version = '4.9.2'
 
     repositories {
         google()
@@ -26,13 +26,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.android.tools.build:gradle:7.4.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.1.0"
     }
 }
 

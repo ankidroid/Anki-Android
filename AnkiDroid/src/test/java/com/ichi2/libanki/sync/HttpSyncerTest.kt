@@ -19,7 +19,7 @@ package com.ichi2.libanki.sync
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.web.CustomSyncServer
+import com.ichi2.anki.SyncPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -96,15 +96,15 @@ class HttpSyncerTest {
     private fun setCustomServerWithNoUrl() {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         userPreferences.edit {
-            putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, true)
+            putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
         }
     }
 
     private fun setCustomServer(s: String) {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         userPreferences.edit {
-            putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, true)
-            putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, s)
+            putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
+            putString(SyncPreferences.CUSTOM_SYNC_URI, s)
         }
     }
 
@@ -113,8 +113,8 @@ class HttpSyncerTest {
     }
 
     companion object {
-        private const val customServerWithNoFormatting = "https://sync.example.com/sync/"
-        private const val customServerWithFormatting = "https://sync%s.example.com/sync/"
+        private const val customServerWithNoFormatting = "https://sync.example.com/"
+        private const val customServerWithFormatting = "https://sync%s.example.com/"
         private const val defaultUrlNoHostNum = "https://sync.ankiweb.net/sync/"
         private const val defaultUrlWithHostNum = "https://sync1.ankiweb.net/sync/"
     }

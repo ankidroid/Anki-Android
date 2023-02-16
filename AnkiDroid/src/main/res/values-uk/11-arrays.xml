@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Нові картки перед повторюваними</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Коли шрифт не визначений на навчальних картках</string>
-    <string name="override_font_always">Завжди</string>
+    <string name="override_font_always" comment="Option to always override font">Завжди</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Системна</string>
     <!-- day_theme_labels -->

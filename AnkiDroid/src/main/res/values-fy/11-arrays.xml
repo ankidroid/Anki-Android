@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">New cards before reviews</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always">Altyd</string>
+    <string name="override_font_always" comment="Option to always override font">Altyd</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->

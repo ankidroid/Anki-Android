@@ -343,7 +343,7 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     }
     val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
         MaterialDialog(this).show {
-            message(text = TR.deckConfigWillRequireFullSync())
+            message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
             positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
             negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
             onCancel { coroutine.resume(false) }

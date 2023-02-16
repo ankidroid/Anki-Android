@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
+    <string name="gestures_none" maxLength="41">Žádné</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
@@ -125,11 +126,13 @@
     <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Stáhnout multimédia při synchronizaci</string>
-    <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Vždy</string>
+    <string name="sync_media_only_unmetered">Pouze na neměřeném připojení</string>
+    <string name="sync_media_never">Nikdy</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="metered_sync_title" maxLength="41">Povolit synchronizaci na měřeném připojení</string>
@@ -227,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastní synchronizační server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nepoužívá se</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Kolekce: %1$s\nMultimédia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">výchozí</string>
-    <string name="custom_sync_server_help"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
-        můžete pro synchronizaci použít vlastní servery.
-        Můžete zadat server pro kolekci, multimédia, nebo obojí.
-        Jestliže nejsou nastaveny, použijí se místo toho výchozí AnkiWeb servery.
-        Například, můžete použít synchronizační server vestavěný v Anki
-        Desktop, abyste synchronizovali kolekci, když jste pouze v místní síti,
-        a AnkiWeb, abyste synchronizovali multimédia, když máte přístup k internetu.
-        <a href="%s">Dozvědět se více</a>
-        <br>
-        <br>Poznámka: na rozdíl od předchozích verzí AnkiDroid
-        musíte zadat úplnou adresu URL pro synchronizaci,
-        například: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
+        můžete k synchronizaci použít vlastní server.
+        Pokud není nastaven, bude místo toho použit výchozí AnkiWeb server.
+        <a href="%s">Zjistit více</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronizovat url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Sync url pro média</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>

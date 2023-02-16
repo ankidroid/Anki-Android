@@ -56,14 +56,14 @@
     <string name="pref_cat_studying" maxLength="41">ଅଧ୍ୟୟନ କରିବା</string>
     <string name="pref_cat_system_wide" maxLength="41">ସିଷ୍ଟମ୍-ବ୍ୟାପୀ</string>
     <string name="pref_cat_reviewing" maxLength="41">ସମୀକ୍ଷା</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସିଙ୍କ୍</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସୀଙ୍କ୍</string>
     <string name="pref_cat_scheduling" maxLength="41">ନିର୍ଦ୍ଧାରଣ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ଧଳାପଟା</string>
     <string name="pref_cat_appearance" maxLength="41">ରୂପ</string>
     <string name="pref_cat_themes" maxLength="41">ଥିମ୍</string>
     <string name="pref_cat_fonts" maxLength="41">ଫଣ୍ଟ</string>
     <string name="pref_cat_gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ</string>
-    <string name="pref_cat_controls" maxLength="41">ନିୟନ୍ତ୍ରଣଗୁଡ଼ିକ</string>
+    <string name="pref_cat_controls" maxLength="41">ନିୟନ୍ତ୍ରଣ</string>
     <string name="pref_cat_advanced" maxLength="41">ଵିକଶିତ</string>
     <string name="pref_cat_workarounds" maxLength="41">କାର୍ଯ୍ୟକ୍ଷେତ୍ର</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">ସ୍କ୍ରିନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରିନର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_down" maxLength="41">ତଳକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_left" maxLength="41">ବାମକୁ ସ୍ଵାଇପ୍ କଲେ</string>
@@ -125,12 +126,14 @@
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
-    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
-    <string name="automatic_sync_choice" maxLength="41">ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
+    <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
-    <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">ସର୍ଵଦା</string>
+    <string name="sync_media_only_unmetered">କେଵଳ ମିଟର୍ ନଥିବା ସଂଯୋଜନାଗୁଡ଼ିକରେ</string>
+    <string name="sync_media_never">କଦାପି ନୁହେଁ</string>
+    <string name="sync_status_badge" maxLength="41">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରିବା</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="metered_sync_title" maxLength="41">ମିଟର୍ ସଂଯୋଜନାଗୁଡ଼ିକରେ ସିଙ୍କ୍ କରିବାକୁ ଦେବା</string>
     <string name="metered_sync_summary">ଯଦି ଅକ୍ଷମ କରାଗଲା, ଆଉ ଆପଣ କୌଣସି ମିଟର୍ ହେଉଥିବା ସଂଯୋଜନାରେ ସିଙ୍କ୍ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତି ତେବେ ଆପଣଙ୍କୁ ଚେତାଵନୀ ଦିଆଯିବ</string>
@@ -158,12 +161,12 @@
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="safe_display" maxLength="41">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
-    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଵାଇସଗୁଡ଼ିକ ଏହା ଲୋଡ଼ି ପାରନ୍ତି।</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରିଦେଇ ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ଵ୍ୟଵହାର କରିବା। E-ink ଡିଵାଇସଗୁଡ଼ିକ ଏହା ଲୋଡ଼ି ପାରନ୍ତି।</string>
     <string name="disable_extended_text_ui" maxLength="41">ଗୋଟିଏ-କ୍ଷେତ୍ର ସମ୍ପାଦନା ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
-    <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
+    <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ଵିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାଵରେ କେନ୍ଦ୍ରିତ କରିରଖିବା</string>
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
@@ -177,7 +180,7 @@
     <string name="show_progress_summ">ବଳକା ପତ୍ରସଂଖ୍ୟା ଦେଖାନ୍ତୁ</string>
     <string name="show_eta" maxLength="41">ETA ଦେଖାନ୍ତୁ</string>
     <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାନ୍ତୁ</string>
-    <string name="use_current" maxLength="41">ନୂଆ ପତ୍ରଗୁଡ଼ିକ ପାଇଁ ତାସଖଣ୍ଡ</string>
+    <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ ତାସଖଣ୍ଡ</string>
     <string name="new_spread" maxLength="41">ନୂଆ ପତ୍ରର ଅଵସ୍ଥିତି</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
@@ -194,8 +197,8 @@
     <string name="enable_api_summary">ଅନ୍ୟ ଆପସ୍ କୁ AnkiDroid ସହିତ ସଂଯୋଗ କରି ଆପଣଙ୍କ ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅନ୍ତୁ</string>
     <string name="custom_buttons" maxLength="41">ଆପ୍ ବାର୍ ବଟନ୍</string>
     <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
-    <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
-    <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
+    <string name="custom_buttons_setting_always_show">ସର୍ଵଦା ଦେଖାଅ</string>
+    <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାଅ</string>
     <string name="custom_buttons_setting_menu_only">କେଵଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
@@ -225,24 +228,14 @@
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">ଗଣନର ସଠିକତା</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">ଅନୁକରଣର ପୁନରାବୃତ୍ତି ସଂଖ୍ୟା</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍</string>
+    <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସୀଙ୍କ୍ ସର୍ଵର୍</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ଵ୍ୟଵହାର ହୋଇନାହିଁ</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">ସଂଗ୍ରହ: %1$s\nମିଡ଼ିଆ: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">ଡିଫଲ୍ଟ</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">ସିଙ୍କ୍ url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
+        ]]></string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">ସୀଙ୍କ୍ url</string>
     <!-- Key Bindings -->
     <string name="keyboard">କୀବୋର୍ଡ୍</string>
     <string name="bluetooth">Bluetooth</string>
@@ -252,7 +245,7 @@
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">ତାସଖଣ୍ଡ ବର୍ଣ୍ଣନା (କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ କୁ ପ୍ରଭାବିତ କରେ)</string>
-    <string name="deck_conf_group" maxLength="41">ବିକଳ୍ପ ଗୋଷ୍ଠୀ</string>
+    <string name="deck_conf_group" maxLength="41">ଵିକଳ୍ପ ଗୋଷ୍ଠୀ</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ</item>
         <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି</item>
@@ -316,7 +309,7 @@
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ଵିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ଵିଜ୍ଞପ୍ତି ସକ୍ଷମ କରିବା</string>
     <string name="deck_conf_reminders_time" maxLength="41">…ରେ ମନେ ପକାନ୍ତୁ</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
@@ -361,25 +354,26 @@
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
     <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
-    <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
-    <string name="disable_dev_options">ଡେଵେଲପର୍ ବିକଳ୍ପ ଅକ୍ଷମ କରିବା</string>
+    <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ</string>
+    <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
+    <string name="disable_dev_options">ଡେଵେଲପର୍ ଵିକଳ୍ପ ଅକ୍ଷମ କରିବା</string>
     <string name="dev_options_warning">        ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା ପୂର୍ବରୁ ଦୟାକରି ନିଶ୍ଚିତ ହୁଅନ୍ତୁ। ଏଇ ବିକଳ୍ପଗୁଡ଼ିକ ବିପଜ୍ଜନକ ଏବଂ ଆପ୍ ଭାଙ୍ଗିପାରନ୍ତି କିମ୍ବା ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଭ୍ରଷ୍ଟ କରିପାରନ୍ତି।\n\nଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ଏହି ବିକଳ୍ପଗୁଡ଼ିକ ଅଧିକାଂଶ ଉପଭୋକ୍ତାଙ୍କ ପାଇଁ ଉପଯୁକ୍ତ ନୁହେଁ ଏବଂ ସେଥିପାଇଁ ଅନୁବାଦ କରାନଯାଇ ଇଂରାଜୀରେ ହି ଥାଏ।
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backup_options__title" maxLength="41">ବ୍ୟାକଅପ୍ ଵିକଳ୍ପ</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid ପର୍ଯ୍ୟାୟକ୍ରମେ ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନିଏ।
+        ବ୍ୟାକଅପ୍ ଦୁଇ ଦିନରୁ ଅଧିକ ପୁରୁଣା ହେବା ପରେ,
+        AnkiDroid ଡିସ୍କ ସ୍ପେସ୍ ମୁକ୍ତ କରିବାକୁ ସେମାନଙ୍କ ମଧ୍ୟରୁ କିଛିଟି ଅପସାରଣ କରିବା ଆରମ୍ଭ କରିବ।
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        ଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ମିଡ଼ିଆ ଫାଇଲର ବ୍ୟାକଅପ୍ ନିଆଯାଏନି।
+        ସୁରକ୍ଷିତ ରହିବାକୁ, ଦୟାକରି ପର୍ଯ୍ୟାୟକ୍ରମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ସୀଙ୍କ୍ରୋନାଇଜ୍ କରୁଥାନ୍ତୁ,
+        କିମ୍ୱା ସଂଗ୍ରହର ରପ୍ତାନି କରି ବ୍ୟାକଅପ୍ ରଖନ୍ତୁ।
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        ଆପଣ ଗୋଟେ ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରିପାରିବେ ଏଵଂ ଡେକ୍ ତାଲିକା ମେନୁରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ରପ୍ତାନି କରିପାରିବେ।
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ମଧ୍ୟରେ କେତେ ମିନିଟର ଅନ୍ତର</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">କେତୋଟି ଦୈନିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">କେତୋଟି ସାପ୍ତାହିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">କେତୋଟି ମାସିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>

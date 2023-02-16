@@ -35,6 +35,7 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
+        buildConfigField "Boolean", "LEGACY_STORAGE", "false"
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -58,8 +59,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600192
-        versionName="2.16alpha92"
+        versionCode=21600193
+        versionName="2.16alpha93"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -102,6 +103,10 @@ android {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", localProperties["enable_leak_canary"]
                 } else {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "true"
+                }
+                // allow setting legacy storage on install
+                if (localProperties["legacy_storage"] != null) {
+                    buildConfigField "Boolean", "LEGACY_STORAGE", localProperties["legacy_storage"]
                 }
             } else {
                 testCoverageEnabled true
@@ -255,14 +260,14 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:23.1.0'
+            force 'org.jetbrains:annotations:24.0.0'
         }
     }
 
     lintChecks project(":lint-rules")
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
-    compileOnly 'org.jetbrains:annotations:23.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
+    compileOnly 'org.jetbrains:annotations:24.0.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
@@ -278,12 +283,11 @@ dependencies {
     implementation 'androidx.sqlite:sqlite-framework:2.2.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    // noinspection GradleDependency - pinned at 1.12 until API26 minSdkVersion (File.toPath usage)
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.webkit:webkit:1.5.0'
+    implementation 'androidx.webkit:webkit:1.6.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
@@ -320,7 +324,7 @@ dependencies {
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
-    implementation 'org.apache.commons:commons-compress:1.22' // #6419 - handle >2GB apkg files
+    implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'commons-io:commons-io:2.11.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
@@ -345,7 +349,7 @@ dependencies {
     api project(":api")
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.mockito:mockito-inline:4.10.0'
+    testImplementation 'org.mockito:mockito-inline:5.1.1'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
@@ -357,7 +361,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-    testImplementation "io.mockk:mockk:1.13.3"
+    testImplementation "io.mockk:mockk:1.13.4"
     testImplementation 'org.apache.commons:commons-exec:1.3' // obtaining the OS
 
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536

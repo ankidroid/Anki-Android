@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">どこでもドロワー</string>
     <string name="gestures_fullscreen_nav_drawer_summary">画面上のどこからでも、右にスワイプするとナビゲーションドロワーが開きます</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">上にスワイプ</string>
     <string name="gestures_swipe_down" maxLength="41">下にスワイプ</string>
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>
@@ -125,11 +126,13 @@
     <string name="tts_summ">音声ファイルが含まれていない場合に、質問と解答を読み上げます</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">メディアの同期</string>
-    <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像・音声・動画）ファイルを自動的に取得します</string>
     <string name="sync_account" maxLength="41">AnkiWebアカウント</string>
     <string name="sync_account_summ_logged_out">ログインしていません</string>
     <string name="automatic_sync_choice" maxLength="41">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">常に同期</string>
+    <string name="sync_media_only_unmetered">Wi-Fi接続時のみ同期</string>
+    <string name="sync_media_never">同期しない</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
     <string name="metered_sync_title" maxLength="41">Wi-Fi接続時以外の同期を許可</string>
@@ -227,21 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">指定なし</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">コレクション: %1$s\nメディア: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">既定</string>
-    <string name="custom_sync_server_help"><![CDATA[        AnkiWebとの同期の代わりに、
-        独自のサーバーを使用して同期を行うこともできます。
-        コレクションサーバーとメディアサーバーのどちらか、または両方を指定することができます。
-        設定しない場合は、デフォルトのAnkiWebサーバーが使用されます。
-        例えば、ローカルネットワークにしかアクセスできない場合はAnki Desktopに組み込まれた同期サーバーを使用してコレクションを同期し、
-        一般的なインターネットアクセスが可能な場合はAnkiWebを使用してメディアを同期する、といったことが可能です。
-        詳細は<a href="%s">こちら</a>をご覧ください。
-        <br>
-        <br>【注意】以前のバージョンのAnkiDroidの場合とは異なり、
-        カスタマイズのための同期URLを完全な形で指定する必要があります。
-        （例: https://example.com:8080/sync/ )]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
@@ -344,8 +338,8 @@
     <string name="card_side_question">表面</string>
     <string name="card_side_answer">裏面</string>
     <string name="card_side_both">表面と裏面の両方</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">表面で %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">裏面で %s</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">表面で%s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">裏面で%s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
@@ -377,22 +371,22 @@
         バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面のメニューから行えます。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">毎週保存するバックアップの数:</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">毎月保存するバックアップの数:</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">毎日保存するバックアップの数</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">毎週保存するバックアップの数</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">毎月保存するバックアップの数</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">容量を管理</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">エラー</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">計算\n中&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d個のファイル\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">未使用メディアファイルを削除</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">使用されていないメディアファイルを削除</string>
+    <string name="pref__delete_unused_media_files__summary">ファイル名の最初の文字が「 _ 」（アンダーバー）ではなく、どのノートにも使用されていないメディア（画像・音声・動画）ファイルを削除します</string>
     <string name="dialog__media_check_required__message">使用していないメディアファイルを検索するにはメディアチェックが必要です</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">使用していないメディアファイルを削除</string>
     <!-- Delete backups -->
@@ -403,13 +397,13 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">コレクションを削除</string>
-    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
+    <string name="dialog__delete_collection__message">本当にあなたのコレクション、メディア、バックアップを削除してもよろしいですか？</string>
     <string name="progress__deleting_collection">コレクションを削除しています&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">すべて削除</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__summary">コレクション、メディア、バックアップ、設定を削除する</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">すべて削除</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にアプリデータを削除してもよろしいですか？　削除対象には、あなたのコレクション、メディア、バックアップ、アプリ内の設定が含まれています。\n\n注意: この操作を行うと、AnkiDroidアプリは強制終了され、現在ご覧になっているこの設定画面は閉じられます。</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">アプリのデータを削除</string>
     <string name="pref__delete_app_data__summary">設定やその他のアプリのデータを削除</string>

@@ -40,6 +40,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <permission android:name="${applicationId}.permission.READ_WRITE_DATABASE"
                 android:label="@string/read_write_permission_label"
                 android:description="@string/read_write_permission_description"
@@ -83,10 +84,12 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
-        android:manageSpaceActivity=".ui.windows.managespace.ManageSpaceActivity"
+        android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >
+        <!-- Probably because of a bug on the framework,
+        the full package path is needed for manageSpaceActivity -->
         <activity
-            android:name=".ui.windows.managespace.ManageSpaceActivity"
+            android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".DrawingActivity"
@@ -411,16 +414,19 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             />
-        <!-- TODO: Fix LockedOrientationActivity - introduction_layout.xml -->
+
         <activity android:name=".IntroductionActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="userPortrait"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            tools:ignore="LockedOrientationActivity" />
+            android:configChanges="keyboardHidden|screenSize|locale" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+
+        <service
+            android:name="com.ichi2.anki.services.MigrationService"
+            android:foregroundServiceType="dataSync"
+            />
 
         <!-- small widget -->
         <receiver

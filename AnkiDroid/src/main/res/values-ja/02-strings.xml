@@ -219,7 +219,7 @@
     <string name="sched_end">（終了）</string>
     <string name="sched_unbury_action">今それらを見る場合は、メニューの「延期解除」をタップしてください</string>
     <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
-    <string name="tag_editor_add_feedback">このまま「%2$s」ボタンをタップすると、タグ「%1$s」の追加が確定します</string>
+    <string name="tag_editor_add_feedback">「%1$s」の追加を確定するには「%2$s」をタップしてください</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
@@ -399,7 +399,7 @@
     <string name="deck_created">デッキを作成しました</string>
     <string name="deck_renamed">デッキ名を変更しました</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">このデッキは削除されています。ショートカットを削除してください。</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">カード</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ノート</string>

@@ -100,8 +100,8 @@
         <item>Modifis noton</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Apliki</string>
+    <string name="filter_by_flags">Flagoj</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifi hodiaŭan limigon de novaj kartoj</string>
     <string name="custom_study_increase_review_limit">Modifi hodiaŭan limigon de kartoj por ripeti</string>
@@ -166,7 +166,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Eraro</string>
     <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
     <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
     <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>

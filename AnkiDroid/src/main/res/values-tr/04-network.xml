@@ -46,7 +46,7 @@
 -->
 <resources>
     <string name="youre_offline">Çevrimdışısınız</string>
-    <string name="sync_even_if_offline">Tekrar dene</string>
+    <string name="sync_even_if_offline">Yine de dene. </string>
     <string name="sync_error">Senkronizasyon hatası</string>
     <string name="vague_error" comment="Network error dialog title">Hata</string>
     <string name="retry">Yeniden Dene</string>
@@ -83,7 +83,7 @@
     <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>
     <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>
     <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra yeniden deneyin.</string>
-    <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen yeniden deneyin.</string>
+    <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen tekrar deneyin.</string>
     <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
     <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
     <string name="sync_write_access_error_on_storage">İndirilen dosya depolama alanınıza kaydedilemedi. Ya depolama salt-okunur ya da yeterli alan yok.</string>

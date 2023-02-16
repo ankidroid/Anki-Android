@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otwórz panel nawigacyjny po przesunięciu w prawo w dowolnym miejscu ekranu</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Przesuń w górę</string>
     <string name="gestures_swipe_down" maxLength="41">Przesuń w dół</string>
     <string name="gestures_swipe_left" maxLength="41">Przesuń w lewo</string>
@@ -125,11 +126,13 @@
     <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Pobierz media przy synchronizacji</string>
-    <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Nie zalogowany</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Zawsze</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Nigdy</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
     <string name="metered_sync_title" maxLength="41">Zezwalaj na synchronizację przy połączeniach taryfowych</string>
@@ -227,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nie używane</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Kolekcja: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">domyślne</string>
-    <string name="custom_sync_server_help"><![CDATA[        Jako alternatywa dla synchronizacji z AnkiWeb,
-        możesz użyć własnych serwerów do synchronizacji.
-        Możesz określić kolekcję lub serwer multimedialny lub oba te elementy.
-        Jeśli nie ustawione, zamiast tego zostaną użyte domyślne serwery AnkiWeb.
-        Na przykład, możesz użyć serwera synchronizacji wbudowanego w Anki
-        na komputery do synchronizacji kolekcji gdy masz tylko sieć lokalną,
-        i AnkiWeb do synchronizacji multimediów, gdy masz ogólny dostęp do Internetu.
-        <a href="%s">Dowiedz się więcej</a>
-        <br>
-        <br>Uwaga: w przeciwieństwie do poprzednich wersji AnkiDroid,
-        musisz określić pełny adres URL synchronizacji,
-        na przykład: https://example. om:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Adres url synchronizacji</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Adres url synchronizacji mediów</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
     <string name="bluetooth">Bluetooth</string>
@@ -363,11 +356,11 @@
     <string name="use_rust_backend_title" maxLength="41">Użyj nowego backendu</string>
     <string name="use_rust_backend_summary">Włącza nowsze funkcje Anki, takie jak silnik v3\nNIESTABILNY. Nie używaj na kolekcji, której nie możesz stracić. NIE cofaj po zamknięciu aplikacji</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Użyj harmonogramu v3</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
+    <string name="disable_dev_options">Wyłącz opcje dla programistów </string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
     <!-- #######################################################################################

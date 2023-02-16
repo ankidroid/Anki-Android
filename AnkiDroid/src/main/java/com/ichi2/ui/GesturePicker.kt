@@ -88,7 +88,7 @@ constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int 
 
     inner class GestureWrapper(val gesture: Gesture?) {
         override fun toString(): String {
-            return gesture?.toDisplayString(context) ?: "None"
+            return gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
         }
 
         override fun equals(other: Any?): Boolean {

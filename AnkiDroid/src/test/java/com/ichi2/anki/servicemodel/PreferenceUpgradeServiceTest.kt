@@ -25,7 +25,6 @@ import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.RemovedPreferences
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil
 import org.hamcrest.CoreMatchers.equalTo
@@ -107,15 +106,6 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun `Legacy custom media sync URL is removed during upgrade`() {
-        val syncURL = "https://msync.ankiweb.net"
-        mPrefs.edit { putString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, syncURL) }
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null), equalTo(syncURL))
-        PreferenceUpgrade.RemoveLegacyMediaSyncUrl().performUpgrade(mPrefs)
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null), equalTo(null))
-    }
-
-    @Test
     fun note_editor_toolbar_button_text() {
         // add two example toolbar buttons
         val buttons = HashUtil.HashSetInit<String>(2)
@@ -170,32 +160,15 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun `Custom collection sync URL preference contains full path after upgrade`() {
-        mPrefs.edit {
-            putString(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE, "http://foo")
-        }
+    fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
+        // enabled -> always
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
+        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("always"))
 
-        PreferenceUpgrade.UpgradeCustomCollectionSyncUrl().performUpgrade(mPrefs)
-
-        assertThat(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE), equalTo(false))
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), equalTo("http://foo/sync/"))
-    }
-
-    @Test
-    fun `Removed Use custom sync server preference is applied to both sync URL preferences after upgrade`() {
-        mPrefs.edit {
-            putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, "http://foo/sync/")
-            putBoolean(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
-        }
-
-        assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
-        assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
-
-        PreferenceUpgrade.UpgradeCustomSyncServerEnabled().performUpgrade(mPrefs)
-
-        assertThat(mPrefs.getBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, false), equalTo(true))
-        assertThat(mPrefs.getBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, false), equalTo(false))
-        assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo("http://foo/sync/"))
-        assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
+        // disabled -> never
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
+        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("never"))
     }
 }

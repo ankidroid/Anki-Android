@@ -15,6 +15,7 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/pref_cat_sync"
     android:key="@string/pref_sync_screen_key">
@@ -28,11 +29,13 @@
             android:targetClass="com.ichi2.anki.MyAccount"
             android:targetPackage="@string/applicationId" />
     </Preference>
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="@string/sync_fetch_missing_media_key"
-        android:summary="@string/sync_fetch_missing_media_summ"
-        android:title="@string/sync_fetch_missing_media" />
+    <ListPreference
+        android:defaultValue="@string/sync_media_always_value"
+        android:entries="@array/sync_media_entries"
+        android:entryValues="@array/sync_media_values"
+        android:key="@string/sync_fetch_media_key"
+        android:title="@string/sync_fetch_missing_media"
+        app:useSimpleSummaryProvider="true"/>
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/automatic_sync_choice_key"

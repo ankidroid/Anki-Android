@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Tarjetas nuevas antes de los repasos</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Cuando no haya una fuente especificada en las tarjetas flash</string>
-    <string name="override_font_always">Siempre</string>
+    <string name="override_font_always" comment="Option to always override font">Siempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Seguir sistema</string>
     <!-- day_theme_labels -->

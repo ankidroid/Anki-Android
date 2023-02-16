@@ -452,7 +452,11 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            return getAppSpecificExternalAnkiDroidDirectory(context)
+            return if (!BuildConfig.LEGACY_STORAGE) {
+                File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
+            } else {
+                legacyAnkiDroidDirectory
+            }
         }
 
         /**

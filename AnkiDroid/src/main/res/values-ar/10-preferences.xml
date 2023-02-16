@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">السماح بإيماءات اللمس في حواف الشاشة</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">قائمة تجول ملء الشاشة</string>
     <string name="gestures_fullscreen_nav_drawer_summary">فتح قائمة التجول عند السحب لليمين من أي مكان في الشاشة</string>
+    <string name="gestures_none" maxLength="41">لا شَيْء</string>
     <string name="gestures_swipe_up" maxLength="41">سحب للأعلى</string>
     <string name="gestures_swipe_down" maxLength="41">سحب للأسفل</string>
     <string name="gestures_swipe_left" maxLength="41">سحب لليسار</string>
@@ -125,11 +126,13 @@
     <string name="tts_summ">يقرأ السؤال والجواب إذا لم يكن هناك ملف صوتي</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">جلب الوسائط أثناء المزامنة</string>
-    <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائيًا عند المزامنة</string>
     <string name="sync_account" maxLength="41">حساب أنكي ويب</string>
     <string name="sync_account_summ_logged_out">لست مسجلًا الدخول</string>
     <string name="automatic_sync_choice" maxLength="41">مزامنة تلقائية</string>
     <string name="automatic_sync_choice_summ">مزامنة تلقائية عند بدء/إغلاق التطبيق إذا مضى على المزامنة الأخيرة        أكثر من 10 دقائق.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">دائمًا</string>
+    <string name="sync_media_only_unmetered">فقط على الاتصالات غير المحدودة</string>
+    <string name="sync_media_never">أبدًا</string>
     <string name="sync_status_badge" maxLength="41">عرض حالة المزامنة</string>
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
     <string name="metered_sync_title" maxLength="41">السماح بالمزامنة على الاتصالات المحدودة</string>
@@ -227,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">خادم مزامنة مخصص</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">غير مستخدم</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">المجموعة: %1$s\nالوسائط: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">افتراضي</string>
-    <string name="custom_sync_server_help"><![CDATA[        كبديل للمزامنة باستخدام AnkiWeb،
-        تستطيع استخدام خوادمك الخاصة.
-        تستطيع تحديد إما المجموعة أو الوسائط أو كليهما.
-        إذا لم يتم ضبط الخيار، سيتم استخدام خوادم AnkiWeb.
-        مثلًا، تستطيع استخدام خادم المزامنة المضمن في
-        نسخة الكمبيوتر لأنكي لمزامنة المجموعة عندما يكون لديك شبكة محلية فقط،
-        واستخدام AnkiWeb لمزامنة الوسائط عندما يكون لديك اتصال إنترنت عادي.
-        <a href="%s">تعلم المزيد</a>
-        <br>
-        <br>ملاحظة: على عكس إصدارات أنكيدرويد السابقة،
-        عليك إدخال عنوان خادم المزامنة كاملًا،
-        مثل: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">رابط المزامنة</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">رابط مزامنة الوسائط</string>
     <!-- Key Bindings -->
     <string name="keyboard">لوحة المفاتيح</string>
     <string name="bluetooth">بلوتوث</string>

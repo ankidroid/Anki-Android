@@ -44,7 +44,7 @@ enum class ViewerCommand(val resourceId: Int) {
     UNDO(R.string.undo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
-    BURY_CARD(R.string.menu_bury),
+    BURY_CARD(R.string.menu_bury_card),
     SUSPEND_CARD(R.string.menu_suspend_card),
     DELETE(R.string.menu_delete_note),
     PLAY_MEDIA(R.string.gesture_play),

@@ -82,6 +82,27 @@ object FileUtil {
     }
 
     /**
+     * Calculates the size of a [File].
+     * If it is a file, returns the size.
+     * If the file does not exist, returns 0
+     * If the file is a directory, recursively explore the directory tree and summing the length of each
+     * file. The time taken to calculate directory size is proportional to the number of files in the directory
+     * and all of its sub-directories. See: [DirectoryContentInformation.fromDirectory]
+     * It is assumed that directory contains no symbolic links.
+     *
+     * @param file Abstract representation of the file/directory whose size needs to be calculated
+     * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
+     */
+    fun getSize(file: File): Long {
+        if (file.isFile) {
+            return file.length()
+        } else if (!file.exists()) {
+            return 0L
+        }
+        return DirectoryContentInformation.fromDirectory(file).totalBytes
+    }
+
+    /**
      * Information about the content of a directory `d`.
      */
     data class DirectoryContentInformation(
@@ -100,6 +121,9 @@ object FileUtil {
         val numberOfFiles: Int
     ) {
         companion object {
+            /**
+             * @throws IOException [root] does not exist
+             */
             fun fromDirectory(root: File): DirectoryContentInformation {
                 var totalBytes = 0L
                 var numberOfDirectories = 0

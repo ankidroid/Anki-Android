@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Vollbild-Navigationsleiste</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Navigationsleiste öffnen, wenn rechts von überall auf dem Bildschirm gewischt wird</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Nach oben wischen</string>
     <string name="gestures_swipe_down" maxLength="41">Nach unten wischen</string>
     <string name="gestures_swipe_left" maxLength="41">Nach links wischen</string>
@@ -125,11 +126,13 @@
     <string name="tts_summ">Liest Frage und Antwort vor, wenn keine anderen Sounds enthalten sind</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Mediadaten synchronisieren</string>
-    <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-Konto</string>
     <string name="sync_account_summ_logged_out">Nicht eingeloggt</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische Synchronisierung</string>
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
     <string name="metered_sync_title" maxLength="41">Synchronisierung über Mobilfunk zulassen</string>
@@ -227,13 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Eigener Synchronisationsserver</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nicht in Gebrauch</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Sammlung: %1$s\nMedien: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">Standard</string>
-    <string name="custom_sync_server_help"><![CDATA[Als Alternative zur Synchronisierung mit AnkiWeb kannst du deine eigenen Server verwenden. Du kannst einen Sammlungsserver, einen Medienserver oder beide auswählen. Standardmäßig werden stattdessen die AnkiWeb-Server verwendet. Zum Beispiel könntest du den Server, der in die Desktopversion von Anki eingebaut ist verwenden, um deine Sammlung zu synchronisieren, wenn du nur ein lokales Netzwerk zur Verfügung hast. AnkiWeb könnte dann bei vollständigem Internetzugriff verwendet werden.
-<a href="%s">Lerne mehr darüber</a><br><br>
-Bitte beachte: anders als bei älteren AnkiDroid-Versionen musst du jetzt deine gesamte Synchronisierungs-URL angeben, zum Beispiel "https://example.com:8080/sync/".]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronisations-URL</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Mediensynchronisations-URL</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tastatur</string>
     <string name="bluetooth">Bluetooth</string>

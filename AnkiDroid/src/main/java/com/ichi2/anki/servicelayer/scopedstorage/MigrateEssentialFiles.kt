@@ -503,7 +503,7 @@ internal constructor(
         /**
          * A collection of [File] objects to be moved by [MigrateEssentialFiles]
          */
-        private fun iterateEssentialFiles(sourcePath: AnkiDroidDirectory) =
+        fun iterateEssentialFiles(sourcePath: AnkiDroidDirectory) =
             PRIORITY_FILES.flatMap { it.getEssentialFiles(sourcePath.directory.canonicalPath) }
 
         /**

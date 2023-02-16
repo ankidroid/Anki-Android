@@ -105,7 +105,7 @@
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
     <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>
-    <string name="custom_study_review_forgotten">Unutulmuş kartları tekrarla</string>
+    <string name="custom_study_review_forgotten">Unutulan kartları gözden geçir</string>
     <string name="custom_study_review_ahead">Önceden çalış</string>
     <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
     <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
@@ -140,11 +140,11 @@
     <string name="note_editor_copy_note">Notu kopyala</string>
     <string name="card_editor_reposition_card">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Zamanını değiştir</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Yeniden planla</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Önizle</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d \'den %2$d</string>
     <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Adını değiştir</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Yeniden adlandır</string>
     <string name="default_conf_delete_error">Varsayılan seçenekler grubu kaldırılamaz</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kart eklendi</item>
@@ -174,10 +174,10 @@
     <string name="import_log_file_cache_cleared">Dosya aktarımında hata, muhtemelen işlem esnasında önbellek temizliği.\nLütfen yeniden deneyin.</string>
     <string name="import_succeeded_but_check_database">Veri aktarımı başarılı ama aktarım sonrası temizlik başarısız oldu. Daha sonra veritabanı kontrolünü çalıştırın. Temel sebep: %s</string>
     <string name="import_error_corrupt_zip">Apkg dosyası bozuk. Lütfen silip yeniden indirin.\n\nTemel sebep: %s</string>
-    <string name="import_error_handle_exception">Dosya aktarılamadı\n\n%s</string>
+    <string name="import_error_handle_exception">Dosya içeri aktarılamadı\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
-    <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
+    <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
     <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
     <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
@@ -223,7 +223,7 @@
     <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
     <string name="steps_min_error">En az bir adım gerekiyor</string>
     <string name="sched_end">(bitiş)</string>
-    <string name="sched_unbury_action">Onları şimdi görmek için menüden \"Görünür Yap\"a dokunun.</string>
+    <string name="sched_unbury_action">Onları şimdi görmek için menüden \"Gizlemeyi geri al\"a dokunun.</string>
     <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
@@ -413,9 +413,9 @@
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deste var</string>
     <string name="deck_created">Deste oluşturuldu</string>
-    <string name="deck_renamed">Destenin adı değiştirildi</string>
+    <string name="deck_renamed">Deste yeniden adlandırıldı</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Deste silindi. Lütfen kısayolu kaldırın</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>

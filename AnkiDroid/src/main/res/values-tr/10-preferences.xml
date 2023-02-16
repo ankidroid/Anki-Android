@@ -99,6 +99,7 @@
     <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Tam ekran gezinme çekmecesi</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Ekranın üzerindeki herhangi bir yerden sağa doğru parmağınızı kaydırdığınızda bütün dosyaların genel görünümü için bir önizleme açılacaktır</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Yukarı sürükleme</string>
     <string name="gestures_swipe_down" maxLength="41">Aşağı sürükleme</string>
     <string name="gestures_swipe_left" maxLength="41">Sola sürükleme</string>
@@ -125,11 +126,13 @@
     <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Eşitlemede medyayı aktar</string>
-    <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
     <string name="sync_account" maxLength="41">AnkiWeb hesabı</string>
     <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
     <string name="automatic_sync_choice" maxLength="41">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Her zaman</string>
+    <string name="sync_media_only_unmetered">Sadece ölçüsüz bağlantılarda</string>
+    <string name="sync_media_never">Hiçbir zaman</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
     <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
@@ -227,23 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Özel senkronizasyon sunucusu</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Kullanılmıyor</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Koleksiyon: %1$s\nMedya: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">varsayılan</string>
-    <string name="custom_sync_server_help"><![CDATA[        AnkiWeb\'le senkronize etmeye bir alternatif olarak,
-        senkronizasyon için kendi sunucularınızı kullanabilirsiniz.
-        Koleksiyon veya medya sunucusu, ya da ikisini de belirleyebilirsiniz.
-        Ayarlanmazsa varsayılan AnkiWeb sunucuları kullanılır.
-        Örneğin, yalnızca yerel ağa bağlıyken koleksiyonu senkronize
-        etmek için Anki Masaüstü\'nün dahili senkronizasyon sunucusunu,
-        genel internet erişiminiz varken medyayı senkronize etmek için de
-        AnkiWeb\'i kullanabilirsiniz.
-        <a href="%s">Daha fazlasını öğren</a>
-        <br>
-        <br>Not: Önceki AnkiDroid sürümlerinin aksine,
-        senkronizasyon URL\'ini komple belirtmeniz gerekir,
-        örneğin: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Medya Senkronizasyon Url\'i</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klavye</string>
     <string name="bluetooth">Bluetooth</string>
@@ -259,7 +251,7 @@
         <item quantity="other">%1$s\n%2$d deste bu grubu kullanıyor</item>
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">Yeni kartlar</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Çalışma</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Tekrarlar</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Hatâlar</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Genel</string>
     <string name="deck_conf_reminders" maxLength="41">Hatırlatmalar</string>
@@ -295,7 +287,7 @@
     <string name="deck_conf_manage" maxLength="41">Grup yönetimi</string>
     <string name="deck_conf_manage_summ">Ayar grupları ekle ve değiştir</string>
     <string name="deck_conf_current_group" maxLength="41">Şu anki grup</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Adını değiştir</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Yeniden adlandır</string>
     <string name="deck_conf_reset" maxLength="41">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Yapılandırma ekle</string>
@@ -310,10 +302,10 @@
     <string name="pref_browser_editor_font" maxLength="41">Tarayıcı ve düzenleyici fontu</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Arama</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Sınırla:</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Sınırla</string>
     <string name="deck_conf_cram_order" maxLength="41">kart seçme ölçütü:</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Zamanını değiştir</string>
-    <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Yeniden planlama</string>
+    <string name="deck_conf_cram_reschedule_summ">Bu destedeki cevaplarıma göre kartları yeniden planlama</string>
     <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
     <string name="deck_conf_cram_steps" maxLength="41">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Kendi adımlarınızı tanımlayın</string>

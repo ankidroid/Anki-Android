@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Новыя карткі перад паўтарэннем</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Калі не пазначаны шрыфт у картках</string>
-    <string name="override_font_always">Заўсёды</string>
+    <string name="override_font_always" comment="Option to always override font">Заўсёды</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Прытрымлівацца сістэмы</string>
     <!-- day_theme_labels -->

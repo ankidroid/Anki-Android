@@ -17,8 +17,10 @@ package com.ichi2.anki.preferences
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.preferences.VersatileTextPreference
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -30,7 +32,6 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         listOf(
             R.string.custom_sync_server_collection_url_key,
-            R.string.custom_sync_server_media_url_key
         ).forEach {
             requirePreference<VersatileTextPreference>(it).continuousValidator =
                 VersatileTextPreference.Validator { value ->
@@ -52,14 +53,15 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
             ?.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
         if (
-            key == CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL ||
-            key == CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL ||
-            key == CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED ||
-            key == CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED
+            key == SyncPreferences.CUSTOM_SYNC_URI ||
+            key == SyncPreferences.CUSTOM_SYNC_ENABLED
         ) {
             CustomSyncServer.handleSyncServerPreferenceChange(AnkiDroidApp.instance)
+            prefs.edit {
+                remove(SyncPreferences.CURRENT_SYNC_URI)
+            }
         }
     }
 }
