@@ -302,14 +302,13 @@ class Note : Cloneable {
         val csum = csumAndStrippedFieldField.second
         // find any matching csums and compare
         val strippedFirstField = csumAndStrippedFieldField.first
-        for (
-            flds in col.db.queryStringList(
-                "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                csum,
-                this.id,
-                mid
-            )
-        ) {
+        val fields = col.db.queryStringList(
+            "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
+            csum,
+            this.id,
+            mid
+        )
+        for (flds in fields) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]
                 ) == strippedFirstField

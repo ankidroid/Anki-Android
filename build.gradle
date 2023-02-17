@@ -76,10 +76,6 @@ subprojects {
             }
         }
 
-        ktlint {
-            version = "0.45.2"
-        }
-
         /**
          Kotlin allows concrete function implementations inside interfaces.
          For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
