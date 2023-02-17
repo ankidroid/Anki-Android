@@ -18,18 +18,18 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
-import android.Manifest
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.ContentValues
 import android.database.CursorWindow
 import android.net.Uri
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
+import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.async.TaskManager.Companion.waitToFinish
 import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
@@ -67,10 +67,7 @@ class ContentProviderTest : InstrumentedTest() {
     var schedVersion = 0
 
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule? = GrantPermissionRule.grant(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        FlashCardsContract.READ_WRITE_PERMISSION
-    )
+    var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.READ_WRITE_PERMISSION)
 
     // Whether tear down should be executed. I.e. if set up was not cancelled.
     private var mTearDown = false
