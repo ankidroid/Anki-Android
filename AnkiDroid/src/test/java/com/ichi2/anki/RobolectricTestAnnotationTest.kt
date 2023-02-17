@@ -15,16 +15,16 @@
  */
 package com.ichi2.anki
 
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringContains.containsString
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 // explicitly missing @RunWith(AndroidJUnit4.class)
 class RobolectricTestAnnotationTest : RobolectricTest() {
     @Test
     fun readableErrorIfNotAnnotated() {
-        val exception = assertThrows<IllegalStateException> { @Suppress("UNUSED_VARIABLE") val unused = this.targetContext }
+        val exception = assertFailsWith<IllegalStateException> { @Suppress("UNUSED_VARIABLE") val unused = targetContext }
         assertThat(exception.message, containsString("RobolectricTestAnnotationTest"))
         assertThat(exception.message, containsString("@RunWith(AndroidJUnit4.class)"))
     }

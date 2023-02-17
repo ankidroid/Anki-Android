@@ -24,6 +24,7 @@ import org.junit.Test
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
 
 class CompatDirectoryContentTest : Test21And26() {
 
@@ -74,20 +75,14 @@ class CompatDirectoryContentTest : Test21And26() {
     fun non_existent_dir_test() {
         val directory = createTransientDirectory()
         directory.delete()
-        assertThrows<FileNotFoundException>({
-            compat.contentOfDirectory(directory)
-        }
-        )
+        assertFailsWith<FileNotFoundException> { compat.contentOfDirectory(directory) }
     }
 
     @SuppressLint("NewApi")
     @Test
     fun file_test() {
         val file = createTransientFile("foo")
-        val exception = assertThrowsSubclass<IOException>({
-            compat.contentOfDirectory(file)
-        }
-        )
+        val exception = assertFailsWith<IOException> { compat.contentOfDirectory(file) }
         if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))
         }
@@ -101,6 +96,6 @@ class CompatDirectoryContentTest : Test21And26() {
     @Test
     fun reproduce_10358() {
         val permissionDenied = createPermissionDenied()
-        assertThrowsSubclass<IOException> { permissionDenied.compat.contentOfDirectory(permissionDenied.directory.directory) }
+        assertFailsWith<IOException> { permissionDenied.compat.contentOfDirectory(permissionDenied.directory.directory) }
     }
 }

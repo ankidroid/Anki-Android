@@ -30,7 +30,6 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -40,6 +39,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import kotlin.test.assertFailsWith
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -61,7 +61,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertThrowsSubclass<Exception> { reviewer.col } } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.col } } }
     }
 
     @Test

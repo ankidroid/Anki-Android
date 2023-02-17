@@ -33,6 +33,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import java.io.File
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -370,7 +371,7 @@ class DeckPickerTest : RobolectricTest() {
             // Neither collection, not its models will be initialized without storage permission
 
             // assert: Lazy Collection initialization CollectionTask.LoadCollectionComplete fails
-            assertThrowsSubclass<Exception> { d.col }
+            assertFailsWith<Exception> { d.col }
         } finally {
             disableNullCollection()
         }

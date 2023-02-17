@@ -30,7 +30,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
-import com.ichi2.testutils.assertThrows
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
@@ -43,6 +42,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -56,7 +56,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
     @Test
     fun ensure_cannot_be_instantiated_without_arguments() {
-        assertThrows<IllegalStateException> { DeckPickerContextMenu(col).deckId }
+        assertFailsWith<IllegalStateException> { DeckPickerContextMenu(col).deckId }
     }
 
     @Test

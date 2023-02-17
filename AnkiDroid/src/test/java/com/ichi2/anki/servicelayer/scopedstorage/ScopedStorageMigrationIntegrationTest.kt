@@ -36,6 +36,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
 import kotlin.test.fail
 
 // PERF: Some of these do not need a collection
@@ -113,7 +114,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
             }
         }
 
-        val aggregatedException = assertThrowsSubclass<AggregateException> { underTest.execTask() }
+        val aggregatedException = assertFailsWith<AggregateException> { underTest.execTask() }
 
         val testExceptions = aggregatedException.exceptions.filter { it !is DirectoryNotEmptyException }
 

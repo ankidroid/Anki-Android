@@ -19,10 +19,10 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.testutils.TestException
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 class MockMigrationContextTest {
     @Test
@@ -35,7 +35,7 @@ class MockMigrationContextTest {
         fun reportError() = context.reportError(throwIfUsed, TestException("test ex"))
 
         reportError() // retryCount is 0 during test. It increments to 1
-        assertThrows<TestException> { reportError() }
+        assertFailsWith<TestException> { reportError() }
 
         assertThat("retry should be called", retryCalled, equalTo(1))
     }
