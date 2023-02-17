@@ -86,7 +86,6 @@
     <string name="full_screen_off">Wyłączony</string>
     <string name="full_screen_system">Ukryj paski systemowe</string>
     <string name="full_screen_complete">Ukryj paski systemowe i przyciski odpowiedzi</string>
-    <string name="full_screen_error_gestures">Musisz włączyć detekcję gestów, aby ukryć przyciski odpowiedzi</string>
     <string name="answer_buttons_position" maxLength="41">Położenie przycisków odpowiedzi</string>
     <string-array name="answer_buttons_position_labels">
         <item>Góra</item>

@@ -86,7 +86,6 @@
     <string name="full_screen_off">غير مفعل</string>
     <string name="full_screen_system">إخفاء أشرطة النظام</string>
     <string name="full_screen_complete">إخفاء أشرطة النظام وأزرار الإجابة</string>
-    <string name="full_screen_error_gestures">عليك تفعيل الإيماءات لإخفاء أزرار الإجابة</string>
     <string name="answer_buttons_position" maxLength="41">موضع أزرار الإجابة</string>
     <string-array name="answer_buttons_position_labels">
         <item>في الأعلى</item>

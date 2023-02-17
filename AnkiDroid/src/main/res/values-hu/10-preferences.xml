@@ -86,7 +86,6 @@
     <string name="full_screen_off">Kikapcsol</string>
     <string name="full_screen_system">Rendszer sávok elrejtése</string>
     <string name="full_screen_complete">Rendszer sávok és válasz gombok elrejtése</string>
-    <string name="full_screen_error_gestures">Engedélyezni kell a gesztusokat a válasz gombok elrejtéséhez</string>
     <string name="answer_buttons_position" maxLength="41">A válasz gombok elhelyezkedése</string>
     <string-array name="answer_buttons_position_labels">
         <item>Oldal teteje</item>

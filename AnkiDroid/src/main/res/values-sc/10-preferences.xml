@@ -86,7 +86,6 @@
     <string name="full_screen_off">Istudadu</string>
     <string name="full_screen_system">Cua sas barras de sistema</string>
     <string name="full_screen_complete">Cua sas barras de sistema e sos butones de risposta</string>
-    <string name="full_screen_error_gestures">Depes abilitare sos gestos pro cuare sos butones de risposta</string>
     <string name="answer_buttons_position" maxLength="41">Positzione de su butone de sas rispostas</string>
     <string-array name="answer_buttons_position_labels">
         <item>In bassu</item>

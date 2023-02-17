@@ -86,7 +86,6 @@
     <string name="full_screen_off">Выкл.</string>
     <string name="full_screen_system">Скрыть системную панель</string>
     <string name="full_screen_complete">Скрыть системную панель и кнопки ответа</string>
-    <string name="full_screen_error_gestures">Включите жесты, чтобы скрыть кнопки</string>
     <string name="answer_buttons_position" maxLength="41">Положение кнопок ответа</string>
     <string-array name="answer_buttons_position_labels">
         <item>Сверху</item>

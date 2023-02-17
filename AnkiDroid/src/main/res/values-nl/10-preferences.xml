@@ -86,7 +86,6 @@
     <string name="full_screen_off">Uit</string>
     <string name="full_screen_system">De systeembalken verbergen</string>
     <string name="full_screen_complete">De systeembalken en antwoordknoppen verbergen</string>
-    <string name="full_screen_error_gestures">U moet de gebaren inschakelen om de antwoordknoppen te kunnen verbergen</string>
     <string name="answer_buttons_position" maxLength="41">Antwoord knoppen positie</string>
     <string-array name="answer_buttons_position_labels">
         <item>Bovenaan</item>

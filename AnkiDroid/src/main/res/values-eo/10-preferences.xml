@@ -86,7 +86,6 @@
     <string name="full_screen_off">Malaktiva</string>
     <string name="full_screen_system">Kaŝi sistemajn bretojn</string>
     <string name="full_screen_complete">Kaŝi sistemajn bretojn kaj respondajn butonojn</string>
-    <string name="full_screen_error_gestures">Enŝaltu gestojn por kaŝi respondajn butonojn</string>
     <string name="answer_buttons_position" maxLength="41">Pozicio de respondaj butonoj</string>
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>

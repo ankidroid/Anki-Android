@@ -86,7 +86,6 @@
     <string name="full_screen_off">關閉</string>
     <string name="full_screen_system">隱藏系統狀態欄</string>
     <string name="full_screen_complete">隱藏系統狀態欄和回答按鈕</string>
-    <string name="full_screen_error_gestures">您必須啟用手勢操作才能隱藏回答按鈕</string>
     <string name="answer_buttons_position" maxLength="41">顯示答案按鈕位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>頂部</item>

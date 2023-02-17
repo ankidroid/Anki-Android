@@ -86,7 +86,6 @@
     <string name="full_screen_off">Desligado</string>
     <string name="full_screen_system">Ocultar as barras do sistema</string>
     <string name="full_screen_complete">Ocultar as barras do sistema e botões de resposta</string>
-    <string name="full_screen_error_gestures">Deve ativar gestos para ocultar os botões de resposta</string>
     <string name="answer_buttons_position" maxLength="41">Posição dos botões de resposta</string>
     <string-array name="answer_buttons_position_labels">
         <item>Em cima</item>

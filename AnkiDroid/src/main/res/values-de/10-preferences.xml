@@ -86,7 +86,6 @@
     <string name="full_screen_off">Aus</string>
     <string name="full_screen_system">Systemleisten ausblenden</string>
     <string name="full_screen_complete">Systemleisten und Antwortschaltflächen ausblenden</string>
-    <string name="full_screen_error_gestures">Sie müssen Gesten aktivieren, um die Antwortschaltflächen auszublenden</string>
     <string name="answer_buttons_position" maxLength="41">Position der Antwortschaltflächen</string>
     <string-array name="answer_buttons_position_labels">
         <item>Oben</item>

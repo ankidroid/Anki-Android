@@ -86,7 +86,6 @@
     <string name="full_screen_off">Disabilitato</string>
     <string name="full_screen_system">Nascondi le barre di sistema</string>
     <string name="full_screen_complete">Nascondi le barre di sistema e i pulsanti di risposta</string>
-    <string name="full_screen_error_gestures">È necessario abilitare i gesti per nascondere i pulsanti di risposta</string>
     <string name="answer_buttons_position" maxLength="41">Posizione dei pulsanti di risposta</string>
     <string-array name="answer_buttons_position_labels">
         <item>In alto</item>

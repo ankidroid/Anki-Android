@@ -86,7 +86,6 @@
     <string name="full_screen_off">Mati</string>
     <string name="full_screen_system">Sembunyikan bar sistem</string>
     <string name="full_screen_complete">Sembunyikan bar sistem dan tombol jawab</string>
-    <string name="full_screen_error_gestures">Kamu harus mengaktifkan gestur untuk menyembunyikan tombol jawab</string>
     <string name="answer_buttons_position" maxLength="41">Posisi tombol jawab</string>
     <string-array name="answer_buttons_position_labels">
         <item>Atas</item>

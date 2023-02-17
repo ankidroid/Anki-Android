@@ -86,7 +86,6 @@
     <string name="full_screen_off">ఆఫ్</string>
     <string name="full_screen_system">సిస్టమ్ బార్లను దాచు</string>
     <string name="full_screen_complete">సిస్టమ్ బార్లను దాచిపెట్టి, సమాధానం బటన్లను దాచిపెట్టు</string>
-    <string name="full_screen_error_gestures">మీరు సమాధానం బటన్లను దాచడానికి సంజ్ఞలను ప్రారంభించాలి</string>
     <string name="answer_buttons_position" maxLength="41">సమాధానం బటన్లు స్థానం</string>
     <string-array name="answer_buttons_position_labels">
         <item>టాప్</item>

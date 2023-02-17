@@ -86,7 +86,6 @@
     <string name="full_screen_off">Vypnúť</string>
     <string name="full_screen_system">Skryť systémové panely</string>
     <string name="full_screen_complete">Skryť systémové panely a tlačidlá s odpoveďami</string>
-    <string name="full_screen_error_gestures">Ak chcete skryť tlačidlá s odpoveďami musíte povoliť gestá</string>
     <string name="answer_buttons_position" maxLength="41">Pozícia tlačidla pre odpoveď</string>
     <string-array name="answer_buttons_position_labels">
         <item>Hore</item>

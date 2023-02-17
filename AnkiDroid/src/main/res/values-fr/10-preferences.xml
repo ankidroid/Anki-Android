@@ -86,7 +86,6 @@
     <string name="full_screen_off">Inactif</string>
     <string name="full_screen_system">Masquer les barres système</string>
     <string name="full_screen_complete">Masquer les barres système et les boutons de réponse</string>
-    <string name="full_screen_error_gestures">Vous devez activer les gestes pour pouvoir masquer les boutons de réponse</string>
     <string name="answer_buttons_position" maxLength="41">Position des boutons de réponse</string>
     <string-array name="answer_buttons_position_labels">
         <item>Haut</item>

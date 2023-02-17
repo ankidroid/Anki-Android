@@ -86,7 +86,6 @@
     <string name="full_screen_off">끔</string>
     <string name="full_screen_system">시스템 바 숨기기</string>
     <string name="full_screen_complete">시스템 바와 정답 버튼 숨기기</string>
-    <string name="full_screen_error_gestures">정답 버튼을 숨기려면 제스처를 사용하도록 해야 합니다.</string>
     <string name="answer_buttons_position" maxLength="41">정답 버튼 위치</string>
     <string-array name="answer_buttons_position_labels">
         <item>상단</item>
