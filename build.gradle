@@ -77,11 +77,7 @@ subprojects {
         }
 
         ktlint {
-            // remove version override when ktlint gradle plugin releases with 0.45+ transitive
-            // check for "ktlint" here:
-            // https://github.com/JLLeitschuh/ktlint-gradle/blob/master/plugin/gradle/libs.versions.toml
             version = "0.45.2"
-            disabledRules = ["no-wildcard-imports"]
         }
 
         /**
