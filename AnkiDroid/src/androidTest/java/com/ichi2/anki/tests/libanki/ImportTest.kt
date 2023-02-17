@@ -15,12 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki
 
-import android.Manifest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.Shared
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.importer.Anki2Importer
 import com.ichi2.libanki.importer.AnkiPackageImporter
@@ -45,8 +44,7 @@ class ImportTest : InstrumentedTest() {
     private lateinit var testCol: Collection
 
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule? =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
 
     // testAnki2Mediadupes() failed on Travis API=22 EMU_FLAVOR=default ABI=armeabi-v7a
     // com.ichi2.anki.tests.libanki.ImportTest > testAnki2Mediadupes[test(AVD) - 5.1.1] FAILED

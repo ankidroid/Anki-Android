@@ -15,25 +15,24 @@
  */
 package com.ichi2.anki
 
-import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.Matchers
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
+import org.junit.rules.TestRule
 import java.util.ArrayList
 
 abstract class NoteEditorTest protected constructor() {
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule? =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
     var activityRule: ActivityScenarioRule<NoteEditor>? = ActivityScenarioRule(

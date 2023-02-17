@@ -16,9 +16,8 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
-import android.Manifest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
+import com.ichi2.anki.testutil.GrantStoragePermission
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,8 +29,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
 @RunWith(AndroidJUnit4::class)
 class CollectionTest : InstrumentedTest() {
     @get:Rule
-    val runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    val runtimePermissionRule = GrantStoragePermission.instance
 
     @Test
     fun testOpenCollection() {

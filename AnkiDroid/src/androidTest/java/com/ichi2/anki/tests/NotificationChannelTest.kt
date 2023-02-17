@@ -15,16 +15,15 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
-import android.Manifest
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.Channel
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
@@ -42,8 +41,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
 @KotlinCleanup("Enable JUnit 5 in androidTest and use JUnit5Asserter to match the standard tests")
 class NotificationChannelTest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
     private var mCurrentAPI = -1
     private var mTargetAPI = -1
     @KotlinCleanup("lateinit")
