@@ -66,7 +66,9 @@ class MultimediaEditableNote : IMultimediaEditableNote {
     override fun getField(index: Int): IField? {
         return if (index in 0 until numberOfFields) {
             fieldsPrivate[index]
-        } else null
+        } else {
+            null
+        }
     }
 
     override fun setField(index: Int, field: IField?): Boolean {

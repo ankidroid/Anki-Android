@@ -64,6 +64,7 @@ open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
+
     @KotlinCleanup("can move analytics here now")
     override fun attachBaseContext(base: Context) {
         // update base context with preferred app language before attach
@@ -260,7 +261,9 @@ open class AnkiDroidApp : Application() {
                     // throw new IllegalStateException(
                     //        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
                     // --- end of alteration from upstream Timber.DebugTree.getTag ---
-                } else createStackElementTag(stackTrace[CALL_STACK_INDEX])
+                } else {
+                    createStackElementTag(stackTrace[CALL_STACK_INDEX])
+                }
             }
 
         // ----  END copied from Timber.DebugTree because DebugTree.getTag() is package private ----

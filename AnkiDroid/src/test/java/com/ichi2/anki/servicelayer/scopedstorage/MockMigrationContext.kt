@@ -27,6 +27,7 @@ open class MockMigrationContext : MigrationContext() {
     val exceptions get() = errors.map { it.exception }
     var logExceptions: Boolean = false
     val progress = mutableListOf<NumberOfBytes>()
+
     /** A list of tasks which were passed into [execSafe] */
     val executed = mutableListOf<Operation>()
 

@@ -25,6 +25,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CardInfoModelTest : RobolectricTest() {
     private var mModel: CardInfo.CardInfoModel? = null
+
     @Before
     fun setupModel() {
         // using a card from my collection

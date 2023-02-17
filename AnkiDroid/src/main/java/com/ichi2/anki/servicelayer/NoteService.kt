@@ -176,7 +176,9 @@ object NoteService {
     fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
         return if (!replaceNewlines) {
             fieldData
-        } else fieldData.replace(FieldEditText.NEW_LINE, "<br>")
+        } else {
+            fieldData.replace(FieldEditText.NEW_LINE, "<br>")
+        }
     }
 
     suspend fun toggleMark(note: Note) {

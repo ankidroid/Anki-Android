@@ -46,8 +46,10 @@ class NotificationChannelTest : InstrumentedTest() {
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var mCurrentAPI = -1
     private var mTargetAPI = -1
+
     @KotlinCleanup("lateinit")
     private var mManager: NotificationManager? = null
+
     @Before
     @UiThreadTest
     fun setUp() {

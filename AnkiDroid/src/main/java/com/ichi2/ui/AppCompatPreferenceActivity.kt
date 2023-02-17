@@ -152,7 +152,9 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             Timber.d("getString(key=%s, defValue=%s)", key, defValue)
             return if (!mValues.containsKey(key)) {
                 defValue
-            } else mValues[key]
+            } else {
+                mValues[key]
+            }
         }
 
         override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {

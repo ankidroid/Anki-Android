@@ -25,10 +25,13 @@ import net.ankiweb.rsdroid.RustCleanup
  */
 abstract class SortOrder {
     class NoOrdering : SortOrder()
+
     /** Based on config: sortType and sortBackwards */
     class UseCollectionOrdering : SortOrder()
+
     /** A custom SQL string placed after "order by" */
     class AfterSqlOrderBy(val customOrdering: String) : SortOrder()
+
     @Deprecated("Not yet usable - unhandled in Java backend")
     @RustCleanup("remove @Deprecated once Java backend is gone")
     class BuiltinSortKind(val value: String, val reverse: Boolean) : SortOrder()

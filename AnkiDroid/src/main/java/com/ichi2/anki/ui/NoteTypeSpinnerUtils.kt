@@ -30,7 +30,7 @@ fun setupNoteTypeSpinner(context: Context, noteTypeSpinner: Spinner, col: Collec
     noteTypeSpinner.adapter = ArrayAdapter(
         context,
         android.R.layout.simple_spinner_dropdown_item,
-        modelNames,
+        modelNames
     ).apply {
         // The resource passed to the constructor is normally used for both the spinner view
         // and the dropdown list. This keeps the former and overrides the latter.

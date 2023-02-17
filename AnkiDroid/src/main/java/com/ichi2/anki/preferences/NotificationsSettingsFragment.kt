@@ -53,8 +53,10 @@ class NotificationsSettingsFragment : SettingsFragment() {
                     scheduleNotification(TimeManager.time, requireContext())
                 } else {
                     val intent = CompatHelper.compat.getImmutableBroadcastIntent(
-                        requireContext(), 0,
-                        Intent(requireContext(), NotificationService::class.java), 0
+                        requireContext(),
+                        0,
+                        Intent(requireContext(), NotificationService::class.java),
+                        0
                     )
                     val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
                     alarmManager.cancel(intent)

@@ -203,7 +203,8 @@ open class CompatV21 : Compat {
         audioFocusRequest: AudioFocusRequest?
     ) {
         audioManager.requestAudioFocus(
-            audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+            audioFocusChangeListener,
+            AudioManager.STREAM_MUSIC,
             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
         )
     }

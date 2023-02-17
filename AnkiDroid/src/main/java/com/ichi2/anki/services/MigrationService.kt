@@ -144,7 +144,8 @@ class MigrationService : Service() {
             notificationBuilder.setContentText(
                 context.resources.getString(
                     R.string.migration_transferred_size,
-                    currentProgress.toMB().toFloat(), sourceSize.toMB().toFloat()
+                    currentProgress.toMB().toFloat(),
+                    sourceSize.toMB().toFloat()
                 )
             )
             manager.notify(id, notificationBuilder.build())
@@ -216,7 +217,7 @@ class MigrationService : Service() {
     }
 
     private fun getRemainingTransferSize(
-        task: MigrateUserData,
+        task: MigrateUserData
     ): NumberOfBytes? {
         return try {
             val ignoredFiles = MigrateEssentialFiles.iterateEssentialFiles(task.source) +

@@ -40,6 +40,7 @@ fun NumberOfBytes.toKB(): Int {
 fun NumberOfBytes.toMB(): Int {
     return this.toKB() / 1024
 }
+
 /**
  * Function that is executed when one file is migrated, with the number of bytes moved.
  * Called with 0 when the file is already present in destination (i.e. successful move with no byte copied)
@@ -167,6 +168,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          * @param transferred The number of bytes of the transferred file
          */
         abstract fun reportProgress(transferred: NumberOfBytes)
+
         /**
          * Whether [File#renameTo] should be attempted for files.
          *
@@ -489,7 +491,6 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @throws RuntimeException Various other failings if only a single exception was thrown
      */
     fun migrateFiles(progressListener: MigrationProgressListener): Boolean {
-
         val context = initializeContext(progressListener)
 
         // define the function here, so we can execute it on retry

@@ -74,9 +74,10 @@ class CompatDirectoryContentTest : Test21And26() {
     fun non_existent_dir_test() {
         val directory = createTransientDirectory()
         directory.delete()
-        assertThrows<FileNotFoundException>({
-            compat.contentOfDirectory(directory)
-        }
+        assertThrows<FileNotFoundException>(
+            {
+                compat.contentOfDirectory(directory)
+            }
         )
     }
 
@@ -84,9 +85,10 @@ class CompatDirectoryContentTest : Test21And26() {
     @Test
     fun file_test() {
         val file = createTransientFile("foo")
-        val exception = assertThrowsSubclass<IOException>({
-            compat.contentOfDirectory(file)
-        }
+        val exception = assertThrowsSubclass<IOException>(
+            {
+                compat.contentOfDirectory(file)
+            }
         )
         if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))

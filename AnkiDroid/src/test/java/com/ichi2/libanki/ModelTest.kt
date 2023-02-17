@@ -112,7 +112,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelDelete() {
-
         val col = col
         val note = col.newNote()
         note.setItem("Front", "1")

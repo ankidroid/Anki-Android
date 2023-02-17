@@ -61,6 +61,7 @@ class ImportTest : InstrumentedTest() {
     // Allowing it to re-run now, 3 times, in case it flakes again.
     @get:Rule
     var retry = RetryRule(10)
+
     @Before
     @Throws(IOException::class)
     fun setUp() {
@@ -77,7 +78,6 @@ class ImportTest : InstrumentedTest() {
     @Test
     @Throws(IOException::class, JSONException::class, ImportExportException::class)
     fun testAnki2Mediadupes() {
-
         // add a note that references a sound
         var n = testCol.newNote()
         n.setField(0, "[sound:foo.mp3]")

@@ -177,12 +177,16 @@ abstract class AbstractFlashcardViewer :
     protected var answerField: FixedEditText? = null
     protected var flipCardLayout: LinearLayout? = null
     private var easeButtonsLayout: LinearLayout? = null
+
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton1: EaseButton? = null
+
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton2: EaseButton? = null
+
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton3: EaseButton? = null
+
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton4: EaseButton? = null
     protected var topBarLayout: RelativeLayout? = null
@@ -223,6 +227,7 @@ abstract class AbstractFlashcardViewer :
     private var mViewerUrl: String? = null
     private var mAssetLoader: WebViewAssetLoader? = null
     private val mFadeDuration = 300
+
     @KotlinCleanup("made internal for tests")
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal var sched: AbstractSched? = null
@@ -651,7 +656,9 @@ abstract class AbstractFlashcardViewer :
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return if (processCardFunction { cardWebView: WebView? -> processHardwareButtonScroll(keyCode, cardWebView) }) {
             true
-        } else super.onKeyDown(keyCode, event)
+        } else {
+            super.onKeyDown(keyCode, event)
+        }
     }
 
     public override val currentCardId: CardId? get() = currentCard?.id
@@ -824,7 +831,6 @@ abstract class AbstractFlashcardViewer :
                 legacyUndo()
             } else {
                 return launchCatchingTask {
-
                     if (!backendUndoAndShowPopup(findViewById(R.id.flip_card))) {
                         legacyUndo()
                     }
@@ -1246,7 +1252,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun restoreCollectionPreferences(col: Collection) {
-
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes")
@@ -1652,104 +1657,106 @@ abstract class AbstractFlashcardViewer :
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         return if (isControlBlocked && which !== ViewerCommand.EXIT) {
             false
-        } else when (which) {
-            ViewerCommand.SHOW_ANSWER -> {
-                if (displayAnswer) {
-                    return false
+        } else {
+            when (which) {
+                ViewerCommand.SHOW_ANSWER -> {
+                    if (displayAnswer) {
+                        return false
+                    }
+                    displayCardAnswer()
+                    true
                 }
-                displayCardAnswer()
-                true
-            }
-            ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
-                flipOrAnswerCard(EASE_1)
-                true
-            }
-            ViewerCommand.FLIP_OR_ANSWER_EASE2 -> {
-                flipOrAnswerCard(EASE_2)
-                true
-            }
-            ViewerCommand.FLIP_OR_ANSWER_EASE3 -> {
-                flipOrAnswerCard(EASE_3)
-                true
-            }
-            ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
-                flipOrAnswerCard(EASE_4)
-                true
-            }
-            ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED -> {
-                flipOrAnswerCard(getRecommendedEase(false))
-                true
-            }
-            ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
-                flipOrAnswerCard(getRecommendedEase(true))
-                true
-            }
-            ViewerCommand.EXIT -> {
-                closeReviewer(RESULT_DEFAULT, false)
-                true
-            }
-            ViewerCommand.UNDO -> {
-                if (!isUndoAvailable) {
-                    return false
+                ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
+                    flipOrAnswerCard(EASE_1)
+                    true
                 }
-                undo()
-                true
-            }
-            ViewerCommand.EDIT -> {
-                editCard(fromGesture)
-                true
-            }
-            ViewerCommand.TAG -> {
-                showTagsDialog()
-                true
-            }
-            ViewerCommand.BURY_CARD -> buryCard()
-            ViewerCommand.BURY_NOTE -> buryNote()
-            ViewerCommand.SUSPEND_CARD -> suspendCard()
-            ViewerCommand.SUSPEND_NOTE -> suspendNote()
-            ViewerCommand.DELETE -> {
-                showDeleteNoteDialog()
-                true
-            }
-            ViewerCommand.PLAY_MEDIA -> {
-                playSounds(true)
-                true
-            }
-            ViewerCommand.PAGE_UP -> {
-                onPageUp()
-                true
-            }
-            ViewerCommand.PAGE_DOWN -> {
-                onPageDown()
-                true
-            }
-            ViewerCommand.ABORT_AND_SYNC -> {
-                abortAndSync()
-                true
-            }
-            ViewerCommand.RECORD_VOICE -> {
-                recordVoice()
-                true
-            }
-            ViewerCommand.REPLAY_VOICE -> {
-                replayVoice()
-                true
-            }
-            ViewerCommand.TOGGLE_WHITEBOARD -> {
-                toggleWhiteboard()
-                true
-            }
-            ViewerCommand.SHOW_HINT -> {
-                loadUrlInViewer("javascript: showHint();")
-                true
-            }
-            ViewerCommand.SHOW_ALL_HINTS -> {
-                loadUrlInViewer("javascript: showAllHints();")
-                true
-            }
-            else -> {
-                Timber.w("Unknown command requested: %s", which)
-                false
+                ViewerCommand.FLIP_OR_ANSWER_EASE2 -> {
+                    flipOrAnswerCard(EASE_2)
+                    true
+                }
+                ViewerCommand.FLIP_OR_ANSWER_EASE3 -> {
+                    flipOrAnswerCard(EASE_3)
+                    true
+                }
+                ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
+                    flipOrAnswerCard(EASE_4)
+                    true
+                }
+                ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED -> {
+                    flipOrAnswerCard(getRecommendedEase(false))
+                    true
+                }
+                ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
+                    flipOrAnswerCard(getRecommendedEase(true))
+                    true
+                }
+                ViewerCommand.EXIT -> {
+                    closeReviewer(RESULT_DEFAULT, false)
+                    true
+                }
+                ViewerCommand.UNDO -> {
+                    if (!isUndoAvailable) {
+                        return false
+                    }
+                    undo()
+                    true
+                }
+                ViewerCommand.EDIT -> {
+                    editCard(fromGesture)
+                    true
+                }
+                ViewerCommand.TAG -> {
+                    showTagsDialog()
+                    true
+                }
+                ViewerCommand.BURY_CARD -> buryCard()
+                ViewerCommand.BURY_NOTE -> buryNote()
+                ViewerCommand.SUSPEND_CARD -> suspendCard()
+                ViewerCommand.SUSPEND_NOTE -> suspendNote()
+                ViewerCommand.DELETE -> {
+                    showDeleteNoteDialog()
+                    true
+                }
+                ViewerCommand.PLAY_MEDIA -> {
+                    playSounds(true)
+                    true
+                }
+                ViewerCommand.PAGE_UP -> {
+                    onPageUp()
+                    true
+                }
+                ViewerCommand.PAGE_DOWN -> {
+                    onPageDown()
+                    true
+                }
+                ViewerCommand.ABORT_AND_SYNC -> {
+                    abortAndSync()
+                    true
+                }
+                ViewerCommand.RECORD_VOICE -> {
+                    recordVoice()
+                    true
+                }
+                ViewerCommand.REPLAY_VOICE -> {
+                    replayVoice()
+                    true
+                }
+                ViewerCommand.TOGGLE_WHITEBOARD -> {
+                    toggleWhiteboard()
+                    true
+                }
+                ViewerCommand.SHOW_HINT -> {
+                    loadUrlInViewer("javascript: showHint();")
+                    true
+                }
+                ViewerCommand.SHOW_ALL_HINTS -> {
+                    loadUrlInViewer("javascript: showAllHints();")
+                    true
+                }
+                else -> {
+                    Timber.w("Unknown command requested: %s", which)
+                    false
+                }
             }
         }
     }
@@ -2602,6 +2609,7 @@ abstract class AbstractFlashcardViewer :
          * Should be protected, using non-JVM static members protected in the superclass companion is unsupported yet
          */
         const val INITIAL_HIDE_DELAY = 200
+
         // I don't see why we don't do this by intent.
         /** to be sent to and from the card editor  */
         @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)

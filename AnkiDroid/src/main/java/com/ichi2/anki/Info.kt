@@ -40,6 +40,7 @@ import timber.log.Timber
  */
 class Info : AnkiActivity() {
     private var mWebView: WebView? = null
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -103,7 +104,6 @@ class Info : AnkiActivity() {
                 mWebView!!.settings.javaScriptEnabled = true
                 mWebView!!.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
-
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */

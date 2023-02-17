@@ -40,13 +40,13 @@ abstract class Test21And26 {
     companion object {
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
-
         fun data(): Iterable<Array<Any>> = sequence {
             yield(arrayOf(CompatV21(), "CompatV21"))
             yield(arrayOf(CompatV26(), "CompatV26"))
         }.asIterable()
 
         lateinit var staticCompat: Compat
+
         @BeforeClass
         @JvmStatic // required for @BeforeClass
         fun setupClass() {

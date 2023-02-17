@@ -121,6 +121,7 @@ open class Reviewer :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var whiteboard: Whiteboard? = null
         protected set
+
     // Record Audio
     /** File of the temporary mic record  */
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -150,7 +151,8 @@ open class Reviewer :
             val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
-                resources.getQuantityString(toastResourceId, cardCount, cardCount), true
+                resources.getQuantityString(toastResourceId, cardCount, cardCount),
+                true
             )
         }
     }
@@ -201,7 +203,9 @@ open class Reviewer :
             val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton == true
             return if (shownAsToolbarButton && !mPrefFullscreenReview) {
                 CardMarker.FLAG_NONE
-            } else actualValue
+            } else {
+                actualValue
+            }
         }
 
     override fun createWebView(): WebView {
@@ -600,7 +604,8 @@ open class Reviewer :
     private fun openOrToggleMicToolbar() {
         if (!canRecordAudio(this)) {
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.RECORD_AUDIO),
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
                 REQUEST_AUDIO_PERMISSION
             )
         } else {
@@ -632,7 +637,8 @@ open class Reviewer :
             return
         }
         val lp2 = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
         audioView!!.layoutParams = lp2
         val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
@@ -924,7 +930,9 @@ open class Reviewer :
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         return if (mProcessor.onKeyUp(keyCode, event)) {
             true
-        } else super.onKeyUp(keyCode, event)
+        } else {
+            super.onKeyUp(keyCode, event)
+        }
     }
 
     private fun <T> setupSubMenu(menu: Menu, @IdRes parentMenu: Int, subMenuProvider: T) where T : ActionProvider?, T : SubMenuProvider? {
@@ -1419,20 +1427,27 @@ open class Reviewer :
     private fun suspendNoteAvailable(): Boolean {
         return if (currentCard == null || isControlBlocked) {
             false
-        } else col.db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-            currentCard!!.nid, currentCard!!.id
-        ) == 1
+        } else {
+            col.db.queryScalar(
+                "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+                currentCard!!.nid,
+                currentCard!!.id
+            ) == 1
+        }
         // whether there exists a sibling not buried.
     }
+
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
         return if (currentCard == null || isControlBlocked) {
             false
-        } else col.db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-            currentCard!!.nid, currentCard!!.id
-        ) == 1
+        } else {
+            col.db.queryScalar(
+                "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+                currentCard!!.nid,
+                currentCard!!.id
+            ) == 1
+        }
         // Whether there exists a sibling which is neither suspended nor buried
     }
 

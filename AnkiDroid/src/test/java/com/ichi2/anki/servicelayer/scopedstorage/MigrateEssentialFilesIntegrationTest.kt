@@ -168,7 +168,6 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     }
 
     private fun migrateEssentialFiles(stubbing: (KStubbing<MigrateEssentialFiles>.(MigrateEssentialFiles) -> Unit)? = null) {
-
         fun mock(e: MigrateEssentialFiles): MigrateEssentialFiles {
             return if (stubbing == null) e else spy(e, stubbing)
         }

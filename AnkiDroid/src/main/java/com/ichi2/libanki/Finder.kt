@@ -44,7 +44,7 @@ class Finder(private val col: Collection) {
     @CheckResult
     private fun _findCards(
         query: String,
-        _order: SortOrder,
+        _order: SortOrder
     ): List<Long> {
         val tokens = _tokenize(query)
         val res1 = _where(tokens)
@@ -295,7 +295,9 @@ class Finder(private val col: Collection) {
         }
         return if (s.bad) {
             Pair(null, null)
-        } else Pair(s.q, args.toTypedArray())
+        } else {
+            Pair(s.q, args.toTypedArray())
+        }
     }
 
     /**
@@ -517,19 +519,25 @@ class Finder(private val col: Collection) {
     private fun _findNids(`val`: String): String? {
         return if (fNidsPattern.matcher(`val`).find()) {
             null
-        } else "n.id in ($`val`)"
+        } else {
+            "n.id in ($`val`)"
+        }
     }
 
     private fun _findCids(`val`: String): String? {
         return if (fNidsPattern.matcher(`val`).find()) {
             null
-        } else "c.id in ($`val`)"
+        } else {
+            "c.id in ($`val`)"
+        }
     }
 
     private fun _findMid(`val`: String): String? {
         return if (fMidPattern.matcher(`val`).find()) {
             null
-        } else "n.mid = $`val`"
+        } else {
+            "n.mid = $`val`"
+        }
     }
 
     private fun _findModel(`val`: String): String {
@@ -696,7 +704,9 @@ class Finder(private val col: Collection) {
         }
         return if (nids.isEmpty()) {
             "0"
-        } else "n.id in " + Utils.ids2str(nids)
+        } else {
+            "n.id in " + Utils.ids2str(nids)
+        }
     }
 
     private fun _findDupes(`val`: String): String? {
@@ -713,7 +723,8 @@ class Finder(private val col: Collection) {
         val nids: MutableList<Long> = ArrayList()
         col.db.query(
             "select id, flds from notes where mid=? and csum=?",
-            mid, csum
+            mid,
+            csum
         ).use { cur ->
             val nid = cur.getLong(0)
             val flds = cur.getString(1)
@@ -779,6 +790,7 @@ class Finder(private val col: Collection) {
         ): Int {
             @Suppress("NAME_SHADOWING")
             var src = src
+
             @Suppress("NAME_SHADOWING")
             var dst = dst
             val mmap: MutableMap<Long, Int> = HashMap()

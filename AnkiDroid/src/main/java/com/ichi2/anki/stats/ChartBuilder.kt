@@ -323,7 +323,6 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
     }
 
     fun ticsCalc(pixelDistance: Int, field: RectangleWrap, deltaRange: Double): Double {
-
         // Make approximation of number of ticks based on desired number of pixels per tick
         val numTicks = (field.height / pixelDistance).toDouble()
 

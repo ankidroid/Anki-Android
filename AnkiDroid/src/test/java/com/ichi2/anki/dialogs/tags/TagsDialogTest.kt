@@ -86,7 +86,8 @@ class TagsDialogTest {
             val returnedList = AtomicReference<List<String>?>()
             val returnedOption = AtomicInteger()
             f.parentFragmentManager.setFragmentResultListener(
-                TagsDialogListener.ON_SELECTED_TAGS_KEY, mockLifecycleOwner(),
+                TagsDialogListener.ON_SELECTED_TAGS_KEY,
+                mockLifecycleOwner(),
                 { _: String?, bundle: Bundle ->
                     returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
                     returnedOption.set(bundle.getInt(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
@@ -227,10 +228,16 @@ class TagsDialogTest {
     fun test_TagsDialog_expandPathToCheckedTagsUponOpening() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf(
-            "fruit::apple", "fruit::pear", "fruit::pear::big", "sport::football", "sport::tennis", "book"
+            "fruit::apple",
+            "fruit::pear",
+            "fruit::pear::big",
+            "sport::football",
+            "sport::tennis",
+            "book"
         )
         val checkedTags = listOf(
-            "fruit::pear::big", "sport::tennis"
+            "fruit::pear::big",
+            "sport::tennis"
         )
         val args = TagsDialog(ParametersUtils.whatever())
             .withArguments(type, checkedTags, allTags)
@@ -370,11 +377,15 @@ class TagsDialogTest {
     fun test_SearchTag_showAllRelevantTags() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf(
-            "common::speak", "common::speak::tennis", "common::sport::tennis",
-            "common::sport::football", "common::sport::football::small"
+            "common::speak",
+            "common::speak::tennis",
+            "common::sport::tennis",
+            "common::sport::football",
+            "common::sport::football::small"
         )
         val checkedTags = listOf(
-            "common::speak::tennis", "common::sport::tennis",
+            "common::speak::tennis",
+            "common::sport::tennis",
             "common::sport::football::small"
         )
         val args = TagsDialog(ParametersUtils.whatever())
@@ -458,8 +469,11 @@ class TagsDialogTest {
     fun test_CheckTags_intermediateTagsShouldToggleDynamically() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf(
-            "common::speak", "common::speak::tennis", "common::sport::tennis",
-            "common::sport::football", "common::sport::football::small"
+            "common::speak",
+            "common::speak::tennis",
+            "common::sport::tennis",
+            "common::sport::football",
+            "common::sport::football::small"
         )
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
@@ -596,7 +610,8 @@ class TagsDialogTest {
             editText.setText("hello ")
             Assert.assertEquals(
                 "The space should be replaced by '::' without mistakenly clear everything.",
-                "hello::", editText.text.toString()
+                "hello::",
+                editText.text.toString()
             )
 
             editText.setText("hello")

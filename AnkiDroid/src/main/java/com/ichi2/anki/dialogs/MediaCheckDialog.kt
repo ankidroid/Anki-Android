@@ -124,7 +124,9 @@ class MediaCheckDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
                 resources.getString(R.string.check_media_title)
-            } else resources.getString(R.string.app_name)
+            } else {
+                resources.getString(R.string.app_name)
+            }
         }
 
     override val dialogHandlerMessage: Message

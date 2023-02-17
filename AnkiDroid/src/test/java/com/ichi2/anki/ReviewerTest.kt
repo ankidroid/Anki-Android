@@ -47,6 +47,7 @@ class ReviewerTest : RobolectricTest() {
     @JvmField // required for Parameter
     @ParameterizedRobolectricTestRunner.Parameter
     var schedVersion = 0
+
     @Before
     override fun setUp() {
         super.setUp()
@@ -288,7 +289,6 @@ class ReviewerTest : RobolectricTest() {
 
     @Suppress("SameParameterValue")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
-
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
             jsApi.ankiGetNewCardCount(),

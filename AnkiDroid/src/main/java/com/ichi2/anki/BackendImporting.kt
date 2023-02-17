@@ -41,7 +41,7 @@ fun DeckPicker.importApkgs(apkgPaths: List<String>) {
                     if (progress.hasImporting()) {
                         text = progress.importing
                     }
-                },
+                }
             ) {
                 undoableOp {
                     importAnkiPackage(apkgPath)
@@ -105,7 +105,7 @@ suspend fun AnkiActivity.exportApkg(
             if (progress.hasExporting()) {
                 text = progress.exporting
             }
-        },
+        }
     ) {
         withCol {
             newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
@@ -115,14 +115,14 @@ suspend fun AnkiActivity.exportApkg(
 
 suspend fun AnkiActivity.exportColpkg(
     colpkgPath: String,
-    withMedia: Boolean,
+    withMedia: Boolean
 ) {
     withProgress(
         extractProgress = {
             if (progress.hasExporting()) {
                 text = progress.exporting
             }
-        },
+        }
     ) {
         withCol {
             newBackend.exportCollectionPackage(colpkgPath, withMedia, true)

@@ -24,8 +24,10 @@ enum class FullScreenMode(private val prefValue: String) {
 
     /** Display both navigation and buttons (default) */
     BUTTONS_AND_MENU("0"),
+
     /** Remove the menu bar, keeps answer button. */
     BUTTONS_ONLY("1"),
+
     /** Remove both menu bar and buttons. Can only be set if gesture is on. */
     FULLSCREEN_ALL_GONE("2");
 
