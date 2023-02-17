@@ -25,7 +25,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.setLegacyStorage
 import com.ichi2.libanki.Collection
 import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.testutils.TestException
-import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,6 +34,7 @@ import org.hamcrest.io.FileMatchers
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class ScopedStorageAnkiDroidTest : RobolectricTest() {
@@ -78,7 +78,7 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
         }
 
         // if "AnkiDroid100" can't be created
-        assertThrows<NoSuchElementException> { ScopedStorageService.migrateEssentialFiles(targetContext) }
+        assertFailsWith<NoSuchElementException> { ScopedStorageService.migrateEssentialFiles(targetContext) }
     }
 
     @Test
@@ -88,7 +88,7 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
             val destinationFile = slot<File>()
             every { MigrateEssentialFiles.migrateEssentialFiles(any(), destination = capture(destinationFile)) } throws TestException("failed")
 
-            assertThrows<TestException> { ScopedStorageService.migrateEssentialFiles(targetContext) }
+            assertFailsWith<TestException> { ScopedStorageService.migrateEssentialFiles(targetContext) }
 
             assertThat("destination was deleted on failure", destinationFile.captured, not(FileMatchers.anExistingDirectory()))
         }

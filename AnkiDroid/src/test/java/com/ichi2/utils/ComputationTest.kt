@@ -16,10 +16,10 @@
 
 package com.ichi2.utils
 
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 class ComputationTest {
     @Test
@@ -33,7 +33,7 @@ class ComputationTest {
     fun errorIsFailure() {
         val asNull = Computation.err<Int>()
         assertThat(asNull.succeeded(), equalTo(false))
-        assertThrows<IllegalStateException> {
+        assertFailsWith<IllegalStateException> {
             asNull.value
         }
     }

@@ -22,7 +22,6 @@ import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Models.Companion.REQ_ALL
 import com.ichi2.libanki.Models.Companion.REQ_ANY
 import com.ichi2.libanki.Utils.stripHTML
-import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import net.ankiweb.rsdroid.BackendFactory
@@ -36,6 +35,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
+import kotlin.test.assertFailsWith
 
 fun clozeClass(): String {
     return if (BackendFactory.defaultLegacySchema) {
@@ -756,7 +756,7 @@ class ModelTest : RobolectricTest() {
         val basic = mm.byName("Basic")
         val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}")
-        assertThrowsSubclass<Exception> {
+        assertFailsWith<Exception> {
             // in V16, the "save" throws, in V11, the "add" throws
             mm.save(basic, true)
             addNoteUsingBasicModel("foo", "bar")

@@ -18,7 +18,6 @@ package com.ichi2.testutils
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
-import org.junit.Assert
 import kotlin.test.junit5.JUnit5Asserter
 
 /** Assertion methods that aren't currently supported by our dependencies  */
@@ -51,27 +50,6 @@ object AnkiAssert {
         }
     }
 
-    fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
-        try {
-            r.run()
-            Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
-        } catch (t: Throwable) {
-            if (t.javaClass == clazz) {
-                @Suppress("UNCHECKED_CAST")
-                return t as T
-            }
-            if (t.message != null && t.message!!.startsWith("Expected exception: ")) {
-                // We need to add a "throws" if we rethrow t, so fail with the same code.
-                Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
-            }
-            throw AssertionError(
-                "Expected '" + clazz.simpleName + "' got '" + t.javaClass.simpleName + "'",
-                t
-            )
-        }
-        throw IllegalStateException("unreachable")
-    }
-
     fun <T> assertEqualsArrayList(expected: Array<T>, actual: List<T>?) {
         assertListEquals(expected.toList(), actual)
     }
@@ -84,46 +62,6 @@ object AnkiAssert {
         val minMax = SchedV2._fuzzIvlRange(targetIvl)
         return c.ivl in minMax.first..minMax.second
     }
-}
-
-/** assertThrows, allowing for lambda shorthand
- *
- * ```kotlin
- * val exception = assertThrows<IllegalStateException> {
- *     foo()
- * }
- * ```
- *
- * @see TestException if a test-only exception is needed
- * */
-inline fun <reified T : Throwable> assertThrows(r: Runnable): T =
-    AnkiAssert.assertThrows(r, T::class.java)
-
-/**
- * [assertThrows], accepting subclasses of the exception type
- *
- * ```kotlin
- * val exception = assertThrows<IllegalStateException> {
- *     foo()
- * }
- * ```
- *
- * @see TestException if a test-only exception is needed
- * */
-inline fun <reified T : Throwable> assertThrowsSubclass(r: Runnable): T {
-    try {
-        r.run()
-    } catch (t: Throwable) {
-        // got the exception we want
-        if (t is T) {
-            return t
-        }
-        // We got an exception, but not the correct one
-        throw AssertionError("Expected '" + T::class.simpleName + "' got '" + t.javaClass.simpleName + "'", t)
-    }
-
-    Assert.fail("Expected exception: " + T::class.simpleName + ". No exception thrown.")
-    throw IllegalStateException("shouldn't reach here")
 }
 
 /** Asserts that the expression is `false` with an optional [message]. */
