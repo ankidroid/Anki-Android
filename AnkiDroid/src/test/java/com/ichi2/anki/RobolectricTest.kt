@@ -42,6 +42,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
@@ -83,6 +84,10 @@ open class RobolectricTest : CollectionGetter {
 
     @get:Rule
     val mTaskScheduler = TaskSchedulerRule()
+
+    /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
+    @get:Rule
+    val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 
     @Before
     @CallSuper
