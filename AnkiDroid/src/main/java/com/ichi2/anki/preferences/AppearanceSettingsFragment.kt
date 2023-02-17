@@ -21,12 +21,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
-import com.ichi2.anki.cardviewer.GestureProcessor
-import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Theme
@@ -45,29 +42,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         val col = col!!
-        // Show error toast if the user tries to disable answer button without gestures on
-        requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
-            val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-            if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
-                true
-            } else {
-                // TODO add a button on the snackbar that leads directly to the
-                // Controls fragment and highlight the gesture preference
-                showSnackbar(R.string.full_screen_error_gestures)
-                false
-            }
-        }
-        requirePreference<ListPreference>(FullScreenMode.PREF_KEY).setOnPreferenceChangeListener { _, newValue: Any ->
-            val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-            if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
-                true
-            } else {
-                // TODO add a button on the snackbar that leads directly to the
-                // Controls fragment and highlight the gesture preference
-                showSnackbar(R.string.full_screen_error_gestures)
-                false
-            }
-        }
+
         // Configure background
         mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
         mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
