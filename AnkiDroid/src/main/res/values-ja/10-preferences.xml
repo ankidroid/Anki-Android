@@ -86,7 +86,6 @@
     <string name="full_screen_off">オフ</string>
     <string name="full_screen_system">ステータスバー（通知バー）を隠す</string>
     <string name="full_screen_complete">ステータスバー（通知バー）と解答表示ボタン・回答ボタンを隠す</string>
-    <string name="full_screen_error_gestures">回答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
     <string name="answer_buttons_position" maxLength="41">解答表示ボタン・回答ボタンの位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>カードの上側</item>

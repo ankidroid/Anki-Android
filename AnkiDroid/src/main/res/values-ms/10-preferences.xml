@@ -86,7 +86,6 @@
     <string name="full_screen_off">Matikan</string>
     <string name="full_screen_system">Menyembunyikan sistem bar</string>
     <string name="full_screen_complete">Menyembunyikan sistem bar dan menjawab butang</string>
-    <string name="full_screen_error_gestures">Kau harus membolehkan isyarat untuk menyembunyikan menjawab butang</string>
     <string name="answer_buttons_position" maxLength="41">Menjawab kedudukan butang</string>
     <string-array name="answer_buttons_position_labels">
         <item>Teratas</item>

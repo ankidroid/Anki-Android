@@ -86,7 +86,6 @@
     <string name="full_screen_off">خاموش</string>
     <string name="full_screen_system">پنهان کردن نوار سیستم</string>
     <string name="full_screen_complete">پنهان کردن نوارهای سیستم و دکمه های پاسخ</string>
-    <string name="full_screen_error_gestures">برای مخفی کردن دکمه های پاسخ باید قابلیت حرکات دست را فعال کنید</string>
     <string name="answer_buttons_position" maxLength="41">موقعیت دکمه های پاسخ</string>
     <string-array name="answer_buttons_position_labels">
         <item>بالا</item>

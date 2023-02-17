@@ -86,7 +86,6 @@
     <string name="full_screen_off">Väljas</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="full_screen_error_gestures">Vastuse nuppude peitmiseks pead lubama žestid.</string>
     <string name="answer_buttons_position" maxLength="41">Vastuse nuppude asukoht</string>
     <string-array name="answer_buttons_position_labels">
         <item>Ülal</item>

@@ -86,7 +86,6 @@
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Itago ang mga bar ng system</string>
     <string name="full_screen_complete">Itago ang mga system bar at sagutin ang mga pindutan</string>
-    <string name="full_screen_error_gestures">Dapat mong paganahin ang mga gesture upang itago ang mga pindutan ng sagot</string>
     <string name="answer_buttons_position" maxLength="41">Sagot na mga pindutan ng mga pindutan</string>
     <string-array name="answer_buttons_position_labels">
         <item>Tuktok</item>

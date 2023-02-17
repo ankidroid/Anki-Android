@@ -86,7 +86,6 @@
     <string name="full_screen_off">Vypnout</string>
     <string name="full_screen_system">Skrýt panely systému</string>
     <string name="full_screen_complete">Skrýt panely systému a tlačítka odpovědí</string>
-    <string name="full_screen_error_gestures">Musíte povolit gesta, aby byla tlačítka odpovědí skryta</string>
     <string name="answer_buttons_position" maxLength="41">Pozice tlačítek odpovědí</string>
     <string-array name="answer_buttons_position_labels">
         <item>Nahoře</item>

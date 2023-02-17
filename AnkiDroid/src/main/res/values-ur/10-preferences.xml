@@ -86,7 +86,6 @@
     <string name="full_screen_off">بند</string>
     <string name="full_screen_system">سسٹم کی سلاخوں کو چھپائیں</string>
     <string name="full_screen_complete">سسٹم بارز اور جوابی بٹن چھپائیں</string>
-    <string name="full_screen_error_gestures">جواب کے بٹنوں کو چھپانے کے لیے آپ کو اشاروں کو فعال کرنا چاہیے</string>
     <string name="answer_buttons_position" maxLength="41">جواب بٹن کی پوزیشن</string>
     <string-array name="answer_buttons_position_labels">
         <item>سب سے اوپر</item>

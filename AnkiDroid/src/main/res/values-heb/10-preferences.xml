@@ -86,7 +86,6 @@
     <string name="full_screen_off">כבוי</string>
     <string name="full_screen_system">הסתרת שורות המערכת</string>
     <string name="full_screen_complete">הסתרת שורות המערכת וכפתורי התשובה</string>
-    <string name="full_screen_error_gestures">כדי להסתיר את כפתורי התשובה יש לאפשר שימוש במחוות</string>
     <string name="answer_buttons_position" maxLength="41">מיקום כפתור המענה</string>
     <string-array name="answer_buttons_position_labels">
         <item>למעלה</item>

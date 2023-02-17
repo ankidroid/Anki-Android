@@ -86,7 +86,6 @@
     <string name="full_screen_off">ᱵᱚᱸᱫ</string>
     <string name="full_screen_system">ᱥᱭᱥᱴᱚᱢ ᱵᱟᱨ ᱩᱠᱩᱭ ᱢᱮ</string>
     <string name="full_screen_complete">ᱥᱭᱥᱴᱚᱢ ᱵᱟᱨ ᱟᱨ ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱩᱠᱩᱭᱢᱮ</string>
-    <string name="full_screen_error_gestures">ᱛᱮᱞᱟ ᱩᱠᱩ ᱞᱟᱹᱜᱤᱫ ᱪᱤᱱᱦᱟᱹ ᱮᱢ ᱛᱮ ᱯᱟᱲᱟᱣᱼᱜᱟ</string>
     <string name="answer_buttons_position" maxLength="41">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱡᱟᱭᱜᱟ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ᱪᱚᱴ</item>

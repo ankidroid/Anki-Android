@@ -86,7 +86,6 @@
     <string name="full_screen_off">Desactivado</string>
     <string name="full_screen_system">Agochar barras do sistema</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
     <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
         <item>Top</item>

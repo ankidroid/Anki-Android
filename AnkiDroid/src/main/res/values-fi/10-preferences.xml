@@ -86,7 +86,6 @@
     <string name="full_screen_off">Pois päältä</string>
     <string name="full_screen_system">Piilota järjestelmäpalkit</string>
     <string name="full_screen_complete">Piilota järjestelmäpalkit ja vastauspainikkeet</string>
-    <string name="full_screen_error_gestures">Sinun täytyy ottaa käyttöön eleet piilottaaksesi vastauspainikkeet</string>
     <string name="answer_buttons_position" maxLength="41">Vastauspainikkeiden sijainti</string>
     <string-array name="answer_buttons_position_labels">
         <item>Ylhäällä</item>

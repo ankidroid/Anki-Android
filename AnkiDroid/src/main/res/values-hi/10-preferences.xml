@@ -86,7 +86,6 @@
     <string name="full_screen_off">ऑफ</string>
     <string name="full_screen_system">सिस्टम पट्टियां छुपाएं</string>
     <string name="full_screen_complete">सिस्टम पट्टियां और उत्तर बटन छुपाएं</string>
-    <string name="full_screen_error_gestures">उत्तर बटनों को छुपाने के लिए आपको जेस्चर सक्षम करना आवश्यक है</string>
     <string name="answer_buttons_position" maxLength="41">उत्तर बटन स्थिति</string>
     <string-array name="answer_buttons_position_labels">
         <item>सर्वोच्च</item>

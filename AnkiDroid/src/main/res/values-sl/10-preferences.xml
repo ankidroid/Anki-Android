@@ -86,7 +86,6 @@
     <string name="full_screen_off">Izklopljen</string>
     <string name="full_screen_system">Skrij sistemske vrstice</string>
     <string name="full_screen_complete">Skrij sistemske vrstice in gumbe za odgovor</string>
-    <string name="full_screen_error_gestures">Za skritje gumbov za odgovor morate omogočiti poteze</string>
     <string name="answer_buttons_position" maxLength="41">Položaj gumbov za odgovarjanje</string>
     <string-array name="answer_buttons_position_labels">
         <item>Zgoraj</item>

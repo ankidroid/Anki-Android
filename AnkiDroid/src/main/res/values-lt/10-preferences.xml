@@ -86,7 +86,6 @@
     <string name="full_screen_off">Išjungta</string>
     <string name="full_screen_system">Slėpti sistemines juostas</string>
     <string name="full_screen_complete">Slėpti sistemos juostas ir atsakymų mygtukus</string>
-    <string name="full_screen_error_gestures">Norėdami paslėpti atsakymų mygtukus, turite įjungti gestus</string>
     <string name="answer_buttons_position" maxLength="41">Atsakymų mygtukų vieta</string>
     <string-array name="answer_buttons_position_labels">
         <item>Viršuje</item>
