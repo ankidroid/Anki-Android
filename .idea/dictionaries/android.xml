@@ -40,6 +40,7 @@
       <w>snackbars</w>
       <w>sqldb</w>
       <w>stacktraces</w>
+      <w>testutils</w>
       <w>tracesql</w>
       <w>ungzip</w>
       <w>ungzipped</w>
