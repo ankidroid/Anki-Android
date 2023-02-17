@@ -200,8 +200,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         dst.db.database.beginTransaction()
         try {
             src.db.database.query(
-                "select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes",
-                null
+                "select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes"
             ).use { cur ->
                 // Counters for progress updates
                 val total = cur.count

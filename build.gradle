@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
-    ext.kotlin_version = '1.7.22'
+    ext.kotlin_version = '1.8.10'
     ext.lint_version = '30.4.1'
     ext.acra_version = '5.9.7'
     ext.ankidroid_backend_version = '0.1.20-anki2.1.57'
@@ -93,11 +93,21 @@ subprojects {
 
          and we used "all" because we don't have downstream consumers
          https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+
+         Related to ExperimentalCoroutinesApi: this opt-in is added to enable usage of experimental
+            coroutines API, this targets all project modules with the exception of the "api" module,
+            which doesn't use coroutines so the annotation isn't not available. This would normally
+            result in a warning but we treat warnings as errors.
+            (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
         */
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             kotlinOptions {
                 allWarningsAsErrors = fatalWarnings
-                freeCompilerArgs = ['-Xjvm-default=all']
+                def compilerArgs = ['-Xjvm-default=all']
+                if (project.name != "api") {
+                    compilerArgs += ['-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi']
+                }
+                freeCompilerArgs = compilerArgs
             }
         }
     }
