@@ -36,6 +36,7 @@ android {
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "LEGACY_STORAGE", "false"
+        buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -97,6 +98,10 @@ android {
                 // allow overriding default schema version
                 if (localProperties["legacy_schema"] != null) {
                     buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
+                }
+                // allows the scoped storage migration when the user is not logged in
+                if (localProperties["allow_unsafe_migration"] != null) {
+                    buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", localProperties["allow_unsafe_migration"]
                 }
                 // allow disabling leak canary
                 if (localProperties["enable_leak_canary"] != null) {

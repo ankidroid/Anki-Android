@@ -794,9 +794,16 @@ open class DeckPicker :
             val searchIcon = decks.count() >= 10
             val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
-            val offerToUpgrade = isLegacyStorage(context) && !userMigrationIsInProgress(context)
+            val offerToUpgrade = shouldOfferToUpgrade(context)
             OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
         }
+    }
+
+    private fun shouldOfferToUpgrade(context: Context): Boolean {
+        if (!BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn()) {
+            return false
+        }
+        return isLegacyStorage(context) && !userMigrationIsInProgress(context)
     }
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
