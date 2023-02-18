@@ -19,7 +19,7 @@ package com.ichi2.libanki.stats
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.anki.stats.StatsMetaInfo
@@ -1256,6 +1256,13 @@ from cards where did in ${_limit()}"""
     companion object {
         const val SECONDS_PER_DAY = 86400L
         const val ALL_DECKS_ID = 0L
+        fun getDayOffset(col: com.ichi2.libanki.Collection): Int {
+            return when (col.schedVer()) {
+                2 -> col.get_config("rollover", Preferences.DEFAULT_ROLLOVER_VALUE)!!
+                // 1, or otherwise:
+                else -> col.crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
+            }
+        }
 
         /**
          * Note: NOT in libanki

@@ -17,9 +17,8 @@ package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
+import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.utils.LanguageUtil
@@ -34,7 +33,6 @@ class GeneralSettingsFragment : SettingsFragment() {
         get() = "prefs.general"
 
     override fun initSubscreen() {
-        val col = col!!
         // Build languages
         initializeLanguagePref()
 
@@ -43,18 +41,21 @@ class GeneralSettingsFragment : SettingsFragment() {
         // if true, then add note to current decks, otherwise let the note type's configuration decide
         // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
         requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
-            setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
+            launchCatchingTask {
+                val valueIndex = if (withCol { get_config("addToCur", true)!! }) 0 else 1
+                setValueIndex(valueIndex)
+            }
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("addToCur", "0" == newValue)
+                launchWithCol { set_config("addToCur", "0" == newValue) }
             }
         }
         // Paste PNG
         // Represents in the collection's pref "pastePNG" , i.e.
         // whether to convert clipboard uri to png format or not.
         requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
-            isChecked = col.get_config("pastePNG", false)!!
+            launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("pastePNG", newValue)
+                launchWithCol { set_config("pastePNG", newValue) }
             }
         }
         // Error reporting mode

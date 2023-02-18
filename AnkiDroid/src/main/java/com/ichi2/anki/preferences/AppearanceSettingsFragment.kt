@@ -21,9 +21,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Theme
@@ -41,8 +40,6 @@ class AppearanceSettingsFragment : SettingsFragment() {
         get() = "prefs.appearance"
 
     override fun initSubscreen() {
-        val col = col!!
-
         // Configure background
         mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
         mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -139,18 +136,18 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
-            isChecked = col.get_config_boolean("estTimes")
-            setOnPreferenceChangeListener { newValue ->
-                col.set_config("estTimes", newValue)
+            launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
+            setOnPreferenceChangeListener { newETA ->
+                launchWithCol { set_config("estTimes", newETA) }
             }
         }
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
-            isChecked = col.get_config_boolean("dueCounts")
-            setOnPreferenceChangeListener { newValue ->
-                col.set_config("dueCounts", newValue)
+            launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
+            setOnPreferenceChangeListener { newDueCountsValue ->
+                launchWithCol { set_config("dueCounts", newDueCountsValue) }
             }
         }
     }

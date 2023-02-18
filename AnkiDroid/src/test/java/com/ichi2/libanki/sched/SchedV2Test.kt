@@ -37,7 +37,6 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.Consts.STARTING_FACTOR
 import com.ichi2.libanki.Consts.SYNC_VER
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
@@ -284,7 +283,6 @@ open class SchedV2Test : RobolectricTest() {
     }
 
     @Test
-    @Throws(BackendNotSupportedException::class)
     fun newTimezoneHandling() {
         val col = colV2
         // #5805
