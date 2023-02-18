@@ -105,7 +105,9 @@ class Toolbar : FrameLayout {
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
 
         val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
-        CompatHelper.compat.addTooltipTextsFromContentDescription(parentLayout.children)
+        parentLayout.children.forEach { child ->
+            CompatHelper.compat.setTooltipTextByContentDescription(child)
+        }
     }
 
     /**

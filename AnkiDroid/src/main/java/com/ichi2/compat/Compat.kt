@@ -74,7 +74,7 @@ import java.io.*
  */
 interface Compat {
     fun setupNotificationChannel(context: Context)
-    fun addTooltipTextsFromContentDescription(views: Sequence<View>)
+    fun setTooltipTextByContentDescription(view: View)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int
