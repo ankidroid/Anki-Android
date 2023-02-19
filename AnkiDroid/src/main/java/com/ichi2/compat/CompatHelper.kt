@@ -20,6 +20,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
+import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
@@ -127,5 +128,19 @@ class CompatHelper private constructor() {
         @Throws(NameNotFoundException::class)
         fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             compat.getPackageInfo(this, packageName, flags)
+
+        /**
+         * Determine the best service to handle for a given Intent.
+         *
+         * @param intent An intent containing all of the desired specification
+         *            (action, data, type, category, and/or component).
+         * @param flags Additional option flags to modify the data returned.
+         * @return Returns a ResolveInfo object containing the final service intent
+         *         that was determined to be the best action. Returns null if no
+         *         matching service was found.
+         */
+        fun PackageManager.resolveServiceCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
+            return compat.resolveService(this, intent, flags)
+        }
     }
 }
