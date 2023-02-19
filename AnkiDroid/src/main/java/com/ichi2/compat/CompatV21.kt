@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -73,6 +74,14 @@ open class CompatV21 : Compat {
 
     override fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>? {
         return bundle.getParcelableArrayList(key)
+    }
+
+    override fun resolveService(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): ResolveInfo? {
+        return packageManager.resolveService(intent, flags.value.toInt())
     }
 
     override fun <T : Serializable?> getSerializableExtra(
