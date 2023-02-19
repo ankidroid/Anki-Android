@@ -18,6 +18,8 @@ package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
@@ -512,7 +514,8 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         // otherwise, there were a few exceptions which didn't stop execution, throw these.
         if (!context.successfullyCompleted) {
             context.terminatedWith?.let { throw it }
-            throw AggregateException.raise("", context.loggedExceptions) // TODO
+            val migrationFailedMessage = AnkiDroidApp.instance.getString(R.string.migration_failed_message)
+            throw AggregateException.raise(migrationFailedMessage, context.loggedExceptions)
         }
 
         // we are successfully migrated here
