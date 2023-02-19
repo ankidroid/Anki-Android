@@ -19,6 +19,7 @@ package com.ichi2.utils
 
 import org.jetbrains.annotations.Contract
 import java.util.*
+import kotlin.math.min
 
 object StringUtil {
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
@@ -29,4 +30,8 @@ object StringUtil {
 
         return s.substring(0, 1).uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
     }
+}
+
+fun String.trimToLength(maxLength: Int): String {
+    return this.substring(0, min(this.length, maxLength))
 }

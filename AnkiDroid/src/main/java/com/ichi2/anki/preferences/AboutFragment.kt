@@ -15,10 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -36,8 +33,8 @@ import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.IntentUtil
-import com.ichi2.utils.VersionUtils.appName
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
 
 class AboutFragment : Fragment() {
@@ -105,9 +102,7 @@ class AboutFragment : Fragment() {
      */
     private fun copyDebugInfo() {
         val debugInfo = DebugInfoService.getDebugInfo(requireContext()) { (requireActivity() as Preferences).col }
-        val clipboardManager = requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-        if (clipboardManager != null) {
-            clipboardManager.setPrimaryClip(ClipData.newPlainText("$appName v$pkgVersionName", debugInfo))
+        if (requireContext().copyToClipboard(debugInfo)) {
             showSnackbar(
                 R.string.about_ankidroid_successfully_copied_debug,
                 Snackbar.LENGTH_SHORT
