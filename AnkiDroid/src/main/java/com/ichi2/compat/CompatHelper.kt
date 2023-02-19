@@ -146,5 +146,14 @@ class CompatHelper private constructor() {
         fun PackageManager.resolveServiceCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
             return compat.resolveService(this, intent, flags)
         }
+
+        /**
+         * Read into an existing List object from the parcel at the current
+         * dataPosition(), using the given class loader to load any enclosed
+         * Parcelables.  If it is null, the default class loader is used.
+         */
+        inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
+            compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
+        }
     }
 }

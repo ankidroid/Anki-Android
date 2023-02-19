@@ -282,6 +282,15 @@ open class CompatV21 : Compat {
         }
     }
 
+    override fun <T> readList(
+        parcel: Parcel,
+        outVal: MutableList<in T>,
+        classLoader: ClassLoader?,
+        clazz: Class<T>
+    ) {
+        parcel.readList(outVal, classLoader)
+    }
+
     companion object {
         // Update to PendingIntent.FLAG_MUTABLE once available (API 31)
         @Suppress("unused")
