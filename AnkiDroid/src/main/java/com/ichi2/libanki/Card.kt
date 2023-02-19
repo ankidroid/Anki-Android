@@ -404,7 +404,9 @@ open class Card : Cloneable {
     override fun equals(other: Any?): Boolean {
         return if (other is Card) {
             this.id == other.id
-        } else super.equals(other)
+        } else {
+            super.equals(other)
+        }
     }
 
     override fun hashCode(): Int {
@@ -552,7 +554,9 @@ open class Card : Cloneable {
         override fun equals(other: Any?): Boolean {
             return if (other !is Cache) {
                 false
-            } else this.id == other.id
+            } else {
+                this.id == other.id
+            }
         }
 
         fun loadQA(reload: Boolean, browser: Boolean) {

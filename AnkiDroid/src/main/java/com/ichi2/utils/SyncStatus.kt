@@ -28,6 +28,7 @@ import net.ankiweb.rsdroid.BackendFactory
 
 enum class SyncStatus {
     INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED,
+
     /**
      * Scope storage migration is ongoing. Sync should be disabled.
      */

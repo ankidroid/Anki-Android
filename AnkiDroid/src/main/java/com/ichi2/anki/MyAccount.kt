@@ -50,6 +50,7 @@ open class MyAccount : AnkiActivity() {
     private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
+
     @Suppress("Deprecation")
     private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
@@ -116,7 +117,8 @@ open class MyAccount : AnkiActivity() {
                 mLoginListener,
                 Connection.Payload(
                     arrayOf(
-                        username, password,
+                        username,
+                        password,
                         getInstance(this)
                     )
                 )
@@ -155,7 +157,8 @@ open class MyAccount : AnkiActivity() {
                 mLoginListener,
                 Connection.Payload(
                     arrayOf(
-                        username, password,
+                        username,
+                        password,
                         getInstance(this)
                     )
                 )
@@ -258,8 +261,10 @@ open class MyAccount : AnkiActivity() {
             Timber.d("loginListener.onPreExecute()")
             if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
                 mProgressDialog = StyledProgressDialog.show(
-                    this@MyAccount, null,
-                    resources.getString(R.string.alert_logging_message), false
+                    this@MyAccount,
+                    null,
+                    resources.getString(R.string.alert_logging_message),
+                    false
                 )
             }
         }

@@ -44,8 +44,10 @@ class NotificationChannelTest : InstrumentedTest() {
     var runtimePermissionRule = GrantStoragePermission.instance
     private var mCurrentAPI = -1
     private var mTargetAPI = -1
+
     @KotlinCleanup("lateinit")
     private var mManager: NotificationManager? = null
+
     @Before
     @UiThreadTest
     fun setUp() {

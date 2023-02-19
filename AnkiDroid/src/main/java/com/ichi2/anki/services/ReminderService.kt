@@ -134,7 +134,6 @@ class ReminderService : BroadcastReceiver() {
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
     private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
-
         // Avoid crashes if the deck option group is deleted while we
         // are working
         if (col.dbClosed || col.decks.getConf(dConfId) == null) {

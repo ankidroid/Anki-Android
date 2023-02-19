@@ -49,7 +49,8 @@ class LanguageUtilsTest {
         assertThat(
             "Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES",
-            actual, Matchers.contains(*CURRENT_LANGUAGES)
+            actual,
+            Matchers.contains(*CURRENT_LANGUAGES)
         )
     }
 

@@ -85,7 +85,8 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         val f = File("test.svg")
         controller.setImagePreview(f, 100)
         assertThat(
-            "A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
+            "A SVG image file can't be previewed",
+            ShadowToast.getTextOfLatestToast(),
             equalTo(getResourceString(R.string.multimedia_editor_svg_preview))
         )
         assertThat("A SVG image file can't be previewed", controller.isShowingPreview, equalTo(false))

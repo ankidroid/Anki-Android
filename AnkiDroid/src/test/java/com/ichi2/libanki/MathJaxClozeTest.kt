@@ -107,7 +107,6 @@ class MathJaxClozeTest : RobolectricTest() {
 
     @Test
     fun textContainsMathjax() {
-
         assertFalse(MathJax.textContainsMathjax("Hello world."))
         assertFalse(MathJax.textContainsMathjax(""))
         assertTrue(MathJax.textContainsMathjax("This is an inline! \\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}"))

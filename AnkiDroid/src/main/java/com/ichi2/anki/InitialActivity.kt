@@ -30,7 +30,6 @@ object InitialActivity {
     /** Returns null on success  */
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? {
-
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
             return StartupFailure.WEBVIEW_FAILED

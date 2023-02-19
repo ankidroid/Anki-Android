@@ -62,11 +62,13 @@ class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPref
         private fun convertFromPreferenceValue(hostNum: String?): Int? {
             return if (hostNum == null) {
                 getDefaultHostNum()
-            } else try {
-                hostNum.toInt()
-            } catch (e: Exception) {
-                Timber.w(e)
-                getDefaultHostNum()
+            } else {
+                try {
+                    hostNum.toInt()
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    getDefaultHostNum()
+                }
             }
         }
     }

@@ -140,7 +140,8 @@ class SharedDecksDownloadFragment : Fragment() {
         activity?.registerReceiver(mOnComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         val currentFileName = URLUtil.guessFileName(
-            fileToBeDownloaded.url, fileToBeDownloaded.contentDisposition,
+            fileToBeDownloaded.url,
+            fileToBeDownloaded.contentDisposition,
             fileToBeDownloaded.mimeType
         )
 

@@ -140,13 +140,13 @@ class CollectionV16(
 
     override fun findCards(
         search: String,
-        order: SortOrder,
+        order: SortOrder
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 get_config("sortType", null as String?) ?: "noteFld",
-                get_config("sortBackwards", false) ?: false,
+                get_config("sortBackwards", false) ?: false
             )
         } else {
             order
@@ -161,13 +161,13 @@ class CollectionV16(
 
     override fun findNotes(
         query: String,
-        order: SortOrder,
+        order: SortOrder
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 get_config("noteSortType", null as String?) ?: "noteFld",
-                get_config("browserNoteSortBackwards", false) ?: false,
+                get_config("browserNoteSortBackwards", false) ?: false
             )
         } else {
             order

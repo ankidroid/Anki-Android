@@ -47,6 +47,7 @@ class TypeAnswerTest {
 <hr id=answer>
 
 $!"""
+
         @Language("HTML")
         val expectedOutput = """<style>.card {
  font-family: arial;
@@ -80,6 +81,7 @@ $!"""
 <hr id=answer>
 
 hello"""
+
         @Language("HTML")
         val expectedOutput = """<style>.card {
  font-family: arial;
@@ -114,6 +116,7 @@ hello"""
 <hr id=answer>
 
 hello"""
+
         @Language("HTML")
         val expectedOutput = """<style>.card {
  font-family: arial;
@@ -148,6 +151,7 @@ hello"""
 <hr id=answer>
 
 $!"""
+
         @Language("HTML")
         val expectedOutput = """<style>.card {
  font-family: arial;
@@ -182,6 +186,7 @@ $!"""
 <hr id=answer>
 
 $!"""
+
         @Language("HTML")
         val expectedOutput = """<style>.card {
  font-family: arial;
@@ -216,6 +221,7 @@ $!"""
 <hr id=answer>
 
 $!"""
+
         @Language("HTML")
         val expectedOutput = """<style>.card {
  font-family: arial;

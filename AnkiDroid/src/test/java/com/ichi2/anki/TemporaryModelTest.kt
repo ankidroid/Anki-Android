@@ -34,7 +34,6 @@ class TemporaryModelTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun testTempModelStorage() {
-
         // Start off with clean state in the cache dir
         TemporaryModel.clearTempModelFiles()
 
@@ -58,7 +57,6 @@ class TemporaryModelTest : RobolectricTest() {
 
     @Test
     fun testAddDeleteTracking() {
-
         // Assume you start with a 2 template model (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
         // ...and it should reduce to just removing the original 1st/2nd and adding the final as first

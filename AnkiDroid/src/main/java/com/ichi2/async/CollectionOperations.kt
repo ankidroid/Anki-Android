@@ -44,7 +44,7 @@ fun updateCard(
     col: Collection,
     editCard: Card,
     isFromReviewer: Boolean,
-    canAccessScheduler: Boolean,
+    canAccessScheduler: Boolean
 ): Card {
     Timber.d("doInBackgroundUpdateNote")
     // Save the note
@@ -84,7 +84,7 @@ fun updateCard(
  */
 fun updateMultipleNotes(
     col: Collection,
-    notesToUpdate: List<Note>,
+    notesToUpdate: List<Note>
 ): List<Note> {
     Timber.d("CollectionOperations: updateMultipleNotes")
     return col.db.executeInTransaction {
@@ -133,8 +133,12 @@ fun updateValuesFromDeck(
         val totalNewCount = sched.totalNewForCurrentDeck()
         val totalCount = sched.cardCount()
         StudyOptionsFragment.DeckStudyData(
-            counts.new, counts.lrn, counts.rev, totalNewCount,
-            totalCount, sched.eta(counts)
+            counts.new,
+            counts.lrn,
+            counts.rev,
+            totalNewCount,
+            totalCount,
+            sched.eta(counts)
         )
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
@@ -302,7 +306,7 @@ fun saveModel(
  */
 fun deleteMultipleNotes(
     col: Collection,
-    cardIds: List<Long>,
+    cardIds: List<Long>
 ): Array<Card> {
     val cards = cardIds.map { col.getCard(it) }.toTypedArray()
     return col.db.executeInTransaction {

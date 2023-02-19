@@ -79,7 +79,9 @@ object ExceptionUtil {
         } catch (e: Exception) {
             CrashReportService.sendExceptionReport(e, origin)
             UIUtils.showThemedToast(
-                context, context.getString(R.string.multimedia_editor_something_wrong), true
+                context,
+                context.getString(R.string.multimedia_editor_something_wrong),
+                true
             )
         }
     }

@@ -30,6 +30,7 @@ import java.io.File
 class DiskFile private constructor(val file: File) {
     /** @see [File.renameTo] */
     fun renameTo(destination: File): Boolean = file.renameTo(destination)
+
     /** @see [FileUtils.contentEquals] */
     fun contentEquals(f2: File): Boolean = FileUtils.contentEquals(file, f2)
     override fun toString(): String = file.canonicalPath

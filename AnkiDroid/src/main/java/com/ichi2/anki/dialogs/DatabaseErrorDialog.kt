@@ -64,7 +64,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         }
         return when (type) {
             DIALOG_LOAD_FAILED -> {
-
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
                 dialog.show {
@@ -81,7 +80,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_ERROR -> {
-
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
                 dialog.show {
@@ -103,7 +101,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_ERROR_HANDLING -> {
-
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
                 val options = ArrayList<String>(6)
@@ -176,7 +173,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_REPAIR_COLLECTION -> {
-
                 // Allow user to run BackupManager.repairCollection()
                 dialog.show {
                     contentNullable(message)
@@ -189,7 +185,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_RESTORE_BACKUP -> {
-
                 // Allow user to restore one of the backups
                 val path = CollectionHelper.getCollectionPath(requireContext())
                 mBackups = BackupManager.getBackups(File(path))
@@ -244,7 +239,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog
             }
             DIALOG_NEW_COLLECTION -> {
-
                 // Allow user to create a new empty collection
                 dialog.show {
                     contentNullable(message)
@@ -263,7 +257,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_CONFIRM_DATABASE_CHECK -> {
-
                 // Confirmation dialog for database check
                 dialog.show {
                     contentNullable(message)
@@ -275,7 +268,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_CONFIRM_RESTORE_BACKUP -> {
-
                 // Confirmation dialog for backup restore
                 dialog.show {
                     contentNullable(message)
@@ -287,7 +279,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_FULL_SYNC_FROM_SERVER -> {
-
                 // Allow user to do a full-sync from the server
                 dialog.show {
                     contentNullable(message)
@@ -299,7 +290,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_LOCKED -> {
-
                 // If the database is locked, all we can do is ask the user to exit.
                 dialog.show {
                     contentNullable(message)
@@ -444,8 +434,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         /** If the database is at a version higher than what we can currently handle  */
         const val INCOMPATIBLE_DB_VERSION = 10
+
         /** If the disk space is full **/
         const val DIALOG_DISK_FULL = 11
+
         // public flag which lets us distinguish between inaccessible and corrupt database
         var databaseCorruptFlag = false
 

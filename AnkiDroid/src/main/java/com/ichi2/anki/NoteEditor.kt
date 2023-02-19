@@ -134,6 +134,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     // non-null after onCollectionLoaded
     private var mEditorNote: Note? = null
+
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var mCurrentEditedCard: Card? = null
     private var mSelectedTags: ArrayList<String>? = null
@@ -142,6 +143,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     var deckId: DeckId = 0
         private set
     private var mAllModelIds: List<Long>? = null
+
     @KotlinCleanup("this ideally should be Int, Int?")
     private var mModelChangeFieldMap: MutableMap<Int, Int>? = null
     private var mModelChangeCardMap: HashMap<Int, Int?>? = null
@@ -201,7 +203,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             return if (allFieldsHaveContent()) {
                 R.string.note_editor_no_cards_created_all_fields
-            } else R.string.note_editor_no_cards_created
+            } else {
+                R.string.note_editor_no_cards_created
+            }
 
             // Otherwise, display "no cards created".
         }
@@ -360,7 +364,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         mDeckSpinnerSelection =
             DeckSpinnerSelection(
-                this, col, findViewById(R.id.note_deck_spinner),
+                this,
+                col,
+                findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
                 showFilteredDecks = false
@@ -429,7 +435,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun modifyCurrentSelection(formatter: Toolbar.TextFormatter, textBox: FieldEditText) {
-
         // get the current text and selection locations
         val selectionStart = textBox.selectionStart
         val selectionEnd = textBox.selectionEnd
@@ -623,7 +628,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // changed fields?
         return if (isFieldEdited) {
             true
-        } else isTagsEdited
+        } else {
+            isTagsEdited
+        }
         // changed tags?
     }
 
@@ -805,7 +812,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val dialog = ConfirmationDialog()
             dialog.setArgs(res.getString(R.string.full_sync_confirmation))
             val confirm = Runnable {
-
                 // Bypass the check once the user confirms
                 col.modSchemaNoCheck()
                 try {
@@ -1182,7 +1188,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
             REQUEST_TEMPLATE_EDIT -> {
-
                 // Model can change regardless of exit type - update ourselves and CardBrowser
                 mReloadRequired = true
                 mEditorNote!!.reloadModel()
@@ -1416,8 +1421,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")
     private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
-        if (currentFields.getJSONObject(index).getBoolean("sticky"))
+        if (currentFields.getJSONObject(index).getBoolean("sticky")) {
             mToggleStickyText.getOrPut(index) { "" }
+        }
         if (mToggleStickyText[index] == null) {
             toggleStickyButton!!.background.alpha = 64
         } else {
@@ -1684,8 +1690,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun updateToolbar() {
         val editorLayout = findViewById<View>(R.id.note_editor_layout)
         val bottomMargin =
-            if (shouldHideToolbar()) 0 else resources.getDimension(R.dimen.note_editor_toolbar_height)
-                .toInt()
+            if (shouldHideToolbar()) {
+                0
+            } else {
+                resources.getDimension(R.dimen.note_editor_toolbar_height)
+                    .toInt()
+            }
         val params = editorLayout.layoutParams as MarginLayoutParams
         params.bottomMargin = bottomMargin
         editorLayout.layoutParams = params
@@ -1718,7 +1728,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         val buttons = toolbarButtons
         for (b in buttons) {
-
             // 0th button shows as '1' and is Ctrl + 1
             val visualIndex = b.index + 1
             var text = visualIndex.toString()

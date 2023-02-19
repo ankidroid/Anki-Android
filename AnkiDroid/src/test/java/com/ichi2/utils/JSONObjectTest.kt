@@ -866,6 +866,7 @@ class JSONObjectTest {
     private lateinit var mCorrectJsonObjectWithArray: JSONObject
     private lateinit var mCorrectJsonObjectNestedWithArray: JSONObject
     lateinit var booleanMap: MutableMap<String, Boolean>
+
     @Before
     @Test
     fun setUp() {
@@ -967,6 +968,7 @@ class JSONObjectTest {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
         }
     }
+
     /**
      * Tests that exception is caught in the catch statement
      */

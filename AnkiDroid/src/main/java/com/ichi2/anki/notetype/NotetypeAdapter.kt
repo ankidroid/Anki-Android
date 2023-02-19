@@ -46,7 +46,7 @@ internal class NotetypesAdapter(
     private val onShowFields: (NoteTypeUiModel) -> Unit,
     private val onEditCards: (NoteTypeUiModel) -> Unit,
     private val onRename: (NoteTypeUiModel) -> Unit,
-    private val onDelete: (NoteTypeUiModel) -> Unit,
+    private val onDelete: (NoteTypeUiModel) -> Unit
 ) : ListAdapter<NoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -56,7 +56,7 @@ internal class NotetypesAdapter(
             onDelete = onDelete,
             onRename = onRename,
             onEditCards = onEditCards,
-            onShowFields = onShowFields,
+            onShowFields = onShowFields
         )
     }
 
@@ -70,7 +70,7 @@ internal class NotetypeViewHolder(
     onShowFields: (NoteTypeUiModel) -> Unit,
     onEditCards: (NoteTypeUiModel) -> Unit,
     onRename: (NoteTypeUiModel) -> Unit,
-    onDelete: (NoteTypeUiModel) -> Unit,
+    onDelete: (NoteTypeUiModel) -> Unit
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
     val useCount: TextView = rowView.findViewById(R.id.note_use_count)

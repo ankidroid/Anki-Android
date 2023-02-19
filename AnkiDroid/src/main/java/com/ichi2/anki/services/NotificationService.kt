@@ -69,7 +69,9 @@ class NotificationService : BroadcastReceiver() {
                 val resultIntent = Intent(context, DeckPicker::class.java)
                 resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 val resultPendingIntent = CompatHelper.compat.getImmutableActivityIntent(
-                    context, 0, resultIntent,
+                    context,
+                    0,
+                    resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
                 builder.setContentIntent(resultPendingIntent)

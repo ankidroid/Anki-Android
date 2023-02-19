@@ -66,7 +66,9 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     override fun buildCustomView(savedInstanceState: Bundle?): View {
         val preferences = AnkiDroidApp.getSharedPrefs(this)
         val inflater = layoutInflater
-        @SuppressLint("InflateParams") val rootView = // when you inflate into an alert dialog, you have no parent view
+
+        @SuppressLint("InflateParams")
+        val rootView = // when you inflate into an alert dialog, you have no parent view
             inflater.inflate(R.layout.feedback, null)
         mAlwaysReportCheckBox = rootView.findViewById(R.id.alwaysReportCheckbox)
         mAlwaysReportCheckBox?.isChecked = preferences.getBoolean("autoreportCheckboxValue", true)

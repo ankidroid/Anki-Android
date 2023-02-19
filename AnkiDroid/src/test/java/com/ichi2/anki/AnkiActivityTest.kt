@@ -32,7 +32,8 @@ class AnkiActivityTest : RobolectricTest() {
     fun themeChangeIsValid() {
         // #12404 - fail to respond to day/night mode change
         val activity = startActivityNormallyOpenCollectionWithIntent(
-            AnkiActivity::class.java, Intent()
+            AnkiActivity::class.java,
+            Intent()
         )
         assertThat(Themes.currentTheme, equalTo(Theme.LIGHT))
 

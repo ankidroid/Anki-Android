@@ -626,8 +626,8 @@ class Decks(private val col: Collection) : DeckManager() {
     override fun confForDid(did: Long): DeckConfig {
         val deck = get(did, false)!!
         if (deck.has("conf")) {
-            @KotlinCleanup("Clarify comment. It doesn't make sense when using :?")
             // fall back on default
+            @KotlinCleanup("Clarify comment. It doesn't make sense when using :?")
             val conf = getConf(deck.getLong("conf")) ?: getConf(1L)!!
             return conf.apply {
                 put("dyn", DECK_STD)
@@ -959,6 +959,7 @@ class Decks(private val col: Collection) : DeckManager() {
             save()
         }
     }
+
     /*
       Dynamic decks
      */
@@ -992,6 +993,7 @@ class Decks(private val col: Collection) : DeckManager() {
 
         // not in libAnki
         const val DECK_SEPARATOR = "::"
+
         @KotlinCleanup("Maybe use triple quotes and @language? for these properties")
         const val DEFAULT_DECK = (
             "" +
@@ -1079,6 +1081,7 @@ class Decks(private val col: Collection) : DeckManager() {
         }
 
         private val spaceAroundSeparator = Pattern.compile("\\s*::\\s*")
+
         @Suppress("NAME_SHADOWING")
         @VisibleForTesting
         fun strip(deckName: String): String {
@@ -1097,6 +1100,7 @@ class Decks(private val col: Collection) : DeckManager() {
      * **************************************
      */
         private val normalized = HashMap<String?, String>()
+
         @KotlinCleanup("nullability")
         fun normalizeName(name: String?): String? {
             if (!normalized.containsKey(name)) {

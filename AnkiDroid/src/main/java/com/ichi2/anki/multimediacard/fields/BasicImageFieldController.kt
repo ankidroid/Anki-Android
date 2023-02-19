@@ -96,6 +96,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return min(height * 0.4, width * 0.6).toInt()
         }
     private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
+
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 

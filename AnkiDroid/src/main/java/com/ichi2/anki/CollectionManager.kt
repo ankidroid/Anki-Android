@@ -296,12 +296,14 @@ object CollectionManager {
                 // out our own code, and standard dalvik/java.lang stack frames
                 val caller = stackTraceElements.filter {
                     val klass = it.className
-                    for (
-                        text in listOf(
-                            "CollectionManager", "dalvik", "java.lang",
-                            "CollectionHelper", "AnkiActivity"
-                        )
-                    ) {
+                    val toCheck = listOf(
+                        "CollectionManager",
+                        "dalvik",
+                        "java.lang",
+                        "CollectionHelper",
+                        "AnkiActivity"
+                    )
+                    for (text in toCheck) {
                         if (text in klass) {
                             return@filter false
                         }

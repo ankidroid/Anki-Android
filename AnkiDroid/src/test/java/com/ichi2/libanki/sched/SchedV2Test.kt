@@ -197,7 +197,8 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(
             "Tree has not the expected structure",
             expectedTree(
-                col, true
+                col,
+                true
             ),
             tree
         )
@@ -1947,35 +1948,55 @@ open class SchedV2Test : RobolectricTest() {
             )
             val cNode = TreeNode(
                 DeckDueTreeNode(
-                    "cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0,
+                    "cmxieunwoogyxsctnjmv",
+                    1596783600440L,
+                    0,
+                    0,
+                    0,
                     collapsed = false,
                     filtered = false
                 )
             )
             val fNode = TreeNode(
                 DeckDueTreeNode(
-                    "blank::foobar", 1596783600540L, 0, 0, 0,
+                    "blank::foobar",
+                    1596783600540L,
+                    0,
+                    0,
+                    0,
                     collapsed = false,
                     filtered = false
                 )
             )
             val bNode = TreeNode(
                 DeckDueTreeNode(
-                    "blank", 1596783600520L, 0, 0, 0,
+                    "blank",
+                    1596783600520L,
+                    0,
+                    0,
+                    0,
                     collapsed = false,
                     filtered = false
                 )
             )
             val aBlankNode = TreeNode(
                 DeckDueTreeNode(
-                    "A::blank", 1596783600580L, 0, 0, 0,
+                    "A::blank",
+                    1596783600580L,
+                    0,
+                    0,
+                    0,
                     collapsed = false,
                     filtered = false
                 )
             )
             val aNode = TreeNode(
                 DeckDueTreeNode(
-                    "A", 1596783600560L, 0, 0, 0,
+                    "A",
+                    1596783600560L,
+                    0,
+                    0,
+                    0,
                     collapsed = false,
                     filtered = false
                 )
@@ -2007,7 +2028,11 @@ open class SchedV2Test : RobolectricTest() {
             expected.add(
                 TreeNode(
                     DeckDueTreeNode(
-                        "scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0,
+                        "scxipjiyozczaaczoawo",
+                        1596783600420L,
+                        0,
+                        0,
+                        0,
                         collapsed = false,
                         filtered = false
                     )

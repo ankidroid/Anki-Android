@@ -1,3 +1,5 @@
+// see .editorconfig for ktlint-related rules
+
 android {
     lint {
         abortOnError true

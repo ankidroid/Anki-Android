@@ -38,6 +38,7 @@ class LayoutValidationTest : InstrumentedTest() {
     @JvmField // required for Parameter
     @Parameterized.Parameter(1)
     var name: String? = null
+
     @Test
     @Throws(Exception::class)
     fun ensureLayout() {

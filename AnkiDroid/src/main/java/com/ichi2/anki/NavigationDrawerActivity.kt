@@ -61,6 +61,7 @@ abstract class NavigationDrawerActivity :
      */
     protected var fragmented = false
     private var mNavButtonGoesBack = false
+
     // Navigation drawer list item entries
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var mNavigationView: NavigationView
@@ -77,7 +78,9 @@ abstract class NavigationDrawerActivity :
 
         // Using ClosableDrawerLayout as a parent view.
         val closableDrawerLayout = LayoutInflater.from(this).inflate(
-            navigationDrawerLayout, null, false
+            navigationDrawerLayout,
+            null,
+            false
         ) as ClosableDrawerLayout
         // Get CoordinatorLayout using resource ID
         val coordinatorLayout = LayoutInflater.from(this)

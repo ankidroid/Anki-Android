@@ -40,5 +40,5 @@ class ModelBrowserContextMenu : AnalyticsDialogFragment() {
 enum class ModelBrowserContextMenuAction(val order: Int, @StringRes val actionTextResId: Int) {
     Template(0, R.string.model_browser_template),
     Rename(1, R.string.model_browser_rename),
-    Delete(2, R.string.model_browser_delete),
+    Delete(2, R.string.model_browser_delete)
 }

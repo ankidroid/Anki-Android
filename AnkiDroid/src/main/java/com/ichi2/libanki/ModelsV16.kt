@@ -50,6 +50,7 @@ class NoteTypeNameIDUseCount(val id: Long, val name: String, val useCount: UInt)
 class BackendNote(val fields: MutableList<String>)
 
 private typealias int = Long
+
 // # types
 private typealias Field = JSONObject // Dict<str, Any>
 private typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
@@ -457,7 +458,6 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
 
     /** Modifies schema. */
     fun set_sort_index(nt: NoteType, idx: Int) {
-
         assert(0 <= idx && idx < len(nt.flds))
         nt.sortf = idx
     }
@@ -604,7 +604,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
             oldNotetypeId = m.id,
             newNotetypeId = newModel.id,
             currentSchema = col.scm,
-            oldNotetypeName = m.name,
+            oldNotetypeName = m.name
         )
     }
 

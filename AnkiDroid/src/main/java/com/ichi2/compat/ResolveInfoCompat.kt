@@ -40,6 +40,7 @@ class ResolveInfoFlagsCompat private constructor(@ResolveInfoFlagsBitsCompat val
         fun of(@ResolveInfoFlagsBitsCompat value: Long): ResolveInfoFlagsCompat {
             return ResolveInfoFlagsCompat(value)
         }
+
         /** Helper property. Does not exist on Platform API */
         val EMPTY
             get() = ResolveInfoFlagsCompat(0)
@@ -161,7 +162,7 @@ const val MATCH_DIRECT_BOOT_UNAWARE = 0x00040000
         MATCH_DIRECT_BOOT_AWARE.toLong(),
         MATCH_DIRECT_BOOT_UNAWARE.toLong(),
         MATCH_SYSTEM_ONLY.toLong(),
-        MATCH_UNINSTALLED_PACKAGES.toLong(),
+        MATCH_UNINSTALLED_PACKAGES.toLong()
         // PackageManager.MATCH_INSTANT, // @SystemApi
         // PackageManager.MATCH_DEBUG_TRIAGED_MISSING, // deprecated
         // PackageManager.GET_DISABLED_COMPONENTS, // deprecated

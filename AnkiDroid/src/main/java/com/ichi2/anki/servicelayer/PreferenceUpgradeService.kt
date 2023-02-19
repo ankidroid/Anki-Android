@@ -265,7 +265,7 @@ object PreferenceUpgradeService {
                 Pair(37, ViewerCommand.TOGGLE_WHITEBOARD),
                 Pair(41, ViewerCommand.SHOW_HINT),
                 Pair(42, ViewerCommand.SHOW_ALL_HINTS),
-                Pair(43, ViewerCommand.ADD_NOTE),
+                Pair(43, ViewerCommand.ADD_NOTE)
             )
 
             override fun upgrade(preferences: SharedPreferences) {

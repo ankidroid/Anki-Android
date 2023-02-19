@@ -180,7 +180,7 @@ private fun showError(context: Context, msg: String, exception: Throwable) {
 suspend fun <T> Backend.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
-    block: suspend CoroutineScope.() -> T,
+    block: suspend CoroutineScope.() -> T
 ): T {
     return coroutineScope {
         val monitor = launch {
@@ -292,7 +292,7 @@ private suspend fun <T> withProgressDialog(
 private suspend fun monitorProgress(
     backend: Backend,
     extractProgress: ProgressContext.() -> Unit,
-    updateUi: ProgressContext.() -> Unit,
+    updateUi: ProgressContext.() -> Unit
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
@@ -313,7 +313,7 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null,
+    var amount: Pair<Int, Int>? = null
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation
