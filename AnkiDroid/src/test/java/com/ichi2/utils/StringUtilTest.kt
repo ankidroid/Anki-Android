@@ -16,35 +16,12 @@
 package com.ichi2.utils
 
 import com.ichi2.utils.StringUtil.toTitleCase
-import com.ichi2.utils.StringUtil.trimRight
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
-import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 
 class StringUtilTest {
-    @Test
-    fun trimRightNullIsSetToNull() {
-        assertThat(trimRight(null), nullValue())
-    }
-
-    @Test
-    fun trimRightWhiteSpaceIsBlankString() {
-        assertThat(trimRight(" "), equalTo(""))
-    }
-
-    @Test
-    fun trimRightOnlyTrimsRight() {
-        assertThat(trimRight(" a "), equalTo(" a"))
-    }
-
-    @Test
-    fun trimRightDoesNothingOnTrimmedString() {
-        val input = " foo"
-        assertThat(trimRight(input), sameInstance(input))
-    }
-
     @Test
     fun toTitleCase_null_is_null() {
         assertThat(toTitleCase(null), nullValue())
