@@ -142,5 +142,24 @@ class CompatHelper private constructor() {
         fun PackageManager.resolveServiceCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
             return compat.resolveService(this, intent, flags)
         }
+
+        /**
+         * Retrieve all activities that can be performed for the given intent.
+         *
+         * @param intent The desired intent as per resolveActivity().
+         * @param flags Additional option flags to modify the data returned. The
+         *            most important is [MATCH_DEFAULT_ONLY], to limit the
+         *            resolution to only those activities that support the
+         *            [CATEGORY_DEFAULT]. Or, set
+         *            [MATCH_ALL] to prevent any filtering of the results.
+         * @return Returns a List of ResolveInfo objects containing one entry for
+         *         each matching activity, ordered from best to worst. In other
+         *         words, the first item is what would be returned by
+         *         {@link #resolveActivity}. If there are no matching activities, an
+         *         empty list is returned.
+         */
+        fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
+            return compat.queryIntentActivities(this, intent, flags)
+        }
     }
 }

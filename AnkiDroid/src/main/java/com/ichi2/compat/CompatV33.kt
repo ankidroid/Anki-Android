@@ -63,4 +63,8 @@ open class CompatV33 : CompatV31(), Compat {
     ): ResolveInfo? {
         return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }
+
+    override fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
+        return packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+    }
 }

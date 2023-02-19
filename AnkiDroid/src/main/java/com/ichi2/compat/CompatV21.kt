@@ -84,6 +84,14 @@ open class CompatV21 : Compat {
         return packageManager.resolveService(intent, flags.value.toInt())
     }
 
+    override fun queryIntentActivities(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): List<ResolveInfo> {
+        return packageManager.queryIntentActivities(intent, flags.value.toInt())
+    }
+
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
