@@ -76,4 +76,8 @@ open class CompatV33 : CompatV31(), Compat {
     ) {
         parcel.readList(outVal, classLoader, clazz)
     }
+
+    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
+        return bundle.getParcelable(key, clazz)
+    }
 }
