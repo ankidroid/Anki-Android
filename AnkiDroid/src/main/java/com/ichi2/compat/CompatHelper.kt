@@ -148,8 +148,8 @@ class CompatHelper private constructor() {
          * dataPosition(), using the given class loader to load any enclosed
          * Parcelables.  If it is null, the default class loader is used.
          */
-        fun <T> Parcel.readListCompat(outVal: MutableList<in T>, classLoader: ClassLoader?, clazz: Class<T>) {
-            compat.readList(this, outVal, classLoader, clazz)
+        inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
+            compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
         }
     }
 }

@@ -143,7 +143,7 @@ class RecursivePictureMenu : DialogFragment() {
         protected constructor(parcel: Parcel) : super(parcel) {
             if (parcel.readByte().toInt() == 0x01) {
                 mChildren = ArrayList()
-                parcel.readListCompat(mChildren, Item::class.java.classLoader, Item::class.java)
+                parcel.readListCompat<Item>(mChildren)
             } else {
                 mChildren = ArrayList(0)
             }
