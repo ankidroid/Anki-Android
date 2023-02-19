@@ -193,7 +193,7 @@ object HelpDialog {
         }
 
         private constructor(source: Parcel) : super(source) {
-            mFunc = source.readSerializableCompat(ActivityConsumer::class.java.classLoader, ActivityConsumer::class.java)!!
+            mFunc = source.readSerializableCompat<ActivityConsumer>()!!
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {

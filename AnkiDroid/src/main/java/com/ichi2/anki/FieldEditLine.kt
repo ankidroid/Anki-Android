@@ -240,7 +240,7 @@ class FieldEditLine : FrameLayout {
             toggleStickyId = source.readInt()
             mediaButtonId = source.readInt()
             expandButtonId = source.readInt()
-            expansionState = source.readSerializableCompat(ExpansionState::class.java.classLoader, ExpansionState::class.java)
+            expansionState = source.readSerializableCompat<ExpansionState>()
         }
 
         companion object {

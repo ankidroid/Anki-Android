@@ -129,8 +129,8 @@ class CompatHelper private constructor() {
         fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             compat.getPackageInfo(this, packageName, flags)
 
-        fun <T> Parcel.readSerializableCompat(loader: ClassLoader?, clazz: Class<T>): T? {
-            return compat.readSerializable(this, loader, clazz)
+        inline fun <reified T> Parcel.readSerializableCompat(): T? {
+            return compat.readSerializable(this, T::class.java.classLoader, T::class.java)
         }
 
         /**
