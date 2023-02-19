@@ -63,4 +63,13 @@ open class CompatV33 : CompatV31(), Compat {
     ): ResolveInfo? {
         return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }
+
+    override fun <T> readList(
+        parcel: Parcel,
+        outVal: MutableList<in T>,
+        classLoader: ClassLoader?,
+        clazz: Class<T>
+    ) {
+        parcel.readList(outVal, classLoader, clazz)
+    }
 }

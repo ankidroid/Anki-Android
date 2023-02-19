@@ -278,6 +278,13 @@ interface Compat {
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
 
+    /**
+     * Read into an existing List object from the parcel at the current
+     * dataPosition(), using the given class loader to load any enclosed
+     * Parcelables.  If it is null, the default class loader is used.
+     */
+    fun <T> readList(parcel: Parcel, outVal: MutableList<in T>, classLoader: ClassLoader?, clazz: Class<T>)
+
     companion object {
         /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
         const val ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT"

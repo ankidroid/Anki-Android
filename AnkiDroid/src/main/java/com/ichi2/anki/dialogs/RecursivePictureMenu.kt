@@ -34,6 +34,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
+import com.ichi2.compat.CompatHelper.Companion.readListCompat
 import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
@@ -139,11 +140,10 @@ class RecursivePictureMenu : DialogFragment() {
             }
         }
 
-        @Suppress("deprecation") // readList
         protected constructor(parcel: Parcel) : super(parcel) {
             if (parcel.readByte().toInt() == 0x01) {
                 mChildren = ArrayList()
-                parcel.readList(mChildren, Item::class.java.classLoader)
+                parcel.readListCompat(mChildren, Item::class.java.classLoader, Item::class.java)
             } else {
                 mChildren = ArrayList(0)
             }
