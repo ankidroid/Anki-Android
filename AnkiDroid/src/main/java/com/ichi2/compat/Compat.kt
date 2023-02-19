@@ -38,6 +38,7 @@ import android.util.SparseArray
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
+import java.util.*
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -113,6 +114,13 @@ interface Compat {
      * @return a Serializable value, or `null`
      */
     fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
+
+    /**
+     * Read and return a new Serializable object from the parcel.
+     * @return the Serializable object, or null if the Serializable name
+     * wasn't found in the parcel.
+     */
+    fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T?
 
     /**
      * Retrieve overall information about an application package that is

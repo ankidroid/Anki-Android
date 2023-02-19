@@ -31,6 +31,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem.ActivityConsumer
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
+import com.ichi2.compat.CompatHelper.Companion.readSerializableCompat
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -191,9 +192,8 @@ object HelpDialog {
             mFunc.consume(activity)
         }
 
-        @Suppress("deprecation") // readSerializable
         private constructor(source: Parcel) : super(source) {
-            mFunc = source.readSerializable() as ActivityConsumer
+            mFunc = source.readSerializableCompat(ActivityConsumer::class.java.classLoader, ActivityConsumer::class.java)!!
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {

@@ -37,6 +37,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.ViewCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.UIUtils.getDensityAdjustedValue
+import com.ichi2.compat.CompatHelper.Companion.readSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.readSparseArrayCompat
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
@@ -233,14 +234,13 @@ class FieldEditLine : FrameLayout {
             out.writeSerializable(expansionState)
         }
 
-        @Suppress("deprecation") // readSparseArray readSerializable
         private constructor(source: Parcel, loader: ClassLoader) : super(source) {
             childrenStates = source.readSparseArrayCompat(loader, Parcelable::class.java)
             editTextId = source.readInt()
             toggleStickyId = source.readInt()
             mediaButtonId = source.readInt()
             expandButtonId = source.readInt()
-            expansionState = source.readSerializable() as ExpansionState?
+            expansionState = source.readSerializableCompat(ExpansionState::class.java.classLoader, ExpansionState::class.java)
         }
 
         companion object {
