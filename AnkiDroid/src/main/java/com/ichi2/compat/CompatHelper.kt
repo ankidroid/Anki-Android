@@ -129,6 +129,10 @@ class CompatHelper private constructor() {
         fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             compat.getPackageInfo(this, packageName, flags)
 
+        inline fun <reified T> Parcel.readSerializableCompat(): T? {
+            return compat.readSerializable(this, T::class.java.classLoader, T::class.java)
+        }
+
         /**
          * Determine the best service to handle for a given Intent.
          *

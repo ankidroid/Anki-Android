@@ -115,6 +115,11 @@ open class CompatV21 : Compat {
         clazz: Class<T>
     ): T? = bundle.getSerializable(key) as? T?
 
+    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
+        @Suppress("UNCHECKED_CAST")
+        return parcel.readSerializable() as T
+    }
+
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {

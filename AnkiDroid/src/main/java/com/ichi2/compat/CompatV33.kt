@@ -45,6 +45,10 @@ open class CompatV33 : CompatV31(), Compat {
         return bundle.getSerializable(key, clazz)
     }
 
+    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
+        return parcel.readSerializable(loader, clazz)
+    }
+
     override fun <T> readSparseArray(
         parcel: Parcel,
         loader: ClassLoader,
