@@ -63,7 +63,6 @@ class ACRATest : InstrumentedTest() {
     @Test
     @Throws(Exception::class)
     fun testDebugConfiguration() {
-
         // Debug mode overrides all saved state so no setup needed
         CrashReportService.setDebugACRAConfig(sharedPrefs)
         assertArrayEquals(
@@ -91,7 +90,6 @@ class ACRATest : InstrumentedTest() {
     @Test
     @Throws(Exception::class)
     fun testProductionConfigurationUserDisabled() {
-
         // set up as if the user had prefs saved to disable completely
         setReportConfig(CrashReportService.FEEDBACK_REPORT_NEVER)
 

@@ -35,9 +35,11 @@ abstract class DeckManager {
      */
 
     abstract fun load(@Language("JSON") decks: String, dconf: String)
+
     @RustCleanup("Unused in V16")
     /** @throws DeckRenameException */
     abstract fun save()
+
     /** Can be called with either a deck or a deck configuration.
      * @throws DeckRenameException */
     abstract fun save(g: Deck)
@@ -50,24 +52,31 @@ abstract class DeckManager {
      */
 
     abstract fun id_for_name(name: String): Long?
+
     @Throws(DeckRenameException::class)
     abstract fun id(name: String): Long
+
     /** Same as id, but rename ancestors if filtered to avoid failure */
     fun id_safe(name: String) = id_safe(name, Decks.DEFAULT_DECK)
+
     /** Same as id, but rename ancestors if filtered to avoid failure */
     abstract fun id_safe(name: String, type: String): Long
 
     /** Remove the deck. delete any cards inside and child decks. */
     fun rem(did: DeckId) = rem(did, true)
+
     /** Remove the deck. Delete child decks. If cardsToo, delete any cards inside. */
     fun rem(did: DeckId, cardsToo: Boolean = true) = rem(did, cardsToo, true)
+
     /** Remove the deck. If cardsToo, delete any cards inside. */
     abstract fun rem(did: DeckId, cardsToo: Boolean = true, childrenToo: Boolean = true)
 
     /** An unsorted list of all deck names. */
     fun allNames() = allNames(true)
+
     /** An unsorted list of all deck names. */
     abstract fun allNames(dyn: Boolean = true): List<String>
+
     /** A list of all decks. */
     abstract fun all(): List<Deck>
     abstract fun allIds(): Set<Long>
@@ -77,9 +86,11 @@ abstract class DeckManager {
     /** Return the number of decks. */
     @RustCleanup("This is a long in V16 - shouldn't make a difference, but needs investigation")
     abstract fun count(): Int
-    @CheckResult
+
     /** Obtains the deck from the DeckID, or default if the deck was not found */
+    @CheckResult
     fun get(did: DeckId): Deck = get(did, true)!!
+
     /**
      * Obtains the deck from the DeckID
      * @param did The deck to obtain
@@ -114,8 +125,10 @@ abstract class DeckManager {
     abstract fun updateConf(g: DeckConfig)
 
     fun confId(name: String): Long = confId(name, Decks.DEFAULT_CONF)
+
     /** Create a new configuration and return id */
     abstract fun confId(name: String, cloneFrom: String): Long
+
     /**
      * Remove a configuration and update all decks using it.
      * @throws ConfirmModSchemaException
@@ -144,11 +157,14 @@ abstract class DeckManager {
      */
     /** The currently active dids. Make sure to copy before modifying. */
     abstract fun active(): LinkedList<Long>
+
     /** The currently selected did. */
     abstract fun selected(): Long
     abstract fun current(): Deck
+
     /** Select a new branch. */
     abstract fun select(did: DeckId)
+
     /**
      * All children of did as nodes of (key:name, value:id)
      *
@@ -158,6 +174,7 @@ abstract class DeckManager {
     abstract fun children(did: DeckId): TreeMap<String, Long>
     abstract fun childDids(did: DeckId, childMap: Decks.Node): List<Long>
     abstract fun childMap(): Decks.Node
+
     /** All parents of did. */
     abstract fun parents(did: DeckId): List<Deck>
 

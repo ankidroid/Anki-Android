@@ -43,7 +43,6 @@ class CheckBoxTriStates : AppCompatCheckBox {
     }
 
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
-
         // we never truly set the listener to the client implementation, instead we only hold
         // a reference to it and invoke it when needed.
         if (mPrivateListener !== listener) {
@@ -145,7 +144,10 @@ class CheckBoxTriStates : AppCompatCheckBox {
         cycleIndeterminateToChecked = false
         if (attrs != null) {
             val a = context.theme.obtainStyledAttributes(
-                attrs, R.styleable.CheckBoxTriStates, 0, 0
+                attrs,
+                R.styleable.CheckBoxTriStates,
+                0,
+                0
             )
             cycleCheckedToIndeterminate = a.getBoolean(
                 R.styleable.CheckBoxTriStates_cycle_checked_to_indeterminate,

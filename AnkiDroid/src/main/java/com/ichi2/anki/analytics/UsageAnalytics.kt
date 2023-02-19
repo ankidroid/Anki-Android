@@ -39,6 +39,7 @@ import timber.log.Timber
 @KotlinCleanup("see if we can make variables lazy, or properties without the `s` prefix")
 object UsageAnalytics {
     const val ANALYTICS_OPTIN_KEY = "analyticsOptIn"
+
     @KotlinCleanup("lateinit")
     private var sAnalytics: GoogleAnalytics? = null
     private var sOriginalUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
@@ -136,13 +137,9 @@ object UsageAnalytics {
         Thread.setDefaultUncaughtExceptionHandler(sOriginalUncaughtExceptionHandler)
         sOriginalUncaughtExceptionHandler = null
     }
-    /**
-     * Determine whether we are disabled or not
-     */
+
     /**
      * Allow users to enable or disable analytics
-     *
-     * @param optIn true allows collection of analytics information
      */
     @set:Synchronized
     private var optIn: Boolean
@@ -174,7 +171,6 @@ object UsageAnalytics {
      */
     @Synchronized
     fun reInitialize() {
-
         // send any pending async hits, re-chain default exception handlers and re-init
         Timber.i("reInitialize()")
         sAnalytics!!.flush()
@@ -283,7 +279,9 @@ object UsageAnalytics {
         // if we're not under the ACRA process then we're fine to initialize a WebView
         return if (!ACRA.isACRASenderServiceProcess()) {
             true
-        } else hasSetDataDirectory()
+        } else {
+            hasSetDataDirectory()
+        }
 
         // If we have a custom data directory, then the crash will not occur.
     }
@@ -313,7 +311,6 @@ object UsageAnalytics {
      */
     private class AndroidDefaultRequest : DefaultRequest() {
         fun setAndroidRequestParameters(context: Context): DefaultRequest {
-
             // Are we running on really large screens or small screens? Send raw screen size
             try {
                 val size = DisplayUtils.getDisplayDimensions(context)

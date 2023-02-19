@@ -32,9 +32,9 @@ import org.mockito.Mockito
 import org.mockito.kotlin.*
 import org.robolectric.annotation.Config
 
+// This is difficult to test as Chronometer.mStarted isn't visible
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-// This is difficult to test as Chronometer.mStarted isn't visible
 class AnswerTimerTest {
     lateinit var chronometer: Chronometer
 

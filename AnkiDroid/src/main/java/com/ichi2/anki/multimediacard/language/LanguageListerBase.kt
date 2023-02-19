@@ -41,7 +41,9 @@ open class LanguageListerBase {
     fun getCodeFor(Language: String): String? {
         return if (mLanguageMap.containsKey(Language)) {
             mLanguageMap[Language]
-        } else null
+        } else {
+            null
+        }
     }
 
     val languages: ArrayList<String>

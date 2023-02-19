@@ -203,11 +203,13 @@ class DB(db: SupportSQLiteDatabase) {
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
     fun executeScript(@Language("SQL") sql: String) {
         mod = true
-        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val queries = java.lang.String(sql).split(";")
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+        val queries = java.lang.String(sql).split(";")
         for (query in queries) {
             database.execSQL(query)
         }
     }
+
     /** update must always be called via DB in order to mark the db as changed  */
     fun update(
         table: String,

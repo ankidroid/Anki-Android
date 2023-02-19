@@ -27,10 +27,17 @@ import com.ichi2.utils.ViewGroupUtils.getAllChildren
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 class AutoSizeCheckBoxPreference : android.preference.CheckBoxPreference {
-    @Suppress("unused") constructor(context: Context?) : super(context) {}
-    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
-    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
-    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
+    @Suppress("unused")
+    constructor(context: Context?) : super(context) {}
+
+    @Suppress("unused")
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
+
+    @Suppress("unused")
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+
+    @Suppress("unused")
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
 
     @Deprecated("Deprecated in Java")
     override fun onBindView(view: View) {

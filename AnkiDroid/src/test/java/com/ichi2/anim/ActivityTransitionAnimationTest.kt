@@ -50,7 +50,7 @@ class ActivityTransitionAnimationTest {
             return Stream.of(
                 Arguments.of(Direction.START, Direction.END),
                 Arguments.of(Direction.UP, Direction.DOWN),
-                Arguments.of(Direction.RIGHT, Direction.LEFT),
+                Arguments.of(Direction.RIGHT, Direction.LEFT)
             )
         }
     }

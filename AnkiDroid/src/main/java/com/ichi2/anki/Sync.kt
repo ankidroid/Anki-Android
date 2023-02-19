@@ -47,6 +47,7 @@ object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
+
     // Used in the legacy schema path
     const val HOSTNUM = "hostNum"
 }
@@ -106,7 +107,7 @@ fun isLoggedIn() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getString(
 
 fun DeckPicker.handleNewSync(
     conflict: Connection.ConflictResolution?,
-    syncMedia: Boolean,
+    syncMedia: Boolean
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
@@ -177,7 +178,7 @@ private fun cancelSync(backend: Backend) {
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean,
+    syncMedia: Boolean
 ) {
     val output = deckPicker.withProgress(
         extractProgress = {
@@ -242,7 +243,7 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean,
+    syncMedia: Boolean
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
@@ -272,7 +273,7 @@ private suspend fun handleDownload(
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean,
+    syncMedia: Boolean
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
@@ -325,7 +326,7 @@ private suspend fun handleMediaSync(
             },
             updateUi = {
                 dialog.setMessage(text)
-            },
+            }
         ) {
             withContext(Dispatchers.IO) {
                 backend.syncMedia(auth)

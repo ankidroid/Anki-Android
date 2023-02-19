@@ -352,7 +352,8 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
                 showThemedToast(
                     context,
-                    context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(), true
+                    context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(),
+                    true
                 )
                 null
             }

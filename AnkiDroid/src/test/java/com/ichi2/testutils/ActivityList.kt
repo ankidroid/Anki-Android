@@ -45,7 +45,8 @@ object ActivityList {
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
                 getReviewDeckIntent(
-                    ctx, 1L
+                    ctx,
+                    1L
                 )
             },
             get(StudyOptionsActivity::class.java),

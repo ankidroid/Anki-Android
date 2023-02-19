@@ -32,7 +32,7 @@ buildscript {
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.1.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.2.0"
     }
 }
 
@@ -74,14 +74,6 @@ subprojects {
                 systemProperties['junit.jupiter.execution.parallel.enabled'] = true
                 systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
             }
-        }
-
-        ktlint {
-            // remove version override when ktlint gradle plugin releases with 0.45+ transitive
-            // check for "ktlint" here:
-            // https://github.com/JLLeitschuh/ktlint-gradle/blob/master/plugin/gradle/libs.versions.toml
-            version = "0.45.2"
-            disabledRules = ["no-wildcard-imports"]
         }
 
         /**

@@ -67,7 +67,9 @@ object ContentResolverUtil {
         }
         return if (extension == null) {
             null
-        } else "image.$extension"
+        } else {
+            "image.$extension"
+        }
     }
 
     @CheckResult

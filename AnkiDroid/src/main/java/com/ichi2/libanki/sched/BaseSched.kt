@@ -95,7 +95,7 @@ abstract class BaseSched(val col: Collection) {
         col.newBackend.backend.buryOrSuspendCards(
             cardIds = cids.toList(),
             noteIds = listOf(),
-            mode = mode,
+            mode = mode
         )
     }
 
@@ -254,7 +254,7 @@ abstract class BaseSched(val col: Collection) {
         col.newBackend.backend.extendLimits(
             deckId = col.decks.selected(),
             newDelta = newc,
-            reviewDelta = rev,
+            reviewDelta = rev
         )
     }
 
@@ -475,7 +475,8 @@ abstract class BaseSched(val col: Collection) {
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-            today, REPORT_LIMIT
+            today,
+            REPORT_LIMIT
         )
     }
 

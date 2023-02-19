@@ -24,7 +24,10 @@ import kotlin.test.assertFailsWith
 class RobolectricTestAnnotationTest : RobolectricTest() {
     @Test
     fun readableErrorIfNotAnnotated() {
-        val exception = assertFailsWith<IllegalStateException> { @Suppress("UNUSED_VARIABLE") val unused = targetContext }
+        val exception = assertFailsWith<IllegalStateException> {
+            @Suppress("UNUSED_VARIABLE")
+            val unused = this.targetContext
+        }
         assertThat(exception.message, containsString("RobolectricTestAnnotationTest"))
         assertThat(exception.message, containsString("@RunWith(AndroidJUnit4.class)"))
     }

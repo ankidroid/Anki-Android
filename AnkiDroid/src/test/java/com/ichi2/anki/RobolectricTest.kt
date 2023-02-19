@@ -138,7 +138,6 @@ open class RobolectricTest : CollectionGetter {
     @After
     @CallSuper
     open fun tearDown() {
-
         // If you don't clean up your ActivityControllers you will get OOM errors
         for (controller in mControllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString())

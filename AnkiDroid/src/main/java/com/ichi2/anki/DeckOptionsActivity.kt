@@ -136,7 +136,9 @@ class DeckOptionsActivity :
 
                     mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
                     mValues["reminderTime"] = String.format(
-                        "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
+                        "%1$02d:%2$02d",
+                        reminderTime.getLong(0),
+                        reminderTime.getLong(1)
                     )
                 } else {
                     mValues["reminderEnabled"] = "false"
@@ -171,8 +173,10 @@ class DeckOptionsActivity :
         fun preConfChange() {
             val res = deckOptionsActivity.resources
             progressDialog = StyledProgressDialog.show(
-                deckOptionsActivity as Context, null,
-                res?.getString(R.string.reordering_cards), false
+                deckOptionsActivity as Context,
+                null,
+                res?.getString(R.string.reordering_cards),
+                false
             )
         }
 
@@ -282,7 +286,8 @@ class DeckOptionsActivity :
                                 // Don't remove the options group if it's the default group
                                 UIUtils.showThemedToast(
                                     this@DeckOptionsActivity,
-                                    resources.getString(R.string.default_conf_delete_error), false
+                                    resources.getString(R.string.default_conf_delete_error),
+                                    false
                                 )
                             } else {
                                 // Remove options group, handling the case where the user needs to confirm full sync
@@ -346,7 +351,8 @@ class DeckOptionsActivity :
                                     applicationContext,
                                     mOptions.getLong("id").toInt(),
                                     Intent(applicationContext, ReminderService::class.java).putExtra(
-                                        ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")
+                                        ReminderService.EXTRA_DECK_OPTION_ID,
+                                        mOptions.getLong("id")
                                     ),
                                     0
                                 )
@@ -698,7 +704,6 @@ class DeckOptionsActivity :
 
     companion object {
         fun reminderToCalendar(time: Time, reminder: JSONObject): Calendar {
-
             val calendar = time.calendar()
 
             calendar[Calendar.HOUR_OF_DAY] = reminder.getJSONArray("time").getInt(0)
