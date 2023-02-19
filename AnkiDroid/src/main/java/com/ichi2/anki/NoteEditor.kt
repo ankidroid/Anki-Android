@@ -1421,8 +1421,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")
     private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
-        if (currentFields.getJSONObject(index).getBoolean("sticky"))
+        if (currentFields.getJSONObject(index).getBoolean("sticky")) {
             mToggleStickyText.getOrPut(index) { "" }
+        }
         if (mToggleStickyText[index] == null) {
             toggleStickyButton!!.background.alpha = 64
         } else {

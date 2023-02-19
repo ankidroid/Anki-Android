@@ -129,7 +129,7 @@ object LanguageUtil {
         "粵語" to "yue", // Cantonese
         "中文 (中国)" to "zh-CN", // Chinese (China)
         "中文 (台灣)" to "zh-TW", // Chinese (Taiwan)
-        "isiZulu" to "zu", // Zulu
+        "isiZulu" to "zu" // Zulu
 
     )
 

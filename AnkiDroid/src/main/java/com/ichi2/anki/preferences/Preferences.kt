@@ -123,7 +123,8 @@ class Preferences :
         pref: Preference
     ): Boolean {
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
-            classLoader, pref.fragment!!
+            classLoader,
+            pref.fragment!!
         )
         fragment.arguments = pref.extras
         supportFragmentManager.commit {
