@@ -22,7 +22,6 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.libanki.MediaCheckResult
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.NetworkUtils
 import timber.log.Timber
@@ -87,7 +86,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             val preferences = AnkiDroidApp.getSharedPrefs(mActivity.get())
             val res = mActivity.get()!!.resources
             val hkey = preferences.getString("hkey", "")
-            val millisecondsSinceLastSync = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
+            val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
             val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
             if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
                 deckPicker.sync()
