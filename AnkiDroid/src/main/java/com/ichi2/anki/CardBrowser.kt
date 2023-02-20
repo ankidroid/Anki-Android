@@ -56,6 +56,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
 import com.ichi2.anki.servicelayer.NoteService.isMarked
@@ -1376,12 +1377,20 @@ open class CardBrowser :
         }
 
         if (inCardsMode) {
-            val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size)
-            mExportingDelegate.showExportDialog(msg, selectedCardIds, inCardsMode)
+            mExportingDelegate.showExportDialog(
+                ExportDialogParams(
+                    message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size),
+                    exportType = ExportType.ExportCards(selectedCardIds)
+                )
+            )
         } else {
             val selectedNoteIds = selectedNoteIds(selectedCardIds, col)
-            val msg = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size)
-            mExportingDelegate.showExportDialog(msg, selectedNoteIds, inCardsMode)
+            mExportingDelegate.showExportDialog(
+                ExportDialogParams(
+                    message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size),
+                    exportType = ExportType.ExportNotes(selectedNoteIds)
+                )
+            )
         }
     }
 
