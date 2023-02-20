@@ -44,6 +44,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
@@ -1725,6 +1726,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             clozeDrawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
             val clozeButton = toolbar.insertItem(0, clozeDrawable, Runnable { toolbar.onFormat(clozeFormatter) })
             clozeButton.contentDescription = resources.getString(R.string.insert_cloze)
+            TooltipCompat.setTooltipText(clozeButton, resources.getString(R.string.insert_cloze))
         }
         val buttons = toolbarButtons
         for (b in buttons) {
@@ -1736,6 +1738,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             val bmp = toolbar.createDrawableForString(text)
             val v = toolbar.insertItem(0, bmp, b.toFormatter())
+            v.contentDescription = text
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.
             v.tag = (visualIndex % 10).toString()
@@ -1749,7 +1752,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-        toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        val addButton = toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
+        TooltipCompat.setTooltipText(addButton, resources.getString(R.string.add_toolbar_item))
     }
 
     private val toolbarButtons: ArrayList<CustomToolbarButton>

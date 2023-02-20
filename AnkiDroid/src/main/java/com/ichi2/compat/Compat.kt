@@ -35,6 +35,7 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseArray
+import android.view.View
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
@@ -78,6 +79,7 @@ import java.util.*
  */
 interface Compat {
     fun setupNotificationChannel(context: Context)
+    fun setTooltipTextByContentDescription(view: View)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int

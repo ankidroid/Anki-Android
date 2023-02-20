@@ -38,7 +38,9 @@ import android.os.Parcelable
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.util.SparseArray
+import android.view.View
 import android.widget.TimePicker
+import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.*
@@ -49,6 +51,11 @@ import java.io.*
 open class CompatV21 : Compat {
     // Until API26, ignore notification channels
     override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
+    }
+
+    // Until API26, tooltips cannot be defined declaratively in layouts
+    override fun setTooltipTextByContentDescription(view: View) {
+        TooltipCompat.setTooltipText(view, view.contentDescription)
     }
 
     // Until API 23 the methods have "current" in the name
