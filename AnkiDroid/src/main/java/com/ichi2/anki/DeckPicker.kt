@@ -57,7 +57,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -71,7 +70,6 @@ import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.*
-import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog.FileSizeFormatter
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
@@ -88,7 +86,6 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.anki.servicelayer.ScopedStorageService.getBestDefaultRootDirectory
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.Undo
@@ -137,7 +134,6 @@ import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
-const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -156,7 +152,7 @@ const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
  *   * Filtering decks (if more than 10) [mToolbarSearchView]
  * * Controlling syncs
  *   * A user may [pull down][mPullToSyncWrapper] on the 'tree view' to sync
- *   * A [button][displaySyncBadge] which relies on [SyncStatus] to display whether a sync is needed
+ *   * A [button][updateSyncIconFromState] which relies on [SyncStatus] to display whether a sync is needed
  *   * Blocks the UI and displays sync progress when syncing
  * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
  *   * General handler for error/global dialogs (search for 'as DeckPicker')
@@ -324,7 +320,7 @@ open class DeckPicker :
                 for (data in result.impList!!) {
                     // Check if mLog is not null or empty
                     // If mLog is not null or empty that indicates an error has occurred.
-                    if (data.log.isNullOrEmpty()) {
+                    if (data.log.isEmpty()) {
                         fileCount += 1
                         totalCardCount += data.cardCount
                     } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
@@ -509,7 +505,7 @@ open class DeckPicker :
     }
 
     private fun hasShownAppIntro(): Boolean {
-        val prefs = AnkiDroidApp.getSharedPrefs(this)
+        val prefs = getSharedPrefs(this)
 
         // if moving from 2.15 to 2.16 then we do not want to show the intro
         // remove this after ~2.17 and default to 'false' if the pref is not set
@@ -574,7 +570,7 @@ open class DeckPicker :
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
      */
-    fun handleStartup() {
+    private fun handleStartup() {
         if (startingStorageMigrationInterruptsStartup()) return
 
         Timber.d("handleStartup: Continuing. unaffected by storage migration")
@@ -582,7 +578,7 @@ open class DeckPicker :
             val failure = InitialActivity.getStartupFailureType(this)
             mStartupError = if (failure == null) {
                 // Show any necessary dialogs (e.g. changelog, special messages, etc)
-                val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+                val sharedPrefs = getSharedPrefs(this)
                 showStartupScreensAndDialogs(sharedPrefs, 0)
                 false
             } else {
@@ -635,11 +631,11 @@ open class DeckPicker :
         }
     }
 
-    fun displayDatabaseFailure() {
+    private fun displayDatabaseFailure() {
         Timber.i("Displaying database failure")
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
     }
-    fun displayNoStorageError() {
+    private fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DISK_FULL)
     }
@@ -648,7 +644,7 @@ open class DeckPicker :
     @Throws(OutOfMemoryError::class)
     private fun applyDeckPickerBackground(view: View): Boolean {
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
-        if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
+        if (!getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference")
             view.setBackgroundResource(0)
             return false
@@ -670,7 +666,7 @@ open class DeckPicker :
     /**
      * precondition: [hasStorageAccessPermission] should return false
      */
-    fun requestStoragePermission() {
+    private fun requestStoragePermission() {
         // DEFECT #5847: This fails if the activity is killed.
         // Even if the dialog is showing, we want to show it again.
         val storagePermissions = arrayOf(
@@ -839,7 +835,7 @@ open class DeckPicker :
             }
             R.id.action_scoped_storage_migrate -> {
                 Timber.i("DeckPicker:: migrate button pressed")
-                showDialogThatOffersToMigrateStorage(onPostpone = null)
+                showDialogThatOffersToMigrateStorage()
                 return true
             }
             R.id.action_import -> {
@@ -913,7 +909,7 @@ open class DeckPicker :
             return
         }
         if (requestCode == SHOW_INFO_NEW_VERSION) {
-            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(baseContext), 3)
+            showStartupScreensAndDialogs(getSharedPrefs(baseContext), 3)
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true
         } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
@@ -1047,7 +1043,7 @@ open class DeckPicker :
     }
 
     private fun automaticSync() {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = getSharedPrefs(baseContext)
 
         // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
@@ -1062,8 +1058,10 @@ open class DeckPicker :
         }
     }
 
+    @Suppress("DEPRECATION") // onBackPressed
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = getSharedPrefs(baseContext)
         if (isDrawerOpen) {
             super.onBackPressed()
         } else {
@@ -1328,14 +1326,6 @@ open class DeckPicker :
             Timber.i("No startup screens required")
             onFinishedStartup()
         }
-    }
-
-    open fun displayDowngradeFailedNoSpace() {
-        Timber.w("Not enough space to downgrade")
-        val formatter = FileSizeFormatter(this)
-        val collectionPath = CollectionHelper.getCollectionPath(this)
-        val collectionFile = File(collectionPath)
-        showDialogFragment(DeckPickerNoSpaceToDowngradeDialog.newInstance(formatter, collectionFile))
     }
 
     @VisibleForTesting
@@ -1627,7 +1617,7 @@ open class DeckPicker :
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
      */
     override fun sync(conflict: ConflictResolution?) {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = getSharedPrefs(baseContext)
 
         if (userMigrationIsInProgress(this)) {
             warnNoSyncDuringMigration()
@@ -1752,7 +1742,7 @@ open class DeckPicker :
 
             // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
             // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
-            AnkiDroidApp.getSharedPrefs(baseContext).edit { putLong("lastSyncTime", syncStartTime) }
+            getSharedPrefs(baseContext).edit { putLong("lastSyncTime", syncStartTime) }
         }
 
         override fun onProgressUpdate(vararg values: Any?) {
@@ -1808,7 +1798,7 @@ open class DeckPicker :
                     when (resultType) {
                         ConnectionResultType.BAD_AUTH -> {
                             // delete old auth information
-                            AnkiDroidApp.getSharedPrefs(baseContext).edit {
+                            getSharedPrefs(baseContext).edit {
                                 putString("username", "")
                                 putString("hkey", "")
                             }
@@ -1878,7 +1868,7 @@ open class DeckPicker :
                         }
                         ConnectionResultType.CONNECTION_ERROR -> {
                             dialogMessage = res.getString(R.string.sync_connection_error)
-                            if (result.size >= 0 && result[0] is Exception) {
+                            if (result[0] is Exception) {
                                 dialogMessage += """
                                     
                                     
@@ -2279,7 +2269,7 @@ open class DeckPicker :
         }
     }
 
-    fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
+    private fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
@@ -2306,7 +2296,7 @@ open class DeckPicker :
         Timber.d("Startup - Deck List UI Completed")
     }
 
-    fun renderPage() {
+    private fun renderPage() {
         if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -2363,7 +2353,7 @@ open class DeckPicker :
             val due = mDeckListAdapter.due
             val res = resources
             if (col.cardCount() != -1) {
-                val time: String? = if (eta != -1 && eta != null) {
+                val time: String = if (eta != -1 && eta != null) {
                     Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
                 } else {
                     "-"
@@ -2889,7 +2879,7 @@ open class DeckPicker :
     /**
      * Start migrating the user data. Assumes that
      */
-    fun startMigrateUserDataService() {
+    private fun startMigrateUserDataService() {
         // TODO: Handle lack of disk space - most common error
         Timber.i("Starting Migrate User Data Service")
         migrationService.startForeground(this, MigrationService::class.java)
@@ -2918,33 +2908,9 @@ open class DeckPicker :
     }
 
     /**
-     * Last warning, asking the user whether they accept risk of data loss.
-     */
-    fun warnAboutBackup() {
-        val currentDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
-        val newDirectory = getBestDefaultRootDirectory(this, File(currentDirectory))
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.manual_backup)
-            .setMessage(getString(R.string.scoped_storage_require_user_to_accept_risk, currentDirectory, newDirectory.absolutePath))
-            .setPositiveButton(
-                R.string.dialog_confirm
-            ) { _, _ ->
-                AnkiDroidApp.getSharedPrefs(this).edit {
-                    putBoolean(USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP, true)
-                }
-            }
-            .setNegativeButton(
-                R.string.remind_me_later
-            ) { _, _ ->
-                setMigrationWasLastPostponedAtToNow()
-            }
-            .show()
-    }
-
-    /**
      * Last time the user had chosen to postpone migration. Or 0 if never.
      */
-    var migrationWasLastPostponedAt: Long
+    private var migrationWasLastPostponedAt: Long
         get() = getSharedPrefs(baseContext).getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
         set(timeInSecond) = getSharedPrefs(baseContext)
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
@@ -2952,7 +2918,7 @@ open class DeckPicker :
     /**
      * Show a dialog offering to migrate, postpone or learn more.
      */
-    fun showDialogThatOffersToMigrateStorage(onPostpone: (() -> Unit)?) {
+    private fun showDialogThatOffersToMigrateStorage() {
         Timber.i("Displaying dialog to migrate storage")
         if (userMigrationIsInProgress(baseContext)) {
             // This should not occur. We should have not called the function in this case.
@@ -2981,26 +2947,14 @@ open class DeckPicker :
                 getString(R.string.scoped_storage_postpone)
             ) { _, _ ->
                 setMigrationWasLastPostponedAtToNow()
-                onPostpone?.invoke()
             }.addScopedStorageLearnMoreLinkAndShow(message)
     }
 
     // Scoped Storage migration
-    fun setMigrationWasLastPostponedAtToNow() {
+    private fun setMigrationWasLastPostponedAtToNow() {
         migrationWasLastPostponedAt = TimeManager.time.intTime()
     }
-
-    /**
-     * Whether we can offer the migration at current time.
-     * That is, the last time the user postponed was longer than our postpone time.
-     */
-    fun shouldNotWaitMoreToOfferToMigrate(): Boolean {
-        val timeSinceLastPostponed = TimeManager.time.intTime() - migrationWasLastPostponedAt
-        return timeSinceLastPostponed > POSTPONE_MIGRATION_INTERVAL_DAYS * 24 * 60 * 60
-    }
 }
-
-const val USER_ACCEPT_MIGRATION_RISK_KEY_WITHOUT_BACKUP = "user accept the risk of migration without a backup"
 
 /** Android's onCreateOptionsMenu does not play well with coroutines, as
  * it expects the menu to have been fully configured by the time the routine

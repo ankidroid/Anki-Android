@@ -13,7 +13,6 @@ import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.utils.ResourceLoader
@@ -616,30 +615,6 @@ class DeckPickerTest : RobolectricTest() {
         override fun onPrepareOptionsMenu(menu: Menu): Boolean {
             optionsMenu = menu
             return super.onPrepareOptionsMenu(menu)
-        }
-    }
-
-    // Migration
-    @Test
-    fun `If user never postponed migration, shouldNotWaitMoreToOfferToMigrate() returns true`() {
-        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            scenario.onActivity { deckPicker: DeckPicker ->
-                assertThat("When no postpone occurred, it should be time to offer migration", deckPicker.shouldNotWaitMoreToOfferToMigrate())
-            }
-        }
-    }
-
-    @Test
-    fun `If user postpone, shouldNotWaitMoreToOfferToMigrate() returns false, an true later`() {
-        // Testing twice because the function may have side effect and normally we should not see different after two calls
-        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            scenario.onActivity { deckPicker: DeckPicker ->
-                deckPicker.setMigrationWasLastPostponedAtToNow()
-                assertThat("When postpone just occurred, we should not offer migration", !deckPicker.shouldNotWaitMoreToOfferToMigrate())
-                (TimeManager.time as MockTime).addD(POSTPONE_MIGRATION_INTERVAL_DAYS)
-                (TimeManager.time as MockTime).addM(1)
-                assertThat("When postpone occurred after our interval elapsed, it should be time to offer migration", deckPicker.shouldNotWaitMoreToOfferToMigrate())
-            }
         }
     }
 }
