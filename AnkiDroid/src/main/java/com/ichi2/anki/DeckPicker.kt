@@ -80,6 +80,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
@@ -922,8 +923,12 @@ open class DeckPicker :
             }
             R.id.action_export -> {
                 Timber.i("DeckPicker:: Export collection button pressed")
-                val msg = resources.getString(R.string.confirm_apkg_export)
-                mExportingDelegate.showExportDialog(msg)
+                mExportingDelegate.showExportDialog(
+                    ExportDialogParams(
+                        message = resources.getString(R.string.confirm_apkg_export),
+                        exportType = ExportType.ExportCollection
+                    )
+                )
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -2438,8 +2443,12 @@ open class DeckPicker :
     }
 
     fun exportDeck(did: DeckId) {
-        val msg = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name"))
-        mExportingDelegate.showExportDialog(msg, did)
+        mExportingDelegate.showExportDialog(
+            ExportDialogParams(
+                message = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name")),
+                exportType = ExportType.ExportDeck(did)
+            )
+        )
     }
 
     fun createIcon(context: Context, did: DeckId) {
