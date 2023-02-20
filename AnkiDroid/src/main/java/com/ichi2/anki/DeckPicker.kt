@@ -896,16 +896,21 @@ open class DeckPicker :
             }
             R.id.action_export -> {
                 Timber.i("DeckPicker:: Export collection button pressed")
-                mExportingDelegate.showExportDialog(
-                    ExportDialogParams(
-                        message = resources.getString(R.string.confirm_apkg_export),
-                        exportType = ExportType.ExportCollection
-                    )
-                )
+                exportCollection(includeMedia = false)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    fun exportCollection(includeMedia: Boolean) {
+        mExportingDelegate.showExportDialog(
+            ExportDialogParams(
+                message = resources.getString(R.string.confirm_apkg_export),
+                exportType = ExportType.ExportCollection,
+                includeMedia = includeMedia
+            )
+        )
     }
 
     @Deprecated("Deprecated in Java")
@@ -1136,6 +1141,8 @@ open class DeckPicker :
         } else {
             // new code triggers backup in updateDeckList()
         }
+
+        launchCatchingTask { BackupPromptDialog.showIfAvailable(this@DeckPicker) }
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -1630,7 +1637,7 @@ open class DeckPicker :
     override fun sync(conflict: ConflictResolution?) {
         val preferences = getSharedPrefs(baseContext)
 
-        if (userMigrationIsInProgress(this)) {
+        if (!canSync(this)) {
             warnNoSyncDuringMigration()
             return
         }
