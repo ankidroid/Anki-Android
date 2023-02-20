@@ -53,8 +53,12 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val exportData = requireArguments().toExportDialogParams()
-        val initialSelection: Array<Int> = if (exportData.includeScheduling) arrayOf(INCLUDE_SCHED) else arrayOf()
-        includeSched = initialSelection.contains(INCLUDE_SCHED)
+        includeSched = exportData.includeScheduling
+        includeMedia = exportData.includeMedia
+
+        val initialSelection = mutableListOf<Int>()
+        if (includeSched) initialSelection.add(INCLUDE_SCHED)
+        if (includeMedia) initialSelection.add(INCLUDE_MEDIA)
 
         return MaterialDialog(requireActivity()).show {
             title(R.string.export)
@@ -106,16 +110,18 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
 /**
  * @param message A dialog to display to the user when exporting
  */
-class ExportDialogParams(val message: String, val exportType: ExportType) {
+class ExportDialogParams(val message: String, val exportType: ExportType, includeMedia: Boolean? = null) {
     val includeScheduling: Boolean = when (this.exportType) {
         is ExportNotes -> false
         is ExportCards -> false
         is ExportDeck -> false
         is ExportCollection -> true
     }
+    val includeMedia = includeMedia ?: false
 
     fun appendToBundle(bundle: Bundle): Bundle {
         bundle.putString(MESSAGE, this.message)
+        bundle.putBoolean(INCLUDE_MEDIA, this.includeMedia)
 
         when (this.exportType) {
             is ExportNotes -> bundle.putLongArray(NOTE_IDS, this.exportType.nodeIds.toLongArray())
@@ -131,6 +137,7 @@ class ExportDialogParams(val message: String, val exportType: ExportType) {
         private const val DECK_ID = "did"
         private const val CARD_IDS = "cardIds"
         private const val NOTE_IDS = "noteIds"
+        private const val INCLUDE_MEDIA = "includeMedia"
 
         private fun Bundle.toExportType(): ExportType {
             val did = getNullableLong(DECK_ID)
@@ -151,7 +158,8 @@ class ExportDialogParams(val message: String, val exportType: ExportType) {
 
         fun Bundle.toExportDialogParams(): ExportDialogParams = ExportDialogParams(
             message = getString(MESSAGE)!!,
-            exportType = this.toExportType()
+            exportType = this.toExportType(),
+            includeMedia = getBoolean(INCLUDE_MEDIA)
         )
     }
 }
