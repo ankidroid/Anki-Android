@@ -207,7 +207,7 @@ open class DeckPicker :
     private var mEmptyCardTask: Cancellable? = null
 
     // MigrationProgress Dialog state flow viewModel
-    private val progressViewModel by viewModels<MigrationProgressViewModel>()
+    private val migrationProgressViewModel by viewModels<MigrationProgressViewModel>()
 
     /** See [OptionsMenuState]. */
     @VisibleForTesting
@@ -2911,7 +2911,7 @@ open class DeckPicker :
             service.totalToTransfer?.let { totalToTransfer ->
                 lifecycleScope.launch {
                     while (migrationService.instance?.totalToTransfer != null) {
-                        progressViewModel.migrationProgressFlow.value = MigrationProgress(
+                        migrationProgressViewModel.migrationProgressFlow.value = MigrationProgress(
                             service.currentProgress.toMB(),
                             totalToTransfer.toMB()
                         )
