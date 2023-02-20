@@ -33,11 +33,11 @@ import kotlinx.coroutines.launch
 
 class MigrationProgressDialogFragment :
     DialogFragment() {
-    private lateinit var messageTextView: TextView
-    private lateinit var progressBar: ProgressBar
     private val progressViewModel by activityViewModels<MigrationProgressViewModel>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val messageTextView: TextView
+        val progressBar: ProgressBar
         val progressView =
             requireActivity().layoutInflater.inflate(R.layout.indeterminate_progress_bar, null)
         progressBar = progressView.findViewById(R.id.indeterminate_progressBar)
@@ -46,7 +46,21 @@ class MigrationProgressDialogFragment :
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 progressViewModel.migrationProgressFlow.collect { state ->
-                    updateProgress(state)
+                    val progressPercentage: String = if (state.totalMb == 0) {
+                        "100.00"
+                    } else {
+                        String.format(
+                            "%.2f",
+                            (state.transferredMb.toFloat() / state.totalMb.toFloat()) * 100
+                        )
+                    }
+                    val progressText = resources.getString(
+                        R.string.scoped_storage_migration_progress,
+                        progressPercentage
+                    )
+                    progressBar.max = state.totalMb
+                    progressBar.progress = state.transferredMb
+                    messageTextView.text = progressText
                 }
             }
         }
@@ -59,21 +73,6 @@ class MigrationProgressDialogFragment :
                 (requireActivity() as AnkiActivity).openUrl(R.string.link_scoped_storage_faq)
             }
             .create()
-    }
-
-    private fun updateProgress(state: MigrationProgress) {
-        val progressPercentage =
-            String.format(
-                "%.2f",
-                (state.transferredMb.toFloat() / state.totalMb.toFloat()) * 100
-            )
-        val progressText = resources.getString(
-            R.string.scoped_storage_migration_progress,
-            progressPercentage
-        )
-        progressBar.max = state.totalMb
-        progressBar.progress = state.transferredMb
-        messageTextView.text = progressText
     }
 }
 
