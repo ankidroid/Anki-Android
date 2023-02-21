@@ -16,12 +16,13 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.show
 import timber.log.Timber
 
 /**
@@ -83,12 +84,12 @@ class DevOptionsFragment : SettingsFragment() {
      * Shows dialog to confirm if developer options should be disabled
      */
     private fun showDisableDevOptionsDialog() {
-        MaterialDialog(requireContext()).show {
-            title(R.string.disable_dev_options)
-            positiveButton(R.string.dialog_ok) {
+        AlertDialog.Builder(requireContext()).show {
+            setTitle(R.string.disable_dev_options)
+            setPositiveButton(R.string.dialog_ok) { _, _ ->
                 disableDevOptions()
             }
-            negativeButton(R.string.dialog_cancel)
+            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
         }
     }
 

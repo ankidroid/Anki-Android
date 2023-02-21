@@ -15,8 +15,8 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
@@ -24,6 +24,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.customSyncBase
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.show
 
 /**
  * Fragment with preferences related to syncing
@@ -40,16 +41,16 @@ class SyncSettingsFragment : SettingsFragment() {
 
         // Configure force full sync option
         requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
-            MaterialDialog(requireContext()).show {
-                title(R.string.force_full_sync_title)
-                message(R.string.force_full_sync_summary)
-                positiveButton(R.string.dialog_ok) {
+            AlertDialog.Builder(requireContext()).show {
+                setTitle(R.string.force_full_sync_title)
+                setMessage(R.string.force_full_sync_summary)
+                setPositiveButton(R.string.dialog_ok) { _, _ ->
                     launchCatchingTask {
                         withCol { modSchemaNoCheck() }
                         showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
                     }
                 }
-                negativeButton(R.string.dialog_cancel)
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
             true
         }
