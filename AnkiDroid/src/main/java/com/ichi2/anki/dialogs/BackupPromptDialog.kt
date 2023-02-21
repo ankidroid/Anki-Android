@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.content.Context
 import android.os.Build
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -29,7 +30,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.Permissions
+import com.ichi2.utils.*
 import timber.log.Timber
 
 /**
@@ -79,10 +80,27 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     private fun onDismiss() {
         Timber.i("BackupPromptDialog dismissed")
         if (userCheckedDoNotShowAgain) {
-            dialogPermanentlyDismissed = true
+            permanentlyDismissDialog()
         } else {
             timesDialogDismissed += 1
             nextTimeToShowDialog = calculateNextTimeToShowDialog()
+        }
+    }
+
+    private fun permanentlyDismissDialog() {
+        val message = if (userIsPreservingLegacyStorage()) R.string.dismiss_backup_warning_upgrade else R.string.dismiss_backup_warning_new_user
+
+        AlertDialog.Builder(windowContext).show {
+            title(R.string.dismiss_backup_warning_title)
+            message(message)
+            iconAttr(R.attr.dialogErrorIcon)
+            positiveButton(R.string.dialog_cancel) {
+                dialogPermanentlyDismissed = true
+            }
+            negativeButton(R.string.button_disable_reminder) {
+                userCheckedDoNotShowAgain = false
+                onDismiss()
+            }
         }
     }
 
