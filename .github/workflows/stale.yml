@@ -25,4 +25,6 @@ jobs:
         exempt-pr-labels: 'Keep Open'
         close-issue-reason: 'not_planned'
         days-before-issue-stale: 90
+        days-before-pr-stale: 30
+        only-pr-labels: 'Needs Author Reply'
 
