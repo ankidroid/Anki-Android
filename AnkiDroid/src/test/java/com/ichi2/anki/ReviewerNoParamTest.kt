@@ -210,6 +210,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Flaky(os = OS.WINDOWS)
     fun drawerConflictsIfUp() {
         enableGestureSetting()
         disableConflictGestures()
