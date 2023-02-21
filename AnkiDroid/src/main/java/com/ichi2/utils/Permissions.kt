@@ -80,6 +80,7 @@ object Permissions {
 
     /**
      * Check if we have read and write access permission to the external storage
+     * Note: This can return true >= R on a debug build or if storage is preserved
      * @param context
      * @return
      */
