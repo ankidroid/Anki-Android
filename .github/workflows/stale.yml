@@ -24,4 +24,5 @@ jobs:
         exempt-issue-labels: 'Keep Open'
         exempt-pr-labels: 'Keep Open'
         close-issue-reason: 'not_planned'
+        days-before-issue-stale: 90
 
