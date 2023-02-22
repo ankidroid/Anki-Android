@@ -140,7 +140,7 @@ open class CardBrowser :
     lateinit var cardsAdapter: MultiColumnListAdapter
 
     private var mSearchTerms: String = ""
-    private lateinit var mRestrictOnDeck: String
+    private var mRestrictOnDeck: String = ""
     private var mCurrentFlag = 0
     private lateinit var mTagsDialogFactory: TagsDialogFactory
     private lateinit var mSearchItem: MenuItem
@@ -228,7 +228,7 @@ open class CardBrowser :
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
     private var mLastRenderStart: Long = 0
-    private var mActionBarTitle: TextView? = null
+    private lateinit var mActionBarTitle: TextView
     private var mReloadRequired = false
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -511,8 +511,11 @@ open class CardBrowser :
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
         // initialize the lateinit variables
+        // Load reference to action bar title
+        mActionBarTitle = findViewById(R.id.toolbar_title)
         cardsListView = findViewById(R.id.card_browser_list)
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        mColumn1Index = preferences.getInt("cardBrowserColumn1", 0)
         // get the font and font size from the preferences
         val sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
         val sflCustomFont = preferences.getString("browserEditorFont", "")
@@ -577,8 +580,6 @@ open class CardBrowser :
         registerExternalStorageListener()
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
-        // Load reference to action bar title
-        mActionBarTitle = findViewById(R.id.toolbar_title)
         val colOrder = col.get_config_string("sortType")
         mOrder = fSortTypes.indexOf(colOrder).let { i -> if (i == -1) CARD_ORDER_NONE else i }
         if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
@@ -599,7 +600,6 @@ open class CardBrowser :
         )
         column1Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
         cardsColumn1Spinner.adapter = column1Adapter
-        mColumn1Index = preferences.getInt("cardBrowserColumn1", 0)
         cardsColumn1Spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
@@ -1395,7 +1395,7 @@ open class CardBrowser :
             invalidate()
             val deletedCards = withCol { deleteMultipleNotes(this, selectedIds) }
             removeNotesView(deletedCards.map { it.id }, false)
-            mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
             invalidateOptionsMenu() // maybe the availability of undo changed
 
             searchCards()
@@ -2237,7 +2237,7 @@ open class CardBrowser :
                 return
             }
             updateMultiselectMenu()
-            mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
         } finally {
             if (colIsOpen()) {
                 cardsAdapter.notifyDataSetChanged()
@@ -2537,8 +2537,8 @@ open class CardBrowser :
         // set in multi-select mode
         isInMultiSelectMode = true
         // show title and hide spinner
-        mActionBarTitle!!.visibility = View.VISIBLE
-        mActionBarTitle!!.text = checkedCardCount().toString()
+        mActionBarTitle.visibility = View.VISIBLE
+        mActionBarTitle.text = checkedCardCount().toString()
         deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
         // reload the actionbar using the multi-select mode actionbar
         invalidateOptionsMenu()
@@ -2559,7 +2559,7 @@ open class CardBrowser :
         // update action bar
         invalidateOptionsMenu()
         deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
-        mActionBarTitle!!.visibility = View.GONE
+        mActionBarTitle.visibility = View.GONE
     }
 
     @VisibleForTesting
