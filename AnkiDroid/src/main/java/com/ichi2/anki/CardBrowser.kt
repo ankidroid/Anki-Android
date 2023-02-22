@@ -494,6 +494,7 @@ open class CardBrowser :
         }
     }
 
+    @NeedsTest("mColumn1Index is uninitilized")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
