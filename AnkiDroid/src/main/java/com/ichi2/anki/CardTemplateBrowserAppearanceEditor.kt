@@ -22,8 +22,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.annotation.CheckResult
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import org.jetbrains.annotations.Contract
 import org.json.JSONObject
 import timber.log.Timber
@@ -96,7 +100,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showRestoreDefaultDialog() {
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             positiveButton(R.string.dialog_ok) {
                 restoreDefaultAndClose()
             }
