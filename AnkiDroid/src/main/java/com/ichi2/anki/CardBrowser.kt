@@ -494,7 +494,7 @@ open class CardBrowser :
         }
     }
 
-    @NeedsTest("mColumn1Index is uninitilized")
+    @NeedsTest("mColumn1Index/mColumn2Index")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -517,6 +517,8 @@ open class CardBrowser :
         cardsListView = findViewById(R.id.card_browser_list)
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         mColumn1Index = preferences.getInt("cardBrowserColumn1", 0)
+        // Load default value for column2 selection
+        mColumn2Index = preferences.getInt("cardBrowserColumn2", 0)
         // get the font and font size from the preferences
         val sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
         val sflCustomFont = preferences.getString("browserEditorFont", "")
@@ -619,8 +621,6 @@ open class CardBrowser :
                 // Do Nothing
             }
         }
-        // Load default value for column2 selection
-        mColumn2Index = preferences.getInt("cardBrowserColumn2", 0)
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         val cardsColumn2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
         val column2Adapter = ArrayAdapter.createFromResource(
