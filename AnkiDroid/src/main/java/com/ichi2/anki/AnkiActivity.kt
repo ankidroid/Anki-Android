@@ -7,7 +7,6 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
@@ -102,10 +101,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)
         }
-    }
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
     }
 
     override fun onStart() {

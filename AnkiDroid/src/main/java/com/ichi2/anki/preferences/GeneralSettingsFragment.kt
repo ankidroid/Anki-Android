@@ -15,6 +15,8 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
 import com.ichi2.anki.*
@@ -83,15 +85,20 @@ class GeneralSettingsFragment : SettingsFragment() {
     private fun initializeLanguagePref() {
         val sortedLanguages = LanguageUtil.APP_LANGUAGES.toSortedMap(java.lang.String.CASE_INSENSITIVE_ORDER)
         val systemLocale = getSystemLocale()
-
         requirePreference<ListPreference>(R.string.pref_language_key).apply {
             entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
-            entryValues = arrayOf("$systemLocale", *sortedLanguages.values.toTypedArray())
-            setOnPreferenceChangeListener { newValue ->
-                LanguageUtil.setDefaultBackendLanguages(newValue as String)
+            entryValues = arrayOf(LanguageUtil.DEFAULT_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
+            setOnPreferenceChangeListener { selectedLanguage ->
+                LanguageUtil.setDefaultBackendLanguages(selectedLanguage as String)
                 runBlocking { CollectionManager.discardBackend() }
 
-                requireActivity().recreate()
+                val localeCode = if (selectedLanguage != LanguageUtil.DEFAULT_LANGUAGE_TAG) {
+                    selectedLanguage
+                } else {
+                    null
+                }
+                val localeList = LocaleListCompat.forLanguageTags(localeCode)
+                AppCompatDelegate.setApplicationLocales(localeList)
             }
         }
     }

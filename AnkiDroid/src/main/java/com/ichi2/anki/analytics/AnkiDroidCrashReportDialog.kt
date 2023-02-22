@@ -18,7 +18,6 @@ package com.ichi2.anki.analytics
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
@@ -40,10 +39,6 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     private var mAlwaysReportCheckBox: CheckBox? = null
     private var mUserComment: EditText? = null
     private var mHelper: CrashReportDialogHelper? = null
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

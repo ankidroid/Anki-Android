@@ -288,11 +288,6 @@ class Preferences :
         result.highlight(fragmentToHighlight as PreferenceFragmentCompat)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-    }
-
     companion object {
         /** Key of the language preference  */
         const val LANGUAGE = "language"
