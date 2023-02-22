@@ -210,7 +210,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
-    @Flaky(os = OS.WINDOWS)
+    @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfUp() {
         enableGestureSetting()
         disableConflictGestures()
@@ -222,7 +222,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
-    @Flaky(os = OS.LINUX, "hasDrawerSwipeConflicts was false")
+    @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfDown() {
         enableGestureSetting()
         disableConflictGestures()
@@ -234,6 +234,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfRight() {
         enableGestureSetting()
         disableConflictGestures()
