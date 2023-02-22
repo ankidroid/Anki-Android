@@ -143,10 +143,10 @@ open class CardBrowser :
     private var mRestrictOnDeck: String = ""
     private var mCurrentFlag = 0
     private lateinit var mTagsDialogFactory: TagsDialogFactory
-    private lateinit var mSearchItem: MenuItem
-    private lateinit var mSaveSearchItem: MenuItem
-    private lateinit var mMySearchesItem: MenuItem
-    private lateinit var mPreviewItem: MenuItem
+    private var mSearchItem: MenuItem? = null
+    private var mSaveSearchItem: MenuItem? = null
+    private var mMySearchesItem: MenuItem? = null
+    private var mPreviewItem: MenuItem? = null
     private var mUndoSnackbar: Snackbar? = null
 
     private var renderBrowserQAJob: Job? = null
@@ -373,7 +373,7 @@ open class CardBrowser :
                 Timber.d("OnSelection using search terms: %s", this)
                 mSearchTerms = this
                 mSearchView.setQuery(this, false)
-                mSearchItem.expandActionView()
+                mSearchItem!!.expandActionView()
                 searchCards()
             }
         }
@@ -386,7 +386,7 @@ open class CardBrowser :
                 col.set_config("savedFilters", savedFiltersObj)
                 col.flush()
                 if (savedFiltersObj.length() == 0) {
-                    mMySearchesItem.isVisible = false
+                    mMySearchesItem!!.isVisible = false
                 }
             }
         }
@@ -406,7 +406,7 @@ open class CardBrowser :
                 col.set_config("savedFilters", savedFiltersObj)
                 col.flush()
                 mSearchView.setQuery("", false)
-                mMySearchesItem.isVisible = true
+                mMySearchesItem!!.isVisible = true
             } else {
                 showThemedToast(
                     this@CardBrowser,
@@ -919,12 +919,12 @@ open class CardBrowser :
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
             mSaveSearchItem = menu.findItem(R.id.action_save_search)
-            mSaveSearchItem.isVisible = false // the searchview's query always starts empty.
+            mSaveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches)
             val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
-            mMySearchesItem.isVisible = savedFiltersObj != null && savedFiltersObj.length() > 0
+            mMySearchesItem!!.isVisible = savedFiltersObj != null && savedFiltersObj.length() > 0
             mSearchItem = menu.findItem(R.id.action_search)
-            mSearchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                     return true
                 }
@@ -940,13 +940,13 @@ open class CardBrowser :
                     return true
                 }
             })
-            mSearchView = mSearchItem.actionView as CardBrowserSearchView
+            mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
             mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (mSearchView.shouldIgnoreValueChange()) {
                         return true
                     }
-                    mSaveSearchItem.isVisible = newText.isNotEmpty()
+                    mSaveSearchItem?.isVisible = newText.isNotEmpty()
                     mTempSearchQuery = newText
                     return true
                 }
@@ -960,7 +960,7 @@ open class CardBrowser :
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
             if (!mTempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
-                mSearchItem.expandActionView() // This calls mSearchView.setOnSearchClickListener
+                mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
                 val toUse = if (!mTempSearchQuery.isNullOrEmpty()) mTempSearchQuery else mSearchTerms
                 mSearchView.setQuery(toUse!!, false)
             }
@@ -1027,9 +1027,7 @@ open class CardBrowser :
     }
 
     private fun updatePreviewMenuItem() {
-        if (this::mPreviewItem.isInitialized) {
-            mPreviewItem.isVisible = cardCount > 0
-        }
+        mPreviewItem?.isVisible = cardCount > 0
     }
 
     /** Returns the number of cards that are visible on the screen  */
@@ -1643,7 +1641,7 @@ open class CardBrowser :
         invalidate()
         if ("" != mSearchTerms) {
             mSearchView.setQuery(mSearchTerms, false)
-            mSearchItem.expandActionView()
+            mSearchItem!!.expandActionView()
         }
         val searchText: String? = if (mSearchTerms.contains("deck:")) {
             "($mSearchTerms)"
