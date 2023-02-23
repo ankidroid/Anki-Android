@@ -250,7 +250,7 @@ class TgzPackageExtract(private val context: Context) {
             }
         } catch (e: IOException) {
             outputDir.deleteRecursively()
-            throw ArchiveException(context.getString(R.string.malicious_archive_exceeds_limit, Formatter.formatFileSize(context, TOO_BIG_SIZE), TOO_MANY_FILES))
+            throw ArchiveException(context.resources.getQuantityString(R.plurals.malicious_archive_exceeds_limit_new, TOO_MANY_FILES, Formatter.formatFileSize(context, TOO_BIG_SIZE), TOO_MANY_FILES))
         }
     }
 

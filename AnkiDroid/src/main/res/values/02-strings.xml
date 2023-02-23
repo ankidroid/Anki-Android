@@ -421,7 +421,10 @@
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Could not create directory %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <plurals name="malicious_archive_exceeds_limit_new">
+        <item quantity="one">Malicious archive. Size exceeds %1$s or contains more than %2$d file</item>
+        <item quantity="other">Malicious archive. Size exceeds %1$s or contains more than %2$d files</item>
+    </plurals>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
 
     <!--  Hierarchical Tags  -->
