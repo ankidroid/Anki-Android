@@ -15,7 +15,7 @@ Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uy
 • 6000'den fazla hazır deste
 • ilerleme widget'ı
 • ayrıntılı istatistikler
-• AnkiWeb ile eşitleme
+• AnkiWeb ile eşitlenme
 • açık kaynaklı
 
 ★ Ek özellikler:

@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -35,6 +36,8 @@ import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
+import com.ichi2.utils.copyToClipboard
+import com.ichi2.utils.trimToLength
 import timber.log.Timber
 import java.io.File
 import java.util.function.Consumer
@@ -69,7 +72,22 @@ class IntentHandler : Activity() {
                 Timber.d("onCreate() performing default action")
                 launchDeckPickerIfNoOtherTasks(reloadIntent)
             }
+            LaunchType.COPY_DEBUG_INFO -> {
+                copyDebugInfoToClipboard(intent)
+                finish()
+            }
         }
+    }
+
+    private fun copyDebugInfoToClipboard(intent: Intent) {
+        Timber.i("Copying debug info to clipboard")
+        if (!this.copyToClipboard(intent.getStringExtra(CLIPBOARD_INTENT_EXTRA_DATA)!!)) {
+            Timber.w("Failed to obtain ClipboardManager")
+            showThemedToast(this, R.string.something_wrong, true)
+            return
+        }
+
+        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug, true)
     }
 
     /**
@@ -157,10 +175,13 @@ class IntentHandler : Activity() {
     // COULD_BE_BETTER: Also extract the parameters into here to reduce coupling
     @VisibleForTesting
     enum class LaunchType {
-        DEFAULT_START_APP_IF_NEW, FILE_IMPORT, SYNC, REVIEW
+        DEFAULT_START_APP_IF_NEW, FILE_IMPORT, SYNC, REVIEW, COPY_DEBUG_INFO
     }
 
     companion object {
+        private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
+        private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
+
         private fun isValidViewIntent(intent: Intent): Boolean {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
             // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
@@ -177,6 +198,8 @@ class IntentHandler : Activity() {
                 LaunchType.SYNC
             } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
                 LaunchType.REVIEW
+            } else if (action == CLIPBOARD_INTENT) {
+                LaunchType.COPY_DEBUG_INFO
             } else {
                 LaunchType.DEFAULT_START_APP_IF_NEW
             }
@@ -192,5 +215,13 @@ class IntentHandler : Activity() {
             // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
             storeMessage(handlerMessage)
         }
+
+        fun copyStringToClipboardIntent(context: Context, textToCopy: String) =
+            Intent(context, IntentHandler::class.java).also {
+                it.action = CLIPBOARD_INTENT
+                // max length for an intent is 500KB.
+                // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
+                it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
+            }
     }
 }

@@ -60,6 +60,7 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.BitmapUtil
 import com.ichi2.utils.ExifUtil
@@ -100,7 +101,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 
-    @Suppress("deprecation") // getParcelable
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             Timber.i("loadInstanceState but null so nothing to load")
@@ -110,7 +110,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i("loadInstanceState loading saved state...")
         mViewModel = ImageViewModel.fromBundle(savedInstanceState)
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath")
-        mPreviousImageUri = savedInstanceState.getParcelable("mPreviousImageUri")
+        mPreviousImageUri = savedInstanceState.getParcelableCompat<Uri>("mPreviousImageUri")
     }
 
     override fun saveInstanceState(): Bundle {

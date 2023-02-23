@@ -83,7 +83,8 @@
         <item quantity="one">Current interval: %d day</item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
+    <string name="reschedule_card_dialog_message">কার্ডের পুনরাব্রিত্তির জন্য সময় নির্ধারণ করুন
+ </string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>

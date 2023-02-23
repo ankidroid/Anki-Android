@@ -15,12 +15,14 @@
  */
 package com.ichi2.utils
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.CheckResult
+import timber.log.Timber
 
 object ClipboardUtil {
     // JPEG is sent via pasted content
@@ -66,4 +68,24 @@ object ClipboardUtil {
             ?.description
             ?.label
     }
+}
+
+/**
+ * Copies the provided text to the clipboard (truncated if necessary)
+ * @return `true` if the clipboard is modified. `false` otherwise
+ */
+fun Context.copyToClipboard(text: String): Boolean {
+    val clipboardManager = this.getSystemService(Activity.CLIPBOARD_SERVICE) as? ClipboardManager
+    if (clipboardManager == null) {
+        Timber.w("Failed to obtain ClipboardManager")
+        return false
+    }
+
+    clipboardManager.setPrimaryClip(
+        ClipData.newPlainText(
+            "${VersionUtils.appName} v${VersionUtils.pkgVersionName}",
+            text
+        )
+    )
+    return true
 }
