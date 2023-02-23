@@ -881,7 +881,7 @@ open class DeckPicker :
                 val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
                 createFilteredDeckDialog.setOnNewDeckCreated {
                     // a filtered deck was created
-                    openStudyOptions(true)
+                    openFilteredDeckOptions()
                 }
                 launchCatchingTask {
                     withProgress {
@@ -2105,6 +2105,12 @@ open class DeckPicker :
     fun openAnkiWebSharedDecks() {
         val intent = Intent(this, SharedDecksActivity::class.java)
         startActivityWithoutAnimation(intent)
+    }
+
+    private fun openFilteredDeckOptions() {
+        val intent = Intent()
+        intent.setClass(this, FilteredDeckOptions::class.java)
+        startActivityWithAnimation(intent, START)
     }
 
     private fun openStudyOptions(withDeckOptions: Boolean) {
