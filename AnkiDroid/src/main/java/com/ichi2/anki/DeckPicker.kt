@@ -696,8 +696,9 @@ open class DeckPicker :
     private fun updateMigrationState(menu: Menu, migrationInProgress: Boolean) {
         val menuProgressIcon: MenuItem = menu.findItem(R.id.action_migration_progress)
         menuProgressIcon.isVisible = migrationInProgress
-        val progressBar: ProgressBar = menuProgressIcon.actionView!!.findViewById(R.id.ic_progressDonut)
-        if(migrationInProgress) {
+        val progressBar: ProgressBar =
+            menuProgressIcon.actionView!!.findViewById(R.id.ic_progressDonut)
+        if (migrationInProgress) {
             migrationService.instance?.let { service ->
                 service.totalToTransfer?.let { totalToTransfer ->
                     val total = totalToTransfer.toDouble().toInt()
@@ -817,7 +818,7 @@ open class DeckPicker :
             val syncIcon = fetchSyncStatus(col)
             val offerToUpgrade = shouldOfferToUpgrade(context)
             val migrationInProgress = userMigrationIsInProgress(context)
-            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade,migrationInProgress)
+            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade, migrationInProgress)
         }
     }
 
