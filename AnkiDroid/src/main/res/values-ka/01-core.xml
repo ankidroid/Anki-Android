@@ -242,8 +242,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ფაილზე %s ჩაწერა ვერ მოხერხდა ან ფაილი ვერ შეიქმნა</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migrating_data_message">მონაცემემთა მიგრაცია</string>
+    <string name="migration_successful_message">მიგრაცია წარმატებით დასრულდა</string>
+    <string name="migration_failed_message">მიგრაცია ვერ მოხერხდა</string>
+    <string name="migration_transferred_size">მიგრირებულია %1$.0f MB %2$.0f MB-დან</string>
 </resources>

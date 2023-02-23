@@ -41,10 +41,10 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -87,6 +87,7 @@ import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
+import com.ichi2.utils.*
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
@@ -456,7 +457,7 @@ abstract class AbstractFlashcardViewer :
                 val nMins = elapsed.first / 60
                 val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
                 val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-                MaterialDialog(this@AbstractFlashcardViewer).show {
+                AlertDialog.Builder(this@AbstractFlashcardViewer).show {
                     title(R.string.timebox_reached_title)
                     message(text = timeboxMessage)
                     positiveButton(R.string.dialog_continue) {
@@ -865,7 +866,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun showDeleteNoteDialog() {
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             title(R.string.delete_card_title)
             iconAttr(R.attr.dialogErrorIcon)
             message(

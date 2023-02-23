@@ -91,6 +91,10 @@ open class CompatV21 : Compat {
         return packageManager.resolveService(intent, flags.value.toInt())
     }
 
+    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
+        return bundle.getParcelable(key)
+    }
+
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,

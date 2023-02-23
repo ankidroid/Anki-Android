@@ -81,7 +81,7 @@
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
+    <string name="col_path" maxLength="41">AnkiDroid-ის საქაღალდე</string>
     <string name="fullscreen_review" maxLength="41">სრულეკრანიანი რეჟიმი</string>
     <string name="full_screen_off">გამორთულია</string>
     <string name="full_screen_system">Hide the system bars</string>
@@ -165,7 +165,7 @@
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
+    <string name="vertical_centering" maxLength="41">ცენტრში მოთავსება</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max" maxLength="41">Max number of backups</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>

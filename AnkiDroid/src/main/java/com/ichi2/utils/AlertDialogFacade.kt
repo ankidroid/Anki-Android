@@ -112,6 +112,10 @@ fun AlertDialog.Builder.negativeButton(
     }
 }
 
+fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
+    return this.setCancelable(cancelable)
+}
+
 /**
  * Executes the provided block, then creates an [AlertDialog] with the arguments supplied
  * and immediately displays the dialog

@@ -148,6 +148,23 @@ class CompatHelper private constructor() {
         }
 
         /**
+         * Returns the value associated with the given key or `null` if:
+         *  * No mapping of the desired type exists for the given key.
+         *  * A `null` value is explicitly associated with the key.
+         *  * The object is not of type `T`.
+         *
+         * **Note: ** if the expected value is not a class provided by the Android platform,
+         * you must call [.setClassLoader] with the proper [ClassLoader] first.
+         * Otherwise, this method might throw an exception or return `null`.
+         *
+         * @param key a String, or `null`
+         * @return a Parcelable value, or `null`
+         */
+        inline fun <reified T> Bundle.getParcelableCompat(key: String): T? {
+            return compat.getParcelable(this, key, T::class.java)
+        }
+
+        /**
          * Read into an existing List object from the parcel at the current
          * dataPosition(), using the given class loader to load any enclosed
          * Parcelables.  If it is null, the default class loader is used.

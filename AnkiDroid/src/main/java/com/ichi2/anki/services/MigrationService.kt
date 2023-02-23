@@ -33,6 +33,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.toKB
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.toMB
+import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.Repeater
 import com.ichi2.utils.runOnUiThread
@@ -115,6 +116,11 @@ class MigrationService : Service() {
                 UIUtils.showThemedToast(context, message, true)
             }
         }
+
+        fun onError(e: Exception) {
+            notificationUpdater.terminate()
+            notification?.notifyError(e)
+        }
     }
 
     private class Notification private constructor(
@@ -155,12 +161,27 @@ class MigrationService : Service() {
             val titleRes = if (result) R.string.migration_successful_message else R.string.migration_failed_message
             val notificationTitle = context.resources.getString(titleRes)
             notificationBuilder.setContentTitle(notificationTitle)
-                .setProgress(0, 0, false)
                 .setOngoing(false)
+                .hideProgressBar()
+            manager.notify(id, notificationBuilder.build())
+        }
+
+        fun notifyError(e: Exception) {
+            // TODO: Add a button for 'Get Help'
+            val copyIntent = IntentHandler.copyStringToClipboardIntent(this.context, e.toString())
+
+            val copyDebugIntent = compat.getImmutableActivityIntent(this.context, COPY_DEBUG, copyIntent, 0)
+            notificationBuilder.setContentTitle(context.getString(R.string.migration_failed_message))
+                .setContentText(e.toString())
+                .setOngoing(false)
+                .hideProgressBar()
+                .addAction(R.drawable.ic_star_notify, context.getString(R.string.feedback_copy_debug), copyDebugIntent)
+
             manager.notify(id, notificationBuilder.build())
         }
 
         companion object {
+            const val COPY_DEBUG: Int = 1
             fun createInstance(context: Context, sourceSize: NumberOfBytes): Notification {
                 val notificationManager = NotificationManagerCompat.from(context)
                 return Notification(context, notificationManager, sourceSize)
@@ -201,9 +222,13 @@ class MigrationService : Service() {
             this.totalToTransfer = getRemainingTransferSize(migrateUserDataTask)
             val listener = MigrateUserDataProgressListener(this)
             listener.initNotification(totalToTransfer)
-            // TODO: Handle transient errors (lack of space)
-            val result = migrateUserDataTask.migrateFiles { bytesTransferred -> listener.onProgressUpdate(bytesTransferred) }
-            listener.onResult(result)
+            try {
+                val result = migrateUserDataTask.migrateFiles { bytesTransferred -> listener.onProgressUpdate(bytesTransferred) }
+                listener.onResult(result)
+            } catch (e: Exception) {
+                CrashReportService.sendExceptionReport(e, "Storage Migration Failed")
+                listener.onError(e)
+            }
         }
 
         return getRestartBehavior()
@@ -246,3 +271,7 @@ class MigrationService : Service() {
 
     override fun onBind(intent: Intent): IBinder = LocalBinder()
 }
+
+/** Hides a progress bar if previously shown on a notification */
+private fun NotificationCompat.Builder.hideProgressBar(): NotificationCompat.Builder =
+    this.setProgress(0, 0, false)
