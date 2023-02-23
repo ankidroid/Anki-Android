@@ -82,7 +82,7 @@
     <string name="sync_database_acknowledge">Koleksiyon senkronize edildi</string>
     <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>
     <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>
-    <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra yeniden deneyin.</string>
+    <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra tekrar deneyin.</string>
     <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen tekrar deneyin.</string>
     <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
     <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
@@ -124,7 +124,7 @@
     <string name="sync_error_413_collection_size">Koleksiyonunuz veya bir medya dosyası senkronizasyon için fazla büyük.</string>
     <string name="sync_error_500_unknown">AnkiWeb bir hatayla karşılaştı. Lütfen birkaç dakika sonra yeniden deneyin, olmazsa lütfen bug bildiriminde bulunun.</string>
     <string name="sync_error_501_upgrade_required">Lütfen en son AnkiDroid sürümüne yükseltin</string>
-    <string name="sync_error_502_maintenance">AnkiWeb şu an bakımda. Lütfen birkaç dakika sonra yeniden deneyin.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb şu an bakımda. Lütfen birkaç dakika sonra tekrar deneyin.</string>
     <string name="sync_error_504_gateway_timeout">504 ağ geçidi zamanaşımı hatası alındı.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Senkronizasyon (tam)</string>

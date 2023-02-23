@@ -106,7 +106,7 @@
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Адбылася памылка падчас запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; калі ласка, паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Недастаткова свабоднага месца, каб адрыць AnkiDroid. Вызваліце крыху месца на прыладзе, каб працягнуць.</string>
     <string name="repair_deck_dialog">Аднавіць базу даных?\n\nПерад тым, як пачнецца аднаўленне, копія базы даных будзе змешчана ў створаную падпапку \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
@@ -279,12 +279,12 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Вы не можаце ствараць падкалоды для ўсіх калод</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
+    <string name="scoped_storage_require_user_to_accept_risk">        Па прычыне змянення палітыкі прыватнасці, ваша бягучае сховішча будзе недаступна, калі вы выдаліце праграму.
+        \n\nНам неабходна перанесці вашы даныя ў прыватнае месца праграмы AnkiDroid.
+        \n\nДаныя ў гэтым прыватным месцы могуць быць выдалены разам з праграмай.
+        \n\nВаша бягучае месца захоўвання %1$s
+        \n\nПрыватным месцам размяшчэння даных будзе %2$s
+        \n\nПацвердзіце, што вы рэгулярна будзеце рабіць рэзервовую копію гэтай папкі.
     </string>
     <string name="manual_backup">Рэзервовае капіяванне ўручную</string>
     <string name="remind_me_later">Нагадаць мне пазней</string>
