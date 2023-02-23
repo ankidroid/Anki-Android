@@ -2,11 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape
-            android:innerRadiusRatio="2.6"
+            android:innerRadiusRatio="2.7"
             android:shape="ring"
             android:useLevel="false"
             android:type="sweep"
-            android:thicknessRatio="9.0">
+            android:thicknessRatio="8.0">
             <solid android:color="#00FFFFFF"/>
         </shape>
     </item>
@@ -17,11 +17,11 @@
             android:fromDegrees="-90"
             android:toDegrees="-90">
             <shape
-                android:innerRadiusRatio="2.6"
+                android:innerRadiusRatio="2.7"
                 android:shape="ring"
                 android:angle="0"
                 android:type="sweep"
-                android:thicknessRatio="9.0">
+                android:thicknessRatio="8.0">
                 <solid android:color="?attr/iconColor"/>
 
             </shape>
