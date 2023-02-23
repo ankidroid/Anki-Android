@@ -295,7 +295,7 @@
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
     <string name="title_whiteboard_pen_color">Color del lápiz</string>
-    <string name="title_whiteboard_editor">Hola</string>
+    <string name="title_whiteboard_editor">Editor de pizarra</string>
     <string name="user_is_a_robot">Prueba automatizada detectada. Si eres un humano, ponte en contacto con el soporte de AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Esta tarjeta utiliza características de AnkiDroid no compatibles. Contacte con el desarrollador %1$s o vea la wiki. %2$s</string>

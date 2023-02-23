@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Спампаваная база даных была пашкоджаная. Калі ласка, паспрабуйце яшчэ раз.</string>
     <string name="sync_overwrite_error">Бягучая калекцыя не можа быць перазапісаная спампаваным файлам</string>
     <string name="sync_connection_error">Скончыўся тэрмін злучэння. Магчыма, што зараз у вас праблемы з падлучэннем да інтэрнэту або ў папцы змешчаны вельмі вялікі медыяфайл.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">Спампаваны файл не можа быць захаваны ў ваша сховішча. Магчыма, што яно знаходзіцца ў рэжыме чытання або на ім недастаткова свабоднага месца.</string>
     <string name="sync_error_invalid_sync_server">Азначаны памылковы карыстальніцкі сервер сінхранізацыя ў дадатковых наладах (%s). Увядзіце, калі ласка, слушных сервер або адключыце гэту функцыю ў наладах.</string>
     <string name="sync_deletions_message">Сінхранізуюцца выдаленыя&#8230;</string>
     <string name="sync_small_objects_message">Сінхранізацыя невялікіх аб\'ектаў&#8230;</string>

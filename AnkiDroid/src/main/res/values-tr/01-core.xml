@@ -104,7 +104,7 @@
     <string name="browse_cards">Kartları gözden geçir</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı Eşitle</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
     <string name="menu_bury_card">Kartı gizle</string>
     <string name="menu_bury_note">Notu gizle</string>

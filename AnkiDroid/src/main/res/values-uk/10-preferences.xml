@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Дозволити сенсорні жести в кутах екрану</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Повноекранна панель навігації</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Відкривати панель навігації при проведенні вправо з будь-якого місця на екрані</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Немає</string>
     <string name="gestures_swipe_up" maxLength="41">Провести пальцем вгору</string>
     <string name="gestures_swipe_down" maxLength="41">Провести пальцем донизу</string>
     <string name="gestures_swipe_left" maxLength="41">Провести пальцем вліво</string>
@@ -130,9 +130,9 @@
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Завжди</string>
+    <string name="sync_media_only_unmetered">Лише під час безлімітного з\'єднання</string>
+    <string name="sync_media_never">Ніколи</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
@@ -230,10 +230,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Користувацький сервер</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не використовується</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        Замість синхронізації з AnkiWeb,
+        ви можете вибрати свій сервер для синхронізації.
+        Якщо нічого не вказано, буде використаний сервер AnkiWeb.
+        <a href="%s">Дізнатися більше</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронізації</string>
     <!-- Key Bindings -->
