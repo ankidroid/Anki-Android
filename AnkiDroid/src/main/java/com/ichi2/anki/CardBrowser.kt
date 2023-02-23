@@ -498,7 +498,7 @@ open class CardBrowser :
         }
     }
 
-    @NeedsTest("mColumn1Index/mColumn2Index")
+    @NeedsTest("ensure mColumn[1/2]Index are used as default columns")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
