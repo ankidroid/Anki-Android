@@ -16,13 +16,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="12dp"
     android:clickable="true">
 
     <ProgressBar
         android:id="@+id/ic_progressDonut"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:clickable="true"
         android:indeterminate="false"
         android:progressDrawable="@drawable/ic_migration_progress" />
