@@ -717,7 +717,7 @@ open class DeckPicker :
             }
         }
     }
-    
+
     private fun setupSearchIcon(menuItem: MenuItem) {
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
