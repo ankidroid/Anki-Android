@@ -45,7 +45,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -458,7 +457,7 @@ abstract class AbstractFlashcardViewer :
                 val nMins = elapsed.first / 60
                 val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
                 val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-                MaterialDialog(this@AbstractFlashcardViewer).show {
+                AlertDialog.Builder(this@AbstractFlashcardViewer).show {
                     title(R.string.timebox_reached_title)
                     message(text = timeboxMessage)
                     positiveButton(R.string.dialog_continue) {
