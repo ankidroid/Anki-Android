@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.annotation.VisibleForTesting
 import anki.backend.backendError
 import com.ichi2.libanki.Collection
@@ -25,6 +24,7 @@ import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
+import com.ichi2.utils.isRobolectric
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
@@ -53,8 +53,6 @@ object CollectionManager {
 
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
 
-    private val robolectric = "robolectric" == Build.FINGERPRINT
-
     @VisibleForTesting
     var emulateOpenFailure = false
 
@@ -63,6 +61,22 @@ object CollectionManager {
      * does not happen.
      * It's important that the block is not suspendable - if it were, it would allow
      * multiple requests to be interleaved when a suspend point was hit.
+     *
+     * TODO Allow suspendable blocks, rely on locking instead.
+     *
+     * TODO Disallow running functions that are supposed to be run inside the queue outside of it.
+     *   For instance, this can be done by marking a [block] with a context
+     *   that cannot be instantiated outside of this class:
+     *
+     *       suspend fun<T> withQueue(block: context(Queue) () -> T): T {
+     *          return withContext(collectionOperationsDispatcher) {
+     *              block(queue)
+     *          }
+     *      }
+     *
+     *   Then, only functions that are also marked can be run inside the block:
+     *
+     *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
     private suspend fun<T> withQueue(block: CollectionManager.() -> T): T {
         return withContext(queue) {
@@ -191,7 +205,7 @@ object CollectionManager {
      * Automatically called by [withCol]. Can be called directly to ensure collection
      * is loaded at a certain point in time, or to ensure no errors occur.
      */
-    suspend fun ensureOpen() {
+    private suspend fun ensureOpen() {
         withQueue {
             ensureOpenInner()
         }
@@ -210,10 +224,21 @@ object CollectionManager {
         }
     }
 
+    // TODO Move withQueue to call site
+    suspend fun deleteCollectionDirectory() {
+        withQueue {
+            ensureClosedInner(save = false)
+            getCollectionDirectory().deleteRecursively()
+        }
+    }
+
+    fun getCollectionDirectory() =
+        File(CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance))
+
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
-    fun createCollectionPath(): String {
-        val dir = CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance)
+    private fun createCollectionPath(): String {
+        val dir = getCollectionDirectory().path
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
     }
@@ -221,12 +246,12 @@ object CollectionManager {
     /**
      * Like [withQueue], but can be used in a synchronous context.
      *
-     * Note: Because [runBlocking] inside [runTest] will lead to
+     * Note: Because [runBlocking] inside `RobolectricTest.runTest` will lead to
      * deadlocks, this will not block when run under Robolectric,
      * and there is no guarantee about concurrent access.
      */
     private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
-        return if (robolectric) {
+        return if (isRobolectric) {
             block(this)
         } else {
             runBlocking {
@@ -271,12 +296,14 @@ object CollectionManager {
                 // out our own code, and standard dalvik/java.lang stack frames
                 val caller = stackTraceElements.filter {
                     val klass = it.className
-                    for (
-                        text in listOf(
-                            "CollectionManager", "dalvik", "java.lang",
-                            "CollectionHelper", "AnkiActivity"
-                        )
-                    ) {
+                    val toCheck = listOf(
+                        "CollectionManager",
+                        "dalvik",
+                        "java.lang",
+                        "CollectionHelper",
+                        "AnkiActivity"
+                    )
+                    for (text in toCheck) {
                         if (text in klass) {
                             return@filter false
                         }

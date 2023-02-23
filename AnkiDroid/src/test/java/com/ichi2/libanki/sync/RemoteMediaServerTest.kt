@@ -16,9 +16,10 @@
 
 package com.ichi2.libanki.sync
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.anki.SyncPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -31,21 +32,21 @@ class RemoteMediaServerTest {
     fun defaultMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(null)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlNoHostNum))
     }
 
     @Test
     fun defaultMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(1)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlWithHostNum))
     }
 
     @Ignore("Not yet supported")
     @Test
     fun customMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(null)
-        setCustomMediaServer(sCustomServerWithFormatting)
+        setCustomMediaServer(customServerWithFormatting)
         val syncUrl = underTest.syncURL()
         assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
     }
@@ -54,7 +55,7 @@ class RemoteMediaServerTest {
     @Test
     fun customMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(1)
-        setCustomMediaServer(sCustomServerWithFormatting)
+        setCustomMediaServer(customServerWithFormatting)
         val syncUrl = underTest.syncURL()
         assertThat(syncUrl, equalTo("https://sync1.example.com/msync"))
     }
@@ -62,17 +63,17 @@ class RemoteMediaServerTest {
     @Test
     fun unformattedCustomMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(null)
-        setCustomMediaServer(sCustomServerWithNoFormatting)
+        setCustomMediaServer(customServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/msync/"))
     }
 
     @Test
     fun unformattedCustomMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(1)
-        setCustomMediaServer(sCustomServerWithNoFormatting)
+        setCustomMediaServer(customServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/msync/"))
     }
 
     @Test
@@ -80,7 +81,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(null)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlNoHostNum))
     }
 
     @Test
@@ -88,34 +89,33 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(1)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
+        assertThat(syncUrl, equalTo(defaultUrlWithHostNum))
     }
 
-    @KotlinCleanup("use edit{} extension function")
     private fun setCustomServerWithNoUrl() {
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply()
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            .edit {
+                putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
+            }
     }
 
-    @KotlinCleanup("use edit{} extension function")
     private fun setCustomMediaServer(s: String) {
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
-        val e = userPreferences.edit()
-        e.putBoolean("useCustomSyncServer", true)
-        e.putString("syncMediaUrl", s)
-        e.apply()
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            .edit {
+                putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
+                putString(SyncPreferences.CUSTOM_SYNC_URI, s)
+            }
     }
 
     private fun getServerWithHostNum(hostNum: Int?): RemoteMediaServer {
         return RemoteMediaServer(null, null, null, HostNum(hostNum))
     }
 
-    @KotlinCleanup("rename all")
     companion object {
         // COULD_BE_BETTER: We currently fail on a trailing flash in these variables.
-        private const val sCustomServerWithNoFormatting = "https://sync.example.com/msync"
-        private const val sCustomServerWithFormatting = "https://sync%s.example.com/msync"
-        private const val sDefaultUrlNoHostNum = "https://sync.ankiweb.net/msync/"
-        private const val sDefaultUrlWithHostNum = "https://sync1.ankiweb.net/msync/"
+        private const val customServerWithNoFormatting = "https://sync.example.com/"
+        private const val customServerWithFormatting = "https://sync%s.example.com/"
+        private const val defaultUrlNoHostNum = "https://sync.ankiweb.net/msync/"
+        private const val defaultUrlWithHostNum = "https://sync1.ankiweb.net/msync/"
     }
 }

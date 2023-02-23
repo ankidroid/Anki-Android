@@ -15,9 +15,9 @@
  */
 package com.ichi2.utils
 
-import org.acra.util.IOUtils.*
+import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThrows
 import org.junit.Rule
@@ -25,9 +25,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
-import java.util.ArrayList
-import kotlin.Throws
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -35,6 +32,7 @@ class FileUtilTest {
     @get:Rule
     var temporaryDirectory = TemporaryFolder()
     private var testDirectorySize: Long = 0
+
     @Throws(Exception::class)
     private fun createSrcFilesForTest(temporaryRoot: File, testDirName: String): File {
         val grandParentDir = File(temporaryRoot, testDirName)
@@ -43,17 +41,17 @@ class FileUtilTest {
         val childDir2 = File(parentDir, "child2")
         val grandChildDir = File(childDir, "grandChild")
         val grandChild2Dir = File(childDir2, "grandChild2")
-        val files = ArrayList<File>()
-        files.add(File(grandParentDir, "file1.txt"))
-        files.add(File(parentDir, "file2.txt"))
-        files.add(File(childDir, "file3.txt"))
-        files.add(File(childDir2, "file4.txt"))
-        files.add(File(grandChildDir, "file5.txt"))
-        files.add(File(grandChildDir, "file6.txt"))
+        val files = listOf(
+            File(grandParentDir, "file1.txt"),
+            File(parentDir, "file2.txt"),
+            File(childDir, "file3.txt"),
+            File(childDir2, "file4.txt"),
+            File(grandChildDir, "file5.txt"),
+            File(grandChildDir, "file6.txt")
+        )
         grandChildDir.mkdirs()
         grandChild2Dir.mkdirs()
-        for (i in files.indices) {
-            val file = files[i]
+        files.forEachIndexed { i, file ->
             writeStringToFile(file, "File " + (i + 1) + " called " + file.name)
             this.testDirectorySize += file.length()
         }
@@ -68,10 +66,13 @@ class FileUtilTest {
 
         // Test for success scenario
         val dir = createSrcFilesForTest(temporaryRootDir, "dir")
-        assertEquals(FileUtil.getDirectorySize(dir), testDirectorySize)
+        val dirInfo = FileUtil.DirectoryContentInformation.fromDirectory(dir)
+        assertEquals(testDirectorySize, dirInfo.totalBytes, "Directory size is not as expected")
+        assertEquals(5, dirInfo.numberOfSubdirectories, "Wrong number of subdirectories")
+        assertEquals(6, dirInfo.numberOfFiles, "Wrong number of files")
 
         // Test for failure scenario by passing a file as an argument instead of a directory
-        assertThrows(IOException::class.java) { FileUtil.getDirectorySize(File(dir, "file1.txt")) }
+        assertThrows(IOException::class.java) { FileUtil.DirectoryContentInformation.fromDirectory(File(dir, "file1.txt")) }
     }
 
     @Test
@@ -159,18 +160,21 @@ class FileUtilTest {
     @Test
     @Throws(IOException::class)
     fun fileSizeTest() {
-        assertThat("deleted file should have 0 size", FileUtil.getSize(File("test.txt")), equalTo(0L))
-
+        fun sizeFromDir(file: File) = FileUtil.DirectoryContentInformation.fromDirectory(file).totalBytes
         val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
 
-        assertThat("empty directory should have 0 size", FileUtil.getSize(temporaryRootDir), equalTo(0L))
+        assertThat("empty directory should have 0 size", sizeFromDir(temporaryRootDir), equalTo(0L))
 
         val textFile = File(temporaryRootDir, "tmp.txt")
         writeStringToFile(textFile, "Hello World")
 
         val expectedLength = "Hello World".length.toLong()
-        assertThat("File size should return text length", FileUtil.getSize(textFile), equalTo(expectedLength))
+        assertThrows("fromDirectory fails on files", IOException::class.java) {
+            sizeFromDir(
+                textFile
+            )
+        }
 
-        assertThat("Should return file lengths", FileUtil.getSize(temporaryRootDir), equalTo(expectedLength))
+        assertThat("Should return file lengths", sizeFromDir(temporaryRootDir), equalTo(expectedLength))
     }
 }

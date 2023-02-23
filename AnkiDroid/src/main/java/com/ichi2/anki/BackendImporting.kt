@@ -18,17 +18,20 @@
 
 package com.ichi2.anki
 
+import androidx.appcompat.app.AlertDialog
+import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.libanki.CollectionV16
-import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.importer.importCsvRaw
 import com.ichi2.libanki.undoableOp
+import com.ichi2.utils.message
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
@@ -41,7 +44,7 @@ fun DeckPicker.importApkgs(apkgPaths: List<String>) {
                     if (progress.hasImporting()) {
                         text = progress.importing
                     }
-                },
+                }
             ) {
                 undoableOp {
                     importAnkiPackage(apkgPath)
@@ -65,7 +68,7 @@ suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
         )
         val importResponse = ImportResponse.parseFrom(output)
         undoableOp { importResponse }
-        MaterialDialog(this@importCsvRaw).show {
+        AlertDialog.Builder(this@importCsvRaw).show {
             message(text = summarizeReport(col.tr, importResponse))
             positiveButton(R.string.dialog_ok) {
                 this@importCsvRaw.finish()
@@ -98,31 +101,31 @@ suspend fun AnkiActivity.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: DeckId?
+    limit: ExportLimit
 ) {
     withProgress(
         extractProgress = {
             if (progress.hasExporting()) {
                 text = progress.exporting
             }
-        },
+        }
     ) {
         withCol {
-            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
         }
     }
 }
 
 suspend fun AnkiActivity.exportColpkg(
     colpkgPath: String,
-    withMedia: Boolean,
+    withMedia: Boolean
 ) {
     withProgress(
         extractProgress = {
             if (progress.hasExporting()) {
                 text = progress.exporting
             }
-        },
+        }
     ) {
         withCol {
             newBackend.exportCollectionPackage(colpkgPath, withMedia, true)

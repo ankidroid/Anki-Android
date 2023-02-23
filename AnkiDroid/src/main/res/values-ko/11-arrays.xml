@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">새 카드를 복습보다 먼저</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">플래시카드에 특정 글꼴이 지정되지 않은 경우</string>
-    <string name="override_font_always">항상</string>
+    <string name="override_font_always" comment="Option to always override font">항상</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->

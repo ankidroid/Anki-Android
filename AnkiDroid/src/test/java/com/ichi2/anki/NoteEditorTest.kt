@@ -190,7 +190,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection()
-        ActivityScenario.launch(NoteEditor::class.java).use { scenario ->
+        ActivityScenario.launchActivityForResult(NoteEditor::class.java).use { scenario ->
             scenario.onActivity { noteEditor: NoteEditor ->
                 noteEditor.onBackPressed()
                 assertThat("Pressing back should finish the activity", noteEditor.isFinishing)
@@ -327,7 +327,7 @@ class NoteEditorTest : RobolectricTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
         editor.setCurrentlySelectedModel(col.models.byName("Basic")!!.getLong("id"))
         val field = editor.getFieldForTest(0)
-        field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", "<span style=\"color: red\">text</span>"))
+        field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())
         assertNotNull(field.clipboard!!.primaryClip)
 

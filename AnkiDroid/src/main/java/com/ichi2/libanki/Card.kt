@@ -18,7 +18,6 @@
 package com.ichi2.libanki
 
 import android.content.ContentValues
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
@@ -32,9 +31,9 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
 import net.ankiweb.rsdroid.RustCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException
@@ -399,13 +398,15 @@ open class Card : Cloneable {
                 members.add("'${f.name}': N/A")
             }
         }
-        return TextUtils.join(",  ", members)
+        return members.joinToString(",  ")
     }
 
     override fun equals(other: Any?): Boolean {
         return if (other is Card) {
             this.id == other.id
-        } else super.equals(other)
+        } else {
+            super.equals(other)
+        }
     }
 
     override fun hashCode(): Int {
@@ -553,7 +554,9 @@ open class Card : Cloneable {
         override fun equals(other: Any?): Boolean {
             return if (other !is Cache) {
                 false
-            } else this.id == other.id
+            } else {
+                this.id == other.id
+            }
         }
 
         fun loadQA(reload: Boolean, browser: Boolean) {

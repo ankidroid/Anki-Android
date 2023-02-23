@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Резервну копію не збережено. Не достатньо місця у сховищі. Зменьшіть глибину резервного копіювання або видаліть інші файли.</string>
-    <string name="sd_space_warning">Менше ніж  %d Мб простору залишилось на карті пам’яті.\n Звільніть трохи місця, щоб вберегтися від втрати даних.</string>
+    <string name="backup_deck_no_storage_left">Резервна копія не збережена. У вашому сховищі недостатньо місця. Зменште кількість резервних копій або видаліть інші файли.</string>
+    <string name="storage_warning">У пам’яті залишилося менше ніж %d МБ місця.\nЗвільніть місце, щоб уникнути втрати даних.</string>
     <string name="backup_restore">Відновити з резервної копії</string>
     <string name="backup_new_collection">Нова колекція</string>
     <string name="backup_del_collection">Видалити колекцію та створити нову</string>

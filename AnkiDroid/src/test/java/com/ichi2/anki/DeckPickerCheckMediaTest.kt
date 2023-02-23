@@ -17,25 +17,16 @@
 
 package com.ichi2.anki
 
-import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 import java.util.concurrent.ExecutionException
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerCheckMediaTest : RobolectricTest() {
-    private lateinit var mImpl: DeckPicker
-    override fun setUp() {
-        super.setUp()
-        mImpl = Robolectric.buildActivity(DeckPicker::class.java, Intent())
-            .create().start().resume().get()
-    }
-
     override fun useInMemoryDatabase(): Boolean {
         return false
     }
@@ -53,7 +44,7 @@ class DeckPickerCheckMediaTest : RobolectricTest() {
             col.media.db!!.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
             equalTo(0)
         )
-        mImpl.checkMedia()
+        col.media.performFullCheck()
         assertThat(
             col.media.db!!.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
             equalTo(1)

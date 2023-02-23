@@ -118,7 +118,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             if (cursor == null) {
                 showThemedToast(
                     AnkiDroidApp.instance.applicationContext,
-                    AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong), true
+                    AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
+                    true
                 )
                 return
             }
@@ -137,7 +138,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                     CrashReportService.sendExceptionReport(e, "Media Clip addition failed. Name " + mediaClipFullName + " / cursor mime type column type " + cursor.getType(2))
                     showThemedToast(
                         AnkiDroidApp.instance.applicationContext,
-                        AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong), true
+                        AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
+                        true
                     )
                     return
                 }
@@ -154,7 +156,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             CrashReportService.sendExceptionReport(e, "handleMediaSelection:tempFile")
             showThemedToast(
                 AnkiDroidApp.instance.applicationContext,
-                AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong), true
+                AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
+                true
             )
             return
         }
@@ -165,7 +168,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
 
                 // If everything worked, hand off the information
-                mField.setHasTemporaryMedia(true)
+                mField.hasTemporaryMedia = true
                 mField.audioPath = clipCopy.absolutePath
                 tvAudioClip.text = clipCopy.name
                 tvAudioClip.visibility = View.VISIBLE
@@ -175,7 +178,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             CrashReportService.sendExceptionReport(e, "handleMediaSelection:copyFromProvider")
             showThemedToast(
                 AnkiDroidApp.instance.applicationContext,
-                AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong), true
+                AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
+                true
             )
         }
     }

@@ -154,7 +154,6 @@
     <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的“空白卡片”选项来查找空白卡片。</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
-    <string name="show_hint">显示%s</string>
     <string name="info_rate">给AnkiDroid评分</string>
     <string name="import_title">正在导入……</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
@@ -185,13 +184,18 @@
     <string name="export_include_media">包括媒体文件</string>
     <string name="confirm_apkg_export">要将记忆库集合导出为 Anki 包吗？</string>
     <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">导出 %d 张选定卡片为 apkg 文件？</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
+    </plurals>
     <string name="export_in_progress">正在导出 Anki 软件包文件&#8230;</string>
-    <string name="export_successful_title">发送 Anki 包？</string>
-    <string name="export_send_button">发送</string>
+    <string name="export_success_title">成功导出牌组集</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
     <string name="export_save_apkg_successful">已成功保存 Anki 包</string>
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
-    <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
+    <string name="export_success_message">您可以选择一个文件位置来保存它，或者与其他应用共享。</string>
     <string name="export_share_title">选择如何发送 Anki 软件包</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
@@ -201,7 +205,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">导出apkg文件时出错</string>
+    <string name="export_select_save_app">选择文件保存位置</string>
+    <string name="export_select_share_app">选择分享应用</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
@@ -366,6 +371,15 @@
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
+    <string name="sync_impossible_during_migration">同步功能被禁用，直到迁移完成。\n
+        %1$d 个媒体文件留待迁移。</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">如果您重新安装 AnkiDroid，它将无法打开您的牌组集。</string>
+    <string name="migration_update_request_dialog_download_warning">如果您卸载 AnkiDroid，您需要再次下载您的全部牌组集。</string>
+    <string name="migration_update_request">Android 存储访问策略要求我们更改存储牌组集的位置。 迁移数据后，AnkiDroid 将更快，您的数据将更安全。
+    您将无法在存储迁移过程中同步。</string>
+    <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid 啦。</string>
+    <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
+\n存储迁移将在后台继续。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s 不是一个有效的 javascript 附加组件包</string>
     <string name="could_not_create_dir">无法创建目录 %s</string>
@@ -387,6 +401,8 @@
     <string name="validation_deck_already_exists">牌组已存在</string>
     <string name="deck_created">已创建牌组</string>
     <string name="deck_renamed">重命名牌组</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">牌组已删除。请删除快捷方式</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">笔记</string>

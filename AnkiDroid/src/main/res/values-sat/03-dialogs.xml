@@ -90,10 +90,11 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ᱱᱟᱶᱟ ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱠᱟᱱᱟ ᱾ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱞᱮᱠᱷᱟᱱ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ‌ᱛᱮ‌ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ ᱾ ᱱᱟᱶᱟ ᱫᱷᱟᱲᱤ ᱨᱮ ᱱᱟᱶᱟ ᱡᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱚᱫᱚᱞ‌ ᱞᱟᱹᱜᱤᱫ ᱨᱤᱯᱚᱡᱤᱥᱚᱱ ᱠᱟᱰ ᱵᱮᱵᱷᱟᱨ ᱢᱮ‌ᱸ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱫᱚ ᱵᱷᱚᱵᱤᱥᱭᱚᱛ ᱨᱮ ᱚᱠᱟᱞᱠᱟᱛᱮ ᱠᱟᱰ ᱠᱚ ᱥᱮᱰᱭᱩᱞ ᱟ ᱚᱱᱟ ᱦᱚᱸ ᱨᱤᱥᱚᱴ ᱟᱭ (ᱮᱡᱽ ᱫᱚ %d%% ᱛᱮ ᱥᱮᱴᱚᱜᱼᱟ)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
@@ -103,7 +104,7 @@
     <string name="custom_study_rev_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱨᱤᱵᱷᱤᱣ ᱞᱤᱢᱤᱴ</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
-    <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
+    <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
     <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
     <string name="importing_collection">ᱴᱩᱢᱟᱹᱞ ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ...</string>
@@ -115,18 +116,20 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD ᱠᱟᱰ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
-    <string name="sd_card_almost_full_title">SD ᱠᱟᱰ ᱯᱟᱠᱷᱟᱯᱟᱹᱠᱷᱤ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>
     <string name="no_space_to_downgrade_content">AnkiDroid ᱡᱟᱹ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ %s ᱠᱷᱟᱞᱤ ᱟᱨᱡᱟᱣ ᱴᱷᱟᱶ ᱞᱟᱹᱠᱛᱤ । ᱫᱟᱭᱟᱠᱟᱛᱮ ᱴᱷᱟᱶ ᱥᱟᱯᱷᱟ</string>
     <string name="restore_backup_title">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱫᱚᱦᱰᱟᱭᱟ ᱥᱮ?</string>
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">ᱮᱴᱟᱜᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
+    <string name="dialog_confirm">ᱴᱷᱟᱹᱣᱠᱟᱹ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
+    <string name="dialog_yes">ᱦᱮᱸ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">ᱠᱟᱹᱢᱤ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ ...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -172,9 +175,6 @@
     <string name="multimedia_editor_failed">ᱢᱟᱹᱞᱴᱤᱢᱤᱰᱤᱭᱟ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ᱟᱧᱡᱚᱢ ᱨᱮᱠᱚᱰᱤᱝ ᱪᱷᱟᱰ ᱵᱟᱰ</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ᱫᱚ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱫᱚᱨᱠᱟᱨ, ᱚᱠᱟ ᱫᱚ ᱟᱢᱟᱜ AnkiDroid ᱴᱩᱢᱟᱹᱞ, flashcard ᱢᱮᱰᱤᱭᱟ, ᱟᱨ ᱵᱮᱠᱚᱯ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱢᱤᱨᱮ ᱦᱩᱭᱩᱜ ᱟ ᱾ ᱟᱞᱮᱭᱟᱜ ᱞᱚᱰ ᱫᱚ open-source ᱜᱮᱭᱚ, volunteers ᱠᱚ ᱚᱞ ᱟᱠᱟᱫᱟ ᱚᱨ millions ᱠᱚᱣᱟᱜ ᱵᱷᱚᱨᱥᱟ ᱢᱮᱱᱟᱜᱼᱟ.\n\n ᱟᱢ ᱴᱷᱮᱱ ᱠᱩᱠᱞᱤ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱱ ᱫᱚ, ᱟᱞᱮᱭᱟᱜ ᱮᱯᱯ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱥᱟᱯᱚᱴ ᱯᱷᱚᱨᱩᱢ ᱛᱮ ᱪᱟᱞᱟᱜᱢᱮ.\n\nAnkiDroid ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱟᱹᱰᱤ ᱥᱟᱨᱷᱣ !\n—AnkiDroid ᱞᱟᱦᱟ ᱨᱟᱠᱟᱵ ᱫᱚᱞ</string>
     <string name="mutimedia_editor_assertion_failed">ᱵᱚᱝ ᱵᱟᱥᱟᱭᱟᱠᱟᱱ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ ᱮᱰᱵᱷᱟᱱᱥ ᱮᱰᱤᱴᱚᱨ ᱨᱮ ᱫᱮᱠᱷᱟᱣᱮᱫ ᱟᱭ</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ᱦᱟᱹᱞᱤ ᱦᱚᱪᱚᱭᱮᱱᱟ</string>
@@ -199,8 +199,8 @@
     <!-- Deck Picker Background-->
     <string name="background_image_applied">ᱚᱱᱚᱰ ᱪᱮᱛᱟᱨ ᱵᱟᱦᱟᱞᱮᱱᱟ</string>
     <string name="background_image_removed">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱦᱟᱴᱟᱣ ᱮᱱᱟ</string>
-    <string name="no_image_selected">ᱪᱤᱛᱟᱨ ᱵᱟᱝ ᱪᱚᱭᱚᱱ ᱟᱠᱟᱱᱟ</string>
-    <string name="error_selecting_image">ᱪᱤᱛᱟᱨ ᱪᱚᱭᱚᱱ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱾ %s</string>
+    <string name="no_image_selected">ᱪᱤᱛᱟᱨ ᱵᱟᱝ ᱵᱟᱪᱷᱟᱣ ᱟᱠᱟᱱᱟ</string>
+    <string name="error_selecting_image">ᱪᱤᱛᱟᱨ ᱵᱟᱪᱷᱟᱣ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱾ %s</string>
     <string name="error_deleting_image">ᱪᱤᱛᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱵᱷᱩᱞ</string>
     <string name="failed_to_apply_background_image">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱵᱟᱦᱟᱞ ᱰᱤᱜᱟᱹᱣ %s</string>
     <string name="background_image_too_large">ᱰᱠᱮ ᱦᱟᱛᱟᱣ ᱵᱮᱠᱜᱟᱨᱩᱸᱰ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ</string>
@@ -214,7 +214,7 @@
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">ᱠᱤᱵᱚᱰ ᱦᱤᱸᱴ ᱪᱚᱭᱚᱱ</string>
+    <string name="locale_selection_dialog_title">ᱠᱤᱵᱚᱰ ᱦᱤᱸᱴ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="locale_selection_dialog_summary">ᱠᱤᱪᱷᱤ ᱢᱟᱹᱞᱴᱤᱞᱤᱱᱜᱩᱟᱞ ᱠᱤᱭᱵᱚᱰ, ᱡᱮᱢᱚᱱ GBoard  ᱫᱚ ᱚᱞ ᱠᱚ ᱥᱟᱯᱲᱟᱣ ᱡᱷᱚᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱜᱟᱱᱚᱜᱼᱟ \n\n ᱡᱩᱫᱤ ᱟᱢᱟᱜᱽ ᱠᱤᱭᱵᱚᱰ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱵᱟᱭ ᱜᱟᱱᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱱ ᱫᱚᱭᱟ ᱠᱟᱛᱮ ᱠᱮᱭᱵᱚᱰ ᱢᱮᱱᱭᱩᱯᱷᱮᱠᱪᱚᱨᱟᱹᱨ ᱨᱮᱭᱟᱜ “setImeHintLocales” ᱱᱮᱦᱚᱨᱮᱢ ᱾</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ᱵᱮᱵᱷᱟᱨᱮᱫᱟᱹᱧ</string>
@@ -230,6 +230,7 @@
     <string name="help_item_support_develop_ankidroid">ᱰᱮᱵᱷᱞᱚᱯ</string>
     <string name="help_item_support_rate_ankidroid">ᱫᱚᱨ</string>
     <string name="help_item_support_other_ankidroid">ᱚᱞᱜᱟ</string>
+    <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">ᱡᱟᱹᱛ</string>
     <string name="help_item_anki_forums">Anki ᱯᱷᱚᱨᱚᱱ</string>
     <string name="help_item_discord">Discord</string>
@@ -256,7 +257,17 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">ᱰᱮᱠ ᱯᱭᱟᱠᱮᱡᱽ (apkg)</string>
     <string name="import_collection_package">ᱦᱟᱞᱟᱝᱥᱟᱢᱴᱟ ᱯᱭᱟᱠᱮᱡ (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">ᱚᱞ ᱨᱮᱫ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

@@ -35,13 +35,13 @@ class CardBrowserNonAndroidTest {
 
     @Test
     fun imageIsStrippedCorrectly() {
-        val output = formatWithFilenamesStripped("aou<img src=\"test.jpg\">aou")
+        val output = formatWithFilenamesStripped("""aou<img src="test.jpg">aou""")
         assertThat(output, equalTo("aou aou"))
     }
 
     @Test
     fun imageIsRetainedWithNoHtml() {
-        val output = formatWithFilenamesRetained("aou<img src=\"test.jpg\">aou")
+        val output = formatWithFilenamesRetained("""aou<img src="test.jpg">aou""")
         assertThat(output, equalTo("aou test.jpg aou"))
     }
 

@@ -17,13 +17,15 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.FileNotFoundException
 import java.io.IOException
 
-data class DeleteEmptyDirectory(val directory: Directory) : MigrateUserData.Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
+data class DeleteEmptyDirectory(val directory: Directory) : Operation() {
+    override fun execute(context: MigrationContext): List<Operation> {
         val directoryContainsFiles =
             try {
                 directory.hasFiles()
@@ -31,7 +33,7 @@ data class DeleteEmptyDirectory(val directory: Directory) : MigrateUserData.Oper
                 return noFile(ex)
             }
         if (directoryContainsFiles) {
-            context.reportError(this, MigrateUserData.DirectoryNotEmptyException(directory))
+            context.reportError(this, DirectoryNotEmptyException(directory))
             return operationCompleted()
         }
 
@@ -45,7 +47,7 @@ data class DeleteEmptyDirectory(val directory: Directory) : MigrateUserData.Oper
         return operationCompleted()
     }
 
-    private fun noFile(ex: IOException): List<MigrateUserData.Operation> {
+    private fun noFile(ex: IOException): List<Operation> {
         if (!directory.directory.exists()) {
             // If the directory is already deleted, the goal of the operation is reached,
             // hence we do not have to throw.

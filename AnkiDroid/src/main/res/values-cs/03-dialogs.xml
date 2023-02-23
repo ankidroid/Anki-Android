@@ -59,7 +59,7 @@
     </plurals>
     <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
-    <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
+    <string name="initializing_tts">Spouští se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
@@ -106,6 +106,7 @@
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
     <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
@@ -129,8 +130,8 @@
         <item quantity="many">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
         <item quantity="other">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD karta je plná</string>
-    <string name="sd_card_almost_full_title">SD karta téměř plná</string>
+    <string name="storage_full_title">Úložiště je plné</string>
+    <string name="storage_almost_full_title">Úložiště téměř plné</string>
     <string name="no_space_to_downgrade_title">Není místo</string>
     <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného úložiště. Abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
     <string name="restore_backup_title">Obnovit zálohu?</string>
@@ -138,7 +139,9 @@
     <string name="restore_backup_choose_another">Vybrat jinou</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
+    <string name="dialog_confirm">Potvrdit</string>
     <string name="dialog_no">Ne</string>
+    <string name="dialog_yes">Ano</string>
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_processing">Zpracovává se...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>
@@ -188,9 +191,6 @@
     <string name="multimedia_editor_failed">Nepodařilo se otevřít multimediální editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Vítejte v AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid vyžaduje oprávnění k úložišti, které používáme výhradně pro ukládání vaší AnkiDroid kolekce, multimédií kartiček a záloh. Náš kód je otevřený, napsaný dobrovolníky a mají v něj důvěru miliony.\n\nPokud máte jakékoliv dotazy, nahlédněte prosím do naší příručky v aplikaci nebo navštivte naše fóra podpory.\n\nDěkujeme, že zkoušíte AnkiDroid!\n—AnkiDroid vývojový tým</string>
     <string name="mutimedia_editor_assertion_failed">Nastala neznámá chyba při zobrazování pokročilého editoru</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
@@ -246,6 +246,7 @@
     <string name="help_item_support_develop_ankidroid">Vyvíjet</string>
     <string name="help_item_support_rate_ankidroid">Ohodnotit</string>
     <string name="help_item_support_other_ankidroid">Ostatní</string>
+    <string name="multimedia_editor_trans_translate">Přeložit</string>
     <string name="help_title_community">Komunita</string>
     <string name="help_item_anki_forums">Fóra Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -277,4 +278,14 @@
     <string name="import_csv">Textový soubor (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nemůžete vytvořit podřízený balíček pro všechny balíčky</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Kvůli změnám ochrany osobních údajů v Androidu bude vaše aktuální úložiště nedostupné, pokud bude aplikace odinstalována.
+        \n\nPotřebujeme přesunout vaše data do místa, které je vyhrazeno pro AnkiDroid aplikaci.
+        \n\nData v tomto vyhrazeném umístění mohou být odstraněna, pokud se odinstaluje aplikace.
+        \n\nVaše aktuální úložiště je %1$s
+        \n\nUmístění vyhrazeného úložiště bude %2$s
+        \n\nProsím potvrďte, že budete pravidelně zálohovat tuto složku.
+    </string>
+    <string name="manual_backup">Ruční záloha</string>
+    <string name="remind_me_later">Připomenout později</string>
 </resources>

@@ -105,6 +105,20 @@
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="two">Export cards</item>
+        <item quantity="few">Export cards</item>
+        <item quantity="many">Export cards</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="two">Export notes</item>
+        <item quantity="few">Export notes</item>
+        <item quantity="many">Export notes</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deleted</item>
         <item quantity="two">%d cards deleted</item>

@@ -2,6 +2,11 @@ name: Emulator Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      clearCaches:
+        description: "Clear workflow caches where possible"
+        required: false
+        type: string
   pull_request:
     branches:
       - '**'
@@ -67,15 +72,7 @@ jobs:
           # Builds on other branches will only read from main branch cache writes
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-
-      - name: Warm Gradle Cache
-        # This makes sure we fetch gradle network resources with a retry
-        uses: nick-invision/retry@v2
-        with:
-          timeout_minutes: 15
-          retry_wait_seconds: 60
-          max_attempts: 3
-          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest --daemon
+          gradle-home-cache-cleanup: true
 
         # This appears to be 'Cache Size: ~1230 MB (1290026823 B)' based on watching action logs
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
@@ -87,34 +84,34 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ hashFiles('~/.android/avd/**/snapshots/**') }}
+          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ github.event.inputs.clearCaches }}
           restore-keys: |
             avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
+
+      - name: Clear Caches Optionally
+        if: "${{ github.event.inputs.clearCaches != '' }}"
+        shell: bash
+        run: |
+          du -sk ~/.gradle
+          du -sk ~/.android
+          rm -fr ~/.gradle
+          rm -fr ~/.android
+          du -sk ~/.gradle || echo ~/.gradle is gone
+          du -sk ~/.android || echo ~/.android is gone
+
+      - name: Warm Gradle Cache
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 15
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest --daemon
 
       - name: AVD Boot and Snapshot Creation
         # Only generate a snapshot for saving if we are on main branch with a cache miss
         # Comment the if out to generate snapshots on branch for performance testing
-        if: steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          force-avd-creation: false
-          target: ${{ matrix.target }}
-          arch: ${{ matrix.arch }}
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          sdcard-path-or-size: 100M
-          disable-animations: true
-          # Give the emulator a little time to run and do first boot stuff before taking snapshot
-          script: echo "Generated AVD snapshot for caching."
-
-        # This step is separate so pure install time may be calculated as a step
-      - name: Emulator Snapshot After Firstboot Warmup
-        # Only generate a snapshot for saving if we are on main branch with a cache miss
-        # Switch the if statements via comment if generating snapshots for performance testing
-        # if: matrix.first-boot-delay != '0'
-        if: steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main'
-        env:
-          FIRST_BOOT_DELAY: ${{ matrix.first-boot-delay }}
+        if: "${{ github.event.inputs.clearCaches != '' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -126,7 +123,36 @@ jobs:
           disable-animations: true
           # Give the emulator a little time to run and do first boot stuff before taking snapshot
           script: |
+            touch adb-log.txt
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
+            adb logcat --clear
+            echo "Generated AVD snapshot for caching."
+
+        # This step is separate so pure install time may be calculated as a step
+      - name: Emulator Snapshot After Firstboot Warmup
+        # Only generate a snapshot for saving if we are on main branch with a cache miss
+        # Switch the if statements via comment if generating snapshots for performance testing
+        # if: matrix.first-boot-delay != '0'
+        if: "${{ github.event.inputs.clearCaches != '' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
+        env:
+          FIRST_BOOT_DELAY: ${{ matrix.first-boot-delay }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          sdcard-path-or-size: 100M
+          disable-animations: true
+          # Restart zygote to win a config race / Give emulator time to run and do first boot stuff before taking snapshot
+          script: |
+            touch adb-log.txt
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
+            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
+            sleep 10
             sleep $FIRST_BOOT_DELAY
+            adb logcat --clear
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
@@ -141,10 +167,9 @@ jobs:
           sdcard-path-or-size: 100M
           disable-animations: true
           script: |
-            $ANDROID_HOME/platform-tools/adb logcat '*:D' > adb-log.txt &
+            touch adb-log.txt
+            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
             sleep 5
-            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
-            sleep 10
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Compress Emulator Log
@@ -159,12 +184,6 @@ jobs:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
           path: adb-log.txt.gz
 
-      - name: Submit Coverage
-        # This can fail on timeouts etc, wrap with retry
-        uses: nick-invision/retry@v2
+      - uses: codecov/codecov-action@v3
         with:
-          timeout_minutes: 10
-          retry_wait_seconds: 60
-          continue_on_error: true #12501
-          max_attempts: 3
-          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh 
+          verbose: true

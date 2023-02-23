@@ -21,10 +21,11 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
 import java.io.File
-import java.lang.IllegalStateException
 
 /**
  * Moves a file from [sourceFile] to [proposedDestinationFile].
@@ -48,7 +49,6 @@ class MoveConflictedFile private constructor(
 ) : Operation() {
 
     override fun execute(context: MigrationContext): List<Operation> {
-
         // create the "conflict" folder if it didn't exist, and the relative path to the file
         // example: "AnkiDroid/conflict/collection.media/subfolder"
         createDirectory(proposedDestinationFile.parentFile!!)
@@ -87,6 +87,7 @@ class MoveConflictedFile private constructor(
 
     companion object {
         const val CONFLICT_DIRECTORY = "conflict"
+
         /**
          * @param sourceFile The file to move from
          * @param destinationTopLevel The top level directory to move to (non-relative path). "/storage/emulated/0/AnkiDroid/"
@@ -98,7 +99,6 @@ class MoveConflictedFile private constructor(
             destinationTopLevel: Directory,
             sourceRelativePath: RelativeFilePath
         ): MoveConflictedFile {
-
             // we add /conflict/ to the path inside this method. If this already occurred, something was wrong
             if (sourceRelativePath.path.firstOrNull() == CONFLICT_DIRECTORY) {
                 throw IllegalStateException("can't move from a root path of 'conflict': $sourceRelativePath")

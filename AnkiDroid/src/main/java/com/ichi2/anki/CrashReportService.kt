@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
@@ -28,7 +29,6 @@ import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
 import org.acra.ReportField
@@ -36,7 +36,6 @@ import org.acra.config.*
 import org.acra.sender.HttpSender
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
 
 object CrashReportService {
 
@@ -47,33 +46,45 @@ object CrashReportService {
     const val FEEDBACK_REPORT_ALWAYS = "0"
 
     /** Our ACRA configurations, initialized during Application.onCreate()  */
-    private lateinit var mAcraCoreConfigBuilder: CoreConfigurationBuilder
+    @JvmStatic
+    private var logcatArgs = arrayOf(
+        "-t",
+        "100",
+        "-v",
+        "time",
+        "ActivityManager:I",
+        "SQLiteLog:W",
+        AnkiDroidApp.TAG + ":D",
+        "*:S"
+    )
+
+    @JvmStatic
+    private var dialogEnabled = true
+
+    @JvmStatic
+    private lateinit var toastText: String
+
+    @JvmStatic
+    lateinit var acraCoreConfigBuilder: CoreConfigurationBuilder
+        private set
     private lateinit var mApplication: Application
     private const val WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME"
     private const val MIN_INTERVAL_MS = 60000
     private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
 
-    /**
-     * Temporary method to access the CoreConfigurationBuilder until all classes that require access
-     *  to the CoreConfigurationBuilder are migrated to kotlin.
-     */
-    @KotlinCleanup("once EVERY class using this method gets migrated to kotlin remove it and expose mAcraCoreConfigBuilder with a private setter")
-    fun getAcraCoreConfigBuilder(): CoreConfigurationBuilder {
-        return mAcraCoreConfigBuilder
+    private enum class ToastType(@StringRes private val toastMessageRes: Int) {
+        AUTO_TOAST(R.string.feedback_auto_toast_text),
+        MANUAL_TOAST(R.string.feedback_for_manual_toast_text);
+
+        fun getToastMessage(context: Context) = context.getString(toastMessageRes)
     }
 
-    /**
-     * Use this method to initialize the ACRA CoreConfigurationBuilder in Application.onCreate().
-     * The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same
-     * data directory. Analytics falls back to a sensible default if this is not set.
-     */
-    fun initialize(application: Application) {
-        mApplication = application
-        // Setup logging and crash reporting
-        mAcraCoreConfigBuilder = CoreConfigurationBuilder(application)
-            .setBuildConfigClass(org.acra.dialog.BuildConfig::class.java)
-            .setExcludeMatchingSharedPreferencesKeys("username", "hkey")
-            .setReportContent(
+    private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
+        val builder = CoreConfigurationBuilder()
+            .withBuildConfigClass(com.ichi2.anki.BuildConfig::class.java) // AnkiDroid BuildConfig - Acrarium#319
+            .withExcludeMatchingSharedPreferencesKeys("username", "hkey")
+            .withSharedPreferencesName("acra")
+            .withReportContent(
                 ReportField.REPORT_ID,
                 ReportField.APP_VERSION_CODE,
                 ReportField.APP_VERSION_NAME,
@@ -101,26 +112,61 @@ object CrashReportService {
                 ReportField.MEDIA_CODEC_LIST,
                 ReportField.THREAD_DETAILS
             )
-            .setLogcatArguments("-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S")
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            .setReportDialogClass(AnkiDroidCrashReportDialog::class.java)
-            .setResCommentPrompt(R.string.empty_string)
-            .setResTitle(R.string.feedback_title)
-            .setResText(R.string.feedback_default_text)
-            .setResPositiveButtonText(R.string.feedback_report)
-            .setResIcon(R.drawable.logo_star_144dp)
-            .setEnabled(true)
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder::class.java)
-            .setHttpMethod(HttpSender.Method.PUT)
-            .setUri(BuildConfig.ACRA_URL)
-            .setEnabled(true)
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
-            .setResText(R.string.feedback_auto_toast_text)
-            .setEnabled(true)
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder::class.java)
-            .setExceptionClassLimit(1000)
-            .setStacktraceLimit(1)
-            .setEnabled(true)
+            .withLogcatArguments(*logcatArgs)
+            .withPluginConfigurations(
+                DialogConfigurationBuilder()
+                    .withReportDialogClass(AnkiDroidCrashReportDialog::class.java)
+                    .withCommentPrompt(mApplication.getString(R.string.empty_string))
+                    .withTitle(mApplication.getString(R.string.feedback_title))
+                    .withText(mApplication.getString(R.string.feedback_default_text))
+                    .withPositiveButtonText(mApplication.getString(R.string.feedback_report))
+                    .withResIcon(R.drawable.logo_star_144dp)
+                    .withEnabled(dialogEnabled)
+                    .build(),
+                HttpSenderConfigurationBuilder()
+                    .withHttpMethod(HttpSender.Method.PUT)
+                    .withUri(BuildConfig.ACRA_URL)
+                    .withEnabled(true)
+                    .build(),
+                ToastConfigurationBuilder()
+                    .withText(toastText)
+                    .withEnabled(true)
+                    .build(),
+                LimiterConfigurationBuilder()
+                    .withExceptionClassLimit(1000)
+                    .withStacktraceLimit(1)
+                    .withDeleteReportsOnAppUpdate(true)
+                    .withResetLimitsOnAppUpdate(true)
+                    .withEnabled(true)
+                    .build()
+            )
+        ACRA.init(mApplication, builder)
+        acraCoreConfigBuilder = builder
+        fetchWebViewInformation().let {
+            ACRA.errorReporter.putCustomData(WEBVIEW_VER_NAME, it[WEBVIEW_VER_NAME] ?: "")
+            ACRA.errorReporter.putCustomData("WEBVIEW_VER_CODE", it["WEBVIEW_VER_CODE"] ?: "")
+        }
+        return builder
+    }
+
+    /**
+     * Use this method to initialize the ACRA CoreConfigurationBuilder in Application.onCreate().
+     * The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same
+     * data directory. Analytics falls back to a sensible default if this is not set.
+     */
+    @JvmStatic
+    fun initialize(application: Application) {
+        mApplication = application
+        // FIXME ACRA needs to reinitialize after language is changed, but with the new language
+        //   this is difficult because the Application (AnkiDroidApp) does not change it's baseContext
+        //   perhaps a solution could be to change AnkiDroidApp to have a context wrapper that it sets
+        //   as baseContext, and that wrapper allows a resources/configuration update, then
+        //   in GeneralSettingsFragment for the language dialog change listener, the context wrapper
+        //   could be updated directly with the new locale code so that calling getString on would fetch
+        //   the new language string ?
+        toastText = ToastType.AUTO_TOAST.getToastMessage(mApplication)
+
+        // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {
             setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(mApplication))
         } else {
@@ -140,26 +186,24 @@ object CrashReportService {
      * @param value value of FEEDBACK_REPORT_KEY preference
      */
     fun setAcraReportingMode(value: String) {
-        val editor = AnkiDroidApp.getSharedPrefs(mApplication).edit()
-        // Set the ACRA disable value
-        if (value == FEEDBACK_REPORT_NEVER) {
-            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, true)
-        } else {
-            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false)
-            // Switch between auto-report via toast and manual report via dialog
-            val builder: CoreConfigurationBuilder = mAcraCoreConfigBuilder
-            val dialogBuilder = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            val toastBuilder = builder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
-            if (value == FEEDBACK_REPORT_ALWAYS) {
-                dialogBuilder.setEnabled(false)
-                toastBuilder.setResText(R.string.feedback_auto_toast_text)
-            } else if (value == FEEDBACK_REPORT_ASK) {
-                dialogBuilder.setEnabled(true)
-                toastBuilder.setResText(R.string.feedback_for_manual_toast_text)
+        AnkiDroidApp.getSharedPrefs(mApplication).edit {
+            // Set the ACRA disable value
+            if (value == FEEDBACK_REPORT_NEVER) {
+                putBoolean(ACRA.PREF_DISABLE_ACRA, true)
+            } else {
+                putBoolean(ACRA.PREF_DISABLE_ACRA, false)
+                // Switch between auto-report via toast and manual report via dialog
+                if (value == FEEDBACK_REPORT_ALWAYS) {
+                    dialogEnabled = false
+                    toastText = ToastType.AUTO_TOAST.getToastMessage(mApplication)
+                } else if (value == FEEDBACK_REPORT_ASK) {
+                    createAcraCoreConfigBuilder()
+                    dialogEnabled = true
+                    toastText = ToastType.MANUAL_TOAST.getToastMessage(mApplication)
+                }
+                createAcraCoreConfigBuilder()
             }
-            setAcraConfigBuilder(builder)
         }
-        editor.apply()
     }
 
     /**
@@ -174,8 +218,8 @@ object CrashReportService {
         setAcraReportingMode(FEEDBACK_REPORT_NEVER)
         prefs.edit { putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER) }
         // Use a wider logcat filter in case crash reporting manually re-enabled
-        val logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
-        setAcraConfigBuilder(mAcraCoreConfigBuilder.setLogcatArguments(*logcatArgs))
+        logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
+        createAcraCoreConfigBuilder()
     }
 
     /**
@@ -187,17 +231,6 @@ object CrashReportService {
     fun setProductionACRAConfig(prefs: SharedPreferences) {
         // Enable or disable crash reporting based on user setting
         setAcraReportingMode(prefs.getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)!!)
-    }
-
-    /**
-     * Set the ACRA ConfigurationBuilder and **re-initialize the ACRA system** with the contents
-     * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
-     */
-    private fun setAcraConfigBuilder(acraCoreConfigBuilder: CoreConfigurationBuilder) {
-        this.mAcraCoreConfigBuilder = acraCoreConfigBuilder
-        ACRA.init(mApplication, acraCoreConfigBuilder)
-        ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation()[WEBVIEW_VER_NAME])
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation()["WEBVIEW_VER_CODE"])
     }
 
     private fun fetchWebViewInformation(): HashMap<String, String> {
@@ -234,16 +267,18 @@ object CrashReportService {
     fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?, onlyIfSilent: Boolean) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
+        val reportMode = AnkiDroidApp.getSharedPrefs(mApplication.applicationContext).getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
         if (onlyIfSilent) {
-            val reportMode = AnkiDroidApp.getSharedPrefs(mApplication.applicationContext).getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
             if (FEEDBACK_REPORT_ALWAYS != reportMode) {
                 Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.")
                 return
             }
         }
-        ACRA.getErrorReporter().putCustomData("origin", origin)
-        ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo)
-        ACRA.getErrorReporter().handleException(e)
+        if (FEEDBACK_REPORT_NEVER != reportMode) {
+            ACRA.errorReporter.putCustomData("origin", origin ?: "")
+            ACRA.errorReporter.putCustomData("additionalInfo", additionalInfo ?: "")
+            ACRA.errorReporter.handleException(e)
+        }
     }
 
     fun isProperServiceProcess(): Boolean {
@@ -289,13 +324,11 @@ object CrashReportService {
         val reportMode = preferences.getString(FEEDBACK_REPORT_KEY, "")
         return if (FEEDBACK_REPORT_NEVER == reportMode) {
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, false) }
-            mAcraCoreConfigBuilder
-                .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-                .setEnabled(true)
+            toastText = ToastType.MANUAL_TOAST.getToastMessage(mApplication)
+            createAcraCoreConfigBuilder()
             val sendStatus = sendReportFor(ankiActivity)
-            mAcraCoreConfigBuilder
-                .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-                .setEnabled(false)
+            dialogEnabled = false
+            createAcraCoreConfigBuilder()
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, true) }
             sendStatus
         } else {
@@ -324,28 +357,9 @@ object CrashReportService {
      * @param activity the Activity used for Context access when interrogating ACRA reports
      * @return the timestamp of the most recent report, or -1 if no reports at all
      */
-    // Upstream issue for access to field/method: https://github.com/ACRA/acra/issues/843
     private fun getTimestampOfLastReport(activity: AnkiActivity): Long {
-        try {
-            // The ACRA LimiterData holds a timestamp for every generated report
-            val limiterData = LimiterData.load(activity)
-            val limiterDataListField = limiterData.javaClass.getDeclaredField("list")
-            limiterDataListField.isAccessible = true
-            @Suppress("UNCHECKED_CAST")
-            val limiterDataList = limiterDataListField[limiterData] as List<LimiterData.ReportMetadata>
-            for (report in limiterDataList) {
-                if (report.exceptionClass != UserSubmittedException::class.java.name) {
-                    continue
-                }
-                val timestampMethod = report.javaClass.getDeclaredMethod("getTimestamp")
-                timestampMethod.isAccessible = true
-                val timestamp = timestampMethod.invoke(report) as Calendar
-                // Limiter ensures there is only one report for the class, so if we found it, return it
-                return timestamp.timeInMillis
-            }
-        } catch (e: Exception) {
-            Timber.w(e, "Unexpected exception checking for recent reports")
-        }
-        return -1
+        return LimiterData.load(activity).reportMetadata
+            .filter { it.exceptionClass == UserSubmittedException::class.java.name }
+            .maxOfOrNull { it.timestamp?.timeInMillis ?: -1L } ?: -1L
     }
 }

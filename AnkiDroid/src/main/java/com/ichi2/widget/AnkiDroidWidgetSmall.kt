@@ -24,6 +24,7 @@ import android.os.IBinder
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
@@ -43,7 +44,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         super.onEnabled(context)
         Timber.d("SmallWidget: Widget enabled")
         val preferences = AnkiDroidApp.getSharedPrefs(context)
-        preferences.edit().putBoolean("widgetSmallEnabled", true).commit()
+        preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", true) }
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
     }
 
@@ -51,7 +52,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         super.onDisabled(context)
         Timber.d("SmallWidget: Widget disabled")
         val preferences = AnkiDroidApp.getSharedPrefs(context)
-        preferences.edit().putBoolean("widgetSmallEnabled", false).commit()
+        preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", false) }
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
@@ -151,7 +152,9 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
             ankiDroidIntent.action = Intent.ACTION_MAIN
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER)
             val pendingAnkiDroidIntent = CompatHelper.compat.getImmutableActivityIntent(
-                context, 0, ankiDroidIntent,
+                context,
+                0,
+                ankiDroidIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent)

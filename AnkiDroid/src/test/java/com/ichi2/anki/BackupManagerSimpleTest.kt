@@ -134,7 +134,7 @@ class BackupManagerSimpleTest {
         f3.createNewFile()
         f4.createNewFile()
 
-        BackupManager.deleteDeckBackups(colFile.path, 2)
+        BackupManager.deleteColBackups(colFile.path, 2)
         assertThat("Older backups should have been deleted", f2, not(anExistingFile()))
         assertThat("Older backups should have been deleted", f4, not(anExistingFile()))
         assertThat("Newer backups should have been kept", f1, anExistingFile())

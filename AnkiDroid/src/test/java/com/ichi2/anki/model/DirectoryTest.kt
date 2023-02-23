@@ -18,7 +18,6 @@ package com.ichi2.anki.model
 
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
-import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.*
@@ -28,6 +27,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
 
 /**
  * Tests for [Directory]
@@ -93,7 +93,7 @@ class DirectoryTest : Test21And26() {
     fun has_files_throws_if_file_no_longer_exists() {
         val dir = createValidTempDir()
         dir.directory.delete()
-        assertThrows<FileNotFoundException> { dir.hasFiles() }
+        assertFailsWith<FileNotFoundException> { dir.hasFiles() }
     }
 
     @Test

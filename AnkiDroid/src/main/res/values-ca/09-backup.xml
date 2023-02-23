@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">La còpia de seguretat no s\'ha desat. No queda prou espai a la targeta SD. Baixa la profunditat de la còpia de seguretat o elimina altres fitxers.</string>
-    <string name="sd_space_warning">Hi ha menys de %d MB d\'espai lliure a la targeta SD.\nAllibereu una mica d\'espai per evitar la pèrdua de dades.</string>
+    <string name="backup_deck_no_storage_left">La còpia de seguretat no s\'ha desat. No hi ha prou espai. Baixeu la profunditat de la còpia de seguretat o elimineu altres fitxers.</string>
+    <string name="storage_warning">Hi ha menys de %d MB d\'espai lliure.\nAllibereu una mica d\'espai per no perdre dades.</string>
     <string name="backup_restore">Restaura des d\'una còpia de reserva</string>
     <string name="backup_new_collection">Nova col·lecció</string>
     <string name="backup_del_collection">Suprimeix la col·lecció i genera una nova</string>

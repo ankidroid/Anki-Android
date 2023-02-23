@@ -22,7 +22,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -30,6 +29,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -43,8 +43,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfigura
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.async.CollectionTask.RebuildCram
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
@@ -52,13 +50,15 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
+
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
@@ -67,10 +67,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
+        val args = this.arguments ?: Bundle()
         args.apply {
             putInt("id", contextMenuAttribute.value)
             putLong("did", did)
@@ -112,8 +109,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (ContextMenuOption.fromString(resources, charSequence.toString())) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
-                        val i = Intent(requireContext(), DeckOptions::class.java)
-                        i.putExtra("did", requireArguments().getLong("did"))
+                        val deckId = requireArguments().getLong("did")
+                        val i = if (BackendFactory.defaultLegacySchema) {
+                            Intent(requireContext(), DeckOptionsActivity::class.java).apply {
+                                putExtra("did", deckId)
+                            }
+                        } else {
+                            com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
+                        }
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {
@@ -127,7 +130,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         customStudyListener?.showDialogFragment(d)
                     }
                     STUDY_TAGS -> {
-
                         /*
                          * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
                          * number, it is necessary to collect a list of tags. This case handles the creation
@@ -136,13 +138,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val currentDeck = requireArguments().getLong("did")
 
                         val dialogFragment = TagsDialog().withArguments(
-                            TagsDialog.DialogType.CUSTOM_STUDY_TAGS, ArrayList(),
+                            TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
+                            ArrayList(),
                             ArrayList(collection.tags.byDeck(currentDeck, true))
                         )
                         customStudyListener?.showDialogFragment(dialogFragment)
                     }
                     else -> {
-
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
@@ -176,7 +178,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         */
         // Input dialogs
         // Show input dialog for an individual custom study dialog
-        @SuppressLint("InflateParams") val v = requireActivity().layoutInflater.inflate(R.layout.styled_custom_study_details_dialog, null)
+        @SuppressLint("InflateParams")
+        val v = requireActivity().layoutInflater.inflate(R.layout.styled_custom_study_details_dialog, null)
         val textView1 = v.findViewById<TextView>(R.id.custom_study_details_text1)
         val textView2 = v.findViewById<TextView>(R.id.custom_study_details_text2)
         val editText = v.findViewById<EditText>(R.id.custom_study_details_edittext2)
@@ -208,7 +211,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
                 when (contextMenuOption) {
                     STUDY_NEW -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply()
+                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
@@ -216,7 +219,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply()
+                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
@@ -231,9 +234,11 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             arrayOf(
                                 String.format(
                                     Locale.US,
-                                    "rated:%d:1", n
+                                    "rated:%d:1",
+                                    n
                                 ),
-                                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM
+                                Consts.DYN_MAX_SIZE,
+                                Consts.DYN_RANDOM
                             ),
                             false
                         )
@@ -244,9 +249,11 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             arrayOf(
                                 String.format(
                                     Locale.US,
-                                    "prop:due<=%d", n
+                                    "prop:due<=%d",
+                                    n
                                 ),
-                                Consts.DYN_MAX_SIZE, Consts.DYN_DUE
+                                Consts.DYN_MAX_SIZE,
+                                Consts.DYN_DUE
                             ),
                             true
                         )
@@ -260,7 +267,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             arrayOf(
                                 "is:new added:" +
                                     n,
-                                Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST
+                                Consts.DYN_MAX_SIZE,
+                                Consts.DYN_OLDEST
                             ),
                             false
                         )
@@ -324,13 +332,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             for (tag in selectedTags) {
                 arr.add("tag:'$tag'")
             }
-            sb.append("(").append(TextUtils.join(" or ", arr)).append(")")
+            sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
         createCustomStudySession(
             JSONArray(),
             arrayOf(
                 sb.toString(),
-                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM
+                Consts.DYN_MAX_SIZE,
+                Consts.DYN_RANDOM
             ),
             true
         )
@@ -372,8 +381,12 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
             EMPTY_SCHEDULE -> // Special custom study options to show when extending the daily study limits is not applicable
                 return listOf(
-                    STUDY_FORGOT, STUDY_AHEAD, STUDY_RANDOM,
-                    STUDY_PREVIEW, STUDY_TAGS, DECK_OPTIONS
+                    STUDY_FORGOT,
+                    STUDY_AHEAD,
+                    STUDY_RANDOM,
+                    STUDY_PREVIEW,
+                    STUDY_TAGS,
+                    DECK_OPTIONS
                 )
         }
     }
@@ -457,7 +470,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             // issue
             Timber.w("Invalid Dynamic Deck: %s", dyn)
             CrashReportService.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession")
-            showThemedToast(this.context, getString(R.string.custom_study_rebuild_deck_corrupt), false)
+            showThemedToast(requireContext(), getString(R.string.custom_study_rebuild_deck_corrupt), false)
             return
         }
         // and then set various options
@@ -476,8 +489,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        TaskManager.launchCollectionTask(RebuildCram(), createCustomStudySessionListener())
-
+        requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }
@@ -491,10 +503,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         customStudyListener?.dismissAllDialogFragments()
     }
 
-    private fun createCustomStudySessionListener(): CreateCustomStudySessionListener {
-        return CreateCustomStudySessionListener(customStudyListener)
-    }
-
     /**
      * Interface that enables mixed usage of ContextMenuOptions and ContextMenuConfigurations.
      *
@@ -503,6 +511,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      */
     interface ContextMenuAttribute<T> where T : Enum<*> {
         val value: Int
+
         @get:StringRes val stringResource: Int?
     }
 

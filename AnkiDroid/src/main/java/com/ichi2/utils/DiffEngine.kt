@@ -56,23 +56,24 @@ open class DiffEngine {
             // We do the comparison with “<”s &c. in the strings, but should of course not just put those in the HTML
             // output. Also, it looks like the Android WebView swallows single “\”s, so replace those with the entity by
             // hand.
-            return "<span class=\"typeBad\">" + escapeHtml(s) + "</span>"
+            return """<span class="typeBad">""" + escapeHtml(s) + "</span>"
         }
 
         @CheckResult
         fun wrapGood(s: String?): String {
-            return "<span class=\"typeGood\">" + escapeHtml(s) + "</span>"
+            return """<span class="typeGood">""" + escapeHtml(s) + "</span>"
         }
 
         @CheckResult
         fun wrapMissing(s: String?): String {
-            return "<span class=\"typeMissed\">" + escapeHtml(s) + "</span>"
+            return """<span class="typeMissed">""" + escapeHtml(s) + "</span>"
         }
 
         /** Prevents combining marks not getting highlighted properly if a span starts with them, by adding a "&nbsp;" before them (#10665) */
         fun escapeLoneMarks(s: String): String {
-            if (s[0].category.code.startsWith("M"))
+            if (s[0].category.code.startsWith("M")) {
                 return "\\xa0$s"
+            }
             return s
         }
 

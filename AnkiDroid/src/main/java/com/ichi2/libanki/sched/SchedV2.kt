@@ -23,7 +23,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.database.SQLException
 import android.database.sqlite.SQLiteConstraintException
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
@@ -38,12 +37,18 @@ import com.ichi2.libanki.Consts.NEW_CARD_ORDER
 import com.ichi2.libanki.Consts.REVLOG_TYPE
 import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.libanki.sched.Counts.Queue.*
+import com.ichi2.libanki.sched.SchedV2.CountMethod
+import com.ichi2.libanki.sched.SchedV2.LimitMethod
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
@@ -60,10 +65,12 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     protected var haveQueues = false
     protected var mHaveCounts = false
     protected var mToday: Int? = null
+
     @KotlinCleanup("replace Sched.getDayCutoff() with dayCutoff")
     final override var dayCutoff: Long = 0
     private var mLrnCutoff: Long = 0
     protected var mNewCount = 0
+
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal var mLrnCount = 0
     protected var mRevCount = 0
@@ -329,7 +336,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         val conf = _cardConf(card)
         return if (card.isInDynamicDeck && !conf.getBoolean("resched")) {
             2
-        } else 4
+        } else {
+            4
+        }
     }
 
     /**
@@ -420,6 +429,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
         return tot
     }
+
     /*
       Deck list **************************************************************** *******************************
      */
@@ -451,7 +461,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             // new
             var nlim = _deckNewLimitSingle(deck, false)
             var plim: Int? = null
-            if (!TextUtils.isEmpty(p)) {
+            if (!p.isNullOrEmpty()) {
                 val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
                 Assert.that(
@@ -689,7 +699,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         // collapse or finish
         return if (_preloadLrnCard(true)) {
             arrayOf(mLrnQueue)
-        } else arrayOf()
+        } else {
+            arrayOf()
+        }
     }
 
     /** pre load the potential next card. It may loads many card because, depending on the time taken, the next card may
@@ -722,7 +734,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     protected fun _cntFnNew(did: Long, lim: Int): Int {
         return col.db.queryScalar(
             "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND id != ? LIMIT ?)",
-            did, currentCardId(), lim
+            did,
+            currentCardId(),
+            lim
         )
     }
 
@@ -749,7 +763,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
             areSiblings()*/
             0
-        } else currentCard!!.nid
+        } else {
+            currentCard!!.nid
+        }
     }
 
     /**
@@ -762,7 +778,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
             areSiblings()*/
             0
-        } else mCurrentCard!!.id
+        } else {
+            mCurrentCard!!.id
+        }
     }
 
     protected fun _fillNew(): Boolean {
@@ -794,12 +812,12 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                  */
                 // fill the queue with the current did
                 for (
-                    cid in col.db.queryLongList(
-                        "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?",
-                        did,
-                        id,
-                        lim
-                    )
+                cid in col.db.queryLongList(
+                    "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?",
+                    did,
+                    id,
+                    lim
+                )
                 ) {
                     mNewQueue.add(cid)
                 }
@@ -827,7 +845,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         return if (_fillNew()) {
             // mNewCount -= 1; see decrementCounts()
             mNewQueue.removeFirstCard()
-        } else null
+        } else {
+            null
+        }
     }
 
     private fun _updateNewCardRatio() {
@@ -878,7 +898,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
     protected fun _deckNewLimit(did: Long, fn: LimitMethod?, considerCurrentCard: Boolean): Int {
-        @Suppress("NAME_SHADOWING") var fn = fn
+        @Suppress("NAME_SHADOWING")
+        var fn = fn
         if (fn == null) {
             fn = LimitMethod { g: Deck -> _deckNewLimitSingle(g, considerCurrentCard) }
         }
@@ -900,14 +921,16 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     /** New count for a single deck.  */
     fun _newForDeck(did: Long, lim: Int): Int {
-        @Suppress("NAME_SHADOWING") var lim = lim
+        @Suppress("NAME_SHADOWING")
+        var lim = lim
         if (lim == 0) {
             return 0
         }
         lim = Math.min(lim, mReportLimit)
         return col.db.queryScalar(
             "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-            did, lim
+            did,
+            lim
         )
     }
 
@@ -974,7 +997,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         // day
         mLrnCount += col.db.queryScalar(
             "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? AND id != ?",
-            mToday!!, currentCardId()
+            mToday!!,
+            currentCardId()
         )
         if (isCancelled(cancelListener)) return
         // previews
@@ -1012,7 +1036,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             .query(
                 "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?" +
                     " AND id != ? LIMIT ?",
-                cutoff, currentCardId(), mReportLimit
+                cutoff,
+                currentCardId(),
+                mReportLimit
             ).use { cur ->
                 mLrnQueue.setFilled()
                 while (cur.moveToNext()) {
@@ -1075,10 +1101,13 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                  * simulate _getLrnDayCard which did remove the card
                  * from the queue.
                  */for (
-                cid in col.db.queryLongList(
-                    "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
-                    did, mToday!!, currentCardId(), mQueueLimit
-                )
+            cid in col.db.queryLongList(
+                "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
+                did,
+                mToday!!,
+                currentCardId(),
+                mQueueLimit
+            )
             ) {
                 mLrnDayQueue.add(cid)
             }
@@ -1104,12 +1133,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         return if (_fillLrnDay()) {
             // mLrnCount -= 1; see decrementCounts()
             mLrnDayQueue.removeFirstCard()
-        } else null
+        } else {
+            null
+        }
     }
 
     // Overridden
     protected open fun _answerLrnCard(card: Card, @BUTTON_TYPE ease: Int) {
         val conf = _lrnConf(card)
+
         @REVLOG_TYPE val type: Int
         type =
             if (card.type == Consts.CARD_TYPE_REV || card.type == Consts.CARD_TYPE_RELEARNING) {
@@ -1173,7 +1205,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     private fun _rescheduleLrnCard(card: Card, conf: JSONObject, delay: Int? = null): Int {
         // normal delay for the current step?
-        @Suppress("NAME_SHADOWING") var delay = delay
+        @Suppress("NAME_SHADOWING")
+        var delay = delay
         if (delay == null) {
             delay = _delayForGrade(conf, card.left)
         }
@@ -1207,7 +1240,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     protected fun _delayForGrade(conf: JSONObject, left: Int): Int {
-        @Suppress("NAME_SHADOWING") var left = left
+        @Suppress("NAME_SHADOWING")
+        var left = left
         left = left % 1000
         return try {
             val delay: Double
@@ -1265,14 +1299,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    @KotlinCleanup("simplify with scope function on card")
     private fun _rescheduleGraduatingLapse(card: Card, early: Boolean) {
         if (early) {
             card.ivl = card.ivl + 1
         }
-        card.due = (mToday!! + card.ivl).toLong()
-        card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
+        card.apply {
+            due = (mToday!! + card.ivl).toLong()
+            queue = Consts.QUEUE_TYPE_REV
+            type = Consts.CARD_TYPE_REV
+        }
     }
 
     // Overridden: V1 has type rev for relearning
@@ -1294,7 +1329,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     private fun _leftToday(delays: JSONArray, left: Int, now: Long): Int {
-        @Suppress("NAME_SHADOWING") var now = now
+        @Suppress("NAME_SHADOWING")
+        var now = now
         if (now == 0L) {
             now = time.intTime()
         }
@@ -1336,13 +1372,14 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     /** Reschedule a new card that's graduated for the first time.
      * Overridden: V1 does not set type and queue */
-    @KotlinCleanup("simplify with scope function on card")
     private fun _rescheduleNew(card: Card, conf: JSONObject, early: Boolean) {
-        card.ivl = _graduatingIvl(card, conf, early)
-        card.due = (mToday!! + card.ivl).toLong()
-        card.factor = conf.getInt("initialFactor")
-        card.type = Consts.CARD_TYPE_REV
-        card.queue = Consts.QUEUE_TYPE_REV
+        card.apply {
+            ivl = _graduatingIvl(card, conf, early)
+            due = (mToday!! + card.ivl).toLong()
+            factor = conf.getInt("initialFactor")
+            type = Consts.CARD_TYPE_REV
+            queue = Consts.QUEUE_TYPE_REV
+        }
     }
 
     protected fun _logLrn(
@@ -1391,13 +1428,17 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                 "SELECT count() FROM (SELECT null FROM cards WHERE did = ?" +
                     " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?" +
                     " LIMIT ?)",
-                did, time.intTime() + col.get_config_int("collapseTime"), mReportLimit
+                did,
+                time.intTime() + col.get_config_int("collapseTime"),
+                mReportLimit
             )
             cnt + col.db.queryScalar(
                 "SELECT count() FROM (SELECT null FROM cards WHERE did = ?" +
                     " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?" +
                     " LIMIT ?)",
-                did, mToday!!, mReportLimit
+                did,
+                mToday!!,
+                mReportLimit
             )
         } catch (e: SQLException) {
             throw RuntimeException(e)
@@ -1472,13 +1513,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     protected fun _revForDeck(did: Long, lim: Int, childMap: Decks.Node): Int {
-        @Suppress("NAME_SHADOWING") var lim = lim
+        @Suppress("NAME_SHADOWING")
+        var lim = lim
         val dids = col.decks.childDids(did, childMap).toMutableList()
         dids.add(0, did)
         lim = Math.min(lim, mReportLimit)
         return col.db.queryScalar(
             "SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-            mToday!!, lim
+            mToday!!,
+            lim
         )
     }
 
@@ -1493,7 +1536,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         if (isCancelled(cancelListener)) return
         mRevCount = col.db.queryScalar(
             "SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND id != ? LIMIT ?)",
-            mToday!!, currentCardId(), lim
+            mToday!!,
+            currentCardId(),
+            lim
         )
     }
 
@@ -1528,7 +1573,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             col.db.query(
                 "SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?" +
                     " ORDER BY due, random()  LIMIT ?",
-                mToday!!, id, lim
+                mToday!!,
+                id,
+                lim
             ).use { cur ->
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0))
@@ -1627,8 +1674,14 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     protected fun _logRev(card: Card, @BUTTON_TYPE ease: Int, delay: Int, type: Int) {
         log(
-            card.id, col.usn(), ease, if (delay != 0) -delay else card.ivl, card.lastIvl,
-            card.factor, card.timeTaken(), type
+            card.id,
+            col.usn(),
+            ease,
+            if (delay != 0) -delay else card.ivl,
+            card.lastIvl,
+            card.factor,
+            card.timeTaken(),
+            type
         )
     }
     /*
@@ -1656,12 +1709,14 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         val ivl3 = _constrainedIvl((card.ivl + delay / 2) * fct, conf, ivl2.toDouble(), fuzz)
         return if (ease == Consts.BUTTON_THREE) {
             ivl3
-        } else _constrainedIvl(
-            (card.ivl + delay) * fct * conf.getDouble("ease4"),
-            conf,
-            ivl3.toDouble(),
-            fuzz
-        )
+        } else {
+            _constrainedIvl(
+                (card.ivl + delay) * fct * conf.getDouble("ease4"),
+                conf,
+                ivl3.toDouble(),
+                fuzz
+            )
+        }
     }
 
     fun _fuzzedIvl(ivl: Int): Int {
@@ -1770,7 +1825,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             val limit = term.getInt(1)
             val order = term.getInt(2)
             val orderLimit = _dynOrder(order, limit)
-            if (!TextUtils.isEmpty(search.trim { it <= ' ' })) {
+            if (search.trim { it <= ' ' }.isNotEmpty()) {
                 search = String.format(Locale.US, "(%s)", search)
             }
             search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search)
@@ -1814,7 +1869,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             Consts.DYN_DUEPRIORITY -> String.format(
                 Locale.US,
                 "(case when queue=" + Consts.QUEUE_TYPE_REV + " and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
-                mToday, mToday
+                mToday,
+                mToday
             )
             Consts.DYN_DUE -> // if we don't understand the term, default to due order
                 "c.due"
@@ -1831,7 +1887,10 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         for (id in ids) {
             data.add(
                 arrayOf(
-                    did, due, u, id
+                    did,
+                    due,
+                    u,
+                    id
                 )
             )
             due += 1
@@ -1913,19 +1972,18 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             return conf.getJSONObject("new")
         }
         // dynamic deck; override some attributes, use original deck for others
-        @KotlinCleanup("simplify with return and scope function on dict")
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
-        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"))
-        // overrides
-        dict.put("separate", conf.getBoolean("separate"))
-        dict.put("order", Consts.NEW_CARDS_DUE)
-        dict.put("perDay", mReportLimit)
-        return dict
+        return JSONObject().apply {
+            // original deck
+            put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
+            put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"))
+            put("bury", oconf.getJSONObject("new").optBoolean("bury", true))
+            put("delays", oconf.getJSONObject("new").getJSONArray("delays"))
+            // overrides
+            put("separate", conf.getBoolean("separate"))
+            put("order", Consts.NEW_CARDS_DUE)
+            put("perDay", mReportLimit)
+        }
     }
 
     // Overridden: different delays for filtered cards.
@@ -1935,25 +1993,26 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             return conf.getJSONObject("lapse")
         }
         // dynamic deck; override some attributes, use original deck for others
-        @KotlinCleanup("simplify with return and scope function on dict")
         val oconf = col.decks.confForDid(card.oDid)
-        val dict = JSONObject()
-        // original deck
-        dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
-        dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
-        dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
-        dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
-        dict.put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"))
-        // overrides
-        dict.put("resched", conf.getBoolean("resched"))
-        return dict
+        return JSONObject().apply {
+            // original deck
+            put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
+            put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"))
+            put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"))
+            put("mult", oconf.getJSONObject("lapse").getDouble("mult"))
+            put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"))
+            // overrides
+            put("resched", conf.getBoolean("resched"))
+        }
     }
 
     protected fun _revConf(card: Card): JSONObject {
         val conf = _cardConf(card)
         return if (!card.isInDynamicDeck) {
             conf.getJSONObject("rev")
-        } else col.decks.confForDid(card.oDid).getJSONObject("rev")
+        } else {
+            col.decks.confForDid(card.oDid).getJSONObject("rev")
+        }
     }
 
     private fun _previewingCard(card: Card): Boolean {
@@ -1984,7 +2043,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             update(deck)
         }
         // unbury if the day has rolled over
-        val unburied: Int = @Suppress("USELESS_CAST") col.get_config("lastUnburied", 0 as Int)!!
+        val unburied: Int = @Suppress("USELESS_CAST")
+        col.get_config("lastUnburied", 0 as Int)!!
         if (unburied < mToday!!) {
             SyncStatus.ignoreDatabaseModification { unburyCards() }
             col.set_config("lastUnburied", mToday)
@@ -2019,10 +2079,12 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     override fun hasCardsTodayAfterStudyAheadLimit(): Boolean {
         return if (!BackendFactory.defaultLegacySchema) {
             super.hasCardsTodayAfterStudyAheadLimit()
-        } else col.db.queryScalar(
-            "SELECT 1 FROM cards WHERE did IN " + _deckLimit() +
-                " AND queue = " + Consts.QUEUE_TYPE_LRN + " LIMIT 1"
-        ) != 0
+        } else {
+            col.db.queryScalar(
+                "SELECT 1 FROM cards WHERE did IN " + _deckLimit() +
+                    " AND queue = " + Consts.QUEUE_TYPE_LRN + " LIMIT 1"
+            ) != 0
+        }
     }
 
     fun haveBuriedSiblings(): Boolean {
@@ -2054,7 +2116,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     override fun haveBuried(): Boolean {
         return if (!BackendFactory.defaultLegacySchema) {
             super.haveBuried()
-        } else haveManuallyBuried() || haveBuriedSiblings()
+        } else {
+            haveManuallyBuried() || haveBuriedSiblings()
+        }
     }
     /*
       Next time reports ********************************************************
@@ -2069,7 +2133,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         if (_previewingCard(card)) {
             return if (ease == Consts.BUTTON_ONE) {
                 _previewDelay(card).toLong()
-            } else 0
+            } else {
+                0
+            }
         }
         // (re)learning?
         return if (card.queue == Consts.QUEUE_TYPE_NEW || card.queue == Consts.QUEUE_TYPE_LRN || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
@@ -2079,7 +2145,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             val conf = _lapseConf(card)
             if (conf.getJSONArray("delays").length() > 0) {
                 (conf.getJSONArray("delays").getDouble(0) * 60.0).toLong()
-            } else _lapseIvl(card, conf) * Stats.SECONDS_PER_DAY
+            } else {
+                _lapseIvl(card, conf) * Stats.SECONDS_PER_DAY
+            }
         } else {
             // review
             val early = card.isInDynamicDeck && card.oDue > mToday!!
@@ -2162,7 +2230,8 @@ end)  """
         col.db.execute(
             "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN " +
                 Utils.ids2str(ids),
-            time.intTime(), col.usn()
+            time.intTime(),
+            col.usn()
         )
     }
 
@@ -2178,11 +2247,15 @@ end)  """
         col.db.execute(
             "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?" +
                 " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-            time.intTime(), col.usn()
+            time.intTime(),
+            col.usn()
         )
     }
 
     // Overridden: V1 also remove from dyns and lrn
+    /**
+     * Bury all cards with id in cids. Set as manual bury if [manual]
+     */
     @VisibleForTesting
     override fun buryCards(cids: LongArray, manual: Boolean) {
         if (!BackendFactory.defaultLegacySchema) {
@@ -2194,10 +2267,16 @@ end)  """
         col.log(*cids.toTypedArray())
         col.db.execute(
             "update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
-            queue, time.intTime(), col.usn()
+            queue,
+            time.intTime(),
+            col.usn()
         )
     }
 
+    /**
+     * Unbury the cards of deck [did] and its descendants.
+     * @param type See [UnburyType]
+     */
     override fun unburyCardsForDeck(did: Long, type: UnburyType) {
         if (!BackendFactory.defaultLegacySchema) {
             super.unburyCardsForDeck(did, type)
@@ -2208,19 +2287,34 @@ end)  """
         unburyCardsForDeck(type, dids)
     }
 
+    /**
+     * Unbury the cards of some decks.
+     * @param type See [UnburyType]
+     * @param allDecks the decks from which cards should be unburied. If None, unbury for all decks.
+     * Only cards directly in a deck of this lists are considered, not subdecks.
+     */
     fun unburyCardsForDeck(type: UnburyType, allDecks: List<Long>?) {
-        val queue: String
-        queue = when (type) {
+        @Language("SQL")
+        val queue = when (type) {
             UnburyType.ALL -> queueIsBuriedSnippet()
             UnburyType.MANUAL -> "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED
             UnburyType.SIBLINGS -> "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED
         }
-        val sids = Utils.ids2str(allDecks ?: col.decks.active())
-        col.log(col.db.queryLongList("select id from cards where $queue and did in $sids"))
+        val deckConstraint = if (allDecks == null) {
+            ""
+        } else {
+            " and did in " + Utils.ids2str(allDecks)
+        }
+        col.log(col.db.queryLongList("select id from cards where $queue $deckConstraint"))
         col.db.execute(
-            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
-            time.intTime(), col.usn()
+            "update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + deckConstraint,
+            time.intTime(),
+            col.usn()
         )
+    }
+
+    override fun unburyCards() {
+        unburyCardsForDeck(UnburyType.ALL, null)
     }
 
     /**
@@ -2232,11 +2326,10 @@ end)  """
             super.buryNote(nid)
             return
         }
-        val cids = Utils.collection2Array(
-            col.db.queryLongList(
-                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid
-            )
-        )
+        val cids = col.db.queryLongList(
+            "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW,
+            nid
+        ).toLongArray()
         buryCards(cids)
     }
 
@@ -2279,7 +2372,7 @@ end)  """
         }
         // then bury
         if (!toBury.isEmpty()) {
-            buryCards(Utils.collection2Array(toBury), false)
+            buryCards(toBury.toLongArray(), false)
         }
     }
     /*
@@ -2387,7 +2480,10 @@ end)  """
                 col.db.execute(
                     "UPDATE cards SET mod = ?, usn = ?, due = due + ?" +
                         " WHERE id NOT IN " + scids + " AND due >= ? AND type = " + Consts.CARD_TYPE_NEW,
-                    now, col.usn(), shiftBy, low
+                    now,
+                    col.usn(),
+                    shiftBy,
+                    low
                 )
             }
         }
@@ -2441,12 +2537,15 @@ end)  """
         if (schedVer == 1) {
             col.db.execute(
                 "update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = ?, usn = ?, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")",
-                time.intTime(), col.usn()
+                time.intTime(),
+                col.usn()
             )
         } else {
             col.db.execute(
                 "update cards set due = ?+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = ?, usn = ?, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")",
-                mToday, time.intTime(), col.usn()
+                mToday,
+                time.intTime(),
+                col.usn()
             )
         }
 
@@ -2458,7 +2557,8 @@ end)  """
     private fun _resetSuspendedLearning() {
         col.db.execute(
             "update cards set type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type in (" + Consts.CARD_TYPE_REV + ", " + Consts.CARD_TYPE_RELEARNING + ") then " + Consts.CARD_TYPE_REV + " else type end), due = (case when odue then odue else due end), odue = 0, mod = ?, usn = ? where queue < 0",
-            time.intTime(), col.usn()
+            time.intTime(),
+            col.usn()
         )
     }
 

@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Tämä kortti on tyhjä. Käytä ”Tyhjät kortit” vaihtoehtoa pakka-luettelon -valikosta.</string>
     <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
     <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
-    <string name="show_hint">Näytä %s</string>
     <string name="info_rate">Arvostele AnkiDroid</string>
     <string name="import_title">Tuodaan</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lisää</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Myös media</string>
     <string name="confirm_apkg_export">Tuo kokoelma Anki-tiedostona?</string>
     <string name="confirm_apkg_export_deck">Tallenna ”%s” apkg-tiedostona?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Tuodaan Anki-tiedostoa...</string>
-    <string name="export_successful_title">Lähetä Anki-tiedosto?</string>
-    <string name="export_send_button">Lähetä</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan...</string>
     <string name="export_save_apkg_successful">Anki-tiedosto tallennettu.</string>
     <string name="export_save_apkg_unsuccessful">Anki-tiedoston tallennus epäonnistui.</string>
-    <string name="export_successful">Tiedosto ”%s” tuotiin. Haluatko lähettää sen toisella sovelluksella?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid toi kortit: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Virhe apkg-tiedoston tuonnissa</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valinnat</string>
     <string name="menu__deck_options">Pakan asetukset</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -377,6 +384,15 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Could not create directory %s</string>
@@ -398,6 +414,8 @@
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>

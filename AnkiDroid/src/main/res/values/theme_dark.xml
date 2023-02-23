@@ -14,15 +14,18 @@
         <item name="colorPrimary">@color/theme_dark_primary</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorAccent">@color/material_blue_400</item>
-        <item name="android:textColor">@color/theme_dark_primary_text</item>
-        <item name="android:textColorPrimary">@color/theme_dark_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
         <item name="colorControlActivated">?attr/colorAccent</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
+        <!-- Menu -->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
         <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
@@ -39,6 +42,8 @@
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">@color/theme_dark_primary</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
@@ -50,7 +55,7 @@
         <item name="newCountColor">@color/material_indigo_200</item>
         <item name="learnCountColor">@color/material_red_200</item>
         <item name="reviewCountColor">@color/material_green_200</item>
-        <item name="zeroCountColor">#202020</item>
+        <item name="zeroCountColor">#808080</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_dark_primary_light</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -117,10 +122,16 @@
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_color_button_text">@color/white</item>
+        <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
+        <item name="md_corner_radius">@dimen/dialog_corner_radius</item>
+        <item name="textAllCaps">false</item>
+        <item name="md_button_casing">literal</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
+        <item name="overflowAndPopupMenuIconColor">#9effffff</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
@@ -152,15 +163,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_dark_primary</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <!-- Legacy action bar  (used in Preferences with no explicit Toolbar) -->
-    <style name="LegacyActionBarDark" parent="Theme_Dark">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_dark</item>
-        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

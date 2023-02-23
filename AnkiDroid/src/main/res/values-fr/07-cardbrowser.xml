@@ -50,8 +50,8 @@
         <item quantity="other">%d cartes affichées</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d note affichée</item>
+        <item quantity="other">%d notes affichées</item>
     </plurals>
     <string name="card_browser_all_decks">Tous les jeux de cartes</string>
     <string name="card_browser_delete_card">Supprimer les notes</string>
@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Tronquer le contenu</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Exporter la carte</item>
+        <item quantity="other">Exporter les cartes</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Exporter la note</item>
+        <item quantity="other">Exporter les notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d carte supprimée</item>
         <item quantity="other">%d cartes supprimées</item>

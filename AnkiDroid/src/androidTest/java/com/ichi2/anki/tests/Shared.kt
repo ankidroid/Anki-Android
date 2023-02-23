@@ -16,7 +16,6 @@
 package com.ichi2.anki.tests
 
 import android.content.Context
-import android.text.TextUtils
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
@@ -32,14 +31,13 @@ import java.io.IOException
 @KotlinCleanup("maybe delete Shared object and make inner functions as top level")
 object Shared {
     @Throws(IOException::class)
-    @KotlinCleanup("make context not null")
-    fun getEmptyCol(context: Context?): Collection {
+    fun getEmptyCol(context: Context): Collection {
         val f = File.createTempFile("test", ".anki2")
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         val path = f.absolutePath
         assertTrue(f.delete())
-        return Storage.collection(context!!, path)
+        return Storage.collection(context, path)
     }
 
     /**
@@ -56,10 +54,10 @@ object Shared {
      * @return See getTestDir.
      */
     private fun getTestDir(context: Context, name: String): File {
-        @KotlinCleanup("initialize suffix with if/else expression")
-        var suffix = ""
-        if (!TextUtils.isEmpty(name)) {
-            suffix = "-$name"
+        val suffix = if (name.isNotEmpty()) {
+            "-$name"
+        } else {
+            ""
         }
         val dir = File(context.cacheDir, "testfiles$suffix")
         if (!dir.exists()) {
@@ -85,12 +83,11 @@ object Shared {
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
     @Throws(IOException::class)
-    @KotlinCleanup("fix `is` usage")
     fun getTestFilePath(context: Context, name: String): String {
-        val `is` = context.classLoader.getResourceAsStream("assets/$name")
+        val inputStream = context.classLoader.getResourceAsStream("assets/$name")
             ?: throw FileNotFoundException("Could not find test file: assets/$name")
         val dst = File(getTestDir(context, name), name).absolutePath
-        Utils.writeToFile(`is`, dst)
+        Utils.writeToFile(inputStream, dst)
         return dst
     }
 }

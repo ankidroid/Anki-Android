@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">כן</string>
     <!-- Navigation drawer items-->
     <string name="decks">חפיסות</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">דפדפן קלפים</string>
@@ -187,6 +186,8 @@
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="empty_cloze_warning">ערוך את הרשומה והוסף השלם את החסר. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">סנכרון מושבת זמנית</string>
+    <string name="button_upgrade" comment="Text of the sync button">העבר לאחסון הקפי</string>
     <string name="cancel_sync_confirm">לבטל את הסנכרון?</string>
     <string name="continue_sync">המשך סנכרון</string>
     <string name="sync_cancelled">סנכרון בוטל</string>
@@ -255,4 +256,11 @@
         <item quantity="other">%1$d קלפים (0 נותרו)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">לא ניתן לכתוב או ליצור קובץ %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

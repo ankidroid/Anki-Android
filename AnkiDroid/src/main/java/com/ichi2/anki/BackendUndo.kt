@@ -35,7 +35,6 @@ suspend fun FragmentActivity.backendUndoAndShowPopup(anchorView: View? = null): 
         }
 
         showSnackbar(TR.undoActionUndone(changes.operation)) {
-
             // A snackbar may obscure vital elements (e.g: the answer buttons on the Reviewer)
             // `anchorView` stops this
             anchorView?.let { setAnchorView(anchorView) }

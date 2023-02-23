@@ -100,8 +100,8 @@
         <item>Modifis noton</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Apliki</string>
+    <string name="filter_by_flags">Flagoj</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifi hodiaŭan limigon de novaj kartoj</string>
     <string name="custom_study_increase_review_limit">Modifi hodiaŭan limigon de kartoj por ripeti</string>
@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Tiu ĉi karto estas malplena. Uzu la agon “malplenaj kartoj” en la menuo ĉe la ekrano de kartaroj.</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
-    <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
     <string name="import_title">Enporti</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
@@ -167,7 +166,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Eraro</string>
     <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
     <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
     <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Inkluzivi aŭdvidaĵojn</string>
     <string name="confirm_apkg_export">Ĉu elporti kolekton kiel Anki‑pakaĵon?</string>
     <string name="confirm_apkg_export_deck">Ĉu elporti “%s” kiel apkg-dosieron?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Elportado de Anki-pakaĵa dosiero&#8230;</string>
-    <string name="export_successful_title">Ĉu sendi Anki-pakaĵon?</string>
-    <string name="export_send_button">Sendi</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado…</string>
     <string name="export_save_apkg_successful">Sukcese savis Anki-pakaĵon</string>
     <string name="export_save_apkg_unsuccessful">Savi la Anki-pakaĵon malsukcesis</string>
-    <string name="export_successful">Elportis dosieron “%s”. Ĉu sendi ĝin per alia aplikaĵo?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid elportis fulmokartojn: %s</string>
     <string name="export_email_text"><![CDATA[        Saluton!
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Eraro dum elportado de apkg-dosiero</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Agordoj</string>
     <string name="menu__deck_options">Agordoj pri kartaro</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>
@@ -377,6 +384,15 @@
     <string name="scoped_storage_postpone">Ne nun</string>
     <string name="scoped_storage_migrate">Movi datumojn</string>
     <string name="search_card_js_api_no_results">Serĉ-rezulto estas malplena</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s ne estas ĝusta JavaScript-aldonaĵ-pakaĵo</string>
     <string name="could_not_create_dir">Ne povis krei dosierujon %s</string>
@@ -398,6 +414,8 @@
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>

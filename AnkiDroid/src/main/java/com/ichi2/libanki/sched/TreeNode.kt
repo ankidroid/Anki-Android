@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki.sched
 
-import com.ichi2.utils.KotlinCleanup
-
 /**
  * Defines a node in a tree with a known, non-null value: [value].
  * [children] contain the children (may be empty, but non-null)
@@ -25,15 +23,5 @@ import com.ichi2.utils.KotlinCleanup
 data class TreeNode<T : Any>(val value: T) {
     fun hasChildren(): Boolean = children.any()
     val children: MutableList<TreeNode<T>> = mutableListOf()
-
-    /** UNSAFE. Casts the tree to [U] */
-    @KotlinCleanup("should be removable after DeckPicker is converted")
-    @Suppress("UNCHECKED_CAST")
-    fun <U : Any> unsafeCastToType(): TreeNode<U> {
-        return TreeNode(this.value as U).also {
-            it.children.addAll(this.children.map { child -> child.unsafeCastToType() })
-        }
-    }
-
     override fun toString(): String = "$value, $children"
 }

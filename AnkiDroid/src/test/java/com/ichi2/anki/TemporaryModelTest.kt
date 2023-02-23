@@ -18,8 +18,9 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.TemporaryModel.ChangeType.*
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.Model
-import com.ichi2.utils.JSONObject
+import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,7 +34,6 @@ class TemporaryModelTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun testTempModelStorage() {
-
         // Start off with clean state in the cache dir
         TemporaryModel.clearTempModelFiles()
 
@@ -56,9 +56,7 @@ class TemporaryModelTest : RobolectricTest() {
     }
 
     @Test
-    @Suppress("deprecation") // getSerializable
     fun testAddDeleteTracking() {
-
         // Assume you start with a 2 template model (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
         // ...and it should reduce to just removing the original 1st/2nd and adding the final as first
@@ -97,7 +95,7 @@ class TemporaryModelTest : RobolectricTest() {
 
         // Make sure we can resurrect these changes across lifecycle
         val outBundle = tempModel.toBundle()
-        assertTemplateChangesEqual(expected4, outBundle.getSerializable("mTemplateChanges"))
+        assertTemplateChangesEqual(expected4, outBundle.getSerializableCompat("mTemplateChanges"))
 
         // This is the hard part. We will delete a template we added so everything shifts.
         // The template currently at ordinal 1 was added as template 3 at the start before it slid down on the deletes

@@ -22,15 +22,15 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
-import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckDueTreeNode
-import com.ichi2.utils.JSONObject
+import org.json.JSONObject
 import timber.log.Timber
 
 class ReminderService : BroadcastReceiver() {
@@ -103,7 +103,7 @@ class ReminderService : BroadcastReceiver() {
             Timber.v("onReceive - deck '%s' due count %d", deckDue.fullDeckName, total)
             val notification = NotificationCompat.Builder(
                 context,
-                NotificationChannels.getId(NotificationChannels.Channel.DECK_REMINDERS)
+                Channel.DECK_REMINDERS.id
             )
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentTitle(context.getString(R.string.reminder_title))
@@ -115,7 +115,7 @@ class ReminderService : BroadcastReceiver() {
                         total
                     )
                 )
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_star_notify)
                 .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                 .setContentIntent(
                     CompatHelper.compat.getImmutableActivityIntent(
@@ -134,7 +134,6 @@ class ReminderService : BroadcastReceiver() {
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
     private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
-
         // Avoid crashes if the deck option group is deleted while we
         // are working
         if (col.dbClosed || col.decks.getConf(dConfId) == null) {

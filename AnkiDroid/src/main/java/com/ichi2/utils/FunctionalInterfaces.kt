@@ -15,7 +15,8 @@
  */
 package com.ichi2.utils
 
-import kotlin.jvm.Throws
+import com.ichi2.utils.FunctionalInterfaces.Filter
+import org.json.JSONException
 
 /** TODO: Move this to standard library in API 24  */
 @KotlinCleanup("try to improve the generic code with in/out declarations for generic type parameters")

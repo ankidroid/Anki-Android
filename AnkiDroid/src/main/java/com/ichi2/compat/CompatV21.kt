@@ -20,6 +20,9 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -28,11 +31,16 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
+import android.os.Parcel
 import android.os.Parcelable
 import android.os.Vibrator
 import android.provider.MediaStore
+import android.util.SparseArray
+import android.view.View
 import android.widget.TimePicker
+import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.*
@@ -42,7 +50,12 @@ import java.io.*
 @Suppress("Deprecation")
 open class CompatV21 : Compat {
     // Until API26, ignore notification channels
-    override fun setupNotificationChannel(context: Context, id: String, name: String) { /* pre-API26, do nothing */
+    override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
+    }
+
+    // Until API26, tooltips cannot be defined declaratively in layouts
+    override fun setTooltipTextByContentDescription(view: View) {
+        TooltipCompat.setTooltipText(view, view.contentDescription)
     }
 
     // Until API 23 the methods have "current" in the name
@@ -60,6 +73,26 @@ open class CompatV21 : Compat {
     // Until API31 the MediaRecorder constructor was default, ignoring the Context
     override fun getMediaRecorder(context: Context): MediaRecorder {
         return MediaRecorder()
+    }
+
+    override fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
+        return parcel.readSparseArray(loader)
+    }
+
+    override fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>? {
+        return bundle.getParcelableArrayList(key)
+    }
+
+    override fun resolveService(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): ResolveInfo? {
+        return packageManager.resolveService(intent, flags.value.toInt())
+    }
+
+    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
+        return bundle.getParcelable(key)
     }
 
     override fun <T : Serializable?> getSerializableExtra(
@@ -82,6 +115,22 @@ open class CompatV21 : Compat {
     ): T? {
         return intent.getParcelableExtra<T>(name)
     }
+
+    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
+        packageManager.getPackageInfo(packageName, flags.value.toInt())
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Serializable?> getSerializable(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>
+    ): T? = bundle.getSerializable(key) as? T?
+
+    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
+        @Suppress("UNCHECKED_CAST")
+        return parcel.readSerializable() as T
+    }
+
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {
@@ -179,7 +228,8 @@ open class CompatV21 : Compat {
         audioFocusRequest: AudioFocusRequest?
     ) {
         audioManager.requestAudioFocus(
-            audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+            audioFocusChangeListener,
+            AudioManager.STREAM_MUSIC,
             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
         )
     }
@@ -241,6 +291,15 @@ open class CompatV21 : Compat {
                 return paths[mOrd++]
             }
         }
+    }
+
+    override fun <T> readList(
+        parcel: Parcel,
+        outVal: MutableList<in T>,
+        classLoader: ClassLoader?,
+        clazz: Class<T>
+    ) {
+        parcel.readList(outVal, classLoader)
     }
 
     companion object {

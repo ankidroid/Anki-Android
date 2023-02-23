@@ -93,14 +93,15 @@
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">მონაცემთა ბაზის შეცდომა</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
+    <string name="answering_error_report">შეცდომის შეტყობინება</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">კატეგორია „ნაგულისხმევი“ ცარიელია</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">ახალი ბარათი დასტაში: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_rev_extend">დღევანდელი გადახედვების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">X დღით ადრე სწავლა:</string>
     <string name="custom_study_random">დასტიდან x ბარათის შემთხვევით ამორჩევა:</string>
@@ -115,22 +116,24 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD ბარათი სავსეა</string>
-    <string name="sd_card_almost_full_title">SD ბარათი თითქმის სავსეა</string>
+    <string name="storage_full_title">მეხსიერება სავსეა</string>
+    <string name="storage_almost_full_title">მეხსიერება თითქმის გავსებულია</string>
     <string name="no_space_to_downgrade_title">მეხსიერების სივრცე არ არის</string>
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
+    <string name="restore_backup_title">რეზერვის აღდგენა?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">აირჩიეთ სხვა</string>
     <string name="dialog_cancel">გაუქმება</string>
     <string name="dialog_ok">დიახ</string>
+    <string name="dialog_confirm">დადასტურება</string>
     <string name="dialog_no">არა</string>
+    <string name="dialog_yes">კი</string>
     <string name="dialog_continue">გაგრძელება</string>
     <string name="dialog_processing">მუშავდება…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>
     <string name="dialog_positive_delete">წაშლა</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">გამორთვა</string>
     <string name="dialog_positive_overwrite">ჩანაცვლება</string>
     <string name="dialog_positive_remove">ამოშლა</string>
     <string name="dialog_positive_repair">შეკეთება</string>
@@ -149,7 +152,7 @@
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
     <string name="check_media_no_unused_missing">No unused or missing files found</string>
     <string name="check_media_db_updated">Media database rebuilt</string>
-    <string name="check_media_delete_unused">Delete unused</string>
+    <string name="check_media_delete_unused">წაშალე გამოუყენებელი</string>
     <string name="delete_media_message">მიმდინარეობს მედიაფაილების წაშლა&#8230;</string>
     <string name="delete_media_result_title">წაშლის შედეგი</string>
     <plurals name="delete_media_result_message">
@@ -157,24 +160,21 @@
         <item quantity="other">%d ფაილი წაიშალა</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
+    <string name="tags_dialog_option_all_cards">ყველა ბარათი</string>
     <string name="tags_dialog_option_new_cards">ახალი</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">სასწავლო</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
     <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">No empty cards</string>
-    <string name="empty_cards_count">Cards to delete: %d</string>
-    <string name="empty_cards_deleted">Cards deleted: %d</string>
+    <string name="empty_cards_none">არ არის ცარიელი ბარათები</string>
+    <string name="empty_cards_count">წასაშლელი ბარათი: %d</string>
+    <string name="empty_cards_deleted">წაიშალა %d ბარათი</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
     <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
@@ -188,11 +188,11 @@
     <string name="card_browser_deck_change_error">დასტა ვერ შეიცვალა</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">\"%s\" გაუქმდა</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_title">მონაცემთა ბაზა ჩაკეტილია</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
     <string name="incompatible_database_version_title">Incompatible Database Version</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
@@ -201,7 +201,7 @@
     <string name="background_image_removed">Background image removed</string>
     <string name="no_image_selected">No image selected</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
+    <string name="error_deleting_image">შეცდომა სურათის წაშლისას</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
@@ -214,29 +214,30 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">კლავიატურის ენის არჩევა</string>
+    <string name="locale_selection_dialog_summary">ზოგ მრავალენოვან კლავიატურას, როგორც მაგალითად Gboard-ს, ტექსტის რედაქტირებისას ენის შეცვლის ფუნქცია აქვს\n\nთუკი თქვენი კლავიატურა ენას ვერ ცვლის, გთხოვთ კლავიატურის მწარმოებელს მიმართოთ და \"setImeHintLocales\" ფუნქციის დამატება მოსთხოვოთ</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_using_ankidroid">AnkiDroid-ის გამოყენება</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid-ის ინსტრუქცია</string>
+    <string name="help_item_anki_manual">Anki-ს ინსტრუქცია</string>
+    <string name="help_item_ankidroid_faq">ხშირად დასმული კითხვები AnkiDroid-ზე</string>
+    <string name="help_title_get_help">დახმარების მიღება</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">AnkiDroid-ის მხარდაჭერა</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_opencollective_donate">ფინანსური მხარდაჭერა</string>
+    <string name="help_item_support_develop_ankidroid">განავითარე</string>
     <string name="help_item_support_rate_ankidroid">შეფასება</string>
     <string name="help_item_support_other_ankidroid">სხვა</string>
+    <string name="multimedia_editor_trans_translate">თარგმნა</string>
     <string name="help_title_community">საზოგადოება</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">Anki-ს ფორუმი</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_title_privacy">კონფიდენციალურობა</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid-ის კონფიდენციალურობის პოლიტიკა</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
@@ -259,4 +260,14 @@
     <string name="import_csv">ტექსტური ფაილი (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">მექანიკური დარეზერვება</string>
+    <string name="remind_me_later">შემახსენე მოგვიანებით</string>
 </resources>

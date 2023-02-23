@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">De gedownloade database was corrupt. Probeer het opnieuw.</string>
     <string name="sync_overwrite_error">Je huidige collectie kan niet worden overschreven door het gedownloade bestand.</string>
     <string name="sync_connection_error">Verbinding time-out. Je internetverbinding ondervindt problemen of je hebt een erg groot bestand in je mediamap.</string>
-    <string name="sync_write_access_error">Het gedownloade bestand kon niet worden opgeslagen op de sd-kaart. Ofwel de sd-kaart is als alleen-lezen aangesloten of er is onvoldoende ruimte.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">De aangepaste synchronisatieserver in geavanceerde instellingen is ongeldig (%s). Voer een geldige server in, of schakel de instelling uit.</string>
     <string name="sync_deletions_message">Verwijderde objecten synchroniseren...</string>
     <string name="sync_small_objects_message">Kleine objecten synchroniseren...</string>

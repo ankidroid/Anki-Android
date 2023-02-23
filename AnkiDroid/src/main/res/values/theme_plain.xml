@@ -5,16 +5,14 @@
     <color name="theme_plain_primary_light">#F5F5F5</color>
     <color name="theme_plain_accent">#607D8B</color>
     <color name="theme_plain_primary_text">#212121</color>
-    <color name="theme_plain_secondary_text">#727272</color>
 
     <style name="Theme_Light.Plain">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_plain_primary</item>
         <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
         <item name="colorAccent">@color/theme_plain_accent</item>
-        <item name="android:textColor">@color/theme_plain_primary_text</item>
-        <item name="android:textColorPrimary">@color/theme_plain_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_plain_secondary_text</item>
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="colorControlActivated">?attr/colorAccent</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">#607D8B</item>
@@ -23,6 +21,8 @@
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
         <item name="actionModeBackground">@color/theme_plain_primary</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
         <!-- Reviewer button drawables -->
@@ -48,6 +48,7 @@
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_500</item>
+        <item name="overflowAndPopupMenuIconColor">?attr/colorPrimary</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_plain_primary</item>
         <!-- Navbar -->
@@ -76,15 +77,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
-    <style name="LegacyActionBarPlain" parent="Theme_Light.Plain">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_light</item>
-        <item name="android:textColorSecondary">@color/prefs_item_light_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

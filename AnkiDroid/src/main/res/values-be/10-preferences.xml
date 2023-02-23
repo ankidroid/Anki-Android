@@ -86,7 +86,6 @@
     <string name="full_screen_off">Выключаны</string>
     <string name="full_screen_system">Схаваць сістэмную панэль</string>
     <string name="full_screen_complete">Схаваць сістэмную панэль і панэль кнопак адказу</string>
-    <string name="full_screen_error_gestures">Вы павінны ўключыць жэсты, каб схаваць панэль кнопак адказу</string>
     <string name="answer_buttons_position" maxLength="41">Становішча кнопак адказу</string>
     <string-array name="answer_buttons_position_labels">
         <item>Зверху</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Поўнаэкранная панэль навігацыі</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Адкрываць навігацыйную панэль, калі чыркаеце ўправа ў любым месцы экрана.</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Чырканне ўверх</string>
     <string name="gestures_swipe_down" maxLength="41">Чырканне ўніз</string>
     <string name="gestures_swipe_left" maxLength="41">Чырканне ўлева</string>
@@ -125,12 +125,14 @@
     <string name="tts_summ">Чытае пытанні і адказы, калі аўдыяфайл адсутнічае</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Спампоўваць медыяфайлы</string>
-    <string name="sync_fetch_missing_media_summ">Аўтаматычна атрымліваць адсутныя медыяфайлы, падчас сінхранізацыі</string>
     <string name="sync_account" maxLength="41">Уліковы запіс AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не ўвайшлі ў сістэму</string>
     <string name="automatic_sync_choice" maxLength="41">Аўтаматычная сінхранізацыя</string>
     <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
         калі з часу апошняй сінхранізацыі мінула больш чым 10 хвілін.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Заўсёды</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Адлюстроўваць статус сінхранізацыі</string>
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="metered_sync_title" maxLength="41">Дазволіць сінхранізацыю пры тарыфікацыі злучэння</string>
@@ -227,12 +229,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Колькасць крокаў мадэлявання</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Уласны сервер сінхранізацыі</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Уласны сервер сінхранізацыі</string>
-    <string name="custom_sync_server_enable_summary">У тым выпадку, калі вы па нейкіх прычынах не хочаце карыстацца серверам AnkiWeb, то тут можна азначыць іншы сервер</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не выкарыстоўваецца</string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Спасылка для сінхранізацыі</string>
-    <string name="custom_sync_server_base_url_invalid">Памылковы адрас сінхранізацыі</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Спасылка для медыяфайлаў</string>
-    <string name="custom_sync_server_media_url_invalid">Памылковая спасылка сінхранізацыі медыяфайлаў</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавіятура</string>
     <string name="bluetooth">Bluetooth</string>
@@ -352,7 +355,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">Уключыць ‘%s’</string>
     <string name="use_rust_backend_title" maxLength="41">Выкарыстоўваць новую серверную частку</string>
     <string name="use_rust_backend_summary">Уключыце новыя функцыі Anki. Напрыклад, планіроўшчык трэцяй версіі\nНЕСТАБІЛЬНА. Не выкарыстоўвайце з калекцыяй, якая прадстаўляе для вас каштоўнасць. НЕ вяртаецца пры закрыцці праграмы.</string>
-    <string name="use_rust_backend_warning">Верагодна, што гэта можа цалкам пашкодзіць вашу ўстаноўку і будзе неабходна выдаліць прыладу, і папку AnkiDroid. Таксама можа быць зломана сінхранізацыя з AnkiWeb.\n\nМы вітаем тэставанне, але будзьце ўпэўнены, што ў вас ёсць прыгодны не-AnkiWeb бэкап.</string>
+    <string name="use_rust_backend_warning">Ёсць верагоднасць, што гэта можа цалкам пашкодзіць усталёўку і запатрабуе выдалення праграмы і папкі AnkiDroid і што можа адбыцца распаўсюджанне пашкоджання праз сінхранізацыю ў AnkiWeb.\n\nМы вітаем тэсціраванне гэтай функцыі, але настойліва рэкамендуем пераканацца, што ў вас ёсць актуальная рэзервовая копія па-за межамі сістэмы AnkiWeb.</string>
     <string name="enable_v3_sched_title" maxLength="41">Выкарыстоўваць планіроўшчык v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметры распрацоўшчыка</string>
@@ -360,4 +363,68 @@
     <string name="disable_dev_options">Адключыць параметры распрацоўшчыка</string>
     <string name="dev_options_warning">        Калі ласка, пераканайцеся, што вы сапраўды ўпэўненыя ў сваіх дзеяннях. Гэтыя параметры з\'яўляюцца небяспечнымі і могуць парушыць працу праграмы або пашкодзіць вашу калекцыю.\n\nЗвярніце ўвагу, што гэтыя параметры не пасуюць для большасці карыстальнікаў і таму яны не перакладаюцца. З гэтай прычыны, яны пішуцца толькі на англійскай.
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Параметры рэзервовага капіявання</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
+        After backups are more than two days old,
+        AnkiDroid will start removing some of them to free up disk space.
+        <br><br>
+        Note that media files are not backed up.
+        To be safe, please periodically synchronize your collection, or back up exports of it.
+        <br><br>
+        You can restore from a backup and export your collection in the deck list menu.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Кіраванне прасторай</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Памылка</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d файл\n%2$s</item>
+        <item quantity="few">%1$d файлы\n%2$s</item>
+        <item quantity="many">%1$d файлаў\n%2$s</item>
+        <item quantity="other">%1$d файлы\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
+    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Выдаліць рэзервовыя копіі</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Выдаліць рэзервовыя копіі</string>
+    <string name="progress__deleting_backups">Выдаленне рэзервовых копій&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Выдаліць калекцыю</string>
+    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Выдаліць калекцыю</string>
+    <string name="dialog__delete_collection__message">Вы сапраўды хочаце выдаліць сваю калекцыю, медыя і рэзервовыя копіі?</string>
+    <string name="progress__deleting_collection">Выдаленне калекцыі...</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Выдаліць усё</string>
+    <string name="pref__delete_everything__summary">Выдаліць калекцыю, медыя, рэзервовыя копіі і налады</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Выдаліць усё</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Выдаліць даныя праграмы</string>
+    <string name="pref__delete_app_data__summary">Выдаліць налады і іншыя даныя праграмы</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Выдаліць даныя праграмы</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Няма калекцыі</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Памылка</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Атрыманне&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Калекцыя не існуе</string>
 </resources>

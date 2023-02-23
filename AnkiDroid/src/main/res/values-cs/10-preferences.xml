@@ -74,7 +74,7 @@
     <string name="reset_languages" maxLength="41">Obnovit jazyky</string>
     <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro převod textu na řeč a slovníky) pro všechny balíčky</string>
     <string name="reset_languages_question">Obnovit všechna přiřazení jazyka?</string>
-    <string name="reset_confirmation">Obnovit všechny stavy</string>
+    <string name="reset_confirmation">Všechny stavy obnoveny</string>
     <string name="card_zoom" maxLength="41">Zvětšení karty</string>
     <string name="image_zoom" maxLength="41">Zvětšení obrázku</string>
     <string name="button_size" maxLength="41">Velikost tlačítka pro odpověď</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">Vypnout</string>
     <string name="full_screen_system">Skrýt panely systému</string>
     <string name="full_screen_complete">Skrýt panely systému a tlačítka odpovědí</string>
-    <string name="full_screen_error_gestures">Musíte povolit gesta, aby byla tlačítka odpovědí skryta</string>
     <string name="answer_buttons_position" maxLength="41">Pozice tlačítek odpovědí</string>
     <string-array name="answer_buttons_position_labels">
         <item>Nahoře</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
+    <string name="gestures_none" maxLength="41">Žádné</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Stáhnout multimédia při synchronizaci</string>
-    <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Vždy</string>
+    <string name="sync_media_only_unmetered">Pouze na neměřeném připojení</string>
+    <string name="sync_media_never">Nikdy</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="metered_sync_title" maxLength="41">Povolit synchronizaci na měřeném připojení</string>
@@ -150,7 +152,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazení odpovědi</string>
     <string name="timeout_answer" maxLength="41">Odpověď po časovém limitu</string>
-    <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané audio soubory</string>
+    <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané zvukové soubory</string>
     <string name="timeout_answer_seconds" maxLength="41">Čas pro zobrazení odpovědi</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Čas pro zobrazení další otázky</string>
@@ -226,12 +228,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Počet iterací simulace</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastní synchronizační server</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Použij vlastní synchronizační server</string>
-    <string name="custom_sync_server_enable_summary">Jestliže nechcete používat proprietární službu AnkiWeb, můžete zde zadat alternativní server</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nepoužívá se</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
+        můžete k synchronizaci použít vlastní server.
+        Pokud není nastaven, bude místo toho použit výchozí AnkiWeb server.
+        <a href="%s">Zjistit více</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronizovat url</string>
-    <string name="custom_sync_server_base_url_invalid">Neplatná URL synchronizace</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Sync url pro média</string>
-    <string name="custom_sync_server_media_url_invalid">Neplatná URL synchronizace médií</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>
@@ -279,9 +282,9 @@
     <string name="deck_conf_max_time" maxLength="41">Maximální čas pro odpověď</string>
     <string name="deck_conf_seconds">XXX sekund</string>
     <string name="deck_conf_timer" maxLength="41">Zobrazit časovač odpovědí</string>
-    <string name="deck_conf_autoplay" maxLength="41">Automaticky přehrát audio</string>
+    <string name="deck_conf_autoplay" maxLength="41">Automaticky přehrát zvuk</string>
     <string name="deck_conf_replayq" maxLength="41">Přehrát otázku</string>
-    <string name="deck_conf_replayq_summ">Při zobrazení odpovědi přehrát audio otázky i odpovědi</string>
+    <string name="deck_conf_replayq_summ">Při zobrazení odpovědi přehrát zvuk otázky i odpovědi</string>
     <string name="deck_conf_manage" maxLength="41">Správa skupin</string>
     <string name="deck_conf_manage_summ">Přidat a změnit skupiny možností</string>
     <string name="deck_conf_current_group" maxLength="41">Aktuální skupina</string>
@@ -359,4 +362,67 @@
     <string name="disable_dev_options">Zakázat možnosti pro vývojáře</string>
     <string name="dev_options_warning">        Prosím buďte si jisti před povolením možností pro vývojáře. Tyto možnosti jsou nebezpečné a mohou poškodit aplikaci nebo vaši kolekci.\n\nVšimněte si, že tyto možnosti nejsou vhodné pro většinu uživatelů, a proto nejsou přeloženy, takže jsou v angličtině.
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Možnosti zálohování</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid pravidelně zálohuje Vaši kolekci.
+        Jestliže jsou zálohy více než dva dny staré,
+        AnkiDroid začne odstraňovat některé z nich, aby uvolnil místo na disku.
+        <br><br>
+        Všimněte si, že multimediální soubory nejsou zálohovány.
+        Pro jistotu pravidelně synchronizujte vaši kolekci nebo zálohujte její exporty.
+        <br><br>
+        Můžete obnovit ze zálohy a exportovat vaši kolekci v nabídce seznamu balíčků.]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Počet minut mezi automatickými zálohami</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Počet denních záloh, které se mají zachovat</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Počet týdenních záloh, které se mají zachovat</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Počet měsíčních záloh, které se mají zachovat</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Správa úložiště</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Chyba</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Vypočí-\ntává se&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d soubor\n%2$s</item>
+        <item quantity="few">%1$d soubory\n%2$s</item>
+        <item quantity="many">%1$d souboru\n%2$s</item>
+        <item quantity="other">%1$d souborů\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Odstranit nepoužívané multimediální soubory</string>
+    <string name="pref__delete_unused_media_files__summary">Odstranit obrázky a další multimédia, která nemají předponu _ a na které neodkazují žádné poznámky </string>
+    <string name="dialog__media_check_required__message">Vyžaduje se zkontrolovat multimédia, aby se našly nepoužívané multimediální soubory</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Odstranit nepoužívané multimediální soubory</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Odstranit zálohy</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Odstranit zálohy</string>
+    <string name="progress__deleting_backups">Odstraňují se zálohy&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Odstranit kolekci</string>
+    <string name="pref__delete_collection__summary">Odstranit kolekci, multimédia a zálohy. Nastavení aplikace není odstraněno</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Odstranit kolekci</string>
+    <string name="dialog__delete_collection__message">Opravdu chcete odstranit vaši kolekci, multimédia a zálohy?</string>
+    <string name="progress__deleting_collection">Odstraňuje se kolekce&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Odstranit vše</string>
+    <string name="pref__delete_everything__summary">Odstranit kolekci, multimédia, zálohy a nastavení</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Odstranit vše</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Opravdu chcete odstranit všechna data? To zahrnuje vaši kolekci, multimédia, zálohy a nastavení.\n\nPoznámka: tato akce zavře okno.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Odstranit data aplikace</string>
+    <string name="pref__delete_app_data__summary">Odstranit nastavení a další data aplikace</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Odstranit data aplikace</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Opravdu chcete odstranit data aplikace? To zahrnuje nastavení a další data aplikace.\n\nPoznámka: tato akce zavře okno.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Žádná kolekce</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Chyba</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Načítání&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Vypočítává se&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekce neexistuje</string>
 </resources>

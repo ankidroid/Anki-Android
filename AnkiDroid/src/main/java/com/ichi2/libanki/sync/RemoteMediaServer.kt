@@ -16,7 +16,6 @@
  ****************************************************************************************/
 package com.ichi2.libanki.sync
 
-import android.text.TextUtils
 import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.anki.web.CustomSyncServer
@@ -24,10 +23,10 @@ import com.ichi2.async.Connection
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Response
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -156,7 +155,7 @@ class RemoteMediaServer(
     @Throws(MediaSyncException::class)
     // NOTE: the original name of the method was _dataOnly which followed upstream naming
     private inline fun <reified T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
-        if (!TextUtils.isEmpty(resp.optString("err"))) {
+        if (resp.optString("err").isNotEmpty()) {
             val err = resp.getString("err")
             col?.log("error returned: $err")
             throw MediaSyncException("SyncError:$err")

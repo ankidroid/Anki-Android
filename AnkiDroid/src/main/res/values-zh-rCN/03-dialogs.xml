@@ -88,6 +88,7 @@
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
+    <string name="storage_full_message">没有足够的可用存储空间来打开AnkiDroid。释放一些空间以继续。 </string>
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
     <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
@@ -108,8 +109,8 @@
     <plurals name="import_complete_message">
         <item quantity="other">导入的文件数: %1$d\n总共导入的卡片数: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD 卡已满</string>
-    <string name="sd_card_almost_full_title">SD 卡几乎已满</string>
+    <string name="storage_full_title">存储空间已满</string>
+    <string name="storage_almost_full_title">存储空间几乎满了</string>
     <string name="no_space_to_downgrade_title">没有空间</string>
     <string name="no_space_to_downgrade_content">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
@@ -117,7 +118,9 @@
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
+    <string name="dialog_confirm">确认</string>
     <string name="dialog_no">否</string>
+    <string name="dialog_yes">是</string>
     <string name="dialog_continue">继续</string>
     <string name="dialog_processing">处理中...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
@@ -164,9 +167,6 @@
     <string name="multimedia_editor_failed">打开多媒体编辑器失败</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音频录制权限被拒绝</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">欢迎来到 AnkiDroid！</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要存储权限，我们只用来存储您的 AnkiDroid 集合、记忆卡片媒体和备份。 我们的代码是开源的，由志愿者撰写，并且受到数百万人的信任。\n\n如果您有任何疑问，请访问我们的应用内手册或访问我们的支持论坛。\n\n感谢您尝试AnkiDroid！\n— AnkiDroid 开发团队</string>
     <string name="mutimedia_editor_assertion_failed">显示高级编辑器时发生未知错误</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
@@ -222,6 +222,7 @@
     <string name="help_item_support_develop_ankidroid">开发</string>
     <string name="help_item_support_rate_ankidroid">评分</string>
     <string name="help_item_support_other_ankidroid">其他</string>
+    <string name="multimedia_editor_trans_translate">翻译</string>
     <string name="help_title_community">社区</string>
     <string name="help_item_anki_forums">Anki 论坛</string>
     <string name="help_item_discord">Discord</string>
@@ -250,4 +251,14 @@
     <string name="import_csv">文本文件(.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        由于 Android 隐私变化，如应用被卸载，您当前的存储位置将不可访问。
+        \n\n我们需要将您的数据迁移到一个对 AnkiDroid 应用来说秘密的地方。
+        \n\n如果应用被卸载，这个私有位置中的数据可能会被删除。
+        \n\n您当前的存储位置是 %1$s
+        \n\n私有存储位置将是 %2$s
+        \n\n请确保您将定期备份此文件夹。
+    </string>
+    <string name="manual_backup">手动备份</string>
+    <string name="remind_me_later">稍后提醒我</string>
 </resources>

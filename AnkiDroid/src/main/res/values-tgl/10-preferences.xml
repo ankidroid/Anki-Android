@@ -86,7 +86,6 @@
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Itago ang mga bar ng system</string>
     <string name="full_screen_complete">Itago ang mga bar ng system at sagutin ang mga pindutan</string>
-    <string name="full_screen_error_gestures">Dapat mong paganahin ang mga kumpas upang itago ang mga pindutan ng sagot</string>
     <string name="answer_buttons_position" maxLength="41">Posisyon ng sagot sa mga pindutan</string>
     <string-array name="answer_buttons_position_labels">
         <item>Itaas</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Mag-swipe pataas</string>
     <string name="gestures_swipe_down" maxLength="41">Mag-swipe pababa</string>
     <string name="gestures_swipe_left" maxLength="41">Mag-swipe pakaliwa</string>
@@ -125,12 +125,14 @@
     <string name="tts_summ">Binabasa ang tanong at sagot kung walang sound file na kasama</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Kunin ang media sa sync</string>
-    <string name="sync_fetch_missing_media_summ">Awtomatikong makuha ang nawawalang media kapag naka-sync</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Hindi naka-log in</string>
     <string name="automatic_sync_choice" maxLength="41">Awtomatikong pag-synchronize</string>
     <string name="automatic_sync_choice_summ">Awtomatikong i-sync sa start / exit ng app kung ang huling pag-sync ay higit sa 10
         minuto ang nakalipas.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
@@ -227,12 +229,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Bilang ng mga pag-ulit ng simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Gumamit ng custom sync server</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Gumamit ng custom sync server</string>
-    <string name="custom_sync_server_enable_summary">Kung ayaw mong gamitin ang pagmamay-ari na serbisyo ng AnkiWeb maaari mong tukuyin ang isang alternatibong server dito</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">I-sync ang url</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Nai-singkronisa ang media</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
@@ -356,4 +359,66 @@
     <string name="disable_dev_options">Disable developer options</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
+        After backups are more than two days old,
+        AnkiDroid will start removing some of them to free up disk space.
+        <br><br>
+        Note that media files are not backed up.
+        To be safe, please periodically synchronize your collection, or back up exports of it.
+        <br><br>
+        You can restore from a backup and export your collection in the deck list menu.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Manage space</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d file\n%2$s</item>
+        <item quantity="other">%1$d files\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
+    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
+    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
+    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
+    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
 </resources>

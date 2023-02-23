@@ -44,11 +44,7 @@ class TextField : FieldBase(), IField {
             setThisModified()
         }
 
-    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {}
-    override fun hasTemporaryMedia(): Boolean {
-        // TODO Auto-generated method stub
-        return false
-    }
+    override var hasTemporaryMedia: Boolean = false
 
     override var name: String?
         get() = mName

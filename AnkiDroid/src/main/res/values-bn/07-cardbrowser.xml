@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">সবগুলো ডেক খুঁজো</string>
     <string name="card_browser_unknown_deck_name">অজানা</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">বিষয়বস্ত ছাঁটাই</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d টি কার্ড মুছেছি</item>
         <item quantity="other">%d টি কার্ড মুছেছি</item>

@@ -56,9 +56,9 @@
     </plurals>
     <string name="delete_cram_deck_message">%s の全てのカードを元のデッキに戻してもよろしいですか？</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
-    <string name="initializing_tts">テキスト読み上げ機能（TTS）を初期化しています...</string>
+    <string name="initializing_tts">テキスト読み上げ（TTS）機能を初期化しています...</string>
     <string name="tts_no_tts">音声なし</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\n使用されていないファイル:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの表示順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
@@ -66,10 +66,10 @@
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d枚のカードの表示順序が変更されました</item>
     </plurals>
-    <string name="reset_card_dialog_title">カードの回答履歴をリセット</string>
+    <string name="reset_card_dialog_title">カードの学習履歴をリセット</string>
     <string name="reset_card_dialog_message">新規カードの最後に配置します</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d枚のカードの回答履歴をリセットしました</item>
+        <item quantity="other">%d枚のカードの学習履歴をリセットしました</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
@@ -88,6 +88,7 @@
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
     <string name="answering_error_report">エラーを報告する</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
     <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
@@ -108,8 +109,8 @@
     <plurals name="import_complete_message">
         <item quantity="other">インポートされたファイル: %1$d\nインポートされたカードの合計: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SDカード空き容量なし</string>
-    <string name="sd_card_almost_full_title">SDカード空き容量わずか</string>
+    <string name="storage_full_title">ストレージの空き容量がありません</string>
+    <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
     <string name="no_space_to_downgrade_title">空き容量が不足</string>
     <string name="no_space_to_downgrade_content">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
@@ -117,7 +118,9 @@
     <string name="restore_backup_choose_another">他を選択</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">確認</string>
     <string name="dialog_no">いいえ</string>
+    <string name="dialog_yes">はい</string>
     <string name="dialog_continue">続行</string>
     <string name="dialog_processing">処理中です...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
@@ -164,9 +167,6 @@
     <string name="multimedia_editor_failed">マルチメディアエディターを開けませんでした</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が拒否されました</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroidへようこそ!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroidを使用するにはストレージへのアクセスを許可する必要があります。AnkiDroidはストレージを、コレクション（カードのテキスト、表示スケジュールなど一連のデータ）、カードに用いるメディア（画像・動画・音声）ファイル、およびバックアップの保存にのみ使用します。 AnkiDroidのソースコードは、ボランティアによって書かれ、一般に公開されており、何百万人もの人々から信頼されています。\n\nご不明な点がございましたら、アプリ内の「ヘルプ」→「使い方」からマニュアルをご覧いただくか、「ヘルプ」→「問い合わせ」→「メーリングリスト」からサポートフォーラムにお問い合わせください。\n\nAnkiDroidをお試しいただきありがとうございます！\n— AnkiDroid開発チーム</string>
     <string name="mutimedia_editor_assertion_failed">エディターの表示中に不明なエラーが発生しました</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
@@ -222,6 +222,7 @@
     <string name="help_item_support_develop_ankidroid">開発</string>
     <string name="help_item_support_rate_ankidroid">評価</string>
     <string name="help_item_support_other_ankidroid">その他</string>
+    <string name="multimedia_editor_trans_translate">翻訳</string>
     <string name="help_title_community">コミュニティー</string>
     <string name="help_item_anki_forums">Ankiフォーラム</string>
     <string name="help_item_discord">Discord</string>
@@ -237,10 +238,10 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">従量課金制のネット接続です。データ通信量に応じて通信費が増える可能性があります。</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
-    <string name="deck_picker_lrn">このデッキ内の、学習中カードの数。</string>
+    <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
@@ -249,5 +250,15 @@
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
     <string name="import_csv">テキストファイル (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Androidのプライバシーポリシーの改定により、AnkiDroidを今後アンインストールすると、再度インストールしても現在のデータ保存先にはアクセスできなくなります。
+        \n\nそのリスクを避けるため、AnkiDroid専用の新しい保存先へのデータの移動を強く推奨しています。
+        \n\n新しい保存先に移動したデータは、アプリのアンインストール時にアプリと共に削除されます。
+        \n\n現在の保存先: %1$s
+        \n\n新しい保存先: %2$s
+        \n\nこのフォルダのバックアップを定期的にとることをおすすめします。
+    </string>
+    <string name="manual_backup">手動バックアップ</string>
+    <string name="remind_me_later">後で再通知</string>
 </resources>

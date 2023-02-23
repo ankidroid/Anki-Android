@@ -16,24 +16,19 @@
 
 package com.ichi2.async
 
-import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.StudyOptionsFragment
-import com.ichi2.anki.TemporaryModel
+import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.Note
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.Computation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import java.util.ArrayList
-import kotlin.Comparator
 
 /**
  * This file contains functions that have been migrated from [CollectionTask]
@@ -49,7 +44,7 @@ fun updateCard(
     col: Collection,
     editCard: Card,
     isFromReviewer: Boolean,
-    canAccessScheduler: Boolean,
+    canAccessScheduler: Boolean
 ): Card {
     Timber.d("doInBackgroundUpdateNote")
     // Save the note
@@ -89,7 +84,7 @@ fun updateCard(
  */
 fun updateMultipleNotes(
     col: Collection,
-    notesToUpdate: List<Note>,
+    notesToUpdate: List<Note>
 ): List<Note> {
     Timber.d("CollectionOperations: updateMultipleNotes")
     return col.db.executeInTransaction {
@@ -138,8 +133,12 @@ fun updateValuesFromDeck(
         val totalNewCount = sched.totalNewForCurrentDeck()
         val totalCount = sched.cardCount()
         StudyOptionsFragment.DeckStudyData(
-            counts.new, counts.lrn, counts.rev, totalNewCount,
-            totalCount, sched.eta(counts)
+            counts.new,
+            counts.lrn,
+            counts.rev,
+            totalNewCount,
+            totalCount,
+            sched.eta(counts)
         )
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
@@ -153,12 +152,15 @@ fun updateValuesFromDeck(
  *
  * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
  */
-fun getAllModelsAndNotesCount(col: Collection,): Pair<List<Model>, List<Int>> {
+suspend fun getAllModelsAndNotesCount(): Pair<List<Model>, List<Int>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundLoadModels")
-    val models = col.models.all()
+    val models = withCol { models.all() }
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
-    val cardCount = models.map { col.models.useCount(it) }
-    return Pair(models, cardCount)
+    val cardCount = models.map {
+        ensureActive()
+        withCol { this.models.useCount(it) }
+    }
+    Pair(models, cardCount)
 }
 
 fun changeDeckConfiguration(
@@ -295,5 +297,131 @@ fun saveModel(
         }
     } finally {
         DB.safeEndInTransaction(col.db)
+    }
+}
+
+/**
+ * Deletes all the card with given ids
+ * @return Array<Cards> list of all deleted cards
+ */
+fun deleteMultipleNotes(
+    col: Collection,
+    cardIds: List<Long>
+): Array<Card> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    return col.db.executeInTransaction {
+        val sched = col.sched
+        // list of all ids to pass to remNotes method.
+        // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+        val notes = CardUtils.getNotes(listOf(*cards))
+        val allCards = CardUtils.getAllCards(notes)
+        // delete note
+        val uniqueNoteIds = LongArray(notes.size)
+        val notesArr = notes.toTypedArray()
+        for ((index, note) in notes.withIndex()) {
+            uniqueNoteIds[index] = note.id
+        }
+        col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
+        col.remNotes(uniqueNoteIds)
+        sched.deferReset()
+        // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+        allCards.toTypedArray()
+    }
+}
+
+fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    return col.db.executeInTransaction {
+        val sched = col.sched
+        // collect undo information
+        val cids = LongArray(cards.size)
+        val originalSuspended = BooleanArray(cards.size)
+        var hasUnsuspended = false
+        for (i in cards.indices) {
+            val card = cards[i]
+            cids[i] = card.id
+            if (card.queue != Consts.QUEUE_TYPE_SUSPENDED) {
+                hasUnsuspended = true
+                originalSuspended[i] = false
+            } else {
+                originalSuspended[i] = true
+            }
+        }
+
+        // if at least one card is unsuspended -> suspend all
+        // otherwise unsuspend all
+        if (hasUnsuspended) {
+            sched.suspendCards(cids)
+        } else {
+            sched.unsuspendCards(cids)
+        }
+
+        // mark undo for all at once
+        col.markUndo(UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended))
+
+        // reload cards because they'll be passed back to caller
+        for (c in cards) {
+            c.load()
+        }
+        sched.deferReset()
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        cards
+    }
+}
+
+// TODO: Instead of returning Computation.err() can throw an exception with the exact message what went wrong
+//      Or can add a message parameter to the Computation.err() so that message can be propagated upwards, currently
+//      there is no way for user to know why the operation failed, was it due to same deck id, dynamic deck or something else?
+fun changeDeckMulti(
+    col: Collection,
+    cardIds: List<Long>,
+    newDid: DeckId
+): Computation<Array<Card>> {
+    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
+    Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
+    return col.db.executeInTransaction {
+        val deckData = col.decks.get(newDid)
+        if (Decks.isDynamic(deckData)) {
+            // #5932 - can't change to a dynamic deck. Use "Rebuild"
+            Timber.w("Attempted to move to dynamic deck. Cancelling task.")
+            return@executeInTransaction Computation.err()
+        }
+
+        // Confirm that the deck exists (and is not the default)
+        try {
+            val actualId = deckData.getLong("id")
+            if (actualId != newDid) {
+                Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId)
+                return@executeInTransaction Computation.err()
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "failed to check deck")
+            return@executeInTransaction Computation.err()
+        }
+        val changedCardIds = LongArray(cards.size)
+        for (i in cards.indices) {
+            changedCardIds[i] = cards[i].id
+        }
+        col.sched.remFromDyn(changedCardIds)
+        val originalDids = LongArray(cards.size)
+        for (i in cards.indices) {
+            val card = cards[i]
+            card.load()
+            // save original did for undo
+            originalDids[i] = card.did
+            // then set the card ID to the new deck
+            card.did = newDid
+            val note = card.note()
+            note.flush()
+            // flush card too, in case, did has been changed
+            card.flush()
+        }
+        val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
+        // mark undo for all at once
+        col.markUndo(changeDeckMulti)
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        return@executeInTransaction Computation.ok(cards)
     }
 }

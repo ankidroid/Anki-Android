@@ -44,15 +44,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Sí</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartes</string>
     <string name="statistics">Estadístiques</string>
-    <string name="settings">Configuració</string>
+    <string name="settings">Preferències</string>
     <string name="help">Ajuda</string>
-    <string name="drawing">Drawing</string>
-    <string name="send_feedback">Enviar comentaris</string>
+    <string name="drawing">Dibuix</string>
+    <string name="send_feedback">Envia comentaris</string>
     <string name="studyoptions_due_today">Venç avui:</string>
     <string name="studyoptions_new_total">Total de noves fitxes:</string>
     <string name="studyoptions_total_cards">Total de fitxes:</string>
@@ -67,26 +66,26 @@
         <item quantity="other">%1$d cartes pendents (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minut restant</item>
-        <item quantity="other">%d minuts restants</item>
+        <item quantity="one">Queda %d minut</item>
+        <item quantity="other">Queden %d minuts</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Queda %1$d hora i %2$d minuts</item>
+        <item quantity="other">Queden %1$d hores i %2$d minuts</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Queda %1$d dia i %2$d hores</item>
+        <item quantity="other">Queden %1$d dies i %2$d hores</item>
     </plurals>
-    <string name="no_cards_placeholder_title">La teva col·lecció és buida</string>
-    <string name="no_cards_placeholder_description">Comença a afegir cartes\n usant la icona +.</string>
+    <string name="no_cards_placeholder_title">La col·lecció és buida</string>
+    <string name="no_cards_placeholder_description">Comenceu a afegir cartes\n amb la icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">%1$d carta estudiada en %2$s avui</item>
-        <item quantity="other">%1$d cartes estudiades en %2$s avui</item>
+        <item quantity="one">Avui heu estudiat %1$d carta en %2$s</item>
+        <item quantity="other">Avui heu estudiat %1$d cartes en %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Entrar resposta</string>
+    <string name="type_answer_hint">Entreu la resposta</string>
     <string name="show_answer">Mostra la resposta</string>
     <string name="hide_answer">Amaga la resposta</string>
     <string name="ease_button_again">De nou</string>
@@ -94,19 +93,19 @@
     <string name="ease_button_good">Correcte</string>
     <string name="ease_button_easy">Fàcil</string>
     <string name="studyoptions_congrats_undo">Desfés %s</string>
-    <string name="menu_import">Importar</string>
+    <string name="menu_import">Importa</string>
     <string name="undo">Desfés</string>
     <string name="undo_action_review">revisió final</string>
-    <string name="undo_action_change_deck_multi">Desfer canvis als paquets</string>
-    <string name="move_all_to_deck">Moure tot al paquet</string>
-    <string name="unbury">Desenterrar</string>
+    <string name="undo_action_change_deck_multi">canvia de paquet</string>
+    <string name="move_all_to_deck">Mou tot al paquet</string>
+    <string name="unbury">Desenterra</string>
     <string name="rename_deck">Canvia el nom del paquet</string>
-    <string name="create_shortcut">Crear drecera</string>
-    <string name="browse_cards">Examinar cartes</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Afegir</string>
-    <string name="menu_add_note">Afegir nota</string>
+    <string name="create_shortcut">Crea una drecera</string>
+    <string name="browse_cards">Fulleja les cartes</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Afegeix</string>
+    <string name="menu_add_note">Afegeix una nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de sincronització</string>
-    <string name="menu_dismiss_note">Amagar / eliminar</string>
+    <string name="menu_dismiss_note">Amaga / elimina</string>
     <string name="menu_bury_card">Enterrar carta</string>
     <string name="menu_bury_note">Enterra la nota</string>
     <string name="menu_suspend_card">Suspèn la fitxa</string>
@@ -158,29 +157,31 @@
     <string name="rebuild_cram_label">Reconstrueix</string>
     <string name="empty_cram_label">Buit</string>
     <string name="create_subdeck">Crea un paquet</string>
-    <string name="empty_filtered_deck">Buidant paquet filtrat</string>
-    <string name="custom_study_deck_name">Sessió d\'estudi personalitzat</string>
+    <string name="empty_filtered_deck">S\'està buidant el paquet filtrat</string>
+    <string name="custom_study_deck_name">Sessió d\'estudi a mida</string>
     <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
     <string name="empty_deck">Aquest paquet és buit</string>
-    <string name="search_deck" comment="Deck search for selecting it">Cerca a paquet</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Nom de paquet invàlid</string>
+    <string name="search_deck" comment="Deck search for selecting it">Cerca un paquet</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Cerca un paquet</string>
+    <string name="invalid_deck_name">El nom del paquet no és vàlid</string>
     <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>
-    <string name="studyoptions_limit_reached">Has arribat al límit d\'estudi diari</string>
-    <string name="studyoptions_empty_schedule">No hi ha cartes previstes per a estudiar</string>
+    <string name="studyoptions_limit_reached">Heu arribat al límit d\'estudi diari</string>
+    <string name="studyoptions_empty_schedule">No hi ha targetes previstes per a estudiar</string>
     <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
     <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
     <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
-    <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
-    <string name="studyoptions_no_cards_due">No hi ha cartes per fer.</string>
+    <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida.</string>
+    <string name="studyoptions_no_cards_due">No hi ha cartes previstes.</string>
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
     <string name="empty_cloze_warning">Editeu aquesta nota i afegiu-hi algunes eliminacions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronització</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">La sincronització està desactivada temporalment.</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migra a l\'emmagatzematge scoped</string>
     <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
     <string name="continue_sync">Continua la sincronització</string>
-    <string name="sync_cancelled">Sincronització cancel·lada</string>
-    <string name="sync_cancel_message">Cancelant...\nThis pot trigar una estona.</string>
-    <string name="export">Exportar</string>
+    <string name="sync_cancelled">S\'ha cancel·lat la sincronització</string>
+    <string name="sync_cancel_message">S\'està cancel·lant...\nAixò pot trigar una estona.</string>
+    <string name="export">Exporta</string>
     <string name="export_collection">Exporta la col·lecció</string>
     <string name="export_deck">Exporta el paquet</string>
     <string name="nothing">Res</string>
@@ -188,22 +189,22 @@
     <string name="title_activity_template_editor">Tipus de cartes</string>
     <string name="card_template_editor_front">Plantilla frontal</string>
     <string name="card_template_editor_back">Plantilla del darrere</string>
-    <string name="card_template_editor_styling">Estilitzar</string>
+    <string name="card_template_editor_styling">Estilitzat</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspecte del navegador de cartes</string>
-    <string name="card_template_editor_deck_override">Substitució de paquet</string>
-    <string name="card_template_editor_insert_field">Inseriu camp</string>
-    <string name="card_template_editor_select_field">Seleccioneu camp</string>
-    <string name="card_template_editor_cant_delete">Com a mínim un tipus de carta és necessari.</string>
+    <string name="card_template_editor_deck_override">Anul·la el paquet</string>
+    <string name="card_template_editor_insert_field">Inseriu un camp</string>
+    <string name="card_template_editor_select_field">Trieu un camp</string>
+    <string name="card_template_editor_cant_delete">Cal com a mí­nim un tipus de carta</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">Això crearà %1$d cartes. Continuar?</item>
-        <item quantity="other">Això crearà %1$d cartes. Continuar?</item>
+        <item quantity="one">Això crearà %1$d cartes. Voleu continuar?</item>
+        <item quantity="other">Això crearà %1$d cartes. Voleu continuar?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Voleu eliminar el tipus de carta \"%2$s\", i la seva %1$d carta?</item>
         <item quantity="other">Voleu eliminar el tipus de carta \"%2$s\", i les seves %1$d cartes?</item>
     </plurals>
-    <string name="invalid_template">Una carta no s\'ha pogut generar</string>
-    <string name="card_template_editor_would_delete_note">L\'eliminació d\'aquest tipus de carta provocaria la supressió d\'una o més notes. En primer lloc, creeu i deseu un tipus de carta nou.</string>
+    <string name="invalid_template">No s\'ha pogut generar una carta.</string>
+    <string name="card_template_editor_would_delete_note">L\'eliminació d\'aquest tipus de carta suprimirà una o més notes. Creeu i deseu primer un tipus de carta nou.</string>
     <string name="card_template_editor_save_error">No es poden desar els canvis a la plantilla de carta: %s</string>
     <string name="template_for_current_card_deleted">S\'ha esborrat el tipus de carta per la carta actual.</string>
     <!-- Card Browser Appearance -->
@@ -215,7 +216,7 @@
     <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
     <string name="read_write_permission_description">accés a notes, targetes, tipus de nota i malls existents, així com crear-ne de nous</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de cartas</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de cartes</string>
     <string name="context_menu_anki_card_label">Menú \'Anki Card\'</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s té un problema:<br/>%2$s</string>
     <string name="more_information">Més informació</string>
@@ -237,5 +238,12 @@
         <item quantity="one">%1$d carta (queda 0)</item>
         <item quantity="other">%1$d cartes (queden 0)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s còpies</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

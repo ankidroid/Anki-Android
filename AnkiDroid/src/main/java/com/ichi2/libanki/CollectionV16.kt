@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import android.content.Context
 import android.content.res.Resources
+import anki.collection.OpChanges
 import anki.config.ConfigKey
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toBackendNote
@@ -139,13 +140,13 @@ class CollectionV16(
 
     override fun findCards(
         search: String,
-        order: SortOrder,
+        order: SortOrder
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 get_config("sortType", null as String?) ?: "noteFld",
-                get_config("sortBackwards", false) ?: false,
+                get_config("sortBackwards", false) ?: false
             )
         } else {
             order
@@ -160,13 +161,13 @@ class CollectionV16(
 
     override fun findNotes(
         query: String,
-        order: SortOrder,
+        order: SortOrder
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 get_config("noteSortType", null as String?) ?: "noteFld",
-                get_config("browserNoteSortBackwards", false) ?: false,
+                get_config("browserNoteSortBackwards", false) ?: false
             )
         } else {
             order
@@ -242,5 +243,18 @@ class CollectionV16(
     /** Change the flag color of the specified cards. flag=0 removes flag. */
     fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
         backend.setFlag(cardIds = cids, flag = flag)
+    }
+
+    fun addNote(note: Note, deckId: DeckId): OpChanges {
+        val resp = backend.addNote(note.toBackendNote(), deckId)
+        note.id = resp.noteId
+        return resp.changes
+    }
+
+    /** allowEmpty is ignored in the new schema */
+    @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
+    override fun addNote(note: Note, allowEmpty: Models.AllowEmpty): Int {
+        addNote(note, note.model().did)
+        return note.numberOfCards()
     }
 }

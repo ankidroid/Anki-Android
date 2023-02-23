@@ -26,8 +26,8 @@ class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
-            title(R.string.sd_card_full_title)
-            message(R.string.backup_deck_no_space_left)
+            title(R.string.storage_full_title)
+            message(R.string.backup_deck_no_storage_left)
             cancelable(true)
             positiveButton(R.string.dialog_ok) {
                 (activity as DeckPicker).startLoadingCollection()

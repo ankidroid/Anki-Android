@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">taip</string>
     <!-- Navigation drawer items-->
     <string name="decks">Rinkiniai</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortelių naršyklė</string>
@@ -186,6 +185,8 @@
     <string name="sd_card_not_mounted">Atminties įrenginys neprijungtas</string>
     <string name="empty_cloze_warning">Redaguoti šį užrašą ir įkelti keletą paslėptų žodžių. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinchronizuoti</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Ar norite sinchronizavimą atšaukti?</string>
     <string name="continue_sync">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled">Sinchronizavimas atšauktas</string>
@@ -254,4 +255,11 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopija</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

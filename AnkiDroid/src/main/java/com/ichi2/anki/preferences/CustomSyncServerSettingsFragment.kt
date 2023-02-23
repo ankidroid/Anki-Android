@@ -15,49 +15,53 @@
  */
 package com.ichi2.anki.preferences
 
-import android.app.AlertDialog
-import android.webkit.URLUtil
-import androidx.preference.Preference
-import androidx.preference.SwitchPreference
+import android.content.SharedPreferences
+import android.os.Bundle
+import androidx.core.content.edit
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.web.CustomSyncServer
+import com.ichi2.preferences.VersatileTextPreference
+import okhttp3.HttpUrl.Companion.toHttpUrl
 
 class CustomSyncServerSettingsFragment : SettingsFragment() {
-    override val preferenceResource: Int
-        get() = R.xml.preferences_custom_sync_server
-    override val analyticsScreenNameConstant: String
-        get() = "prefs.custom_sync_server"
+    override val preferenceResource = R.xml.preferences_custom_sync_server
+    override val analyticsScreenNameConstant = "prefs.custom_sync_server"
 
     override fun initSubscreen() {
-        // Use custom sync server
-        requirePreference<SwitchPreference>(R.string.custom_sync_server_enable_key).setOnPreferenceChangeListener { _ ->
-            CustomSyncServer.handleSyncServerPreferenceChange(requireContext())
+        listOf(
+            R.string.custom_sync_server_collection_url_key
+        ).forEach {
+            requirePreference<VersatileTextPreference>(it).continuousValidator =
+                VersatileTextPreference.Validator { value ->
+                    if (value.isNotEmpty()) value.toHttpUrl()
+                }
         }
-        // Sync url
-        requirePreference<Preference>(R.string.custom_sync_server_collection_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
-            val newUrl = newValue.toString()
-            if (newUrl.isNotEmpty() && !URLUtil.isValidUrl(newUrl)) {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.custom_sync_server_base_url_invalid)
-                    .setPositiveButton(R.string.dialog_ok, null)
-                    .show()
-                return@setOnPreferenceChangeListener false
+    }
+
+    // See discussion at https://github.com/ankidroid/Anki-Android/pull/12367#discussion_r967681337
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        preferenceManager.sharedPreferences
+            ?.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        preferenceManager.sharedPreferences
+            ?.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
+    }
+
+    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+        if (
+            key == SyncPreferences.CUSTOM_SYNC_URI ||
+            key == SyncPreferences.CUSTOM_SYNC_ENABLED
+        ) {
+            CustomSyncServer.handleSyncServerPreferenceChange(AnkiDroidApp.instance)
+            prefs.edit {
+                remove(SyncPreferences.CURRENT_SYNC_URI)
             }
-            CustomSyncServer.handleSyncServerPreferenceChange(requireContext())
-            true
-        }
-        // Media url
-        requirePreference<Preference>(R.string.custom_sync_server_media_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
-            val newUrl = newValue.toString()
-            if (newUrl.isNotEmpty() && !URLUtil.isValidUrl(newUrl)) {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.custom_sync_server_media_url_invalid)
-                    .setPositiveButton(R.string.dialog_ok, null)
-                    .show()
-                return@setOnPreferenceChangeListener false
-            }
-            CustomSyncServer.handleSyncServerPreferenceChange(requireContext())
-            true
         }
     }
 }

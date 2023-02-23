@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">是</string>
     <!-- Navigation drawer items-->
     <string name="decks">牌組</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">瀏覽卡牌</string>
@@ -56,7 +55,7 @@
     <string name="studyoptions_due_today">今天到期:</string>
     <string name="studyoptions_new_total">新卡片總數:</string>
     <string name="studyoptions_total_cards">卡片總數:</string>
-    <string name="studyoptions_eta">預計時間 (分鐘):</string>
+    <string name="studyoptions_eta">預計時間 (分鐘)：</string>
     <string name="studyoptions_start">開始學習</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
@@ -101,7 +100,7 @@
     <string name="browse_cards">瀏覽卡片</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳戶</string>
     <string name="menu_dismiss_note">隱藏/刪除</string>
     <string name="menu_bury_card">暫時隱藏卡片</string>
     <string name="menu_bury_note">暫時隱藏筆記</string>
@@ -172,6 +171,8 @@
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
     <string name="empty_cloze_warning">編輯此筆記，並新增一些克漏字測驗。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">暫時禁用同步</string>
+    <string name="button_upgrade" comment="Text of the sync button">遷移到作用域存儲</string>
     <string name="cancel_sync_confirm">你要取消同步嗎？</string>
     <string name="continue_sync">繼續同步</string>
     <string name="sync_cancelled">同步已取消</string>
@@ -228,7 +229,14 @@
     <string name="sync_conflict_title_new">選擇要保留的收藏</string>
     <string name="sync_conflict_replace_title">取代收藏</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d 張卡片待複習（0張到期)</item>
+        <item quantity="other">%1$d 張卡片待複習 (0 張到期)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s 複製</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">無法寫入或建立檔案 %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

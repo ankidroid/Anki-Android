@@ -82,6 +82,6 @@
     <string name="card_template_editor_deck_override_off">ᱰᱮᱠ ᱚᱣᱟᱹᱨᱨᱟᱭᱮᱰ (ᱚᱯᱷ)</string>
     <string name="model_manager_deck_override_added_message">\'%1$s\' ᱰᱤᱯᱷᱟᱹᱞᱴ ᱰᱮᱠ \'%2$s\' ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' ᱞᱟᱹᱜᱤᱫ ᱰᱤᱯᱷᱟᱹᱞᱴ ᱰᱮᱠ ᱚᱰᱚᱠᱮᱱᱟ</string>
-    <string name="deck_override_explanation">ᱰᱮᱠ ᱪᱚᱭᱚᱱ ᱠᱟᱛᱮ ᱱᱟᱶᱟ \'%s\' ᱠᱟᱰ ᱠᱚ ᱫᱚᱦᱚᱭᱢᱮ</string>
+    <string name="deck_override_explanation">ᱰᱮᱠ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱛᱮ ᱱᱟᱶᱟ \'%s\' ᱠᱟᱰ ᱠᱚ ᱫᱚᱦᱚᱭᱢᱮ</string>
     <string name="deck_picker_dialog_filter_decks">ᱰᱮᱠ ᱠᱚ ᱪᱷᱟᱹᱱᱤ ᱢᱮ</string>
 </resources>

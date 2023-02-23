@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">oui</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigateur de cartes</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="empty_cloze_warning">Modifier cette note et ajouter quelques textes à trous. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronisation temporairement désactivée</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrer vers l\'espace de stockage étendu</string>
     <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
     <string name="continue_sync">Continuer la synchronisation</string>
     <string name="sync_cancelled">Synchronisation annulée</string>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d cartes (0 à faire)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copie</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Impossible d\'éditer ou de créer le fichier %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

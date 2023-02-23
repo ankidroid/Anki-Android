@@ -17,53 +17,25 @@
 package com.ichi2.anki.ui
 
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
-import com.ichi2.libanki.Model
-import com.ichi2.themes.Themes.getColorFromAttr
+import com.ichi2.libanki.Collection
 import com.ichi2.utils.NamedJSONComparator
-import java.util.*
 
-/** Setup for a spinner which displays all note types */
-object NoteTypeSpinnerUtils {
-    fun setupNoteTypeSpinner(context: Context, noteTypeSpinner: Spinner, col: com.ichi2.libanki.Collection): ArrayList<Long> {
-        val models: List<Model> = col.models.all()
-        Collections.sort(models, NamedJSONComparator.INSTANCE)
-        val modelNames: MutableList<String> = ArrayList<String>(models.size)
-        val allModelIds = ArrayList<Long>(models.size)
-        for (m in models) {
-            modelNames.add(m.getString("name"))
-            allModelIds.add(m.getLong("id"))
-        }
+fun setupNoteTypeSpinner(context: Context, noteTypeSpinner: Spinner, col: Collection): List<Long> {
+    val sortedModels = col.models.all().sortedWith(NamedJSONComparator.INSTANCE)
+    val modelNames = sortedModels.map { it.getString("name") }
 
-        val unselectedTextColor = getColorFromAttr(context, android.R.attr.textColorPrimary)
-        val selectedTextColor = ContextCompat.getColor(context, R.color.note_editor_selected_item_text)
-        val unselectedBackgroundColor = getColorFromAttr(context, android.R.attr.colorBackground)
-        val selectedBackgroundColor = ContextCompat.getColor(context, R.color.note_editor_selected_item_background)
-        val noteTypeAdapter: ArrayAdapter<String> = object : ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, modelNames) {
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                // Cast the drop down items (popup items) as text view
-                val tv = super.getDropDownView(position, convertView, parent) as TextView
-
-                val selectedPosition = noteTypeSpinner.selectedItemPosition
-                val selected = position == selectedPosition
-                // If this item is selected
-                val backgroundColor = if (selected) selectedBackgroundColor else unselectedBackgroundColor
-                val textColor = if (selected) selectedTextColor else unselectedTextColor
-                tv.setBackgroundColor(backgroundColor)
-                tv.setTextColor(textColor)
-
-                // Return the modified view
-                return tv
-            }
-        }
-        noteTypeSpinner.adapter = noteTypeAdapter
-        noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        return allModelIds
+    noteTypeSpinner.adapter = ArrayAdapter(
+        context,
+        android.R.layout.simple_spinner_dropdown_item,
+        modelNames
+    ).apply {
+        // The resource passed to the constructor is normally used for both the spinner view
+        // and the dropdown list. This keeps the former and overrides the latter.
+        setDropDownViewResource(R.layout.spinner_dropdown_item_with_radio)
     }
+
+    return sortedModels.map { it.getLong("id") }
 }

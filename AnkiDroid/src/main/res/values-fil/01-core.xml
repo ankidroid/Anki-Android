@@ -44,19 +44,18 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">oo</string>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kard browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Istatistika</string>
-    <string name="settings">Ang mga setting</string>
+    <string name="settings">Pagsasaayos</string>
     <string name="help">Tulong</string>
-    <string name="drawing">pagguhit</string>
+    <string name="drawing">Pagguhit</string>
     <string name="send_feedback">Magpadala ng tugun</string>
     <string name="studyoptions_due_today">Nakatakda ngayon:</string>
-    <string name="studyoptions_new_total">Bilang ng mga bagong Kard:</string>
-    <string name="studyoptions_total_cards">Kabuuan ng mga kard:</string>
-    <string name="studyoptions_eta">Tinatayang oras (minuto):</string>
+    <string name="studyoptions_new_total">Dami ng mga bagong card:</string>
+    <string name="studyoptions_total_cards">Dami ng mga card:</string>
+    <string name="studyoptions_eta">Tinatayang oras (min):</string>
     <string name="studyoptions_start">Pag-aaral</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
@@ -72,12 +71,12 @@ mga natitirang minuto</item>
         <item quantity="other">%d minutong natitira</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Isa</item>
+        <item quantity="other">Iba</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Isa</item>
+        <item quantity="other">Iba</item>
     </plurals>
     <string name="no_cards_placeholder_title">Walang laman ang tipon</string>
     <string name="no_cards_placeholder_description">Magsimula idadag ang mga cards\nusing the + icon.</string>
@@ -118,7 +117,7 @@ mga natitirang minuto</item>
     <string name="menu_flag">Watawat</string>
     <string name="menu_flag_card">Card ng isang watawat</string>
     <string name="menu_flag_card_zero">Walang watawat</string>
-    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_one">Pulang watawat</string>
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
@@ -177,6 +176,8 @@ mga natitirang minuto</item>
     <string name="sd_card_not_mounted">Ang device storage ay hindi nakataas</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">I-sync</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Gusto mo bang kanselahin ang sync?</string>
     <string name="continue_sync">Ipagtuloy ang pagsync</string>
     <string name="sync_cancelled">Nakansela ang sync</string>
@@ -239,4 +240,11 @@ mga natitirang minuto</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

@@ -17,9 +17,10 @@ package com.ichi2.utils
 
 import android.content.Context
 import android.content.Intent
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 import java.lang.Exception
 
@@ -41,12 +42,12 @@ object IntentUtil {
                 activity.startActivityWithoutAnimation(intent)
             } else {
                 val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
-                showThemedToast(activity, errorMsg, true)
+                activity.showSnackbar(errorMsg, Snackbar.LENGTH_SHORT)
             }
         } catch (e: Exception) {
             Timber.w(e)
             val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
-            showThemedToast(activity, errorMsg, true)
+            activity.showSnackbar(errorMsg, Snackbar.LENGTH_SHORT)
         }
     }
 }

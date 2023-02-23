@@ -15,46 +15,43 @@
  */
 package com.ichi2.anki
 
-import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.Matchers
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
+import org.junit.rules.TestRule
 import java.util.ArrayList
 
-@KotlinCleanup("fix ide lint issues")
 abstract class NoteEditorTest protected constructor() {
     @get:Rule
-    var runtimePermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
     var activityRule: ActivityScenarioRule<NoteEditor>? = ActivityScenarioRule(
         noteEditorIntent
     )
 
-    @KotlinCleanup("simplify property getter with apply and direct return")
     private val noteEditorIntent: Intent
         get() {
-            val intent = Intent(targetContext, NoteEditor::class.java)
-            intent.component = ComponentName(targetContext, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-            return intent
+            return Intent(targetContext, NoteEditor::class.java).apply {
+                component = ComponentName(targetContext, NoteEditor::class.java)
+                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            }
         }
 
     @Before
     fun before() {
         for (invalid in invalidSdksImpl) {
             Assume.assumeThat(
-                String.format("Test fails on Travis API %d", invalid),
+                "Test fails on Travis API $invalid",
                 Build.VERSION.SDK_INT,
                 Matchers.not(
                     Matchers.`is`(invalid)
@@ -63,8 +60,7 @@ abstract class NoteEditorTest protected constructor() {
         }
     }
 
-    @KotlinCleanup("Simplify property getter: too many lists created")
-    protected val invalidSdksImpl: List<Int>
+    private val invalidSdksImpl: List<Int>
         get() {
             // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
             // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync

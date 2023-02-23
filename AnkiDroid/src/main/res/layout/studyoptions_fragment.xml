@@ -187,15 +187,13 @@
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
                         android:paddingBottom="8dp"/>
-                    <Button
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/LargeFilledButtonStyle"
                         android:id="@+id/studyoptions_start"
-                        android:theme="@style/LargeButtonStyle"
-                        android:layout_width="200dip"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:lines="2"
+                        android:minWidth="200dp"
                         android:text="@string/studyoptions_start"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
                         android:layout_gravity="center_horizontal"/>
                 </LinearLayout>
             </RelativeLayout>

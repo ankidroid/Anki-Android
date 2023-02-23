@@ -116,13 +116,13 @@
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
-    <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="save">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
-    <string name="select">ᱪᱚᱭᱚᱱ</string>
+    <string name="select">ᱵᱟᱪᱷᱟᱣ</string>
     <string name="reordering_cards">ᱠᱟᱰ ᱨᱮᱠᱚᱰᱤᱝ&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ᱠᱷᱚᱱ)</string>
     <string name="confirm_map_cards_to_nothing">ᱡᱟᱷᱟᱭ ᱠᱟᱰ ᱵᱟᱭ ᱢᱮᱯ ᱠᱚᱜᱼᱟ ᱚᱱᱟ ᱠᱟᱲ ᱫᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱜᱼᱟ ᱾ ᱡᱚᱫᱤ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱨᱮ ᱠᱟᱰ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱠᱷᱟᱱ ᱪᱮᱫ ᱢᱟᱱᱮ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱾ ᱢᱤᱫ ᱞᱮᱛᱟᱲ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?</string>
@@ -154,10 +154,9 @@
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
     <string name="check_db_message">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="empty_card_warning">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱩᱬᱤ ᱜᱮᱭᱟ ᱾ \"ᱱᱩᱬᱤ ᱠᱟᱰ\" ᱰᱮᱠ ᱥᱠᱨᱤᱱ ᱛᱟᱞᱠᱟ ᱢᱮᱱᱩ ᱠᱷᱚᱱ ᱪᱚᱭᱚᱱ ᱢᱮ ᱾</string>
+    <string name="empty_card_warning">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱩᱬᱤ ᱜᱮᱭᱟ ᱾ \"ᱱᱩᱬᱤ ᱠᱟᱰ\" ᱰᱮᱠ ᱥᱠᱨᱤᱱ ᱛᱟᱞᱠᱟ ᱢᱮᱱᱩ ᱠᱷᱚᱱ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱾</string>
     <string name="unknown_type_field_warning">ᱨᱚᱲ ᱴᱟᱭᱤᱯ ᱢᱮᱺ ᱵᱚᱭ ᱵᱟᱰᱟᱭᱠᱟᱱ ᱡᱟᱭᱜᱟ %s</string>
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
@@ -178,7 +177,7 @@
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
-    <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
+    <string name="import_error_content_provider">ᱵᱟᱪᱷᱟᱣᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">ᱢᱮᱰᱤᱭᱟ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
     <string name="confirm_apkg_export">ᱴᱩᱢᱟᱹᱞ Anki ᱯᱮᱠᱮᱡ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ ?</string>
     <string name="confirm_apkg_export_deck">“%s” apkg ᱨᱮᱫ ᱞᱮᱠᱷᱟ ᱛᱮ ᱵᱷᱮᱡᱟᱭ ᱢᱮ?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Anki ᱯᱮᱠᱮᱡ ᱨᱮᱫ&#8230; ᱵᱷᱟᱡᱟᱜ ᱠᱟᱱᱟ </string>
-    <string name="export_successful_title">Anki ᱯᱮᱠᱮᱡ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
-    <string name="export_send_button">ᱵᱷᱮᱡᱟ</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ...</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
-    <string name="export_successful">ᱨᱮᱫ “%s” ᱵᱷᱮᱡᱟᱭ ᱮᱱᱟ ᱾ ᱚᱞᱜᱟ ᱮᱯᱯ ᱛᱮ ᱵᱷᱮᱡᱟ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱵᱷᱩᱞ</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
@@ -274,7 +281,7 @@
     <string name="check_integrity_recovered_deck_name">ᱨᱤᱠᱚᱵᱷᱚᱨ ᱟᱠᱟᱱ ᱠᱟᱰ ᱠᱚ</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ᱵᱮᱠᱜᱟᱨᱩᱸᱰ</string>
-    <string name="choose_an_image">ᱪᱤᱛᱟᱨ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
+    <string name="choose_an_image">ᱪᱤᱛᱟᱨ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ᱢᱩᱞ ᱯᱷᱮᱰᱟᱛ ᱨᱮ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
@@ -320,8 +327,8 @@
     <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="note_editor_toolbar_icon">ᱵᱩᱛᱟᱹᱢ ᱚᱞ</string>
-    <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
-    <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ</string>
+    <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱵᱟᱪᱷᱟᱣ</string>
+    <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
     <string name="edit_toolbar_item">ᱦᱟᱹᱛᱤᱭᱟᱹᱨ ᱡᱤᱱᱤᱥ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
@@ -377,6 +384,15 @@
     <string name="scoped_storage_postpone">ᱵᱚᱸᱫ</string>
     <string name="scoped_storage_migrate">ᱩᱪᱟᱹᱲ</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Could not create directory %s</string>
@@ -395,14 +411,16 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="validation_deck_already_exists">ᱰᱮᱠ ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_renamed">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱮᱱᱟ</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ᱠᱮᱰᱠᱚ</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ᱱᱳᱴᱠᱚ</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="browser_options_dialog_heading">ᱵᱽᱨᱟᱣᱡᱚᱨᱟᱜ ᱢᱚᱱᱮ ᱛᱮᱭᱟᱜ</string>
 </resources>

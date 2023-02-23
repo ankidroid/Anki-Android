@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Да</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоды</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Список карточек</string>
@@ -169,7 +168,7 @@
     <string name="empty_cram_label">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="custom_study_deck_name">Дополнительное занятие</string>
+    <string name="custom_study_deck_name">Допзанятие</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
@@ -186,6 +185,8 @@
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="empty_cloze_warning">Правьте эту заметку и добавьте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронизация временно отключена</string>
+    <string name="button_upgrade" comment="Text of the sync button">Перенос хранилища</string>
     <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
     <string name="continue_sync">Продолжить синхронизацию</string>
     <string name="sync_cancelled">Синхронизация отменена</string>
@@ -198,7 +199,7 @@
     <string name="title_activity_template_editor">Типы карточек</string>
     <string name="card_template_editor_front">Шаблон лица</string>
     <string name="card_template_editor_back">Шаблон оборота</string>
-    <string name="card_template_editor_styling">Стилизация</string>
+    <string name="card_template_editor_styling">Таблица стилей</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
     <string name="card_template_editor_insert_field">Вставить поле</string>
@@ -254,4 +255,11 @@
         <item quantity="other">%1$d карточек (0 к просмотру)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">Копия %s</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Данные переносятся</string>
+    <string name="migration_successful_message">Данные успешно перенесены</string>
+    <string name="migration_failed_message">Не удалось перенести данные</string>
+    <string name="migration_transferred_size">Перенесено %1$.0f МБ из %2$.0f МБ</string>
 </resources>

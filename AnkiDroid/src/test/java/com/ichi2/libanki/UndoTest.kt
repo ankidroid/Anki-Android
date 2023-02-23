@@ -22,23 +22,21 @@ import com.ichi2.libanki.Consts.COUNT_REMAINING
 import com.ichi2.libanki.Consts.QUEUE_TYPE_LRN
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.sched.Counts
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.instanceOf
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("import MatcherAssert/Matchers to simplify assertion methods calls")
 class UndoTest : RobolectricTest() {
     /*****************
      * Undo
      */
     @get:Throws(Exception::class)
-    @KotlinCleanup("make it private")
-    val colV2: Collection
+    private val colV2: Collection
         get() {
             val col = col
             col.changeSchedulerVer(2)
@@ -84,9 +82,9 @@ class UndoTest : RobolectricTest() {
         }
     }
 
+    // TODO why is this test ignored if it doesn't have @Ignore(happens for both java and kotlin versions)
     @Test
     @Throws(Exception::class)
-    // TODO why is this test ignored if it doesn't have @Ignore(happens for both java and kotlin versions)
     fun test_review() {
         val col = colV2
         with(col) {
@@ -135,10 +133,10 @@ class UndoTest : RobolectricTest() {
             // performing a normal op will clear the review queue
             c = sched.card
             sched.answerCard(c!!, Consts.BUTTON_THREE)
-            MatcherAssert.assertThat(undoType(), Matchers.instanceOf(UndoReview::class.java))
+            assertThat(undoType(), instanceOf(UndoReview::class.java))
             save("foo")
             // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
-            assumeThat(undoName(targetContext.resources), Matchers.equalTo("foo"))
+            assumeThat(undoName(targetContext.resources), equalTo("foo"))
             undo()
         }
     }

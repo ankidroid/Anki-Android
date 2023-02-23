@@ -44,20 +44,19 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">はい</string>
     <!-- Navigation drawer items-->
-    <string name="decks">デッキリスト</string>
+    <string name="decks">単語帳</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
-    <string name="statistics">統計情報</string>
+    <string name="statistics">統計</string>
     <string name="settings">設定</string>
     <string name="help">ヘルプ</string>
-    <string name="drawing">描画</string>
-    <string name="send_feedback">フィードバック</string>
+    <string name="drawing">手書き</string>
+    <string name="send_feedback">フィードバックを送信</string>
     <string name="studyoptions_due_today">今日の課題:</string>
-    <string name="studyoptions_new_total">新規カード:</string>
+    <string name="studyoptions_new_total">新しいカードの枚数:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
-    <string name="studyoptions_start">スタート</string>
+    <string name="studyoptions_start">学習開始</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
@@ -84,9 +83,9 @@
     <string name="type_answer_hint">答えを入力してください</string>
     <string name="show_answer">解答を表示</string>
     <string name="hide_answer">解答を非表示</string>
-    <string name="ease_button_again">もう一度</string>
+    <string name="ease_button_again">やり直し</string>
     <string name="ease_button_hard">難しい</string>
-    <string name="ease_button_good">普通</string>
+    <string name="ease_button_good">正解</string>
     <string name="ease_button_easy">簡単</string>
     <string name="studyoptions_congrats_undo">%s を元に戻す</string>
     <string name="menu_import">インポート</string>
@@ -171,6 +170,8 @@
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">同期が一時的に無効になっています</string>
+    <string name="button_upgrade" comment="Text of the sync button">データ保存先を対象範囲別ストレージへ移行</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
     <string name="sync_cancelled">同期がキャンセルされました</string>
@@ -230,4 +231,11 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">移行に成功しました</string>
+    <string name="migration_failed_message">移行に失敗しました</string>
+    <string name="migration_transferred_size">%2$.0f MB 中 %1$.0f MB を移行しました</string>
 </resources>

@@ -23,6 +23,7 @@ import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Model
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
@@ -37,7 +38,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun testPreviewUnsavedTemplate() {
-
         val modelName = "Basic"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0)
@@ -141,7 +141,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun testPreviewNormal() {
-
         // Make sure we test previewing a new card template
         val modelName = "Basic (and reversed card)"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
@@ -304,13 +303,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing, equalTo(true))
     }
 
-    @KotlinCleanup("Change visibility to private")
-    protected fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
+    private fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
         return getFieldsAsBundleForPreview(fields, false)
     }
 
-    @KotlinCleanup("Change visibility to private")
-    protected fun assertTwoCards(testCardTemplatePreviewer: TestCardTemplatePreviewer) {
+    private fun assertTwoCards(testCardTemplatePreviewer: TestCardTemplatePreviewer) {
         assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
 

@@ -77,7 +77,7 @@
     <string name="reset_confirmation">Все сопоставления сброшены</string>
     <string name="card_zoom" maxLength="41">Масштаб карточек</string>
     <string name="image_zoom" maxLength="41">Масштаб картинок</string>
-    <string name="button_size" maxLength="41">Размер кнопки ответа</string>
+    <string name="button_size" maxLength="41">Масштаб кнопок ответа</string>
     <string name="card_browser_font_size" maxLength="41">Масштаб шрифта в списке карточек</string>
     <string name="card_browser_hide_media" maxLength="41">Показывать имена файлов</string>
     <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">Выкл.</string>
     <string name="full_screen_system">Скрыть системную панель</string>
     <string name="full_screen_complete">Скрыть системную панель и кнопки ответа</string>
-    <string name="full_screen_error_gestures">Включите жесты, чтобы скрыть кнопки</string>
     <string name="answer_buttons_position" maxLength="41">Положение кнопок ответа</string>
     <string-array name="answer_buttons_position_labels">
         <item>Сверху</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Панель навигации при полном экране</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Показывать панель навигации при смахивании в любом месте экрана</string>
+    <string name="gestures_none" maxLength="41">Нет</string>
     <string name="gestures_swipe_up" maxLength="41">Смахивание вверх</string>
     <string name="gestures_swipe_down" maxLength="41">Смахивание вниз</string>
     <string name="gestures_swipe_left" maxLength="41">Смахивание влево</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">Зачитывает вопрос и ответ, если нет прикреплённого аудиофайла</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Загружать медиафайлы</string>
-    <string name="sync_fetch_missing_media_summ">Автоматически загружает медиафайлы при синхронизации</string>
     <string name="sync_account" maxLength="41">Учётная запись AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не вошли в учётную запись</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Всегда</string>
+    <string name="sync_media_only_unmetered">Только на безлимитных соединениях</string>
+    <string name="sync_media_never">Никогда</string>
     <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>
     <string name="sync_status_badge_summ">Добавляет точку на значок синхронизации, когда можно выгрузить изменения</string>
     <string name="metered_sync_title" maxLength="41">Разрешить синхронизацию в тарифицируемых сетях</string>
@@ -226,12 +228,12 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число итераций моделирования</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Использовать пользовательский сервер</string>
-    <string name="custom_sync_server_enable_summary">Если вы не хотите использовать AnkiWeb, то вы можете указать альтернативный сервер</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не используется</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Вместо синхронизации с AnkiWeb, вы можете использовать свой сервер для синхронизации.
+        Если не установлено, то будет использоваться AnkiWeb сервер по умолчанию.
+        <a href="%s">Подробнее</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
-    <string name="custom_sync_server_base_url_invalid">Недопустимый адрес синхронизации</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
-    <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>
     <string name="bluetooth">Bluetooth</string>
@@ -359,4 +361,67 @@
     <string name="disable_dev_options">Отключить настройки разработчика</string>
     <string name="dev_options_warning">        Пожалуйста, убедитесь, что вы знаете что делаете перед включением опций разработчика. Эти параметры являются опасными и могут нарушить приложение или повредить вашу коллекцию.\n\nОбратите внимание, что эти опции не подходят для большинства пользователей и поэтому не переводятся, поэтому они находятся на английском языке.
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Параметры резервного копирования</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid периодически делает резервную копию вашей коллекции.
+        AnkiDroid удаляет копии старше двух дней, чтобы освободить место на диске.
+        <br><br>
+        Заметьте, что медиафайлы не резервируются.
+        Для надёжности периодически синхронизируйте вашу коллекцию или экспортируйте её в другое место.
+        <br><br>
+        Вы можете восстановить коллекцию из резервной копии или экспортировать коллекцию в меню списка колод.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Интервал в минутах между копиями</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Количество ежедневных копий</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Количество еженедельных копий</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Количество ежемесячных копий</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Управление памятью</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Ошибка</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Вычисляется&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d файл\n%2$s</item>
+        <item quantity="few">%1$d файла\n%2$s</item>
+        <item quantity="many">%1$d файлов\n%2$s</item>
+        <item quantity="other">%1$d файлов\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Удалить неиспользуемые медиафайлы</string>
+    <string name="pref__delete_unused_media_files__summary">Удалять изображения и другие носители, которые не начинаются с «_» и не связаны ни с какими записями</string>
+    <string name="dialog__media_check_required__message">Выполните проверку медиафайлов, чтобы найти неиспользуемые</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Удалить неиспользуемые медиафайлы</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Удалить резервные копии</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Удалить резервные копии</string>
+    <string name="progress__deleting_backups">Резервные копии удаляются&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Удалить коллекцию</string>
+    <string name="pref__delete_collection__summary">Удалить коллекцию, медиа и резервные копии. Настройки приложения не удаляются</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Удалить коллекцию</string>
+    <string name="dialog__delete_collection__message">Удалить вашу коллекцию, медиафайлы и резервные копии?</string>
+    <string name="progress__deleting_collection">Коллекция удаляется&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Удалить всё</string>
+    <string name="pref__delete_everything__summary">Удалить коллекцию, медиафайлы, резервные копии и настройки</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Удалить всё</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Удалить все данные? Это включает в себя вашу коллекцию, медиафайлы, резервные копии и настройки.\n\nПримечание: это действие закроет окно.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Удалить данные приложения</string>
+    <string name="pref__delete_app_data__summary">Удалить настройки и другие данные приложения</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Удалить данные приложения</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Удалить данные приложения? Это включает в себя настройки и другие данные приложения.\n\nПримечание: это действие закроет окно.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Нет коллекций</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Ошибка</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Данные получаются&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Вычисляется&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Коллекция не существует</string>
 </resources>

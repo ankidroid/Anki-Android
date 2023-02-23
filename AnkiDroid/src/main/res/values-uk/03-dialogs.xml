@@ -106,6 +106,7 @@
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Повідомити про помилку</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Ви дійсно бажаєте спробувати відновити базу даних?\n\nПеред початком спроби в підкаталозі \'%s\' буде створена копія.</string>
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
@@ -125,12 +126,12 @@
     <string name="import_update_ignored">Деякі оновлення пропущено, оскільки тип записів змінений</string>
     <plurals name="import_complete_message">
         <item quantity="one">Карток імпортовано: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="few">Карток імпортовано: %2$d</item>
+        <item quantity="many">Карток імпортовано: %2$d</item>
         <item quantity="other">Файлів імпортовано: %1$d\nЗагалом карток імпортовано: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD карта заповнена</string>
-    <string name="sd_card_almost_full_title">SD-карта майже заповнена</string>
+    <string name="storage_full_title">Сховище заповнено</string>
+    <string name="storage_almost_full_title">Сховище майже заповнено</string>
     <string name="no_space_to_downgrade_title">Пам\'ять заповнена</string>
     <string name="no_space_to_downgrade_content">AnkiDroid потрібно %s вільного місця, щоб продовжити. Будь ласка, очистіть трохи пам\'ять</string>
     <string name="restore_backup_title">Відновити резервну копію?</string>
@@ -138,7 +139,9 @@
     <string name="restore_backup_choose_another">Вибрати інший</string>
     <string name="dialog_cancel">Скасувати</string>
     <string name="dialog_ok">Ок</string>
+    <string name="dialog_confirm">Підтвердити</string>
     <string name="dialog_no">Ні</string>
+    <string name="dialog_yes">Так</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
@@ -188,9 +191,6 @@
     <string name="multimedia_editor_failed">Не вдалося відкрити мультимедійний редактор</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Відхилено доступ до запису звуку</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Ласкаво просимо до AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid потрібен дозвіл на доступ до пам\'яті, який ми використовуємо виключно для збереження колекції AnkiDroid, карток та резервніих копій. Код додатка відкритий, написаний добровольцями тому йому довіряють мільйони.\n\nЯкщо у вас виникли запитання, будь ласка, перегляньте посібник в додатоку або відвідайте наші форуми.\n\nДякуємо за те, що ви спробували AnkiDroid!\n—Команда Розробників AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Невідома помилка під час відображення розширеного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid оновлено</string>
@@ -246,6 +246,7 @@
     <string name="help_item_support_develop_ankidroid">Розробка</string>
     <string name="help_item_support_rate_ankidroid">Оцінити</string>
     <string name="help_item_support_other_ankidroid">Інше</string>
+    <string name="multimedia_editor_trans_translate">Перекласти</string>
     <string name="help_title_community">Спільнота</string>
     <string name="help_item_anki_forums">Форуми Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -277,4 +278,14 @@
     <string name="import_csv">Текстовий файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Ви не можете створити підколоду для всіх колод</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        У зв\'язку зі зміною політики конфіденційності Android, ваше теперішнє розташування сховища буде недоступне, якщо ви видалите додаток.
+        \n\nНам потрібно перенести ваші дані до приватного місця додатку AnkiDroid.
+        \n\nДані у цьому приватному місці можуть бути видалені, коли додаток буде деінстальовано.
+        \n\nВаше поточне місце зберігання %1$s
+        \n\n\nПриватне місце зберігання буде %2$s
+        \n\nБудь ласка перевірте, щоб ви регулярно робили резервні копії цієї папки.
+    </string>
+    <string name="manual_backup">Резервне копіювання вручну</string>
+    <string name="remind_me_later">Нагадати пізніше</string>
 </resources>

@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.LocaleList
-import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
@@ -45,6 +44,7 @@ import com.ichi2.utils.ClipboardUtil.getImageUri
 import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
 import kotlin.math.max
@@ -55,6 +55,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private var mOrigBackground: Drawable? = null
     private var mSelectionChangeListener: TextSelectionListener? = null
     private var mImageListener: ImagePasteListener? = null
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var clipboard: ClipboardManager? = null
 
@@ -70,15 +71,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
     }
 
-    @KotlinCleanup("Remove try-catch")
     private fun shouldDisableExtendedTextUi(): Boolean {
-        return try {
-            val sp = AnkiDroidApp.getSharedPrefs(this.context)
-            sp.getBoolean("disableExtendedTextUi", false)
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to get extended UI preference")
-            false
-        }
+        return AnkiDroidApp.getSharedPrefs(this.context).getBoolean("disableExtendedTextUi", false)
     }
 
     @KotlinCleanup("Simplify")
@@ -110,7 +104,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         val inputConnection = super.onCreateInputConnection(editorInfo) ?: return null
         EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES)
         ViewCompat.setOnReceiveContentListener(
-            this, IMAGE_MIME_TYPES,
+            this,
+            IMAGE_MIME_TYPES,
             object : OnReceiveContentListener {
                 override fun onReceiveContent(view: View, payload: ContentInfoCompat): ContentInfoCompat? {
                     val pair = payload.partition { item -> item.uri != null }
@@ -183,20 +178,19 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     fun setContent(content: String?, replaceNewLine: Boolean) {
-        var _content = content
-        if (content == null) {
-            _content = ""
+        val text = if (content == null) {
+            ""
         } else if (replaceNewLine) {
-            _content = content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+        } else {
+            content
         }
-        setText(_content)
+        setText(text)
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         val state = super.onSaveInstanceState()
-        val savedState = SavedState(state)
-        savedState.ord = ord
-        return savedState
+        return SavedState(state, ord)
     }
 
     override fun onTextContextMenuItem(id: Int): Boolean {
@@ -224,11 +218,12 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    @KotlinCleanup("Make param non-null")
-    protected fun onImagePaste(imageUri: Uri?): Boolean {
+    private fun onImagePaste(imageUri: Uri?): Boolean {
         return if (imageUri == null) {
             false
-        } else mImageListener!!.onImagePaste(this, imageUri)
+        } else {
+            mImageListener!!.onImagePaste(this, imageUri)
+        }
     }
 
     override fun onRestoreInstanceState(state: Parcelable) {
@@ -236,9 +231,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             super.onRestoreInstanceState(state)
             return
         }
-        val ss = state
-        super.onRestoreInstanceState(ss.superState)
-        ord = ss.ord
+        super.onRestoreInstanceState(state.superState)
+        ord = state.ord
     }
 
     fun setCapitalize(value: Boolean) {
@@ -253,42 +247,15 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     val isCapitalized: Boolean
         get() = this.inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
-    @KotlinCleanup("Use @Parcelize")
-    internal class SavedState : BaseSavedState {
-        var ord = 0
-
-        constructor(superState: Parcelable?) : super(superState)
-
-        override fun writeToParcel(out: Parcel, flags: Int) {
-            super.writeToParcel(out, flags)
-            out.writeInt(ord)
-        }
-
-        private constructor(`in`: Parcel) : super(`in`) {
-            ord = `in`.readInt()
-        }
-
-        companion object {
-            @JvmField // required field that makes Parcelables from a Parcel
-            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
-                override fun createFromParcel(source: Parcel): SavedState {
-                    return SavedState(source)
-                }
-
-                override fun newArray(size: Int): Array<SavedState?> {
-                    return arrayOfNulls(size)
-                }
-            }
-        }
-    }
+    @Parcelize
+    internal class SavedState(val state: Parcelable?, val ord: Int) : BaseSavedState(state)
 
     interface TextSelectionListener {
         fun onSelectionChanged(selStart: Int, selEnd: Int)
     }
 
-    @KotlinCleanup("non-null")
     fun interface ImagePasteListener {
-        fun onImagePaste(editText: EditText?, uri: Uri?): Boolean
+        fun onImagePaste(editText: EditText, uri: Uri?): Boolean
     }
 
     companion object {

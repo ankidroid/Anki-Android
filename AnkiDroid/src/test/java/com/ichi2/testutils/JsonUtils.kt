@@ -16,9 +16,9 @@
 
 package com.ichi2.testutils
 
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import org.json.JSONArray
 import org.json.JSONException
+import org.json.JSONObject
 import org.json.JSONStringer
 
 object JsonUtils {
@@ -40,10 +40,8 @@ object JsonUtils {
     }
 
     private fun JSONArray.values() = sequence {
-        var i = 0
-        while (i < this@values.length()) {
+        for (i in 0 until this@values.length()) {
             yield(this@values[i])
-            i++
         }
     }
 
@@ -56,7 +54,7 @@ object JsonUtils {
     }
 
     private fun JSONObject.iterateEntries() = sequence {
-        for (k in this@iterateEntries) {
+        for (k in this@iterateEntries.keys()) {
             yield(Pair(k, this@iterateEntries.get(k)))
         }
     }

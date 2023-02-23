@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">A letöltött adatbázis sérült volt. Kérlek, próbáld újra.</string>
     <string name="sync_overwrite_error">A jelenlegi gyűjteményt nem lehetett felülírni a letöltött fájllal.</string>
     <string name="sync_connection_error">A kapcsolat túllépte az időkeretet. Vagy az internet-kapcsolattal van probléma, vagy nagy fájl van a média mappában.</string>
-    <string name="sync_write_access_error">A letöltött fájlt nem sikerült menteni a sd kártya. Az sd kártya vagy írásvédett, vagy nincs rajta elég hely.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">A Haladó beállításokban megadott egyéni szinkronizáló szerver elérhetetlen (%s). Kérem adj meg egy érvényes szervert, vagy tiltsd a beállítást.</string>
     <string name="sync_deletions_message">Törlések szinkronizálása...</string>
     <string name="sync_small_objects_message">Kis méretű objektumok szinkronizálása...</string>

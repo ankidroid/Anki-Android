@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">復習カードの前</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">フォントが指定されていない場合</string>
-    <string name="override_font_always">全て</string>
+    <string name="override_font_always" comment="Option to always override font">全て</string>
     <!-- theme labels -->
     <string name="theme_follow_system">端末の設定に従う</string>
     <!-- day_theme_labels -->
@@ -113,6 +113,6 @@
     <string name="gesture_show_all_hints">全てのヒントを表示</string>
     <string name="record_voice">音声を録音</string>
     <string name="replay_voice">音声を再生</string>
-    <string name="automatic_answer_option_2">難しい（選択できない場合は 普通）</string>
-    <string name="automatic_answer_option_4">簡単（選択できない場合は 普通）</string>
+    <string name="automatic_answer_option_2">難しい（選択できない場合は 正解）</string>
+    <string name="automatic_answer_option_4">簡単（選択できない場合は 正解）</string>
 </resources>

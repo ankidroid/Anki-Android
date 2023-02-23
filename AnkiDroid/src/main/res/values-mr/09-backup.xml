@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">बॅकअप जतन झाला नाही. एसडी कार्डवर पुरेशी जागा शिल्लक नाही. बॅकअप खोली कमी करा किंवा इतर काही फायली काढा.</string>
-    <string name="sd_space_warning">Āpalyā SD kārḍavarīla %d MB pēkṣā kamī jāgā śillaka āhēta.\n ḍēṭācē nukasāna ṭāḷaṇyāsāṭhī kāhī jāgā.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">Bĕka\'apamadhūna punarsan̄cayita karā</string>
     <string name="backup_new_collection">Navina saṅgraha</string>
     <string name="backup_del_collection">Saṅgraha haṭavā āṇi navīna tayāra karā</string>

@@ -46,9 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
-        app:itemIconTint="@color/bottom_navigation_icon_color"
-        app:itemTextColor="@color/bottom_navigation_text_color"
+        style="@style/BottomNavigationViewStyle"
         app:menu="@menu/card_template_editor_navigation_bar_menu"
         />
 

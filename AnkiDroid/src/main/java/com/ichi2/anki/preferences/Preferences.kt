@@ -32,18 +32,19 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
@@ -52,7 +53,10 @@ import java.util.*
 /**
  * Preferences dialog.
  */
-class Preferences : AnkiActivity(), SearchPreferenceResultListener {
+class Preferences :
+    AnkiActivity(),
+    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+    SearchPreferenceResultListener {
     val searchConfiguration: SearchConfiguration by lazy { configureSearchBar() }
     lateinit var searchView: PreferencesSearchView
 
@@ -62,7 +66,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
-        setThemeLegacy(this)
 
         val actionBar = enableToolbar().apply {
             setHomeButtonEnabled(true)
@@ -113,6 +116,22 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         searchView.searchConfiguration = searchConfiguration
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference
+    ): Boolean {
+        val fragment = supportFragmentManager.fragmentFactory.instantiate(
+            classLoader,
+            pref.fragment!!
+        )
+        fragment.arguments = pref.extras
+        supportFragmentManager.commit {
+            replace(R.id.settings_container, fragment)
+            addToBackStack(null)
+        }
+        return true
     }
 
     /**
@@ -242,24 +261,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         }
     }
 
-    /** Sets the hour that the collection rolls over to the next day  */
-    @VisibleForTesting
-    fun setDayOffset(hours: Int) {
-        when (getSchedVer(col)) {
-            2 -> {
-                col.set_config("rollover", hours)
-                col.flush()
-            }
-            else -> { // typically "1"
-                val date: Calendar = col.crtGregorianCalendar()
-                date[Calendar.HOUR_OF_DAY] = hours
-                col.crt = date.timeInMillis / 1000
-                col.setMod()
-            }
-        }
-        scheduleNotification(TimeManager.time, this)
-    }
-
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         val resultFragment = getFragmentFromXmlRes(result.resourceFile)
             ?: return
@@ -287,11 +288,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         result.highlight(fragmentToHighlight as PreferenceFragmentCompat)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-    }
-
     companion object {
         /** Key of the language preference  */
         const val LANGUAGE = "language"
@@ -299,7 +295,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         /* Only enable AnkiDroid notifications unrelated to due reminders */
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
-        private const val DEFAULT_ROLLOVER_VALUE: Int = 4
+        const val DEFAULT_ROLLOVER_VALUE: Int = 4
 
         /**
          * The number of cards that should be due today in a deck to justify adding a notification.
@@ -309,15 +305,8 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
         /** Returns the hour that the collection rolls over to the next day  */
-        fun getDayOffset(col: Collection): Int {
-            return when (col.schedVer()) {
-                2 -> col.get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
-                // 1, or otherwise:
-                else -> col.crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
-            }
-        }
 
-        fun getSchedVer(col: Collection): Int {
+        private fun getSchedVer(col: Collection): Int {
             val ver = col.schedVer()
             if (ver < 1 || ver > 2) {
                 Timber.w("Unknown scheduler version: %d", ver)
@@ -350,5 +339,35 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         /** Whether the user is logged on to AnkiWeb  */
         fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean =
             preferences.getString("username", "")!!.isNotEmpty()
+
+        /** Sets the hour that the collection rolls over to the next day  */
+        @VisibleForTesting
+        suspend fun setDayOffset(context: Context, hours: Int) {
+            withCol {
+                when (getSchedVer(this)) {
+                    2 -> {
+                        set_config("rollover", hours)
+                        flush()
+                    }
+                    else -> { // typically "1"
+                        val date: Calendar = crtGregorianCalendar()
+                        date[Calendar.HOUR_OF_DAY] = hours
+                        crt = date.timeInMillis / 1000
+                        setMod()
+                    }
+                }
+            }
+            scheduleNotification(TimeManager.time, context)
+        }
+
+        suspend fun getDayOffset(): Int {
+            return withCol {
+                when (schedVer()) {
+                    2 -> get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
+                    // 1, or otherwise:
+                    else -> crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
+                }
+            }
+        }
     }
 }

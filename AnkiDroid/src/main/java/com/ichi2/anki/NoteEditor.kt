@@ -30,7 +30,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
+import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -41,8 +41,11 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -73,9 +76,8 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.NoteTypeSpinnerUtils
+import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.anki.widgets.PopupMenuWithIcons
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
@@ -90,6 +92,8 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
@@ -131,6 +135,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     // non-null after onCollectionLoaded
     private var mEditorNote: Note? = null
+
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var mCurrentEditedCard: Card? = null
     private var mSelectedTags: ArrayList<String>? = null
@@ -138,7 +143,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @get:VisibleForTesting
     var deckId: DeckId = 0
         private set
-    private var mAllModelIds: ArrayList<Long>? = null
+    private var mAllModelIds: List<Long>? = null
+
     @KotlinCleanup("this ideally should be Int, Int?")
     private var mModelChangeFieldMap: MutableMap<Int, Int>? = null
     private var mModelChangeCardMap: HashMap<Int, Int?>? = null
@@ -193,24 +199,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (isClozeType) {
                 return R.string.note_editor_no_cloze_delations
             }
-            if (TextUtils.isEmpty(getCurrentFieldText(0))) {
+            if (getCurrentFieldText(0).isEmpty()) {
                 return R.string.note_editor_no_first_field
             }
             return if (allFieldsHaveContent()) {
                 R.string.note_editor_no_cards_created_all_fields
-            } else R.string.note_editor_no_cards_created
+            } else {
+                R.string.note_editor_no_cards_created
+            }
 
             // Otherwise, display "no cards created".
         }
 
-    private fun allFieldsHaveContent(): Boolean {
-        for (s in currentFieldStrings) {
-            if (TextUtils.isEmpty(s)) {
-                return false
-            }
-        }
-        return true
-    }
+    private fun allFieldsHaveContent() = currentFieldStrings.none { it.isNullOrEmpty() }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -354,7 +355,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner)
-        mAllModelIds = NoteTypeSpinnerUtils.setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
+        mAllModelIds = setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
 
         // Deck Selector
         val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)
@@ -364,7 +365,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         mDeckSpinnerSelection =
             DeckSpinnerSelection(
-                this, col, findViewById(R.id.note_deck_spinner),
+                this,
+                col,
+                findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
                 showFilteredDecks = false
@@ -433,7 +436,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun modifyCurrentSelection(formatter: Toolbar.TextFormatter, textBox: FieldEditText) {
-
         // get the current text and selection locations
         val selectionStart = textBox.selectionStart
         val selectionEnd = textBox.selectionEnd
@@ -627,7 +629,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // changed fields?
         return if (isFieldEdited) {
             true
-        } else isTagsEdited
+        } else {
+            isTagsEdited
+        }
         // changed tags?
     }
 
@@ -699,6 +703,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Different from libAnki, block if there are no cloze deletions.
             // DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
             if (isClozeType && !hasClozeDeletions()) {
+                displayErrorSavingNote()
+                return
+            }
+            if (getCurrentFieldText(0).isEmpty()) {
                 displayErrorSavingNote()
                 return
             }
@@ -805,7 +813,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val dialog = ConfirmationDialog()
             dialog.setArgs(res.getString(R.string.full_sync_confirmation))
             val confirm = Runnable {
-
                 // Bypass the check once the user confirms
                 col.modSchemaNoCheck()
                 try {
@@ -915,8 +922,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_show_toolbar -> {
                 item.isChecked = !item.isChecked
-                AnkiDroidApp.getSharedPrefs(this).edit()
-                    .putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked).apply()
+                AnkiDroidApp.getSharedPrefs(this).edit {
+                    putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked)
+                }
                 updateToolbar()
             }
             R.id.action_capitalize -> {
@@ -927,8 +935,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_scroll_toolbar -> {
                 item.isChecked = !item.isChecked
-                AnkiDroidApp.getSharedPrefs(this).edit()
-                    .putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked).apply()
+                AnkiDroidApp.getSharedPrefs(this).edit {
+                    putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked)
+                }
                 updateToolbar()
             }
         }
@@ -936,7 +945,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun toggleCapitalize(value: Boolean) {
-        AnkiDroidApp.getSharedPrefs(this).edit().putBoolean(PREF_NOTE_EDITOR_CAPITALIZE, value).apply()
+        AnkiDroidApp.getSharedPrefs(this).edit {
+            putBoolean(PREF_NOTE_EDITOR_CAPITALIZE, value)
+        }
         for (f in mEditFields!!) {
             f!!.setCapitalize(value)
         }
@@ -947,7 +958,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         Timber.i("Setting font size to %d", fontSizeSp)
-        AnkiDroidApp.getSharedPrefs(this).edit().putInt(PREF_NOTE_EDITOR_FONT_SIZE, fontSizeSp).apply()
+        AnkiDroidApp.getSharedPrefs(this).edit { putInt(PREF_NOTE_EDITOR_FONT_SIZE, fontSizeSp) }
         for (f in mEditFields!!) {
             f!!.textSize = fontSizeSp.toFloat()
         }
@@ -1178,7 +1189,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
             REQUEST_TEMPLATE_EDIT -> {
-
                 // Model can change regardless of exit type - update ourselves and CardBrowser
                 mReloadRequired = true
                 mEditorNote!!.reloadModel()
@@ -1275,7 +1285,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val editLineView = editLines[i]
             mCustomViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText!!.setImagePasteListener { editText: EditText?, uri: Uri? ->
+            newEditText.setImagePasteListener { editText: EditText?, uri: Uri? ->
                 onImagePaste(
                     editText!!,
                     uri!!
@@ -1286,7 +1296,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
                 }
                 if (previous != null) {
-                    previous.lastViewInTabOrder!!.nextFocusForwardId = newEditText.id
+                    previous.lastViewInTabOrder.nextFocusForwardId = newEditText.id
                 }
             }
             previous = editLineView
@@ -1316,26 +1326,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
-                mediaButton!!.setBackgroundResource(icons[1])
+                mediaButton.setBackgroundResource(icons[1])
                 setRemapButtonListener(mediaButton, i)
-                toggleStickyButton!!.setBackgroundResource(0)
+                toggleStickyButton.setBackgroundResource(0)
             } else if (editModelMode && !allowFieldRemapping()) {
-                mediaButton!!.setBackgroundResource(0)
-                toggleStickyButton!!.setBackgroundResource(0)
+                mediaButton.setBackgroundResource(0)
+                toggleStickyButton.setBackgroundResource(0)
             } else {
                 // Use media editor button if not changing note type
-                mediaButton!!.setBackgroundResource(icons[0])
+                mediaButton.setBackgroundResource(icons[0])
                 setMMButtonListener(mediaButton, i)
                 if (addNote) {
                     // toggle sticky button
-                    toggleStickyButton!!.setBackgroundResource(icons[2])
+                    toggleStickyButton.setBackgroundResource(icons[2])
                     setToggleStickyButtonListener(toggleStickyButton, i)
                 } else {
-                    toggleStickyButton!!.setBackgroundResource(0)
+                    toggleStickyButton.setBackgroundResource(0)
                 }
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
+                previous.lastViewInTabOrder.nextFocusForwardId = R.id.CardEditorTagButton
             }
             mediaButton.contentDescription =
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
@@ -1351,8 +1361,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return true
     }
 
-    private fun setMMButtonListener(mediaButton: ImageButton?, index: Int) {
-        mediaButton!!.setOnClickListener { v: View? ->
+    private fun setMMButtonListener(mediaButton: ImageButton, index: Int) {
+        mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
                 val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
@@ -1362,10 +1372,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 startMultimediaFieldEditor(index, note)
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
-                // TODO: Update the icons for dark material theme, then can set 3rd argument to true
-                val popup = PopupMenuWithIcons(this@NoteEditor, v, true)
+                val popup = PopupMenu(this@NoteEditor, v)
                 val inflater = popup.menuInflater
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.menu)
+
+                (popup.menu as? MenuBuilder)?.let { menu ->
+                    menu.setOptionalIconsVisible(true)
+                    increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+                    tintOverflowMenuIcons(menu)
+                }
+
                 popup.setOnMenuItemClickListener { item: MenuItem ->
                     when (item.itemId) {
                         R.id.menu_multimedia_audio -> {
@@ -1404,7 +1420,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
+    @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")
     private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
+        if (currentFields.getJSONObject(index).getBoolean("sticky")) {
+            mToggleStickyText.getOrPut(index) { "" }
+        }
         if (mToggleStickyText[index] == null) {
             toggleStickyButton!!.background.alpha = 64
         } else {
@@ -1671,8 +1691,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun updateToolbar() {
         val editorLayout = findViewById<View>(R.id.note_editor_layout)
         val bottomMargin =
-            if (shouldHideToolbar()) 0 else resources.getDimension(R.dimen.note_editor_toolbar_height)
-                .toInt()
+            if (shouldHideToolbar()) {
+                0
+            } else {
+                resources.getDimension(R.dimen.note_editor_toolbar_height)
+                    .toInt()
+            }
         val params = editorLayout.layoutParams as MarginLayoutParams
         params.bottomMargin = bottomMargin
         editorLayout.layoutParams = params
@@ -1683,7 +1707,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             toolbar.visibility = View.VISIBLE
         }
         toolbar.clearCustomItems()
-        val clozeIcon = toolbar.clozeIcon
         if (mEditorNote!!.model().isCloze) {
             val clozeFormatter = Toolbar.TextFormatter { s: String ->
                 val stringFormat = Toolbar.StringFormat()
@@ -1698,14 +1721,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 stringFormat
             }
-            clozeIcon!!.setOnClickListener { toolbar.onFormat(clozeFormatter) }
-            clozeIcon.visibility = View.VISIBLE
-        } else {
-            clozeIcon!!.visibility = View.GONE
+
+            val clozeDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_cloze_black_24dp, null)
+            clozeDrawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+            val clozeButton = toolbar.insertItem(0, clozeDrawable, Runnable { toolbar.onFormat(clozeFormatter) })
+            clozeButton.contentDescription = resources.getString(R.string.insert_cloze)
+            TooltipCompat.setTooltipText(clozeButton, resources.getString(R.string.insert_cloze))
         }
         val buttons = toolbarButtons
         for (b in buttons) {
-
             // 0th button shows as '1' and is Ctrl + 1
             val visualIndex = b.index + 1
             var text = visualIndex.toString()
@@ -1714,6 +1738,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             val bmp = toolbar.createDrawableForString(text)
             val v = toolbar.insertItem(0, bmp, b.toFormatter())
+            v.contentDescription = text
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.
             v.tag = (visualIndex % 10).toString()
@@ -1727,7 +1752,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-        toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        val addButton = toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
+        TooltipCompat.setTooltipText(addButton, resources.getString(R.string.add_toolbar_item))
     }
 
     private val toolbarButtons: ArrayList<CustomToolbarButton>
@@ -1738,37 +1765,35 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
 
     private fun saveToolbarButtons(buttons: ArrayList<CustomToolbarButton>) {
-        AnkiDroidApp.getSharedPrefs(this).edit()
-            .putStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, CustomToolbarButton.toStringSet(buttons))
-            .apply()
+        AnkiDroidApp.getSharedPrefs(this).edit {
+            putStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, CustomToolbarButton.toStringSet(buttons))
+        }
     }
 
     private fun addToolbarButton(buttonText: String, prefix: String, suffix: String) {
-        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
-            return
-        }
+        if (prefix.isEmpty() && suffix.isEmpty()) return
         val toolbarButtons = toolbarButtons
         toolbarButtons.add(CustomToolbarButton(toolbarButtons.size, buttonText, prefix, suffix))
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }
 
-    @KotlinCleanup(".isEmpty()")
     private fun editToolbarButton(
-        buttonTextParam: String,
-        prefixParam: String,
-        suffixParam: String,
+        buttonText: String,
+        prefix: String,
+        suffix: String,
         currentButton: CustomToolbarButton
     ) {
-        var buttonText: String? = buttonTextParam
-        var prefix: String? = prefixParam
-        var suffix: String? = suffixParam
-        buttonText = if (TextUtils.isEmpty(buttonText)) currentButton.buttonText else buttonText
-        prefix = if (TextUtils.isEmpty(prefix)) currentButton.prefix else prefix
-        suffix = if (TextUtils.isEmpty(suffix)) currentButton.suffix else suffix
         val toolbarButtons = toolbarButtons
-        val index = currentButton.index
-        toolbarButtons[index] = CustomToolbarButton(index, buttonText!!, prefix!!, suffix!!)
+        val currentButtonIndex = currentButton.index
+
+        toolbarButtons[currentButtonIndex] = CustomToolbarButton(
+            index = currentButtonIndex,
+            buttonText = buttonText.ifEmpty { currentButton.buttonText },
+            prefix = prefix.ifEmpty { currentButton.prefix },
+            suffix = suffix.ifEmpty { currentButton.suffix }
+        )
+
         saveToolbarButtons(toolbarButtons)
         updateToolbar()
     }
@@ -1902,7 +1927,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun tagsAsString(tags: List<String>): String {
-        return TextUtils.join(" ", tags)
+        return tags.joinToString(" ")
     }
 
     private val currentlySelectedModel: Model?

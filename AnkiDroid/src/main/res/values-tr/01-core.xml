@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">evet</string>
     <!-- Navigation drawer items-->
     <string name="decks">Desteler</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart tarayıcısı</string>
@@ -52,7 +51,7 @@
     <string name="settings">Ayarlar</string>
     <string name="help">Yardım</string>
     <string name="drawing">Çizim</string>
-    <string name="send_feedback">Geribildirim gönder</string>
+    <string name="send_feedback">Geri bildirim gönder</string>
     <string name="studyoptions_due_today">Bugün sırada:</string>
     <string name="studyoptions_new_total">Toplam yeni kart:</string>
     <string name="studyoptions_total_cards">Toplam kart:</string>
@@ -95,27 +94,27 @@
     <string name="ease_button_easy">Kolay</string>
     <string name="studyoptions_congrats_undo">%s geri al</string>
     <string name="menu_import">İçeri aktar</string>
-    <string name="undo">Geri Al</string>
+    <string name="undo">Geri al</string>
     <string name="undo_action_review">Son çalışmayı</string>
     <string name="undo_action_change_deck_multi">Desteleri değiştir</string>
     <string name="move_all_to_deck">Hepsini desteye taşı</string>
-    <string name="unbury">Görünür Yap</string>
-    <string name="rename_deck">Destenin adını değiştir</string>
+    <string name="unbury">Gizlemeyi geri al</string>
+    <string name="rename_deck">Desteyi yeniden adlandır</string>
     <string name="create_shortcut">Kısayol oluştur</string>
-    <string name="browse_cards">Turkcha</string>
+    <string name="browse_cards">Kartları gözden geçir</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
     <string name="menu_bury_card">Kartı gizle</string>
-    <string name="menu_bury_note">Notu Gizle</string>
-    <string name="menu_suspend_card">Kartı Askıya Al</string>
+    <string name="menu_bury_note">Notu gizle</string>
+    <string name="menu_suspend_card">Kartı askıya al</string>
     <string name="menu_suspend_note">Notu Askıya Al</string>
     <string name="menu_bury">Gizle</string>
     <string name="menu_suspend">Askıya Al</string>
     <string name="menu_delete_note">Notu Sil</string>
     <string name="menu_flag">Bayrak</string>
-    <string name="menu_flag_card">Bayrak kartı</string>
+    <string name="menu_flag_card">Kartı bayrakla işaretle</string>
     <string name="menu_flag_card_zero">Bayrak yok</string>
     <string name="menu_flag_card_one">Kırmızı bayrak</string>
     <string name="menu_flag_card_two">Turuncu bayrak</string>
@@ -148,7 +147,7 @@
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d dk</string>
     <string name="time_quantity_hours_minutes">%1$d s %2$d d</string>
-    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_hours">%d s</string>
     <string name="time_quantity_days">%d gün</string>
     <string name="time_quantity_days_hours">%1$d g %2$d s</string>
     <string name="time_quantity_months">%.1f ay</string>
@@ -156,7 +155,7 @@
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor...</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
-    <string name="empty_cram_label">Boş</string>
+    <string name="empty_cram_label">Boşalt</string>
     <string name="create_subdeck">Altdeste oluştur</string>
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
@@ -175,36 +174,38 @@
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="empty_cloze_warning">Bu notu düzenleyip doldurulacak boşluklar ekleyin. (%1$s)</string>
-    <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
+    <string name="button_sync" comment="Text of the sync button">Eşitleme</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Senkronizasyon geçici olarak devredışı</string>
+    <string name="button_upgrade" comment="Text of the sync button">Kapsamlı depolamaya geç</string>
     <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
     <string name="continue_sync">Senkronizasyona devam et</string>
     <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>
     <string name="sync_cancel_message">İptâl ediliyor&#8230;\nBu biraz sürebilir.</string>
-    <string name="export">Dışarı aktar</string>
-    <string name="export_collection">Koleksiyonu dışarı aktar</string>
-    <string name="export_deck">Desteyi dışarı aktar</string>
+    <string name="export">Dışa aktar</string>
+    <string name="export_collection">Koleksiyonu dışa aktar</string>
+    <string name="export_deck">Desteyi dışa aktar</string>
     <string name="nothing">Hiçbirşey</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Kart türleri</string>
-    <string name="card_template_editor_front">Şablon Ön Yüz</string>
-    <string name="card_template_editor_back">Şablon Arka Yüz</string>
+    <string name="title_activity_template_editor">Kart tipleri</string>
+    <string name="card_template_editor_front">Ön şablon</string>
+    <string name="card_template_editor_back">Arka şablon</string>
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kart Tarayıcısı Görünümü</string>
     <string name="card_template_editor_deck_override">Desteyi Geçersiz Kılma</string>
-    <string name="card_template_editor_insert_field">Alan Ekle</string>
+    <string name="card_template_editor_insert_field">Alan ekle</string>
     <string name="card_template_editor_select_field">Alan seç</string>
-    <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
+    <string name="card_template_editor_cant_delete">En az bir kart tipi gerekiyor.</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Bu %1$d kart oluşturacak. Devam edilsin mi?</item>
         <item quantity="other">Bu %1$d kart oluşturacak. Devam edilsin mi?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
+        <item quantity="one">\"%2$s\" kart tipi ve %1$d kartı silinsin mi?</item>
         <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     </plurals>
     <string name="invalid_template">Bir kart oluşturulamadı</string>
     <string name="card_template_editor_would_delete_note">Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
-    <string name="card_template_editor_save_error">Kart şablon değişiklikleri yapılamıyor: %s</string>
+    <string name="card_template_editor_save_error">Kart şablonu değişiklikleri kaydedilemiyor: %s</string>
     <string name="template_for_current_card_deleted">Kart için mevcut olan kart tipi silindi.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Tarayıcı görünümü</string>
@@ -220,10 +221,10 @@
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s problem var:<br/>%2$s</string>
     <string name="more_information">Daha fazla bilgi</string>
     <string name="no_field">Bulundu \'{{%1$s}}\', ama \'%1$s\' alanı yok.</string>
-    <string name="closed_tag_not_open">Bulundu \'{{/%1$s}}\', ama \'{{#%1$s}}\' ya da \'{{^%1$s}}\' eksik.</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' bulundu, ama \'{{#%1$s}}\' ya da \'{{^%1$s}}\' eksik.</string>
     <string name="missing_closing_bracket">\'%s\' içinde \'}}\' eksik.</string>
     <string name="open_tag_not_closed">\'{{%s}}\' eksik.</string>
-    <string name="wrong_tag_closed">Bulundu \'{{/%1$s}}\', ama \'{{/%2$s}}\' beklendi.</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' bulundu, ama \'{{/%2$s}}\' beklendi.</string>
     <string name="filter_error">%s Filtresinde Hata</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksiyonlar birleştirilemiyor.\nHangi koleksiyonu tutmak istersiniz?</string>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d kart (0 sırası gelmiş)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopyala</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">%s dosyası oluşturulamıyor ya da yazılamıyor</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

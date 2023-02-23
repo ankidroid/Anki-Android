@@ -65,7 +65,7 @@
     <string name="disable_whiteboard">დაფის გამორთვა</string>
     <string name="show_whiteboard">დაფის ჩვენება</string>
     <string name="hide_whiteboard">დაფის დამალვა</string>
-    <string name="clear_whiteboard">დაფის წაშლა</string>
+    <string name="clear_whiteboard">დაფის გასუფთავება</string>
     <string name="replay_audio">ხმის თავიდან ჩართვა</string>
     <string name="leech_suspend_notification">ბარათი მოინიშნა როგორც სწავლის შემაფერხებელი ბარათი და Anki მას ამიერიდან გამოტოვებს</string>
     <string name="leech_notification">ბარათი შემაფერხებლად მოინიშნა</string>
@@ -73,8 +73,8 @@
     <string name="webview_crash_unknown">უცნობი შეცდომა</string>
     <string name="webview_crash_unknwon_detailed">ეს იყო გამოწვეული WebWiew-ის შიდა შეცდომით</string>
     <string name="webview_crash_oom">მეხსიერება აღარ არის</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_oom_details">სისტემამ WebView შეწყვიტა. ზოგადად, ეს აპლიკაციის მეხსიერების ამოწურვის შემთხვევაში ხდება, ხშირად დიდი შრიფტების ან მედიაფაილების გამო.</string>
+    <string name="webview_crash_nonfatal">WebView მიმღები ავარიულად გაითიშა. მიზეზი: %s</string>
     <string name="webview_crash_fatal">ფატალური შეცდომა: WebView მიმღები ავარიულად გაითიშა. მიზეზი: %s</string>
     <string name="webview_crash_loop_dialog_title">შეცდომა WebView სისტემის დამუშავებისას</string>
     <string name="webview_crash_loop_dialog_content">WebView სისტემამ ვერ დაამუშავა ბარათი „%1$s“.\n %2$s</string>
@@ -115,9 +115,9 @@
     <string name="discard_unsaved_changes">დაიხუროს და დაიკარგოს ეს მონაცემი?</string>
     <string name="note_editor_no_cards_created">ბარათები არ შეიქმნა. გთხოვთ მეტი ველი შეავსოთ</string>
     <string name="note_editor_no_first_field">პირველი ველი ცარიელია</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cloze_delations">შენიშვნის ეს ტიპი უნდა შეიცავდეს გამოტოვებულ ადგილებს</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">გამოტოვებული ადგილები მხოლოდ გამოტოვებული ადგილებიანი ტიპის შენიშვნებში იმუშავებს</string>
     <string name="saving_facts">შენიშვნის შენახვა</string>
     <string name="saving_model">შენიშვნის ტიპი ინახება</string>
     <string name="save">შენახვა</string>
@@ -154,17 +154,16 @@
     <string name="check_media">მედია ფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
     <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+    <string name="empty_card_warning">ბარათი ცარიელია. გამოიყენეთ \"ცარიელი ბარათების\" ღილაკი დასტების სიის ეკრანზე არსებული მენიუდან</string>
     <string name="unknown_type_field_warning">პასუხის აკრეფა: უცნობი ველი %s</string>
     <string name="delete_deck">იშლება დასტა&#8230;</string>
-    <string name="show_hint">აჩვენე %s</string>
     <string name="info_rate">შეაფასეთ AnkiDroid</string>
     <string name="import_title">იმპორტირება</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
-    <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+    <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">\"%s\" დაემატოს კოლექციას? ამას შეიძლება გარკვეული დრო დასჭირდეს</item>
+        <item quantity="other">გსურთ ჩამოთვლილი ფაილების  იმპორტირება:\n%s\nამას შეიძლება გარკვეული დრო დასჭირდეს</item>
     </plurals>
     <string name="import_log_no_apkg">ეს არ არის მოქმედი Anki-პაკეტის ფაილი</string>
     <string name="import_title_error" comment="Title of error dialog">შეცდომა</string>
@@ -177,11 +176,11 @@
     <string name="import_error_corrupt_zip">APKG ფაილი დაზიანებულია. გთხოვთ წაშალოთ და ხელახლა ჩამოტვირთოთ. \n\nგამომწვევი მიზეზი: %s</string>
     <string name="import_error_handle_exception">ფაილის იმპორტირება ვერ მოხერხდა\n\n%s</string>
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
+    <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
+    <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">მრავალი COLPKG ფაილი მოინიშნა.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_colpkg_apkg">apkg და colpkg ფაილები ერთბაშად მოინიშნა</string>
     <string name="import_stats_error">ჩამოთვლილი ფაილების იმპორტირებისას რამდენიმე შეცდომა მოხდა:\n%s</string>
     <string name="import_replacing">კოლექციის ჩანაცვლება...</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
@@ -189,14 +188,21 @@
     <string name="export_include_media">მედია ფაილების მოცვა</string>
     <string name="confirm_apkg_export">გსურთ კოლექციის Anki-პაკეტად ექსპორტირება?</string>
     <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">მონიშნული ბარათის APKG ფაილად შენახვა?</item>
+        <item quantity="other">მონიშნული %d ბარათის APKG ფაილად შენახვა?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">მონიშნული შენიშვნის APKG ფაილად შენახვა?</item>
+        <item quantity="other">მონიშნული %d შენიშვნის APKG ფაილად შენახვა?</item>
+    </plurals>
     <string name="export_in_progress">მიმდინარეობს Аnki-პაკეტის ფაილის ექსპორტი&#8230;</string>
-    <string name="export_successful_title">გაიგზავნოს Anki-პაკეტი?</string>
-    <string name="export_send_button">გაგზავნა</string>
+    <string name="export_success_title">კოლექციის ექსპორტი წარმატებით დასრულდა</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
-    <string name="export_successful">ფაილი \"%s\" დაექსპორტდა. გინდათ გააგზავნოთ სხვა აპლიკაციით? </string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
+    <string name="export_share_title">Anki-პაკეტის გაგზავნა:</string>
     <string name="export_email_subject">AnkiDroid-მა წარმატებით განახორციელა ბარათების ექსპორტი: %s</string>
     <string name="export_email_text"><![CDATA[        გამარჯობა!
         <br/><br/>
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">შეცდომა apkg ფაილის ექსპორტში</string>
+    <string name="export_select_save_app">ფაილის შენახვის ადგილი აირჩიეთ</string>
+    <string name="export_select_share_app">აირჩიეთ აპლიკაცია გასაზიარებლად</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">პარამეტრები</string>
     <string name="menu__deck_options">დასტის პარამეტრები</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>
@@ -267,7 +274,7 @@
     <string name="export_v2_dummy_note">ეს ფაილი მოითხოვს Anki-ს უფრო ახალ ვერსიას.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[კამერის სურათები შეიძლება დიდი იყოს.  სურათების შეკუმშვას და ზომის შეცვლას ფაილების დირექტორიაში შეძლებთ]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_browser_notification">ბრაუზერი ვერ მოიძებნა, გთხოვთ ვებგვერდი კომპიუტერზე ან მობილურ მოწყობილობაზე იხილოთ: </string>
     <string name="web_page_error">შეცდომა გვერდის ჩატვირთვისას: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">ბარათში არსებული გარე გვერდის ბმული არ არის გათვალისწინებული.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
@@ -298,11 +305,11 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ხედი</string>
     <string name="anki_js_error_code">(შეცდომის კოდი: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">გამართვის ინფორმაცია გაცვლის ბუფერზე დაკოპირდა</string>
+    <string name="about_ankidroid_error_copy_debug_info">შეცდომა გამართვის ინფორმაციის გაცვლის ბუფერზე დაკოპირებისას</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ბარათის შიგთავსის შეცდომა: „%s“ ვერ ჩაიტვირთა</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">ბარათის შიგთავსის შეცდომა: საჭიროა მედიაფაილების განახლება</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">შეცდომა დასტის „%s“ ჩატვირთვისას</string>
     <string name="search_decks">დასტების მოძიება</string>
@@ -324,7 +331,7 @@
     <string name="after_text">HTML მონიშნულის შემდეგ</string>
     <string name="add_toolbar_item">ხელსაწყოთა ზოლის ელემენტის შექმნა</string>
     <string name="edit_toolbar_item">ხელსაწყოთა ზოლის ელემენტის რედაქტირება</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
     <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
     <string name="note_editor_paste_too_large">სურათი ზედმეტად დიდია ჩასასმელად, გთხოვთ სურათი ხელით ჩაამატოთ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
@@ -377,6 +384,15 @@
     <string name="scoped_storage_postpone">გადადება</string>
     <string name="scoped_storage_migrate">მონაცემების მიგრაცია</string>
     <string name="search_card_js_api_no_results">ვერ მოიძებნა</string>
+    <string name="sync_impossible_during_migration">სინქრონიზაცია გამორთული იქნება, სანამ მიგრაცია არ დასრულდება.\n
+        დარჩენილია %1$d მედიაფაილი</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">იწყება მეხსიერების მიგრაცია. AnkiDroid-ის გამოყენების შესაძლებლობა ცოტა ხანში აღდგება</string>
+    <string name="migration_part_1_done_resume">ისევ შეგიძლიათ AnkiDroid გამოიყენოთ.
+\nმეხსიერების მიგრაცია ფონში გაგრძელდება</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s არ არის მოქმედი JavaScript-ის დანამატი პაკეტი</string>
     <string name="could_not_create_dir">ვერ შეიქმნა ნუსხა %s</string>
@@ -398,11 +414,13 @@
     <string name="validation_deck_already_exists">დასტა უკვე არსებობს</string>
     <string name="deck_created">დასტა შეიქმნა</string>
     <string name="deck_renamed">დასტის სახელი შეიცვალა</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">დასტა წაიშალა. გთხოვთ მოაშოროთ სწრაფი ბმული</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ბარათები</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების ბრაუზერში ჩვენების გადართვა</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">ბრაუზერის პარამეტრები</string>
 </resources>

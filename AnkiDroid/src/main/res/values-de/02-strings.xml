@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Diese Karte ist leer. Verwenden Sie die Option »Leere Karten« aus dem Menü der Stapelübersicht.</string>
     <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
     <string name="delete_deck">Lösche Stapel&#8230;</string>
-    <string name="show_hint">%s anzeigen</string>
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="import_title">Importieren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
@@ -189,14 +188,21 @@
     <string name="export_include_media">Medien einbeziehen</string>
     <string name="confirm_apkg_export">Sammlung als Anki-Paket exportieren?</string>
     <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Ausgewählte Karte als APKG-Datei exportieren?</item>
+        <item quantity="other">%d ausgewählte Karten als APKG-Datei exportieren?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Ausgewählte Notiz als APKG-Datei exportieren?</item>
+        <item quantity="other">%d ausgewählte Notizen als APKG-Datei exportieren?</item>
+    </plurals>
     <string name="export_in_progress">Anki-Paketdatei wird exportiert &#8230;</string>
-    <string name="export_successful_title">Anki-Paket senden?</string>
-    <string name="export_send_button">Senden</string>
+    <string name="export_success_title">Sammlung erfolgreich exportiert</string>
     <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert …</string>
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
-    <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_success_message">Du kannst entweder einen Ort zum Speichern der Datei auswählen oder diese mit einer anderen App teilen.</string>
+    <string name="export_share_title">Anki-Paket senden mit</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
     <string name="export_email_text"><![CDATA[        Hallo!
         <br/><br/>
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Fehler beim Exportieren der APKG-Datei</string>
+    <string name="export_select_save_app">Wähle den Speicherort deiner Datei</string>
+    <string name="export_select_share_app">Anwendung zum Teilen auswählen</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
     <string name="menu__deck_options">Stapeloptionen</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lernoptionen</string>
@@ -377,6 +384,15 @@
     <string name="scoped_storage_postpone">Aufschieben</string>
     <string name="scoped_storage_migrate">Daten verschieben</string>
     <string name="search_card_js_api_no_results">Suche lieferte keine Ergebnisse</string>
+    <string name="sync_impossible_during_migration">Die Synchronisierung bleibt bis zum Abschluss der Migration deaktiviert.\n
+%1$d Mediendateien verbleibend.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Wenn du AnkiDroid neu installierst, wird es nicht in der Lage sein, deine Sammlung zu öffnen.</string>
+    <string name="migration_update_request_dialog_download_warning">Falls du AnkiDroid deinstallierst, wirst du die gesamte Sammlung erneut herunterladen müssen.</string>
+    <string name="migration_update_request">Die Speicherzugriffsrichtlinie von Android erfordert, dass wir den Speicherort deiner Sammlung ändern. Sobald deine Daten migriert worden sind, wird AnkiDroid schneller laufen und deine Daten werden sicherer sein.
+Du wirst nicht in der Lage sein, Anki während der Speichermigration zu synchronisieren.</string>
+    <string name="start_migration_progress_message">Die Speichermigration hat begonnen. Du wirst AnkiDroid in Kürze weiterverwenden können.</string>
+    <string name="migration_part_1_done_resume">Du kannst jetzt AnkiDroid weiterverwenden.
+\nDie Speichermigration wird im Hintergrund fortfahren.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s ist kein gültiges Javascript-Addon-Paket</string>
     <string name="could_not_create_dir">Verzeichnis %s konnte nicht erstellt werden </string>
@@ -398,6 +414,8 @@
     <string name="validation_deck_already_exists">Stapel existiert bereits</string>
     <string name="deck_created">Stapel wurde erstellt</string>
     <string name="deck_renamed">Stapel wurde umbenannt</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck würde gelöscht. Bitte den Shortcut entfernen</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>

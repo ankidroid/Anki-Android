@@ -20,6 +20,10 @@ package com.ichi2.compat
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.media.AudioFocusRequest
@@ -27,10 +31,15 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
+import android.util.SparseArray
+import android.view.View
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
+import java.util.*
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -69,12 +78,17 @@ import java.io.*
  * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
  */
 interface Compat {
-    fun setupNotificationChannel(context: Context, id: String, name: String)
+    fun setupNotificationChannel(context: Context)
+    fun setTooltipTextByContentDescription(view: View)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
+    fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>?
+    fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>?
+    fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
+    fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
 
     /**
      * Retrieve extended data from the intent.
@@ -91,6 +105,36 @@ interface Compat {
      * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
      */
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
+
+    /**
+     * Returns the value associated with the given key, or `null` if:
+     * * No mapping of the desired type exists for the given key.
+     * * A `null` value is explicitly associated with the key.
+     * * The object is not of type {@code clazz}.
+     *
+     * @param key a String, or `null`
+     * @param clazz The expected class of the returned type
+     * @return a Serializable value, or `null`
+     */
+    fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
+
+    /**
+     * Read and return a new Serializable object from the parcel.
+     * @return the Serializable object, or null if the Serializable name
+     * wasn't found in the parcel.
+     */
+    fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T?
+
+    /**
+     * Retrieve overall information about an application package that is
+     * installed on the system.
+     *
+     * @see PackageManager.getPackageInfo
+     * @throws NameNotFoundException if no such package is available to the caller.
+     * * Can be null: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/ComputerEngine.java;drc=c4ad8bc669e66262a00798b57132347a0d0aa2ac;bpv=1;bpt=1;l=1705?q=getPackageInfoInternal&ss=android&gsn=getPackageInfoInternalBody&gs=kythe%3A%2F%2Fandroid.googlesource.com%2Fplatform%2Fsuperproject%3Flang%3Djava%3Fpath%3Dcom.android.server.pm.ComputerEngine%23977e4a94695fef516f4b2d9fa73dea77cfaf06eff40c6fb3ec9bd80c6e18a08f
+     */
+    @Throws(NameNotFoundException::class)
+    fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo?
 
     /**
      * Copy file at path [source] to path [target]
@@ -128,7 +172,7 @@ interface Compat {
      * @throws SecurityException If a security manager exists and its SecurityManager.checkRead(String)
      * method denies read access to the directory
      * @throws FileNotFoundException if the file do not exists
-     * @throws NotDirectoryException if the file could not otherwise be opened because it is not
+     * @throws java.nio.file.NotDirectoryException if the file could not otherwise be opened because it is not
      * a directory (optional specific exception), (starting at API 26)
      * @throws IOException – if an I/O error occurs
      */
@@ -156,7 +200,7 @@ interface Compat {
             Intent.FILL_IN_ACTION, Intent.FILL_IN_DATA, Intent.FILL_IN_CATEGORIES, Intent.FILL_IN_COMPONENT, Intent.FILL_IN_PACKAGE, Intent.FILL_IN_SOURCE_BOUNDS, Intent.FILL_IN_SELECTOR, Intent.FILL_IN_CLIP_DATA
         ]
     )
-    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+    @Retention(AnnotationRetention.SOURCE)
     annotation class PendingIntentFlags
 
     /**
@@ -236,7 +280,7 @@ interface Compat {
      * @param directory A directory.
      * @return a FileStream over file and directory of this directory.
      * null in case of trouble. This stream must be closed explicitly when done with it.
-     * @throws NotDirectoryException if the file exists and is not a directory (starting at API 26)
+     * @throws java.nio.file.NotDirectoryException if the file exists and is not a directory (starting at API 26)
      * @throws FileNotFoundException if the file do not exists
      * @throws IOException if files can not be listed. On non existing or non-directory file up to API 25. This also occurred on an existing directory because of permission issue
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
@@ -244,6 +288,13 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
+
+    /**
+     * Read into an existing List object from the parcel at the current
+     * dataPosition(), using the given class loader to load any enclosed
+     * Parcelables.  If it is null, the default class loader is used.
+     */
+    fun <T> readList(parcel: Parcel, outVal: MutableList<in T>, classLoader: ClassLoader?, clazz: Class<T>)
 
     companion object {
         /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */

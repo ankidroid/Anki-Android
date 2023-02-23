@@ -34,18 +34,17 @@ import com.ichi2.anki.ReadText
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.trimRight
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.regex.Pattern
 
-@KotlinCleanup("IDE Lint")
 // NICE_TO_HAVE: Abstract, then add tests for #6111
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
+@KotlinCleanup("IDE Lint")
 class Sound {
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
@@ -66,12 +65,13 @@ class Sound {
      * Weak reference to the activity which is attempting to play the sound
      */
     private var mCallingActivity: WeakReference<Activity?>? = null
+
     @VisibleForTesting
     fun getSounds(side: SoundSide): ArrayList<String>? {
         if (side == SoundSide.QUESTION_AND_ANSWER) {
             makeQuestionAnswerList()
         }
-        return mSoundPaths!![side]
+        return mSoundPaths[side]
     }
 
     /**
@@ -84,12 +84,12 @@ class Sound {
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
-    private val mSoundPaths: HashMap<SoundSide, ArrayList<String>>? = HashMap()
+    private val mSoundPaths: HashMap<SoundSide, ArrayList<String>> = HashMap()
     private var mAudioFocusRequest: AudioFocusRequest? = null
 
     // Clears current sound paths; call before parseSounds() calls
     fun resetSounds() {
-        mSoundPaths!!.clear()
+        mSoundPaths.clear()
     }
 
     /**
@@ -103,7 +103,7 @@ class Sound {
     fun addSounds(soundDir: String, tags: List<SoundOrVideoTag>, qa: SoundSide) {
         for ((filename) in tags) {
             // Create appropriate list if needed; list must not be empty so long as code does no check
-            if (!mSoundPaths!!.containsKey(qa)) {
+            if (!mSoundPaths.containsKey(qa)) {
                 mSoundPaths[qa] = ArrayList(0)
             }
             val soundPath = getSoundPath(soundDir, filename)
@@ -121,7 +121,7 @@ class Sound {
      */
     private fun makeQuestionAnswerList(): Boolean {
         // if combined list already exists, don't recreate
-        if (mSoundPaths!!.containsKey(SoundSide.QUESTION_AND_ANSWER)) {
+        if (mSoundPaths.containsKey(SoundSide.QUESTION_AND_ANSWER)) {
             return false // combined list already exists
         }
 
@@ -148,7 +148,7 @@ class Sound {
      */
     fun playSounds(qa: SoundSide, errorListener: OnErrorListener?) {
         // If there are sounds to play for the current card, start with the first one
-        if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
+        if (mSoundPaths.containsKey(qa)) {
             Timber.d("playSounds %s", qa)
             playSoundInternal(
                 mSoundPaths[qa]!![0],
@@ -156,7 +156,7 @@ class Sound {
                 null,
                 errorListener
             )
-        } else if (mSoundPaths != null && qa == SoundSide.QUESTION_AND_ANSWER) {
+        } else if (qa == SoundSide.QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
                 Timber.d("playSounds: playing both question and answer")
                 playSoundInternal(
@@ -177,10 +177,8 @@ class Sound {
      */
     fun getSoundsLength(qa: SoundSide): Long {
         var length: Long = 0
-        if (mSoundPaths != null && (
-            qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(
-                    qa
-                )
+        if (qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(
+                qa
             )
         ) {
             val metaRetriever = MediaMetadataRetriever()
@@ -369,7 +367,9 @@ class Sound {
     val currentAudioUri: String?
         get() = if (mCurrentAudioUri == null) {
             null
-        } else mCurrentAudioUri.toString()
+        } else {
+            mCurrentAudioUri.toString()
+        }
 
     fun notifyConfigurationChanged(videoView: VideoView) {
         if (mMediaPlayer != null) {
@@ -406,7 +406,7 @@ class Sound {
         private var mNextToPlay = 1
         override fun onCompletion(mp: MediaPlayer) {
             // If there is still more sounds to play for the current card, play the next one
-            if (mSoundPaths!!.containsKey(qa) && mNextToPlay < mSoundPaths[qa]!!.size) {
+            if (mSoundPaths.containsKey(qa) && mNextToPlay < mSoundPaths[qa]!!.size) {
                 Timber.i("Play all: Playing next sound")
                 playSound(mSoundPaths[qa]!![mNextToPlay++], this, null, errorListener)
             } else {
@@ -454,11 +454,11 @@ class Sound {
     }
 
     fun hasQuestion(): Boolean {
-        return mSoundPaths!!.containsKey(SoundSide.QUESTION)
+        return mSoundPaths.containsKey(SoundSide.QUESTION)
     }
 
     fun hasAnswer(): Boolean {
-        return mSoundPaths!!.containsKey(SoundSide.ANSWER)
+        return mSoundPaths.containsKey(SoundSide.ANSWER)
     }
 
     fun interface OnErrorListener {
@@ -469,7 +469,7 @@ class Sound {
         /**
          * Pattern used to identify the markers for sound files
          */
-        val SOUND_PATTERN = Pattern.compile("\\[sound:([^\\[\\]]*)]")
+        val SOUND_PATTERN: Pattern = Pattern.compile("\\[sound:([^\\[\\]]*)]")
 
         /**
          * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
@@ -586,7 +586,9 @@ class Sound {
             val trimmedSound = sound.trim { it <= ' ' }
             return if (hasURIScheme(trimmedSound)) {
                 trimmedSound
-            } else soundDir + Uri.encode(trimRight(sound))
+            } else {
+                soundDir + Uri.encode(sound.trimEnd())
+            }
         }
 
         /**

@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">জি</string>
     <!-- Navigation drawer items-->
     <string name="decks">ডেকসমূহ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">কার্ড ব্রাউজার</string>
@@ -96,10 +95,10 @@
     <string name="studyoptions_congrats_undo">%s বাতিল করুন</string>
     <string name="menu_import">আমদানি করুন</string>
     <string name="undo">বাতিল করুন</string>
-    <string name="undo_action_review">সর্বশেষ পর্যালোচনা</string>
+    <string name="undo_action_review">সর্বশেষ রিভিউ</string>
     <string name="undo_action_change_deck_multi">ডেক পরিবর্তন করুন</string>
     <string name="move_all_to_deck">সবগুলো ডেক এ সড়াও</string>
-    <string name="unbury">বাতিল স্থগিত করুন</string>
+    <string name="unbury">অদাফন</string>
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
     <string name="create_shortcut">শর্টকাট তৈরী করুন</string>
     <string name="browse_cards">কার্ড খুঁজুন</string>
@@ -111,7 +110,7 @@
     <string name="menu_bury_note">নোট দাফন</string>
     <string name="menu_suspend_card">কার্ড স্থগিত</string>
     <string name="menu_suspend_note">নোট স্থগিত</string>
-    <string name="menu_bury">বাতিল</string>
+    <string name="menu_bury">দাফন</string>
     <string name="menu_suspend">স্থগিত</string>
     <string name="menu_delete_note">নোট মুছে ফেলুন</string>
     <string name="menu_flag">ফ্ল্যাগ</string>
@@ -170,12 +169,14 @@
     <string name="studyoptions_empty_schedule">পড়ার জন্য নির্ধারিত কোন কার্ড</string>
     <string name="studyoptions_congrats_finished">অভিনন্দন! আপাতত শেষ হয়েছে।</string>
     <string name="studyoptions_congrats_more_rev">আজকের এই সীমায় পৌঁছে গেছে, কিন্তু এখনো পর্যালোচনা থেকে কার্ডের আছে। বিকল্প সীমা বাড়তে পারে।</string>
-    <string name="studyoptions_congrats_more_new">আজকের এই সীমায় পৌঁছে গেছে। আরো নতুন কার্ড পাওয়া যায়। আপনার পছন্দের সীমা বাড়তে পারে, কিন্তু তোমার মেয়াদী রিভিউ চাহিদার এই বৃদ্ধি পাবে।</string>
+    <string name="studyoptions_congrats_more_new">আজকের সীমা ছুঁয়ে ফেলেছেন। আরও নতুন কার্ড বাকি আছে; আপনি অপশন থেকে সীমা বৃদ্ধি করতে পারেন, কিন্তু এতে আপনার স্বল্পমেয়াদী রিভিউয়ের চাপ বৃদ্ধি পাবে।</string>
     <string name="studyoptions_congrats_custom">স্বাভাবিক সময়সূচির বাইরে পড়াশোনা করার জন্য, \'প্রথা অধ্যয়ন\' বোতাম স্পর্শ</string>
     <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
     <string name="empty_cloze_warning">এই নোট সম্পাদনা করুন এবং কিছু ক্লোজ দিলিশন অ্যাড করুন (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">সিংক্রোনাইজ</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">সিঙ্ক সাময়িকভাবে বন্ধ আছে</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">আপনি সিঙ্ক বাতিল করতে চান?</string>
     <string name="continue_sync">সিংক বজায় রাখুন</string>
     <string name="sync_cancelled">সিংক বাতিল করা হয়েছে</string>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d টি কার্ড (বাকি 0)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s কপি</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

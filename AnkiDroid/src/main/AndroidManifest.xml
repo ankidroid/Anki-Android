@@ -19,10 +19,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.ichi2.anki"
-          android:installLocation="auto"
-          >
+    android:installLocation="auto">
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
@@ -38,8 +35,10 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <permission android:name="${applicationId}.permission.READ_WRITE_DATABASE"
                 android:label="@string/read_write_permission_label"
                 android:description="@string/read_write_permission_description"
                 android:protectionLevel="dangerous"
@@ -74,6 +73,7 @@
         android:windowSoftInputMode="adjustResize"
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
+        android:hasFragileUserData="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
@@ -81,20 +81,27 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
+        android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >
+        <!-- Probably because of a bug on the framework,
+        the full package path is needed for manageSpaceActivity -->
+        <activity
+            android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".DrawingActivity"
             android:label="@string/drawing"
             android:exported="false"
-            android:configChanges="keyboardHidden|locale|orientation|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name="com.ichi2.anki.pages.PagesActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name="com.ichi2.anki.IntentHandler"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
             >
@@ -184,13 +191,13 @@
             android:name="com.ichi2.anki.DeckPicker"
             android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
             android:label="StudyOptions"
             android:exported="false"
-            android:configChanges="keyboardHidden|locale|orientation|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:parentActivityName=".DeckPicker"
             >
         </activity>
@@ -214,7 +221,7 @@
             android:label="@string/card_browser"
             android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="true"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:parentActivityName=".DeckPicker"
             >
             <intent-filter android:label="@string/card_browser">
@@ -229,18 +236,24 @@
             android:name=".ModelBrowser"
             android:label="@string/model_browser_label"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            />
+        <activity
+            android:name=".notetype.ManageNotetypes"
+            android:label="@string/model_browser_label"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name=".ModelFieldEditor"
             android:label="@string/model_editor_label"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name="com.ichi2.anki.Reviewer"
             android:exported="true"
             android:theme="@style/Theme_Dark_Compat.Launcher"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
             <intent-filter>
@@ -251,45 +264,45 @@
         <activity
             android:name="com.ichi2.anki.VideoPlayer"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             />
         <activity
             android:name="com.ichi2.anki.MyAccount"
             android:label="@string/menu_my_account"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name="com.ichi2.anki.preferences.Preferences"
             android:label="@string/settings"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
-            android:theme="@style/LegacyActionBarLight"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            android:theme="@style/Theme_Light"
             >
             <intent-filter>
                 <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.DeckOptions"
+            android:name="com.ichi2.anki.DeckOptionsActivity"
             android:label="@string/deckpreferences_title"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
-            android:theme="@style/LegacyActionBarLight"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            android:theme="@style/Theme_Light"
             />
         <activity
             android:name=".FilteredDeckOptions"
             android:label="@string/deckpreferences_title"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
-            android:theme="@style/LegacyActionBarLight"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            android:theme="@style/Theme_Light"
             />
         <activity
             android:name="com.ichi2.anki.Info"
             android:label="@string/pref_cat_about_title"
             android:exported="false"
-            android:configChanges="locale|uiMode"
+            android:configChanges="uiMode"
             />
 
         <activity-alias
@@ -309,7 +322,7 @@
             android:label="@string/fact_adder_intent_title"
             android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="true"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             >
             <intent-filter>
                 <action android:name="org.openintents.action.CREATE_FLASHCARD" />
@@ -324,7 +337,7 @@
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:exported="true"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
@@ -337,7 +350,7 @@
         <activity
             android:name="com.ichi2.anki.Statistics"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:parentActivityName=".DeckPicker"
             >
         </activity>
@@ -345,33 +358,33 @@
             android:name="com.ichi2.anki.Previewer"
             android:label="@string/preview_title"
             android:exported="false"
-            android:configChanges="locale|uiMode"
+            android:configChanges="uiMode"
             />
         <activity
             android:name="com.ichi2.anki.CardTemplatePreviewer"
             android:label="@string/preview_title"
             android:exported="false"
-            android:configChanges="locale|uiMode"
+            android:configChanges="uiMode"
             />
         <activity
             android:name=".multimediacard.activity.MultimediaEditFieldActivity"
             android:label="@string/title_activity_edit_text"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             >
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity"
             android:label="@string/multimedia_editor_text_field_editing_say"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             >
         </activity>
         <activity
             android:name="com.ichi2.anki.CardTemplateEditor"
             android:label="@string/title_activity_template_editor"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             >
         </activity>
@@ -379,35 +392,47 @@
             android:name=".CardTemplateBrowserAppearanceEditor"
             android:label="@string/card_template_browser_appearance_title"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name=".CardInfo"
             android:label="@string/card_info_title"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
         <activity
             android:name=".SharedDecksActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name="com.ichi2.anki.LoginActivity"
             android:label="@string/menu_my_account"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             />
-        <!-- TODO: Fix LockedOrientationActivity - introduction_layout.xml -->
+
         <activity android:name=".IntroductionActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="userPortrait"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            tools:ignore="LockedOrientationActivity" />
+            android:configChanges="keyboardHidden|screenSize" />
 
+
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+
+        <service
+            android:name="com.ichi2.anki.services.MigrationService"
+            android:foregroundServiceType="dataSync"
+            />
 
         <!-- small widget -->
         <receiver
@@ -505,7 +530,7 @@
 
         <provider
             android:name=".provider.CardContentProvider"
-            android:authorities="com.ichi2.anki.flashcards"
+            android:authorities="${applicationId}.flashcards"
             android:enabled="true"
             android:exported="true"
             >
@@ -514,7 +539,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.ichi2.anki.apkgfileprovider"
+            android:authorities="${applicationId}.apkgfileprovider"
             android:grantUriPermissions="true"
             android:exported="false"
             >

@@ -54,7 +54,7 @@
 
     <!-- override_font_labels -->
     <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always">Always</string>
+    <string name="override_font_always" comment="Option to always override font">Always</string>
 
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>

@@ -116,7 +116,8 @@ class UtilsTest {
         for (s in strings) {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
-                "", Utils.stripHTML(s)
+                "",
+                Utils.stripHTML(s)
             )
         }
     }
@@ -134,7 +135,8 @@ class UtilsTest {
         for (s in strings) {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
-                "", Utils.stripHTML(s)
+                "",
+                Utils.stripHTML(s)
             )
         }
     }

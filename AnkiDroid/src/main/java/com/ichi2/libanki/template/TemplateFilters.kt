@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki.template
 
-import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.libanki.Utils
@@ -69,7 +68,7 @@ object TemplateFilters {
         var filter = filterInput
         return if ("text" == filter) {
             // strip html
-            if (!TextUtils.isEmpty(txt)) {
+            if (txt.isNotEmpty()) {
                 Utils.stripHTML(txt)
             } else {
                 ""
@@ -83,7 +82,7 @@ object TemplateFilters {
             val split = filter.split("-").toTypedArray()
             filter = split[0]
             val extra = split[1]
-            if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
+            if (txt.isNotEmpty() && extra.isNotEmpty()) {
                 clozeText(txt, extra, filter[1])
             } else {
                 ""
@@ -115,12 +114,11 @@ object TemplateFilters {
         if (txt.trim { it <= ' ' }.length == 0) {
             return ""
         }
-        val res = AnkiDroidApp.appResources
         // random id
         val domId = "hint" + txt.hashCode()
         return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
             domId + "').style.display='block';_relinquishFocus();return false;\">" +
-            res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+            tag + "</a><div id=\"" +
             domId + "\" class=hint style=\"display: none\">" + txt + "</div>"
     }
 
@@ -138,7 +136,7 @@ object TemplateFilters {
             @KotlinCleanup("maybe make non-null")
             var buf: String?
             buf = if (type == 'q') {
-                if (!TextUtils.isEmpty(m.group(4))) {
+                if (!m.group(4).isNullOrEmpty()) {
                     "[" + m.group(4) + "]"
                 } else {
                     CLOZE_DELETION_REPLACEMENT
@@ -205,7 +203,8 @@ object TemplateFilters {
                         replacement,
                         Matcher.quoteReplacement(
                             m.group(0)!!.replace(
-                                "{{c$ord::", "{{C$ord::"
+                                "{{c$ord::",
+                                "{{C$ord::"
                             )
                         )
                     )

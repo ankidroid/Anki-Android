@@ -49,10 +49,17 @@ import java.util.*
  * * Allow maps other than the reviewer
  */
 class ControlPreference : ListPreference {
-    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    @Suppress("unused") constructor(context: Context) : super(context)
+    @Suppress("unused")
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+
+    @Suppress("unused")
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    @Suppress("unused")
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
+    @Suppress("unused")
+    constructor(context: Context) : super(context)
 
     fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
@@ -88,8 +95,9 @@ class ControlPreference : ListPreference {
     override fun callChangeListener(newValue: Any?): Boolean {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
+                val actionName = title
                 MaterialDialog(context).show {
-                    title(R.string.binding_add_gesture)
+                    title(text = actionName.toString())
 
                     val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
 
@@ -114,10 +122,11 @@ class ControlPreference : ListPreference {
                 }
             }
             ADD_KEY_INDEX -> {
+                val actionName = title
                 MaterialDialog(context).show {
                     val keyPicker: KeyPicker = KeyPicker.inflate(context)
                     customView(view = keyPicker.rootLayout)
-                    title(R.string.binding_add_key)
+                    title(text = actionName.toString())
 
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->

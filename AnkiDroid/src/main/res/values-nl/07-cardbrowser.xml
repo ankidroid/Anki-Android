@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">Alle leersets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Exporteer kaart</item>
+        <item quantity="other">Exporteer kaarten</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Notitie exporteren</item>
+        <item quantity="other">Notities exporteren</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kaart verwijderd</item>
         <item quantity="other">%d kaarten verwijderd</item>

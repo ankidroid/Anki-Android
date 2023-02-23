@@ -20,9 +20,10 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.BlocksSchemaUpgrade
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
@@ -32,9 +33,9 @@ class Note : Cloneable {
     val col: Collection
 
     /**
-     * @return the mId
+     * Should only be mutated by addNote()
      */
-    val id: Long
+    var id: Long
 
     @get:VisibleForTesting
     var guId: String? = null
@@ -65,7 +66,11 @@ class Note : Cloneable {
 
     constructor(col: Collection, model: Model) {
         this.col = col
-        this.id = time.timestampID(col.db, "notes")
+        this.id = if (BackendFactory.defaultLegacySchema) {
+            time.timestampID(col.db, "notes")
+        } else {
+            0
+        }
         guId = Utils.guid64()
         mModel = model
         mid = model.getLong("id")
@@ -116,14 +121,17 @@ class Note : Cloneable {
             usn = col.usn()
         }
         val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields, col.models.sortIdx(mModel)
+            fields,
+            col.models.sortIdx(mModel)
         )
         val sfld = csumAndStrippedFieldField.first
         val tags = stringTags()
         val fields = joinedFields()
         if (mod == null && col.db.queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                this.id.toString(), tags, fields
+                this.id.toString(),
+                tags,
+                fields
             ) > 0
         ) {
             return
@@ -288,17 +296,19 @@ class Note : Cloneable {
             return DupeOrEmpty.EMPTY
         }
         val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields, 0
+            fields,
+            0
         )
         val csum = csumAndStrippedFieldField.second
         // find any matching csums and compare
         val strippedFirstField = csumAndStrippedFieldField.first
-        for (
-            flds in col.db.queryStringList(
-                "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                csum, this.id, mid
-            )
-        ) {
+        val fields = col.db.queryStringList(
+            "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
+            csum,
+            this.id,
+            mid
+        )
+        for (flds in fields) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]
                 ) == strippedFirstField

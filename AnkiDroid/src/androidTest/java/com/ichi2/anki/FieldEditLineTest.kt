@@ -32,7 +32,7 @@ class FieldEditLineTest : NoteEditorTest() {
             setOrd(5)
         }
         val text = line.editText
-        assertThat(text!!.ord, equalTo(5))
+        assertThat(text.ord, equalTo(5))
         assertThat(text.text.toString(), equalTo("Hello"))
         assertThat(line.name, equalTo("Name"))
     }
@@ -50,7 +50,7 @@ class FieldEditLineTest : NoteEditorTest() {
         restored.onRestoreInstanceState(b!!)
 
         val text = restored.editText
-        assertThat(text!!.ord, equalTo(5))
+        assertThat(text.ord, equalTo(5))
         assertThat(text.text.toString(), equalTo("Hello"))
         assertThat(toSave.name, equalTo("Name"))
     }

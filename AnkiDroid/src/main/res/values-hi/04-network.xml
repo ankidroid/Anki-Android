@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">डाउनलोड किया गया डेटाबेस दूषित था । कृपया पुन: प्रयास करें ।</string>
     <string name="sync_overwrite_error">आपका वर्तमान संग्रह डाउनलोड की गई फ़ाइल द्वारा अधिलेखित नहीं किया जा सका</string>
     <string name="sync_connection_error">कनेक्शन टाइम आउट हो गया । या तो आपका इंटरनेट कनेक्शन समस्याओं का सामना कर रहा है, या आपके मीडिया फ़ोल्डर में एक बहुत बड़ी फ़ाइल है ।</string>
-    <string name="sync_write_access_error">डाउनलोड की गई फ़ाइल को SD कार्ड पर सहेजा नहीं जा सका । या तो कार्ड केवल पढ़ने के लिए माउंटेड है या पर्याप्त स्थान नहीं है ।</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">उन्नत सेटिंग्स में कस्टम सिंक सर्वर अमान्य है (%s)। कृपया एक मान्य सर्वर दर्ज करें, या सेटिंग अक्षम करें।</string>
     <string name="sync_deletions_message">हटाए गए सिंक्रनाइज़ कर रहा है.. ।</string>
     <string name="sync_small_objects_message">छोटी ऑब्जेक्ट्स सिंक्रनाइज़ कर रहा है.. ।</string>

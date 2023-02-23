@@ -10,14 +10,6 @@ class MediaClipField : AudioField() {
 
     override val isModified: Boolean = false
 
-    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
-        currentHasTemporaryMedia = hasTemporaryMedia
-    }
-
-    override fun hasTemporaryMedia(): Boolean {
-        return currentHasTemporaryMedia
-    }
-
     override var name: String? = null
 
     companion object {

@@ -18,7 +18,6 @@ package com.ichi2.anki.jsaddons
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import org.acra.collections.ImmutableMap
 
 data class AddonModel(
     val name: String,
@@ -30,10 +29,10 @@ data class AddonModel(
     val ankidroidJsApi: String,
     val addonType: String,
     val keywords: List<String>,
-    val author: ImmutableMap<String, String>,
+    val author: Map<String, String>,
     val license: String,
     val homepage: String,
-    val dist: ImmutableMap<String, String>
+    val dist: Map<String, String>
 ) {
     /**
      * Update preferences for addons with boolean remove, the preferences will be used to store the information about

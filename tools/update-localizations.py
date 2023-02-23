@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2010 norbert.nagold@gmail.com
@@ -45,7 +45,7 @@ titleString = 'AnkiDroid Flashcards'
 import os
 import shutil
 import zipfile
-import urllib
+import urllib.request
 import string
 import re
 import difflib
@@ -65,13 +65,12 @@ def replacechars(filename, fileExt, isCrowdin):
                 # some people outwitted crowdin's "0"-bug by filling in "0 ", this changes it back:
                 if line.startswith("    <item>0 </item>"): 
                     line = "    <item>0</item>\n"
-                line = string.replace(line, '\'', '\\\'')
-                line = string.replace(line, '\\\\\'', '\\\'')
-                line = string.replace(line, '\n\s', '\\n')
-                # line = string.replace(line, 'amp;', '')
+                line = line.replace('\'', '\\\'')
+                line = line.replace('\\\\\'', '\\\'')
+                line = line.replace('\n\s', '\\n')
+                # line = line.replace('amp;', '')
                 if re.search('%[0-9]\\s\\$|%[0-9]\\$\\s', line) != None:
                     errorOccured = True
-#           print line      
             fin.write(line)
     else:
         fin.write("<?xml version=\"1.0\" encoding=\"utf-8\"?> \n <!-- \n ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> \n ~ This program is free software; you can redistribute it and/or modify it under \n ~ the terms of the GNU General Public License as published by the Free Software \n ~ Foundation; either version 3 of the License, or (at your option) any later \n ~ version. \n ~ \n ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY \n ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A \n ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. \n ~ \n ~ You should have received a copy of the GNU General Public License along with \n ~ this program.  If not, see <http://www.gnu.org/licenses/>. \n --> \n \n \n<resources> \n <string-array name=\"tutorial_questions\"> \n")
@@ -88,7 +87,7 @@ def replacechars(filename, fileExt, isCrowdin):
             if sepPos == -1:
                 if len(contentLine) > 2:
                     errorOccured = True
-                    print contentLine
+                    print(contentLine)
                 continue
             line.append(["<![CDATA[" + contentLine[:sepPos] + "]]>", "<![CDATA[" + contentLine[sepPos+11:] + "]]>"])
         for fi in line:
@@ -108,10 +107,10 @@ def replacechars(filename, fileExt, isCrowdin):
     shutil.move(newfilename,filename)
     if errorOccured:
         #os.remove(filename)
-        print 'Error in file ' + filename
+        print('Error in file ' + filename)
         return False
     else:
-        # print 'File ' + filename + ' successfully copied' # Disabled, makes output too large.
+        # print('File ' + filename + ' successfully copied') # Disabled, makes output too large.
         return True
 
 def fileExtFor(f):
@@ -129,32 +128,32 @@ def createIfNotExisting(directory):
 def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
     if f == '14-marketdescription':
         newfile = 'docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
-        file(newfile, 'w').write(source)
+        open(newfile, 'wb').write(source)
         # translations must be compared to the old version of marketdescription (bug of crowdin)
         oldContent = open('docs/marketing/localized_description/oldVersionJustToCompareWith.txt').readlines()
         newContent = open(newfile).readlines()
         for i in range(0, len(oldContent)):
             if oldContent[i] != newContent[i]:
-                print 'File ' + newfile + ' successfully copied'
+                print('File ' + newfile + ' successfully copied')
                 return True         
         os.remove(newfile)
-        print 'File marketdescription is not translated into language ' + language
+        print('File marketdescription is not translated into language ' + language)
         return True
     elif f == '15-markettitle':
 #       newfile = 'docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
-#       file(newfile, 'w').write(source)
-        translatedTitle = source.replace("\n", "")
+#       open(newfile, 'w').write(source)
+        translatedTitle = source.replace(b"\n", b"").decode()
         if titleString != translatedTitle:
             s = open(titleFile, 'a')
             s.write("\n" + language + ': ' + translatedTitle)
             s.close()
-            print 'Added translated title'
+            print('Added translated title')
         else:
-            print 'Title not translated'
+            print('Title not translated')
         return True
     else:
         newfile = valuesDirectory + f + '.xml'
-        file(newfile, 'w').write(source)
+        open(newfile, 'wb').write(source)
         return replacechars(newfile, fileExt, isCrowdin)
 
 def build():
@@ -167,18 +166,19 @@ def build():
             c = open("tools/crowdin_key.txt","r+")
         CROWDIN_KEY = c.readline();
         c.close()
-        print "Building ZIP on server..."
-        urllib.urlopen('https://api.crowdin.com/api/project/ankidroid/export?key=' + CROWDIN_KEY)
-        print "Built."
+        print("Building ZIP on server...")
+        with urllib.request.urlopen('https://api.crowdin.com/api/project/ankidroid/export?key=' + CROWDIN_KEY) as url:
+            url.read()
+        print("Built.")
     except IOError as e:
-        print "No crowdin_key.txt file, skipping build."
+        print("No crowdin_key.txt file, skipping build.")
 
 build()
 
 zipname = 'ankidroid.zip'
 
-print "Downloading Crowdin file"
-urllib.urlretrieve('https://crowdin.com/backend/download/project/ankidroid.zip',zipname)
+print("Downloading Crowdin file")
+urllib.request.urlretrieve('https://crowdin.com/backend/download/project/ankidroid.zip',zipname)
 
 zip = zipfile.ZipFile(zipname, "r")
 
@@ -194,7 +194,7 @@ for language in languages:
     #
     # The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
     if language.split('-', 1)[0] in localizedRegions:
-        androidLanguage = string.replace(language, '-', '-r') # zh-CW becomes zh-rCW
+        androidLanguage = language.replace('-', '-r') # zh-CW becomes zh-rCW
     else:
         androidLanguage = language.split('-', 1)[0] # Example: es-ES becomes es
 
@@ -207,7 +207,7 @@ for language in languages:
     if language == 'tl':
         androidLanguage = 'tgl'
 
-    print "\nCopying language files from " + language + " to " + androidLanguage
+    print("\nCopying language files from " + language + " to " + androidLanguage)
     valuesDirectory = "AnkiDroid/src/main/res/values-" + androidLanguage + "/"
     createIfNotExisting(valuesDirectory)
 
@@ -217,17 +217,17 @@ for language in languages:
         anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True, language)) or anyError
 
     if anyError:
-        print "At least one file of the last handled language contains an error."
+        print("At least one file of the last handled language contains an error.")
         anyError = False
 
-print "\nRemoving Crowdin file\n"
+print("\nRemoving Crowdin file\n")
 zip.close()
 os.remove(zipname)
 
-print "Checking translations for known classes of error."
-print "(Note that if errors are found and you correct on crowdin, they make you wait 30 minutes for a new zip build)"
+print("Checking translations for known classes of error.")
+print("(Note that if errors are found and you correct on crowdin, they make you wait 30 minutes for a new zip build)")
 subprocess.check_call("./tools/find-broken-strings-variables.sh", shell=True)
 
-print "Committing updates. Please add any fixes as another commit."
+print("Committing updates. Please add any fixes as another commit.")
 subprocess.call("git add docs/marketing/localized_description AnkiDroid/src/main/res/values*", shell=True)
 subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)

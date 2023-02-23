@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">是</string>
     <!-- Navigation drawer items-->
     <string name="decks">牌组</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">卡片浏览器</string>
@@ -74,7 +73,7 @@
     <plurals name="reviewer_window_title_days_new">
         <item quantity="other">剩余 %1$d 天 %2$d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">收藏为空</string>
+    <string name="no_cards_placeholder_title">收藏夹为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -93,7 +92,7 @@
     <string name="undo">撤销</string>
     <string name="undo_action_review">上次复习</string>
     <string name="undo_action_change_deck_multi">更换牌组</string>
-    <string name="move_all_to_deck">将所有移动至牌组</string>
+    <string name="move_all_to_deck">全部移动至牌组</string>
     <string name="unbury">取消搁置</string>
     <string name="rename_deck">重命名</string>
     <string name="create_shortcut">创建快捷方式</string>
@@ -116,9 +115,9 @@
     <string name="menu_flag_card_two">橙色旗标</string>
     <string name="menu_flag_card_three">绿色旗标</string>
     <string name="menu_flag_card_four">蓝色旗标</string>
-    <string name="menu_flag_card_five">粉色标志</string>
-    <string name="menu_flag_card_six">蓝绿色标志</string>
-    <string name="menu_flag_card_seven">紫色标志</string>
+    <string name="menu_flag_card_five">粉色旗标</string>
+    <string name="menu_flag_card_six">蓝绿色旗标</string>
+    <string name="menu_flag_card_seven">紫色旗标</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
     <string name="menu_search">在%1$s中查找</string>
@@ -156,7 +155,7 @@
     <string name="empty_filtered_deck">正在清空已过滤的牌组&#8230;</string>
     <string name="custom_study_deck_name">自定义学习的进程</string>
     <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
-    <string name="empty_deck">此列表为空</string>
+    <string name="empty_deck">此牌组无内容</string>
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
@@ -171,6 +170,8 @@
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="empty_cloze_warning">编辑此卡牌记录并添加一些创建填空。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">暂时禁用了同步</string>
+    <string name="button_upgrade" comment="Text of the sync button">迁移到作用域存储</string>
     <string name="cancel_sync_confirm">你想要取消同步吗？</string>
     <string name="continue_sync">继续同步</string>
     <string name="sync_cancelled">同步已取消</string>
@@ -184,7 +185,7 @@
     <string name="card_template_editor_front">正面</string>
     <string name="card_template_editor_back">背面</string>
     <string name="card_template_editor_styling">样式</string>
-    <string name="card_template_editor_menu_card_browser_appearance">卡牌浏览器外观</string>
+    <string name="card_template_editor_menu_card_browser_appearance">卡片浏览器外观</string>
     <string name="card_template_editor_deck_override">牌组覆盖</string>
     <string name="card_template_editor_insert_field">插入字段</string>
     <string name="card_template_editor_select_field">选择字段</string>
@@ -208,8 +209,8 @@
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
     <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡牌浏览器</string>
-    <string name="context_menu_anki_card_label">Anki 卡</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片浏览器</string>
+    <string name="context_menu_anki_card_label">Anki 卡片</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s 有一个问题：<br/>%2$s</string>
     <string name="more_information">更多信息</string>
     <string name="no_field">找到了 “{{%1$s}}”，但没有一个字段叫 “%1$s”。</string>
@@ -230,4 +231,11 @@
         <item quantity="other">%1$d 张卡片 (0到期)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">迁移数据</string>
+    <string name="migration_successful_message">迁移成功</string>
+    <string name="migration_failed_message">迁移失败</string>
+    <string name="migration_transferred_size">迁移了 %1$.0f MB，共 %2$.0f MB</string>
 </resources>

@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kortlekar</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortbläddrare</string>
@@ -72,11 +71,11 @@
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d timmar %2$d kvar</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d dagar %2$d kvar</item>
     </plurals>
     <string name="no_cards_placeholder_title">Samlingen är tom</string>
     <string name="no_cards_placeholder_description">Börja lägga till kort\nmed + knappen</string>
@@ -163,7 +162,7 @@
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="empty_deck">Den här leken är tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
     <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">Lagringsenheten inte monterad</string>
     <string name="empty_cloze_warning">Redigera denna not och lägg till några textluckor. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Vill du avbryta synkroniseringen?</string>
     <string name="continue_sync">Fortsätt synkronisering</string>
     <string name="sync_cancelled">Synkronisering avbruten</string>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d kort (0 förfallet)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopia</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

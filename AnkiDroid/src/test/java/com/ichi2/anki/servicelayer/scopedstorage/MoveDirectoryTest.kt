@@ -17,7 +17,9 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MoveDirectory
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
@@ -60,48 +62,6 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         val subdirectory = File(destinationFile, "more files")
         assertThat("subdir was copied", subdirectory.exists(), equalTo(true))
         assertThat("subdir file was copied", File(subdirectory, "tmp-2.txt").exists(), equalTo(true))
-    }
-
-    @Test
-    fun test_fast_rename() {
-        val source = createTransientDirectory().withTempFile("tmp.txt")
-        val destinationFile = generateDestinationDirectoryRef()
-        executionContext.attemptRename = true
-
-        val ret = moveDirectory(source, destinationFile).execute()
-
-        assertThat("fast rename returns no operations", ret, empty())
-        assertThat("source directory should not exist", source.exists(), equalTo(false))
-        assertThat("destination directory should exist", destinationFile.exists(), equalTo(true))
-        assertThat("file should be copied", File(destinationFile, "tmp.txt").exists(), equalTo(true))
-    }
-
-    @Test
-    fun failed_rename_avoids_further_renames() {
-        // This is a performance optimization,
-        val source = createTransientDirectory().withTempFile("tmp.txt")
-        val destinationFile = generateDestinationDirectoryRef()
-        var renameCalled = 0
-
-        executionContext.logExceptions = true
-        // don't actually move the directory, or we'd have a problem
-        val moveDirectory = spy(moveDirectory(source, destinationFile)) {
-            doAnswer { renameCalled++; return@doAnswer false }.whenever(it).rename(any(), any())
-        }
-
-        assertThat("rename was true", executionContext.attemptRename, equalTo(true))
-
-        moveDirectory.execute()
-
-        assertThat("rename is now false", executionContext.attemptRename, equalTo(false))
-        assertThat("rename was called", renameCalled, equalTo(1))
-
-        moveDirectory.execute()
-
-        assertThat("rename was not called again", renameCalled, equalTo(1))
-
-        assertThat(executionContext.exceptions, hasSize(0))
-        assertThat("source was not copied", File(source, "tmp.txt").exists(), equalTo(true))
     }
 
     @Test
@@ -215,7 +175,7 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
                     return@doAnswer object : Operation() {
                         // Create a file in `source` and then execute the original operation.
                         // It ensures a file is added after some files where already copied.
-                        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+                        override fun execute(context: MigrationContext): List<Operation> {
                             new_file_name = toDoBetweenTwoFilesMove(source).name
                             return operation.execute()
                         }

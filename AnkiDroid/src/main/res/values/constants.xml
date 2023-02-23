@@ -20,8 +20,6 @@
         WARNING: These values here match static values defined in Deck.java DO
         NOT edit them, unless you change their corresponding values
     -->
-    <!-- App name -->
-    <string name="app_name" comment="The name of the app">AnkiDroid</string>
     <!-- Used in deck preferences -->
     <string-array name="custom_button_labels">
         <item>@string/custom_buttons_setting_always_show</item>
@@ -165,6 +163,7 @@
     <string name="link_distributions">https://apps.ankiweb.net/#download</string>
     <string name="link_ankiweb_lost_email_instructions">https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions</string>
     <string name="link_scoped_storage_faq">https://github.com/ankidroid/Anki-Android/wiki/Storage-Migration-FAQ</string>
+    <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
@@ -247,6 +246,22 @@
     <string-array name="night_theme_values">
         <item>3</item>
         <item>4</item>
+    </string-array>
+
+    <string-array name="sync_media_entries">
+        <item>@string/sync_media_always</item>
+        <item>@string/sync_media_only_unmetered</item>
+        <item>@string/sync_media_never</item>
+    </string-array>
+
+    <string name="sync_media_always_value">always</string>
+    <string name="sync_media_only_unmetered_value">only_unmetered</string>
+    <string name="sync_media_never_value">never</string>
+
+    <string-array name="sync_media_values">
+        <item>@string/sync_media_always_value</item>
+        <item>@string/sync_media_only_unmetered_value</item>
+        <item>@string/sync_media_never_value</item>
     </string-array>
 
     <!-- Preferences headers summaries -->

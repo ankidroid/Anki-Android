@@ -19,10 +19,10 @@ package com.ichi2.libanki.backend
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.str
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import org.json.JSONArray
+import org.json.JSONObject
 
 class RustConfigBackend(private val backend: Backend) {
 

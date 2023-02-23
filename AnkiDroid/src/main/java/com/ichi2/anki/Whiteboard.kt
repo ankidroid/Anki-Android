@@ -31,6 +31,7 @@ import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
@@ -171,7 +172,9 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 MotionEvent.ACTION_POINTER_UP -> trySecondFingerClick(event)
                 else -> false
             }
-        } else false
+        } else {
+            false
+        }
     }
 
     /**
@@ -373,9 +376,9 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     private fun saveStrokeWidth(wbStrokeWidth: Int) {
         mPaint.strokeWidth = wbStrokeWidth.toFloat()
-        val edit = AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit()
-        edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth)
-        edit.apply()
+        AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit {
+            putInt("whiteBoardStrokeWidth", wbStrokeWidth)
+        }
     }
 
     @get:VisibleForTesting
@@ -505,8 +508,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         }
         draw(canvas)
         val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!)
-        // TODO: Fix inconsistent CompressFormat 'JPEG' and file extension 'png'
-        return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
+        return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "jpg", Bitmap.CompressFormat.JPEG, 95)
     }
 
     @KotlinCleanup("fun interface & use SAM on callers")
@@ -521,7 +523,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
             )
             whiteboard.layoutParams = lp2
             val fl = context.findViewById<FrameLayout>(R.id.whiteboard)

@@ -94,6 +94,7 @@
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
@@ -117,8 +118,8 @@
         <item quantity="one">کارت های وارد شده: %2$d</item>
         <item quantity="other">فایل های وارد شده: %1$d\nکل کارت های وارد شده: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">کارت حافظه پر</string>
-    <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">جای خالی وجود ندارد</string>
     <string name="no_space_to_downgrade_content">AnkiDroid %s فضای خالی لازم دارد تا ادامه دهد. لطفا کمی جا خالی کنید</string>
     <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
@@ -126,7 +127,9 @@
     <string name="restore_backup_choose_another">انتخاب دیگری</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">خیر</string>
+    <string name="dialog_yes">بله</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
@@ -174,9 +177,6 @@
     <string name="multimedia_editor_failed">باز کردن ویرایشگر رسانه انجام نشد</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">به آنکی‌دروید خوش آمدید!</string>
-    <string name="collection_load_welcome_request_permissions_details">آنکی‌دروید نیازمند به دسترسی به حافظه می‌باشد. از این دسترسی صرفاً برای ذخیرۀ مجموعۀ، فلش‌کارت‌ها و فایل‌های پشتیبان شما استفاده می‌شود. آنکی نرم‌افزاری اوپن سورس است که توسط افراد داوطلب نوشته شده است و میلیون‌ها نفر به آن اعتماد دارند.\n\n اگر سوالی دارید می‌توانید به راهنمای داخل نرم‌افزار یا انجمن‌های ما مراجعه کنید.\n\از اینکه از آنکی‌دروید استفاده می‌کنید متشکریم!\n--تیم توسعه‌دهندۀ آنکی‌دروید</string>
     <string name="mutimedia_editor_assertion_failed">در هنگام نمایش ویرایشگر پیشرفته خطایی رخ داد</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
@@ -232,6 +232,7 @@
     <string name="help_item_support_develop_ankidroid">توسعه</string>
     <string name="help_item_support_rate_ankidroid">امتیازدهی</string>
     <string name="help_item_support_other_ankidroid">دیگر</string>
+    <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">انجمن</string>
     <string name="help_item_anki_forums">فوروم های Anki</string>
     <string name="help_item_discord">دیسکورد</string>
@@ -261,4 +262,14 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">شما نمیتوانید برای همه دسته ها یک زیردسته درست کنید</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

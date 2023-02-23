@@ -82,10 +82,10 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="few">Reschedule %d cards</item>
-        <item quantity="many">Reschedule %d cards</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">Zmień harmonogram %d karty</item>
+        <item quantity="few">Zmień harmonogram %d kart</item>
+        <item quantity="many">Zmień harmonogram %d kart</item>
+        <item quantity="other">Zmień harmonogram %d kart</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Aktualna przerwa: %d dzień</item>
@@ -106,6 +106,7 @@
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
@@ -124,23 +125,25 @@
     <string name="import_update_details">Zaktualizowano %1$d z %2$d istniejących notatek.</string>
     <string name="import_update_ignored">Niektóre aktualizacje zostały zignorowane, ponieważ zmienił się typ notatki</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Zaimportowanych kart: %2$d</item>
+        <item quantity="few">Zaimportowanych kart: %2$d</item>
+        <item quantity="many">Zaimportowanych kart: %2$d</item>
+        <item quantity="other">Zaimportowanych kart: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">Karta SD jest pełna</string>
-    <string name="sd_card_almost_full_title">Karta SD jest prawie pełna</string>
+    <string name="storage_full_title">Pamięć jest pełna</string>
+    <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title">Brak miejsca</string>
     <string name="no_space_to_downgrade_content">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
     <string name="restore_backup_title">Odtworzyć kopię zapasową?</string>
     <string name="restore_backup">Kolekcja zostanie zastąpione starszą kopią. Wszelkie niezapisane postępy zostaną utracone.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Wybierz inny</string>
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Potwierdź</string>
     <string name="dialog_no">Nie</string>
+    <string name="dialog_yes">Tak</string>
     <string name="dialog_continue">Kontynuuj</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Przetwarzanie...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>
     <string name="dialog_positive_delete">Usuń</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -188,9 +191,6 @@
     <string name="multimedia_editor_failed">Nie udało się otworzyć edytora multimediów</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Nie uzyskano uprawnienia do nagrywania dźwięków</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Witamy w AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid wymaga uprawnienia \"Pamięć\" które jest używane wyłącznie do przechowywania twojej kolekcji AnkiDroid, multimediów i kopii zapasowych. Nasz kod jest otwarto-źródłowy i napisany przez wolontariuszy.\n\nJeśli masz jakiekolwiek pytania, sprawdź nasz podręcznik lub odwiedź nasze fora wsparcia.\n\nDziękujemy za wypróbowanie AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Wystąpił nieznany błąd podczas wyświetlania zaawansowanego edytora</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid został zaktualizowany</string>
@@ -246,6 +246,7 @@
     <string name="help_item_support_develop_ankidroid">Rozbuduj</string>
     <string name="help_item_support_rate_ankidroid">Oceń</string>
     <string name="help_item_support_other_ankidroid">Inne</string>
+    <string name="multimedia_editor_trans_translate">Przetłumacz</string>
     <string name="help_title_community">Społeczność</string>
     <string name="help_item_anki_forums">Forum Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -264,7 +265,7 @@
         <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
         <item quantity="other">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Korzystasz z połączenia taryfowego. Korzystanie z danych może dodatkowo kosztować</string>
     <string name="deck_picker_new">Liczba nowych kart do zobaczenia dziś w tej talii.</string>
     <string name="deck_picker_rev">Liczba kart do powtórki na dziś w tej talii.</string>
     <string name="deck_picker_lrn">Liczba kart w uczeniu się w tej talii.</string>
@@ -274,7 +275,17 @@
     <string name="deck_picker_counts">Otwórz stronę główną talii zawierającą liczbę kart do zobaczenia dzisiaj.</string>
     <string name="import_deck_package">Pakiet talii (.apkg)</string>
     <string name="import_collection_package">Pakiet kolekcji (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Plik tekstowy (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Nie można utworzyć podtalii dla wszystkich talii</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Ze względu na zmiany warunków użytkowania Androida, aktualna lokalizacja plików będzie niedostępna, jeśli aplikacja zostanie odinstalowana.
+        \n\nMusimy przenieść Twoje dane na prywatną lokalizację do aplikacji AnkiDroid.
+        \n\nDane w tej lokalizacji prywatnej mogą zostać usunięte, jeśli aplikacja zostanie odinstalowana.
+        \n\nTwoja aktualna lokalizacja plików to %1$s
+        \n\nLokalizacja prywatnego folderu to %2$s
+        \n\nPotwierdź, że będziesz regularnie wykonywać kopie zapasowe tego folderu.
+    </string>
+    <string name="manual_backup">Ręczna kopia zapasowa</string>
+    <string name="remind_me_later">Przypomnij mi później</string>
 </resources>

@@ -47,14 +47,12 @@
     <string name="multimedia_editor_popup_text">Editor avançado</string>
     <string name="multimedia_editor_popup_cloze">Ocultar</string>
     <string name="multimedia_editor_popup_clear_field">Limpar campo</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">Traduzir</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Carregar</string>
     <string name="multimedia_editor_pron_looking_up">Buscando pronúncia</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Falha na pronunciação</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">Somente uma palavra por vez é suportada</string>
     <string name="multimedia_editor_word_search_try_lower_case">Tente utilizar apenas letras minúsculas</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->

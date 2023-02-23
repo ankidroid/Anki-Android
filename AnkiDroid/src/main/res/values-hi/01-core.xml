@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">हाँ</string>
     <!-- Navigation drawer items-->
     <string name="decks">डेकस</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउज़र</string>
@@ -76,7 +75,7 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d दिन %2$d बचे हैं</item>
     </plurals>
     <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
     <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए + आइकन का उपयोग करें।</string>
@@ -163,7 +162,7 @@
     <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
     <string name="empty_deck">इस डेक खाली है</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक खोज</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक खोज</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
     <string name="studyoptions_empty">यह डेक खाली है । नई सामग्री जोड़ने के लिए + बटन दबाएँ.</string>
     <string name="studyoptions_limit_reached">दैनिक अध्ययन सीमा तक पहुंच गई</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
     <string name="empty_cloze_warning">इस नोट को संपादित करें और कुछ cloze विलोपन जोड़ें। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">क्या आप सिंक्रनाइज़ेशन रद्द करना चाहते हैं?</string>
     <string name="continue_sync">सिंक जारी रखें</string>
     <string name="sync_cancelled">सिंक्रनाइज़ेशन रद्द किया गया</string>
@@ -240,4 +241,11 @@ Back - बैक</string>
         <item quantity="other">%1$d कार्ड (0 शेष)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

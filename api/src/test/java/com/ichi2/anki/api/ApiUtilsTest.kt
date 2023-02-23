@@ -5,7 +5,6 @@ package com.ichi2.anki.api
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.util.HashSet
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -42,13 +41,9 @@ internal class ApiUtilsTest {
     }
 
     @Test
-    // TODO: @KotlinCleanup("use mutableSetOf, use scope function")
     fun joinTagsShouldReturnEmptyStringWhenSetIsValid() {
-        val set: MutableSet<String?> = HashSet()
-        set.add("A")
-        set.add("B")
-        set.add("C")
-        assertEquals("A B C", Utils.joinTags(set))
+        val tags = setOf("A", "B", "C")
+        assertEquals("A B C", Utils.joinTags(tags))
     }
 
     @Test
@@ -58,7 +53,7 @@ internal class ApiUtilsTest {
 
     @Test
     fun joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
-        assertEquals("", Utils.joinTags(HashSet()))
+        assertEquals("", Utils.joinTags(emptySet()))
     }
 
     @Test

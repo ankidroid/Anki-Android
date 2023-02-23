@@ -26,8 +26,9 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
-import com.ichi2.utils.JSONArray
+import com.ichi2.utils.jsonObjectIterable
 import org.intellij.lang.annotations.Language
+import org.json.JSONArray
 import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -45,9 +46,11 @@ class TypeAnswer(
 
     /** What the learner actually typed (externally mutable) */
     var input = ""
+
     /** Font face of the 'compare to' field */
     var font = ""
         private set
+
     /** The font size of the 'compare to' field */
     var size = 0
         private set
@@ -158,9 +161,6 @@ class TypeAnswer(
             append(">\n</center>\n")
         } else {
             append("<span id=\"typeans\" class=\"typePrompt")
-            if (useInputTag) {
-                append(" typeOff")
-            }
             append("\">........</span>")
         }
         return m.replaceAll(sb.toString())

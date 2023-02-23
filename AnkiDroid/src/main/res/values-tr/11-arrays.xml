@@ -66,12 +66,12 @@
     <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
     <string name="add_to_deck_decide_by_note_type">Not türüne göre karar ver</string>
     <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Yeni kartları ve çalışmaları karıştır</string>
-    <string name="new_spread_new_after_review">Yeni kartlar çalışmalardan sonra</string>
-    <string name="new_spread_new_before_review">Yeni kartlar çalışmalardan önce</string>
+    <string name="new_spread_mix_new_and_review">Yeni kartları ve tekrarları karıştır</string>
+    <string name="new_spread_new_after_review">Yeni kartlar tekrarlardan sonra</string>
+    <string name="new_spread_new_before_review">Yeni kartlar tekrarlardan önce</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Bilgi kartlarında font belirtilmediği zaman</string>
-    <string name="override_font_always">Her zaman</string>
+    <string name="override_font_always" comment="Option to always override font">Her zaman</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Sistemi izle</string>
     <!-- day_theme_labels -->
@@ -113,6 +113,6 @@
     <string name="gesture_show_all_hints">Tüm İpuçlarını Göster</string>
     <string name="record_voice">Ses kaydet</string>
     <string name="replay_voice">Sesi tekrar oynat</string>
-    <string name="automatic_answer_option_2">Zor (mevcut değilse iyi)</string>
-    <string name="automatic_answer_option_4">Kolay (Müsait değilse iyi)</string>
+    <string name="automatic_answer_option_2">Zor (mevcut değilse İyi)</string>
+    <string name="automatic_answer_option_4">Kolay (mevcut değilse İyi)</string>
 </resources>

@@ -19,13 +19,11 @@ import android.net.Uri
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
-import com.ichi2.utils.KotlinCleanup
 
 class FragmentTestActivity : AnkiActivity() {
     var lastUrlOpened: String? = null
         private set
-    @KotlinCleanup("maybe lateinit")
-    var lastShownDialogFragment: DialogFragment? = null
+    lateinit var lastShownDialogFragment: DialogFragment
         private set
 
     override fun openUrl(url: Uri) {

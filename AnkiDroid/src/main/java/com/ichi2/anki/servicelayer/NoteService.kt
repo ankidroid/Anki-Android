@@ -34,9 +34,9 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.CollectionUtils.average
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -130,7 +130,7 @@ object NoteService {
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
                     val outFile = File(col.media.dir(), fname)
-                    if (field.hasTemporaryMedia() && outFile.absolutePath != tmpMediaPath) {
+                    if (field.hasTemporaryMedia && outFile.absolutePath != tmpMediaPath) {
                         // Delete original
                         inFile.delete()
                     }
@@ -176,7 +176,9 @@ object NoteService {
     fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
         return if (!replaceNewlines) {
             fieldData
-        } else fieldData.replace(FieldEditText.NEW_LINE, "<br>")
+        } else {
+            fieldData.replace(FieldEditText.NEW_LINE, "<br>")
+        }
     }
 
     suspend fun toggleMark(note: Note) {

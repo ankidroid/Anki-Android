@@ -124,7 +124,7 @@
     <string name="close">關閉</string>
     <string name="select">選擇</string>
     <string name="reordering_cards">正在重新排列卡片...</string>
-    <string name="field_remapping">%1$s (來自 \"%2$s\")</string>
+    <string name="field_remapping">%1$s (來自「%2$s」)</string>
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
     <string name="timebox_reached_title">達到計時器限制！</string>
     <plurals name="timebox_reached">
@@ -154,7 +154,6 @@
     <string name="empty_card_warning">這張卡片是空的。請使用牌組列表界面右上角菜單中的“空白卡片”選項來查找空白卡片。</string>
     <string name="unknown_type_field_warning">輸入答案：未知的欄位 %s</string>
     <string name="delete_deck">刪除牌組中...\n請稍候</string>
-    <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價 AnkiDroid</string>
     <string name="import_title">正在匯入……</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
@@ -175,7 +174,7 @@
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
-    <string name="import_error_copy_to_cache">無法快取檔案（可能是儲存空間不夠）</string>
+    <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
     <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
     <string name="import_error_colpkg_apkg">無法同時選擇 apkg &amp; 和 colpkg 檔。</string>
     <string name="import_stats_error">匯入檔案時發生錯誤：\n「%s」</string>
@@ -185,13 +184,18 @@
     <string name="export_include_media">包含媒體</string>
     <string name="confirm_apkg_export">是否匯出集合為 Anki 包？</string>
     <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">匯出 %d 張選定卡片為 apkg 文件？</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">匯出 %d 個選定筆記為 apkg 文件？</item>
+    </plurals>
     <string name="export_in_progress">匯出 Anki 套件檔案中&#8230;</string>
-    <string name="export_successful_title">發送 Anki 套件？</string>
-    <string name="export_send_button">發送</string>
+    <string name="export_success_title">成功匯出牌組集</string>
     <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中…</string>
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
-    <string name="export_successful">檔案 “%s” 匯出完畢，您想用其它應用程式發送它嗎？</string>
+    <string name="export_success_message">您可以選擇一個文件位置來保存它，或者與其他應用共亯。</string>
     <string name="export_share_title">以...傳送Anki牌組包</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
     <string name="export_email_text"><![CDATA[        你好！
@@ -201,7 +205,8 @@
         [1]%1$s<br/>
         [2]%2$s
         ]]></string>
-    <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
+    <string name="export_select_save_app">選擇文件保存位置</string>
+    <string name="export_select_share_app">選擇要共亯的應用程序</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
@@ -366,6 +371,15 @@
     <string name="scoped_storage_postpone">延後</string>
     <string name="scoped_storage_migrate">遷移</string>
     <string name="search_card_js_api_no_results">搜尋沒有任何結果</string>
+    <string name="sync_impossible_during_migration">同步功能被禁用，直到遷移完成。\n
+        %1$d 個媒體檔案留待遷移。</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">如果您重新安裝AnkiDroid，它將無法打開您的牌組集。</string>
+    <string name="migration_update_request_dialog_download_warning">如果您卸載AnkiDroid，您需要再次下載您的全部牌組集。</string>
+    <string name="migration_update_request">Android存儲訪問策略要求我們更改存儲牌組集的位置。 遷移數據後，AnkiDroid將更快，您的數據將更安全。
+    您將無法在存儲遷移過程中同步。</string>
+    <string name="start_migration_progress_message">開始存儲遷移。 不久後您就可以繼續使用AnkiDroid啦。</string>
+    <string name="migration_part_1_done_resume">您可以繼續使用AnkiDroid了。
+\n存儲遷移將在後臺繼續。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s 不是一個有效的 JavaScript addon package</string>
     <string name="could_not_create_dir">無法建立目錄 %s</string>
@@ -379,19 +393,21 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">少學習一點</string>
     <string name="intro_ankidroid_tagline_two">多記一點</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_short_ankidroid_explanation">Anki的卡片調度器通過增强你最薄弱的記憶和保存你最强大的記憶來節省時間</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">快速入門</string>
+    <string name="intro_sync_from_ankiweb">從AnkiWeb同步</string>
+    <string name="already_logged_in">已登入</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="validation_deck_already_exists">該牌組已存在</string>
+    <string name="deck_created">已創建牌組</string>
+    <string name="deck_renamed">重命名的牌組</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">筆記</string>
+    <string name="toggle_cards_notes">切換卡片/筆記</string>
+    <string name="toggle_browser_mode_help">在瀏覽器中切換顯示卡片或筆記</string>
+    <string name="truncate_content_help">截斷瀏覽器每行高度僅顯示內容前三行</string>
+    <string name="browser_options_dialog_heading">瀏覽器選項</string>
 </resources>

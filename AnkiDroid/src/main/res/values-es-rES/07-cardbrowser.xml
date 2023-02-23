@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">Buscar todos los mazos</string>
     <string name="card_browser_unknown_deck_name">Desconocido</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncar contenido</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Exportar tarjeta</item>
+        <item quantity="other">Exportar tarjetas</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Exportar nota</item>
+        <item quantity="other">Exportar notas</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">Tarjeta %d eliminada</item>
         <item quantity="other">%d tarjetas eliminadas</item>

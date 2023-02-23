@@ -100,8 +100,8 @@
         <item>Nota modificada</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Aplica</string>
+    <string name="filter_by_flags">Bandera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Canviar el límit de cartes noves d\'avui</string>
     <string name="custom_study_increase_review_limit">Modificar el límit de revisions de carta d\'avui</string>
@@ -140,9 +140,9 @@
     <string name="note_editor_copy_note">Copiar nota</string>
     <string name="card_editor_reposition_card">Reposició</string>
     <string name="card_editor_reset_card">Reinicia</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Tornar a planificar</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Torna a planificar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Previsualització</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">Targeta %1$d de %2$d</string>
     <string name="error_insufficient_memory">No hi ha suficient memòria al dispositiu per a aquesta operació</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Canvia el nom</string>
     <string name="default_conf_delete_error">El grup d\'opcions per defecte no es pot esborrar</string>
@@ -157,55 +157,62 @@
     <string name="empty_card_warning">Aquesta targeta està buida. Utilitza l\'opció del menú de \"Buit de targetes\" a la pantalla de llista de malls.</string>
     <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
     <string name="delete_deck">S\'està suprimint el paquet...\nUn moment si us plau.</string>
-    <string name="show_hint">Mostra %s</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
     <string name="import_title">S\'està important</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Voleu afegir \"%s\" a la col·lecció? Això pot trigar força</item>
+        <item quantity="other">Voleu importar \"%s\" a la col·lecció? Això pot trigar força</item>
     </plurals>
     <string name="import_log_no_apkg">Aquest no és un fitxer de paquet Anki vàlid</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">S\'ha produït un error</string>
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">Error al validar apkg</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">No hi ha prou espai per importar el paquet.\nCalen  - %1$s \nDisposeu de - %2$s.\n\nTeniu problemes? Intenteu alliberar espai al dispositiu si és possible. O bé, sincronitzant us cal menys espai que important. Proveu d\'importar el paquet amb un dispositiu amb més espai (per exemple, Anki per a l\'Escriptori) i després sincronitzar-lo amb aquest dispositiu.</string>
     <string name="import_log_file_cache_cleared">S\'ha produït un error en importar el fitxer, potser s\'ha esborrat la memòria cau durant el processament.\nIntenteu-ho de nou si us plau</string>
     <string name="import_succeeded_but_check_database">La importació de dades ha funcionat correctament, però ha fallat la neteja posterior a la importació. Executeu la comprovació de la base de dade més tard. Causa fonamental: %s</string>
     <string name="import_error_corrupt_zip">El fitxer apkg està malmès. Suprimiu-lo i torneu-lo a descarregar.\n\nCausa fonamental: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">No ha estat possible importar el paquet\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nom del fitxer \"%s\" no té l\'extensió .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Les substitucions a la base de dades Anki (.anki2) encara no són suportades. Consulteu el manual per obtenir instruccions de substitució.</string>
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_copy_to_cache">No ha estat possible copiar el fitxer a la memòria cau (segurament falta espai)</string>
+    <string name="import_error_multiple_colpkg">Heu triat diversos fitxers colpkg.</string>
+    <string name="import_error_colpkg_apkg">Heu triat els fitxers  apkg &amp; i colpkg alhora.</string>
+    <string name="import_stats_error">S\'han produït alguns errors en importar els fitxers següents:\n%s</string>
     <string name="import_replacing">Substituint la col·lecció&#8230;</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
     <string name="export_include_schedule">Incloueu la planificació</string>
     <string name="export_include_media">Incloure multimèdia</string>
     <string name="confirm_apkg_export">Exporta col·lecció com un paquet Anki?</string>
     <string name="confirm_apkg_export_deck">Exportar \"%s\" com a arxiu apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Voleu exportar com a fitxer apkg la targeta que heu triat?</item>
+        <item quantity="other">Voleu exportar com a fitxer apkg les %d targetes que heu triat?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Voleu exportar com a fitxer apkg la bota que heu triat?</item>
+        <item quantity="other">Voleu exportar com a fitxer apkg les %d notes que heu triat?</item>
+    </plurals>
     <string name="export_in_progress">Exportant arxiu de paquet Anki&#8230;</string>
-    <string name="export_successful_title">Enviar paquet Anki?</string>
-    <string name="export_send_button">Enviar</string>
+    <string name="export_success_title">La col·lecció s\'ha exportat correctament</string>
     <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant...</string>
     <string name="export_save_apkg_successful">Paquet Anki desat amb èxit</string>
     <string name="export_save_apkg_unsuccessful">Error al desar paquet Anki</string>
-    <string name="export_successful">L\'arxiu \"%s\" ha estat importat. Vols enviar-lo amb una altra applicació?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_success_message">Podeu triar una ubicació per desar el fitxer o compartir-ho amb una altra aplicació.</string>
+    <string name="export_share_title">Voleu enviar el paquet Anki?</string>
     <string name="export_email_subject">Notes exportades a AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hola!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+		Això és un paquet de targetes d\'Anki enviat des d\'AnkiDroid.[1]
+        Intenteu obrir-ho utilitzant una de les distribucions d\'Anki disponibles[2] i gaudiu d\'un estudi senzilll i eficient!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Error en exportar l\'arxiu apkg</string>
+    <string name="export_select_save_app">Triu on voleu desar el fitxer</string>
+    <string name="export_select_share_app">Selecciona l\'aplicació per compartir</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
     <string name="menu__deck_options">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>
@@ -277,9 +284,9 @@
     <string name="choose_an_image">Selecciona una imatge</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaura els valors per defecte</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">Aquí teniu un exemple {{%1$s::sample}} de blancs per omplir</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exsmple</string>
+    <string name="basic_answer_sample_text">un exemple</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanc</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Activeu la pantalla completa per utilitzar la carpeta de mostrar la navegació usant JavaScript.</string>
@@ -319,12 +326,12 @@
     <string name="format_font_size">Canvia la mida de la lletra</string>
     <string name="insert_mathjax">Insereix equació MathJax</string>
     <string name="insert_cloze">Insertar supressió parcial</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Text del botó</string>
     <string name="before_text">HTML abans de la selecció</string>
     <string name="after_text">HTML després de la selecció</string>
     <string name="add_toolbar_item">Crear element de la barra d\'eines</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Element de la barra d\'eines</string>
+    <string name="toolbar_item_explain_edit_or_remove">Entreu el codi HTML que voleu inserir abans i després del text seleccionat\n\nFeu una pressió prolongada a un element de la barra d\'eines per editar-ho o eliminar-hp</string>
     <string name="remove_toolbar_item">Elimino l\'element de la barra d\'eines?</string>
     <string name="note_editor_paste_too_large">La imatge és massa gran per enganxar-la. Inseriu-la manualment si us plau</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        S\'està fent una còpia de seguretat d\'Android. Prova-ho un altre vegada si us plau</string>
@@ -332,7 +339,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">La pantalla d\'inici no permet que AnkiDroid afegeixi dreceres</string>
     <string name="create_shortcut_error">Error afegint drecera: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Posar els frases en majúscules</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Barra d\'eines de desplaçament</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -356,53 +363,64 @@
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
     <string name="home">Inici</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Targeta enterrada</string>
+    <string name="buried_note">Nota enterrada</string>
+    <string name="deleted_note">Nota suprimida</string>
+    <string name="suspended_card">Targeta suspesa</string>
+    <string name="suspended_note">Nota suspesa</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Feu que el camp %s sigui enganxós</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="scoped_storage_title">Migració de la carpeta</string>
+    <string name="scoped_storage_initial_message">Cal moure les dades per complir amb les noves normes de privadesa d\'Android
+\n\nSi desinstal·leu l\'AnkiDroid abans de la migració, les vostres dades es perdran
+\n\nSi us plau, realitzeu la migració tan aviat com sigui possible</string>
+    <string name="scoped_storage_terms_message">La migració s\'executarà en segon pla. No podreu sincronitzar durant la migració\n\nLa durada estimada és: %s</string>
+    <string name="scoped_storage_term_1">He fet una còpia de seguretat de les meves dades</string>
+    <string name="scoped_storage_term_1_ankiweb">He sincronitzat amb l\'AnkiWeb recentment</string>
+    <string name="scoped_storage_term_2">No desinstal·laré l\'aplicació mentre les dades es canvien de lloc</string>
+    <string name="scoped_storage_select_all_terms">Si us plau, accepteu tots els elements per a continuar.</string>
+    <string name="scoped_storage_learn_more">Vull saber-ne més</string>
+    <string name="scoped_storage_postpone">Ajorna-ho</string>
+    <string name="scoped_storage_migrate">Migra</string>
+    <string name="search_card_js_api_no_results">La cerca ha tornat cap resultat</string>
+    <string name="sync_impossible_during_migration">La sincronització està desactivada mentre dura la migració.\n
+         Queden per migrar %1$d fitxers multimèdia.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Si torneu a instal·lar AnkiDroid, no podrà obrir la vostra col·lecció.</string>
+    <string name="migration_update_request_dialog_download_warning">Si desinstal·leu l\'AnkiDroid, haureu de tornar a descarregar tota la col·lecció.</string>
+    <string name="migration_update_request">La política de privadesa d\'Android obliga a canviar de lloc la carpeta de la vostra col·lecció. Quan les dades es migrin, l\'AnkiDroid serà més ràpid i les vostres dades seran més segures.
+     No podreu sincronitzar mentre duri la migració.</string>
+    <string name="start_migration_progress_message">S\'està iniciant la migració. Podreu reprendre l\'ús d\'AnkiDroid en breu.</string>
+    <string name="migration_part_1_done_resume">Podeu tornar a utilitzar l\'AnkiDroid.
+\nLa migració continuarà en segon pla.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s no és un paquet de complements javascript vàlid</string>
+    <string name="could_not_create_dir">No s\'ha pogut crear la carpeta %s</string>
+    <string name="malicious_archive_entry_outside">Arxiu maliciós. Conté una entrada fora de la carpeta de destinació: %s</string>
+    <string name="malicious_archive_exceeds_limit">Arxiu maliciós. La mida supera %1$s o conté més de %2$d fitxers</string>
+    <string name="file_extract_exceeds_storage_space">L\'extracció del fitxer supera l\'espai disponible</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Expandeix l\'etiqueta \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">No s\'ha pogut accedir a la col·lecció. Si us plau, torneu-ho a provar!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_ankidroid_tagline_one">Estudieu menys</string>
+    <string name="intro_ankidroid_tagline_two">Recorda més</string>
+    <string name="intro_short_ankidroid_explanation">El planificador de targetes de l\'Anki estalvia temps reforçant els vostres records més febles i conservant els vostres més forts</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Comença</string>
+    <string name="intro_sync_from_ankiweb">Sincronitza-ho amb AnkiWeb</string>
+    <string name="already_logged_in">Ja heu iniciat la sessió</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="validation_deck_already_exists">El paquet ja existeix</string>
+    <string name="deck_created">S\'ha generat un paquet</string>
+    <string name="deck_renamed">S\'ha canviat el nom del paquet</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Targetes</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="toggle_cards_notes">Alterna Targetes i Notes</string>
+    <string name="toggle_browser_mode_help">Alterna entre mostrar targetes i notes al navegador</string>
+    <string name="truncate_content_help">Trunca l\'alçada de cada fila del navegador per mostrar només les 3 primeres línies de contingut</string>
+    <string name="browser_options_dialog_heading">Opcions del navegador</string>
 </resources>

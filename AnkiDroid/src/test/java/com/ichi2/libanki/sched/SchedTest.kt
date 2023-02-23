@@ -43,12 +43,12 @@ import com.ichi2.testutils.AnkiAssert.checkRevIvl
 import com.ichi2.testutils.AnkiAssert.without_unicode_isolation
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.MutableTime
-import com.ichi2.utils.JSONArray
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
+import org.json.JSONArray
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -56,8 +56,6 @@ import kotlin.test.*
 import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 @RustCleanup("Remove, or add KotlinCleanup")
-@KotlinCleanup("is -> equalTo")
-@KotlinCleanup("fix ide lint issues")
 @RunWith(AndroidJUnit4::class)
 class SchedTest : RobolectricTest() {
     @Test
@@ -66,7 +64,7 @@ class SchedTest : RobolectricTest() {
 
         val sched = Sched(col)
         val buriedCard = createBuriedCardInDefaultDeck()
-        assertThat(buriedCard.did, `is`(DEFAULT_DECK_ID))
+        assertThat(buriedCard.did, equalTo(DEFAULT_DECK_ID))
 
         assertThat("Card should be buried", getCardInDefaultDeck(sched), nullValue())
 
@@ -90,9 +88,9 @@ class SchedTest : RobolectricTest() {
 
         // Assert
         val dynamicDeck = getCountsForDid(dynDeck.toDouble())
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.lrnCount, `is`(0))
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.newCount, `is`(0))
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.revCount, `is`(0))
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.lrnCount, equalTo(0))
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.newCount, equalTo(0))
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.revCount, equalTo(0))
     }
 
     private fun markNextCardAsGood(sched: Sched) {
@@ -109,7 +107,7 @@ class SchedTest : RobolectricTest() {
                 return value
             }
         }
-        throw IllegalStateException(String.format("Could not find deck %s", didToFind))
+        throw IllegalStateException("Could not find deck $didToFind")
     }
 
     private fun getCardInDefaultDeck(s: Sched): Card? {
@@ -160,7 +158,7 @@ class SchedTest : RobolectricTest() {
             val currentTime = time.getInternalTimeMs()
             sched.answerCard(c!!, BUTTON_ONE)
             val timeAnswered = col.db.queryLongScalar("select id from revlog")
-            assertThat(timeAnswered, `is`(currentTime))
+            assertThat(timeAnswered, equalTo(currentTime))
         }
     }
 
@@ -200,7 +198,7 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_LRN, c.type)
-        assertThat(c.due, `is`(greaterThanOrEqualTo(t)))
+        assertThat(c.due, greaterThanOrEqualTo(t))
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -235,7 +233,7 @@ class SchedTest : RobolectricTest() {
         var note: Note
         for (i in 0..29) {
             note = col.newNote()
-            note.setItem("Front", Integer.toString(i))
+            note.setItem("Front", i.toString())
             if (i > 4) {
                 note.model().put("did", deck2)
             }
@@ -307,13 +305,13 @@ class SchedTest : RobolectricTest() {
         assertEquals(3, (c.left % 1000).toLong())
         assertEquals(3, (c.left / 1000).toLong())
         // it should be due in 30 seconds
-        val t = Math.round((c.due - TimeManager.time.intTime()).toFloat()).toLong()
-        assertThat(t, `is`(greaterThanOrEqualTo(25L)))
-        assertThat(t, `is`(lessThanOrEqualTo(40L)))
+        val t = (c.due - TimeManager.time.intTime())
+        assertThat(t, greaterThanOrEqualTo(25L))
+        assertThat(t, lessThanOrEqualTo(40L))
         // pass it once
         col.sched.answerCard(c, BUTTON_TWO)
         // it should be due in 3 minutes
-        assertEquals(Math.round((c.due - TimeManager.time.intTime()).toFloat()).toFloat(), 179f, 1f)
+        assertEquals((c.due - TimeManager.time.intTime()).toFloat(), 179f, 1f)
         assertEquals(2, (c.left % 1000).toLong())
         assertEquals(2, (c.left / 1000).toLong())
         // check log is accurate
@@ -472,17 +470,17 @@ class SchedTest : RobolectricTest() {
         note.setItem("Back", "two")
         col.addNote(note)
         // set the card up as a review card, due 8 days ago
-        @KotlinCleanup("use scope function")
-        var c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = (col.sched.today - 8).toLong()
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.ivl = 100
-        c.startTimer()
-        c.flush()
+        var c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = (col.sched.today - 8).toLong()
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            ivl = 100
+            startTimer()
+            flush()
+        }
         // save it for later use as well
         val cardcopy = c.clone()
         // failing it should put it in the learn queue with the default options
@@ -499,8 +497,8 @@ class SchedTest : RobolectricTest() {
         assertEquals(1, c.ivl)
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
-        assertThat(c.due - TimeManager.time.intTime(), `is`(greaterThan(118L)))
+        assertThat(c.due, greaterThanOrEqualTo(TimeManager.time.intTime()))
+        assertThat(c.due - TimeManager.time.intTime(), greaterThan(118L))
         // factor should have been decremented
         assertEquals(2300, c.factor)
         // check counters
@@ -700,7 +698,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(28080000, col.sched.nextIvl(c, BUTTON_FOUR))
         assertThat(
             without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_FOUR)),
-            `is`("10.8 mo")
+            equalTo("10.8 mo")
         )
     }
 
@@ -740,16 +738,18 @@ class SchedTest : RobolectricTest() {
         col.reset()
         assertNotNull(card)
         // should cope with rev cards being relearned
-        @KotlinCleanup("use apply")
-        c.due = 0
-        c.ivl = 100
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.flush()
+        c.apply {
+            due = 0
+            ivl = 100
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            flush()
+        }
+
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
-        assertThat(c.due, `is`(greaterThanOrEqualTo(TimeManager.time.intTime())))
+        assertThat(c.due, greaterThanOrEqualTo(TimeManager.time.intTime()))
         assertEquals(QUEUE_TYPE_LRN, c.queue)
         assertEquals(CARD_TYPE_REV, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
@@ -779,17 +779,17 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        @KotlinCleanup("use scope function")
-        var c = note.cards()[0]
-        c.ivl = 100
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        // due in 25 days, so it's been waiting 75 days
-        c.due = (col.sched.today + 25).toLong()
-        c.mod = 1
-        c.factor = STARTING_FACTOR
-        c.startTimer()
-        c.flush()
+        var c = note.cards()[0].apply {
+            ivl = 100
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            // due in 25 days, so it's been waiting 75 days
+            due = (col.sched.today + 25).toLong()
+            mod = 1
+            factor = STARTING_FACTOR
+            startTimer()
+            flush()
+        }
         col.reset()
         assertEquals(Counts(0, 0, 0), col.sched.counts())
         @Suppress("UNUSED_VARIABLE")
@@ -876,12 +876,14 @@ class SchedTest : RobolectricTest() {
         c.load()
         assertEquals(4, col.sched.answerButtons(c).toLong())
         // add a sibling so we can test minSpace, etc
-        @KotlinCleanup("use apply")
         val c2 = c.clone()
-        c2.id = 0
-        c2.ord = 1
-        c2.due = 325
-        c2.flush()
+        c2.apply {
+            id = 0
+            ord = 1
+            due = 325
+            flush()
+        }
+
         // should be able to answer it
         c = card!!
         col.sched.answerCard(c, BUTTON_FOUR)
@@ -939,13 +941,14 @@ class SchedTest : RobolectricTest() {
         assertEquals(CARD_TYPE_NEW, c.type)
         assertEquals(QUEUE_TYPE_NEW, c.queue)
         // undue reviews should also be unaffected
-        @KotlinCleanup("use scope function")
-        c.ivl = 100
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        c.due = (col.sched.today + 25).toLong()
-        c.factor = STARTING_FACTOR
-        c.flush()
+        c.apply {
+            ivl = 100
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            due = (col.sched.today + 25).toLong()
+            factor = STARTING_FACTOR
+            flush()
+        }
         val cardcopy = c.clone()
         col.sched.rebuildDyn(did)
         col.reset()
@@ -1142,12 +1145,14 @@ class SchedTest : RobolectricTest() {
         note = col.newNote()
         note.setItem("Front", "three")
         col.addNote(note)
-        @KotlinCleanup("use scope function")
         val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = col.sched.today.toLong()
-        c.flush()
+        c.apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = col.sched.today.toLong()
+            flush()
+        }
+
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         col.sched.answerCard(card!!, BUTTON_ONE)
@@ -1163,12 +1168,13 @@ class SchedTest : RobolectricTest() {
             val note = col.newNote()
             note.setItem("Front", "num$i")
             col.addNote(note)
-            @KotlinCleanup("use scope function")
             val c = note.cards()[0]
-            c.type = CARD_TYPE_REV
-            c.queue = QUEUE_TYPE_REV
-            c.due = 0
-            c.flush()
+            c.apply {
+                type = CARD_TYPE_REV
+                queue = QUEUE_TYPE_REV
+                due = 0
+                flush()
+            }
         }
         // fail the first one
         col.reset()
@@ -1345,13 +1351,13 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        @KotlinCleanup("use scope function")
-        val c = note.cards()[0]
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        c.ivl = 100
-        c.due = 0
-        c.flush()
+        val c = note.cards()[0].apply {
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            ivl = 100
+            due = 0
+            flush()
+        }
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         col.sched.forgetCards(listOf(c.id))
@@ -1387,17 +1393,17 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        @KotlinCleanup("scope function")
-        val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = 0
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.ivl = 100
-        c.startTimer()
-        c.flush()
+        val c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = 0
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            ivl = 100
+            startTimer()
+            flush()
+        }
         col.reset()
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched._cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
@@ -1412,17 +1418,18 @@ class SchedTest : RobolectricTest() {
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
-        @KotlinCleanup("scope function")
-        var c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.ivl = 100
-        c.due = (col.sched.today - c.ivl).toLong()
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.startTimer()
-        c.flush()
+        var c = note.cards()[0].apply {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            ivl = 100
+            due = (col.sched.today - this.ivl).toLong()
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            startTimer()
+            flush()
+        }
+
         val conf = col.sched._cardConf(c)
         conf.getJSONObject("lapse").put("mult", 0.5)
         col.decks.save(conf)

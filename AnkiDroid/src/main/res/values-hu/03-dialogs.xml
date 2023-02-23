@@ -94,6 +94,7 @@
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
@@ -115,8 +116,8 @@
         <item quantity="one">Importált kártyák: %2$d</item>
         <item quantity="other">Importált kártyák: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD kártya tele</string>
-    <string name="sd_card_almost_full_title">Az SD kártya már majdnem tele van</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Nincs hely</string>
     <string name="no_space_to_downgrade_content">AnkiDroid-nak szüksége van %s szabad tárterületre a folytatáshoz. Szabadíts fel helyet, légyszíves!</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
@@ -124,7 +125,9 @@
     <string name="restore_backup_choose_another">Válasszon másikat</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Nem</string>
+    <string name="dialog_yes">Igen</string>
     <string name="dialog_continue">Folytatás</string>
     <string name="dialog_processing">Feldolgozás...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Létrehoz</string>
@@ -172,9 +175,6 @@
     <string name="multimedia_editor_failed">A Multimédia Szerkesztő megnyitása sikertelen</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audió felvétel engedély megtagadva</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Üdvözöljük az AnkiDroidnál!</string>
-    <string name="collection_load_welcome_request_permissions_details">Az AnkiDroidnak szüksége van tárhely engedélyre, amit csak az AnkiDroid gyűjtemények, szókártyák és biztonsági mentések tárolására használunk. A kódunk nyílt forráskódú, önkéntesek által írva, amiben milliók megbíznak.\n\n.Ha bármilyen kérdések van, kérjük olvassa el az alkalmazáson belüli útmutatót vagy látogassa meg a támogatói fórumainkat.\n\n.Köszönjük, hogy kipróbálta az AnkiDroidot!\n-AnkiDroid Fejlesztői Csapat</string>
     <string name="mutimedia_editor_assertion_failed">Ismeretlen hiba történt a Bővített Szerkesztő megnyitása során</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Frissített AnkiDroid</string>
@@ -230,6 +230,7 @@
     <string name="help_item_support_develop_ankidroid">Feljesztés</string>
     <string name="help_item_support_rate_ankidroid">Értékelés</string>
     <string name="help_item_support_other_ankidroid">Egyéb</string>
+    <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">Közösség</string>
     <string name="help_item_anki_forums">Anki fórumok</string>
     <string name="help_item_discord">Discord</string>
@@ -259,4 +260,14 @@
     <string name="import_csv">Szöveges fájl (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nem hozhatsz létre alpaklit minden paklihoz</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

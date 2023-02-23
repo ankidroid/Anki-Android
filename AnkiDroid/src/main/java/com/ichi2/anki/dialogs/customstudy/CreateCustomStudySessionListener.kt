@@ -15,22 +15,34 @@
  */
 package com.ichi2.anki.dialogs.customstudy
 
-import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
-import com.ichi2.async.TaskListenerWithContext
+import com.ichi2.anki.CollectionManager
+import com.ichi2.async.updateValuesFromDeck
+import timber.log.Timber
 
-class CreateCustomStudySessionListener(callback: Callback?) : TaskListenerWithContext<CreateCustomStudySessionListener.Callback, Void?, DeckStudyData?>(callback) {
+class CreateCustomStudySessionListener(val callback: Callback) {
     interface Callback {
         fun hideProgressBar()
         fun onCreateCustomStudySession()
         fun showProgressBar()
     }
 
-    override fun actualOnPreExecute(context: Callback) {
-        context.showProgressBar()
+    fun onPreExecute() {
+        callback.showProgressBar()
     }
 
-    override fun actualOnPostExecute(context: Callback, result: DeckStudyData?) {
-        context.hideProgressBar()
-        context.onCreateCustomStudySession()
+    fun onPostExecute() {
+        callback.hideProgressBar()
+        callback.onCreateCustomStudySession()
     }
+}
+
+// TODO: See if listener can be simplified more
+suspend fun rebuildCram(listener: CreateCustomStudySessionListener) {
+    listener.onPreExecute()
+    CollectionManager.withCol {
+        Timber.d("doInBackground - rebuildCram()")
+        sched.rebuildDyn(decks.selected())
+        updateValuesFromDeck(this, true)
+    }
+    listener.onPostExecute()
 }

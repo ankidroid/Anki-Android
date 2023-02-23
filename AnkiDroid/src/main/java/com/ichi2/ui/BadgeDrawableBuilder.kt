@@ -16,15 +16,15 @@
 
 package com.ichi2.ui
 
-import android.content.res.Resources
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.MenuItem
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
 import timber.log.Timber
 
-class BadgeDrawableBuilder(private val resources: Resources) {
+class BadgeDrawableBuilder(private val context: Context) {
     private var mChar = '\u0000'
     private var mColor: Int? = null
     fun withText(c: Char): BadgeDrawableBuilder {
@@ -51,7 +51,7 @@ class BadgeDrawableBuilder(private val resources: Resources) {
             badge.setText(mChar)
         }
         if (mColor != null) {
-            val badgeDrawable: Drawable? = VectorDrawableCompat.create(resources, R.drawable.badge_drawable, null)
+            val badgeDrawable: Drawable? = ContextCompat.getDrawable(context, R.drawable.badge_drawable)
             if (badgeDrawable == null) {
                 Timber.w("Unable to find badge_drawable - not drawing badge")
                 return

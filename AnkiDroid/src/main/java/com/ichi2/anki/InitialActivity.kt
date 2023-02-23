@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -29,14 +30,13 @@ object InitialActivity {
     /** Returns null on success  */
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? {
-
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
             return StartupFailure.WEBVIEW_FAILED
         }
 
         // If we're OK, return null
-        if (CollectionHelper.instance.getColSafe(context) != null) {
+        if (CollectionHelper.instance.getColSafe(context, reportException = false) != null) {
             return null
         }
         if (!AnkiDroidApp.isSdCardMounted) {
@@ -49,6 +49,7 @@ object InitialActivity {
             CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
             CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
             CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED
+            CollectionHelper.CollectionOpenFailure.DISK_FULL -> StartupFailure.DISK_FULL
             null -> {
                 // if getColSafe returned null, this should never happen
                 null
@@ -97,7 +98,7 @@ object InitialActivity {
     /** Sets the preference stating that the latest version has been applied  */
     fun setUpgradedToLatestVersion(preferences: SharedPreferences) {
         Timber.i("Marked prefs as upgraded to latest version: %s", pkgVersionName)
-        preferences.edit().putString("lastVersion", pkgVersionName).apply()
+        preferences.edit { putString("lastVersion", pkgVersionName) }
     }
 
     /** @return false: The app has been upgraded since the last launch OR the app was launched for the first time.
@@ -111,6 +112,6 @@ object InitialActivity {
 
     enum class StartupFailure {
         SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED
+        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
     }
 }

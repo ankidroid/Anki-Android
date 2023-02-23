@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Biztonsági mentés nem lett elmentve. Nincsen elég hely az SD kártyán. Vegye lejjebb a biztonsági mentés mélységét vagy töröljön pár más fájlt.</string>
-    <string name="sd_space_warning">Kevesebb, mint %d MB hely maradt az SD kártyán.\n Szabadíts fel helyet az adatvesztés elkerülése érdekében.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">Visszaállítás a biztonsági másolatból</string>
     <string name="backup_new_collection">Új gyűjtemény</string>
     <string name="backup_del_collection">Törölje a gyűjteményt, és hozzon létre egy újat</string>

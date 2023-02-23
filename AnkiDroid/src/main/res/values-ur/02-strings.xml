@@ -60,19 +60,19 @@
     <string name="no_tags">آپ نے ابھی تک کوئی ٹیگ شامل نہیں کیے</string>
     <string name="updated_version">اپڈیٹ کر دیا گیا ورژن %s پہ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">وائٹ بورڈ کو محفوظ کریں</string>
     <string name="enable_whiteboard">وائٹ بورڈ فعال کریں</string>
     <string name="disable_whiteboard">وائٹ بورڈ غیرفعال کریں</string>
     <string name="show_whiteboard">وائٹ بورڈ دکھائیں</string>
     <string name="hide_whiteboard">وائٹ بورڈ چھپائیں</string>
     <string name="clear_whiteboard">وائٹ بورڈ صاف کریں</string>
     <string name="replay_audio">پھر چلائیں آڈیو</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
+    <string name="leech_suspend_notification">کارڈ کو جونک کے طور پر نشان زد اور معطل کر دیا گیا ہے۔</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">فانٹ فائل %s خراب</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknown">نامعلوم خامی</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">یادداشت سے باہر</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -91,30 +91,30 @@
         <item>سوال</item>
         <item>ٹیگز</item>
         <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
+        <item>جائزے</item>
+        <item>وقفہ</item>
+        <item>آسانی</item>
+        <item>بقایا</item>
+        <item>کارڈ میں ترمیم کی گئی</item>
         <item>Created</item>
-        <item>Note Modified</item>
+        <item>ترمیم شدہ نوٹ</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">درخواست دیں</string>
+    <string name="filter_by_flags">جھنڈے</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">بھولے ہوئے کارڈ دہرائیں</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
+    <string name="custom_study_review_ahead">آگے کا جائزہ لیں</string>
     <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
-    <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <string name="custom_study_preview_new">نئے کارڈز کا مشاہدہ کریں</string>
+    <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="cardeditor_title_edit_card">نوٹ میں ترمیم کریں</string>
+    <string name="discard_unsaved_changes">بند کریں اور موجودہ ان پٹ کھو دیں؟</string>
+    <string name="note_editor_no_cards_created">کوئی کارڈ نہیں بنایا۔ براہ کرم مزید فیلڈز پُر کریں۔</string>
+    <string name="note_editor_no_first_field">پہلا میدان خالی ہے۔</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
@@ -136,15 +136,15 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid card</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid کارڈ</string>
+    <string name="note_editor_copy_note">کاپی نوٹ</string>
+    <string name="card_editor_reposition_card">ریپوزیشن</string>
     <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">دوبارہ شیڈول</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نظارہ</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d میں سے %2$d</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Rename</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">نام تبدیل کریں</string>
     <string name="default_conf_delete_error">The default options group can’t be removed</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d card added</item>
@@ -152,25 +152,24 @@
     </plurals>
     <string name="check_db">Check database</string>
     <string name="check_media">Check media</string>
-    <string name="empty_cards">Empty cards</string>
-    <string name="check_db_message">Checking database&#8230;</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+    <string name="empty_cards">خالی کارڈز</string>
+    <string name="check_db_message">ڈیٹا بیس کی جانچ پڑتال&#8230;</string>
+    <string name="empty_card_warning">یہ کارڈ خالی ہے۔ ڈیک لسٹ اسکرین پر مینو سے \"خالی کارڈز\" استعمال کریں۔</string>
+    <string name="unknown_type_field_warning">جواب ٹائپ کریں۔:نامعلوم جگہ %s</string>
     <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="show_hint">Show %s</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
-    <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+    <string name="info_rate">AnkiDroid کی درجہ بندی کریں</string>
+    <string name="import_title">درآمد</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">شامل کریں</string>
+    <string name="import_message_replace_confirm">یہ آپ کے موجودہ مجموعہ کو حذف کر دے گا اور اسے فائل کے ڈیٹا سے بدل دے گا %s</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">Add “%s” to collection? This may take a long time</item>
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_log_no_apkg">یہ ایک درست انکی پیکیج فائل نہیں ہے۔</string>
+    <string name="import_title_error" comment="Title of error dialog">غلطی</string>
+    <string name="import_log_failed_unzip">apkg کو ان زپ کرنے میں ناکام: %s</string>
+    <string name="import_log_failed_copy_to">apkg کو کاپی کرنے میں ناکام %s</string>
+    <string name="import_log_failed_validate">apkg کی توثیق ناکام ہوگئی</string>
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Include media</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Export selected card as apkg file?</item>
+        <item quantity="other">Export %d selected cards as apkg file?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Export selected note as apkg file?</item>
+        <item quantity="other">Export %d selected notes as apkg file?</item>
+    </plurals>
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
+    <string name="export_success_title">Collection exported successfully</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -205,15 +211,17 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Error exporting apkg file</string>
+    <string name="export_select_save_app">Select where to save file</string>
+    <string name="export_select_share_app">Select application for sharing</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">Custom study</string>
-    <string name="more_options">More</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
+    <string name="custom_study">اپنی مرضی کے مطابق مطالعہ</string>
+    <string name="more_options">مزید</string>
+    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.
+یہ عام شیڈول سے ہٹ کر مطالعہ کرنے کے لیے ایک خاص ڈیک ہے۔آپ کے ان کا جائزہ لینے کے بعد کارڈز خود بخود ان کے اصل ڈیک پر واپس آ جائیں گے۔ڈیک کی فہرست سے اس ڈیک کو حذف کرنے سے باقی تمام کارڈز ان کے اصل ڈیک پر واپس آجائیں گے۔</string>
+    <string name="steps_error">اقدامات کے نمبر 0 سے زیادہ ہونے چاہئیں</string>
     <string name="steps_min_error">At least one step is required</string>
     <string name="sched_end">(end)</string>
     <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
@@ -222,33 +230,33 @@
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="one">%s second</item>
-        <item quantity="other">%s seconds</item>
+        <item quantity="one">%s سیکنڈ</item>
+        <item quantity="other">%s سیکنڈز</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="one">%s minute</item>
-        <item quantity="other">%s minutes</item>
+        <item quantity="one">%s منٹ</item>
+        <item quantity="other">%s منٹ</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="one">%s hour</item>
-        <item quantity="other">%s hours</item>
+        <item quantity="one">%s گھنٹہ</item>
+        <item quantity="other">%s گھنٹے</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="one">%s day</item>
-        <item quantity="other">%s days</item>
+        <item quantity="one">%s دن</item>
+        <item quantity="other">%s دن</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="one">%s month</item>
-        <item quantity="other">%s months</item>
+        <item quantity="one">%s مہینہ</item>
+        <item quantity="other">%s مہینے</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="one">%s year</item>
-        <item quantity="other">%s years</item>
+        <item quantity="one">%s سال</item>
+        <item quantity="other">%s سال</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s سیکنڈز</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -377,6 +385,15 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
+        %1$d media files left to migrate.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
+    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
+    You will not be able to sync during the storage migration.</string>
+    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
+\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Could not create directory %s</string>
@@ -398,6 +415,8 @@
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>

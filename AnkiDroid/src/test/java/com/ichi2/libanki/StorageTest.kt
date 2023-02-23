@@ -20,10 +20,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.JsonUtils.toOrderedString
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.fromMap
+import com.ichi2.utils.toStringList
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONArray
+import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
@@ -116,10 +118,10 @@ open class StorageTest : RobolectricTest() {
             models = loadModelsV16(col)
             decks = loadDecksV16(col)
             dConf = loadDConf(col)
-            tags = JSONObject(
+            tags = fromMap(
                 col.tags.all().stream()
                     .map { x: String -> Pair(x, 0) }
-                    .collect(Collectors.toMap({ x: Pair<String, Int?> -> x.first }, { x: Pair<String, Int?> -> x.second }))
+                    .collect(Collectors.toMap({ x: Pair<String, Int> -> x.first }, { x: Pair<String, Int> -> x.second }))
             )
                 .toString()
         }
@@ -225,10 +227,10 @@ open class StorageTest : RobolectricTest() {
 
         /** Removes a given key from all sub-objects, example: for all deck ids, remove the "name"  */
         private fun removeFromAllObjects(actualJson: JSONObject, expectedJson: JSONObject, key: String) {
-            for (id in actualJson) {
+            for (id in actualJson.keys()) {
                 actualJson.getJSONObject(id).remove(key)
             }
-            for (id in expectedJson) {
+            for (id in expectedJson.keys()) {
                 expectedJson.getJSONObject(id).remove(key)
             }
         }
@@ -238,7 +240,7 @@ open class StorageTest : RobolectricTest() {
             val expectedJson = JSONObject(expectedData.models)
             renameKeys(actualJson)
             renameKeys(expectedJson)
-            for (k in actualJson) {
+            for (k in actualJson.keys()) {
                 val actualJsonModel = actualJson.getJSONObject(k)
                 val expectedJsonModel = expectedJson.getJSONObject(k)
                 remove(actualJsonModel, expectedJsonModel, "id")
@@ -282,7 +284,9 @@ open class StorageTest : RobolectricTest() {
             val breq = e.getJSONArray(2)
             return if (areq.length() != 1 || breq.length() != 1) {
                 false
-            } else areq.getInt(0) == breq.getInt(0)
+            } else {
+                areq.getInt(0) == breq.getInt(0)
+            }
         }
 
         private fun assertConfEqual(expectedData: CollectionData) {

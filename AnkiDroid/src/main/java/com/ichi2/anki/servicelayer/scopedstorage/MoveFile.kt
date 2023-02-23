@@ -19,8 +19,9 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.EquivalentFileException
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
@@ -28,25 +29,39 @@ import java.io.File
 /**
  * [Operation] which safely moves a file at path `sourceFile` to path `destinationFile`.
  *
- * Note: thrown exceptions are passed to the context via [MigrateUserData.MigrationContext.reportError]
+ * Note: thrown exceptions are passed to the context via [MigrationContext.reportError]
  *
- * @throws MigrateUserData.FileConflictException If the source and destination exist and are different
- * @throws MigrateUserData.EquivalentFileException sourceFile == destinationFile
- * @throws MigrateUserData.MissingDirectoryException if source or destination's directory is missing
+ * @throws FileConflictException If the source and destination exist and are different
+ * @throws EquivalentFileException sourceFile == destinationFile
+ * @throws MissingDirectoryException if source or destination's directory is missing
  * @throws IllegalStateException File copy failed
  * @throws java.io.IOException Unknown file operation failed
  */
 internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File) : Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
-        val destinationExists = destinationFile.exists()
+    override fun execute(context: MigrationContext): List<Operation> {
+        var destinationExists = destinationFile.exists()
 
         if (destinationExists && destinationFile.isDirectory) {
-            context.reportError(this, MigrateUserData.FileDirectoryConflictException(sourceFile, Directory.createInstanceUnsafe(destinationFile)))
+            context.reportError(
+                this,
+                MigrateUserData.FileDirectoryConflictException(
+                    sourceFile,
+                    Directory.createInstanceUnsafe(destinationFile)
+                )
+            )
             return operationCompleted()
         }
 
         if (handledEquivalentFileContent(destinationExists, context)) {
             return operationCompleted()
+        }
+
+        // destination exists, does NOT match content, and is 0-length
+        // delete it and let the transfer occur again.
+        if (destinationExists && destinationFile.length() == 0L) {
+            // TODO: #13170 - extend this for when destinationFile is an exact subset of sourceFile
+            destinationExists = !destinationFile.delete()
+            Timber.w("(conflict) Deleted empty file in destination. Deletion result: %b", destinationExists)
         }
 
         // destination exists, and does NOT match content: throw an exception
@@ -57,16 +72,26 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
             // user requesting the file
             Timber.d("file already moved to $destinationFile")
             if (sourceFile.file.exists()) {
-                context.reportError(this, MigrateUserData.FileConflictException(sourceFile, DiskFile.createInstance(destinationFile)!!))
+                context.reportError(
+                    this,
+                    MigrateUserData.FileConflictException(
+                        sourceFile,
+                        DiskFile.createInstance(destinationFile)!!
+                    )
+                )
             }
             return operationCompleted()
         }
 
         // attempt a quick rename
-        if (context.attemptRename && sourceFile.renameTo(destinationFile)) {
-            Timber.d("move successful from '$sourceFile' to '$destinationFile'")
-            context.reportProgress(destinationFile.length())
-            return operationCompleted()
+        if (context.attemptRename) {
+            if (sourceFile.renameTo(destinationFile)) {
+                Timber.d("fast move successful from '$sourceFile' to '$destinationFile'")
+                context.reportProgress(destinationFile.length())
+                return operationCompleted()
+            } else {
+                context.attemptRename = false
+            }
         }
 
         // copy the file, and delete the source.
@@ -100,10 +125,10 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
      * * Deletes source, if it has same content as destination but distinct path
      * * If source and destination deleted: report 0 progress (this is a no-op)
      *
-     * @throws MigrateUserData.EquivalentFileException sourceFile == destinationFile
-     * @throws MigrateUserData.MissingDirectoryException if source or destination's directory is missing
+     * @throws EquivalentFileException sourceFile == destinationFile
+     * @throws MissingDirectoryException if source or destination's directory is missing
      */
-    private fun handledEquivalentFileContent(destinationExists: Boolean, context: MigrateUserData.MigrationContext): Boolean {
+    private fun handledEquivalentFileContent(destinationExists: Boolean, context: MigrationContext): Boolean {
         if (!sourceFile.contentEquals(destinationFile)) {
             return false
         }
@@ -130,10 +155,10 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
     }
 
     /**
-     * @throws MigrateUserData.MissingDirectoryException if source or destination's directory is missing
+     * @throws MissingDirectoryException if source or destination's directory is missing
      */
     private fun ensureParentDirectoriesExist() {
-        val exceptionBuilder = MigrateUserData.DirectoryValidator()
+        val exceptionBuilder = DirectoryValidator()
         exceptionBuilder.tryCreate("source - parent dir", sourceFile.file.parentFile!!)
         exceptionBuilder.tryCreate("destination - parent dir", destinationFile.parentFile!!)
         exceptionBuilder.throwIfNecessary()

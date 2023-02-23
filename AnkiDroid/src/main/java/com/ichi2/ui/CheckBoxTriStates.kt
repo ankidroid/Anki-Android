@@ -43,7 +43,6 @@ class CheckBoxTriStates : AppCompatCheckBox {
     }
 
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
-
         // we never truly set the listener to the client implementation, instead we only hold
         // a reference to it and invoke it when needed.
         if (mPrivateListener !== listener) {
@@ -145,7 +144,10 @@ class CheckBoxTriStates : AppCompatCheckBox {
         cycleIndeterminateToChecked = false
         if (attrs != null) {
             val a = context.theme.obtainStyledAttributes(
-                attrs, R.styleable.CheckBoxTriStates, 0, 0
+                attrs,
+                R.styleable.CheckBoxTriStates,
+                0,
+                0
             )
             cycleCheckedToIndeterminate = a.getBoolean(
                 R.styleable.CheckBoxTriStates_cycle_checked_to_indeterminate,
@@ -176,10 +178,10 @@ class CheckBoxTriStates : AppCompatCheckBox {
         var cycleIndeterminateToChecked = false
 
         constructor(superState: Parcelable?) : super(superState) {}
-        private constructor(`in`: Parcel) : super(`in`) {
-            state = State.values()[`in`.readInt()]
-            cycleCheckedToIndeterminate = `in`.readInt() != 0
-            cycleIndeterminateToChecked = `in`.readInt() != 0
+        private constructor(source: Parcel) : super(source) {
+            state = State.values()[source.readInt()]
+            cycleCheckedToIndeterminate = source.readInt() != 0
+            cycleIndeterminateToChecked = source.readInt() != 0
         }
 
         override fun writeToParcel(out: Parcel, flags: Int) {
@@ -202,8 +204,8 @@ class CheckBoxTriStates : AppCompatCheckBox {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
-                override fun createFromParcel(`in`: Parcel): SavedState {
-                    return SavedState(`in`)
+                override fun createFromParcel(source: Parcel): SavedState {
+                    return SavedState(source)
                 }
 
                 override fun newArray(size: Int): Array<SavedState?> {

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Stažená databáze byla poškozena. Zkuste to prosím znovu.</string>
     <string name="sync_overwrite_error">Aktuální kolekce nemohla být přepsána staženým souborem</string>
     <string name="sync_connection_error">Vypršel časový limit připojení. Při připojení k Internetu se vyskytují problémy, nebo máte velmi velký soubor ve složce s multimédii.</string>
-    <string name="sync_write_access_error">Stažený soubor nelze uložit na SD kartu. Buď je vaše SD karta nastavena pouze pro čtení nebo na ní není dostatek místa.</string>
+    <string name="sync_write_access_error_on_storage">Stažený soubor nelze uložit. Buď je úložiště pouze pro čtení nebo v něm není dostatek místa.</string>
     <string name="sync_error_invalid_sync_server">Vlastní synchronizační server v pokročilém nastavení je neplatný (%s). Prosím zadejte platný server, nebo zrušte dané nastavení.</string>
     <string name="sync_deletions_message">Synchronizace odstraněných...</string>
     <string name="sync_small_objects_message">Synchronizace malých objektů...</string>

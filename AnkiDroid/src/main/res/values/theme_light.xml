@@ -28,15 +28,18 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="colorPrimary">@color/theme_light_primary</item>
         <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
         <item name="colorAccent">@color/theme_light_accent</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorPrimary">@color/theme_light_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_light_secondary_text</item>
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="colorControlActivated">?attr/colorPrimary</item>
         <!-- Navigation drawer theme -->
         <item name="navDrawerItemColor">@color/drawer_item_text_light</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_light</item>
+        <!-- Menu -->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
         <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
@@ -53,6 +56,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_light_primary_text</item>
         <item name="actionModeBackground">@color/theme_light_primary</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_light_primary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_light_row_current</item>
@@ -132,10 +137,16 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_color_button_text">@color/black</item>
+        <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
+        <item name="md_corner_radius">@dimen/dialog_corner_radius</item>
+        <item name="textAllCaps">false</item>
+        <item name="md_button_casing">literal</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
         <item name="popupBackgroundColor">@android:color/white</item>
         <item name="iconColor">?android:attr/textColor</item>
+        <item name="overflowAndPopupMenuIconColor">#9e000000</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Navbar -->
@@ -166,15 +177,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
-    <style name="LegacyActionBarLight" parent="Theme_Light">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_light</item>
-        <item name="android:textColorSecondary">@color/prefs_item_light_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

@@ -42,12 +42,11 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
@@ -55,6 +54,7 @@ import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONException
 import org.junit.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
@@ -84,6 +84,10 @@ open class RobolectricTest : CollectionGetter {
 
     @get:Rule
     val mTaskScheduler = TaskSchedulerRule()
+
+    /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
+    @get:Rule
+    val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 
     @Before
     @CallSuper
@@ -134,7 +138,6 @@ open class RobolectricTest : CollectionGetter {
     @After
     @CallSuper
     open fun tearDown() {
-
         // If you don't clean up your ActivityControllers you will get OOM errors
         for (controller in mControllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString())
@@ -289,7 +292,7 @@ open class RobolectricTest : CollectionGetter {
      * Returns an instance of [SharedPreferences] using the test context
      * @see [editPreferences] for editing
      */
-    protected fun getPreferences(): SharedPreferences {
+    fun getPreferences(): SharedPreferences {
         return AnkiDroidApp.getSharedPrefs(targetContext)
     }
 
@@ -331,9 +334,9 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @Throws(JSONException::class)
-    protected fun getCurrentDatabaseModelCopy(modelName: String?): Model {
+    protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
         val collectionModels = col.models
-        return Model(collectionModels.byName(modelName!!).toString().trim { it <= ' ' })
+        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
@@ -371,14 +374,14 @@ open class RobolectricTest : CollectionGetter {
 
     protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
         val model = col.models.byName((name)!!)
-            ?: throw IllegalArgumentException(String.format("Could not find model '%s'", name))
+            ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
         for ((i, field) in fields.withIndex()) {
             n.setField(i, field)
         }
-        check(col.addNote(n) != 0) { String.format("Could not add note: {%s}", fields.joinToString(separator = ", ")) }
+        check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
 
@@ -455,7 +458,7 @@ open class RobolectricTest : CollectionGetter {
         advanceRobolectricLooper()
         wait(timeoutMs.toLong())
         advanceRobolectricLooper()
-        if (!completed[0]) { throw IllegalStateException(String.format("Task %s didn't finish in %d ms", task.javaClass, timeoutMs)) }
+        if (!completed[0]) { throw IllegalStateException("Task ${task.javaClass} didn't finish in $timeoutMs ms") }
     }
 
     /**
@@ -519,7 +522,6 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @CheckResult
-    @KotlinCleanup("scope function")
     protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
         val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
         val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
@@ -554,42 +556,12 @@ open class RobolectricTest : CollectionGetter {
             println("not annotated with junit, not setting up backend")
             return
         }
-        // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
-        // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
-        val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
-        val localBackendVersion = System.getenv("ANKIDROID_BACKEND_VERSION")
-        val supportedBackendVersion = BuildConfig.BACKEND_VERSION
-        if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != localBackendVersion) {
-                throw java.lang.IllegalStateException(
-                    """
-                        AnkiDroid backend testing library requires an update.
-                        Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v$localBackendVersion)
-                        And then set $\0ANKIDROID_BACKEND_VERSION to $supportedBackendVersion
-                        Or to update you can just run the script: sh tools/setup-anki-backend.sh
-                        For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
-                        Error: $\0ANKIDROID_BACKEND_VERSION: expected '$supportedBackendVersion', got '$localBackendVersion
-                    """.trimIndent()
-                )
-            }
-            // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
-            try {
-                RustBackendLoader.ensureSetup(backendPath)
-            } catch (e: UnsatisfiedLinkError) {
-                // java.lang.UnsatisfiedLinkError: /Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib:
-                // dlopen(/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib, 0x0001):
-                // tried: '/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib'
-                // (code signature in <3C55B9B3-1E8A-33F4-A43E-173BDB074DC5>
-                // '/Users/davidallison/StudioProjects/librsdroid-0-1-11.dylib'
-                // not valid for use in process: library load disallowed by system policy)
-
-                // Dialog with message:
-                // “librsdroid-0-1-11.dylib” can’t be opened because Apple cannot check it for malicious software.
-                // This software needs to be updated. Contact the developer for more information.
-                // [Show in Finder] [OK]
-                if (e.message.toString().contains("library load disallowed by system policy")) {
-                    throw IllegalStateException(
-                        """library load disallowed by system policy.
+        try {
+            RustBackendLoader.ensureSetup()
+        } catch (e: UnsatisfiedLinkError) {
+            if (e.message.toString().contains("library load disallowed by system policy")) {
+                throw IllegalStateException(
+                    """library load disallowed by system policy.
 "To fix:
 * Run the test such that the "developer cannot be verified" message appears
 * Press "OK" on the "Apple cannot check it for malicious software" prompt
@@ -598,29 +570,9 @@ open class RobolectricTest : CollectionGetter {
     Button is underneath the text: "librsdroid.dylib was blocked from use because it is not from an identified developer"
 * Press "OK" on the "Apple cannot check it for malicious software" prompt
 * Test should execute correctly"""
-                    )
-                }
-                throw e
+                )
             }
-        } else {
-            // default (no env variable): Extract the backend testing lib from the jar
-            try {
-                RustBackendLoader.ensureSetup(null)
-            } catch (e: UnsatisfiedLinkError) {
-                if (e.message.toString().contains("arm64e")) {
-                    // Giving the commands to user to add the required env variables
-                    val exception =
-                        """
-                            Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/$supportedBackendVersion and add the following environment variables to your device by using following commands: 
-                            export ANKIDROID_BACKEND_PATH={Path to the dylib file}
-                            export ANKIDROID_BACKEND_VERSION=$supportedBackendVersion
-                            Or to do setup automatically, run the script: sh tools/setup-anki-backend.sh
-                            For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
-                        """.trimIndent()
-                    throw IllegalStateException(exception, e)
-                }
-                throw e
-            }
+            throw e
         }
     }
 

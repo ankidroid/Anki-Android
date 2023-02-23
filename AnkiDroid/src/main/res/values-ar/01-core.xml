@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">نعم</string>
     <!-- Navigation drawer items-->
     <string name="decks">شَدّة أوراق</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">متصفح البطاقات</string>
@@ -52,15 +51,15 @@
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
     <string name="drawing">رسم</string>
-    <string name="send_feedback">ارسل رأيك</string>
+    <string name="send_feedback">ارسل انطباعك</string>
     <string name="studyoptions_due_today">المستحق اليوم:</string>
     <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
     <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
     <string name="studyoptions_start">دراسة</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">وَسِّعْ</string>
-    <string name="collapse">قَلِّصْ</string>
+    <string name="expand">إسدال</string>
+    <string name="collapse">إخفاء</string>
     <string name="study_more">ادرس أكثر</string>
     <plurals name="deckpicker_title">
         <item quantity="zero">%1$d بطاقة مستحقة (%2$s)</item>
@@ -73,7 +72,7 @@
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d دقيقة متبقية</item>
         <item quantity="one">دقيقة واحدة متبقية</item>
-        <item quantity="two">دقيقتين متبقيتين</item>
+        <item quantity="two">%d دقائق متبقية</item>
         <item quantity="few">%d دقائق متبقية</item>
         <item quantity="many">%d دقيقة متبقية</item>
         <item quantity="other">%d دقيقة متبقية</item>
@@ -107,7 +106,7 @@
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">أدخل الإجابة</string>
-    <string name="show_answer">اظهار الإجابة</string>
+    <string name="show_answer">أظهر الإجابة</string>
     <string name="hide_answer">إخفاء الجواب</string>
     <string name="ease_button_again">مجددًا</string>
     <string name="ease_button_hard">صعب</string>
@@ -125,7 +124,7 @@
     <string name="browse_cards">تصفح البطاقات</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">مزامنة الحساب</string>
     <string name="menu_dismiss_note">إخفاء / حذف</string>
     <string name="menu_bury_card">دفن البطاقة</string>
     <string name="menu_bury_note">دفن الملحوظة</string>
@@ -134,16 +133,16 @@
     <string name="menu_bury">دفن</string>
     <string name="menu_suspend">تعليق</string>
     <string name="menu_delete_note">حذف الملحوظة</string>
-    <string name="menu_flag">مؤشر</string>
-    <string name="menu_flag_card">تأشير البطاقة</string>
-    <string name="menu_flag_card_zero">بلا مؤشر</string>
-    <string name="menu_flag_card_one">مؤشر أحمر</string>
-    <string name="menu_flag_card_two">مؤشر برتقالي</string>
-    <string name="menu_flag_card_three">مؤشر أخضر</string>
-    <string name="menu_flag_card_four">مؤشر أزرق</string>
-    <string name="menu_flag_card_five">مؤشر وردي</string>
-    <string name="menu_flag_card_six">مؤشر تركوازي</string>
-    <string name="menu_flag_card_seven">مؤشر بنفسجي</string>
+    <string name="menu_flag">أضف علما</string>
+    <string name="menu_flag_card">أضف علما للبطاقة</string>
+    <string name="menu_flag_card_zero">بدون علم</string>
+    <string name="menu_flag_card_one">علم أحمر</string>
+    <string name="menu_flag_card_two">علم برتقالي</string>
+    <string name="menu_flag_card_three">علم أخضر</string>
+    <string name="menu_flag_card_four">علم أزرق</string>
+    <string name="menu_flag_card_five">علم وردي</string>
+    <string name="menu_flag_card_six">علم تركواز</string>
+    <string name="menu_flag_card_seven">علم بنفسجي</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_search">البحث في %1$s</string>
@@ -180,7 +179,7 @@
     <string name="create_subdeck">إنشاء رزمة فرعية</string>
     <string name="empty_filtered_deck">جار إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
-    <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>
+    <string name="custom_study_deck_exists">أولا أعد تسمية \"رزمة الدراسة المخصصة\" الحالية</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
@@ -193,9 +192,11 @@
     <string name="studyoptions_congrats_more_new">لقد بلغت الحد اليومي. هناك مزيد من البطاقات الجديدة؛ تستطيع رفع الحد في الخيارات، لكن هذا سيزيد من عبء المراجعة على المدى القصير.</string>
     <string name="studyoptions_congrats_custom">للدراسة خارج الجدول المعتاد، اضغط زر «دراسة مخصصة»</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
-    <string name="sd_card_not_mounted">لم يتم تحميل وحدة تخزين الجهاز</string>
+    <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
     <string name="empty_cloze_warning">عدّل هذه الملحوظة وأضف بعض عبارات ملء الفراغات. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">تم إيقاف المزامنة مؤقتًا</string>
+    <string name="button_upgrade" comment="Text of the sync button">انقل لمساحة التخزين السحابية</string>
     <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync">واصِل المزامنة</string>
     <string name="sync_cancelled">أُلغِيت المزامنة</string>
@@ -213,7 +214,7 @@
     <string name="card_template_editor_deck_override">الرزمة المهيمنة</string>
     <string name="card_template_editor_insert_field">إدراج حقل</string>
     <string name="card_template_editor_select_field">تحديد حقل</string>
-    <string name="card_template_editor_cant_delete">يلزم نوع بطاقة واحد على الأقل</string>
+    <string name="card_template_editor_cant_delete">مطلوب نوع بطاقة واحد على الأقل</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="zero">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
         <item quantity="one">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
@@ -224,11 +225,11 @@
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
-        <item quantity="one">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
-        <item quantity="two">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
-        <item quantity="few">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقات المتعلقة به؟</item>
-        <item quantity="many">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
-        <item quantity="other">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
+        <item quantity="one">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقة متعلقة بها؟</item>
+        <item quantity="two">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقات متعلقة بها؟</item>
+        <item quantity="few">هل تريد حذف نوع البطاقة ”%2$s“، والبطاقات الـ%1$d المتعلقة بها؟</item>
+        <item quantity="many">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
+        <item quantity="other">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
     </plurals>
     <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سيؤدي حذف نوع البطاقة هذا إلى حذف ملحوظة أو أكثر. الرجاء إنشاء نوع بطاقة جديد وحفظه أولًا.</string>
@@ -245,7 +246,7 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">متصفح البطاقات</string>
     <string name="context_menu_anki_card_label">بطاقة أنكي</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">هناك مشكلة في %1$s:<br/>%2$s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s فيها مشكلة: <br/>%2$s</string>
     <string name="more_information">مزيد من المعلومات</string>
     <string name="no_field">وجد \'{{%1$s}}\'، لكن ليس هناك أي حقل باسم \'%1$s\'.</string>
     <string name="closed_tag_not_open">وجد \'{{/%1$s}}\'، لكن يفتقد  \'{{#%1$s}}\' أو \'{{^%1$s}}\'.</string>
@@ -270,4 +271,11 @@
         <item quantity="other">%1$d بطاقة (ولا واحدة مستحقة)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s نسخة</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">يتعذر تعديل أو إنشاء ملف %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">نقل بياناتك</string>
+    <string name="migration_successful_message">تم النقل بنجاح</string>
+    <string name="migration_failed_message">فشلت عملية النقل</string>
+    <string name="migration_transferred_size">تم نقل %1$.0f ميغابايت من %2$.0f ميغابايت</string>
 </resources>

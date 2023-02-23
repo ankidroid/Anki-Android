@@ -50,14 +50,14 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Sem resultados</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Geral</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Comportamento</string>
+    <string name="pref_cat_system_wide" maxLength="41">Geral</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisando</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronização</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">Agendamento</string>
     <string name="pref_cat_whiteboard" maxLength="41">Quadro</string>
     <string name="pref_cat_appearance" maxLength="41">Aparência</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">Desligar</string>
     <string name="full_screen_system">Ocultar barras de sistema</string>
     <string name="full_screen_complete">Ocultar barras de sistema e botões de resposta</string>
-    <string name="full_screen_error_gestures">Habilite os gestos para ocultar os botões de resposta</string>
     <string name="answer_buttons_position" maxLength="41">Posição dos botões de resposta</string>
     <string-array name="answer_buttons_position_labels">
         <item>Acima</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Painel de navegação em tela cheia</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir painel de navegação ao ser deslizado de qualquer lugar da tela</string>
+    <string name="gestures_none" maxLength="41">Nenhuma</string>
     <string name="gestures_swipe_up" maxLength="41">Deslizar para cima</string>
     <string name="gestures_swipe_down" maxLength="41">Deslizar para baixo</string>
     <string name="gestures_swipe_left" maxLength="41">Deslizar à esquerda</string>
@@ -125,15 +125,17 @@
     <string name="tts_summ">Lê pergunta e resposta se nenhum arquivo de som estiver incluído</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Busca mídia durante a sincronização</string>
-    <string name="sync_fetch_missing_media_summ">Busca mídia faltando automaticamente durante a sincronização.</string>
     <string name="sync_account" maxLength="41">Conta AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Não está logado</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronização automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/sair do aplicativo se a última sincronização foi há mais de 10 minutos.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Sempre</string>
+    <string name="sync_media_only_unmetered">Apenas em conexões não limitadas</string>
+    <string name="sync_media_never">Nunca</string>
     <string name="sync_status_badge" maxLength="41">Exibir status da sincronização</string>
     <string name="sync_status_badge_summ">Alterar o ícone de sincronização quando alterações forem enviadas.</string>
     <string name="metered_sync_title" maxLength="41">Sincronizar em conexões limitadas</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_summary">Se desativado, você será avisado se tentar sincronizar em uma conexão limitada</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema Dia</string>
     <string name="night_theme" maxLength="41">Tema Noite</string>
@@ -203,7 +205,7 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do card para o diretório do AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="accessibility" maxLength="41">Acessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Colar imagens como PNG</string>
@@ -226,12 +228,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Número de iterações da simulação</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronização personalizado</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Utilizar servidor de sincronização personalizado</string>
-    <string name="custom_sync_server_enable_summary">Se você não deseja utilizar o serviço proprietário do AnkiWeb você pode especificar um servidor alternativo aqui</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Não utilizado</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Como uma alternativa à sincronização com AnkiWeb,
+        você pode usar seu próprio servidor para sincronização.
+        Se não for definido, o servidor AnkiWeb padrão será usado.
+        <a href="%s">Saiba mais</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronismo</string>
-    <string name="custom_sync_server_base_url_invalid">Url de sincronização inválido</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronismo de mídia</string>
-    <string name="custom_sync_server_media_url_invalid">Mídia com URL de sincronização inválido</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
@@ -319,17 +322,17 @@
     <string name="type_in_answer_focus_summ">Focar automaticamente no campo \"tipo de resposta\" no revisor</string>
     <!-- About -->
     <string name="open_changelog">Abrir Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">Sobre</string>
+    <string name="contributors_title">Colaboradores</string>
+    <string name="about_contributors_description"><![CDATA[Estes são os nossos incríveis <a href=\"%1$s\">colaboradores</a>. Você também pode ajudar o AnkiDroid programando, traduzindo, doando e <a href=\"%2$s\">mais</a>!]]></string>
+    <string name="license">Licença</string>
+    <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Você pode apoiar o desenvolvimento de AnkiDroid <a href=\"%1$s\">doando</a>. Qualquer quantia é profundamente apreciada.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Adicionar gesto</string>
     <string name="binding_replace_gesture">Substituir gesto</string>
     <string name="binding_add_key">Adicionar tecla</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Substituir tecla</string>
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecionar lado da carta</string>
@@ -344,15 +347,77 @@
     <string name="bindings_already_bound">Já vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Ativar ‘%s\'</string>
+    <string name="use_rust_backend_title" maxLength="41">Usar o novo backend</string>
+    <string name="use_rust_backend_summary">Habilita recursos novos do Anki, como o agendador v3\nUNSTABLE. Não use em uma coleção que você se importa. NÃO reverta no fechamento do aplicativo</string>
+    <string name="use_rust_backend_warning">Há uma chance de que isso possa corromper a sua instalação completamente, requerendo desinstalação e exclusão da pasta AnkiDroid, e tem uma chance de propagar corrupção através da sincronização com AnkiWeb.\n\nBem-vindo ao teste, mas certifique-se de ter um backup não-AnkiWeb válido.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use o agendador v3</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>
+    <string name="disable_dev_options">Desativar opções do desenvolvedor</string>
+    <string name="dev_options_warning">        Por favor, certifique-se antes de ativar as opções do desenvolvedor. Estas opções são perigosas e podem quebrar o aplicativo ou corromper sua coleção.\n\nNote que essas opções não são adequadas para a maioria dos usuários, portanto, não são traduzidas, elas permanecerão em inglês.
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">Opções de backup</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid faz backup da sua coleção periodicamente.
+        Depois que os backups já têm mais de dois dias,
+        o AnkiDroid começará a remover alguns deles para liberar espaço em disco.
+        <br><br>
+        Note que não há backup dos arquivos de mídia.
+        Para ser seguro, por favor sincronize a sua coleção periodicamente ou faça backup das suas exportações.
+        <br><br>
+        Você pode restaurar a partir de um backup e exportar sua coleção no menu de lista de baralhos.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutos entre backups automáticos</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Backups diários para manter</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Backups semanais para manter</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Backups mensais para manter</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">Gerenciar espaço</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Erro</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlando&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="one">%1$d arquivo\n%2$s</item>
+        <item quantity="other">%1$d arquivos\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Excluir arquivos de mídia não utilizados</string>
+    <string name="pref__delete_unused_media_files__summary">Excluir imagens e outras mídias que não são prefixadas com _ e não são referenciadas por quaisquer notas</string>
+    <string name="dialog__media_check_required__message">Uma verificação de mídia é necessária para encontrar arquivos de mídia não utilizados</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Excluir arquivos de mídia não utilizados</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Excluir backups</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Excluir backups</string>
+    <string name="progress__deleting_backups">Excluindo backups&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Excluir coleção</string>
+    <string name="pref__delete_collection__summary">Excluir coleção, mídia e backups. As configurações do aplicativo não são excluídas</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Excluir coleção</string>
+    <string name="dialog__delete_collection__message">Tem certeza de que deseja excluir sua coleção, mídia e backups?</string>
+    <string name="progress__deleting_collection">Excluindo coleção&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Excluir tudo</string>
+    <string name="pref__delete_everything__summary">Excluir coleção, mídia, backups e configurações</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Excluir tudo</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Tem certeza de que deseja excluir todos os dados? Isso inclui a sua coleção, mídia, backups e preferências.\n\nNota: esta ação fechará a janela.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Excluir dados do app</string>
+    <string name="pref__delete_app_data__summary">Excluir configurações e outros dados do app</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Excluir dados do app</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Tem certeza de que deseja excluir dados do aplicativo? Isso inclui configurações e outros dados do aplicativo.\n\nNota: esta ação fechará a janela.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Nenhuma coleção</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Erro</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Buscando&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculando&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">A coleção não existe</string>
 </resources>

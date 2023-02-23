@@ -40,15 +40,13 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">ପ୍ରତିଛବି ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="multimedia_editor_popup_image">ପ୍ରତିଛଵି ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_video_clip">ଵିଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
     <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
     <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <string name="multimedia_editor_popup_clear_field">କ୍ଷେତ୍ର ସଫା କରନ୍ତୁ</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">ଅନୁବାଦ କରନ୍ତୁ</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">ଲୋଡ୍</string>
     <string name="multimedia_editor_pron_looking_up">ଉଚ୍ଚାରଣକୁ ଦେଖୁଛି</string>
@@ -63,7 +61,7 @@
     <string name="multimedia_editor_field_editing_image">ପ୍ରତିଛବି</string>
     <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
     <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ହୋଇଗଲା</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ହେଲା</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_say">ଉଚ୍ଚାରଣ</string>
@@ -86,7 +84,7 @@
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">ଡାଉନଲୋଡ୍ ହେଉଛି</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">ହୋଇଗଲା</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">ହେଲା</string>
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">ଶବ୍ଦଟି ମିଳିଲା ନାହିଁ</string>
     <!-- failure when contacting glosbe or similar -->
@@ -95,7 +93,7 @@
     <string name="multimedia_editor_progress_wait_title">ଅପେକ୍ଷା କର</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି</string>
-    <string name="multimedia_editor_svg_preview">ପୂର୍ବାବଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
+    <string name="multimedia_editor_svg_preview">ପୂର୍ଵାଵଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="multimedia_editor_png_paste_error">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିକୁ png ରେ ରୂପାନ୍ତର କରିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s କ୍ଷେତ୍ରରେ ମଲ୍ଟିମିଡ଼ିଆ ବିଷୟବସ୍ତୁ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
     <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
@@ -111,7 +109,7 @@
     <!-- Crop function-->
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="crop_button">ପ୍ରତିଛବି କ୍ରପ୍ କରନ୍ତୁ</string>
-    <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB। Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="save_dialog_content">ଚଳିତ ପ୍ରତିଛଵିର ଆକାର %sMB ଅଟେ। ଆଉ ଡିଫଲ୍ଟ ପ୍ରତିଛଵି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ କ୍ରପ୍ କରିବାକୁ ଚାହାଁନ୍ତି କି?</string>
     <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ"</string>
     <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">କ୍ଷେତ୍ର ବିଷୟବସ୍ତୁ</string>

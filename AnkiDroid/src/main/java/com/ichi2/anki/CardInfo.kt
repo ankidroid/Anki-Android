@@ -267,7 +267,9 @@ class CardInfo : AnkiActivity() {
             fun intervalAsTimeSeconds(): Long {
                 return if (ivl < 0) {
                     -ivl
-                } else ivl * Stats.SECONDS_PER_DAY
+                } else {
+                    ivl * Stats.SECONDS_PER_DAY
+                }
             }
 
             // saves space if we just use seconds rather than a "s" suffix
@@ -356,9 +358,10 @@ class CardInfo : AnkiActivity() {
 
             protected fun getCardType(c: Card, model: Model?): String? {
                 return try {
-                    var ord = c.ord
-                    if (c.model().isCloze) {
-                        ord = 0
+                    val ord = if (c.model().isCloze) {
+                        0
+                    } else {
+                        c.ord
                     }
                     model!!.getJSONArray("tmpls").getJSONObject(ord).getString("name")
                 } catch (e: Exception) {

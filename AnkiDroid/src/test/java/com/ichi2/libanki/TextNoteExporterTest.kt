@@ -12,11 +12,9 @@
  */
 package com.ichi2.libanki
 
-import android.text.TextUtils
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.FileOperation
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -28,60 +26,59 @@ import java.io.IOException
 import java.util.*
 import kotlin.Throws
 
-@KotlinCleanup("lateinit wherever possible")
-@KotlinCleanup("IDE-lint")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class TextNoteExporterTest(
     private val includeId: Boolean,
     private val includeTags: Boolean,
     private val includeHTML: Boolean
 ) : RobolectricTest() {
-    private var mCollection: Collection? = null
-    private var mExporter: TextNoteExporter? = null
-    private var mNoteList: List<Note>? = null
+    private lateinit var collection: Collection
+    private lateinit var exporter: TextNoteExporter
+    private lateinit var noteList: List<Note>
+
     @Before
     override fun setUp() {
         super.setUp()
-        mCollection = col
-        mExporter = TextNoteExporter(mCollection!!, includeId, includeTags, includeHTML)
-        val n1 = mCollection!!.newNote()
+        collection = col
+        exporter = TextNoteExporter(collection, includeId, includeTags, includeHTML)
+        val n1 = collection.newNote()
         n1.setItem("Front", "foo")
         n1.setItem("Back", "bar<br>")
         n1.addTags(HashSet(listOf("tag", "tag2")))
-        mCollection!!.addNote(n1)
-        val n2 = mCollection!!.newNote()
+        collection.addNote(n1)
+        val n2 = collection.newNote()
         n2.setItem("Front", "baz")
         n2.setItem("Back", "qux")
         try {
-            n2.model().put("did", mCollection!!.decks.id("new col"))
+            n2.model().put("did", collection.decks.id("new col"))
         } catch (filteredAncestor: DeckRenameException) {
             Timber.e(filteredAncestor)
         }
-        mCollection!!.addNote(n2)
-        mNoteList = listOf(n1, n2)
+        collection.addNote(n2)
+        noteList = listOf(n1, n2)
     }
 
     @Test
     @Throws(IOException::class)
     fun will_export_id_tags_html() {
         val exportedFile = File.createTempFile("export", ".txt")
-        mExporter!!.doExport(exportedFile.absolutePath)
+        exporter.doExport(exportedFile.absolutePath)
         val lines = FileOperation.getFileContents(exportedFile).split("\n".toRegex()).toTypedArray()
-        Assert.assertEquals(mNoteList!!.size.toLong(), lines.size.toLong())
-        for (i in mNoteList!!.indices) {
-            val note = mNoteList!![i]
+        Assert.assertEquals(noteList.size.toLong(), lines.size.toLong())
+        for (i in noteList.indices) {
+            val note = noteList[i]
             val line = lines[i]
             val row: MutableList<String?> = ArrayList()
             if (includeId) {
                 row.add(note.guId)
             }
             for (field in note.fields) {
-                row.add(mExporter!!.processText(field))
+                row.add(exporter.processText(field))
             }
             if (includeTags) {
-                row.add(TextUtils.join(" ", note.tags))
+                row.add(note.tags.joinToString(" "))
             }
-            val expected = TextUtils.join("\t", row)
+            val expected = row.joinToString("\t")
             Assert.assertEquals(expected, line)
         }
     }

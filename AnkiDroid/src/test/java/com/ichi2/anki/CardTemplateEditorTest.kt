@@ -25,9 +25,9 @@ import com.afollestad.materialdialogs.WhichButton
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Model
 import com.ichi2.testutils.assertFalse
-import com.ichi2.utils.JSONObject
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -169,7 +169,6 @@ class CardTemplateEditorTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun testTemplateAdd() {
-
         // Make sure we test previewing a new card template - not working for real yet
         val modelName = "Basic"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
@@ -592,9 +591,10 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add))
         advanceRobolectricLooperWithSleep()
         val ordinal = testEditor.viewPager.currentItem
-        var numAffectedCards = 0
-        if (!TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
-            numAffectedCards = col.models.tmplUseCount(testEditor.tempModel!!.model, ordinal)
+        val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
+            col.models.tmplUseCount(testEditor.tempModel!!.model, ordinal)
+        } else {
+            0
         }
         assertEquals(
             "Did not show dialog about adding template and it's card?",

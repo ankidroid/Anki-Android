@@ -71,9 +71,9 @@
     <string name="new_spread_new_before_review">Cartes noves abans de revisions</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Quan cap font està especificada en les flashcards</string>
-    <string name="override_font_always">Sempre</string>
+    <string name="override_font_always" comment="Option to always override font">Sempre</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Segueix el sistema</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Clar</string>
     <string name="day_theme_plain">Pla</string>
@@ -109,10 +109,10 @@
     <string name="gesture_page_down">Pàgina avall</string>
     <string name="gesture_abort_sync">Interrompre aprenentatge i sincronització</string>
     <string name="gesture_toggle_whiteboard">Activar/desactivar pissarra</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">Mostra un suggeriment</string>
+    <string name="gesture_show_all_hints">Mostra tots els suggeriments</string>
     <string name="record_voice">Enregistra veu</string>
     <string name="replay_voice">Reproduir veu</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">Difícil (o bé correcte si no està disponible)</string>
+    <string name="automatic_answer_option_4">Fàcil (o bé correcte si no està disponible)</string>
 </resources>

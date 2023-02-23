@@ -44,7 +44,7 @@ enum class ViewerCommand(val resourceId: Int) {
     UNDO(R.string.undo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
-    BURY_CARD(R.string.menu_bury),
+    BURY_CARD(R.string.menu_bury_card),
     SUSPEND_CARD(R.string.menu_suspend_card),
     DELETE(R.string.menu_delete_note),
     PLAY_MEDIA(R.string.gesture_play),
@@ -107,7 +107,7 @@ enum class ViewerCommand(val resourceId: Int) {
         val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
         performAdd.apply(bindings, binding)
         val newValue: String = bindings.toPreferenceString()
-        preferences.edit().putString(preferenceKey, newValue).apply()
+        preferences.edit { putString(preferenceKey, newValue) }
     }
 
     fun removeBinding(prefs: SharedPreferences, binding: MappableBinding) {
@@ -124,19 +124,23 @@ enum class ViewerCommand(val resourceId: Int) {
             when (this) {
                 FLIP_OR_ANSWER_EASE1 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH),
-                    keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER)
+                    keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER)
                 )
                 FLIP_OR_ANSWER_EASE2 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_X, CardSide.BOTH),
-                    keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER)
+                    keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER)
                 )
                 FLIP_OR_ANSWER_EASE3 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH),
-                    keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER)
+                    keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER)
                 )
                 FLIP_OR_ANSWER_EASE4 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH),
-                    keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER)
+                    keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER)
                 )
                 FLIP_OR_ANSWER_RECOMMENDED -> from(
                     keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),

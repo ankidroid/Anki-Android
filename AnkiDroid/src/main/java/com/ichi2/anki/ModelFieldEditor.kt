@@ -43,28 +43,21 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuActio
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.CollectionTask.DeleteField
-import com.ichi2.async.CollectionTask.RepositionField
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
-import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.*
+import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
+import org.json.JSONArray
+import org.json.JSONException
 import timber.log.Timber
-import java.lang.NumberFormatException
-import java.lang.RuntimeException
 import java.util.*
-import kotlin.Throws
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var mFieldsListView: ListView
-    @Suppress("Deprecation")
-    private var progressDialog: android.app.ProgressDialog? = null // TODO: Check alternatives to ProgressDialog
     private var fieldNameInput: EditText? = null
     private lateinit var collection: Collection
     private lateinit var mModel: Model
@@ -266,7 +259,26 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     private fun deleteField() {
-        TaskManager.launchCollectionTask(DeleteField(mModel, mNoteFields.getJSONObject(currentPos)), changeFieldHandler())
+        launchCatchingTask {
+            Timber.d("doInBackGroundDeleteField")
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                val result = withCol {
+                    try {
+                        models.remField(mModel, mNoteFields.getJSONObject(currentPos))
+                        save()
+                        true
+                    } catch (e: ConfirmModSchemaException) {
+                        // Should never be reached
+                        e.log()
+                        false
+                    }
+                }
+                if (!result) {
+                    closeActivity()
+                }
+                initialize()
+            }
+        }
     }
 
     /*
@@ -338,11 +350,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     if (pos < 1 || pos > mFieldsLabels.size) {
                         showThemedToast(this@ModelFieldEditor, resources.getString(R.string.toast_out_of_range), true)
                     } else {
-                        val listener = changeFieldHandler()
                         // Input is valid, now attempt to modify
                         try {
                             collection.modSchema()
-                            TaskManager.launchCollectionTask(RepositionField(mModel, mNoteFields.getJSONObject(currentPos), pos - 1), listener)
+                            repositionField(pos - 1)
                         } catch (e: ConfirmModSchemaException) {
                             e.log()
 
@@ -352,13 +363,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             val confirm = Runnable {
                                 try {
                                     collection.modSchemaNoCheck()
-                                    TaskManager.launchCollectionTask(
-                                        RepositionField(
-                                            mModel,
-                                            mNoteFields.getJSONObject(currentPos), pos - 1
-                                        ),
-                                        listener
-                                    )
+                                    repositionField(pos - 1)
                                 } catch (e1: JSONException) {
                                     throw RuntimeException(e1)
                                 }
@@ -374,14 +379,27 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
     }
 
-    // ----------------------------------------------------------------------------
-    // HELPER METHODS
-    // ----------------------------------------------------------------------------
-    private fun dismissProgressBar() {
-        if (progressDialog != null) {
-            progressDialog!!.dismiss()
+    private fun repositionField(index: Int) {
+        launchCatchingTask {
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                val result = withCol {
+                    Timber.d("doInBackgroundRepositionField")
+                    try {
+                        models.moveField(mModel, mNoteFields.getJSONObject(currentPos), index)
+                        save()
+                        true
+                    } catch (e: ConfirmModSchemaException) {
+                        e.log()
+                        // Should never be reached
+                        false
+                    }
+                }
+                if (!result) {
+                    closeActivity()
+                }
+                initialize()
+            }
         }
-        progressDialog = null
     }
 
     /*
@@ -437,36 +455,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val field = mNoteFields.getJSONObject(currentPos)
         // If the sticky setting is enabled then disable it, otherwise enable it
         field.put("sticky", !field.getBoolean("sticky"))
-    }
-
-    // ----------------------------------------------------------------------------
-    // HANDLERS
-    // ----------------------------------------------------------------------------
-    /*
-     * Called during the desk task when any field is modified
-     */
-    private fun changeFieldHandler(): ChangeHandler {
-        return ChangeHandler(this)
-    }
-
-    private class ChangeHandler(modelFieldEditor: ModelFieldEditor) : TaskListenerWithContext<ModelFieldEditor, Void?, Boolean?>(modelFieldEditor) {
-        override fun actualOnPreExecute(context: ModelFieldEditor) {
-            if (context.progressDialog == null) {
-                context.progressDialog = show(
-                    context, context.intent.getStringExtra("title"),
-                    context.resources.getString(R.string.model_field_editor_changing), false
-                )
-            }
-        }
-
-        @KotlinCleanup("Convert result to non-null")
-        override fun actualOnPostExecute(context: ModelFieldEditor, result: Boolean?) {
-            if (result == false) {
-                context.closeActivity()
-            }
-            context.dismissProgressBar()
-            context.initialize()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

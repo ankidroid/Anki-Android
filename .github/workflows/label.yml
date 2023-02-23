@@ -18,7 +18,7 @@ jobs:
         script: |
           let removeLabelsList = [
             "Pending Merge", 
-            "Waiting For Feedback", 
+            "Needs Author Reply", 
             "Needs Review", 
             "Review High Priority", 
             "Needs Second Approval",
@@ -150,3 +150,35 @@ jobs:
                 break;
               }
             }
+
+  add_new_contributor_label:
+    if: github.event.action == 'opened'
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const creator = context.payload.sender.login
+            const opts = github.rest.issues.listForRepo.endpoint.merge({
+              ...context.issue,
+              creator,
+              state: 'all'
+            })
+            const issues = await github.paginate(opts)
+            for (const issue of issues) {
+              if (issue.number === context.issue.number) {
+                continue
+              }
+              if (issue.pull_request) {
+                return // creator is already a contributor
+              }
+            }
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['New contributor']
+            })

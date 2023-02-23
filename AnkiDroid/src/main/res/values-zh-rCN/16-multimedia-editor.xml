@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">高级编辑器</string>
     <string name="multimedia_editor_popup_cloze">创建填空</string>
     <string name="multimedia_editor_popup_clear_field">清除域</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">翻译</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">加载</string>
     <string name="multimedia_editor_pron_looking_up">查找发音</string>

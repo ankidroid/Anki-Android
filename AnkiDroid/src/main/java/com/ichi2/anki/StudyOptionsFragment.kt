@@ -31,13 +31,14 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
-import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
@@ -48,7 +49,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
-import com.ichi2.themes.StyledProgressDialog.Companion.show
+import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
@@ -277,7 +278,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 if (col!!.decks.isDyn(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
-                    val i = Intent(activity, DeckOptions::class.java)
+                    val i = if (BackendFactory.defaultLegacySchema) {
+                        Intent(activity, DeckOptionsActivity::class.java)
+                    } else {
+                        com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
+                    }
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                     slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
@@ -298,11 +303,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                mProgressDialog = show(
-                    requireActivity(), null,
-                    resources.getString(R.string.rebuild_filtered_deck), true
-                )
-                TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
+                launchCatchingTask { rebuildCram() }
                 return true
             }
             R.id.action_empty -> {
@@ -324,6 +325,17 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             else -> return false
         }
+    }
+
+    suspend fun rebuildCram() {
+        val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+            withCol {
+                Timber.d("doInBackground - RebuildCram")
+                sched.rebuildDyn(decks.selected())
+                updateValuesFromDeck(this, true)
+            }
+        }
+        rebuildUi(result, true)
     }
 
     @VisibleForTesting
@@ -378,6 +390,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             // Switch on or off unbury depending on if there are cards to unbury
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            // Set the proper click target for the undo button's ActionProvider
+            val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
+                menu.findItem(R.id.action_undo)
+            ) as? RtlCompliantActionProvider
+            undoActionProvider?.clickHandler = { _, menuItem -> onMenuItemClick(menuItem) }
             // Switch on or off undo depending on whether undo is available
             if (col == null || !col!!.undoAvailable()) {
                 menu.findItem(R.id.action_undo).isVisible = false
@@ -445,11 +462,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             if (deck.isDyn && deck.has("empty")) {
                 deck.remove("empty")
             }
-            mProgressDialog = show(
-                requireActivity(), null,
-                resources.getString(R.string.rebuild_filtered_deck), true
-            )
-            TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
+            launchCatchingTask { rebuildCram() }
         } else {
             TaskManager.waitToFinish()
             refreshInterface(true)
@@ -529,19 +542,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val eta: Int
     )
 
-    /**
-     * Returns a listener that rebuilds the interface after execute.
-     *
-     * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
-     *                        to reflect the latest values.
-     */
-    private fun getCollectionTaskListener(refreshDecklist: Boolean): TaskListener<Void?, DeckStudyData?> {
-        return object : TaskListener<Void?, DeckStudyData?>() {
-            override fun onPreExecute() {}
-            override fun onPostExecute(result: DeckStudyData?) = rebuildUi(result, refreshDecklist)
-        }
-    }
-
     /** Open cram deck option if deck is opened for the first time
      * @return Whether we opened the deck options */
     private fun tryOpenCramDeckOptions(): Boolean {
@@ -583,7 +583,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun rebuildUi(result: DeckStudyData?, refreshDecklist: Boolean) {
         dismissProgressDialog()
         if (result != null) {
-
             // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
             if (activity == null) {
                 Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
@@ -718,8 +717,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          */
         @Suppress("unused")
         private const val BROWSE_CARDS = 3
+
         @Suppress("unused")
         private const val STATISTICS = 4
+
         @Suppress("unused")
         private const val DECK_OPTIONS = 5
 
@@ -748,7 +749,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
 
         @VisibleForTesting
-        fun formatDescription(desc: String?): Spanned {
+        fun formatDescription(desc: String): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)

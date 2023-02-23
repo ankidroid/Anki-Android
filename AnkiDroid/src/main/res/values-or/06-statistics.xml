@@ -67,7 +67,7 @@
     <string name="stats_hours">ଘଣ୍ଟା</string>
     <string name="stats_percentage">ଶତକଡ଼ା</string>
     <string name="stats_period_month">୧ ମାସ</string>
-    <string name="stats_period_year">୧ ବର୍ଷ</string>
+    <string name="stats_period_year">୧ ଵର୍ଷ</string>
     <string name="stats_period_lifetime">ତାସଖଣ୍ଡ ବୟସ</string>
     <string name="stats_deck_collection">ସଂଗ୍ରହ</string>
     <string name="stats_time_of_day">ଦିନର ସମୟ</string>
@@ -94,7 +94,7 @@
     <string name="stats_overview_total_new_cards">ସମୁଦାୟ: &lt;b&gt;%1$d&lt;/b&gt;ଟି ପତ୍ର</string>
     <string name="stats_overview_average_interval">"ହାରାହାରି ଅନ୍ତରାଳ: "</string>
     <string name="stats_overview_longest_interval">"ଦୀର୍ଘତମ ଅନ୍ତରାଳ: "</string>
-    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; ବର୍ଷ</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; ଵର୍ଷ</string>
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; ମାସ</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; ଦିନ</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; ଘଣ୍ଟା</string>
@@ -113,7 +113,7 @@
         <item>ମାସ</item>
     </string-array>
     <string name="stats_today">ଆଜି</string>
-    <string name="stats_overview">ଅବଲୋକନ</string>
+    <string name="stats_overview">ଅଵଲୋକନ</string>
     <string name="stats_forecast">ପୂର୍ବାନୁମାନ</string>
     <string name="stats_review_count">ସମୀକ୍ଷା ଗଣନା</string>
     <string name="stats_review_time">ସମୀକ୍ଷା ସମୟ</string>

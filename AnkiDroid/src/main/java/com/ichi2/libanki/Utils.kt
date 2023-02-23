@@ -26,10 +26,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.StatFs
-import android.text.TextUtils
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper.Companion.compat
@@ -37,11 +37,12 @@ import com.ichi2.libanki.Consts.FIELD_SEPARATOR
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.ImportUtils.isValidPackageName
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.math.BigInteger
@@ -52,6 +53,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.Collection
+import kotlin.math.*
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("timeQuantity methods: single source line per return")
@@ -104,28 +106,26 @@ object Utils {
         val res = context.resources
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
-        return if (Math.abs(time_s) < TIME_MINUTE) {
+        return if (abs(time_s) < TIME_MINUTE) {
             res.getString(R.string.time_quantity_seconds, time_s)
-        } else if (Math.abs(time_s) < TIME_HOUR) {
+        } else if (abs(time_s) < TIME_HOUR) {
             res.getString(
                 R.string.time_quantity_minutes,
-                Math.round(time_s / TIME_MINUTE).toInt()
+                (time_s / TIME_MINUTE).roundToInt()
             )
-        } else if (Math.abs(time_s) < TIME_DAY) {
+        } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours_minutes,
-                Math.floor(time_s / TIME_HOUR).toInt(),
-                Math.round(time_s % TIME_HOUR / TIME_MINUTE)
-                    .toInt()
+                floor(time_s / TIME_HOUR).toInt(),
+                (time_s % TIME_HOUR / TIME_MINUTE).roundToInt()
             )
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days_hours,
-                Math.floor(time_s / TIME_DAY).toInt(),
-                Math.round(time_s % TIME_DAY / TIME_HOUR)
-                    .toInt()
+                floor(time_s / TIME_DAY).toInt(),
+                (time_s % TIME_DAY / TIME_HOUR).roundToInt()
             )
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
         } else {
             res.getString(R.string.time_quantity_years, time_s / TIME_YEAR)
@@ -147,24 +147,24 @@ object Utils {
         val res = context.resources
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
-        return if (Math.abs(time_s) < TIME_MINUTE) {
+        return if (abs(time_s) < TIME_MINUTE) {
             res.getString(R.string.time_quantity_seconds, time_s)
-        } else if (Math.abs(time_s) < TIME_HOUR) {
+        } else if (abs(time_s) < TIME_HOUR) {
             res.getString(
                 R.string.time_quantity_minutes,
-                Math.round(time_s / TIME_MINUTE).toInt()
+                (time_s / TIME_MINUTE).roundToInt()
             )
-        } else if (Math.abs(time_s) < TIME_DAY) {
+        } else if (abs(time_s) < TIME_DAY) {
             res.getString(
                 R.string.time_quantity_hours,
-                Math.round(time_s / TIME_HOUR).toInt()
+                (time_s / TIME_HOUR).roundToInt()
             )
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             res.getString(
                 R.string.time_quantity_days,
-                Math.round(time_s / TIME_DAY).toInt()
+                (time_s / TIME_DAY).roundToInt()
             )
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
         } else {
             res.getString(R.string.time_quantity_years, time_s / TIME_YEAR)
@@ -185,8 +185,9 @@ object Utils {
         val res = context.resources
         return if (time_s < TIME_HOUR_LONG) {
             // get time remaining, but never less than 1
-            time_x = Math.max(
-                Math.round(time_s / TIME_MINUTE).toInt(), 1
+            time_x = max(
+                (time_s / TIME_MINUTE).roundToInt(),
+                1
             )
             res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x)
             // It used to be minutes only. So the word "minutes" is not
@@ -195,8 +196,7 @@ object Utils {
             time_x = (time_s / TIME_HOUR_LONG).toInt()
             remaining_seconds = (time_s % TIME_HOUR_LONG).toInt()
             remaining =
-                Math.round(remaining_seconds.toFloat() / TIME_MINUTE)
-                    .toInt()
+                (remaining_seconds.toFloat() / TIME_MINUTE).roundToInt()
             res.getQuantityString(
                 R.plurals.reviewer_window_title_hours_new,
                 time_x,
@@ -207,7 +207,7 @@ object Utils {
             time_x = (time_s / TIME_DAY_LONG).toInt()
             remaining_seconds = (time_s.toFloat() % TIME_DAY_LONG).toInt()
             remaining =
-                Math.round(remaining_seconds / TIME_HOUR).toInt()
+                (remaining_seconds / TIME_HOUR).roundToInt()
             res.getQuantityString(
                 R.plurals.reviewer_window_title_days_new,
                 time_x,
@@ -229,23 +229,23 @@ object Utils {
     fun timeSpan(context: Context, time_s: Long): String {
         val time_x: Int // Time in unit x
         val res = context.resources
-        return if (Math.abs(time_s) < TIME_MINUTE) {
+        return if (abs(time_s) < TIME_MINUTE) {
             time_x = time_s.toInt()
             res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_HOUR) {
-            time_x = Math.round(time_s / TIME_MINUTE).toInt()
+        } else if (abs(time_s) < TIME_HOUR) {
+            time_x = (time_s / TIME_MINUTE).roundToInt()
             res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_DAY) {
-            time_x = Math.round(time_s / TIME_HOUR).toInt()
+        } else if (abs(time_s) < TIME_DAY) {
+            time_x = (time_s / TIME_HOUR).roundToInt()
             res.getQuantityString(R.plurals.time_span_hours, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_MONTH) {
-            time_x = Math.round(time_s / TIME_DAY).toInt()
+        } else if (abs(time_s) < TIME_MONTH) {
+            time_x = (time_s / TIME_DAY).roundToInt()
             res.getQuantityString(R.plurals.time_span_days, time_x, time_x)
-        } else if (Math.abs(time_s) < TIME_YEAR) {
-            time_x = Math.round(time_s / TIME_MONTH).toInt()
+        } else if (abs(time_s) < TIME_YEAR) {
+            time_x = (time_s / TIME_MONTH).roundToInt()
             res.getQuantityString(R.plurals.time_span_months, time_x, time_x)
         } else {
-            time_x = Math.round(time_s / TIME_YEAR).toInt()
+            time_x = (time_s / TIME_YEAR).roundToInt()
             res.getQuantityString(R.plurals.time_span_years, time_x, time_x)
         }
     }
@@ -274,17 +274,17 @@ object Utils {
      * @return The formatted, localized time string. The time is always a float. E.g. "**27.0** days"
      */
     fun roundedTimeSpan(context: Context, time_s: Long): String {
-        return if (Math.abs(time_s) < TIME_DAY) {
+        return if (abs(time_s) < TIME_DAY) {
             context.resources.getString(
                 R.string.stats_overview_hours,
                 time_s / TIME_HOUR
             )
-        } else if (Math.abs(time_s) < TIME_MONTH) {
+        } else if (abs(time_s) < TIME_MONTH) {
             context.resources.getString(
                 R.string.stats_overview_days,
                 time_s / TIME_DAY
             )
-        } else if (Math.abs(time_s) < TIME_YEAR) {
+        } else if (abs(time_s) < TIME_YEAR) {
             context.resources.getString(
                 R.string.stats_overview_months,
                 time_s / TIME_MONTH
@@ -296,6 +296,7 @@ object Utils {
             )
         }
     }
+
     /*
      * Locale
      * ***********************************************************************************************
@@ -324,10 +325,9 @@ object Utils {
      * @param inputParam The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
-    @KotlinCleanup("non-null param")
     @KotlinCleanup("see if function body could be improved")
-    fun stripHTMLScriptAndStyleTags(inputParam: String?): String {
-        var s = inputParam!!
+    fun stripHTMLScriptAndStyleTags(inputParam: String): String {
+        var s = inputParam
         var htmlMatcher = stylePattern.matcher(s)
         s = htmlMatcher.replaceAll("")
         htmlMatcher = scriptPattern.matcher(s)
@@ -337,19 +337,17 @@ object Utils {
     /**
      * Strip HTML but keep media filenames
      */
-    @KotlinCleanup("replacement: non-null")
-    fun stripHTMLMedia(s: String, replacement: String? = " $1 "): String {
+    fun stripHTMLMedia(s: String, replacement: String = " $1 "): String {
         val imgMatcher = imgPattern.matcher(s)
-        return stripHTML(imgMatcher.replaceAll(replacement!!))
+        return stripHTML(imgMatcher.replaceAll(replacement))
     }
 
     /**
      * Strip sound but keep media filenames
      */
-    @KotlinCleanup("replacement & s: non-null")
-    fun stripSoundMedia(s: String?, replacement: String? = " $1 "): String {
-        val soundMatcher = soundPattern.matcher(s!!)
-        return soundMatcher.replaceAll(replacement!!)
+    fun stripSoundMedia(s: String, replacement: String = " $1 "): String {
+        val soundMatcher = soundPattern.matcher(s)
+        return soundMatcher.replaceAll(replacement)
     }
 
     /**
@@ -377,6 +375,7 @@ object Utils {
         htmlEntities.appendTail(sb)
         return sb.toString()
     }
+
     /*
      * IDs
      * ***********************************************************************************************
@@ -461,23 +460,6 @@ object Utils {
         return str.toString()
     }
 
-    /** LIBANKI: not in libanki
-     * Transform a collection of Long into an array of Long  */
-    @KotlinCleanup("inline as .toLongArray() and remove")
-    fun collection2Array(list: Collection<Long>): LongArray {
-        val ar = LongArray(list.size)
-        var i = 0
-        for (l in list) {
-            ar[i++] = l
-        }
-        return ar
-    }
-
-    @KotlinCleanup("inline")
-    fun list2ObjectArray(list: List<Long>): Array<Long> {
-        return list.toTypedArray()
-    }
-
     // used in ankiweb
     private fun base62(numParam: Int, extra: String): String {
         var num = numParam
@@ -487,8 +469,8 @@ object Utils {
         var mod: Int
         while (num != 0) {
             mod = num % len
-            buf = buf + table.substring(mod, mod + 1)
-            num = num / len
+            buf += table.substring(mod, mod + 1)
+            num /= len
         }
         return buf
     }
@@ -501,15 +483,14 @@ object Utils {
     /** return a base91-encoded 64bit random number  */
     fun guid64(): String {
         return base91(
-            Random().nextInt((Math.pow(2.0, 61.0) - 1).toInt())
+            Random().nextInt((2.0.pow(61.0) - 1).toInt())
         )
     }
 
     // increment a guid by one, for note type conflicts
     // used in Anki
-    @KotlinCleanup("non-null param")
-    fun incGuid(guid: String?): String {
-        return StringBuffer(_incGuid(StringBuffer(guid!!).reverse().toString())).reverse().toString()
+    fun incGuid(guid: String): String {
+        return StringBuffer(_incGuid(StringBuffer(guid).reverse().toString())).reverse().toString()
     }
 
     @KotlinCleanup("remove var guid")
@@ -544,7 +525,7 @@ object Utils {
         for (i in 0 until list.size - 1) {
             result.append(list[i]).append("\u001f")
         }
-        if (list.size > 0) {
+        if (list.isNotEmpty()) {
             result.append(list[list.size - 1])
         }
         return result.toString()
@@ -555,6 +536,7 @@ object Utils {
         // -1 ensures that we don't drop empty fields at the ends
         return fields.split(FIELD_SEPARATOR).toTypedArray()
     }
+
     /*
      * Checksums
      * ***********************************************************************************************
@@ -826,10 +808,13 @@ object Utils {
         try {
             Timber.d("Creating new file... = %s", destination)
             f.createNewFile()
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage") val startTimeMillis =
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val startTimeMillis =
                 System.currentTimeMillis()
             val sizeBytes = compat.copyFile(source, destination)
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage") val endTimeMillis =
+
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val endTimeMillis =
                 System.currentTimeMillis()
             Timber.d("Finished writeToFile!")
             val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
@@ -860,6 +845,7 @@ object Utils {
     fun isIntentAvailable(context: Context, action: String?): Boolean {
         return isIntentAvailable(context, action, null)
     }
+
     @KotlinCleanup("Use @JmOverloads, remove fun passing null for ComponentName")
     @KotlinCleanup("Simplify function body")
     @Suppress("deprecation") // queryIntentActivities
@@ -872,7 +858,7 @@ object Utils {
         val intent = Intent(action)
         intent.component = componentName
         val list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        return !list.isEmpty()
+        return list.isNotEmpty()
     }
 
     /**
@@ -883,7 +869,7 @@ object Utils {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
         // with existing slashes
-        if (mediaDir.length != 0 && !"null".equals(mediaDir, ignoreCase = true)) {
+        if (mediaDir.isNotEmpty() && !"null".equals(mediaDir, ignoreCase = true)) {
             val mediaDirUri = Uri.fromFile(File(mediaDir))
             return "$mediaDirUri/"
         }
@@ -1029,12 +1015,30 @@ object Utils {
      * @return A description of the device, including the model and android version. No commas are present in the
      * returned string.
      */
+    @RustCleanup("can be removed when old syncing code retired")
     fun platDesc(): String {
         // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
         val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
         return String.format(
-            Locale.US, "android:%s:%s",
-            Build.VERSION.RELEASE, model
+            Locale.US,
+            "android:%s:%s",
+            Build.VERSION.RELEASE,
+            model
+        )
+    }
+
+    /**
+     * @return The app version, OS version and device model, provided when syncing.
+     */
+    fun syncPlatform(): String {
+        // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
+        val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
+        return String.format(
+            Locale.US,
+            "android:%s:%s:%s",
+            BuildConfig.VERSION_NAME,
+            Build.VERSION.RELEASE,
+            model
         )
     }
 
@@ -1048,7 +1052,9 @@ object Utils {
     fun nfcNormalized(txt: String): String {
         return if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
             Normalizer.normalize(txt, Normalizer.Form.NFC)
-        } else txt
+        } else {
+            txt
+        }
     }
 
     /**
@@ -1130,7 +1136,7 @@ object Utils {
         for (kv in fields.entries) {
             var value = kv.value
             value = stripHTMLMedia(value).trim { it <= ' ' }
-            if (!TextUtils.isEmpty(value)) {
+            if (value.isNotEmpty()) {
                 nonempty_fields.add(kv.key)
             }
         }

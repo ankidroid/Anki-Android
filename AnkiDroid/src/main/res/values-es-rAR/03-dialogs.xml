@@ -94,6 +94,7 @@
     <string name="answering_error_title">Error en base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar un error</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">¿Desea realmente intentar reparar la base de datos?\n\nAntes de comenzar con el intento, una copia será creada en el subdirectorio \'%s\'.</string>
     <string name="intent_aedict_empty">La categoría \'predeterminado\' está vacía</string>
     <string name="intent_aedict_category">Para añadir tarjetas a AnkiDroid elimine todas las categorías de los blocks de notas y agregue una llamada \'predeterminado\'</string>
@@ -115,8 +116,8 @@
         <item quantity="one">Tarjetas importadas: %2$d</item>
         <item quantity="other">Archivos importados: %1$d\nTotal de tarjetas importadas: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">Tarjeta SD llena</string>
-    <string name="sd_card_almost_full_title">Tarjeta SD casi llena</string>
+    <string name="storage_full_title">Almacenamiento lleno</string>
+    <string name="storage_almost_full_title">Almacenamiento casi lleno</string>
     <string name="no_space_to_downgrade_title">Sin spacio</string>
     <string name="no_space_to_downgrade_content">AnkiDroid necesita %s espacio de almacenamiento libre para continuar. Por favor, borre algo de memoria</string>
     <string name="restore_backup_title">¿Restaurar copia de seguridad?</string>
@@ -124,7 +125,9 @@
     <string name="restore_backup_choose_another">Elige otro</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Confirmar</string>
     <string name="dialog_no">No</string>
+    <string name="dialog_yes">Sí</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">Procesando...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
@@ -172,9 +175,6 @@
     <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">¡Bienvenido a AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requiere permiso de almacenamiento, que utilizamos exclusivamente para almacenar su colección AnkiDroid, soportes de flash y copias de seguridad. Nuestro código es de código abierto, escrito por voluntarios y confiado por millones.\n\nSi tienes alguna pregunta, por favor accede a nuestro manual en la aplicación o visita nuestros foros de soporte.\n\n¡Gracias por probar AnkiDroid!\n—Equipo de Desarrollo de AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Error desconocido al mostrar el Editor Avanzado</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid actualizado</string>
@@ -220,7 +220,7 @@
     <string name="help_title_using_ankidroid">Usando AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Manual de AnkiDroid</string>
     <string name="help_item_anki_manual">Manual de Anki</string>
-    <string name="help_item_ankidroid_faq">Preguntas frecuentes de AnkiDroid</string>
+    <string name="help_item_ankidroid_faq">Preguntas frecuentes sobre AnkiDroid</string>
     <string name="help_title_get_help">Obtener Ayuda</string>
     <string name="help_item_mailing_list">Listas de Correo</string>
     <string name="help_item_reddit">Reddit</string>
@@ -230,17 +230,18 @@
     <string name="help_item_support_develop_ankidroid">Desarrollar</string>
     <string name="help_item_support_rate_ankidroid">Calificar</string>
     <string name="help_item_support_other_ankidroid">Otros</string>
+    <string name="multimedia_editor_trans_translate">Traducir</string>
     <string name="help_title_community">Comunidad</string>
     <string name="help_item_anki_forums">Foro de Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_privacy">Privacidad</string>
+    <string name="help_item_ankidroid_privacy_policy">Política de privacidad de AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Política de privacidad de AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Términos y Condiciones de AnkiWeb</string>
     <string name="help_title_send_exception">Enviar informe de resolución de problemas</string>
-    <string name="help_dialog_exception_report_debounce">El informe ya ha sido enviado</string>
+    <string name="help_dialog_exception_report_debounce">El informe ya fue enviado</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Una sincronización automática puede activarse en %d segundo</item>
@@ -259,4 +260,15 @@
     <string name="import_csv">Archivo de texto (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">No puedes crear un submazo para todos los mazos</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Debido a los cambios de privacidad de Android, tu ubicación de almacenamiento actual será inaccesible si la aplicación es 
+        desinstalada.
+        \n\nNecesitamos migrar tus datos a una ubicación privada de la aplicación AnkiDroid.
+        \n\nLos datos en esta ubicación privada pueden ser eliminados si la aplicación es desinstalada.
+        \n\nTu ubicación de almacenamiento actual es %1$s
+        \n\nLa ubicación de almacenamiento privada será %2$s
+        \n\nPor favor, confirma que harás copias de seguridad de esta carpeta regularmente.
+    </string>
+    <string name="manual_backup">Copia de seguridad manual</string>
+    <string name="remind_me_later">Recuérdamelo más tarde</string>
 </resources>

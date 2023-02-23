@@ -17,8 +17,6 @@
 package com.ichi2.libanki.template
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
 import com.ichi2.libanki.template.TemplateError.FieldNotFound
 import com.ichi2.libanki.template.TemplateFilters.apply_filter
 import com.ichi2.utils.KotlinCleanup
@@ -80,20 +78,5 @@ class Replacement(
 
     override fun toString(): String {
         return "new Replacement(\"" + key.replace("\\", "\\\\") + ", " + filters + "\")"
-    }
-
-    companion object {
-        private fun runHint(txt: String, tag: String): String {
-            if (txt.trim { it <= ' ' }.length == 0) {
-                return ""
-            }
-            val res = AnkiDroidApp.appResources
-            // random id
-            val domId = "hint" + txt.hashCode()
-            return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
-                domId + "').style.display='block';_relinquishFocus();return false;\">" +
-                res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
-                domId + "\" class=hint style=\"display: none\">" + txt + "</div>"
-        }
     }
 }

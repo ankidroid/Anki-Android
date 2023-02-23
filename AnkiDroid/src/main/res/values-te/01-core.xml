@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">అవును</string>
     <!-- Navigation drawer items-->
     <string name="decks">డెక్స్</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">కార్డ్ బ్రౌజర్</string>
@@ -71,7 +70,7 @@
         <item quantity="other">%d నిమిషాలు మిగిలి ఉన్నాయి</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d గంట %2$d ఎడమ</item>
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
@@ -97,12 +96,12 @@
     <string name="menu_import">దిగుమతి</string>
     <string name="undo">చెరచు</string>
     <string name="undo_action_review">చివరి సమీక్ష</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_change_deck_multi">డెక్స్ మార్చండి</string>
+    <string name="move_all_to_deck">అన్నింటినీ డెక్‌కి తరలించండి</string>
     <string name="unbury">త్రవ్వితీయు</string>
     <string name="rename_deck">పేరు మార్చండి</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">సత్వరమార్గం</string>
+    <string name="browse_cards">కార్డ్‌లను బ్రౌజ్ చేయండి</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">చేర్చు</string>
     <string name="menu_add_note">గమనిక చేర్చు</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ఖాతాను సమకాలీకరించండి</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">సమకాలీకరణ</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">మీరు సమకాలీకరణను రద్దు చేయాలనుకుంటున్నారా?</string>
     <string name="continue_sync">సమకాలీకరించండి</string>
     <string name="sync_cancelled">సమకాలీకరణ రద్దు చేయబడింది</string>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

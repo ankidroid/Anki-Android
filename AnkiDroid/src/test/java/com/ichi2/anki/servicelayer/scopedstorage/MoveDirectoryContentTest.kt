@@ -18,7 +18,8 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -32,6 +33,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
 
 /**
  * Test for [MoveDirectoryContent]
@@ -146,7 +148,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
                     return@doAnswer object : Operation() {
                         // Create a file in `source` and then execute the original operation.
                         // It ensures a file is added after some files where already copied.
-                        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+                        override fun execute(context: MigrationContext): List<Operation> {
                             new_file_name = toDoBetweenTwoFilesMove(source).name
                             return operation.execute()
                         }
@@ -183,7 +185,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val sourceDirectory = Directory.createInstance(source)!!
         val destinationDirectory = generateDestinationDirectoryRef()
         source.delete()
-        assertThrows<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
+        assertFailsWith<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
     }
 
     @SuppressLint("NewApi") // NotDirectoryException
@@ -192,7 +194,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val source_file = createTransientFile()
         val dir = Directory.createInstanceUnsafe(source_file)
         val destinationDirectory = generateDestinationDirectoryRef()
-        val ex = assertThrowsSubclass<IOException> { moveDirectoryContent(dir, destinationDirectory) }
+        val ex = assertFailsWith<IOException> { moveDirectoryContent(dir, destinationDirectory) }
         if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", ex, instanceOf(NotDirectoryException::class.java))
         }

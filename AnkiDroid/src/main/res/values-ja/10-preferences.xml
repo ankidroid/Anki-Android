@@ -64,7 +64,7 @@
     <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_controls" maxLength="41">操作</string>
-    <string name="pref_cat_advanced" maxLength="41">その他</string>
+    <string name="pref_cat_advanced" maxLength="41">高度な設定</string>
     <string name="pref_cat_workarounds" maxLength="41">不具合回避策</string>
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
     <!-- preferences.xml entries-->
@@ -86,7 +86,6 @@
     <string name="full_screen_off">オフ</string>
     <string name="full_screen_system">ステータスバー（通知バー）を隠す</string>
     <string name="full_screen_complete">ステータスバー（通知バー）と解答表示ボタン・回答ボタンを隠す</string>
-    <string name="full_screen_error_gestures">回答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
     <string name="answer_buttons_position" maxLength="41">解答表示ボタン・回答ボタンの位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>カードの上側</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">どこでもドロワー</string>
     <string name="gestures_fullscreen_nav_drawer_summary">画面上のどこからでも、右にスワイプするとナビゲーションドロワーが開きます</string>
+    <string name="gestures_none" maxLength="41">なし</string>
     <string name="gestures_swipe_up" maxLength="41">上にスワイプ</string>
     <string name="gestures_swipe_down" maxLength="41">下にスワイプ</string>
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>
@@ -125,15 +125,17 @@
     <string name="tts_summ">音声ファイルが含まれていない場合に、質問と解答を読み上げます</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">メディアの同期</string>
-    <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像・音声・動画）ファイルを自動的に取得します</string>
     <string name="sync_account" maxLength="41">AnkiWebアカウント</string>
     <string name="sync_account_summ_logged_out">ログインしていません</string>
     <string name="automatic_sync_choice" maxLength="41">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">常に同期</string>
+    <string name="sync_media_only_unmetered">Wi-Fi接続時のみ同期</string>
+    <string name="sync_media_never">同期しない</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
-    <string name="metered_sync_title" maxLength="41">従量制課金接続時の同期を許可</string>
-    <string name="metered_sync_summary">この設定を無効にすると、通信データ量に応じて課金する方式でネット接続しているときに同期しようとすると、確認メッセージが表示されます</string>
+    <string name="metered_sync_title" maxLength="41">Wi-Fi接続時以外の同期を許可</string>
+    <string name="metered_sync_summary">この設定を無効にすると、Wi-Fi以外の方法でインターネットに接続しているときに同期しようとすると、確認メッセージが表示されます</string>
     <string name="app_theme" maxLength="41">テーマ</string>
     <string name="day_theme" maxLength="41">通常モードのテーマ</string>
     <string name="night_theme" maxLength="41">ナイトモードのテーマ</string>
@@ -168,18 +170,18 @@
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、回答ボタンの誤タップを防ぎます</string>
     <string name="show_estimates" maxLength="41">回答ボタンに復習間隔を表示</string>
-    <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
+    <string name="show_estimates_summ">次に出題するまでの間隔を回答ボタンに表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">大きな回答ボタンを表示</string>
     <string name="show_large_answer_buttons_summ">回答ボタンを２行２列で表示します</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
-    <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再基本学習、緑: 復習）</string>
+    <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
     <string name="show_eta" maxLength="41">推定学習時間を表示</string>
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">先取り学習の限度</string>
+    <string name="learn_cutoff" maxLength="41">習得ステップの前倒しの限度</string>
     <string name="time_limit" maxLength="41">タイムボックスの時間枠</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
@@ -203,7 +205,7 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
     <string name="html_javascript_debugging_summ">リモートのWebView接続を有効にし、カードのHTMLをAnkiDroidディレクトリに保存します</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">レビュア</string>
+    <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">PNG形式でクリップボード画像を貼り付け</string>
@@ -226,12 +228,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">シミュレーションの反復回数</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">同期サーバーを変更する</string>
-    <string name="custom_sync_server_enable_summary">AnkiWebのサービスを使用せず、代替サーバーを指定します</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">指定なし</string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
-    <string name="custom_sync_server_base_url_invalid">同期先のURLが無効です</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
-    <string name="custom_sync_server_media_url_invalid">メディア同期のためのURLが無効です</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
@@ -245,12 +248,12 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">新規カードと基本学習</string>
+    <string name="deck_conf_new_cards" maxLength="41">新規カードと習得</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘却と再基本学習</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
-    <string name="deck_conf_steps" maxLength="41">学習ステップ（分）</string>
+    <string name="deck_conf_steps" maxLength="41">習得ステップ（分）</string>
     <string name="deck_conf_order" maxLength="41">順序</string>
     <string name="deck_conf_new_cards_day" maxLength="41">一日あたりの新規カード出題枚数の上限</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">最終ステップから復習開始までの間隔</string>
@@ -270,9 +273,9 @@
     <string name="deck_conf_max_ivl" maxLength="41">復習間隔の上限</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">新しい復習間隔（前回比）</string>
     <string name="deck_conf_min_ivl" maxLength="41">復習間隔の下限</string>
-    <string name="deck_conf_leech_thres" maxLength="41">無駄（定着困難）カードと判定する基準</string>
+    <string name="deck_conf_leech_thres" maxLength="41">無駄（習得困難）カードと判定する基準</string>
     <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
-    <string name="deck_conf_leech_action" maxLength="41">無駄（定着困難）カードへの処置</string>
+    <string name="deck_conf_leech_action" maxLength="41">無駄（習得困難）カードへの処置</string>
     <string name="deck_conf_max_time" maxLength="41">統計に利用する解答時間の最大値</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer" maxLength="41">タイマーを表示</string>
@@ -302,7 +305,7 @@
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
     <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の学習ステップを設定</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">このグループのデッキをリマインダー通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">リマインダー通知時刻</string>
     <!-- analytics options -->
@@ -334,8 +337,8 @@
     <string name="card_side_question">表面</string>
     <string name="card_side_answer">裏面</string>
     <string name="card_side_both">表面と裏面の両方</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">表面で %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">裏面で %s</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">表面で%s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">裏面で%s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
@@ -344,8 +347,8 @@
     <string name="pref_cat_experimental" maxLength="41">試験運用機能</string>
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
-    <string name="use_rust_backend_summary">V3スケジューラなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません。</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_summary">V3スケジューラーなど、Ankiの新しい機能を有効にします。\n【注意】試験運用中です。重要なコレクションでは使用しないでください。アプリを終了しても元に戻りません</string>
+    <string name="use_rust_backend_warning">この機能を有効にすることによって、あなたのAnkiDroidのデータが完全に破損してしまうリスクが生じます。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも破損を波及させてしまう可能性があります。\n\nこの機能を試していただくことは歓迎いたしますが、万一に備え、AnkiWeb以外にもコレクションのバックアップを作っておくことを強く推奨いたします。</string>
     <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
@@ -353,4 +356,65 @@
     <string name="disable_dev_options">開発者向けオプションを無効にする</string>
     <string name="dev_options_warning">        これらの設定を有効化すると、アプリ自体を破壊したり、保存されているコレクションを破損させるおそれがあります。\n\nこれらの設定はほとんどのユーザーに適していないため、項目は英語でのみ表示されます。
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">バックアップオプション</string>
+    <string name="pref__backups_help__summary"><![CDATA[        Ankiは定期的にあなたのコレクションをバックアップしています。
+        ２日以上経過したバックアップは、
+       ディスクスペースを確保するために、順次削除していきます。
+        <br><br>
+        メディアファイルは定期バックアップの対象外です。
+        データが失われないよう、AnkiWebとの同期や、メディアファイルを含めたコレクションをエクスポートするという方法でのバックアップ作成をご自身で定期的に行うことをお勧めします。
+        <br><br>
+        バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面のメニューから行えます。
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">毎日保存するバックアップの数</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">毎週保存するバックアップの数</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">毎月保存するバックアップの数</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">容量を管理</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">エラー</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">計算\n中&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="other">%1$d個のファイル\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">使用されていないメディアファイルを削除</string>
+    <string name="pref__delete_unused_media_files__summary">ファイル名の最初の文字が「 _ 」（アンダーバー）ではなく、どのノートにも使用されていないメディア（画像・音声・動画）ファイルを削除します</string>
+    <string name="dialog__media_check_required__message">使用していないメディアファイルを検索するにはメディアチェックが必要です</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">使用していないメディアファイルを削除</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">バックアップを削除</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">バックアップを削除</string>
+    <string name="progress__deleting_backups">バックアップを削除しています...</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
+    <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">コレクションを削除</string>
+    <string name="dialog__delete_collection__message">本当にあなたのコレクション、メディア、バックアップを削除してもよろしいですか？</string>
+    <string name="progress__deleting_collection">コレクションを削除しています&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">すべて削除</string>
+    <string name="pref__delete_everything__summary">コレクション、メディア、バックアップ、設定を削除する</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">すべて削除</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にアプリデータを削除してもよろしいですか？　削除対象には、あなたのコレクション、メディア、バックアップ、アプリ内の設定が含まれています。\n\n注意: この操作を行うと、AnkiDroidアプリは強制終了され、現在ご覧になっているこの設定画面は閉じられます。</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">アプリのデータを削除</string>
+    <string name="pref__delete_app_data__summary">設定やその他のアプリのデータを削除</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">アプリのデータを削除</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にアプリデータを削除してもよろしいですか？　削除対象には、アプリ内の設定やその他のデータも含まれています。\n\n注意: この操作を行うと、現在表示されているアクティビティが終了します。</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">コレクションなし</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">エラー</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">取得中&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">計算中&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">コレクションが存在しません</string>
 </resources>

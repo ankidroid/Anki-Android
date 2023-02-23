@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Cette carte est vide. Utilisez l\'option \"cartes vides\" du menu sur l\'écran de la liste de paquets.</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
     <string name="delete_deck">Suppression du paquet&#8230;</string>
-    <string name="show_hint">Afficher %s</string>
     <string name="info_rate">Noter AnkiDroid</string>
     <string name="import_title">Importation en cours</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Inclure les médias</string>
     <string name="confirm_apkg_export">Exporter la collection sous forme de paquet Anki ?</string>
     <string name="confirm_apkg_export_deck">Exporter \"%s\" au format apkg ?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Exporter les cartes sélectionnées au format .apkg ?</item>
+        <item quantity="other">Exporter les %d cartes sélectionnées au format .apkg ?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Exporter les notes sélectionnées au format .apkg ?</item>
+        <item quantity="other">Exporter les %d notes sélectionnées au format .apkg ?</item>
+    </plurals>
     <string name="export_in_progress">Exportation du fichier Anki&#8230;</string>
-    <string name="export_successful_title">Envoyer le paquet Anki ?</string>
-    <string name="export_send_button">Envoyer</string>
+    <string name="export_success_title">Collection exportée avec succès</string>
     <string name="export_send_no_handlers">Aucune application disponible pour ouvrir le fichier APKG. Sauvegarde...</string>
     <string name="export_save_apkg_successful">Paquet Anki sauvegardé avec succès</string>
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du paquet Anki</string>
-    <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
+    <string name="export_success_message">Vous devez choisir un emplacement de fichier pour le sauvegarder, ou le partager avec une autre application.</string>
     <string name="export_share_title">Envoyer le paquet Anki ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes</string>
     <string name="export_email_text"><![CDATA[        Bonjour !
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Erreur lors de l\'exportation du fichier apkg</string>
+    <string name="export_select_save_app">Sélectionner où sauvegarder le fichier</string>
+    <string name="export_select_share_app">Sélectionner l\'application pour le partage</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
@@ -375,6 +382,15 @@
     <string name="scoped_storage_postpone">Reporter</string>
     <string name="scoped_storage_migrate">Transférer</string>
     <string name="search_card_js_api_no_results">La recherche n\'a pas donné de résultats</string>
+    <string name="sync_impossible_during_migration">La synchronisation est désactivée jusqu\'à ce que la migration soit terminée.\n
+        %1$d fichiers multimédia restants à migrer.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Si vous réinstallez AnkiDroid, il ne pourra pas ouvrir votre collection.</string>
+    <string name="migration_update_request_dialog_download_warning">Si vous désinstallez AnkiDroid, vous devrez télécharger à nouveau votre collection complète.</string>
+    <string name="migration_update_request">La politique d\'accès au stockage Android nous oblige à changer où nous stockons votre collection. Lorsque vos données seront migrées, AnkiDroid sera plus rapide et vos données seront plus sécurisées.
+    Vous ne pourrez pas synchroniser pendant la migration de stockage.</string>
+    <string name="start_migration_progress_message">Démarrage de la migration du stockage. Vous pouvez reprendre votre utilisation d\'AnkiDroid sous peu.</string>
+    <string name="migration_part_1_done_resume">Vous pouvez continuer à utiliser AnkiDroid.
+\nLa migration du stockage continuera en arrière-plan.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s n\'est pas un package d\'extension javascript valide</string>
     <string name="could_not_create_dir">Impossible de créer le répertoire %s</string>
@@ -396,11 +412,13 @@
     <string name="validation_deck_already_exists">Le paquet existe déjà</string>
     <string name="deck_created">Paquet créé</string>
     <string name="deck_renamed">Paquet renommé</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cartes</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="toggle_cards_notes">Activer/Désactiver les Cartes/Notes</string>
+    <string name="toggle_browser_mode_help">Activer/désactiver l\'affichage des cartes ou des notes dans le navigateur</string>
+    <string name="truncate_content_help">Tronquer la hauteur de chaque ligne du navigateur pour ne montrer que les 3 premières lignes de contenu</string>
+    <string name="browser_options_dialog_heading">Options du navigateur</string>
 </resources>

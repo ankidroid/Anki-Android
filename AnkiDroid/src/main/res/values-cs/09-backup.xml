@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Záloha nebyla uložena. Na SD kartě není dostatek místa. Snižte počet záloh nebo odstraňte nějaké jiné soubory.</string>
-    <string name="sd_space_warning">Na vaší SD kartě je méně místa než %d MB.\nUvolněte trochu místa, aby se zabránilo ztrátě dat.</string>
+    <string name="backup_deck_no_storage_left">Záloha nebyla uložena. Ve vašem úložišti není dostatek místa. Snižte počet záloh nebo odstraňte nějaké jiné soubory.</string>
+    <string name="storage_warning">Ve vašem úložišti je méně místa než %d MB.\nUvolněte nějaké místo, aby se zabránilo ztrátě dat.</string>
     <string name="backup_restore">Obnovit ze zálohy</string>
     <string name="backup_new_collection">Nová kolekce</string>
     <string name="backup_del_collection">Odstranit kolekci a vytvořit novou</string>

@@ -16,12 +16,10 @@
 package com.ichi2.async
 
 import com.ichi2.libanki.CollectionGetter
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-@KotlinCleanup("fix IDE lint issues")
 class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManager() {
-    protected override fun removeTaskConcrete(task: CollectionTask<*, *>): Boolean {
+    override fun removeTaskConcrete(task: CollectionTask<*, *>): Boolean {
         return true
     }
 
@@ -29,7 +27,7 @@ class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManag
         return launchCollectionTaskConcrete(task, null)
     }
 
-    protected override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {}
+    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {}
     override fun <Progress, Result> launchCollectionTaskConcrete(
         task: TaskDelegateBase<Progress, Result>,
         listener: TaskListener<in Progress, in Result?>?
@@ -64,19 +62,19 @@ class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManag
         task: TaskDelegateBase<Progress, Result>?,
         listener: TaskListener<in Progress, in Result?>?
     ) : CollectionTask<Progress, Result>(
-        task!!, listener, null
+        task!!,
+        listener,
+        null
     )
 
     companion object {
-        @KotlinCleanup("getCol should be allowed to return null: maybe getColSafe here?")
         fun <Progress, Result> executeTaskWithListener(
             task: TaskDelegateBase<Progress, Result>,
             listener: TaskListener<in Progress, in Result?>?,
             colGetter: CollectionGetter
         ): Cancellable {
             listener?.onPreExecute()
-            val res: Result
-            res = try {
+            val res: Result = try {
                 task.execTask(colGetter.col, MockTaskManager(listener))
             } catch (e: Exception) {
                 Timber.w(

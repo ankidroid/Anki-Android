@@ -23,7 +23,7 @@
     <!-- Sync -->
     <string name="pref_sync_screen_key">syncScreen</string>
     <string name="sync_account_key">syncAccount</string>
-    <string name="sync_fetch_missing_media_key">syncFetchesMedia</string>
+    <string name="sync_fetch_media_key">syncFetchMedia</string>
     <string name="automatic_sync_choice_key">automaticSyncMode</string>
     <string name="force_full_sync_key">force_full_sync</string>
     <string name="sync_status_badge_key">showSyncStatusBadge</string>
@@ -85,9 +85,7 @@
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
-    <string name="custom_sync_server_enable_key">useCustomSyncServer</string>
-    <string name="custom_sync_server_collection_url_key">customCollectionSyncUrl</string>
-    <string name="custom_sync_server_media_url_key">syncMediaUrl</string>
+    <string name="custom_sync_server_collection_url_key">syncBaseUrl</string>
     <!-- Advanced -->
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>
     <string name="pref_cat_workarounds_key">category_workarounds</string>
@@ -114,7 +112,6 @@
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
-    <string name="pref_backup_max_key">backupMax</string>
     <string name="enable_v3_sched_key">v3sched</string>
     <!-- Advanced statistics -->
     <string name="pref_advanced_statistics_screen_key">advancedStatisticsScreen</string>
@@ -135,10 +132,17 @@
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="pref_rust_backend_key">useRustBackend</string>
-    <string name="pref_scoped_storage_key">useScopedStorage</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- Messages displayed after the user enabled developer options, and warned remaining messages will be in English -->
     <string name="dev_options_enabled_msg">Enabled developer options</string>
     <!-- About -->
     <string name="about_screen_key">aboutScreen</string>
+
+    <!-- Backup limits -->
+    <string name="pref_backup_max_key">backupMax</string>
+    <string name="pref_backups_help_key">backups_help</string>
+    <string name="pref_minutes_between_automatic_backups_key">minutes_between_automatic_backups</string>
+    <string name="pref_daily_backups_to_keep_key">daily_backups_to_keep</string>
+    <string name="pref_weekly_backups_to_keep_key">weekly_backups_to_keep</string>
+    <string name="pref_monthly_backups_to_keep_key">monthly_backups_to_keep</string>
 </resources>

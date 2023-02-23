@@ -15,7 +15,6 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.utils.FileOperation.Companion.getFileContents
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -25,28 +24,27 @@ import java.io.IOException
 import java.util.*
 import kotlin.Throws
 
-@KotlinCleanup("lateinit")
 @RunWith(AndroidJUnit4::class)
 class TextCardExporterTest : RobolectricTest() {
-    private var mCol: Collection? = null
+    private lateinit var mCol: Collection
     private val mNoteList: MutableList<Note> = ArrayList()
 
     @Before
     override fun setUp() {
         super.setUp()
         mCol = col
-        var note = mCol!!.newNote()
+        var note = mCol.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar<br>")
         note.setTagsFromStr("tag, tag2")
-        mCol!!.addNote(note)
+        mCol.addNote(note)
         mNoteList.add(note)
         // with a different note
-        note = mCol!!.newNote()
+        note = mCol.newNote()
         note.setItem("Front", "baz")
         note.setItem("Back", "qux")
         note.model().put("did", addDeck("new col"))
-        mCol!!.addNote(note)
+        mCol.addNote(note)
         mNoteList.add(note)
     }
 
@@ -55,7 +53,7 @@ class TextCardExporterTest : RobolectricTest() {
     fun testExportTextCardWithHTML() {
         val exportedFile = File.createTempFile("export", ".txt")
 
-        val exporter = TextCardExporter(mCol!!, true)
+        val exporter = TextCardExporter(mCol, true)
         exporter.doExport(exportedFile.absolutePath)
         // Getting all the content of the file as a string
         val content = getFileContents(exportedFile)
@@ -82,7 +80,7 @@ class TextCardExporterTest : RobolectricTest() {
     fun testExportTextCardWithoutHTML() {
         val exportedFile = File.createTempFile("export", ".txt")
 
-        val exporter = TextCardExporter(mCol!!, false)
+        val exporter = TextCardExporter(mCol, false)
         exporter.doExport(exportedFile.absolutePath)
         // Getting all the content of the file as a string
         val content = getFileContents(exportedFile)

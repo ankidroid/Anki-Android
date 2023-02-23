@@ -106,6 +106,7 @@
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку «%s».</string>
     <string name="intent_aedict_empty">Категория «default» пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории «Notepad» или создайте категорию «default»</string>
@@ -117,7 +118,7 @@
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду дополнительного обучения</string>
+    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду допзанятия</string>
     <string name="importing_collection">Коллекция импортируется&#8230;</string>
     <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
     <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>
@@ -125,12 +126,12 @@
     <string name="import_update_ignored">Некоторые обновления проигнорированы, потому что изменился тип записи</string>
     <plurals name="import_complete_message">
         <item quantity="one">Импортировано карточек: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="few">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
+        <item quantity="many">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
         <item quantity="other">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">В хранилище нет места</string>
-    <string name="sd_card_almost_full_title">В хранилище почти нет места</string>
+    <string name="storage_full_title">Хранилище заполнено</string>
+    <string name="storage_almost_full_title">Хранилище почти заполнено</string>
     <string name="no_space_to_downgrade_title">Нет места</string>
     <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
@@ -138,7 +139,9 @@
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Подтвердить</string>
     <string name="dialog_no">Нет</string>
+    <string name="dialog_yes">Да</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
@@ -189,9 +192,6 @@
     <string name="multimedia_editor_failed">Не удалось открыть редактор мультимедиа</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Не удалось получить разрешение на запись звука</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid приветствует вас!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid необходимо разрешение на доступ к хранилищу, которое используется для хранения вашей коллекции, медиафайлов и резервных копий. Код приложения открыт и создаётся волонтёрами, поэтому ему доверяют.\n\nЕсли у вас есть вопросы, обратитесь к руководству или форуму поддержки.\n\nСпасибо, что используете AnkiDroid!\n— Разработчики AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Произошла неизвестная ошибка при отображении расширенного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid обновлён</string>
@@ -247,6 +247,7 @@
     <string name="help_item_support_develop_ankidroid">Программировать</string>
     <string name="help_item_support_rate_ankidroid">Оценить</string>
     <string name="help_item_support_other_ankidroid">Другое</string>
+    <string name="multimedia_editor_trans_translate">Перевод</string>
     <string name="help_title_community">Сообщество</string>
     <string name="help_item_anki_forums">Форум Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -278,4 +279,14 @@
     <string name="import_csv">Текстовый файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Вы не можете создать подколоду для всех колод</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        В связи с изменениями конфиденциальности Android, ваше текущее хранилище будет недоступно, если приложение будет удалено.
+        \n\nНам нужно перенести ваши данные в место, закрытое для приложения AnkiDroid.
+        \n\nДанные в этом  месте могут быть удалены, если приложение будет удалено.
+        \n\nВаше текущее хранилище - %1$s
+        \n\nЛичное хранилище будет %2$s
+        \n\nПожалуйста, подтвердите, что Вы будете регулярно делать резервные копии в этой папке.
+    </string>
+    <string name="manual_backup">Резервное копирование</string>
+    <string name="remind_me_later">Напомнить позже</string>
 </resources>

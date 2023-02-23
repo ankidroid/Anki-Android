@@ -76,7 +76,10 @@ class PieChartParameterizedTest {
             if (arcLengths[i] == 0.0) continue
             inOrder.verify(graphics)?.color = colors[i]
             inOrder.verify(graphics)?.fillArc(
-                anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+                anyFloat(),
+                anyFloat(),
+                anyFloat(),
+                anyFloat(),
                 floatThat(closeTo(startAngles[i])),
                 floatThat(closeTo(arcLengths[i]))
             )

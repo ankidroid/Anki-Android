@@ -28,7 +28,7 @@ class StudyOptionsFragmentTest {
     // Fixes for #5715: In deck description, ignore what is in style and script tag
     @Test
     fun spanTagsAreNotRemoved() {
-        val result = formatDescription("a<span style=\"color:red\">a=1</span>a")
+        val result = formatDescription("""a<span style="color:red">a=1</span>a""")
         assertEquals("aa=1a", result.toString()) // Note: This is coloured red on the screen
     }
 
@@ -46,7 +46,7 @@ class StudyOptionsFragmentTest {
 
     @Test
     fun scriptTagWithAttributesContentsAreRemoved() {
-        val result = formatDescription("a<script type=\"application/javascript\">a=1</script>a")
+        val result = formatDescription("""a<script type="application/javascript">a=1</script>a""")
         assertEquals("aa", result.toString())
     }
 
@@ -64,7 +64,7 @@ class StudyOptionsFragmentTest {
 
     @Test
     fun styleTagWithAttributesContentsAreRemoved() {
-        val result = formatDescription("a<style type=\"text/css\">a:1</style>a")
+        val result = formatDescription("""a<style type="text/css">a:1</style>a""")
         assertEquals("aa", result.toString())
     }
 

@@ -66,7 +66,7 @@
     <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
     <string name="invalid_username_password">L\'adreça de correu electrònic o la contrasenya no són vàlides.</string>
     <string name="reset_password">Restableix la contrasenya</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Heu oblidat el correu electrònic?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opcions per XXX</string>
     <string name="sync_prepare_syncing">S\'està preparant la sincronització...</string>
@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">La base de dades descarregada era corrupta. Si us plau proveu-ho de nou.</string>
     <string name="sync_overwrite_error">No ha estat possible sobreescriure la vostra col·lecció actual amb l\'arxiu descarregat.</string>
     <string name="sync_connection_error">S\'ha esgotat el emps d\'espera de la connexió. O la connexió a internet està experimentant problemes o teniu un fitxer molt gran a la vostra carpeta de multimèdia.</string>
-    <string name="sync_write_access_error">No ha estat possible desar l\'arxiu descarregat a la targeta SD. O bé la vostra targeta SD està muntada com a només de lectura o bé no hi ha prou espai.</string>
+    <string name="sync_write_access_error_on_storage">El fitxer baixat no s\'ha pogut desar. O bé no es permet l\'escriptura, o bé no hi ha prou espai.</string>
     <string name="sync_error_invalid_sync_server">El valor del servidor de sincronització personalitzat establert a la configuració avançada és incorrecte (%s).Si us plau entreu un servidor vàlid o canvieu aquest valor a la configuració.</string>
     <string name="sync_deletions_message">S\'estan sincronitzant les supressions...</string>
     <string name="sync_small_objects_message">S\'estan sincronitzant els petits objectes...</string>
@@ -102,7 +102,7 @@
     <string name="sync_media_find">S\'esta cercant els media que han canviat...</string>
     <string name="sync_media_no_changes">No hi ha canvis als arxius dels media.</string>
     <string name="sync_media_success">S\'han sincronitzat correctament els media.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">No ha estat possible acabar la sincronització multimèdia:\nS\'han baixat %1$d fitxers multimèdia.\nS\'han pujat %2$d fitxers multimèdia.</string>
     <string name="sync_media_changes_count">%d canvis de multimèdia per carregar</string>
     <string name="sync_media_downloaded_count">%d fitxers descarregats</string>
     <string name="sync_sanity_failed">Després de sincronitzar, la col·lecció ha quedat en un estat inconsistent. Per resoldre-ho, Ankidroid forçarà una sincronització total. Si us plau trieu el costat que preferiu conservar, o anul·leu-ho si ho preferiu sincronitzar més endavant.</string>
@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">Remot</string>
     <string name="force_full_sync_title">Forçar sincronització completa</string>
     <string name="force_full_sync_summary">En la sincronització següent, força els canvis en una direcció</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Sincronització completa forçada</string>
     <string name="full_sync_confirmation">El canvi sol·licitat requerirà una càrrega completa de la base de dades quan sincronitzeu la col·lecció. Si teniu revisions o altres canvis esperant a un altre dispositiu que encara no s\'han sincronitzat aquí encara, estaran perduts. Voleu continuar?</string>
     <string name="full_sync_confirmation_upgrade">Per un error en la versió anteriorment instal·lada de AnkiDroid, es recomana forçar una sincronització completa.</string>
     <string name="sync_error_407_proxy_required">Cal autenticació de servidor intermediari.</string>

@@ -18,6 +18,10 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MoveDirectory
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import org.apache.commons.io.FileUtils.isSymlink
 import timber.log.Timber
 import java.io.File
@@ -41,9 +45,9 @@ data class MoveFileOrDirectory(
     val sourceFile: File,
     /** Destination: known to exist */
     val destination: File
-) : MigrateUserData.Operation() {
+) : Operation() {
 
-    override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
+    override fun execute(context: MigrationContext): List<Operation> {
         when {
             sourceFile.isFile -> {
                 val fileToCreate = DiskFile.createInstanceUnsafe(sourceFile)

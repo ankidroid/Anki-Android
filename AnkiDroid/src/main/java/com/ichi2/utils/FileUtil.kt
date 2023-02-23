@@ -18,6 +18,7 @@ package com.ichi2.utils
 
 import android.content.ContentResolver
 import android.net.Uri
+import android.os.Environment
 import android.os.StatFs
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
@@ -37,6 +38,11 @@ object FileUtil {
         }
     }
 
+    /** Returns the current download Directory */
+    fun getDownloadDirectory(): String {
+        return Environment.DIRECTORY_DOWNLOADS
+    }
+
     /**
      *
      * @param uri               uri to the content to be internalized, used if filePath not real/doesn't work.
@@ -46,11 +52,10 @@ object FileUtil {
      * @throws IOException
      */
     @Throws(IOException::class)
-    @KotlinCleanup("nonnull uri")
-    fun internalizeUri(uri: Uri?, internalFile: File, contentResolver: ContentResolver): File {
+    fun internalizeUri(uri: Uri, internalFile: File, contentResolver: ContentResolver): File {
         // If we got a real file name, do a copy from it
         val inputStream: InputStream = try {
-            contentResolver.openInputStream(uri!!)!!
+            contentResolver.openInputStream(uri)!!
         } catch (e: Exception) {
             Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
             throw e
@@ -74,27 +79,9 @@ object FileUtil {
         val index = fileName.lastIndexOf(".")
         return if (index < 1) {
             null
-        } else AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
-    }
-
-    /**
-     * Calculates the size of a directory by recursively exploring the directory tree and summing the length of each
-     * file. The time taken to calculate directory size is proportional to the number of files in the directory
-     * and all of its sub-directories.
-     * It is assumed that directory contains no symbolic links.
-     *
-     * @throws IOException if the directory argument doesn't denote a directory
-     * @param directory Abstract representation of the file/directory whose size needs to be calculated
-     * @return Size of the directory in bytes
-     */
-    @Throws(IOException::class)
-    fun getDirectorySize(directory: File): Long {
-        var directorySize: Long = 0
-        val files = listFiles(directory)
-        for (file in files) {
-            directorySize += getSize(file)
+        } else {
+            AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
         }
-        return directorySize
     }
 
     /**
@@ -103,16 +90,64 @@ object FileUtil {
      * If the file does not exist, returns 0
      * If the file is a directory, recursively explore the directory tree and summing the length of each
      * file. The time taken to calculate directory size is proportional to the number of files in the directory
-     * and all of its sub-directories. See: [getDirectorySize]
+     * and all of its sub-directories. See: [DirectoryContentInformation.fromDirectory]
      * It is assumed that directory contains no symbolic links.
      *
      * @param file Abstract representation of the file/directory whose size needs to be calculated
      * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
      */
-    fun getSize(file: File) = if (file.isDirectory) {
-        getDirectorySize(file)
-    } else {
-        file.length()
+    fun getSize(file: File): Long {
+        if (file.isFile) {
+            return file.length()
+        } else if (!file.exists()) {
+            return 0L
+        }
+        return DirectoryContentInformation.fromDirectory(file).totalBytes
+    }
+
+    /**
+     * Information about the content of a directory `d`.
+     */
+    data class DirectoryContentInformation(
+        /**
+         * Size of all files contained in `d` directly or indirectly.
+         * Ignore the extra size taken by file system.
+         */
+        val totalBytes: Long,
+        /**
+         * Number of subdirectories of `d`, directly or indirectly. Not counting `d`.
+         */
+        val numberOfSubdirectories: Int,
+        /**
+         * Number of files contained in `d` directly or indirectly.
+         */
+        val numberOfFiles: Int
+    ) {
+        companion object {
+            /**
+             * @throws IOException [root] does not exist
+             */
+            fun fromDirectory(root: File): DirectoryContentInformation {
+                var totalBytes = 0L
+                var numberOfDirectories = 0
+                var numberOfFiles = 0
+                val directoriesToProcess = mutableListOf(root)
+                while (directoriesToProcess.isNotEmpty()) {
+                    val dir = directoriesToProcess.removeLast()
+                    listFiles(dir).forEach {
+                        if (it.isDirectory) {
+                            numberOfDirectories++
+                            directoriesToProcess.add(it)
+                        } else {
+                            numberOfFiles++
+                            totalBytes += it.length()
+                        }
+                    }
+                }
+
+                return DirectoryContentInformation(totalBytes, numberOfDirectories, numberOfFiles)
+            }
+        }
     }
 
     /**

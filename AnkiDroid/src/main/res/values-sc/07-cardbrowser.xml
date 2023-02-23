@@ -50,8 +50,8 @@
         <item quantity="other">%d cartas ammustradas</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d nota ammustrada</item>
+        <item quantity="other">%d notas ammustradas</item>
     </plurals>
     <string name="card_browser_all_decks">Totu sos matzos</string>
     <string name="card_browser_delete_card">Iscantzella sas notas</string>
@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">Chirca in totu sos matzos</string>
     <string name="card_browser_unknown_deck_name">Disconnotu</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Mutza su cuntenutu</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Esporta carta</item>
+        <item quantity="other">Esporta cartas</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Esporta nota</item>
+        <item quantity="other">Esporta notas</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d carta iscantzellada</item>
         <item quantity="other">%d cartas iscantzelladas</item>

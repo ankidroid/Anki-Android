@@ -44,14 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">kyllä</string>
     <!-- Navigation drawer items-->
     <string name="decks">Pakat</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Korttiselain</string>
     <string name="statistics">Tilastot</string>
     <string name="settings">Asetukset</string>
     <string name="help">Ohje</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Piirros</string>
     <string name="send_feedback">Anna palautetta</string>
     <string name="studyoptions_due_today">Tälle päivälle:</string>
     <string name="studyoptions_new_total">Uusia kortteja yhteensä:</string>
@@ -71,12 +70,12 @@
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d tunti %2$d jäljellä</item>
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d päivää %2$d jäljellä</item>
+        <item quantity="other">%1$d päivää %2$d jäljellä</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
     <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
@@ -121,9 +120,9 @@
     <string name="menu_flag_card_two">Oranssi lippu</string>
     <string name="menu_flag_card_three">Vihreä lippu</string>
     <string name="menu_flag_card_four">Sininen lippu</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Vaaleanpunainen lippu</string>
+    <string name="menu_flag_card_six">Turkoosi lippu</string>
+    <string name="menu_flag_card_seven">Violetti lippu</string>
     <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_search">Haku %1$s</string>
@@ -163,7 +162,7 @@
     <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hae pakkaa</string>
     <string name="invalid_deck_name">Pätemätön pakka nimi</string>
     <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
     <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">Laitteen muistia ei ole asennettu</string>
     <string name="empty_cloze_warning">Muokkaa tätä merkintää ja lisää täydennystehtäviä. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkronoi</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synkronointi tilapäisesti pois käytöstä</string>
+    <string name="button_upgrade" comment="Text of the sync button">Siirretään skaalattuun varastointiin</string>
     <string name="cancel_sync_confirm">Haluatko peruuttaa synkronoinnin?</string>
     <string name="continue_sync">Jatka synkronointia</string>
     <string name="sync_cancelled">Synkronointi peruutettu</string>
@@ -195,8 +196,8 @@
     <string name="card_template_editor_select_field">Valitse kenttä</string>
     <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Tämä luo %1$d kortin. Jatketaanko?</item>
+        <item quantity="other">Tämä luo %1$d korttia. Jatketaanko?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d korttia (0 kerrattavissa)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

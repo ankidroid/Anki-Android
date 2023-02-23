@@ -4,7 +4,6 @@
     <color name="theme_black_primary_dark">#000000</color>
     <color name="theme_black_primary_light">#151515</color>
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
-    <color name="theme_black_secondary_text">#a0a0a0</color>
     <color name="theme_black_row_current">#1a1a1a</color>
 
     <style name="Theme_Dark.Black">
@@ -12,9 +11,8 @@
         <item name="colorPrimary">@color/theme_black_primary_dark</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/material_blue_500</item>
-        <item name="android:textColor">@color/theme_black_primary_text</item>
-        <item name="android:textColorPrimary">@color/theme_black_primary_text</item>
-        <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
         <item name="colorControlActivated">?attr/colorAccent</item>
@@ -34,6 +32,8 @@
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_black_primary_text</item>
         <item name="actionModeBackground">@color/theme_black_primary_dark</item>
+        <!-- Tab layout -->
+        <item name="tabLayoutBackgroundColor">@color/theme_black_primary_dark</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
@@ -45,7 +45,7 @@
         <item name="newCountColor">@color/material_blue_700</item>
         <item name="learnCountColor">@color/material_red_400</item>
         <item name="reviewCountColor">@color/material_green_400</item>
-        <item name="zeroCountColor">#202020</item>
+        <item name="zeroCountColor">#808080</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -95,9 +95,9 @@
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
-        <item name="buttonShadowColor">#bdbdbd</item>
+        <item name="buttonShadowColor">#726B6B</item>
         <item name="buttonRippleColor">#BABABA</item>
-        <item name="buttonForegroundColor">#757575</item>
+        <item name="buttonForegroundColor">#363636</item>
         <!-- FAB -->
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
@@ -137,14 +137,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_black_primary</item>
-    </style>
-
-    <!-- Preferences screens -->
-    <style name="LegacyActionBarBlack" parent="Theme_Dark.Black">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">@color/prefs_item_dark</item>
-        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

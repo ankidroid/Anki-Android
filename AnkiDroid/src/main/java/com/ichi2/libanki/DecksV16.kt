@@ -29,7 +29,7 @@
     "MemberVisibilityCanBePrivate",
     "FunctionName",
     "ConvertToStringTemplate",
-    "LocalVariableName",
+    "LocalVariableName"
 )
 
 package com.ichi2.libanki
@@ -44,12 +44,15 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.deepClone
+import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.longIterable
 import java8.util.Optional
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
@@ -384,7 +387,8 @@ class DecksV16(private val col: CollectionV16) :
     @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
     fun allNames(dyn: bool = true, force_default: bool = true): MutableList<str> {
         return this.all_names_and_ids(
-            skip_empty_default = !force_default, include_filtered = dyn
+            skip_empty_default = !force_default,
+            include_filtered = dyn
         ).map { x ->
             x.name
         }.toMutableList()
@@ -901,7 +905,6 @@ class DecksV16(private val col: CollectionV16) :
         return DeckV16.Generic(this)
     }
 
-    val Deck.id: DeckId get() = this.getLong("id")
     val Deck.name: str get() = this.getString("name")
     val Deck.conf: Long get() = this.getLong("conf")
 }

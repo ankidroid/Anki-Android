@@ -47,17 +47,17 @@
     <!-- generic strings -->
     <string name="disabled">已停用</string>
     <string name="enabled">已啟用</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s 秒</string>
+    <string name="pref_summary_minutes">%s 分鐘</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">無結果</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">一般</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">學習中</string>
+    <string name="pref_cat_system_wide" maxLength="41">系統範圍</string>
     <string name="pref_cat_reviewing" maxLength="41">複習</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">計畫任務</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外觀</string>
     <string name="pref_cat_themes" maxLength="41">佈景</string>
@@ -72,7 +72,7 @@
     <string name="use_input_tag" maxLength="41">在卡片中輸入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一個文本框裡輸入答案</string>
     <string name="reset_languages" maxLength="41">重設語言</string>
-    <string name="reset_languages_summ">重置指定牌組語言（TTS和字典）</string>
+    <string name="reset_languages_summ">重置指定牌組語言 (TTS 和字典)</string>
     <string name="reset_languages_question">重設所有的語言？</string>
     <string name="reset_confirmation">重設所有狀態</string>
     <string name="card_zoom" maxLength="41">卡片縮放</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">關閉</string>
     <string name="full_screen_system">隱藏系統狀態欄</string>
     <string name="full_screen_complete">隱藏系統狀態欄和回答按鈕</string>
-    <string name="full_screen_error_gestures">您必須啟用手勢操作才能隱藏回答按鈕</string>
     <string name="answer_buttons_position" maxLength="41">顯示答案按鈕位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>頂部</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>
     <string name="gestures_fullscreen_nav_drawer_summary">從屏幕上任何地方向右劃，可以打開導航的抽屜。</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">向上撥動</string>
     <string name="gestures_swipe_down" maxLength="41">向下撥動</string>
     <string name="gestures_swipe_left" maxLength="41">向左撥動</string>
@@ -125,16 +125,18 @@
     <string name="tts_summ">如果沒有內含音訊檔案，則讀出問題和答案</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">同步時取得媒體檔案</string>
-    <string name="sync_fetch_missing_media_summ">同步時自動取得缺少的媒體檔案</string>
     <string name="sync_account" maxLength="41">AnkiWeb 帳號</string>
     <string name="sync_account_summ_logged_out">未登入</string>
     <string name="automatic_sync_choice" maxLength="41">自動同步</string>
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
     <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="metered_sync_title" maxLength="41">允許按流量計費的連接同步</string>
+    <string name="metered_sync_summary">禁用後，如果嘗試在按流量計費的連接上同步，將收到警告</string>
+    <string name="app_theme" maxLength="41">主題</string>
     <string name="day_theme" maxLength="41">白天主題</string>
     <string name="night_theme" maxLength="41">夜間主題</string>
     <string name="default_font" maxLength="41">預設字型</string>
@@ -165,7 +167,7 @@
     <string name="vertical_centering" maxLength="41">置中</string>
     <string name="vertical_centering_summ">垂直置中卡片內容</string>
     <string name="pref_backup_max" maxLength="41">最大備份數量</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔（毫秒）</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔 (毫秒)</string>
     <string name="pref_double_tap_time_interval_summary">如果時間不到，按二次答案按鍵是無效的，這樣可以避免不小心雙擊按鍵。</string>
     <string name="show_estimates" maxLength="41">顯示按鈕的時間</string>
     <string name="show_estimates_summ">在答案按鈕上顯示下一次複習的時間</string>
@@ -183,7 +185,7 @@
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="new_timezone" maxLength="41">時區變更處理</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">午夜過後%s小時</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
@@ -203,8 +205,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 偵錯</string>
     <string name="html_javascript_debugging_summ">啟用控制 WebView 連線，並儲存卡片 HTML 到 AnkiDroid 資料夾</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">複習介面</string>
+    <string name="accessibility" maxLength="41">無障礙功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">粘貼PNG格式的圖像到剪贴板上</string>
     <string name="paste_as_png_summary">為了節省磁盤空間，Anki自動會粘貼JPG格式到剪贴板上。你也可以在設置裡面設定PNG格式。</string>
@@ -214,33 +216,34 @@
     <string name="media_import_allow_all_files" maxLength="41">允許所有置於媒體匯入中之檔案</string>
     <string name="media_import_allow_all_files_summ">如果安卓無法辨識一份媒體檔案</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">打開統計資料時默認牌組</string>
+    <string name="stats_default_deck_current">顯示最近牌組的統計資料</string>
+    <string name="stats_default_deck_all">顯示所有牌組的統計資料</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">進階統計</string>
     <string name="enable_advanced_statistics_title" maxLength="41">啟用進階統計</string>
-    <string name="enable_advanced_statistics_summ">顯示預測統計：基於對未來複習進行的計算或模擬（啟用）和已安排好的未來複習（禁用）。</string>
+    <string name="enable_advanced_statistics_summ">顯示預測統計：基於對未來複習進行的計算或模擬 (啟用) 和已安排好的未來複習 (停用)。</string>
     <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">計算前 n 天，從而模擬出接下來的</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">計算精度</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">模擬的迭代次數</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自訂同步伺服器</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">使用自訂同步伺服器</string>
-    <string name="custom_sync_server_enable_summary">如果你不想使用專有的 AnkiWeb 服務，您可以指定替代的伺服器</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
-    <string name="custom_sync_server_base_url_invalid">同步地址無效</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">媒體檔案同步地址</string>
-    <string name="custom_sync_server_media_url_invalid">媒體同步地址無效</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">鍵盤</string>
     <string name="bluetooth">藍芽</string>
     <string name="controls_main_category" maxLength="41">指令對照</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">改變牌組群組選項將影響多個牌組。如果你希望僅改變當前牌組，請先為群組新增選項</string>
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">牌組描述(僅影響當前牌組)</string>
+    <string name="deck_conf_deck_description" maxLength="41">牌組描述 (僅影響當前牌組)</string>
     <string name="deck_conf_group" maxLength="41">設定群組</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d 個牌組使用這個群組</item>
@@ -250,7 +253,7 @@
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘記</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
-    <string name="deck_conf_steps" maxLength="41">步(單位是分鐘)</string>
+    <string name="deck_conf_steps" maxLength="41">步 (單位是分鐘)</string>
     <string name="deck_conf_order" maxLength="41">順序</string>
     <string name="deck_conf_new_cards_day" maxLength="41">新卡片/每天</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">晉階成複習卡的間隔</string>
@@ -301,7 +304,7 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
     <string name="deck_conf_cram_filter_2_check">開啟第二個過濾器</string>
-    <string name="deck_conf_cram_steps" maxLength="41">自訂步伐（以分鐘計）</string>
+    <string name="deck_conf_cram_steps" maxLength="41">自訂步伐 (以分鐘計)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">設定自訂步數</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">為此牌組群組的牌組啟用提醒通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">提醒時間</string>
@@ -317,17 +320,17 @@
     <string name="type_in_answer_focus_summ">自動聚焦在復習者的“輸入答案”字段</string>
     <!-- About -->
     <string name="open_changelog">打開更新日志</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">關於</string>
+    <string name="contributors_title">貢獻者</string>
+    <string name="about_contributors_description"><![CDATA[這些是我們非常棒的<a href=\“%1$s\”>貢獻者</a>。 您也可以通過貢獻程式碼、翻譯、捐贈和<a href=\“%2$s\”>更多</a>來幫助AnkiDroid！]]></string>
+    <string name="license">許可證</string>
+    <string name="license_description"><![CDATA[AnkiDroid 在<a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>許可證下發佈，原始程式碼位於<a href=\"%3$s\">Github上</a>]]></string>
+    <string name="donate_description"><![CDATA[您可以通過<a href=\"%1$s\">捐贈</a>支持AnkiDroid的開發。 我們感謝任何數額的捐贈。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">新增手勢</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">替換手勢</string>
     <string name="binding_add_key">新增按鍵</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">替換按鍵</string>
     <string name="key_picker_default_press_key">按一個按鍵</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">選取卡面</string>
@@ -341,16 +344,77 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除%s</string>
     <string name="bindings_already_bound">已經和%s關聯</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41">實驗性功能</string>
+    <string name="experimental_pref_confirmation" maxLength="41">啟用\'%s\'</string>
+    <string name="use_rust_backend_title" maxLength="41">使用新後端</string>
+    <string name="use_rust_backend_summary">啟用較新的Anki功能，例如v3版調度程式\n不穩定。 不要用在你在意的牌組上。 應用關閉時不會還原。</string>
+    <string name="use_rust_backend_warning">此操作可能徹底損壞您的安裝。 要求應用卸載和删除AnkiDroid資料夾，並可能通過同步將損壞傳播到AnkiWeb。 \n\n我們歡迎測試，但請確保您有一個有效的非AnkiWeb備份。</string>
+    <string name="enable_v3_sched_title" maxLength="41">使用 v3 調度器</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">開發人員選項</string>
+    <string name="dev_options_enabled_pref" maxLength="41">啟用開發人員選項</string>
+    <string name="disable_dev_options">禁用開發人員選項</string>
+    <string name="dev_options_warning">        啟用開發者選項之前，您需要知曉這些選項很危險，可能會破壞應用程序或損壞您的牌組。 \n\n注意這些選項不適合大多數用戶，因而沒有翻譯，所以它們仍以英語顯示。
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">備份選項</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
+        After backups are more than two days old,
+        AnkiDroid will start removing some of them to free up disk space.
+        <br><br>
+        Note that media files are not backed up.
+        To be safe, please periodically synchronize your collection, or back up exports of it.
+        <br><br>
+        You can restore from a backup and export your collection in the deck list menu.
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動備份間隔 (分鐘)</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">要保留的每日備份</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">要保留的每週備份</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">要保留的每月備份</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">管理空間</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">錯誤</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">正在計算&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="other">%1$d 個檔案\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">刪除未使用的媒體檔案</string>
+    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">刪除未使用的媒體檔案</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">刪除備份</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">刪除備份</string>
+    <string name="progress__deleting_backups">正在刪除備份&#8230;</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
+    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
+    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
+    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">錯誤</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">正在擷取&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">正在計算&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
 </resources>

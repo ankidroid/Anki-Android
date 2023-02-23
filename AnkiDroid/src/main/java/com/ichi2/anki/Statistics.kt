@@ -54,7 +54,6 @@ import com.ichi2.ui.FixedTextView
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.Locale
 
 @RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")
 class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleListener {
@@ -116,8 +115,12 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             else -> Timber.w("Unknown defaultDeck: %s", defaultDeck)
         }
         mDeckSpinnerSelection = DeckSpinnerSelection(
-            this, col,
-            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true, showFilteredDecks = true
+            this,
+            col,
+            findViewById(R.id.toolbar_spinner),
+            showAllDecks = true,
+            alwaysShowDefault = true,
+            showFilteredDecks = true
         )
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
@@ -259,7 +262,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
 
         private fun getTabTitle(position: Int): String {
-            val l = Locale.getDefault()
             return when (position) {
                 TODAYS_STATS_TAB_POSITION -> getString(R.string.stats_overview)
                 FORECAST_TAB_POSITION -> getString(R.string.stats_forecast)
@@ -271,7 +273,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
                 ANSWER_BUTTONS_TAB_POSITION -> getString(R.string.stats_answer_buttons)
                 CARDS_TYPES_TAB_POSITION -> getString(R.string.title_activity_template_editor)
                 else -> ""
-            }.uppercase(l)
+            }
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -287,7 +289,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
                 mTabLayoutMediator.detach()
             }
             mTabLayoutMediator = TabLayoutMediator(
-                slidingTabLayout, mActivityPager
+                slidingTabLayout,
+                mActivityPager
             ) { tab: TabLayout.Tab, position: Int -> tab.text = getTabTitle(position) }
             mTabLayoutMediator.attach()
         }

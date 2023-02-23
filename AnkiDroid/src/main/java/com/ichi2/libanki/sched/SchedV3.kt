@@ -65,7 +65,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
 
     override fun answerCard(card: Card, ease: Int) {
         val top = queuedCards.cardsList.first()
-        val answer = buildAnswer(card, top.nextStates, ease)
+        val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
         reps += 1
         // if this were checked in the UI, there'd be no need to store an activity here
@@ -76,7 +76,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
         card.load()
     }
 
-    fun buildAnswer(card: Card, states: NextCardStates, ease: Int): CardAnswer {
+    fun buildAnswer(card: Card, states: SchedulingStates, ease: Int): CardAnswer {
         return cardAnswer {
             cardId = card.id
             currentState = states.current
@@ -97,7 +97,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
         }
     }
 
-    private fun stateFromEase(states: NextCardStates, ease: Int): SchedulingState {
+    private fun stateFromEase(states: SchedulingStates, ease: Int): SchedulingState {
         return when (ease) {
             1 -> states.again
             2 -> states.hard
@@ -155,7 +155,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
 
     /** Only provided for legacy unit tests. */
     override fun nextIvl(card: Card, ease: Int): Long {
-        val states = col.backend.getNextCardStates(card.id)
+        val states = col.backend.getSchedulingStates(card.id)
         val state = stateFromEase(states, ease)
         return intervalForState(state)
     }

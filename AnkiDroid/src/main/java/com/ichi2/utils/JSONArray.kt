@@ -41,388 +41,136 @@
  */
 package com.ichi2.utils
 
-import com.ichi2.utils.JSON.toString
-import com.ichi2.utils.JSONObject.Companion.objectToObject
-import java.lang.reflect.Array
+import org.json.JSONArray
+import org.json.JSONObject
 
-@KotlinCleanup("IDE Lint")
-class JSONArray : org.json.JSONArray {
-    constructor() : super() {}
-    constructor(copyFrom: org.json.JSONArray) {
-        try {
-            for (i in 0 until copyFrom.length()) {
-                put(i, copyFrom[i])
+fun JSONArray.deepClone(): JSONArray {
+    val clone = JSONArray()
+    for (i in 0 until length()) {
+        clone.put(
+            when (get(i)) {
+                is JSONObject -> getJSONObject(i).deepClone()
+                is JSONArray -> getJSONArray(i).deepClone()
+                else -> get(i)
             }
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
+        )
+    }
+    return clone
+}
+
+fun JSONArray.jsonArrayIterable(): Iterable<JSONArray> {
+    return Iterable { jsonArrayIterator() }
+}
+
+fun JSONArray.jsonArrayIterator(): Iterator<JSONArray> {
+    return object : Iterator<JSONArray> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): JSONArray {
+            val array = getJSONArray(mIndex)
+            mIndex++
+            return array
         }
     }
+}
 
-    constructor(x: JSONTokener) : this() {
-        try {
-            if (x.nextClean() != '[') {
-                throw x.syntaxError("A JSONArray text must start with '['")
-            }
-            var nextChar = x.nextClean()
-            if (nextChar.code == 0) {
-                // array is unclosed. No ']' found, instead EOF
-                throw x.syntaxError("Expected a ',' or ']'")
-            }
-            if (nextChar != ']') {
-                x.back()
-                while (true) {
-                    if (x.nextClean() == ',') {
-                        x.back()
-                        put(JSONObject.NULL)
-                    } else {
-                        x.back()
-                        put(x.nextValue())
-                    }
-                    when (x.nextClean()) {
-                        '\u0000' -> throw x.syntaxError("Expected a ',' or ']'")
-                        ',' -> {
-                            nextChar = x.nextClean()
-                            if (nextChar.code == 0) {
-                                // array is unclosed. No ']' found, instead EOF
-                                throw x.syntaxError("Expected a ',' or ']'")
-                            }
-                            if (nextChar == ']') {
-                                return
-                            }
-                            x.back()
-                        }
-                        ']' -> return
-                        else -> throw x.syntaxError("Expected a ',' or ']'")
-                    }
-                }
-            }
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
+fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> {
+    return Iterable { jsonObjectIterator() }
+}
+
+@KotlinCleanup("see if jsonObject/string/longIterator() methods can be combined into one")
+fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> {
+    return object : Iterator<JSONObject> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): JSONObject {
+            val `object` = getJSONObject(mIndex)
+            mIndex++
+            return `object`
         }
     }
+}
 
-    constructor(source: String) : this(JSONTokener(source)) {}
-    @KotlinCleanup("simplify loop")
-    constructor(array: Any) : this() {
-        if (array.javaClass.isArray) {
-            val length = Array.getLength(array)
-            var i = 0
-            while (i < length) {
-                this.put(Array.get(array, i))
-                i += 1
-            }
-        } else {
-            throw JSONException(
-                "JSONArray initial value should be a string or collection or array."
-            )
+fun JSONArray.stringIterable(): Iterable<String> {
+    return Iterable { stringIterator() }
+}
+
+fun JSONArray.stringIterator(): Iterator<String> {
+    return object : Iterator<String> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): String {
+            val string = getString(mIndex)
+            mIndex++
+            return string
         }
     }
+}
 
-    constructor(copyFrom: Collection<*>) : this() {
-        for (o in copyFrom) {
-            put(o)
+fun JSONArray.longIterable(): Iterable<Long> {
+    return Iterable { longIterator() }
+}
+
+fun JSONArray.longIterator(): Iterator<Long> {
+    return object : Iterator<Long> {
+        private var mIndex = 0
+        override fun hasNext(): Boolean {
+            return mIndex < length()
+        }
+
+        override fun next(): Long {
+            val long_ = getLong(mIndex)
+            mIndex++
+            return long_
         }
     }
+}
 
-    @KotlinCleanup("https://github.com/ankidroid/Anki-Android/pull/12198#discussion_r956598435")
-    override fun put(value: Double): JSONArray {
-        return try {
-            super.put(value)
-            this
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toJSONObjectList(): List<JSONObject> {
+    val l: MutableList<JSONObject> = ArrayList(length())
+    for (`object` in jsonObjectIterable()) {
+        l.add(`object`)
     }
+    return l
+}
 
-    override fun put(index: Int, value: Boolean): JSONArray {
-        return try {
-            super.put(index, value)
-            this
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toLongList(): List<Long> {
+    val l: MutableList<Long> = ArrayList(length())
+    for (`object` in longIterable()) {
+        l.add(`object`)
     }
+    return l
+}
 
-    override fun put(index: Int, value: Double): JSONArray {
-        return try {
-            super.put(index, value)
-            this
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toStringList(): List<String> {
+    val l: MutableList<String> = ArrayList(length())
+    for (`object` in stringIterable()) {
+        l.add(`object`)
     }
+    return l
+}
 
-    override fun put(index: Int, value: Int): JSONArray {
-        return try {
-            super.put(index, value)
-            this
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
+/**
+ * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
+ * E.g. templates, fields are a JSONArray whose objects have name
+ */
+@KotlinCleanup("simplify fun with apply and forEach")
+fun JSONArray.toStringList(key: String?): List<String> {
+    val l: MutableList<String> = ArrayList(length())
+    for (`object` in jsonObjectIterable()) {
+        l.add(`object`.getString(key!!))
     }
-
-    override fun put(index: Int, value: Long): JSONArray {
-        return try {
-            super.put(index, value)
-            this
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun put(index: Int, value: Any): JSONArray {
-        return try {
-            super.put(index, value)
-            this
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun get(index: Int): Any {
-        return try {
-            super.get(index)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun getBoolean(index: Int): Boolean {
-        return try {
-            super.getBoolean(index)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun getDouble(index: Int): Double {
-        return try {
-            super.getDouble(index)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun getInt(index: Int): Int {
-        return try {
-            super.getInt(index)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun getLong(index: Int): Long {
-        return try {
-            super.getLong(index)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun getString(index: Int): String {
-        return try {
-            super.getString(index)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun getJSONArray(pos: Int): JSONArray {
-        return try {
-            arrayToArray(super.getJSONArray(pos))!!
-        } catch (e: org.json.JSONException) {
-            throw RuntimeException(e)
-        }
-    }
-
-    override fun getJSONObject(pos: Int): JSONObject {
-        return try {
-            objectToObject(super.getJSONObject(pos))
-        } catch (e: org.json.JSONException) {
-            throw RuntimeException(e)
-        }
-    }
-
-    override fun join(separator: String): String {
-        return try {
-            super.join(separator)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    override fun toString(indentSpace: Int): String {
-        return try {
-            super.toString(indentSpace)
-        } catch (e: org.json.JSONException) {
-            throw JSONException(e)
-        }
-    }
-
-    @KotlinCleanup("simplify with when")
-    fun deepClone(): JSONArray {
-        val clone = JSONArray()
-        for (i in 0 until length()) {
-            if (get(i) is JSONObject) {
-                clone.put(getJSONObject(i).deepClone())
-            } else if (get(i) is JSONArray) {
-                clone.put(getJSONArray(i).deepClone())
-            } else {
-                clone.put(get(i))
-            }
-        }
-        return clone
-    }
-
-    fun jsonArrayIterable(): Iterable<JSONArray> {
-        return Iterable { jsonArrayIterator() }
-    }
-
-    fun jsonArrayIterator(): Iterator<JSONArray> {
-        return object : Iterator<JSONArray> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): JSONArray {
-                val array = getJSONArray(mIndex)
-                mIndex++
-                return array
-            }
-        }
-    }
-
-    fun jsonObjectIterable(): Iterable<JSONObject> {
-        return Iterable { jsonObjectIterator() }
-    }
-
-    @KotlinCleanup("see if jsonObject/string/longIterator() methods can be combined into one")
-    fun jsonObjectIterator(): Iterator<JSONObject> {
-        return object : Iterator<JSONObject> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): JSONObject {
-                val `object` = getJSONObject(mIndex)
-                mIndex++
-                return `object`
-            }
-        }
-    }
-
-    fun stringIterable(): Iterable<String> {
-        return Iterable { stringIterator() }
-    }
-
-    fun stringIterator(): Iterator<String> {
-        return object : Iterator<String> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): String {
-                val string = getString(mIndex)
-                mIndex++
-                return string
-            }
-        }
-    }
-
-    fun longIterable(): Iterable<Long> {
-        return Iterable { longIterator() }
-    }
-
-    fun longIterator(): Iterator<Long> {
-        return object : Iterator<Long> {
-            private var mIndex = 0
-            override fun hasNext(): Boolean {
-                return mIndex < length()
-            }
-
-            override fun next(): Long {
-                val long_ = getLong(mIndex)
-                mIndex++
-                return long_
-            }
-        }
-    }
-
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toJSONObjectList(): List<JSONObject> {
-        val l: MutableList<JSONObject> = ArrayList(length())
-        for (`object` in jsonObjectIterable()) {
-            l.add(`object`)
-        }
-        return l
-    }
-
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toLongList(): List<Long> {
-        val l: MutableList<Long> = ArrayList(length())
-        for (`object` in longIterable()) {
-            l.add(`object`)
-        }
-        return l
-    }
-
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toStringList(): List<String> {
-        val l: MutableList<String> = ArrayList(length())
-        for (`object` in stringIterable()) {
-            l.add(`object`)
-        }
-        return l
-    }
-
-    /**
-     * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
-     * E.g. templates, fields are a JSONArray whose objects have name
-     */
-    @KotlinCleanup("simplify fun with apply and forEach")
-    fun toStringList(key: String?): List<String> {
-        val l: MutableList<String> = ArrayList(length())
-        for (`object` in jsonObjectIterable()) {
-            l.add(`object`.getString(key!!))
-        }
-        return l
-    }
-
-    /**
-     * Returns a new object whose values are the values in this array, and whose
-     * names are the values in `names`. Names and values are paired up by
-     * index from 0 through to the shorter array's length. Names that are not
-     * strings will be coerced to strings. This method returns null if either
-     * array is empty.
-     */
-    fun toJSONObject(names: JSONArray): JSONObject? {
-        // copied from upstream
-        val result = JSONObject()
-        val length = Math.min(names.length(), length())
-        if (length == 0) {
-            return null
-        }
-        for (i in 0 until length) {
-            val name = toString(names.opt(i))
-            result.put(name!!, opt(i))
-        }
-        return result
-    }
-
-    companion object {
-        /**
-         * This method simply change the type.
-         *
-         * See the comment of objectToObject to read about the problems met here.
-         *
-         * @param ar Actually a JSONArray
-         * @return the same element as input. But considered as a JSONArray. Returns null if provided with null
-         */
-        fun arrayToArray(ar: org.json.JSONArray?): JSONArray? {
-            return ar as? JSONArray
-        }
-    }
+    return l
 }

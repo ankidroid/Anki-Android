@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">eja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Matzos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigadore de cartas</string>
@@ -178,6 +177,8 @@
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="empty_cloze_warning">Modìfica custa nota e annanghe unos cantos iscantzellamentos de cloze. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronizatzione disabilitada in manera temporànea.</string>
+    <string name="button_upgrade" comment="Text of the sync button">Tràmuda a sa memòria cun punna</string>
     <string name="cancel_sync_confirm">Chetes annullare sa sincronizatzione?</string>
     <string name="continue_sync">Sighi a sincronizare</string>
     <string name="sync_cancelled">Sincronizatzione annullada</string>
@@ -242,4 +243,11 @@
         <item quantity="other">%1$d cartas (0 de revisionare)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s còpia</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

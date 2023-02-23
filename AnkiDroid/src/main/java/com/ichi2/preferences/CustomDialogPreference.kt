@@ -19,6 +19,7 @@ package com.ichi2.preferences
 import android.content.Context
 import android.content.DialogInterface
 import android.util.AttributeSet
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 
@@ -27,21 +28,21 @@ import com.ichi2.anki.R
 class CustomDialogPreference(private val context_: Context, attrs: AttributeSet?) : android.preference.DialogPreference(context_, attrs), DialogInterface.OnClickListener {
     override fun onClick(dialog: DialogInterface, which: Int) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            if (this.title == context_.resources.getString(R.string.deck_conf_reset)) {
-                // Deck Options :: Restore Defaults for Options Group
-                val editor = AnkiDroidApp.getSharedPrefs(context_).edit()
-                editor.putBoolean("confReset", true)
-                editor.commit()
-            } else if (this.title == context_.resources.getString(R.string.dialog_positive_remove)) {
-                // Deck Options :: Remove Options Group
-                val editor = AnkiDroidApp.getSharedPrefs(context_).edit()
-                editor.putBoolean("confRemove", true)
-                editor.commit()
-            } else if (this.title == context_.resources.getString(R.string.deck_conf_set_subdecks)) {
-                // Deck Options :: Set Options Group for all Sub-decks
-                val editor = AnkiDroidApp.getSharedPrefs(context_).edit()
-                editor.putBoolean("confSetSubdecks", true)
-                editor.commit()
+            AnkiDroidApp.getSharedPrefs(context_).edit(commit = true) {
+                when (title) {
+                    context_.resources.getString(R.string.deck_conf_reset) -> {
+                        // Deck Options :: Restore Defaults for Options Group
+                        putBoolean("confReset", true)
+                    }
+                    context_.resources.getString(R.string.dialog_positive_remove) -> {
+                        // Deck Options :: Remove Options Group
+                        putBoolean("confRemove", true)
+                    }
+                    context_.resources.getString(R.string.deck_conf_set_subdecks) -> {
+                        // Deck Options :: Set Options Group for all Sub-decks
+                        putBoolean("confSetSubdecks", true)
+                    }
+                }
             }
         }
     }

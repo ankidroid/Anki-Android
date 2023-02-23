@@ -114,10 +114,7 @@ object HttpFetcher {
             Timber.d(e, "Failed with an exception")
             "FAILED with exception: " + e.message
         } finally {
-            @KotlinCleanup("response?.body?.close()")
-            if (response?.body != null) {
-                response.body!!.close()
-            }
+            response?.body?.close()
         }
     }
 
@@ -153,10 +150,7 @@ object HttpFetcher {
             Timber.w(e)
             "FAILED " + e.message
         } finally {
-            @KotlinCleanup("response?.body?.close()")
-            if (response?.body != null) {
-                response.body!!.close()
-            }
+            response?.body?.close()
         }
     }
 }

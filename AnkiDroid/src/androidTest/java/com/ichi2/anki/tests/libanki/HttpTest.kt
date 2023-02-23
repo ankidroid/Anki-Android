@@ -20,7 +20,8 @@ package com.ichi2.anki.tests.libanki
 import android.Manifest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
+import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.async.Connection
 import com.ichi2.libanki.sync.HostNum
 import com.ichi2.utils.NetworkUtils
@@ -33,8 +34,8 @@ import org.junit.runner.RunWith
 class HttpTest {
 
     @get:Rule
-    var runtimeStoragePermissionRule = GrantPermissionRule.grant(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    var runtimeStoragePermissionRule = grantPermissions(
+        storagePermission,
         Manifest.permission.INTERNET,
         Manifest.permission.ACCESS_NETWORK_STATE
     )
@@ -43,7 +44,6 @@ class HttpTest {
     @Suppress("DEPRECATION")
     @Test
     fun testLogin() {
-
         val username = "AnkiDroidInstrumentedTestUser"
         val password = "AnkiDroidInstrumentedTestInvalidPass"
         val invalidPayload = Connection.Payload(arrayOf(username, password, HostNum(null)))

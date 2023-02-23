@@ -163,15 +163,14 @@
     <string name="empty_card_warning">Эта карточка пуста. Используйте опцию «Пустые карточки» из меню списка колод.</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
     <string name="delete_deck">Колода удаляется&#8230;</string>
-    <string name="show_hint">Показать %s</string>
     <string name="info_rate">Оценить AnkiDroid</string>
     <string name="import_title">Импорт</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">Добавить «%s» в коллекцию? Это может занять много времени</item>
-        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="few">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
+        <item quantity="many">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
         <item quantity="other">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
     </plurals>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
@@ -197,13 +196,24 @@
     <string name="export_include_media">Вместе с медиафайлами</string>
     <string name="confirm_apkg_export">Экспортировать коллекцию в пакет Anki?</string>
     <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Экспортировать выбранную карточку в apkg файл?</item>
+        <item quantity="few">Экспортировать %d выбранные карточки в apkg файл?</item>
+        <item quantity="many">Экспортировать %d выбранных карточек в apkg файл?</item>
+        <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
+        <item quantity="few">Экспортировать %d выбранных записей как apkg файл?</item>
+        <item quantity="many">Экспортировать %d выбранных записей как apkg файл?</item>
+        <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
+    </plurals>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
-    <string name="export_successful_title">Отправить Anki-пакет?</string>
-    <string name="export_send_button">Отправить</string>
+    <string name="export_success_title">Коллекция успешно экспортирована</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
-    <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
+    <string name="export_success_message">Вы можете выбрать папку для сохранения или поделиться через другое приложение.</string>
     <string name="export_share_title">Отправить пакет Anki с помощью</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[        Привет!
@@ -213,7 +223,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
+    <string name="export_select_save_app">Выберите место сохранения</string>
+    <string name="export_select_share_app">Выберите, как поделиться</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
@@ -399,6 +410,15 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
+    <string name="sync_impossible_during_migration">Синхронизация отключена до завершения переноса.\n
+        Осталось пернести %1$d медиафайлов.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Если вы переустановите AnkiDroid, он не сможет открыть вашу коллекцию.</string>
+    <string name="migration_update_request_dialog_download_warning">Если вы удалите AnkiDroid, вам придется заново загрузить всю коллекцию.</string>
+    <string name="migration_update_request">Политика доступа к хранилищу Android требует, чтобы мы изменили место хранения вашей коллекции. Когда ваши данные будут перенесены, AnkiDroid будет работать быстрее, а ваши данные будут в большей безопасности.
+    Вы не сможете синхронизироваться во время переноса хранилища.</string>
+    <string name="start_migration_progress_message">Начало перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
+\nПеренос хранилища будет продолжаться в фоновом режиме.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не является допустимым пакетом дополнения JavaScript</string>
     <string name="could_not_create_dir">Не удалось создать каталог «%s»</string>
@@ -420,6 +440,8 @@
     <string name="validation_deck_already_exists">Колода существует</string>
     <string name="deck_created">Колода создана</string>
     <string name="deck_renamed">Колода переименована</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Колода удалена — удалите ссылку</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>

@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">అధునాతన ఎడిటర్</string>
     <string name="multimedia_editor_popup_cloze">క్లోజ్ తొలగింపు</string>
     <string name="multimedia_editor_popup_clear_field">Clear field</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">అనువాదం</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">లోడ్</string>
     <string name="multimedia_editor_pron_looking_up">ఉచ్చారణ గురించి</string>

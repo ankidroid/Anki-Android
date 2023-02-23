@@ -14,11 +14,14 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.servicelayer.scopedstorage
+package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.DeleteEmptyDirectory
+import com.ichi2.anki.servicelayer.scopedstorage.MoveDirectoryContent
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
@@ -31,21 +34,8 @@ import java.io.File
  *
  */
 
-data class MoveDirectory(val source: Directory, val destination: File) : MigrateUserData.Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
-
-        // This seems unlikely to happen. Both paths need to be on the same mount point
-        // We use directory.exists() to ensure that this operation doesn't occur twice. renameTo
-        // is likely to be expensive, so we use the creation of the target directory to mark
-        // that the rename previously failed
-        if (context.attemptRename && !destination.exists() && rename(source, destination)) {
-            Timber.d("successfully renamed '$source' to '$destination'")
-            return operationCompleted()
-        } else {
-            // mark in the context that rename should not be attempted again for any sub-operations
-            context.attemptRename = false
-        }
-
+data class MoveDirectory(val source: Directory, val destination: File) : Operation() {
+    override fun execute(context: MigrationContext): List<Operation> {
         if (!createDirectory(context)) {
             return operationCompleted()
         }
@@ -60,7 +50,7 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
      * Create an empty directory at destination.
      * Return whether it was successful.
      */
-    internal fun createDirectory(context: MigrateUserData.MigrationContext): Boolean {
+    internal fun createDirectory(context: MigrationContext): Boolean {
         Timber.d("creating directory '$destination'")
         createDirectory(destination)
 

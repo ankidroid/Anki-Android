@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">बैकअप सहेजा नहीं गया। SD कार्ड पर पर्याप्त जगह नहीं बची। बैकअप गहराई कम करें या कुछ अन्य फ़ाइलों को हटा दें।</string>
-    <string name="sd_space_warning">SD कार्ड में %d MB से कम जगह है। \nडेटा हानि से बचने के लिए जगह खाली करें।</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">बैकअप से पुनर्स्थापित करें</string>
     <string name="backup_new_collection">नया संग्रह</string>
     <string name="backup_del_collection">संग्रह हटाएँ और नया संग्रह बनाएँ</string>

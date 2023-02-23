@@ -65,10 +65,10 @@
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
     <string name="show_whiteboard">ホワイトボードを表示する</string>
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
-    <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
+    <string name="clear_whiteboard">ホワイトボードの内容を消去</string>
     <string name="replay_audio">音声・動画を再生</string>
-    <string name="leech_suspend_notification">このカードは \"leech\" （無駄） というタグが付けられ、保留されました</string>
-    <string name="leech_notification">このカードに \"leech\" （無駄） というタグを付けました</string>
+    <string name="leech_suspend_notification">このカードは \"leech\" （無駄、習得困難） というタグが付けられ、保留されました</string>
+    <string name="leech_notification">このカードに \"leech\" （無駄、習得困難） というタグを付けました</string>
     <string name="corrupt_font">使用できないフォントファイル %s</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
     <string name="webview_crash_unknwon_detailed">これはWebViewの内部エラーによって引き起こされました。</string>
@@ -154,7 +154,6 @@
     <string name="empty_card_warning">このカードは白紙カード（表側に表示する内容がないカード）です。このような白紙カードを一括削除するには、デッキリスト画面のメニューから「白紙カードをチェック」を選択してください。</string>
     <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
     <string name="delete_deck">デッキを削除しています...</string>
-    <string name="show_hint">%s を表示</string>
     <string name="info_rate">このアプリを評価</string>
     <string name="import_title">インポート</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
@@ -167,7 +166,7 @@
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">パッケージをインポートするために十分な空き容量がありません。\n必要な容量 - %1$s \n空き容量 - %2$s.\n\nお困りですか？　可能であれば、端末の空き容量を確保してみてください。あるいは、容量に余裕のある端末（Anki Desktopをインストール済みのPCなど）でパッケージをインポートし、そのデータをAnkiWeb経由でこの端末に同期してみるという方法で解決できる可能性もあります。</string>
     <string name="import_log_file_cache_cleared">ファイルのインポート中にエラーが発生しました。キャッシュ処理の問題など。\nもう一度やり直してください</string>
     <string name="import_succeeded_but_check_database">データのインポートに成功しましたが、インポート後のクリーンアップに失敗しました。データベースを確認してください。原因: %s</string>
     <string name="import_error_corrupt_zip">apkgファイルが壊れています。削除して再ダウンロードしてください。\n\n原因ファイル: %s</string>
@@ -176,7 +175,7 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">複数の colpkg ファイルが選択されました。</string>
     <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
     <string name="import_stats_error">下記のファイルをインポートする際にエラーが発生しました:\n%s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
@@ -185,14 +184,19 @@
     <string name="export_include_media">メディアファイルを含める</string>
     <string name="confirm_apkg_export">コレクション（全デッキ）のデータの控え（Ankiパッケージ）を作成しますか？</string>
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="other">選択した%d枚のカードをapkgファイルとしてエクスポートしますか？</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="other">選択した%d枚のノートを apkgファイルとしてエクスポートしますか？</item>
+    </plurals>
     <string name="export_in_progress">Ankiパッケージを作成しています...</string>
-    <string name="export_successful_title">Ankiパッケージを送信しますか？</string>
-    <string name="export_send_button">送信</string>
+    <string name="export_success_title">コレクションのエクスポートに成功しました</string>
     <string name="export_send_no_handlers">apkgファイルに対応した他のアプリがありません。保存します...</string>
     <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
-    <string name="export_successful">Ankiパッケージファイル “%s” を作成しました。他のアプリに送信しますか？　それともこの端末や自分のGoogleドライブに保存しますか？</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_success_message">ファイルを保存する場所を選択するか、ファイルを別のアプリと共有することができます。</string>
+    <string name="export_share_title">Anki パッケージを送信:</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[        こんにちは！
         <br/><br/>
@@ -201,7 +205,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
+    <string name="export_select_save_app">ファイルを保存する場所を選択</string>
+    <string name="export_select_share_app">共有先のアプリを選択</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
     <string name="menu__deck_options">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
@@ -209,12 +214,12 @@
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>
     <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残りのカードも全て元のデッキに戻ります。</string>
-    <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
+    <string name="steps_error">習得ステップには1以上の数字を入力してください</string>
     <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
     <string name="sched_end">（終了）</string>
     <string name="sched_unbury_action">今それらを見る場合は、メニューの「延期解除」をタップしてください</string>
     <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
-    <string name="tag_editor_add_feedback">このまま「%2$s」ボタンをタップすると、タグ「%1$s」の追加が確定します</string>
+    <string name="tag_editor_add_feedback">「%1$s」の追加を確定するには「%2$s」をタップしてください</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
@@ -251,7 +256,7 @@
         <item quantity="other">課題: %2$d枚 （%1$s）</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
+    <string name="apk_share_error">Anki用ファイル（*.apkg）の共有中にエラーが発生しました</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
@@ -262,7 +267,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">デッキ一覧画面の背景</string>
+    <string name="background_image_title">デッキリスト画面の背景</string>
     <string name="choose_an_image">画像を選択</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">デフォルトに戻す</string>
@@ -351,10 +356,10 @@
     <string name="suspended_card">カードを保留しました</string>
     <string name="suspended_note">ノートを保留しました</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">フィールド「%s」の内容を固定する</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">ストレージ移行</string>
-    <string name="scoped_storage_initial_message">Androidがプライバシーに関する新しい方針を導入したことに伴い、AnkiDroidのデータの保存場所を変更する必要があります。\n\nこのデータ移行を済ませる前にAnkiDroidをアンインストールした場合、AnkiDroidであなたが使用していたデッキやメディアファイルなどのデータも削除されます。\n\nこのデータ移行を、できるだけ早く行うことを強くお勧めします</string>
+    <string name="scoped_storage_initial_message">Androidがプライバシーに関する新しい方針を導入したことに伴い、AnkiDroidのデータの保存先（ストレージ）を変更する必要があります。\n\nこのストレージ移行を済ませる前にAnkiDroidをアンインストールした場合、AnkiDroidであなたが使用していたデッキやメディアファイルなどのデータも削除されます。\n\nできるだけ早期にストレージ移行を行うことを強く推奨します</string>
     <string name="scoped_storage_terms_message">移行をバックグラウンドで行います。移行中は、同期は行えません\n\n移行終了までの時間（推定）: %s</string>
     <string name="scoped_storage_term_1">データのバックアップを取りました</string>
     <string name="scoped_storage_term_1_ankiweb">最近AnkiWebとの同期を行いました</string>
@@ -364,32 +369,42 @@
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
+    <string name="sync_impossible_during_migration">移行が完了するまで同期機能は使用できません。\n
+        %1$d個のメディアファイルが移行待機中です。</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">AnkiDroidを再インストールすると、コレクションを開くことができなくなります。</string>
+    <string name="migration_update_request_dialog_download_warning">AnkiDroidをアンインストールする場合は、コレクションをもう一度ダウンロードする必要があります。</string>
+    <string name="migration_update_request">Androidのストレージアクセスポリシーの改定に伴い、AnkiDroidのコレクションの保存先（ストレージ）を変更する必要があります。ストレージを移行すると、AnkiDroidはより高速かつ安全にデータを処理できるようになります。\nなお、移行処理中は同期の機能が使えなくなります。</string>
+    <string name="start_migration_progress_message">ストレージの移行を開始します。AnkiDroidの使用はまもなく再開できます。</string>
+    <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。
+\nストレージの移行はバックグラウンドで続行されます。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
+    <string name="malicious_archive_entry_outside">不正なアーカイブです。ターゲットディレクトリ(%s)外のエントリが含まれています。</string>
     <string name="malicious_archive_exceeds_limit">不正なアーカイブです。サイズが%1$sを超えるか、 ファイル数が%2$d個を超えています</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">保存するファイルのサイズがストレージの空き容量を超えています</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">タグ \'%s \' を展開</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">コレクションにアクセスできませんでした。もう一度試してみてください</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">より少ない時間で</string>
-    <string name="intro_ankidroid_tagline_two">より多く学びましょう</string>
+    <string name="intro_ankidroid_tagline_two">より多く学ぼう</string>
     <string name="intro_short_ankidroid_explanation">Ankiのカードは、微弱な記憶を強化し、強化した記憶を保持するのに適したスケジュールで表示されるので、効率的な学習が可能になります</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">開始する</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
     <string name="already_logged_in">既にログイン済みです</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">同じ名前のデッキが既に存在します</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_created">デッキを作成しました</string>
+    <string name="deck_renamed">デッキ名を変更しました</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">このデッキは削除されています。ショートカットを削除してください。</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">カード</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ノート</string>
     <string name="toggle_cards_notes">カード/ノート の切り替え</string>
     <string name="toggle_browser_mode_help">ブラウザで、カードとノート、どちらのリストを表示するかを切り替えます</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">リスト画面において、カードまたはノートの内容の表示を１件につき３行までに制限します</string>
     <string name="browser_options_dialog_heading">ブラウザ オプション</string>
 </resources>

@@ -18,13 +18,13 @@ package com.ichi2.themes
 import androidx.annotation.StyleRes
 import com.ichi2.anki.R
 
-enum class Theme(val id: String, @StyleRes val resId: Int, @StyleRes val legacyResId: Int, val isNightMode: Boolean) {
+enum class Theme(val id: String, @StyleRes val resId: Int, val isNightMode: Boolean) {
     // IDs must correspond to the ones at @array/app_theme_values on res/values/constants.xml
     // Follow system is "0", so it starts at "1"
-    LIGHT("1", R.style.Theme_Light_Compat, R.style.LegacyActionBarLight, false),
-    PLAIN("2", R.style.Theme_Plain_Compat, R.style.LegacyActionBarPlain, false),
-    BLACK("3", R.style.Theme_Black_Compat, R.style.LegacyActionBarBlack, true),
-    DARK("4", R.style.Theme_Dark_Compat, R.style.LegacyActionBarDark, true);
+    LIGHT("1", R.style.Theme_Light_Compat, false),
+    PLAIN("2", R.style.Theme_Plain_Compat, false),
+    BLACK("3", R.style.Theme_Black_Compat, true),
+    DARK("4", R.style.Theme_Dark_Compat, true);
 
     companion object {
         val fallback: Theme

@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">バックアップが保存できませんでした。SDカードに十分な空き容量がありません。バックアップの範囲を減らすか、空き容量を増やしてください。</string>
-    <string name="sd_space_warning">SDカードの空き領域が %dMBを下回っています。\nデータの損失を避けるために空き領域を増やしてください。</string>
+    <string name="backup_deck_no_storage_left">バックアップが保存できませんでした。内部ストレージに十分な空き容量がありません。バックアップの範囲を減らすか、空き容量を増やしてください。</string>
+    <string name="storage_warning">内部ストレージの空き領域が %dMBを下回っています。\nデータの損失を避けるために空き領域を増やしてください。</string>
     <string name="backup_restore">バックアップから復元</string>
     <string name="backup_new_collection">新しいコレクション</string>
     <string name="backup_del_collection">コレクションの削除と新規作成</string>

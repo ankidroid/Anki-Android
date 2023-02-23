@@ -18,10 +18,8 @@
 package com.ichi2.preferences
 
 import android.content.Context
-import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
@@ -33,7 +31,6 @@ import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-@NeedsTest("removing JvmOverloads should fail")
 open class NumberRangePreferenceCompat
 @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
 constructor(
@@ -41,7 +38,7 @@ constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.editTextPreferenceStyle,
     defStyleRes: Int = R.style.Preference_DialogPreference_EditTextPreference
-) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes) {
+) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
 
     var defaultValue: String? = null
 
@@ -105,7 +102,7 @@ constructor(
      * @return The input value within acceptable range.
      */
     private fun getValidatedRangeFromString(input: String): Int {
-        return if (TextUtils.isEmpty(input)) {
+        return if (input.isEmpty()) {
             min
         } else {
             try {
@@ -189,15 +186,15 @@ constructor(
                 numberRangePreference.setValue(newValue)
             }
         }
-
-        companion object {
-            fun newInstance(key: String?): NumberRangeDialogFragmentCompat {
-                val fragment = NumberRangeDialogFragmentCompat()
-                val b = Bundle(1)
-                b.putString(ARG_KEY, key)
-                fragment.arguments = b
-                return fragment
-            }
-        }
     }
+
+    enum class ShouldShowDialog { Yes, No }
+
+    var onClickListener: () -> ShouldShowDialog = { ShouldShowDialog.Yes }
+
+    override fun onClick() {
+        if (onClickListener() == ShouldShowDialog.Yes) { super.onClick() }
+    }
+
+    override fun makeDialogFragment() = NumberRangeDialogFragmentCompat()
 }

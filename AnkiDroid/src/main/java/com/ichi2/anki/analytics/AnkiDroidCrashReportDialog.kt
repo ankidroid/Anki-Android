@@ -23,15 +23,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import org.acra.config.ACRAConfigurationException
-import org.acra.config.DialogConfiguration
-import org.acra.config.DialogConfigurationBuilder
 import org.acra.dialog.CrashReportDialog
 import org.acra.dialog.CrashReportDialogHelper
-import timber.log.Timber
 
 /**
  * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
@@ -42,19 +39,14 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     private var mAlwaysReportCheckBox: CheckBox? = null
     private var mUserComment: EditText? = null
     private var mHelper: CrashReportDialogHelper? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
-        try {
-            val builder = CrashReportService.getAcraCoreConfigBuilder()
-            val dialogConfig = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java).build() as DialogConfiguration
-            dialogBuilder.setIcon(dialogConfig.resIcon())
-            dialogBuilder.setTitle(dialogConfig.title())
-            dialogBuilder.setPositiveButton(dialogConfig.positiveButtonText(), this@AnkiDroidCrashReportDialog)
-            dialogBuilder.setNegativeButton(dialogConfig.negativeButtonText(), this@AnkiDroidCrashReportDialog)
-        } catch (ace: ACRAConfigurationException) {
-            Timber.e(ace, "Unable to initialize ACRA while creating ACRA dialog?")
-        }
+        dialogBuilder.setIcon(R.drawable.logo_star_144dp)
+        dialogBuilder.setTitle(R.string.feedback_title)
+        dialogBuilder.setPositiveButton(getString(R.string.feedback_report), this@AnkiDroidCrashReportDialog)
+        dialogBuilder.setNegativeButton(R.string.dialog_cancel, this@AnkiDroidCrashReportDialog)
         mHelper = CrashReportDialogHelper(this, intent)
         dialogBuilder.setView(buildCustomView(savedInstanceState))
         val dialog = dialogBuilder.create()
@@ -69,7 +61,9 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     override fun buildCustomView(savedInstanceState: Bundle?): View {
         val preferences = AnkiDroidApp.getSharedPrefs(this)
         val inflater = layoutInflater
-        @SuppressLint("InflateParams") val rootView = // when you inflate into an alert dialog, you have no parent view
+
+        @SuppressLint("InflateParams")
+        val rootView = // when you inflate into an alert dialog, you have no parent view
             inflater.inflate(R.layout.feedback, null)
         mAlwaysReportCheckBox = rootView.findViewById(R.id.alwaysReportCheckbox)
         mAlwaysReportCheckBox?.isChecked = preferences.getBoolean("autoreportCheckboxValue", true)
@@ -89,10 +83,10 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
             // Next time don't tick the auto-report checkbox by default
             val autoReport = mAlwaysReportCheckBox!!.isChecked
             val preferences = AnkiDroidApp.getSharedPrefs(this)
-            preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).apply()
+            preferences.edit { putBoolean("autoreportCheckboxValue", autoReport) }
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit().putString(CrashReportService.FEEDBACK_REPORT_KEY, CrashReportService.FEEDBACK_REPORT_ALWAYS).apply()
+                preferences.edit { putString(CrashReportService.FEEDBACK_REPORT_KEY, CrashReportService.FEEDBACK_REPORT_ALWAYS) }
                 CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)
             }
             // Send the crash report

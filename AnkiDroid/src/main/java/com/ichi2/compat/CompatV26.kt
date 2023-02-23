@@ -17,18 +17,16 @@
 package com.ichi2.compat
 
 import android.annotation.TargetApi
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
 import androidx.annotation.VisibleForTesting
-import androidx.core.app.NotificationCompat
+import com.ichi2.anki.NotificationChannels
 import com.ichi2.utils.KotlinCleanup
-import timber.log.Timber
 import java.io.*
 import java.nio.file.*
 
@@ -38,21 +36,12 @@ open class CompatV26 : CompatV23(), Compat {
     /**
      * In Oreo and higher, you must create a channel for all notifications.
      * This will create the channel if it doesn't exist, or if it exists it will update the name.
-     *
-     * Note that once a channel is created, only the name may be changed as long as the application
-     * is installed on the user device. All other settings are fully under user control.
-     *
-     * @param context the Context with a handle to the NotificationManager
-     * @param id the unique (within the package) id the channel for programmatic access
-     * @param name the user-visible name for the channel
      */
-    override fun setupNotificationChannel(context: Context, id: String, name: String) {
-        Timber.i("Creating notification channel with id/name: %s/%s", id, name)
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notificationChannel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT)
-        notificationChannel.setShowBadge(true)
-        notificationChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
-        manager.createNotificationChannel(notificationChannel)
+    override fun setupNotificationChannel(context: Context) {
+        NotificationChannels.setup(context)
+    }
+
+    override fun setTooltipTextByContentDescription(view: View) { /* Nothing to do API26+ */
     }
 
     @Suppress("DEPRECATION")
@@ -128,29 +117,23 @@ open class CompatV26 : CompatV23(), Compat {
      * Hence this method, hasNext and next should be constant in time and space.
      */
     @Throws(IOException::class)
-    @KotlinCleanup("fix IDE lint issues")
     override fun contentOfDirectory(directory: File): FileStream {
-        val paths_stream: DirectoryStream<Path>
-        paths_stream = try {
+        val pathsStream: DirectoryStream<Path> = try {
             newDirectoryStream(directory.toPath())
-        } catch (e: IOException) {
-            if (e is NoSuchFileException) {
-                val nsfe = e
-                throw FileNotFoundException(
-                    """
-                    ${nsfe.file}
-                    ${nsfe.cause}
-                    ${nsfe.stackTrace}
-                    """.trimIndent()
-                )
-            }
-            throw e
+        } catch (noSuchFileException: NoSuchFileException) {
+            throw FileNotFoundException(
+                """
+                    ${noSuchFileException.file}
+                    ${noSuchFileException.cause}
+                    ${noSuchFileException.stackTrace}
+                """.trimIndent()
+            )
         }
-        val paths: Iterator<Path> = paths_stream.iterator()
+        val paths: Iterator<Path> = pathsStream.iterator()
         return object : FileStream {
             @Throws(IOException::class)
             override fun close() {
-                paths_stream.close()
+                pathsStream.close()
             }
 
             @Throws(IOException::class)

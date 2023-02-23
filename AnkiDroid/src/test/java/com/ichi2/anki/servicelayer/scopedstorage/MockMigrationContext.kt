@@ -16,16 +16,22 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-open class MockMigrationContext : MigrateUserData.MigrationContext() {
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
+
+open class MockMigrationContext : MigrationContext() {
     /** set [logExceptions] to populate this property */
     val errors = mutableListOf<ReportedError>()
     val exceptions get() = errors.map { it.exception }
     var logExceptions: Boolean = false
     val progress = mutableListOf<NumberOfBytes>()
-    /** A list of tasks which were passed into [execSafe] */
-    val executed = mutableListOf<MigrateUserData.Operation>()
 
-    override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
+    /** A list of tasks which were passed into [execSafe] */
+    val executed = mutableListOf<Operation>()
+
+    override fun reportError(throwingOperation: Operation, ex: Exception) {
         if (!logExceptions) {
             throw ex
         }
@@ -36,11 +42,11 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
         progress.add(transferred)
     }
 
-    data class ReportedError(val operation: MigrateUserData.Operation, val exception: Exception)
+    data class ReportedError(val operation: Operation, val exception: Exception)
 
     override fun execSafe(
-        operation: MigrateUserData.Operation,
-        op: (MigrateUserData.Operation) -> Unit
+        operation: Operation,
+        op: (Operation) -> Unit
     ) {
         this.executed.add(operation)
         super.execSafe(operation, op)
@@ -48,15 +54,15 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
 }
 
 /**
- * A [MockMigrationContext] which will call [MigrateUserData.Operation.retryOperations] once on
+ * A [MockMigrationContext] which will call [Operation.retryOperations] once on
  * a failed operation, if any `retryOperations` are available.
  *
  * If a second failure occurs, or if no `retryOperations` are available, it will throw
  */
-class RetryMigrationContext(val retry: (List<MigrateUserData.Operation>) -> Unit) : MockMigrationContext() {
+class RetryMigrationContext(val retry: (List<Operation>) -> Unit) : MockMigrationContext() {
     var retryCount = 0
 
-    override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
+    override fun reportError(throwingOperation: Operation, ex: Exception) {
         val opsForRetry = throwingOperation.retryOperations
         if (!opsForRetry.any()) {
             throw ex

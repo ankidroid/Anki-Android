@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">Nové karty před opakováním</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Když není určeno žádné písmo pro kartičky</string>
-    <string name="override_font_always">Vždy</string>
+    <string name="override_font_always" comment="Option to always override font">Vždy</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Systémový</string>
     <!-- day_theme_labels -->

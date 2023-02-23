@@ -38,6 +38,7 @@ class LayoutValidationTest : InstrumentedTest() {
     @JvmField // required for Parameter
     @Parameterized.Parameter(1)
     var name: String? = null
+
     @Test
     @Throws(Exception::class)
     fun ensureLayout() {
@@ -84,7 +85,7 @@ class LayoutValidationTest : InstrumentedTest() {
             InstantiationException::class
         )
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
+        fun initParameters(): Collection<Array<out Any>> {
             val ctor: Constructor<*> = com.ichi2.anki.R.layout::class.java.declaredConstructors[0]
             ctor.isAccessible = true // Required for at least API 16, maybe later.
             val layout = ctor.newInstance()
@@ -94,14 +95,17 @@ class LayoutValidationTest : InstrumentedTest() {
             nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout::class.java))
             nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout::class.java))
             nonAnkiFieldNames.addAll(getFieldNames(androidx.preference.R.layout::class.java)) // preference_category_material
-            val layouts: MutableList<Array<Any>> = ArrayList()
-            for (f in layout::class.java.fields) {
-                if (nonAnkiFieldNames.contains(f.name)) {
-                    continue
-                }
-                layouts.add(arrayOf(f.getInt(layout), f.name))
-            }
-            return layouts
+
+            // Names of layouts that should be ignored by the layout inflation test.
+            // Currently, ignores layouts that use `FragmentContainerView`
+            // with a specified fragment name, as these would currently fail the test, throwing:
+            //   UnsupportedOperationException: FragmentContainerView must be within
+            //   a FragmentActivity to use android:name="..."
+            val ignoredLayoutIds = listOf(com.ichi2.anki.R.layout.activity_manage_space)
+
+            return layout::class.java.fields
+                .map { arrayOf(it.getInt(layout), it.name) }
+                .filterNot { (id, name) -> name in nonAnkiFieldNames || id in ignoredLayoutIds }
         }
 
         private fun <T> getFieldNames(clazz: Class<T>): HashSet<String> {

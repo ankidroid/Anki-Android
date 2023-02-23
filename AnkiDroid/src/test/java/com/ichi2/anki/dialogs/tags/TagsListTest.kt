@@ -27,6 +27,7 @@ import java.util.*
 class TagsListTest {
     lateinit var tagsList: TagsList
     lateinit var tagsListWithIndeterminate: TagsList
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
@@ -45,11 +46,13 @@ class TagsListTest {
 
         assertEquals(
             "All tags list should not contain any duplicates",
-            listOf("a", "b"), list.copyOfAllTagList()
+            listOf("a", "b"),
+            list.copyOfAllTagList()
         )
         assertEquals(
             "Checked tags list should not contain any duplicates",
-            listOf("b"), list.copyOfCheckedTagList()
+            listOf("b"),
+            list.copyOfCheckedTagList()
         )
     }
 
@@ -66,15 +69,18 @@ class TagsListTest {
 
         assertEquals(
             "All tags list should not contain any duplicates",
-            listOf("a", "b", "c", "d"), list.copyOfAllTagList()
+            listOf("a", "b", "c", "d"),
+            list.copyOfAllTagList()
         )
         assertEquals(
             "Checked tags list should not contain any duplicates",
-            listOf("b"), list.copyOfCheckedTagList()
+            listOf("b"),
+            list.copyOfCheckedTagList()
         )
         assertEquals(
             "indeterminate tags list should be empty",
-            listOf<Any>(), list.copyOfIndeterminateTagList()
+            listOf<Any>(),
+            list.copyOfIndeterminateTagList()
         )
     }
 
@@ -89,11 +95,13 @@ class TagsListTest {
 
         assertEquals(
             "All tags list should not contain any duplicates (case insensitive)",
-            listOf("aA", "bb"), list.copyOfAllTagList()
+            listOf("aA", "bb"),
+            list.copyOfAllTagList()
         )
         assertEquals(
             "Checked tags list should not contain any duplicates  (case insensitive)",
-            listOf("bb"), list.copyOfCheckedTagList()
+            listOf("bb"),
+            list.copyOfCheckedTagList()
         )
     }
 
@@ -110,16 +118,19 @@ class TagsListTest {
 
         assertEquals(
             "All tags list should not contain any duplicates (case insensitive)",
-            listOf("aA", "bb", "cc", "dd", "ff"), list.copyOfAllTagList()
+            listOf("aA", "bb", "cc", "dd", "ff"),
+            list.copyOfAllTagList()
         )
         assertEquals(
             "Checked tags list should not contain any duplicates  (case insensitive)",
-            listOf("ff"), list.copyOfCheckedTagList()
+            listOf("ff"),
+            list.copyOfCheckedTagList()
         )
         assertEquals(
             "Checked tags list should not contain any duplicates  (case insensitive)\n" +
                 "and IndeterminateTagList is correct".trimIndent(),
-            listOf("bb", "dd"), list.copyOfIndeterminateTagList()
+            listOf("bb", "dd"),
+            list.copyOfIndeterminateTagList()
         )
     }
 
@@ -134,11 +145,13 @@ class TagsListTest {
 
         assertEquals(
             "Extra tags in checked not found in all tags, must be added to all tags list",
-            listOf("aA", "bb", "cc"), list.copyOfAllTagList()
+            listOf("aA", "bb", "cc"),
+            list.copyOfAllTagList()
         )
         assertEquals(
             "Extra tags in checked not found in all tags, must be found when retrieving checked tag list",
-            listOf("bb", "cc"), list.copyOfCheckedTagList()
+            listOf("bb", "cc"),
+            list.copyOfCheckedTagList()
         )
     }
 
@@ -155,11 +168,13 @@ class TagsListTest {
 
         assertEquals(
             "Extra tags in checked not found in all tags, must be added to all tags list",
-            listOf("aA", "bb", "Cc", "zz", "dD"), list.copyOfAllTagList()
+            listOf("aA", "bb", "Cc", "zz", "dD"),
+            list.copyOfAllTagList()
         )
         assertEquals(
             "Extra tags in checked not found in all tags, must be found when retrieving checked tag list",
-            listOf("zz"), list.copyOfCheckedTagList()
+            listOf("zz"),
+            list.copyOfCheckedTagList()
         )
         assertEquals(listOf("bb", "Cc"), list.copyOfIndeterminateTagList())
     }
@@ -184,7 +199,8 @@ class TagsListTest {
         assertEquals(listOf("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb"), list.copyOfCheckedTagList())
         assertEquals(
             "Ancestors of checked tags should be marked as indeterminate",
-            listOf("cat1", "cat2", "cat2::bb"), list.copyOfIndeterminateTagList()
+            listOf("cat1", "cat2", "cat2::bb"),
+            list.copyOfIndeterminateTagList()
         )
     }
 
@@ -251,11 +267,13 @@ class TagsListTest {
         )
         assertEquals(
             "The newly added 'anki' tag should be found when retrieving all tags list",
-            join(TAGS, "anki"), tagsList.copyOfAllTagList()
+            join(TAGS, "anki"),
+            tagsList.copyOfAllTagList()
         )
         assertSameElementsIgnoreOrder(
             "Adding operations should have nothing to do with the checked status of tags",
-            CHECKED_TAGS, tagsList.copyOfCheckedTagList()
+            CHECKED_TAGS,
+            tagsList.copyOfCheckedTagList()
         )
     }
 
@@ -312,11 +330,13 @@ class TagsListTest {
         )
         assertEquals(
             "Changing the status of tags to be checked should have noting to do with all tag list",
-            TAGS, tagsList.copyOfAllTagList()
+            TAGS,
+            tagsList.copyOfAllTagList()
         ) // no change
         assertSameElementsIgnoreOrder(
             "The checked 'flags' tag should be found when retrieving list of checked tag",
-            join(CHECKED_TAGS, "flags"), tagsList.copyOfCheckedTagList()
+            join(CHECKED_TAGS, "flags"),
+            tagsList.copyOfCheckedTagList()
         )
     }
 
@@ -328,7 +348,8 @@ class TagsListTest {
         )
         assertEquals(
             "Changing the status of tags to be checked should have noting to do with all tag list",
-            TAGS, tagsListWithIndeterminate.copyOfAllTagList()
+            TAGS,
+            tagsListWithIndeterminate.copyOfAllTagList()
         )
         assertTrue(
             "The checked 'faces' tag should be found when retrieving list of checked tag",
@@ -356,11 +377,13 @@ class TagsListTest {
         )
         assertEquals(
             "Changing the status of tags to be unchecked should have noting to do with all tag list",
-            TAGS, tagsList.copyOfAllTagList()
+            TAGS,
+            tagsList.copyOfAllTagList()
         ) // no change
         assertSameElementsIgnoreOrder(
             "The unchecked 'colors' tag should be not be found when retrieving list of checked tag",
-            minus(CHECKED_TAGS, "colors"), tagsList.copyOfCheckedTagList()
+            minus(CHECKED_TAGS, "colors"),
+            tagsList.copyOfCheckedTagList()
         )
     }
 
@@ -372,7 +395,8 @@ class TagsListTest {
         )
         assertEquals(
             "Changing the status of tags to be checked should have noting to do with all tag list",
-            TAGS, tagsListWithIndeterminate.copyOfAllTagList()
+            TAGS,
+            tagsListWithIndeterminate.copyOfAllTagList()
         )
         assertFalse(
             "Changing from indeterminate to unchecked should not affect checked tags",
@@ -446,7 +470,8 @@ class TagsListTest {
         tagsList.sort()
         assertEquals(
             "Calling #sort on TagsList should result on sorting all tags",
-            SORTED_TAGS, tagsList.copyOfAllTagList()
+            SORTED_TAGS,
+            tagsList.copyOfAllTagList()
         )
     }
 
@@ -456,7 +481,8 @@ class TagsListTest {
         tagsListWithIndeterminate.sort()
         assertEquals(
             "Calling #sort on TagsList should result on sorting all tags",
-            SORTED_TAGS, tagsListWithIndeterminate.copyOfAllTagList()
+            SORTED_TAGS,
+            tagsListWithIndeterminate.copyOfAllTagList()
         )
     }
 
@@ -472,7 +498,8 @@ class TagsListTest {
             tagsList.sort()
             assertEquals(
                 "Calling #sort on TagsList should result on sorting all tags",
-                SORTED_TAGS, tagsList.copyOfAllTagList()
+                SORTED_TAGS,
+                tagsList.copyOfAllTagList()
             )
 
             MockCollection.verify({ Collections.sort(ArgumentMatchers.any(), ArgumentMatchers.any<Comparator<in Any>>()) }, Mockito.never())

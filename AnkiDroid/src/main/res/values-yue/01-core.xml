@@ -44,14 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">卡組</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">瀏覽卡</string>
     <string name="statistics">統計數字</string>
     <string name="settings">設定</string>
     <string name="help">求助</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">绘图</string>
     <string name="send_feedback">畀意見</string>
     <string name="studyoptions_due_today">今日到期:</string>
     <string name="studyoptions_new_total">新卡總數:</string>
@@ -69,13 +68,13 @@
         <item quantity="other">剩低 %d 分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">剩余 %1$d 钟 %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">剩余 %1$d 日 %2$d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">冇收藏</string>
+    <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日用咗 %2$s 學習 %1$d 卡</item>
@@ -83,7 +82,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">輸入答案</string>
     <string name="show_answer">顯示答案</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">隐藏答案</string>
     <string name="ease_button_again">由頭嚟過</string>
     <string name="ease_button_hard">深</string>
     <string name="ease_button_good">中</string>
@@ -94,15 +93,15 @@
     <string name="undo_action_review">上次複習</string>
     <string name="undo_action_change_deck_multi">轉換卡組</string>
     <string name="move_all_to_deck">移動所有卡牌到卡組</string>
-    <string name="unbury">Unbury</string>
+    <string name="unbury">搁置取消</string>
     <string name="rename_deck">重新命名卡組</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">创建快捷方式</string>
+    <string name="browse_cards">擸一眼卡片</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">加入</string>
     <string name="menu_add_note">加入筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
+    <string name="menu_dismiss_note">隐藏/删除</string>
+    <string name="menu_bury_card">卡片卡片</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>
     <string name="menu_suspend_note">Suspend note</string>
@@ -171,6 +170,8 @@
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
     <string name="continue_sync">Continue sync</string>
     <string name="sync_cancelled">Sync cancelled</string>
@@ -230,4 +231,11 @@
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

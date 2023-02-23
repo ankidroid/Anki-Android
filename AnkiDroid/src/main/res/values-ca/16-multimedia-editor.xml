@@ -42,19 +42,17 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Afegeix imatge</string>
     <string name="multimedia_editor_popup_audio_clip">Afegeix clip d\'àudio</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Afegiu un vídeo</string>
     <string name="multimedia_editor_popup_audio">Gravar àudio</string>
     <string name="multimedia_editor_popup_text">Editor avançat</string>
     <string name="multimedia_editor_popup_cloze">Blancs per omplir</string>
     <string name="multimedia_editor_popup_clear_field">Esborrar camp</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">Traduir</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Carrega</string>
     <string name="multimedia_editor_pron_looking_up">Comprovar la pronunciació</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">La pronunciació ha fallat</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">Només s\'admet una paraula a la vegada</string>
     <string name="multimedia_editor_word_search_try_lower_case">Proveu d\'utilitzar només caràcters en minúscules</string>
     <string name="multimedia_editor_poweredbeolingus">Desenvolupat per Beolingus</string>
     <!-- Field editing general -->
@@ -80,8 +78,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Càmera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Àudio</string>
+    <string name="multimedia_editor_import_video">Vídeo</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Descarregant</string>
@@ -95,7 +93,7 @@
     <string name="multimedia_editor_progress_wait_title">Esperi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Alguna cosa ha anat malament</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">No hi ha cap imatge SVG per a previsualitzar</string>
     <string name="multimedia_editor_png_paste_error">Error en convertir la imatge del porta-retalls a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adjuntar contingut multimèdia al camp %1$s</string>
     <string name="multimedia_editor_attach_media">Adjuntar multimèdia</string>
@@ -114,5 +112,5 @@
     <string name="save_dialog_content">La mida actual de la imatge és de %s MB. El límit de mida per defecte de la imatge és 1 MB. La voleu retallar?</string>
     <string name="select_image_failed">"No s\'ha pogut seleccionar la imatge. Torneu-ho a provar si us plau"</string>
     <string name="activity_result_unexpected">L\'aplicació ha tornat un valor inesperat. Potser heu d\'usar una aplicació diferent.</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contingut del camp</string>
 </resources>

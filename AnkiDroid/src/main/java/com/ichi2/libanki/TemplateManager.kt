@@ -27,11 +27,11 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
+import org.json.JSONObject
 import timber.log.Timber
-import java.util.*
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>
@@ -72,7 +72,7 @@ class TemplateManager {
                                 TemplateReplacement(
                                     field_name = node.replacement.fieldName,
                                     current_text = node.replacement.currentText,
-                                    filters = node.replacement.filtersList,
+                                    filters = node.replacement.filtersList
                                 )
                             )
                         )
@@ -92,7 +92,7 @@ class TemplateManager {
                         lang = tag.tts.lang,
                         voices = tag.tts.voicesList,
                         otherArgs = tag.tts.otherArgsList,
-                        speed = tag.tts.speed,
+                        speed = tag.tts.speed
                     )
                 }
             }
@@ -145,7 +145,7 @@ class TemplateManager {
                 card: Card,
                 notetype: NoteType,
                 template: JSONObject,
-                fill_empty: bool,
+                fill_empty: bool
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -153,7 +153,7 @@ class TemplateManager {
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fill_empty,
+                    fill_empty = fill_empty
                 )
             }
         }
@@ -164,7 +164,7 @@ class TemplateManager {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
-                val fields = _note.items().map { Pair(it[0], it[1]) }.toMap().toMutableMap()
+                val fields = _note.items().map { Pair(it[0]!!, it[1]!!) }.toMap().toMutableMap()
 
                 // add (most) special fields
                 fields["Tags"] = _note.stringTags().trim()
@@ -213,7 +213,7 @@ class TemplateManager {
                     question_text = e.localizedMessage ?: e.toString(),
                     answer_text = e.localizedMessage ?: e.toString(),
                     question_av_tags = emptyList(),
-                    answer_av_tags = emptyList(),
+                    answer_av_tags = emptyList()
                 )
             }
 
@@ -236,7 +236,7 @@ class TemplateManager {
                 answer_text = aoutText,
                 question_av_tags = av_tags_to_native(qout.avTagsList),
                 answer_av_tags = av_tags_to_native(aout.avTagsList),
-                css = note_type().getString("css"),
+                css = note_type().getString("css")
             )
 
             return output
@@ -250,8 +250,8 @@ class TemplateManager {
                     backend.renderUncommittedCardLegacy(
                         _note.toBackendNote(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template!!)),
-                        _fill_empty,
+                        BackendUtils.to_json_bytes(_template!!.deepClone()),
+                        _fill_empty
                     )
                 } else {
                     // existing card (eg study mode)
@@ -292,7 +292,7 @@ class TemplateManager {
             q = q ?: template.getString("qfmt")
             a = a ?: template.getString("afmt")
 
-            return Pair(q, a)
+            return Pair(q!!, a!!)
         }
 
         /** Complete rendering by applying any pending custom filters. */

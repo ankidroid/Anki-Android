@@ -26,7 +26,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Process
-import android.text.TextUtils
 import android.util.SparseArray
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.FlashCardsContract.AnkiMedia
@@ -45,7 +44,6 @@ import java.util.*
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
  * this may be extended to all operations at a later date.
  */
-// TODO: High Priority: Kotlin Cleanup: fix nullability of all public methods
 public class AddContentApi(context: Context) {
     private val mContext: Context = context.applicationContext
     private val mResolver: ContentResolver = mContext.contentResolver
@@ -59,7 +57,7 @@ public class AddContentApi(context: Context) {
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
      */
-    public fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String?>?): Long? {
+    public fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String>?): Long? {
         val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
         return noteUri.lastPathSegment!!.toLong()
     }
@@ -68,7 +66,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fields: Array<String>,
-        tags: Set<String?>?
+        tags: Set<String>?
     ): Uri? {
         val values = ContentValues().apply {
             put(Note.MID, modelId)
@@ -106,7 +104,7 @@ public class AddContentApi(context: Context) {
     public fun addNotes(
         modelId: Long,
         deckId: Long,
-        fieldsList: List<Array<String>?>,
+        fieldsList: List<Array<String>>,
         tagsList: List<Set<String>?>?
     ): Int {
         require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
@@ -124,7 +122,9 @@ public class AddContentApi(context: Context) {
         // Add the notes to the content provider and put the new note ids into the result array
         return if (newNoteValuesList.isEmpty()) {
             0
-        } else compat.insertNotes(deckId, newNoteValuesList.toTypedArray())
+        } else {
+            compat.insertNotes(deckId, newNoteValuesList.toTypedArray())
+        }
     }
 
     /**
@@ -191,7 +191,9 @@ public class AddContentApi(context: Context) {
         val notes = compat.findDuplicateNotes(mid, listOf(key))
         return if (notes!!.size() == 0) {
             emptyList<NoteInfo>()
-        } else notes.valueAt(0)
+        } else {
+            notes.valueAt(0)
+        }
     }
 
     /**
@@ -201,7 +203,7 @@ public class AddContentApi(context: Context) {
      * @param keys list of keys
      * @return a SparseArray with a list of duplicate notes for each key
      */
-    public fun findDuplicateNotes(mid: Long, keys: List<String?>): SparseArray<MutableList<NoteInfo?>>? {
+    public fun findDuplicateNotes(mid: Long, keys: List<String>): SparseArray<MutableList<NoteInfo?>>? {
         return compat.findDuplicateNotes(mid, keys)
     }
 
@@ -219,7 +221,7 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteTags(noteId: Long, tags: Set<String?>?): Boolean {
+    public fun updateNoteTags(noteId: Long, tags: Set<String>): Boolean {
         return updateNote(noteId, null, tags)
     }
 
@@ -230,7 +232,7 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteFields(noteId: Long, fields: Array<String>?): Boolean {
+    public fun updateNoteFields(noteId: Long, fields: Array<String>): Boolean {
         return updateNote(noteId, fields, null)
     }
 
@@ -245,7 +247,9 @@ public class AddContentApi(context: Context) {
         return query.use { cursor ->
             if (!cursor.moveToNext()) {
                 null
-            } else NoteInfo.buildFromCursor(cursor)
+            } else {
+                NoteInfo.buildFromCursor(cursor)
+            }
         }
     }
 
@@ -285,7 +289,7 @@ public class AddContentApi(context: Context) {
                 val a = cardsCursor.getString(cardsCursor.getColumnIndex(Card.ANSWER))
                 cards[n] = hashMapOf(
                     "q" to q,
-                    "a" to a,
+                    "a" to a
                 )
             }
         }
@@ -299,10 +303,16 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasicModel(name: String?): Long? {
+    public fun addNewBasicModel(name: String): Long? {
         return addNewCustomModel(
-            name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
-            BasicModel.AFMT, null, null, null
+            name,
+            BasicModel.FIELDS,
+            BasicModel.CARD_NAMES,
+            BasicModel.QFMT,
+            BasicModel.AFMT,
+            null,
+            null,
+            null
         )
     }
 
@@ -312,10 +322,16 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasic2Model(name: String?): Long? {
+    public fun addNewBasic2Model(name: String): Long? {
         return addNewCustomModel(
-            name, Basic2Model.FIELDS, Basic2Model.CARD_NAMES, Basic2Model.QFMT,
-            Basic2Model.AFMT, null, null, null
+            name,
+            Basic2Model.FIELDS,
+            Basic2Model.CARD_NAMES,
+            Basic2Model.QFMT,
+            Basic2Model.AFMT,
+            null,
+            null,
+            null
         )
     }
 
@@ -332,8 +348,9 @@ public class AddContentApi(context: Context) {
      * @param sortf index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
      * @return the mid of the model which was created, or null if it could not be created
      */
+    @Suppress("MemberVisibilityCanBePrivate") // silence IDE
     public fun addNewCustomModel(
-        name: String?,
+        name: String,
         fields: Array<String>,
         cards: Array<String>,
         qfmt: Array<String>,
@@ -449,7 +466,7 @@ public class AddContentApi(context: Context) {
      * @param deckName name of the deck to add
      * @return id of the added deck, or null if the deck was not added
      */
-    public fun addNewDeck(deckName: String?): Long? {
+    public fun addNewDeck(deckName: String): Long? {
         // Create a new note
         val values = ContentValues().apply { put(Deck.DECK_NAME, deckName) }
         val newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values)
@@ -476,7 +493,9 @@ public class AddContentApi(context: Context) {
             return selectedDeckQuery.use { selectedDeckCursor ->
                 if (selectedDeckCursor.moveToNext()) {
                     selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(Deck.DECK_NAME))
-                } else null
+                } else {
+                    null
+                }
             }
         } // Get the current model
 
@@ -527,18 +546,19 @@ public class AddContentApi(context: Context) {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
             val info =
-                if (Build.VERSION.SDK_INT >= 33)
+                if (Build.VERSION.SDK_INT >= 33) {
                     mContext.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.ComponentInfoFlags.of(
                             PackageManager.GET_META_DATA.toLong()
                         )
                     )
-                else
+                } else {
                     mContext.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.GET_META_DATA
                     )
+                }
 
             return if (info?.metaData != null && info.metaData.containsKey(
                     PROVIDER_SPEC_META_DATA_KEY
@@ -658,9 +678,11 @@ public class AddContentApi(context: Context) {
     private inner class CompatV2 : CompatV1() {
         override fun queryNotes(modelId: Long): Cursor? {
             return mResolver.query(
-                Note.CONTENT_URI_V2, PROJECTION,
+                Note.CONTENT_URI_V2,
+                PROJECTION,
                 String.format(Locale.US, "%s=%d", Note.MID, modelId),
-                null, null
+                null,
+                null
             )
         }
 
@@ -694,7 +716,7 @@ public class AddContentApi(context: Context) {
                 Note.MID,
                 modelId,
                 Note.CSUM,
-                TextUtils.join(",", csums)
+                csums.joinToString(separator = ",")
             )
             val notesTableQuery = mResolver.query(
                 Note.CONTENT_URI_V2,
@@ -748,13 +770,14 @@ public class AddContentApi(context: Context) {
         @JvmStatic // required for API
         public fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager
-            return if (Build.VERSION.SDK_INT >= 33)
+            return if (Build.VERSION.SDK_INT >= 33) {
                 manager.resolveContentProvider(
                     FlashCardsContract.AUTHORITY,
                     PackageManager.ComponentInfoFlags.of(0L)
                 )?.packageName
-            else
+            } else {
                 manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)?.packageName
+            }
         }
     }
 }

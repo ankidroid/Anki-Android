@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Stiahnutá databáza bola poškodená. Prosím skúste to znova.</string>
     <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom</string>
     <string name="sync_connection_error">Vypršal časový limit pripojenia. Buď máte problém s internetovým pripojením alebo máte veľký multimediálny súbor v priečinku.</string>
-    <string name="sync_write_access_error">Stiahnutý súbor sa nepodarilo uložiť na SD kartu. Buď je vaša SD karta pripojená iba na čítanie alebo na nej nie je dostatok miesta.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">Zvolený synchronizačný server v rozšírených nastaveniach je neplatný (%s). Zadajte, prosím, platný server, alebo vypnite toto nastavenie.</string>
     <string name="sync_deletions_message">Synchronizujú sa odstránené položky...</string>
     <string name="sync_small_objects_message">Synchronizujú sa malé objekty...</string>

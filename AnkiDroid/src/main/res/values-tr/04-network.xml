@@ -46,7 +46,7 @@
 -->
 <resources>
     <string name="youre_offline">Çevrimdışısınız</string>
-    <string name="sync_even_if_offline">Tekrar dene</string>
+    <string name="sync_even_if_offline">Yine de dene. </string>
     <string name="sync_error">Senkronizasyon hatası</string>
     <string name="vague_error" comment="Network error dialog title">Hata</string>
     <string name="retry">Yeniden Dene</string>
@@ -56,7 +56,7 @@
     <string name="login_create_account_message">Bulut senkronizasyon hizmetini kullanmak için üçüncü parti bir hesaba giriş yapmanız gerekiyor. Hesabı bir sonraki adımda açabilirsiniz.</string>
     <!-- MyAccount.kt -->
     <string name="username">Eposta adresi</string>
-    <string name="password">Şifre</string>
+    <string name="password">Parola</string>
     <string name="log_in">Giriş yap</string>
     <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
     <string name="sign_up_not_affiliated">Not: AnkiWeb, AnkiDroid\'le bağlı değildir</string>
@@ -64,7 +64,7 @@
     <string name="logged_as">Şu adla giriş yapıldı:</string>
     <string name="log_out">Çıkış yap</string>
     <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
-    <string name="invalid_username_password">Geçersiz eposta adresi veya şifre</string>
+    <string name="invalid_username_password">Geçersiz eposta adresi veya parolası</string>
     <string name="reset_password">Parolayı Sıfırla</string>
     <string name="lost_mail_instructions">E-postanızı mı unuttunuz?</string>
     <!-- AndroidManifest.xml -->
@@ -83,10 +83,10 @@
     <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>
     <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>
     <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra yeniden deneyin.</string>
-    <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen yeniden deneyin.</string>
+    <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen tekrar deneyin.</string>
     <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
     <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
-    <string name="sync_write_access_error">İndirilen dosya sd karta kaydedilemedi. Ya sd kartınız salt okunur takılmış ya da yeterli boşluk yok.</string>
+    <string name="sync_write_access_error_on_storage">İndirilen dosya depolama alanınıza kaydedilemedi. Ya depolama salt-okunur ya da yeterli alan yok.</string>
     <string name="sync_error_invalid_sync_server">Gelişmiş Ayarlar\'daki Özel Senkronizasyon Sunucusu geçersiz (%s). Lütfen geçerli bir sunucu girin veya ayarı devre dışı bırakın.</string>
     <string name="sync_deletions_message">Silinenler eşitleniyor...</string>
     <string name="sync_small_objects_message">Küçük nesneler eşitleniyor...</string>

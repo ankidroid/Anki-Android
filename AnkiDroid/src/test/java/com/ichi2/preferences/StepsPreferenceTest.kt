@@ -12,9 +12,9 @@
  */
 package com.ichi2.preferences
 
-import com.ichi2.utils.JSONArray
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
+import org.json.JSONArray
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

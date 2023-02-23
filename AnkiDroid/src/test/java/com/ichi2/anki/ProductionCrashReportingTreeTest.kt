@@ -18,7 +18,6 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.util.Log
 import com.ichi2.testutils.AnkiAssert
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
@@ -27,16 +26,15 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.MockedStatic
 import org.mockito.Mockito.*
+import org.mockito.kotlin.whenever
 import timber.log.Timber
 import java.lang.Exception
 import java.lang.RuntimeException
 
 @SuppressLint("LogNotTimber", "LogConditional")
-@KotlinCleanup("fix 'when'")
 class ProductionCrashReportingTreeTest {
     @Before
     fun setUp() {
-
         // setup - simply instrument the class and do same log init as production
         Timber.plant(AnkiDroidApp.ProductionCrashReportingTree())
     }
@@ -54,11 +52,11 @@ class ProductionCrashReportingTreeTest {
     fun testProductionDebugVerboseIgnored() {
         mockStatic(Log::class.java).use {
             // set up the platform log so that if anyone calls these 2 methods at all, it throws
-            `when`(Log.v(anyString(), anyString(), any()))
+            whenever(Log.v(anyString(), anyString(), any()))
                 .thenThrow(RuntimeException("Verbose logging should have been ignored"))
-            `when`(Log.d(anyString(), anyString(), any()))
+            whenever(Log.d(anyString(), anyString(), any()))
                 .thenThrow(RuntimeException("Debug logging should be ignored"))
-            `when`(
+            whenever(
                 Log.i(anyString(), anyString(), any())
             )
                 .thenThrow(RuntimeException("Info logging should throw!"))
@@ -84,11 +82,10 @@ class ProductionCrashReportingTreeTest {
      */
     @Test
     fun testProductionLogTag() {
-
         var testWithProperClassNameCalled = false
+
         // this is required to ensure 'NativeMethodAccessorImpl' isn't the class name
         fun testWithProperClassName(autoClosed: MockedStatic<Log>) {
-
             // Now let's run through our API calls...
             Timber.i("info level message")
             Timber.w("warn level message")

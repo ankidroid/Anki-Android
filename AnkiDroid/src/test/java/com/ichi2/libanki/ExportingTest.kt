@@ -17,32 +17,29 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE lint")
 class ExportingTest : RobolectricTest() {
-    @KotlinCleanup("lateinit")
-    private var mCol: Collection? = null
+    private lateinit var mCol: Collection
 
     /*****************
      * Exporting    *
      */
     private fun setup() {
         mCol = col
-        var note = mCol!!.newNote()
+        var note = mCol.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar<br>")
         note.setTagsFromStr("tag, tag2")
-        mCol!!.addNote(note)
+        mCol.addNote(note)
         // with a different col
-        note = mCol!!.newNote()
+        note = mCol.newNote()
         note.setItem("Front", "baz")
         note.setItem("Back", "qux")
         note.model().put("did", addDeck("new col"))
-        mCol!!.addNote(note)
+        mCol.addNote(note)
     }
 
     /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

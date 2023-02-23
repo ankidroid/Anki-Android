@@ -18,14 +18,14 @@ package com.ichi2.preferences
 
 import android.content.Context
 import android.text.InputType
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
+import com.ichi2.utils.stringIterable
+import org.json.JSONArray
+import org.json.JSONException
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
@@ -70,9 +70,10 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
             val validated = getValidatedStepsInput(editText.text.toString())
             if (validated == null) {
                 showThemedToast(context, context.resources.getString(R.string.steps_error), false)
-            } else if (TextUtils.isEmpty(validated) && !mAllowEmpty) {
+            } else if (validated.isEmpty() && !mAllowEmpty) {
                 showThemedToast(
-                    context, context.resources.getString(R.string.steps_min_error),
+                    context,
+                    context.resources.getString(R.string.steps_min_error),
                     false
                 )
             } else {
@@ -131,7 +132,7 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
         fun convertToJSON(steps: String): JSONArray? {
             val stepsAr = JSONArray()
             val stepsTrim = steps.trim { it <= ' ' }
-            if (TextUtils.isEmpty(steps)) {
+            if (steps.isEmpty()) {
                 return stepsAr
             }
             try {

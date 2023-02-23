@@ -46,21 +46,21 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%dଟିଏ ପତ୍ର ଦେଖାଯାଇଛି</item>
-        <item quantity="other">%dଟି ପତ୍ର ଦେଖାଯାଇଛି</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ଦର୍ଶାଯାଉଛି</item>
+        <item quantity="other">%dଟି ପତ୍ର ଦର୍ଶାଯାଉଛି</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%dଟିଏ ନୋଟ୍ ଦର୍ଶାଯାଉଛି</item>
+        <item quantity="other">%dଟି ନୋଟ୍ ଦର୍ଶାଯାଉଛି</item>
     </plurals>
     <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
-    <string name="card_browser_delete_card">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="card_browser_delete_card">ନୋଟଗୁଡ଼ିକୁ ଵିଲୋପ କରିବା</string>
     <string name="card_browser_suspend_card">ପତ୍ରଗୁଡ଼ିକୁ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="card_browser_change_deck">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
     <string name="card_browser_unsuspend_card">ପତ୍ରଗୁଡ଼ିକୁ ଅନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="card_browser_mark_card">ନୋଟଗୁଡ଼ିକୁ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="card_browser_unmark_card">ନୋଟଗୁଡ଼ିକୁ ଅଚିନ୍ହିତ କରନ୍ତୁ</string>
-    <string name="delete_card_title">ନୋଟ୍ ବିଲୋପ କରିବେ କି?</string>
+    <string name="delete_card_title">ନୋଟ୍ ଵିଲୋପ କରିବେ ତ?</string>
     <string name="changed_deck_message">%sକୁ ଘୁଞ୍ଚିଗଲା</string>
     <string name="card_browser_show_marked">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
     <string name="card_browser_show_suspended">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
@@ -72,7 +72,7 @@
     <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ </string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ଆପଣ ନାମ ବିନା ସନ୍ଧାନ ସଞ୍ଚୟ କରିପାରିବେ ନାହିଁ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ନାଁଟି ଵିଦ୍ୟମାନ ଅଛି</string>
-    <string name="card_browser_list_my_searches_remove_content">“%1$s” ବିଲୋପ କରନ୍ତୁ?</string>
+    <string name="card_browser_list_my_searches_remove_content">“%1$s” ଵିଲୋପ କରିବେ ତ?</string>
     <string name="card_browser_change_display_order">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_browser_change_display_order_title">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_browser_change_display_order_reverse">ଓଲଟା କରିବାକୁ ଦୁଇଥର ଏକ କ୍ଷେତ୍ର ଚୟନ କରନ୍ତୁ</string>
@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡରେ ଖୋଜନ୍ତୁ</string>
     <string name="card_browser_unknown_deck_name">ଅଜ୍ଞାତ</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">ବିଷୟବସ୍ତୁ ସଂକ୍ଷେପରେ ଦେଖାଇବା</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">ପତ୍ର ରପ୍ତାନି କରିବା</item>
+        <item quantity="other">ପତ୍ରଗୁଡ଼ିକୁ ରପ୍ତାନି କରିବା</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">ନୋଟ୍ ରପ୍ତାନି କରିବା</item>
+        <item quantity="other">ନୋଟଗୁଡ଼ିକୁ ରପ୍ତାନି କରିବା</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%dଟିଏ ପତ୍ର ବିଲୋପ ହେଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ବିଲୋପ ହେଲା</item>

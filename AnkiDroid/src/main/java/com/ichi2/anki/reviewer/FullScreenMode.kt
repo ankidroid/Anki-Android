@@ -16,6 +16,7 @@
 package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import timber.log.Timber
 
 /** Whether Reviewer content should take the full screen */
@@ -23,8 +24,10 @@ enum class FullScreenMode(private val prefValue: String) {
 
     /** Display both navigation and buttons (default) */
     BUTTONS_AND_MENU("0"),
+
     /** Remove the menu bar, keeps answer button. */
     BUTTONS_ONLY("1"),
+
     /** Remove both menu bar and buttons. Can only be set if gesture is on. */
     FULLSCREEN_ALL_GONE("2");
 
@@ -51,12 +54,14 @@ enum class FullScreenMode(private val prefValue: String) {
             val fullScreenModeKey = PREF_KEY
             val old = preferences.getBoolean("fullscreenReview", false)
             val newValue = if (old) BUTTONS_ONLY else BUTTONS_AND_MENU
-            preferences.edit().putString(fullScreenModeKey, newValue.getPreferenceValue()).apply()
-            preferences.edit().remove("fullscreenReview").apply()
+            preferences.edit {
+                putString(fullScreenModeKey, newValue.getPreferenceValue())
+                remove("fullscreenReview")
+            }
         }
 
         fun setPreference(prefs: SharedPreferences, mode: FullScreenMode) {
-            prefs.edit().putString(PREF_KEY, mode.getPreferenceValue()).apply()
+            prefs.edit { putString(PREF_KEY, mode.getPreferenceValue()) }
         }
     }
 }

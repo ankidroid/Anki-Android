@@ -54,12 +54,12 @@
         <item quantity="other">%d بطاقة معروضة</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="zero">%d notes shown</item>
-        <item quantity="one">%d note shown</item>
-        <item quantity="two">%d notes shown</item>
-        <item quantity="few">%d notes shown</item>
-        <item quantity="many">%d notes shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="zero">%d ملحوظة معروضة</item>
+        <item quantity="one">%d ملحوظة معروضة</item>
+        <item quantity="two">%d ملحوظة معروضة</item>
+        <item quantity="few">%d ملحوظات معروضة</item>
+        <item quantity="many">%d ملحوظة معروضة</item>
+        <item quantity="other">%d ملحوظة معروضة</item>
     </plurals>
     <string name="card_browser_all_decks">كل الرزم</string>
     <string name="card_browser_delete_card">حذف الملحوظات</string>
@@ -107,6 +107,22 @@
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">اقتطاع المحتوى</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="zero">تصدير البطاقة</item>
+        <item quantity="one">تصدير البطاقة</item>
+        <item quantity="two">تصدير البطاقات</item>
+        <item quantity="few">تصدير البطاقات</item>
+        <item quantity="many">تصدير البطاقات</item>
+        <item quantity="other">تصدير البطاقات</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="zero">تصدير الملحوظة</item>
+        <item quantity="one">تصدير الملحوظة</item>
+        <item quantity="two">تصدير الملحوظات</item>
+        <item quantity="few">تصدير الملحوظات</item>
+        <item quantity="many">تصدير الملحوظات</item>
+        <item quantity="other">تصدير الملحوظات</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="zero">حُذِفت %d بطاقة</item>
         <item quantity="one">حُذِفت %d بطاقة</item>

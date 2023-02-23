@@ -50,14 +50,14 @@
         <item quantity="other">%d cards visíveis</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d nota apresentada</item>
+        <item quantity="other">%d notas exibidas</item>
     </plurals>
     <string name="card_browser_all_decks">Todos os baralhos</string>
     <string name="card_browser_delete_card">Excluir notas</string>
-    <string name="card_browser_suspend_card">Suspender cards</string>
+    <string name="card_browser_suspend_card">Suspender cartões</string>
     <string name="card_browser_change_deck">Mudar Baralho</string>
-    <string name="card_browser_unsuspend_card">Cancelar suspensão dos cards</string>
+    <string name="card_browser_unsuspend_card">Cancelar suspensão dos cartões</string>
     <string name="card_browser_mark_card">Marcar notas</string>
     <string name="card_browser_unmark_card">Desmarcar notas</string>
     <string name="delete_card_title">Excluir nota?</string>
@@ -66,12 +66,12 @@
     <string name="card_browser_show_suspended">Filtrar suspenso</string>
     <string name="card_browser_search_by_tag">Filtrar por tag</string>
     <string name="card_browser_search_by_flag">Filtrar por Sinalização</string>
-    <string name="card_browser_list_my_searches">Minhas buscas</string>
-    <string name="card_browser_list_my_searches_save">Salvar busca</string>
-    <string name="card_browser_list_my_searches_title">Escolha uma busca salva</string>
-    <string name="card_browser_list_my_searches_new_name">Nome para a busca atual</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Você não pode salvar uma busca sem um nome.</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Nome já existente!</string>
+    <string name="card_browser_list_my_searches">Minhas pesquisas</string>
+    <string name="card_browser_list_my_searches_save">Salvar pesquisa</string>
+    <string name="card_browser_list_my_searches_title">Escolha uma pesquisa salva</string>
+    <string name="card_browser_list_my_searches_new_name">Nome para a pesquisa atual</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Você não pode salvar uma pesquisa sem um nome</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">O nome já existe</string>
     <string name="card_browser_list_my_searches_remove_content">Excluir \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
     <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
@@ -98,7 +98,15 @@
     <string name="card_browser_no_cards_in_deck">Nenhum card encontrado no deck ‘%s\'</string>
     <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
     <string name="card_browser_unknown_deck_name">Desconhecido</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Mostrar menos</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Exportar cartão</item>
+        <item quantity="other">Exportar cartões</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Exportar nota</item>
+        <item quantity="other">Exportar notas</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deletado</item>
         <item quantity="other">%d cards deletados</item>

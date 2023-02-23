@@ -16,8 +16,9 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Executor
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Executor
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -33,6 +34,7 @@ class ExecutorTest {
 
     /** the system under test: no initial operations */
     private val underTest = Executor(ArrayDeque())
+
     /** execution context: allows access to the order of execution */
     private val executionContext = MockMigrationContext()
 
@@ -126,7 +128,8 @@ class ExecutorTest {
         assertThat(executionContext.executed[0], equalTo(blockingOp))
         assertThat(
             "a preempted operation is not run if terminate() is called",
-            executionContext.executed, hasSize(1)
+            executionContext.executed,
+            hasSize(1)
         )
     }
 
@@ -147,7 +150,8 @@ class ExecutorTest {
         assertThat(executionContext.executed[0], equalTo(blockingOp))
         assertThat(
             "a regular operation is not run if terminate() is called",
-            executionContext.executed, hasSize(1)
+            executionContext.executed,
+            hasSize(1)
         )
     }
 
@@ -170,9 +174,10 @@ class ExecutorTest {
     class BlockedOperation : Operation() {
         // Semaphore that can be acquired once the operation is not blocked anymore
         val isBlocked = Semaphore(1).apply { acquire() }
+
         // Semaphore that can be acquired after operation start executing
         var isExecuting = Semaphore(1).apply { acquire() }
-        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+        override fun execute(context: MigrationContext): List<Operation> {
             isExecuting.release()
             isBlocked.acquireInTwoSeconds()
             return emptyList()

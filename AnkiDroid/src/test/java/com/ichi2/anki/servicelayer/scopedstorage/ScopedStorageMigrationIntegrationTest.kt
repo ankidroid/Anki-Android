@@ -19,8 +19,9 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
-import com.ichi2.async.ProgressSenderAndCancelListener
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationProgressListener
 import com.ichi2.exceptions.AggregateException
 import com.ichi2.testutils.*
 import net.ankiweb.rsdroid.BackendFactory
@@ -35,10 +36,11 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
 import kotlin.test.fail
 
 // PERF: Some of these do not need a collection
-/** Test for [MigrateUserData.execTask] */
+/** Test for [MigrateUserData.migrateFiles] */
 @RunWith(AndroidJUnit4::class)
 class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
@@ -58,7 +60,10 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
     @Test
     fun `Valid migration`() {
+        setLegacyStorage()
+
         underTest = MigrateUserDataTester.create()
+
         // use all the real components on a real collection.
         val inputDirectory = File(col.path).parentFile!!
         File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
@@ -80,12 +85,14 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         assertThat(
             "a number of files should remain to allow the user to restore their collection",
-            fileCount(inputDirectory), equalTo(MigrateUserDataTester.INTEGRATION_INTENDED_REMAINING_FILE_COUNT)
+            fileCount(inputDirectory),
+            equalTo(MigrateUserDataTester.INTEGRATION_INTENDED_REMAINING_FILE_COUNT)
         )
     }
 
     @Test
     fun `Migration without space fails`() {
+        setLegacyStorage()
         // use all the real components on a real collection.
         val inputDirectory = File(col.path).parentFile!!
         File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
@@ -108,7 +115,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
             }
         }
 
-        val aggregatedException = assertThrowsSubclass<AggregateException> { underTest.execTask() }
+        val aggregatedException = assertFailsWith<AggregateException> { underTest.execTask() }
 
         val testExceptions = aggregatedException.exceptions.filter { it !is DirectoryNotEmptyException }
 
@@ -176,7 +183,8 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         assertThat(
             "collection media should be deleted on retry if empty",
-            File(underTest.source.directory, "collection.media"), not(anExistingDirectory())
+            File(underTest.source.directory, "collection.media"),
+            not(anExistingDirectory())
         )
 
         assertThat("no external retries should be made", underTest.externalRetries, equalTo(0))
@@ -205,7 +213,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     private fun MigrateUserDataTester.execTask(): Boolean {
-        return this.execTask(mock(), mock())
+        return this.migrateFiles(mock())
     }
 }
 
@@ -216,8 +224,8 @@ private class MigrateUserDataTester
 private constructor(source: Directory, destination: Directory, val filesToMigrateCount: Int) :
     MigrateUserData(source, destination) {
 
-    override fun initializeContext(collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): UserDataMigrationContext {
-        return super.initializeContext(collectionTask).apply {
+    override fun initializeContext(progress: MigrationProgressListener): UserDataMigrationContext {
+        return super.initializeContext(progress).apply {
             attemptRename = false
         }
     }
@@ -233,8 +241,10 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
 
     /** The number of files in [destination] */
     val migratedFilesCount: Int get() = fileCount(destination.directory)
+
     /** The number of files in [source] */
     val sourceFilesCount: Int get() = fileCount(source.directory)
+
     /** The number of files in the "conflict" directory */
     val conflictedFilesCount: Int get() {
         if (!conflictDirectory.exists()) {
@@ -300,7 +310,10 @@ private fun fileCount(directory: File): Int {
 
     val files = directory.listFiles()
     return files!!.sumOf {
-        if (it.isFile) return@sumOf 1
-        else return@sumOf fileCount(it) + 1
+        if (it.isFile) {
+            return@sumOf 1
+        } else {
+            return@sumOf fileCount(it) + 1
+        }
     }
 }

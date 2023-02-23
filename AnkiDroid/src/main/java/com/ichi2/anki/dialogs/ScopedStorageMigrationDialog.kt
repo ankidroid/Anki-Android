@@ -24,13 +24,20 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
+import androidx.appcompat.app.AlertDialog
+import androidx.core.text.parseAsHtml
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.utils.MDUtil
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
+import makeLinksClickable
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 typealias OpenUri = (Uri) -> Unit
@@ -154,3 +161,18 @@ private fun openMoreInfo(ctx: Context, openUri: (Uri) -> (Unit)) {
 }
 
 fun openUrl(activity: AnkiActivity): OpenUri = activity::openUrl
+
+/**
+ * Set [message] as the dialog message, followed by "Learn More", as a link to Scoped Storage faq.
+ * Then show the dialog.
+ * @return the dialog
+ */
+fun AlertDialog.Builder.addScopedStorageLearnMoreLinkAndShow(@Language("HTML") message: String): AlertDialog {
+    @Language("HTML")
+    val messageWithLink = """$message
+            <br>
+            <br><a href='${context.getString(R.string.link_scoped_storage_faq)}'>${context.getString(R.string.scoped_storage_learn_more)}</a>
+    """.trimIndent().parseAsHtml()
+    setMessage(messageWithLink)
+    return makeLinksClickable().apply { show() }
+}

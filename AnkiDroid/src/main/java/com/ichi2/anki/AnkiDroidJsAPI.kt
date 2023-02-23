@@ -22,7 +22,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.text.TextUtils
 import android.webkit.JavascriptInterface
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
@@ -36,10 +35,10 @@ import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.runBlocking
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
@@ -118,7 +117,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
     private fun requireApiVersion(apiVer: String, apiDevContact: String): Boolean {
         try {
-            if (TextUtils.isEmpty(apiDevContact)) {
+            if (apiDevContact.isEmpty()) {
                 return false
             }
             val versionCurrent = Version.valueOf(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
@@ -174,7 +173,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             if (requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)) {
                 enableJsApi()
             }
-            apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString()
+            apiStatusJson = JSONObject(mJsApiListMap as Map<String, Boolean>).toString()
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {

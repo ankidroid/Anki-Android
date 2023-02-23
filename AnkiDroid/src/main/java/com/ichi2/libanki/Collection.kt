@@ -26,7 +26,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
 import android.database.sqlite.SQLiteDatabaseLockedException
-import android.text.TextUtils
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode
@@ -59,6 +58,9 @@ import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.util.*
@@ -165,6 +167,7 @@ open class Collection(
     open var crt: Long = 0
     open var mod: Long = 0
     open var scm: Long = 0
+
     @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
@@ -183,12 +186,11 @@ open class Collection(
 
     init {
         media = initMedia()
+        tags = initTags()
         val created = reopen()
         log(path, VersionUtils.pkgVersionName)
         // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo()
-        tags = initTags()
-        load()
         if (crt == 0L) {
             crt = UIUtils.getDayStart(TimeManager.time) / 1000
         }
@@ -339,7 +341,8 @@ open class Collection(
         while (true) {
             db.query(
                 "SELECT substr($columnName, ?, ?) FROM col",
-                pos.toString(), chunk.toString()
+                pos.toString(),
+                chunk.toString()
             ).use { cursor ->
                 if (!cursor.moveToFirst()) {
                     return buf.toString()
@@ -455,6 +458,7 @@ open class Collection(
         return if (dbClosed) {
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
+            load()
             media.connect()
             _openLog()
             if (afterFullSync) {
@@ -613,7 +617,7 @@ open class Collection(
      * @return Number of card added
      * @return Number of card added.
      */
-    fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
+    open fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
         val cms = findTemplates(note, allowEmpty)
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
@@ -706,7 +710,7 @@ open class Collection(
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
     fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int, Int>>(Utils.collection2Array(nids), model)
+        return genCards<CollectionTask<Int, Int>>(nids.toLongArray(), model)
     }
 
     fun <T> genCards(
@@ -714,7 +718,7 @@ open class Collection(
         model: Model,
         task: T?
     ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        return genCards(Utils.collection2Array(nids), model, task)
+        return genCards(nids.toLongArray(), model, task)
     }
 
     fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
@@ -788,6 +792,7 @@ open class Collection(
                     val ord = cur.getInt(2)
                     val did = cur.getLong(3)
                     val due = cur.getLong(4)
+
                     @Consts.CARD_TYPE val type = cur.getInt(5)
 
                     // existing cards
@@ -1123,7 +1128,7 @@ open class Collection(
         d["id"] = cid.toString()
         qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
         afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
-        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt), Pair("a", afmt))) {
+        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
             val type = p.first
             var format = p.second
             if ("q" == type) {
@@ -1159,7 +1164,7 @@ open class Collection(
             if ("q" == type && model.isCloze) {
                 if (Models._availClozeOrds(model, flist, false).isEmpty()) {
                     val link = String.format(
-                        "<a href=\"%s\">%s</a>",
+                        """<a href="%s">%s</a>""",
                         context.resources.getString(R.string.link_ankiweb_docs_cloze_deletion),
                         "help"
                     )
@@ -1175,7 +1180,9 @@ open class Collection(
         val flag = flags and 0b111
         return if (flag == 0) {
             ""
-        } else "flag$flag"
+        } else {
+            "flag$flag"
+        }
     }
     /*
       Finding cards ************************************************************ ***********************************
@@ -1208,6 +1215,7 @@ open class Collection(
     fun buildSearchString(node: SearchNode): String {
         return backend.buildSearchString(node)
     }
+
     /** Return a list of card ids  */
     @KotlinCleanup("set reasonable defaults")
     fun findCards(search: String): List<Long> {
@@ -1311,7 +1319,9 @@ open class Collection(
                 get_config_int("timeLim"),
                 sched.reps - mStartReps
             )
-        } else null
+        } else {
+            null
+        }
     }
 
     /*
@@ -1333,7 +1343,9 @@ open class Collection(
     fun undoType(): UndoAction? {
         return if (!undo.isEmpty()) {
             undo.last
-        } else null
+        } else {
+            null
+        }
     }
 
     open fun undoName(res: Resources): String {
@@ -1352,8 +1364,6 @@ open class Collection(
         return lastUndo.undo(this)
     }
 
-    @BlocksSchemaUpgrade("audit all UI actions that call this, and make sure they call a backend method")
-    @RustCleanup("this will be unnecessary after legacy schema dropped")
     /**
      * In the legacy schema, this adds the undo action to the undo list.
      * In the new schema, this action is not useful, as the backend stores its own
@@ -1361,6 +1371,8 @@ open class Collection(
      * operation available. If you find an action is not undoable with the new backend,
      * you probably need to be calling the relevant backend method to perform it,
      * instead of trying to do it with raw SQL. */
+    @BlocksSchemaUpgrade("audit all UI actions that call this, and make sure they call a backend method")
+    @RustCleanup("this will be unnecessary after legacy schema dropped")
     fun markUndo(undoAction: UndoAction) {
         Timber.d("markUndo() of type %s", undoAction.javaClass)
         undo.add(undoAction)
@@ -1471,7 +1483,8 @@ open class Collection(
             val badOrd = db.queryScalar(
                 "select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
                     "select id from notes where mid = ?) limit 1",
-                tmpls.length(), m.getLong("id")
+                tmpls.length(),
+                m.getLong("id")
             ) > 0
             if (badOrd) {
                 return false
@@ -1766,7 +1779,9 @@ open class Collection(
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
                 Utils.ids2str(dynIdsAndZero),
-            nextDeckId, TimeManager.time.intTime(), usn()
+            nextDeckId,
+            TimeManager.time.intTime(),
+            usn()
         )
         result.cardsWithFixedHomeDeckCount = cardIds.size
         val message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size)
@@ -1838,7 +1853,9 @@ open class Collection(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today, TimeManager.time.intTime(), usn()
+                sched.today,
+                TimeManager.time.intTime(),
+                usn()
             )
         }
         return problems
@@ -2030,7 +2047,8 @@ open class Collection(
                     )
                     if (firstException == null) {
                         val details = String.format(
-                            Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
+                            Locale.ROOT,
+                            "deleteNotesWithWrongFieldCounts row: %d col: %d",
                             currentRow,
                             cur.columnCount
                         )
@@ -2139,23 +2157,20 @@ open class Collection(
         }
     }
 
-    fun log(vararg argsParam: Any?) {
-        val args = argsParam.toMutableList()
-        if (!debugLog) {
-            return
-        }
-        val trace = Thread.currentThread().stackTrace[3]
-        // Overwrite any args that need special handling for an appropriate string representation
-        for (i in 0 until args.size) {
-            if (args[i] is LongArray) {
-                args[i] = Arrays.toString(args[i] as LongArray?)
-            }
-        }
-        val s = String.format(
-            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
-            TextUtils.join(",  ", args)
-        )
-        writeLog(s)
+    fun log(vararg objects: Any?) {
+        if (!debugLog) return
+
+        val unixTime = TimeManager.time.intTime()
+
+        val outerTraceElement = Thread.currentThread().stackTrace[3]
+        val fileName = outerTraceElement.fileName
+        val methodName = outerTraceElement.methodName
+
+        val objectsString = objects
+            .map { if (it is LongArray) Arrays.toString(it) else it }
+            .joinToString(", ")
+
+        writeLog("[$unixTime] $fileName:$methodName() $objectsString")
     }
 
     private fun writeLog(s: String) {
@@ -2206,7 +2221,10 @@ open class Collection(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
             ),
-            7, flag, usn(), TimeManager.time.intTime()
+            7,
+            flag,
+            usn(),
+            TimeManager.time.intTime()
         )
     }
 
@@ -2305,14 +2323,14 @@ open class Collection(
      */
     @Suppress("unused")
     fun get_config_object(key: String): JSONObject {
-        return JSONObject(config!!.getJSONObject(key))
+        return config!!.getJSONObject(key).deepClone()
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
     fun get_config_array(key: String): JSONArray {
-        return JSONArray(config!!.getJSONArray(key))
+        return config!!.getJSONArray(key).deepClone()
     }
 
     /**
@@ -2327,43 +2345,55 @@ open class Collection(
     fun get_config(key: String, defaultValue: Boolean?): Boolean? {
         return if (config!!.isNull(key)) {
             defaultValue
-        } else config!!.getBoolean(key)
+        } else {
+            config!!.getBoolean(key)
+        }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Long?): Long? {
         return if (config!!.isNull(key)) {
             defaultValue
-        } else config!!.getLong(key)
+        } else {
+            config!!.getLong(key)
+        }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Int?): Int? {
         return if (config!!.isNull(key)) {
             defaultValue
-        } else config!!.getInt(key)
+        } else {
+            config!!.getInt(key)
+        }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Double?): Double? {
         return if (config!!.isNull(key)) {
             defaultValue
-        } else config!!.getDouble(key)
+        } else {
+            config!!.getDouble(key)
+        }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: String?): String? {
         return if (config!!.isNull(key)) {
             defaultValue
-        } else config!!.getString(key)
+        } else {
+            config!!.getString(key)
+        }
     }
 
     /** Edits to the config are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
         return if (config!!.isNull(key)) {
-            if (defaultValue == null) null else JSONObject(defaultValue)
-        } else JSONObject(config!!.getJSONObject(key))
+            if (defaultValue == null) null else defaultValue.deepClone()
+        } else {
+            config!!.getJSONObject(key).deepClone()
+        }
     }
 
     /** Edits to the array are not persisted to the preferences  */
@@ -2371,7 +2401,9 @@ open class Collection(
     fun get_config(key: String, defaultValue: JSONArray?): JSONArray? {
         return if (config!!.isNull(key)) {
             if (defaultValue == null) null else JSONArray(defaultValue)
-        } else JSONArray(config!!.getJSONArray(key))
+        } else {
+            JSONArray(config!!.getJSONArray(key))
+        }
     }
 
     fun set_config(key: String, value: Boolean) {
@@ -2447,7 +2479,9 @@ open class Collection(
     open fun setDeck(cids: LongArray, did: Long) {
         db.execute(
             "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-            did, usn(), TimeManager.time.intTime()
+            did,
+            usn(),
+            TimeManager.time.intTime()
         )
     }
 

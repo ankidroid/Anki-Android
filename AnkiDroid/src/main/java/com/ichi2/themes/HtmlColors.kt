@@ -26,7 +26,8 @@ import java.util.regex.Pattern
 @KotlinCleanup("for better possibly-null handling")
 object HtmlColors {
     private val fHtmlColorPattern = Pattern.compile(
-        "((?:color|background)\\s*[=:]\\s*\"?)((?:[a-z]+|#[0-9a-f]+|rgb\\([0-9]+,\\s*[0-9],+\\s*[0-9]+\\)))([\";\\s])", Pattern.CASE_INSENSITIVE
+        "((?:color|background)\\s*[=:]\\s*\"?)((?:[a-z]+|#[0-9a-f]+|rgb\\([0-9]+,\\s*[0-9],+\\s*[0-9]+\\)))([\";\\s])",
+        Pattern.CASE_INSENSITIVE
     )
     private val fShortHexColorPattern = Pattern.compile("^#([0-9a-f])([0-9a-f])([0-9a-f])$", Pattern.CASE_INSENSITIVE)
     private val fLongHexColorPattern = Pattern.compile("^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$", Pattern.CASE_INSENSITIVE)
@@ -46,7 +47,9 @@ object HtmlColors {
         val normalisedName = name.lowercase(Locale.US)
         return if (sColorsMap!!.containsKey(normalisedName)) {
             sColorsMap!![normalisedName]
-        } else name
+        } else {
+            name
+        }
     }
 
     /**
@@ -67,7 +70,8 @@ object HtmlColors {
                     m2 = fShortHexColorPattern.matcher(color)
                     if (m2.find()) {
                         color = String.format(
-                            Locale.US, "#%x%x%x",
+                            Locale.US,
+                            "#%x%x%x",
                             0xf - m2.group(1)!!.toInt(16),
                             0xf - m2.group(2)!!.toInt(16),
                             0xf - m2.group(3)!!.toInt(16)
@@ -77,7 +81,8 @@ object HtmlColors {
                     m2 = fLongHexColorPattern.matcher(color)
                     if (m2.find()) {
                         color = String.format(
-                            Locale.US, "#%02x%02x%02x",
+                            Locale.US,
+                            "#%02x%02x%02x",
                             0xff - m2.group(1)!!.toInt(16),
                             0xff - m2.group(2)!!.toInt(16),
                             0xff - m2.group(3)!!.toInt(16)
@@ -87,7 +92,8 @@ object HtmlColors {
                     m2 = fRgbColorPattern.matcher(color)
                     if (m2.find()) {
                         color = String.format(
-                            Locale.US, "rgb(%d, %d, %d)",
+                            Locale.US,
+                            "rgb(%d, %d, %d)",
                             0xff - m2.group(1)!!.toInt(),
                             0xff - m2.group(2)!!.toInt(),
                             0xff - m2.group(3)!!.toInt()

@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Sí</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mazos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Explorador de tarjetas</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
     <string name="empty_cloze_warning">Editar esta nota y añadir algunos huecos (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronización desactivada temporalmente</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrar al almacenamiento de alcance.</string>
     <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
     <string name="continue_sync">Continuar la sincronización</string>
     <string name="sync_cancelled">Sincronización cancelada</string>
@@ -191,7 +192,7 @@
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apariencia del Navegador de Tarjetas</string>
     <string name="card_template_editor_deck_override">Anulación de mazo</string>
-    <string name="card_template_editor_insert_field">Insertar campos</string>
+    <string name="card_template_editor_insert_field">Insertar campo</string>
     <string name="card_template_editor_select_field">Seleccionar campo</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
     <plurals name="card_template_editor_confirm_add">
@@ -231,11 +232,18 @@
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">¿Reemplazar tu colección en AnkiDroid con tu colección de AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">¿Reemplazar tu colección en AnkiWeb con tu colección de AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Selecciona la colección a mantener</string>
+    <string name="sync_conflict_title_new">Seleccionar colección a mantener</string>
     <string name="sync_conflict_replace_title">Reemplazar colección</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d tarjeta (0 pendiente)</item>
         <item quantity="other">%1$d tarjetas (0 pendiente)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copiar</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

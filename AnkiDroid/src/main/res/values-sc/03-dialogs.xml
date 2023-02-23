@@ -98,6 +98,7 @@
                                              Si custu acontesset prus de su sòlitu proa a verificare sa base de datos, ariparare sa colletzione o a la ripristinare dae una còpia de seguresa. Incarca in “optziones” pro lu fàghere.\n
                                              \\O diat pòdere èssere fintzas unu problema de AnkiDroid; pro praghere sinnala s\'errore pro nos permìtere de lu verificare.</string>
     <string name="answering_error_report">Sinnala una faddina</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Cheres a beru proare a riparare sa base de datos?\n
                    \n
                    In antis de incumintzare cun sa proa s\'at a creare una còpia in sa suta-cartella “%s”.</string>
@@ -123,8 +124,8 @@
         <item quantity="one">Cartas importadas: %2$d</item>
         <item quantity="other">Documentos importados: %1$d\nTotale de cartas importadas: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">S\'ischeda SD est prena</string>
-    <string name="sd_card_almost_full_title">S\'ischeda SD est belle prena</string>
+    <string name="storage_full_title">Memòria prena</string>
+    <string name="storage_almost_full_title">Memòria belle prena</string>
     <string name="no_space_to_downgrade_title">Non b\'at ispàtziu</string>
     <string name="no_space_to_downgrade_content">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
     <string name="restore_backup_title">Ripristinare sa còpia de seguresa?</string>
@@ -132,7 +133,9 @@
     <string name="restore_backup_choose_another">Issèbera·nde un\'àteru</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">AB</string>
+    <string name="dialog_confirm">Cunfirma</string>
     <string name="dialog_no">Nono</string>
+    <string name="dialog_yes">Eja</string>
     <string name="dialog_continue">Sighi</string>
     <string name="dialog_processing">Protzessende...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
@@ -180,14 +183,6 @@
     <string name="multimedia_editor_failed">Abertura de s\'Editore Multimediale fallida</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permissu de registratzione àudio negadu</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Bene bènnidu in AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid tenet bisòngiu de su permissu de archiviatzione, chi impreamus petzi pro sarvare sa colletzione de AnkiDroid tua, sos elementos multimediales de sas cartas mnemònicas e sas còpias de seguresa. Su còdighe nostru est a flashcard media and backups. Su còdighe nostru est a mitza aberta, iscritu dae voluntàrios, e cunsideradu degnu de fide dae milliones de persones.\n
-                                                \n
-                                                Si tenes cale si siat pregunta aberi su manuale integradu in s\'aplicatzione o bìsita sos forums de suportu nostros.\n
-                                                \n
-                                                Ti torramus gràtzias pro àere isseberadu de proare AnkiDroid!\n
-                                                — Iscuadra de isvilupu de AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">B\'at àpidu una faddina disconnota in sa visualizatzione de s\'editore avantzadu</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid est istadu atualizadu</string>
@@ -252,6 +247,7 @@
     <string name="help_item_support_develop_ankidroid">Isvilupa</string>
     <string name="help_item_support_rate_ankidroid">Vota</string>
     <string name="help_item_support_other_ankidroid">Àteru</string>
+    <string name="multimedia_editor_trans_translate">Borta</string>
     <string name="help_title_community">Comunidade</string>
     <string name="help_item_anki_forums">Forums de Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -268,7 +264,7 @@
         <item quantity="one">In %d segundu diat pòdere incumintzare una sincronizatzione automàtica</item>
         <item quantity="other">In %d segundos diat pòdere incumintzare una sincronizatzione automàtica</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Sa connessione tua est a consumu. Su tramudòngiu de datos diat pòdere costare dinare</string>
     <string name="deck_picker_new">Nùmeru de cartas noas de pompiare oe in custu matzu.</string>
     <string name="deck_picker_rev">Nùmeru de cartas chi iscadint oe in custu matzu.</string>
     <string name="deck_picker_lrn">Nùmeru de cartas de imparare in custu matzu.</string>
@@ -281,4 +277,14 @@
     <string name="import_csv">Documentu de testu (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Non podes creare unu suta-matzu pro totu sos matzos</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Pro neghe de sas modìficas de sa riservadesa de Android sa positzione de archiviatzione tua no at a èssere atzessìbile si s\'aplicatzione no est installada.
+        \n\nDepimus tramudare sos datos tuos a unu tretu privadu de s\'aplicatzione AnkiDroid.
+        \n\nSos datos in custu logu privadu si diant pòdere iscantzellare si disinstallas s\'aplicatzione.
+        \n\nSa positzione de archiviatzione atuale tua est %1$s
+        \n\nSa positzione de archiviatzione privada at a èssere %2$s
+        \n\nPro praghere cunfirma chi as a fàghere còpias de seguresa de custa cartella in manera regulare.
+    </string>
+    <string name="manual_backup">Còpia de seguresa manuale</string>
+    <string name="remind_me_later">Ammenta·mi·lu prus a tardu</string>
 </resources>

@@ -98,9 +98,9 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
                     // getQuantityString needs an int
                     val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
                     val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
-                    mActivity.get()!!.showSimpleNotification(err, message, NotificationChannels.Channel.SYNC)
+                    mActivity.get()!!.showSimpleNotification(err, message, Channel.SYNC)
                 } else {
-                    mActivity.get()!!.showSimpleNotification(err, res.getString(R.string.youre_offline), NotificationChannels.Channel.SYNC)
+                    mActivity.get()!!.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
                 }
             }
             mActivity.get()!!.finishWithoutAnimation()

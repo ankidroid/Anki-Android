@@ -26,14 +26,11 @@ class CountModelsTest : RobolectricTest() {
 
     @Test
     fun testModelsCount() = runTest {
-        val initialCount = modelCount
+        val initialCount = getAllModelsAndNotesCount().first.size /** number of models in the collection */
 
         addNonClozeModel("testModel", arrayOf("front", "back"), qfmt = "{{front}}", afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n{{ back }}")
 
-        val finalCount = modelCount
+        val finalCount = getAllModelsAndNotesCount().first.size
         assertEquals(initialCount + 1, finalCount)
     }
-
-    /** Returns the number of models in the collection */
-    private val modelCount get() = getAllModelsAndNotesCount(col).first.size
 }

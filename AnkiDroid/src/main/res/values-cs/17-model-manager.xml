@@ -70,7 +70,7 @@
     <string name="model_clone_suffix">kopírovat</string>
     <!--Warnings-->
     <string name="model_delete_warning">Opravdu si přejete odstranit tento typ poznámky?</string>
-    <string name="field_delete_warning">Jste si jisti, že chcete odstranit toto pole?</string>
+    <string name="field_delete_warning">Opravdu si přejete odstranit toto pole?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Přidat: %1$s </string>
     <!--This prefix is used for standard note types-->

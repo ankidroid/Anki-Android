@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">إظهار البطاقات الجديدة قبل المراجعات</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">عندما لا يكون هناك خط محدد في البطاقات</string>
-    <string name="override_font_always">دائمًا</string>
+    <string name="override_font_always" comment="Option to always override font">دائمًا</string>
     <!-- theme labels -->
     <string name="theme_follow_system">حسب النظام</string>
     <!-- day_theme_labels -->

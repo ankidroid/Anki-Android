@@ -22,58 +22,85 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.sched.SchedV2
 import java.util.function.Consumer
 
-object RescheduleDialog : IntegerDialog() {
-    @CheckResult
-    fun rescheduleSingleCard(
-        resources: Resources,
-        currentCard: Card,
-        consumer: Consumer<Int>?
-    ): RescheduleDialog {
-        val rescheduleDialog = RescheduleDialog
-        val content = getContentString(resources, currentCard)
-        rescheduleDialog.setArgs(
-            title = resources.getQuantityString(R.plurals.reschedule_cards_dialog_title_new, 1, 1),
-            prompt = resources.getString(R.string.reschedule_card_dialog_message),
-            digits = 4,
-            content = content
-        )
-        if (consumer != null) {
-            rescheduleDialog.setCallbackRunnable(consumer)
-        }
-        return rescheduleDialog
-    }
+// a memory leak was caused when this was a singleton object.
+class RescheduleDialog : IntegerDialog() {
 
-    @CheckResult
-    fun rescheduleMultipleCards(resources: Resources, consumer: Consumer<Int>?, cardCount: Int): RescheduleDialog {
-        val rescheduleDialog = RescheduleDialog
-        rescheduleDialog.setArgs(
-            resources.getQuantityString(R.plurals.reschedule_cards_dialog_title_new, cardCount, cardCount),
-            resources.getString(R.string.reschedule_card_dialog_message),
-            4
-        )
-        if (consumer != null) {
-            rescheduleDialog.setCallbackRunnable(consumer)
-        }
-        return rescheduleDialog
-    }
-
-    private fun getContentString(resources: Resources, currentCard: Card): String? {
-        if (currentCard.isNew) {
-            return resources.getString(R.string.reschedule_card_dialog_new_card_warning)
+    companion object {
+        @CheckResult
+        fun rescheduleSingleCard(
+            resources: Resources,
+            currentCard: Card,
+            consumer: Consumer<Int>?
+        ): RescheduleDialog {
+            val rescheduleDialog = RescheduleDialog()
+            val content = getContentString(resources, currentCard)
+            rescheduleDialog.setArgs(
+                title = resources.getQuantityString(
+                    R.plurals.reschedule_cards_dialog_title_new,
+                    1,
+                    1
+                ),
+                prompt = resources.getString(R.string.reschedule_card_dialog_message),
+                digits = 4,
+                content = content
+            )
+            if (consumer != null) {
+                rescheduleDialog.setCallbackRunnable(consumer)
+            }
+            return rescheduleDialog
         }
 
-        // #5595 - Help a user reschedule cards by showing them the current interval.
-        // DEFECT: We should be able to calculate this for all card types - not yet performed for non-review or dynamic cards
-        if (!currentCard.isReview) {
-            return null
+        @CheckResult
+        fun rescheduleMultipleCards(
+            resources: Resources,
+            consumer: Consumer<Int>?,
+            cardCount: Int
+        ): RescheduleDialog {
+            val rescheduleDialog = RescheduleDialog()
+            rescheduleDialog.setArgs(
+                resources.getQuantityString(
+                    R.plurals.reschedule_cards_dialog_title_new,
+                    cardCount,
+                    cardCount
+                ),
+                resources.getString(R.string.reschedule_card_dialog_message),
+                4
+            )
+            if (consumer != null) {
+                rescheduleDialog.setCallbackRunnable(consumer)
+            }
+            return rescheduleDialog
         }
-        val message = resources.getString(R.string.reschedule_card_dialog_warning_ease_reset, SchedV2.RESCHEDULE_FACTOR / 10)
-        return if (currentCard.isInDynamicDeck) {
-            message
-        } else """
+
+        private fun getContentString(resources: Resources, currentCard: Card): String? {
+            if (currentCard.isNew) {
+                return resources.getString(R.string.reschedule_card_dialog_new_card_warning)
+            }
+
+            // #5595 - Help a user reschedule cards by showing them the current interval.
+            // DEFECT: We should be able to calculate this for all card types - not yet performed for non-review or dynamic cards
+            if (!currentCard.isReview) {
+                return null
+            }
+            val message = resources.getString(
+                R.string.reschedule_card_dialog_warning_ease_reset,
+                SchedV2.RESCHEDULE_FACTOR / 10
+            )
+            return if (currentCard.isInDynamicDeck) {
+                message
+            } else {
+                """
      $message
      
-     ${resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.ivl, currentCard.ivl)}
-        """.trimIndent()
+     ${
+                resources.getQuantityString(
+                    R.plurals.reschedule_card_dialog_interval,
+                    currentCard.ivl,
+                    currentCard.ivl
+                )
+                }
+                """.trimIndent()
+            }
+        }
     }
 }

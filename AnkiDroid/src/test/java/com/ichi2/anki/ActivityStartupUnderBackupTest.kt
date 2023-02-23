@@ -47,6 +47,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter(1)
     @JvmField // required for Parameter
     var mActivityName: String? = null
+
     @Before
     fun before() {
         notYetHandled(CropImageActivity::class.java.simpleName, "cannot implemented - activity from canhub.cropper")
@@ -54,7 +55,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(VideoPlayer::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(LoadPronunciationActivity::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
-        notYetHandled(DeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
+        notYetHandled(DeckOptionsActivity::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
     }
 

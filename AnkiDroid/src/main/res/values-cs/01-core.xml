@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ano</string>
     <!-- Navigation drawer items-->
     <string name="decks">Balíčky</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Prohlížeč karet</string>
@@ -53,7 +52,7 @@
     <string name="help">Nápověda</string>
     <string name="drawing">Kreslení</string>
     <string name="send_feedback">Odeslat zpětnou vazbu</string>
-    <string name="studyoptions_due_today">Dnes k zopakování:</string>
+    <string name="studyoptions_due_today">Dnes ke zkoušení:</string>
     <string name="studyoptions_new_total">Celkem nových karet:</string>
     <string name="studyoptions_total_cards">Celkem karet:</string>
     <string name="studyoptions_eta">Odhadovaný čas (min):</string>
@@ -186,6 +185,8 @@
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronizace dočasně zakázána</string>
+    <string name="button_upgrade" comment="Text of the sync button">Přesunout do vyhrazeného úložiště</string>
     <string name="cancel_sync_confirm">Přejete si přerušit synchronizaci?</string>
     <string name="continue_sync">Pokračovat v synchronizaci</string>
     <string name="sync_cancelled">Synchronizace přrušena</string>
@@ -254,4 +255,11 @@
         <item quantity="other">%1$d karet (0 ke zkoušení)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Vaše data se přesouvají</string>
+    <string name="migration_successful_message">Přesun dat byl úspěšný</string>
+    <string name="migration_failed_message">Přesun dat se nezdařil</string>
+    <string name="migration_transferred_size">Přesunuto %1$.0f MB z %2$.0f MB</string>
 </resources>

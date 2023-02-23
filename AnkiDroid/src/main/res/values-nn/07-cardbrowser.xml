@@ -53,10 +53,10 @@
         <item quantity="one">%d note shown</item>
         <item quantity="other">%d notes shown</item>
     </plurals>
-    <string name="card_browser_all_decks">Alle kortstokker</string>
+    <string name="card_browser_all_decks">Alle kortleikar</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_change_deck">Byt kortleik</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
@@ -97,8 +97,16 @@
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_unknown_deck_name">Ukjend</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
@@ -115,7 +123,7 @@
     <string name="card_info_total_time">Total Time</string>
     <string name="card_info_card_type">Card Type</string>
     <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
+    <string name="card_info_deck_name">Kortleiknamn</string>
     <string name="card_info_card_id">Card Id</string>
     <string name="card_info_note_id">Note Id</string>
     <string name="card_info_revlog_time">Time</string>

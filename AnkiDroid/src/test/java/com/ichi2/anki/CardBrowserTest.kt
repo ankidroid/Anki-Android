@@ -523,6 +523,7 @@ class CardBrowserTest : RobolectricTest() {
         assertNotNull(shownDialog)
 
         cardBrowser.recreate()
+        advanceRobolectricUiLooper()
         val dialogAfterRecreate: Fragment? = cardBrowser.getDialogFragment()
         assertNull(dialogAfterRecreate)
     }
@@ -656,8 +657,10 @@ class CardBrowserTest : RobolectricTest() {
             Timber.w("Can't use childAt on position $position for a single click as it is not visible")
         }
         listener.onItemLongClick(
-            null, childAt,
-            position, toSelect.getItemIdAtPosition(position)
+            null,
+            childAt,
+            position,
+            toSelect.getItemIdAtPosition(position)
         )
         advanceRobolectricUiLooper()
     }

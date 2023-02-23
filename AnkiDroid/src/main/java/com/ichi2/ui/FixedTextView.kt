@@ -218,7 +218,7 @@ class FixedTextView : AppCompatTextView {
         }
     }
 
-    override fun setText(text: CharSequence, type: BufferType) {
+    override fun setText(text: CharSequence?, type: BufferType) {
         try {
             super.setText(text, type)
         } catch (ex: Throwable) {

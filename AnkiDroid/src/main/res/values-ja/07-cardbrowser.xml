@@ -49,7 +49,7 @@
         <item quantity="other">%d枚のカード</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d notes shown</item>
+        <item quantity="other">%d枚のノート</item>
     </plurals>
     <string name="card_browser_all_decks">全てのデッキ</string>
     <string name="card_browser_delete_card">ノートを削除</string>
@@ -57,7 +57,7 @@
     <string name="card_browser_change_deck">デッキを変更</string>
     <string name="card_browser_unsuspend_card">カードの保留を解除</string>
     <string name="card_browser_mark_card">ノートにマーク</string>
-    <string name="card_browser_unmark_card">ノートのマークを取り外す</string>
+    <string name="card_browser_unmark_card">ノートのマークを解除</string>
     <string name="delete_card_title">ノートの削除</string>
     <string name="changed_deck_message">%sにカードを移動しました</string>
     <string name="card_browser_show_marked">マーク付きカードを抽出</string>
@@ -92,11 +92,17 @@
     <string name="card_browser_select_none">選択を全て解除</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
     <string name="card_browser_due_filtered_card">(フィルター)</string>
-    <string name="card_browser_interval_learning_card">(学習中)</string>
+    <string name="card_browser_interval_learning_card">(習得中)</string>
     <string name="card_browser_no_cards_in_deck">%s のデッキにカードが見つかりませんでした</string>
     <string name="card_browser_search_all_decks">全デッキで検索</string>
     <string name="card_browser_unknown_deck_name">不明</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">長文は先頭部分のみ表示</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">表示の切り詰め</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="other">カードをエクスポート</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="other">ノートをエクスポート</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 枚のカードが削除されました</item>
     </plurals>
@@ -106,7 +112,7 @@
     <string name="card_info_latest_review">直近の学習日</string>
     <string name="card_info_interval">間隔</string>
     <string name="card_info_ease">易しさ</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">回答数</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">学習回数</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">忘却回数</string>
     <string name="card_info_average_time">平均タイム</string>
     <string name="card_info_total_time">合計タイム</string>
@@ -119,9 +125,9 @@
     <string name="card_info_revlog_date">日時</string>
     <string name="card_info_revlog_rating">評価</string>
     <string name="card_info_revlog_type">種類</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">基本学習</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">習得</string>
     <string name="card_info_revlog_review">復習</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">再基本学習</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">再習得</string>
     <string name="card_info_revlog_filtered">フィルター</string>
     <string name="card_info_ease_not_applicable">-</string>
 </resources>

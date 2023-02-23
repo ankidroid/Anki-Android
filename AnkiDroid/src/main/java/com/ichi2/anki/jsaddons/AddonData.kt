@@ -23,7 +23,6 @@ import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.NOTE_EDITOR_ADDON
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.anki.jsaddons.NpmUtils.validateName
-import org.acra.collections.ImmutableMap
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -139,10 +138,10 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
         ankidroidJsApi = addonData.ankidroidJsApi!!,
         addonType = addonData.addonType!!,
         keywords = addonData.keywords,
-        author = ImmutableMap<String, String>(addonData.author!!),
+        author = addonData.author!!,
         license = addonData.license!!,
         homepage = addonData.homepage!!,
-        dist = ImmutableMap<String, String>(addonData.dist!!)
+        dist = addonData.dist!!
     )
 
     return Pair(addonModel, immutableList)

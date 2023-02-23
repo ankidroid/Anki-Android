@@ -39,15 +39,14 @@ import com.ichi2.libanki.sync.RemoteMediaServer
 import com.ichi2.libanki.sync.RemoteServer
 import com.ichi2.libanki.sync.Syncer
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import okhttp3.Response
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
-import java.util.Arrays
 
 @Suppress("DEPRECATION") // #7108: AsyncTask
 @KotlinCleanup("Simplify null comparison, !! -> ?.")
@@ -257,7 +256,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             colCorruptFullSync = if (FULL_DOWNLOAD == conflictResolution) {
                 true
             } else {
-                return returnGenericError(data)
+                return genericError(data)
             }
         }
         return try {
@@ -273,7 +272,13 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 val ret = client.sync(this)
                 data.message = client.syncMsg
                 if (ret == null) {
-                    return returnGenericError(data)
+                    return genericError(data)
+                }
+                if (NETWORK_ERROR == ret.first) {
+                    data.success = false
+                    data.resultType = ret.first
+                    data.result = arrayOf(ret.second)
+                    return data
                 }
                 if (NO_CHANGES != ret.first && SUCCESS != ret.first) {
                     data.success = false
@@ -304,7 +309,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             val ret = fullSyncServer.upload()
                             col.reopen()
                             if (ret == null) {
-                                return returnGenericError(data)
+                                return genericError(data)
                             }
                             if (ret.first == ARBITRARY_STRING && ret.second!![0] != HttpSyncer.ANKIWEB_STATUS_OK) {
                                 data.success = false
@@ -319,6 +324,8 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             val ret = fullSyncServer.download()
                             if (SUCCESS == ret) {
                                 data.success = true
+                                // Note: we don't set afterFullSync here, as that assumes the new schema
+                                // has already reopened the collection in the backend.
                                 col.reopen()
                             }
                             if (SUCCESS != ret) {
@@ -489,14 +496,13 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         var message: String? = null
         var col: Collection? = null
 
-        @KotlinCleanup("replace Arrays.toString() -> contentToString")
         @KotlinCleanup("use formatted string")
         override fun toString(): String {
             return "Payload{" +
                 "mTaskType=" + taskType +
-                ", data=" + Arrays.toString(data) +
+                ", data=" + data.contentToString() +
                 ", resultType=" + resultType +
-                ", result=" + Arrays.toString(result) +
+                ", result=" + result.contentToString() +
                 ", success=" + success +
                 ", returnType=" + returnType +
                 ", exception=" + exception +
@@ -556,13 +562,12 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
          * @param data Some payload that should be transformed
          * @return the original payload
          */
-        @KotlinCleanup("remove return from method name")
-        @KotlinCleanup("scpoed function")
-        private fun returnGenericError(data: Payload): Payload {
-            data.success = false
-            data.resultType = GENERIC_ERROR
-            data.result = arrayOfNulls(0)
-            return data
+        private fun genericError(data: Payload): Payload {
+            return data.apply {
+                success = false
+                resultType = GENERIC_ERROR
+                result = arrayOfNulls(0)
+            }
         }
 
         @Synchronized // #7108: AsyncTask

@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">ᱮᱰᱵᱷᱟᱱᱥ  ᱥᱟᱯᱰᱟᱣᱼᱟᱜ</string>
     <string name="multimedia_editor_popup_cloze">ᱠᱞᱚᱡ ᱜᱮᱫ  ᱜᱤᱰᱤᱫ</string>
     <string name="multimedia_editor_popup_clear_field">ᱴᱷᱟᱶ ᱯᱷᱟᱨᱪᱟᱭ ᱢᱮ</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate"> ᱛᱚᱨᱡᱚᱢᱟ</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">ᱞᱳᱰ</string>
     <string name="multimedia_editor_pron_looking_up">ᱩᱪᱨᱚᱬ ᱠᱚ ᱧᱮᱞ-ᱧᱮᱞᱚᱜ ᱠᱟᱱᱟ</string>
@@ -112,7 +110,7 @@
     <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱮᱫ ᱢᱮᱭᱟ ᱥᱮ ᱵᱟᱝ-ᱟ  ?</string>
     <string name="crop_button">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ </string>
     <string name="save_dialog_content">ᱱᱤᱛᱚᱜ ᱪᱤᱛᱟᱹᱨ ᱨᱮᱭᱟᱜ ᱢᱟᱯ %sMB ᱾ ᱦᱩᱰᱟᱹᱜ ᱪᱤᱛᱹᱨ ᱢᱟᱯ ᱑MB ᱾ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟ ᱠᱟᱱᱟ ᱥᱮ?  </string>
-    <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱪᱚᱭᱚᱱ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
+    <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱵᱟᱪᱷᱟᱣ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
     <string name="activity_result_unexpected">ᱮᱯᱯ ᱵᱟᱝ ᱵᱟᱰᱟᱭ ᱠᱟᱱ ᱜᱚᱱᱚᱝ ᱨᱩᱟᱹᱰ ᱮᱢᱚᱜ ᱠᱟᱱᱟᱭ ᱾ ᱟᱢ ᱚᱞᱜᱟ ᱮᱯᱯ ᱵᱮᱵᱷᱨᱟ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

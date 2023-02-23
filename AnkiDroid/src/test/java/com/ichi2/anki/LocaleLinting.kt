@@ -52,7 +52,7 @@ class LocaleLinting(private val locale: Locale) : RobolectricTest() {
         @JvmStatic // required for initParameters
         @Suppress("unused")
         fun initParameters(): Collection<Locale> {
-            return LanguageUtil.APP_LANGUAGES.map(::toLocale)
+            return LanguageUtil.APP_LANGUAGES.values.map(::toLocale)
         }
 
         private fun toLocale(localeCode: String): Locale {

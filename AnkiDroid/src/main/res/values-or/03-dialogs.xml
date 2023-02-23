@@ -47,10 +47,10 @@
     <string name="check_db_title">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="check_db_acknowledge">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏବଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d MB ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
-    <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏଵଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d MB ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
+    <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବା</string>
     <string name="delete_deck_default_deck">ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ବିଲୋପ କରାଯାଇପାରିବ ନାହିଁ</string>
-    <string name="delete_deck_title">ତାସଖଣ୍ଡ ବିଲୋପ କରିବେ କି?</string>
+    <string name="delete_deck_title">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବେ ତ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟିଏ ପତ୍ର ଅଛି।</item>
         <item quantity="other">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟି ପତ୍ର ଅଛି।</item>
@@ -60,13 +60,13 @@
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
-    <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
-    <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
-    <string name="reposition_card_not_new_error">କେବଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ରିପୋଜିସନ୍ କରାଯାଇପାରିବ</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>
+    <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
+    <string name="reposition_card_dialog_message">ଆରମ୍ଭ ଅଵସ୍ଥିତି:</string>
+    <string name="reposition_card_not_new_error">କେଵଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ପୁନଃଅଵସ୍ଥିତ କରିହେବ</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%dଟିଏ ପତ୍ର ରିପୋଜିସନ୍ କରାଗଲା</item>
-        <item quantity="other">%dଟି ପତ୍ର ରିପୋଜିସନ୍ କରାଗଲା</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃଅଵସ୍ଥିତ କରାଗଲା</item>
+        <item quantity="other">%dଟି ପତ୍ର ପୁନଃଅଵସ୍ଥିତ କରାଗଲା</item>
     </plurals>
     <string name="reset_card_dialog_title">ପତ୍ରର ପ୍ରଗତି ପୁନଃସେଟ୍ କର</string>
     <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>
@@ -89,11 +89,12 @@
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">ପୁନଃନିର୍ଦ୍ଧାରଣ କରିବା ଫଳରେ ଭବିଷ୍ୟତରେ ଅନୁସୂଚକ ପତ୍ରକୁ କିପରି ଵ୍ୟଵହାର କରିବ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ ହୋଇଯାଏ (ଅର୍ଥାତ୍ ସହଜତା %dକୁ ସେଟ୍ ହେବ)।</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ତାସଖଣ୍ଡଟି ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଏହାକୁ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ବର୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
@@ -104,19 +105,19 @@
     <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
-    <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରିବା:</string>
+    <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
     <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
     <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି କରୁଛି&#8230;</string>
     <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
-    <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରବର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
-    <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା। </string>
+    <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରଵର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
+    <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା।</string>
     <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
     <plurals name="import_complete_message">
         <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
         <item quantity="other">%1$dଟି ଫାଇଲ୍ ଆମଦାନୀ ହୋଇଛି\nସର୍ବମୋଟ %2$dଟି ପତ୍ର ଆମଦାନୀ କରାଗଲା</item>
     </plurals>
-    <string name="sd_card_full_title">SD କାର୍ଡ ପୂର୍ଣ୍ଣ</string>
-    <string name="sd_card_almost_full_title">SD କାର୍ଡ ପ୍ରାୟ ପୂର୍ଣ୍ଣ</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">ଜାଗା ନାହିଁ</string>
     <string name="no_space_to_downgrade_content">ଜାରି ରଖିବାକୁ AnkiDroid %s ମାଗଣା ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଆବଶ୍ୟକ କରେ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
@@ -124,11 +125,13 @@
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
     <string name="dialog_cancel">ବାତିଲ୍ କର</string>
     <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">ନା</string>
+    <string name="dialog_yes">ହଁ</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="dialog_positive_delete">ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="dialog_positive_delete">ଵିଲୋପ</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="dialog_positive_overwrite">ନବଲିଖନ କରନ୍ତୁ</string>
@@ -150,7 +153,7 @@
     <string name="check_media_no_unused_missing">କୌଣସି ଅବ୍ୟବହୃତ କିମ୍ବା ନିଖୋଜ ଫାଇଲ ମିଳିଲା ନାହିଁ</string>
     <string name="check_media_db_updated">ମିଡ଼ିଆ ଡାଟାବେସ୍ ପୁନଃନିର୍ମିତ</string>
     <string name="check_media_delete_unused">ଅବ୍ୟବହୃତ ବିଲୋପ କରନ୍ତୁ</string>
-    <string name="delete_media_message">ମିଡ଼ିଆ ବିଲୋପ କରୁଛି&#8230;</string>
+    <string name="delete_media_message">ମିଡ଼ିଆ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="delete_media_result_title">ବିଲୋପ ଫଳାଫଳ</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%dଟିଏ ଫାଇଲ୍ ବିଲୋପ ହୋଇଛି</item>
@@ -161,7 +164,7 @@
     <string name="tags_dialog_option_new_cards">ନୂଆ</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ବାକି</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">ଖାଲି ପତ୍ର ଖୋଜାହଉଛି&#8230;</string>
+    <string name="emtpy_cards_finding">ଖାଲି ପତ୍ର ଖୋଜାହେଉଛି&#8230;</string>
     <string name="confirm_cancel">ଆପଣ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="empty_cards_none">କୌଣସି ଖାଲି ପତ୍ର ନାହିଁ</string>
     <string name="empty_cards_count">ବିଲୋପ କରିବାକୁ ପତ୍ର : %d</string>
@@ -172,9 +175,6 @@
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">AnkiDroid କୁ ସ୍ୱାଗତ </string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ଷ୍ଟୋରେଜ୍ ଅନୁମତି ଆବଶ୍ୟକ କରେ, ଯାହାକୁ ଆମେ ଆପଣଙ୍କର AnkiDroid ସଂଗ୍ରହ, ଫ୍ଲାସକାର୍ଡ ମିଡ଼ିଆ ଏବଂ ବ୍ୟାକଅପ୍ ଗଚ୍ଛିତ କରିବା ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ବ୍ୟବହାର କରୁ। ଆମର କୋଡ୍ ଖୋଲା-ଉତ୍ସ ଅଟେ, ସ୍ୱେଚ୍ଛାସେବୀମାନଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏବଂ ଲକ୍ଷ ଲକ୍ଷ ଲୋକଙ୍କ ଦ୍ୱାରା ବିଶ୍ୱାସ କରାଯାଏ।\n\n ଯଦି ଆପଣଙ୍କର କିଛି ପ୍ରଶ୍ନ ଅଛି, ଦୟାକରି ଆମର ଇନ୍-ଆପ୍ ମାନୁଆଲକୁ ପ୍ରବେଶ କରନ୍ତୁ କିମ୍ବା ଆମର ସମର୍ଥନ ଫୋରମ୍ ପରିଦର୍ଶନ କରନ୍ତୁ।\n\n AnkiDroid ଚେଷ୍ଟା କରିଥିବାରୁ ଧନ୍ୟବାଦ!\n—AnkiDroid ବିକାଶ ଦଳ</string>
     <string name="mutimedia_editor_assertion_failed">ଉନ୍ନତ ସମ୍ପାଦକ ପ୍ରଦର୍ଶନ କଲାବେଳେ ଅଜଣା ତ୍ରୁଟି ଘଟିଲା</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid  ଅପଗ୍ରେଡ୍ ହୋଇଛି</string>
@@ -185,7 +185,7 @@
     <string name="integrity_check_fixed_no_home_deck">ଭୁଲ ଘରୋଇ ତାସଖଣ୍ଡ ସହିତ %dଟି ପତ୍ର ଉଦ୍ଧାର କରାଯାଇଛି। ଅଧିକ ସୂଚନା ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
+    <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିଵର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>
     <string name="undo_succeeded">\"%s\" ପୂର୍ବବତ୍ କରାଗଲା</string>
@@ -230,6 +230,7 @@
     <string name="help_item_support_develop_ankidroid">ବିକାଶ କରନ୍ତୁ</string>
     <string name="help_item_support_rate_ankidroid">ମୂଲ୍ୟାୟନ</string>
     <string name="help_item_support_other_ankidroid">ଅନ୍ୟ</string>
+    <string name="multimedia_editor_trans_translate">ଅନୁଵାଦ କରନ୍ତୁ</string>
     <string name="help_title_community">ସମ୍ପ୍ରଦାୟ</string>
     <string name="help_item_anki_forums">Anki ଫୋରମ୍</string>
     <string name="help_item_discord">Discord</string>
@@ -246,7 +247,7 @@
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
         <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">ଆପଣଙ୍କ ସଂଯୋଜନା ମିଟର୍ ହେଉଛି। ଡାଟା ଅନ୍ତରଣରେ ଟଙ୍କା ଖର୍ଚ୍ଚ ହୋଇପାରେ</string>
     <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_rev">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_lrn">ଏହି ତାସଖଣ୍ଡରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
@@ -259,4 +260,14 @@
     <string name="import_csv">ପାଠ୍ୟ ଫାଇଲ୍ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">ଆପଣ ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ଗୋଟେ ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">ମୋତେ ପରେ ମନେ ପକାଅ</string>
 </resources>

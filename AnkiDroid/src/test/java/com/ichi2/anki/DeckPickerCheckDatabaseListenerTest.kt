@@ -19,7 +19,6 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.DeckPicker.CheckDatabaseListener
 import com.ichi2.libanki.Collection.CheckDatabaseResult
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,7 +44,7 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl.didDisplayDialogLoadFailed())
+        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl.didDisplayDialogLoadFailed)
     }
 
     @Test
@@ -55,7 +54,7 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl.didDisplayDialogLoadFailed())
+        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl.didDisplayDialogLoadFailed)
     }
 
     @Test
@@ -65,8 +64,8 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed())
-        assertThat("Dialog should be displayed", mImpl.didDisplayMessage())
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed)
+        assertThat("Dialog should be displayed", mImpl.didDisplayMessage)
     }
 
     @Test
@@ -76,9 +75,9 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl.didDisplayDialogLoadFailed())
-        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl.didDisplayLockedDialog())
-        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage())
+        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl.didDisplayDialogLoadFailed)
+        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl.didDisplayLockedDialog)
+        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage)
     }
 
     @Test
@@ -88,9 +87,9 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed())
-        assertThat("Locked Database dialog should be shown if Db was locked", mImpl.didDisplayLockedDialog())
-        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage())
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed)
+        assertThat("Locked Database dialog should be shown if Db was locked", mImpl.didDisplayLockedDialog)
+        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage)
     }
 
     private fun lockedDatabase(): CheckDatabaseResult {
@@ -127,43 +126,35 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
     }
 
     /**COULD_BE_BETTER: Listener is too coupled to this  */
-    @KotlinCleanup("replace getters with variables")
     private class DeckPickerTestImpl : DeckPicker() {
-        private var mDidDisplayDialogLoadFailed = false
-        private var mDidDisplayMessage = false
-        private var mDidDisplayDbLocked = false
-        fun didDisplayDialogLoadFailed(): Boolean {
-            return mDidDisplayDialogLoadFailed
-        }
+        var didDisplayDialogLoadFailed = false
+            private set
+
+        var didDisplayMessage = false
+            private set
+
+        var didDisplayLockedDialog = false
+            private set
 
         override fun handleDbError() {
-            mDidDisplayDialogLoadFailed = true
+            didDisplayDialogLoadFailed = true
             super.handleDbError()
         }
 
         override fun handleDbLocked() {
-            mDidDisplayDbLocked = true
+            didDisplayLockedDialog = true
             super.handleDbLocked()
         }
 
         fun resetVariables() {
-            mDidDisplayMessage = false
-            mDidDisplayDialogLoadFailed = false
-            mDidDisplayDbLocked = false
+            didDisplayMessage = false
+            didDisplayDialogLoadFailed = false
+            didDisplayLockedDialog = false
         }
 
-        @KotlinCleanup("param should be non-nul")
         override fun showSimpleMessageDialog(message: String?, title: String, reload: Boolean) {
-            mDidDisplayMessage = true
+            didDisplayMessage = true
             super.showSimpleMessageDialog(message = message, title = title, reload = reload)
-        }
-
-        fun didDisplayMessage(): Boolean {
-            return mDidDisplayMessage
-        }
-
-        fun didDisplayLockedDialog(): Boolean {
-            return mDidDisplayDbLocked
         }
     }
 }

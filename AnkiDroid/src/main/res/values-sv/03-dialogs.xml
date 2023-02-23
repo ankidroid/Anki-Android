@@ -94,6 +94,7 @@
     <string name="answering_error_title">Databasfel</string>
     <string name="answering_error_message">Ett fel uppstod när data skrevs till samlingen. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ den från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nAnnars kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
     <string name="answering_error_report">Rapportera fel</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
@@ -115,8 +116,8 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD-kort fullt</string>
-    <string name="sd_card_almost_full_title">SD-kort nästan fullt</string>
+    <string name="storage_full_title">Storage full</string>
+    <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title">Inget utrymme</string>
     <string name="no_space_to_downgrade_content">AnkiDroid behöver %s ledigt lagringsutrymme för att fortsätta. Rensa lite utrymme</string>
     <string name="restore_backup_title">Återställ säkerhetskopia?</string>
@@ -124,7 +125,9 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Avbryt</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_no">Nej</string>
+    <string name="dialog_yes">Ja</string>
     <string name="dialog_continue">Fortsätt</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapa</string>
@@ -172,9 +175,6 @@
     <string name="multimedia_editor_failed">Det gick inte att öppna Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Behörighet för ljudinspelning nekad</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Välkommen till AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid kräver lagringstillstånd, som vi använder exklusivt för att lagra din AnkiDroid-insamling, flashcard media och säkerhetskopior. Vår kod är öppen källkod, skriven av volontärer och betrodd av miljoner.\n\nOm du har några frågor, vänligen gå till vår användarhandledning i appen eller besök vårt supportforum.\n\nTack för att du provar AnkiDroid!\n—AnkiDroids utvecklingsteam</string>
     <string name="mutimedia_editor_assertion_failed">Okänt fel uppstod vid visning av Avancerad redigerare</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid uppgraderat</string>
@@ -230,6 +230,7 @@
     <string name="help_item_support_develop_ankidroid">Utveckla</string>
     <string name="help_item_support_rate_ankidroid">Betygsätt</string>
     <string name="help_item_support_other_ankidroid">Övrigt</string>
+    <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">Community</string>
     <string name="help_item_anki_forums">Anki-forum</string>
     <string name="help_item_discord">Discord</string>
@@ -259,4 +260,14 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
+        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
+        \n\nData in this private location may be deleted if the app is uninstalled.
+        \n\nYour current storage location is %1$s
+        \n\nThe private storage location will be %2$s
+        \n\nPlease confirm that you will regularly make backups of this folder.
+    </string>
+    <string name="manual_backup">Manual backup</string>
+    <string name="remind_me_later">Remind me later</string>
 </resources>

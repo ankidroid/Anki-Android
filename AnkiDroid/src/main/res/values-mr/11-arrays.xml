@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">पुनरावलोकनापूर्वी नवीन कार्डे</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">जेव्हा फ्लॅशकार्डवर कोणताही फॉन्ट निर्दिष्ट केलेला नाही</string>
-    <string name="override_font_always">नेहमी</string>
+    <string name="override_font_always" comment="Option to always override font">नेहमी</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->

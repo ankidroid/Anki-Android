@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MoveDirectory
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.equalTo

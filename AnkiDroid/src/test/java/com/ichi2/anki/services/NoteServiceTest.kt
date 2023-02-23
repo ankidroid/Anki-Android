@@ -41,12 +41,11 @@ import java.io.FileWriter
 import java.io.IOException
 
 @KotlinCleanup("have Model constructor accent @Language('JSON')")
-@KotlinCleanup("fix typo: testimage -> test_image")
-@KotlinCleanup("Add scope functions")
 @RunWith(AndroidJUnit4::class)
 class NoteServiceTest : RobolectricTest() {
     @KotlinCleanup("lateinit")
     var testCol: Collection? = null
+
     @Before
     fun before() {
         testCol = col
@@ -67,9 +66,10 @@ class NoteServiceTest : RobolectricTest() {
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
-        val basicNote = Note(testCol!!, testModel)
-        basicNote.setField(0, "this should be changed to foo")
-        basicNote.setField(1, "this should be changed to bar")
+        val basicNote = Note(testCol!!, testModel).apply {
+            setField(0, "this should be changed to foo")
+            setField(1, "this should be changed to bar")
+        }
 
         NoteService.updateJsonNoteFromMultimediaNote(multiMediaNote, basicNote)
         assertEquals(basicNote.fields[0], multiMediaNote.getField(0)!!.text)
@@ -112,7 +112,7 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     @Throws(IOException::class)
     fun importImageToDirectoryTest() {
-        val fileImage = directory.newFile("testimage.png")
+        val fileImage = directory.newFile("test_image.png")
 
         // writes a line in the file so the file's length isn't 0
         FileWriter(fileImage).use { fileWriter -> fileWriter.write("line1") }
@@ -216,9 +216,10 @@ class NoteServiceTest : RobolectricTest() {
     fun tempAudioIsDeletedAfterImport() {
         val file = createTransientFile("foo")
 
-        val field = MediaClipField()
-        field.audioPath = file.absolutePath
-        field.setHasTemporaryMedia(true)
+        val field = MediaClipField().apply {
+            audioPath = file.absolutePath
+            hasTemporaryMedia = true
+        }
 
         NoteService.importMediaToDirectory(testCol!!, field)
 
@@ -230,9 +231,10 @@ class NoteServiceTest : RobolectricTest() {
     fun tempImageIsDeletedAfterImport() {
         val file = createTransientFile("foo")
 
-        val field = ImageField()
-        field.extraImagePathRef = file.absolutePath
-        field.setHasTemporaryMedia(true)
+        val field = ImageField().apply {
+            extraImagePathRef = file.absolutePath
+            hasTemporaryMedia = true
+        }
 
         NoteService.importMediaToDirectory(testCol!!, field)
 
@@ -245,9 +247,11 @@ class NoteServiceTest : RobolectricTest() {
         val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
         // factor for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
-            card.type = Consts.CARD_TYPE_REV
-            card.factor = 3000 / (i + 1)
-            card.flush()
+            card.apply {
+                type = Consts.CARD_TYPE_REV
+                factor = 3000 / (i + 1)
+                flush()
+            }
         }
         // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
         assertEquals(156, NoteService.avgEase(note))
@@ -278,9 +282,11 @@ class NoteServiceTest : RobolectricTest() {
 
         // interval for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
-            card.type = reviewOrRelearningList.shuffled().first()
-            card.ivl = 3000 / (i + 1)
-            card.flush()
+            card.apply {
+                type = reviewOrRelearningList.shuffled().first()
+                ivl = 3000 / (i + 1)
+                flush()
+            }
         }
 
         // avg interval = (3000 + 1500 + 1000 + 750) / 4 = [1562.5] = 1562

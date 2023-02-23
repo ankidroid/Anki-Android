@@ -25,9 +25,11 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
+import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
@@ -43,7 +45,8 @@ object ActivityList {
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
                 getReviewDeckIntent(
-                    ctx, 1L
+                    ctx,
+                    1L
                 )
             },
             get(StudyOptionsActivity::class.java),
@@ -55,7 +58,7 @@ object ActivityList {
             get(VideoPlayer::class.java),
             get(MyAccount::class.java),
             get(Preferences::class.java),
-            get(DeckOptions::class.java),
+            get(DeckOptionsActivity::class.java),
             get(CropImageActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),
@@ -75,6 +78,8 @@ object ActivityList {
             get(PagesActivity::class.java),
             get(LoginActivity::class.java),
             get(IntroductionActivity::class.java),
+            get(ManageNotetypes::class.java),
+            get(ManageSpaceActivity::class.java)
         )
     }
 

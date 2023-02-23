@@ -34,6 +34,10 @@ android {
         buildConfigField "Boolean", "LEGACY_SCHEMA", "true"
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
+        buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
+        buildConfigField "Boolean", "LEGACY_STORAGE", "false"
+        buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
+        resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
@@ -56,8 +60,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600186
-        versionName="2.16alpha86"
+        versionCode=21600193
+        versionName="2.16alpha93"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -75,7 +79,9 @@ android {
     }
     buildTypes {
         debug {
+            versionNameSuffix "-debug"
             debuggable true
+            applicationIdSuffix ".debug"
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
             // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
@@ -93,6 +99,20 @@ android {
                 if (localProperties["legacy_schema"] != null) {
                     buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
+                // allows the scoped storage migration when the user is not logged in
+                if (localProperties["allow_unsafe_migration"] != null) {
+                    buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", localProperties["allow_unsafe_migration"]
+                }
+                // allow disabling leak canary
+                if (localProperties["enable_leak_canary"] != null) {
+                    buildConfigField "Boolean", "ENABLE_LEAK_CANARY", localProperties["enable_leak_canary"]
+                } else {
+                    buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "true"
+                }
+                // allow setting legacy storage on install
+                if (localProperties["legacy_storage"] != null) {
+                    buildConfigField "Boolean", "LEGACY_STORAGE", localProperties["legacy_storage"]
+                }
             } else {
                 testCoverageEnabled true
             }
@@ -100,14 +120,25 @@ android {
             // make the icon red if in debug mode
             resValue 'color', 'anki_foreground_icon_color_0', "#FFFF0000"
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
+            resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
         release {
             minifyEnabled true
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
+            // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
+            if (project.hasProperty("customSuffix")) {
+                applicationIdSuffix project.property("customSuffix")
+            }
+            if (project.hasProperty("customName")) {
+                resValue "string", "app_name", project.property("customName")
+            }
+
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
+            resValue "string", "applicationId", defaultConfig.applicationId
         }
     }
 
@@ -178,10 +209,12 @@ android {
     }
 
     compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
         coreLibraryDesugaringEnabled true
     }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
     }
     ndkVersion "22.0.7026061"
 }
@@ -234,41 +267,40 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:23.0.0'
+            force 'org.jetbrains:annotations:24.0.0'
         }
     }
 
     lintChecks project(":lint-rules")
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
-    compileOnly 'org.jetbrains:annotations:23.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
+    compileOnly 'org.jetbrains:annotations:24.0.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
-    implementation 'androidx.activity:activity-ktx:1.6.0'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.annotation:annotation:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
-    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
+    implementation 'androidx.browser:browser:1.5.0'
     implementation "androidx.core:core-ktx:1.9.0"
-    implementation 'androidx.exifinterface:exifinterface:1.3.4'
+    implementation 'androidx.exifinterface:exifinterface:1.3.6'
     implementation "androidx.fragment:fragment-ktx:$fragments_version"
     implementation "androidx.preference:preference-ktx:1.2.0"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.sqlite:sqlite-framework:2.2.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.3.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    // noinspection GradleDependency - pinned at 1.12 until API26 minSdkVersion (File.toPath usage)
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.webkit:webkit:1.5.0'
+    implementation 'androidx.webkit:webkit:1.6.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
-    implementation 'com.github.CanHub:Android-Image-Cropper:4.3.2'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.21.7' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.21.12' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -319,41 +351,53 @@ dependencies {
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
     // build via AnkiDroidApp.
-    implementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+    implementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 
     api project(":api")
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.mockito:mockito-inline:4.8.0'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    testImplementation 'org.mockito:mockito-inline:5.1.1'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
-    testImplementation "org.robolectric:robolectric:4.8.2"
-    testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'androidx.test.ext:junit:1.1.3'
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "androidx.test:core:$androidx_test_version"
+    testImplementation "androidx.test.ext:junit:$androidx_test_junit_version"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-    testImplementation "io.mockk:mockk:1.13.2"
+    testImplementation "io.mockk:mockk:1.13.4"
     testImplementation 'org.apache.commons:commons-exec:1.3' // obtaining the OS
 
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation "androidx.fragment:fragment-testing:$fragments_version"
+    debugImplementation("androidx.fragment:fragment-testing:$fragments_version") {
+        // exclude transitive androidx.test:core dep: https://github.com/android/android-test/issues/1587
+        exclude group: 'androidx.test', module: 'core'
+    }
 
     // May need a resolution strategy for support libs to our versions
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0') {
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
         exclude module: "protobuf-lite"
     }
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation "androidx.test:core:$androidx_test_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_test_junit_version"
+    androidTestImplementation "androidx.test:rules:$androidx_test_version"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
 
 android {
+
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+    namespace 'com.ichi2.anki'
     testOptions {
         kotlinOptions {
             freeCompilerArgs += [

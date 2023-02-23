@@ -103,6 +103,18 @@
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Обрезать содержимое</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Экспортировать карточку</item>
+        <item quantity="few">Экспортировать карточки</item>
+        <item quantity="many">Экспортировать карточки</item>
+        <item quantity="other">Экспортировать карточки</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Экспортировать запись</item>
+        <item quantity="few">Экспортировать записи</item>
+        <item quantity="many">Экспортировать записи</item>
+        <item quantity="other">Экспортировать записи</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d карточка удалена</item>
         <item quantity="few">%d карточки удалены</item>

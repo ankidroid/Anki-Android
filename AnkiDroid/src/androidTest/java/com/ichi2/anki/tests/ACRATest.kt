@@ -16,22 +16,20 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
+import com.ichi2.anki.testutil.GrantStoragePermission
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
-import org.acra.collections.ImmutableList
 import org.acra.config.ACRAConfigurationException
 import org.acra.config.LimitingReportAdministrator
 import org.acra.config.ToastConfiguration
@@ -49,8 +47,7 @@ import timber.log.Timber
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
 class ACRATest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
     private var mApp: AnkiDroidApp? = null
     private val mDebugLogcatArguments = arrayOf("-t", "300", "-v", "long", "ACRA:S")
 
@@ -66,13 +63,12 @@ class ACRATest : InstrumentedTest() {
     @Test
     @Throws(Exception::class)
     fun testDebugConfiguration() {
-
         // Debug mode overrides all saved state so no setup needed
         CrashReportService.setDebugACRAConfig(sharedPrefs)
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
-            CrashReportService.getAcraCoreConfigBuilder().build().logcatArguments().toTypedArray(),
-            ImmutableList(*mDebugLogcatArguments).toTypedArray()
+            CrashReportService.acraCoreConfigBuilder.build().logcatArguments.toTypedArray(),
+            mDebugLogcatArguments
         )
         verifyDebugACRAPreferences()
     }
@@ -94,7 +90,6 @@ class ACRATest : InstrumentedTest() {
     @Test
     @Throws(Exception::class)
     fun testProductionConfigurationUserDisabled() {
-
         // set up as if the user had prefs saved to disable completely
         setReportConfig(CrashReportService.FEEDBACK_REPORT_NEVER)
 
@@ -147,12 +142,12 @@ class ACRATest : InstrumentedTest() {
         // one send should work
         val crashData = CrashReportDataFactory(
             testContext,
-            CrashReportService.getAcraCoreConfigBuilder().build()
+            CrashReportService.acraCoreConfigBuilder.build()
         ).createCrashData(ReportBuilder().exception(crash))
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
-                CrashReportService.getAcraCoreConfigBuilder().build(),
+                CrashReportService.acraCoreConfigBuilder.build(),
                 crashData
             )
         )
@@ -161,7 +156,7 @@ class ACRATest : InstrumentedTest() {
         assertFalse(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
-                CrashReportService.getAcraCoreConfigBuilder().build(),
+                CrashReportService.acraCoreConfigBuilder.build(),
                 crashData
             )
         )
@@ -173,7 +168,7 @@ class ACRATest : InstrumentedTest() {
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
-                CrashReportService.getAcraCoreConfigBuilder().build(),
+                CrashReportService.acraCoreConfigBuilder.build(),
                 crashData
             )
         )
@@ -236,8 +231,8 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertDialogEnabledStatus(message: String, isEnabled: Boolean) {
-        val config = CrashReportService.getAcraCoreConfigBuilder().build()
-        for (configuration in config.pluginConfigurations()) {
+        val config = CrashReportService.acraCoreConfigBuilder.build()
+        for (configuration in config.pluginConfigurations) {
             // Make sure the dialog is set to pop up
             if (configuration.javaClass.toString().contains("Dialog")) {
                 assertThat(message, configuration.enabled(), equalTo(isEnabled))
@@ -247,8 +242,8 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertToastIsEnabled() {
-        val config = CrashReportService.getAcraCoreConfigBuilder().build()
-        for (configuration in config.pluginConfigurations()) {
+        val config = CrashReportService.acraCoreConfigBuilder.build()
+        for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertThat("Toast should be enabled", configuration.enabled(), equalTo(true))
             }
@@ -257,12 +252,12 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertToastMessage(@StringRes res: Int) {
-        val config = CrashReportService.getAcraCoreConfigBuilder().build()
-        for (configuration in config.pluginConfigurations()) {
+        val config = CrashReportService.acraCoreConfigBuilder.build()
+        for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertEquals(
                     mApp!!.resources.getString(res),
-                    (configuration as ToastConfiguration).text()
+                    (configuration as ToastConfiguration).text
                 )
                 assertTrue("Toast should be enabled", configuration.enabled())
             }

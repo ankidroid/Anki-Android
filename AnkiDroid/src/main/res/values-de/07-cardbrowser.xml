@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">In allen Stapeln suchen</string>
     <string name="card_browser_unknown_deck_name">Unbekannt</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Inhalt kürzen</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Karte exportieren</item>
+        <item quantity="other">Karten exportieren</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Notiz exportieren</item>
+        <item quantity="other">Notizen exportieren</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d Karte gelöscht</item>
         <item quantity="other">%d Karten gelöscht</item>

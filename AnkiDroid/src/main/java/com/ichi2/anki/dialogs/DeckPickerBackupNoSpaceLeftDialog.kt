@@ -30,8 +30,8 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
         val res = resources
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
         return MaterialDialog(requireActivity()).show {
-            title(R.string.sd_card_almost_full_title)
-            message(text = res.getString(R.string.sd_space_warning, space / 1024 / 1024))
+            title(R.string.storage_almost_full_title)
+            message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
             positiveButton(R.string.dialog_ok) {
                 (activity as DeckPicker).finishWithoutAnimation()
             }

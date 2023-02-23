@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">CSDL tải về đã bị hỏng. Xin thử lại.</string>
     <string name="sync_overwrite_error">Không thể ghi đè bộ sưu tập hiện tại bằng tập tin đã tải xuống</string>
     <string name="sync_connection_error">Đã hết thời gian kết nối. Hoặc là kết nối mạng của bạn đang gặp vấn đề hoặc bạn có một tệp rất lớn trong thư mục đa phương tiện.</string>
-    <string name="sync_write_access_error">Không thể lưu tệp đã tải xuống vào thẻ SD. Hoặc là thẻ được gắn với thuộc tính chỉ-đọc hoặc là không đủ dung lượng.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">Máy chủ Đồng bộ hóa Tùy chỉnh trong Cài đặt Nâng cao không hợp lệ (%s). Vui lòng nhập một máy chủ hợp lệ hoặc tắt cài đặt.</string>
     <string name="sync_deletions_message">Đồng bộ phần đã xoá&#8230;</string>
     <string name="sync_small_objects_message">Đồng bộ các phần nhỏ&#8230;</string>

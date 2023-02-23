@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
-    <string name="sd_space_warning">మీ SD కార్డ్లో %d MB స్పేస్ కంటే తక్కువ. \n డేటా నష్టంని నివారించడానికి కొంత స్థలం ఖాళీగా ఉంది.</string>
+    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore">బ్యాకప్ నుండి పునరుద్ధరించండి</string>
     <string name="backup_new_collection">సరికొత్త సేకరణ</string>
     <string name="backup_del_collection">సేకరణను తీసివేసి, క్రొత్తదాన్ని సృష్టించండి</string>

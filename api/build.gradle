@@ -12,14 +12,22 @@ repositories {
     mavenCentral()
 }
 android {
+
+    namespace 'com.ichi2.anki.api'
     compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 29
+        buildConfigField "String", "READ_WRITE_PERMISSION", '"com.ichi2.anki.permission.READ_WRITE_DATABASE"'
+        buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.flashcards"'
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "READ_WRITE_PERMISSION", '"com.ichi2.anki.debug.permission.READ_WRITE_DATABASE"'
+            buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.debug.flashcards"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,6 +41,7 @@ android {
         // enable explicit api mode for additional checks related to the public api
         // see https://kotlinlang.org/docs/whatsnew14.html#explicit-api-mode-for-library-authors
         freeCompilerArgs += '-Xexplicit-api=strict'
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 }
 
@@ -43,7 +52,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.robolectric:robolectric:4.8.2'
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
     lintChecks project(":lint-rules")

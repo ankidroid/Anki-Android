@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">הגיבוי לא נשמר. לא נשאר מספיק מקום בכרטיס SD. הפחת את עומק הגיבוי או הסר כמה קבצים אחרים.</string>
-    <string name="sd_space_warning">פחות מ־%d מ״ב נותרו בכרטיס ה־SD.\nכדי למנוע אובדן מידע יש לפנות מקום בכרטיס.</string>
+    <string name="backup_deck_no_storage_left">הגיבוי לא נשמר. לא נשאר מספיק מקום באחסון שלך. הורד את עומק הגיבוי או הסר כמה קבצים אחרים.</string>
+    <string name="storage_warning">נותר פחות מ-‎%d MB שטח באחסון שלך.\nפנה קצת מקום כדי למנוע אובדן נתונים.</string>
     <string name="backup_restore">שחזור מגיבוי</string>
     <string name="backup_new_collection">אוסף חדש</string>
     <string name="backup_del_collection">מחיקת האוסף הקיים ויצירת אוסף חדש</string>

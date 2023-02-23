@@ -52,10 +52,10 @@
         <item quantity="other">מוצגים %d קלפים</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="two">%d notes shown</item>
-        <item quantity="many">%d notes shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">הפתק %d מוצג</item>
+        <item quantity="two">מוצגים שני קלפים</item>
+        <item quantity="many">מוצגים %d קלפים</item>
+        <item quantity="other">מוצגים %d כרטיסים</item>
     </plurals>
     <string name="card_browser_all_decks">כל החפיסות</string>
     <string name="card_browser_delete_card">מחיקת הערות</string>
@@ -103,6 +103,18 @@
     <string name="card_browser_search_all_decks">חיפוש בכל החפיסות</string>
     <string name="card_browser_unknown_deck_name">לא ידוע</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">חתוך תוכן</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">ייצוא קלף</item>
+        <item quantity="two">יצוא קלפים</item>
+        <item quantity="many">יצוא קלפים</item>
+        <item quantity="other">יצוא קלפים</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">יצוא פתק</item>
+        <item quantity="two">יצוא פתקים</item>
+        <item quantity="many">יצוא פתקים</item>
+        <item quantity="other">יצוא פתקים</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">קלף אחד נמחק.</item>
         <item quantity="two">%d קלפים נמחקו.</item>

@@ -31,13 +31,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONArray
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
+import java.net.UnknownHostException
 import java.util.*
 
 @KotlinCleanup("IDE-lint")
@@ -86,7 +87,8 @@ class Syncer(
         // The next three ones are the only that can be returned during login
         UPGRADE_REQUIRED("upgradeRequired"),
         CONNECTION_ERROR("connectionError"),
-        ERROR("error");
+        ERROR("error"),
+        NETWORK_ERROR("noNetwork");
 
         override fun toString(): String {
             return message
@@ -99,7 +101,16 @@ class Syncer(
         // if the deck has any pending changes, flush them first and bump mod time
         col.save()
         // step 1: login & metadata
-        val ret = remoteServer.meta()
+        val ret = try {
+            remoteServer.meta()
+        } catch (e: Exception) {
+            Timber.e(e.toString())
+            if (e is UnknownHostException) {
+                return Pair(NETWORK_ERROR, null)
+            } else {
+                throw e
+            }
+        }
         val returntype = ret.code
         if (returntype == 403) {
             return Pair(BAD_AUTH, null)

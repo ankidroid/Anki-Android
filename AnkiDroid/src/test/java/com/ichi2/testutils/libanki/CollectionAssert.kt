@@ -17,13 +17,11 @@ package com.ichi2.testutils.libanki
 
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.*
+import org.hamcrest.Matchers.equalTo
 
-@KotlinCleanup("fix 'is'")
 object CollectionAssert {
     fun assertSuspended(collection: Collection, cardId: Long) {
-        assertThat("Card should be suspended", collection.getCard(cardId).queue, `is`(Consts.QUEUE_TYPE_SUSPENDED))
+        assertThat("Card should be suspended", collection.getCard(cardId).queue, equalTo(Consts.QUEUE_TYPE_SUSPENDED))
     }
 }

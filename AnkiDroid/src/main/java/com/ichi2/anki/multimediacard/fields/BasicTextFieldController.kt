@@ -157,7 +157,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 val af: AudioField = AudioRecordingField()
                 af.audioPath = pronouncePath
                 // This is done to delete the file later.
-                af.setHasTemporaryMedia(true)
+                af.hasTemporaryMedia = true
                 mActivity.handleFieldChanged(af)
             } catch (e: Exception) {
                 Timber.w(e)

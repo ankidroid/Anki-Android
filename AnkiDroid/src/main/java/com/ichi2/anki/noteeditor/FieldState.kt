@@ -25,9 +25,9 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Models
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
+import org.json.JSONObject
 import java.util.*
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations

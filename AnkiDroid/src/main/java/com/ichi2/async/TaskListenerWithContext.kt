@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference
 
 /** Similar to task listener, but if the context disappear, no action are executed.
  * We ensure that the context can't disappear during the execution of the methods. */
-abstract class TaskListenerWithContext<CTX, Progress, Result> protected constructor(context: CTX?) :
+abstract class TaskListenerWithContext<CTX, Progress, Result> protected constructor(context: CTX) :
     TaskListener<Progress, Result>() where CTX : Any {
     private val mContext: WeakReference<CTX>
     override fun onPreExecute() {

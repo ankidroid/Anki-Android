@@ -67,6 +67,9 @@ class AnkiServer(
             "importCsv" -> activity.importCsvRaw(bytes)
             "getFieldNames" -> withCol { newBackend.getFieldNamesRaw(bytes) }
             "cardStats" -> withCol { newBackend.cardStatsRaw(bytes) }
+            "getDeckConfig" -> withCol { newBackend.getDeckConfigRaw(bytes) }
+            "getDeckConfigsForUpdate" -> withCol { newBackend.getDeckConfigsForUpdateRaw(bytes) }
+            "updateDeckConfigs" -> activity.updateDeckConfigsRaw(bytes)
             else -> { Timber.w("Unhandled Anki request: %s", methodName); null }
         }
     }

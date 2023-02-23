@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Đồng ý</string>
     <!-- Navigation drawer items-->
     <string name="decks">Các bộ thẻ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Trình duyệt thẻ</string>
@@ -171,6 +170,8 @@
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled">Đã huỷ đồng bộ</string>
@@ -230,4 +231,11 @@
         <item quantity="other">%1$d (0 thẻ đến hạn)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">Bản sao của %s</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

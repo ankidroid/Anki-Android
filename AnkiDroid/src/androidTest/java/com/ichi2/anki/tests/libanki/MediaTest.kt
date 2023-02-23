@@ -15,11 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki
 
-import android.Manifest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -42,8 +41,7 @@ class MediaTest : InstrumentedTest() {
     private var mTestCol: Collection? = null
 
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
 
     @Before
     @Throws(IOException::class)
@@ -114,7 +112,7 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "bar.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao").toMutableList()
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src='foo.jpg'><img src="bar.jpg">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -129,13 +127,13 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao").toMutableList()
+        actual = mTestCol!!.media.filesInStr(mid, """aoeu<img src="foo.jpg">ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "fo")
         actual =
-            mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao").toMutableList()
+            mTestCol!!.media.filesInStr(mid, """aoeu<img src="foo.jpg"><img class=yo src=fo>ao""").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -153,8 +151,8 @@ class MediaTest : InstrumentedTest() {
             Media.escapeImages("<img src='http://foo.com'>")
         )
         assertEquals(
-            "<img src=\"foo%20bar.jpg\">",
-            Media.escapeImages("<img src=\"foo bar.jpg\">")
+            """<img src="foo%20bar.jpg">""",
+            Media.escapeImages("""<img src="foo bar.jpg">""")
         )
     }
 
@@ -183,11 +181,11 @@ class MediaTest : InstrumentedTest() {
         // check media
         val ret = mTestCol!!.media.check()
         var expected = listOf("fake2.png")
-        var actual = ret.noHave.toMutableList()
+        var actual = ret.missingFileNames.toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
         expected = listOf("foo.jpg")
-        actual = ret.unused.toMutableList()
+        actual = ret.unusedFileNames.toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
     }
@@ -197,7 +195,7 @@ class MediaTest : InstrumentedTest() {
     fun testAudioTags() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<audio src=yo>oeu"))
         assertEquals("aoeu", mTestCol!!.media.strip("a<audio src='yo'>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("a<audio src=\"yo\">oeu"))
+        assertEquals("aoeu", mTestCol!!.media.strip("""a<audio src="yo">oeu"""))
     }
 
     @Test
@@ -205,7 +203,7 @@ class MediaTest : InstrumentedTest() {
     fun testObjectTags() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<object data=yo>oeu"))
         assertEquals("aoeu", mTestCol!!.media.strip("a<object data='yo'>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("a<object data=\"yo\">oeu"))
+        assertEquals("aoeu", mTestCol!!.media.strip("""a<object data="yo">oeu"""))
     }
 
     private fun added(d: Collection?): List<String> {

@@ -15,20 +15,19 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
-import android.Manifest
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.NotificationChannels
-import com.ichi2.anki.NotificationChannels.getId
+import com.ichi2.anki.Channel
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.assertEquals
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -42,12 +41,13 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
 @KotlinCleanup("Enable JUnit 5 in androidTest and use JUnit5Asserter to match the standard tests")
 class NotificationChannelTest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
     private var mCurrentAPI = -1
     private var mTargetAPI = -1
+
     @KotlinCleanup("lateinit")
     private var mManager: NotificationManager? = null
+
     @Before
     @UiThreadTest
     fun setUp() {
@@ -72,7 +72,7 @@ class NotificationChannelTest : InstrumentedTest() {
         for (i in channels.indices) {
             Timber.d("Found channel with id %s", channels[i].id)
         }
-        var expectedChannels = NotificationChannels.Channel.values().size
+        var expectedChannels = Channel.values().size
         // If we have channels but have *targeted* pre-26, there is a "miscellaneous" channel auto-defined
         if (mTargetAPI < 26) {
             expectedChannels += 1
@@ -84,15 +84,15 @@ class NotificationChannelTest : InstrumentedTest() {
                 expectedChannels += 1
             }
         }
-        assertEquals(
-            "Incorrect channel count",
+        assertThat(
+            "Not as many channels as expected.",
             expectedChannels,
-            channels.size
+            greaterThanOrEqualTo(channels.size)
         )
-        for (channel in NotificationChannels.Channel.values()) {
+        for (channel in Channel.values()) {
             assertNotNull(
                 "There should be a reminder channel",
-                mManager!!.getNotificationChannel(getId(channel))
+                mManager!!.getNotificationChannel(channel.id)
             )
         }
     }

@@ -73,7 +73,7 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">重設 %d 張卡牌學習進度</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">當前間期：%d 天</item>
@@ -83,11 +83,12 @@
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">一張新卡片正在重新排程。重新排程也會將新卡片變為複習卡。使用選項「變更位置」來變更一張新卡片的新排序位置</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變（間格倍數會被設為%d%%）</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變 (間格倍數會被設為 %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的集合或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
@@ -106,10 +107,10 @@
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
     <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">導入的檔案數：%1$d\n總共導入的卡片數：%2$d</item>
     </plurals>
-    <string name="sd_card_full_title">SD 卡空間已滿</string>
-    <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
+    <string name="storage_full_title">存儲已滿</string>
+    <string name="storage_almost_full_title">存儲空間幾乎滿了</string>
     <string name="no_space_to_downgrade_title">沒有空間</string>
     <string name="no_space_to_downgrade_content">AnkiDroid 需要%s可用儲存空間以繼續。請清除一些空間</string>
     <string name="restore_backup_title">回復備份嗎？</string>
@@ -117,9 +118,11 @@
     <string name="restore_backup_choose_another">選擇其他時間</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
+    <string name="dialog_confirm">確認</string>
     <string name="dialog_no">否</string>
+    <string name="dialog_yes">是</string>
     <string name="dialog_continue">繼續</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">處理中…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
     <string name="dialog_positive_delete">刪除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -164,9 +167,6 @@
     <string name="multimedia_editor_failed">無法開啟多媒體編輯器</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
-    <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">歡迎使用 AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要儲存空間權限，我們僅用於儲存你的 AnkiDroid 集合，單字卡媒體和備份。我們的原始碼完全開放，由志願者寫成，且被眾人信賴。\n\n如果你有任何問題，請查閱我們的程式內用戶手冊或訪問我們的支援論壇。\n\n感謝您使用 AnkiDroid！\n— AnkiDroid 開發團隊</string>
     <string name="mutimedia_editor_assertion_failed">展示進階編輯器時發生未知錯誤</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid 已更新</string>
@@ -222,6 +222,7 @@
     <string name="help_item_support_develop_ankidroid">開發</string>
     <string name="help_item_support_rate_ankidroid">評分</string>
     <string name="help_item_support_other_ankidroid">其他</string>
+    <string name="multimedia_editor_trans_translate">翻譯</string>
     <string name="help_title_community">社群</string>
     <string name="help_item_anki_forums">Anki 論壇</string>
     <string name="help_item_discord">Discord</string>
@@ -237,7 +238,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">您的連接已按流量計費。 資料傳輸可能需要資金</string>
     <string name="deck_picker_new">此牌組中今天要看的新卡片數</string>
     <string name="deck_picker_rev">詞牌組今天到期的卡片數量</string>
     <string name="deck_picker_lrn">詞牌組中學習中的卡片數</string>
@@ -247,7 +248,17 @@
     <string name="deck_picker_counts">開啟包含今天要查看的卡片數量的牌組概覽頁。</string>
     <string name="import_deck_package">卡包</string>
     <string name="import_collection_package">匯總打包</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">文字檔案 (.txt、.csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">您不能為所有牌組創建子牌組</string>
+    <!-- scoped storage -->
+    <string name="scoped_storage_require_user_to_accept_risk">        由於Android隱私變化，如應用被卸載，您當前的存儲位置將不可訪問。
+        \n\n我們需要將您的數據遷移到一個對AnkiDroid應用來說秘密的地方。
+        \n\n如果應用被卸載，這個私有位置中的數據可能會被删除。
+        \n\n您當前的存儲位置是%1$s
+        \n\n私有存儲位置將是%2$s
+        \n\n請確保您將定期備份此資料夾。
+    </string>
+    <string name="manual_backup">手動備份</string>
+    <string name="remind_me_later">稍後提醒我</string>
 </resources>

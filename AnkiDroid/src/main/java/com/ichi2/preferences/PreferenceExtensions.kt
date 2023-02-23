@@ -17,6 +17,7 @@ package com.ichi2.preferences
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import java.util.function.Supplier
 
 /** Extension methods over the SharedPreferences class  */
@@ -35,7 +36,7 @@ object PreferenceExtensions {
             return target.getString(key, "")!!
         }
         val supplied = supplier.get()
-        target.edit().putString(key, supplied).apply()
+        target.edit { putString(key, supplied) }
         return supplied
     }
 }

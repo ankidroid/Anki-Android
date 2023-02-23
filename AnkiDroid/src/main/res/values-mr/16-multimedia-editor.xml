@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">प्रगत संपादक</string>
     <string name="multimedia_editor_popup_cloze">क्लोज हटविणे</string>
     <string name="multimedia_editor_popup_clear_field">साफ फील्ड</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">भाषांतर करा</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">लोड</string>
     <string name="multimedia_editor_pron_looking_up">उच्चार पहात आहात</string>

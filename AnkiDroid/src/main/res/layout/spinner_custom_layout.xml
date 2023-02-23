@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  Like android.R.layout.simple_spinner_dropdown_item, but 3/4 as tall.
 
-
+  Padding start and padding end are used instead of paddingHorizontal as
+  both of these are defined in the spinnerDropDownItemStyle, and they override paddingHorizontal.
+  Normally 16 dp is used for menu padding; this sets it to 12 = 16 * 36 / 48.
+-->
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:singleLine="true"
-    style="@style/card_browser_spinner_child_height"
+    style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
-    android:layout_marginTop="10dp"
-    android:textAlignment="center"
-    android:gravity="center_vertical|center_horizontal"
-    android:layout_marginStart="10dp"
-    android:ellipsize="marquee"/>
+    android:layout_height="36dp"
+    android:ellipsize="marquee"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    />

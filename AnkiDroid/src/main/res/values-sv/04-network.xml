@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Den nedladdade databasen var korrupt. Var vänlig och försök igen.</string>
     <string name="sync_overwrite_error">Din nuvarande samling kunde inte skrivas över av den hämtade filen.</string>
     <string name="sync_connection_error">Anslutningen nådde en maxtidsgräns. Det kan antingen vara ett problem med din internetanslutning, eller att du har en väldigt stor fil i din mediamapp.</string>
-    <string name="sync_write_access_error">Den hämtade filen kunde inte sparas till SD-kortet. Antingen är kortet monterat enbart för läsning eller så har det inte tillräckligt ledigt utrymme.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">Anpassad synkroniseringsserver i avancerade inställningar är ogiltig (%s). Ange en giltig server eller inaktivera inställningen.</string>
     <string name="sync_deletions_message">Synkroniserar borttagningar...</string>
     <string name="sync_small_objects_message">Synkroniserar små objekt...</string>

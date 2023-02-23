@@ -88,7 +88,7 @@
     <string name="sync_remote_db_error">Скачанная база данных была повреждена. Пожалуйста, попробуйте еще раз.</string>
     <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом</string>
     <string name="sync_connection_error">Время ожидания истекло. У вас или проблемы с подключением к интернету, или очень большие медиафайлы.</string>
-    <string name="sync_write_access_error">Загруженный файл не может быть сохранён в хранилище: оно переполнено или доступно только для чтения.</string>
+    <string name="sync_write_access_error_on_storage">Не удалось сохранить загруженный файл в хранилище. Либо хранилище в режиме только для чтения, либо в нём недостаточно места.</string>
     <string name="sync_error_invalid_sync_server">Пользовательский сервер синхронизации, указанный в дополнительных настройках недопустим (%s). Введите допустимый сервер или отключите настройку.</string>
     <string name="sync_deletions_message">Синхронизируются удалённые&#8230;</string>
     <string name="sync_small_objects_message">Синхронизируются малые объекты&#8230;</string>

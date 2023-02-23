@@ -28,6 +28,7 @@ class CsvImporter : PageFragment() {
     override val title = R.string.menu_import
     override val pageName = "import-csv"
     override lateinit var webViewClient: PageWebViewClient
+    override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val path = arguments?.getString(ARG_KEY_PATH) ?: throw Exception("missing path")

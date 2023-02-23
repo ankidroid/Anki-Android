@@ -22,10 +22,10 @@ import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.JSONException
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Response
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 import java.util.*

@@ -163,7 +163,6 @@
     <string name="empty_card_warning">Гэта картка пустая. Скарыстайцеся параметрам \"Пустыя карткі\" ў меню на экране спіса калод.</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
-    <string name="show_hint">Паказаць %s</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>
     <string name="import_title">Імпартаванне</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Дадаць</string>
@@ -197,14 +196,25 @@
     <string name="export_include_media">Разам з медыяфайламі</string>
     <string name="confirm_apkg_export">Экспартаваць калекцыю ў пакет Anki?</string>
     <string name="confirm_apkg_export_deck">Экспартаваць \"%s\" у файл apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">Экспартаваць выбраную картку як файл apkg?</item>
+        <item quantity="few">Экспартаваць выбраныя карткі як файл apkg?</item>
+        <item quantity="many">Экспартаваць выбраныя карткі як файл apkg?</item>
+        <item quantity="other">Экспартаваць выбраныя карткі як файл apkg?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">Экспартаваць выбраную нататку як файл apkg?</item>
+        <item quantity="few">Экспартаваць выбраныя нататкі як файл apkg?</item>
+        <item quantity="many">Экспартаваць выбраныя нататкі як файл apkg?</item>
+        <item quantity="other">Экспартаваць выбраныя нататкі як файл apkg?</item>
+    </plurals>
     <string name="export_in_progress">Ідзе экспартаванне пакета Anki&#8230;</string>
-    <string name="export_successful_title">Адправіць пакет Anki?</string>
-    <string name="export_send_button">Адправіць</string>
+    <string name="export_success_title">Калекцыя паспяхова экспартавана</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне...</string>
     <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
-    <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_success_message">Вы можаце выбраць размяшчэнне файла, каб захаваць яго або падзяліцца ім з іншай праграмай.</string>
+    <string name="export_share_title">Адправіць пакет Anki з выкарыстаннем</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
     <string name="export_email_text"><![CDATA[        Добры дзень!
         <br/><br/>
@@ -213,7 +223,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
+    <string name="export_select_save_app">Выбраць месца захавання файла</string>
+    <string name="export_select_share_app">Выберыце праграму для абагулення</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры калоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>
@@ -298,7 +309,7 @@
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выберыце відарыс</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Усталяваць налады па змаўчанні</string>
+    <string name="restore_default">Вярнуцца да прадвызначаных</string>
     <string name="cloze_sample_text">Гэта {{%1$s::sample}} заданне з пропускамі.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">праклад</string>
     <string name="basic_answer_sample_text">прыклад</string>
@@ -399,6 +410,16 @@
     <string name="scoped_storage_postpone">Адкласці</string>
     <string name="scoped_storage_migrate">Перанесці </string>
     <string name="search_card_js_api_no_results">Пошук не даў ніякіх вынікаў</string>
+    <string name="sync_impossible_during_migration">Сінхранізацыя адключана да завяршэння пераносу.\n
+        Засталося перанесці медыяфайлаў: %1$d</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Калі вы паўторна ўсталюеце AnkiDroid, ён не зможа адкрыць вашу калекцыю.</string>
+    <string name="migration_update_request_dialog_download_warning">Калі вы выдаліце AnkiDroid, вам давядзецца яшчэ раз спампаваць вашу поўную калекцыю.</string>
+    <string name="migration_update_request">Палітыка Android доступу да сховішча патрабуе ад нас змяніць месца захоўвання вашай калекцыі. Калі адбудзецца перанос вашых даных, AnkiDroid будзе працаваць хутчэй, а вашы даныя будуць больш абароненымі.
+    Вы не зможаце сінхранізаваць даныя падчас пераносу сховішча.
+    </string>
+    <string name="start_migration_progress_message">Пачынаецца перанос сховішча. Неўзабаве вы зможаце працягнуць выкарыстоўваць AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Вы можаце працягнуць выкарыстанне AnkiDroid.
+\nПеранос сховішча будзе працягнуты ў фонавым рэжыме.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не з\'яўляецца сапраўдным пакетам дадатку JavaScript</string>
     <string name="could_not_create_dir">Не атрымалася стварыць каталог %s</string>
@@ -417,14 +438,16 @@
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
     <string name="already_logged_in">Вы ўжо ўвайшлі</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Калода існуе</string>
+    <string name="validation_deck_already_exists">Калода ўжо існуе</string>
     <string name="deck_created">Створаная калода</string>
     <string name="deck_renamed">Перайменаваная калода</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
     <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
     <string name="toggle_browser_mode_help">Пераключыць адлюстраванне картак або нататак у браўзеры</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Налады браўзера</string>
 </resources>

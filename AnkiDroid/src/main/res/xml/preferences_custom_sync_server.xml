@@ -4,21 +4,16 @@
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/custom_sync_server_title"
     android:key="@string/pref_custom_sync_server_screen_key">
-    <SwitchPreference
-        android:key="@string/custom_sync_server_enable_key"
-        android:title="@string/custom_sync_server_enable_title"
-        android:summary="@string/custom_sync_server_enable_summary"
-        android:defaultValue="false"/>
-    <EditTextPreference
-        android:dependency="@string/custom_sync_server_enable_key"
+    <com.ichi2.preferences.HtmlHelpPreference
+        android:summary="@string/custom_sync_server_help2"
+        app:substitution1="@string/link_custom_sync_server_help_learn_more_en"
+        search:ignore="true" />
+    <com.ichi2.preferences.VersatileTextWithASwitchPreference
         android:key="@string/custom_sync_server_collection_url_key"
         android:title="@string/custom_sync_server_base_url_title"
-        app:useSimpleSummaryProvider="true" />
-    <EditTextPreference
-        android:dependency="@string/custom_sync_server_enable_key"
-        android:key="@string/custom_sync_server_media_url_key"
-        android:title="@string/custom_sync_server_media_url_title"
+        android:inputType="textUri"
         app:useSimpleSummaryProvider="true" />
 </PreferenceScreen>

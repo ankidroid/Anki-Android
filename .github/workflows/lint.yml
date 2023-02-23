@@ -2,6 +2,11 @@ name: Code Quality Checks
 
 on:
   workflow_dispatch:
+    inputs:
+      clearCaches:
+        description: "Clear workflow caches where possible"
+        required: false
+        type: string
   pull_request:
     branches:
       - '**'
@@ -62,6 +67,15 @@ jobs:
           # Builds on other branches will only read from main branch cache writes
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+          gradle-home-cache-cleanup: true
+
+      - name: Clear Caches Optionally
+        if: "${{ github.event.inputs.clearCaches != '' }}"
+        shell: bash
+        run: |
+          du -sk ~/.gradle
+          rm -fr ~/.gradle
+          du -sk ~/.gradle || echo ~/.gradle is gone
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
@@ -81,7 +95,7 @@ jobs:
           arguments: lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+        uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --check AnkiDroid/**/*.js
           dry: True

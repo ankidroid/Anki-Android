@@ -44,7 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">კი</string>
     <!-- Navigation drawer items-->
     <string name="decks">დასტები</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ბარათების საძიებო</string>
@@ -176,6 +175,8 @@
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებული ადგილი. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">სინქრონიზაცია დროებით გამოირთო</string>
+    <string name="button_upgrade" comment="Text of the sync button">დაშიფრულ მეხსიერებაში მიგრაცია (scoped storage)</string>
     <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
     <string name="continue_sync">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled">სინქრონიზაცია გაუქმებულია</string>
@@ -238,4 +239,11 @@
         <item quantity="other">%1$d ბარათი (სასწავლოა 0)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ასლი</string>
+    <!-- Generic errors -->
+    <string name="error__etc__cannot_write_to_or_create_file">ფაილზე %s ჩაწერა ვერ მოხერხდა ან ფაილი ვერ შეიქმნა</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

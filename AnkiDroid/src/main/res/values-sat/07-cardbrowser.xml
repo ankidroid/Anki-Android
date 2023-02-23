@@ -68,14 +68,14 @@
     <string name="card_browser_search_by_flag">ᱯᱚᱛᱠᱟ ᱛᱮ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
     <string name="card_browser_list_my_searches">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="card_browser_list_my_searches_save">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
-    <string name="card_browser_list_my_searches_title">ᱥᱟᱧᱪᱟᱣᱠᱟᱱ ᱠᱟᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ</string>
+    <string name="card_browser_list_my_searches_title">ᱥᱟᱧᱪᱟᱣᱠᱟᱱ ᱠᱟᱱ ᱠᱟᱰ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="card_browser_list_my_searches_new_name">ᱱᱤᱛᱚᱜᱼᱟ ᱥᱮᱸᱫᱽᱨᱟ ᱧᱩᱛᱩᱢᱟᱼᱜ ᱢᱮ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ᱧᱩᱛᱩᱢ ᱵᱮᱜᱚᱨ ᱥᱮᱸᱫᱽᱨᱟ ᱵᱟᱝ ᱥᱟᱧᱪᱟᱣ ᱫᱟᱲᱮᱟᱼᱜᱟ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ᱧᱩᱛᱩᱢ ᱞᱟᱦᱟ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟ?</string>
     <string name="card_browser_change_display_order">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_browser_change_display_order_title">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
-    <string name="card_browser_change_display_order_reverse">ᱩᱞᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱒ ᱡᱟᱭᱜᱟ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
+    <string name="card_browser_change_display_order_reverse">ᱩᱞᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱒ ᱡᱟᱭᱜᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
     <string-array name="card_browser_order_labels">
@@ -90,8 +90,8 @@
         <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱮ</item>
         <item>ᱪᱩᱠ ᱛᱮ</item>
     </string-array>
-    <string name="card_browser_select_all">ᱡᱷᱚᱛᱚ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
-    <string name="card_browser_select_none">ᱟᱞᱚ ᱪᱚᱭᱚᱱ ᱟ</string>
+    <string name="card_browser_select_all">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
+    <string name="card_browser_select_none">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ᱱᱟᱶᱟ)</string>
     <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
     <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
@@ -99,6 +99,14 @@
     <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <plurals name="card_browser_export_cards">
+        <item quantity="one">Export card</item>
+        <item quantity="other">Export cards</item>
+    </plurals>
+    <plurals name="card_browser_export_notes">
+        <item quantity="one">Export note</item>
+        <item quantity="other">Export notes</item>
+    </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>

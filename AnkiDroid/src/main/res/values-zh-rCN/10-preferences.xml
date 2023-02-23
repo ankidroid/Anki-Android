@@ -86,7 +86,6 @@
     <string name="full_screen_off">关闭</string>
     <string name="full_screen_system">隐藏系统状态栏</string>
     <string name="full_screen_complete">隐藏系统状态栏和回答按钮</string>
-    <string name="full_screen_error_gestures">您必须启用手势操作才能隐藏回答按钮</string>
     <string name="answer_buttons_position" maxLength="41">显示答案按钮位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>顶部</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏导航抽屉</string>
     <string name="gestures_fullscreen_nav_drawer_summary">从屏幕上的任何地方向右滑动时打开导航抽屉</string>
+    <string name="gestures_none" maxLength="41">无</string>
     <string name="gestures_swipe_up" maxLength="41">向上滑动</string>
     <string name="gestures_swipe_down" maxLength="41">向下滑动</string>
     <string name="gestures_swipe_left" maxLength="41">向左滑动</string>
@@ -125,15 +125,17 @@
     <string name="tts_summ">若没有附带声音文件则读出问题和答案</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">同步时获取媒体文件</string>
-    <string name="sync_fetch_missing_media_summ">同步时自动获取缺失的媒体文件</string>
     <string name="sync_account" maxLength="41">AnkiWeb 帐户</string>
     <string name="sync_account_summ_logged_out">未登录</string>
     <string name="automatic_sync_choice" maxLength="41">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">始终</string>
+    <string name="sync_media_only_unmetered">仅在不按流量计费的的连接时</string>
+    <string name="sync_media_never">从不</string>
     <string name="sync_status_badge" maxLength="41">显示同步状态</string>
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
     <string name="metered_sync_title" maxLength="41">允许通过按流量计费连接同步</string>
-    <string name="metered_sync_summary">如禁用，如果您试图通过按流量计费连接进行同步，你将被警告</string>
+    <string name="metered_sync_summary">禁用后，当您尝试通过流量进行同步时，将收到提醒</string>
     <string name="app_theme" maxLength="41">主题</string>
     <string name="day_theme" maxLength="41">白天主题</string>
     <string name="night_theme" maxLength="41">夜间主题</string>
@@ -226,12 +228,13 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">模拟的迭代次数</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">使用自定义同步服务器</string>
-    <string name="custom_sync_server_enable_summary">如果你不想使用专有的 AnkiWeb 服务，您可以指定替代的服务器</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
+    <string name="custom_sync_server_help2"><![CDATA[        作为与AnkiWeb同步的替代方法，
+        您可以使用自己的服务器进行同步。
+        如果未设置，将使用默认AnkiWeb服务器。
+        <a href="%s">了解更多</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
-    <string name="custom_sync_server_base_url_invalid">同步地址无效</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">媒体文件同步地址</string>
-    <string name="custom_sync_server_media_url_invalid">媒体同步地址无效</string>
     <!-- Key Bindings -->
     <string name="keyboard">键盘</string>
     <string name="bluetooth">蓝牙</string>
@@ -322,7 +325,7 @@
     <string name="about_contributors_description"><![CDATA[这些是我们非常棒的 <a href=\"%1$s\">贡献者</a>。您也可以通过贡献代码、翻译、捐赠和 <a href=\"%2$s\">更多</a> 来帮助AnkiDroid！]]></string>
     <string name="license">许可证</string>
     <string name="license_description"><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>许可证下发布，源代码位于 <a href=\"%3$s\">Github 上</a>]]></string>
-    <string name="donate_description"><![CDATA[您可以通过 <a href=\"%1$s\"> 捐赠 </a > 支持 AnkiDroid\ 的开发。我们感谢任何数额的捐赠。]]></string>
+    <string name="donate_description"><![CDATA[您可以通过 <a href=\"%1$s\"> 捐赠 </a > 支持 AnkiDroid 的开发。我们感谢任何数额的捐赠。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">添加手势</string>
     <string name="binding_replace_gesture">替换手势</string>
@@ -353,4 +356,65 @@
     <string name="disable_dev_options">禁用开发者选项</string>
     <string name="dev_options_warning">        启用开发者选项之前，您需要知晓这些选项很危险，可能会破坏应用程序或损坏您的牌组。\n\n注意这些选项不适合大多数用户，因而没有翻译，所以它们仍以英语显示。
     </string>
+    <!-- #######################################################################################
+         #################################### Backup options ###################################
+         ####################################################################################### -->
+    <string name="pref__backup_options__title" maxLength="41">备份选项</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid 定期备份您的牌组集合。
+        在备份文件生成超过两天后，
+        AnkiDroid 会开始删除一些备份释放磁盘空间。
+        <br><br>
+        请注意，AnkiFDroid 不会备份媒体文件。
+        为了安全起见，请定期同步您的牌组集合，或备份集合的导出文件。
+        <br><br>
+        您可以通过牌组列表菜单恢复备份和导出您的牌组集合。
+    ]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自动备份时间间隔，单位为分钟</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">要保留的每日备份</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">要保留的每周备份</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">要保留的月度备份</string>
+    <!-- #######################################################################################
+         ################################# Manage space activity ###############################
+         ####################################################################################### -->
+    <string name="pref__manage_space__screen_title">管理空间</string>
+    <!-- TextWidgetPreference widget text -->
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">出错</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">计算中&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+        <item quantity="other">%1$d 个文件\n%2$s</item>
+    </plurals>
+    <!-- Delete unused media -->
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">删除未使用的媒体文件</string>
+    <string name="pref__delete_unused_media_files__summary">删除不是以 _ 开头且没有被任何笔记引用的图像和其它媒体</string>
+    <string name="dialog__media_check_required__message">需要进行检查来需寻找未使用的媒体文件</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">删除未使用的媒体文件</string>
+    <!-- Delete backups -->
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">删除备份</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">删除备份</string>
+    <string name="progress__deleting_backups">正在删除备份...</string>
+    <!-- Delete collection -->
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">删除牌组集</string>
+    <string name="pref__delete_collection__summary">删除牌组集、媒体和备份。不会删除应用设置</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">删除牌组集</string>
+    <string name="dialog__delete_collection__message">您确定要删除您的牌组集合、媒体和备份吗？</string>
+    <string name="progress__deleting_collection">正在删除牌组集&#8230;</string>
+    <!-- Delete everything -->
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">完全清空</string>
+    <string name="pref__delete_everything__summary">删除牌组集合、媒体文件、备份和设置</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">完全清空</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">您确定要删除所有数据吗？这包括您的牌组集合、媒体、备份和首选项。\n\n注意：此操作将关闭窗口。</string>
+    <!-- Delete app data -->
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">删除应用数据</string>
+    <string name="pref__delete_app_data__summary">删除设置和其他应用数据</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">删除应用数据</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">您确定要删除应用数据吗？这包括设置和其他应用数据。\n\n注意：此操作将关闭窗口。</string>
+    <!-- #######################################################################################
+         ##### Generic preference summaries & snackbars that are shown on preference click #####
+         ####################################################################################### -->
+    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">无牌组集</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">出错</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">获取中&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">计算中&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">牌组集不存在</string>
 </resources>

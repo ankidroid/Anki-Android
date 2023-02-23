@@ -18,46 +18,35 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.NoteTypeId
-import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 
-class TemporaryModel(model: Model) {
+class TemporaryModel(val model: Model) {
     enum class ChangeType {
         ADD, DELETE
     }
 
     private var mTemplateChanges = ArrayList<Array<Any>>()
     var editedModelFileName: String? = null
-    @KotlinCleanup("make this a constructor property")
-    val model: Model
 
-    @KotlinCleanup("use the bundleOf method")
-    fun toBundle(): Bundle {
-        val outState = Bundle()
-        outState.putString(
-            INTENT_MODEL_FILENAME,
-            saveTempModel(AnkiDroidApp.instance.applicationContext, model)
-        )
-        outState.putSerializable("mTemplateChanges", mTemplateChanges)
-        return outState
-    }
+    fun toBundle(): Bundle = bundleOf(
+        INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, model),
+        "mTemplateChanges" to mTemplateChanges
+    )
 
-    @Suppress("deprecation") // getSerializable
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
-            @Suppress("UNCHECKED_CAST")
-            @KotlinCleanup("use bundle.getSerializableWithCast() to improve nullability")
-            mTemplateChanges =
-                (bundle.getSerializable("mTemplateChanges") as ArrayList<Array<Any>>)
+            mTemplateChanges = bundle.getSerializableCompat("mTemplateChanges")!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
@@ -207,11 +196,6 @@ class TemporaryModel(model: Model) {
 
     val templateChanges: ArrayList<Array<Any>>
         get() {
-            @KotlinCleanup("from the code it seems mTemplateChanges is indeed not null, if true remove this check")
-            @Suppress("SENSELESS_COMPARISON")
-            if (mTemplateChanges == null) {
-                mTemplateChanges = ArrayList()
-            }
             return mTemplateChanges
         }
 
@@ -365,11 +349,9 @@ class TemporaryModel(model: Model) {
         }
 
         /** Clear any temp model files saved into internal cache directory  */
-        @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        @KotlinCleanup("handle the nullability issue of listing files from cache dir")
         fun clearTempModelFiles(): Int {
             var deleteCount = 0
-            for (c in AnkiDroidApp.instance.cacheDir.listFiles()) {
+            for (c in AnkiDroidApp.instance.cacheDir.listFiles() ?: arrayOf()) {
                 val absolutePath = c.absolutePath
                 if (absolutePath.contains("editedTemplate") && absolutePath.endsWith("json")) {
                     if (!c.delete()) {
@@ -454,10 +436,5 @@ class TemporaryModel(model: Model) {
             )
             return -1
         }
-    }
-
-    init {
-        Timber.d("Constructor called with model")
-        this.model = model
     }
 }

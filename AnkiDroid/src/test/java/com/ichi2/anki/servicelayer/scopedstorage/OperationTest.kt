@@ -17,7 +17,8 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.createTransientDirectory
@@ -63,11 +64,13 @@ interface OperationTest {
          */
         var beforeFile: File? = null
             private set
+
         /**
          * The second file, it moves fails. Null if no moved occurred.
          */
         var failedFile: File? = null // ensure the second file fails
             private set
+
         /**
          * The last file moved, after the failed file. Null if no moved occurred.
          */
@@ -102,7 +105,7 @@ interface OperationTest {
 
 /** A move operation which fails */
 class FailMove : Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+    override fun execute(context: MigrationContext): List<Operation> {
         throw TestException("should fail but not crash")
     }
 }

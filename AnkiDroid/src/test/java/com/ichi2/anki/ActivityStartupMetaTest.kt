@@ -18,6 +18,8 @@ package com.ichi2.anki
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.utils.KotlinCleanup
@@ -34,13 +36,11 @@ class ActivityStartupMetaTest : RobolectricTest() {
     @Test
     @Throws(PackageManager.NameNotFoundException::class)
     @KotlinCleanup("remove throws; remove stream(), remove : String")
-    @Suppress("deprecation") // getPackageInfo
     fun ensureAllActivitiesAreTested() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
 
         // we can't access this in a static context
-        val pm = targetContext.packageManager
-        val packageInfo = pm.getPackageInfo(targetContext.packageName, PackageManager.GET_ACTIVITIES)
+        val packageInfo = targetContext.getPackageInfoCompat(targetContext.packageName, PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())) ?: throw IllegalStateException("getPackageInfo failed")
         val manifestActivities = packageInfo.activities
         val testedActivityClassNames = ActivityList.allActivitiesAndIntents().stream().map { obj: ActivityLaunchParam -> obj.className }.collect(Collectors.toSet())
         val manifestActivityNames = Arrays.stream(manifestActivities)

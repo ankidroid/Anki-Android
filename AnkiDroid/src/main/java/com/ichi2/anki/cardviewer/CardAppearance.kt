@@ -69,9 +69,7 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
         }
 
     fun getCardClass(oneBasedCardOrdinal: Int): String {
-        var cardClass = "card card$oneBasedCardOrdinal"
-        cardClass += getCssClasses()
-        return cardClass
+        return "card card$oneBasedCardOrdinal" + getCssClasses()
     }
 
     companion object {
@@ -89,6 +87,7 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             // font-weight to 700
             return content.replace("font-weight:600;", "font-weight:700;")
         }
+
         /**
          * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
          */

@@ -157,7 +157,6 @@
     <string name="empty_card_warning">Esta tarjeta está vacía. Utilice la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
     <string name="unknown_type_field_warning">Tipear respuesta: campo desconocido %s</string>
     <string name="delete_deck">Eliminando mazo...\nPor favor aguarde.</string>
-    <string name="show_hint">Mostrar %s</string>
     <string name="info_rate">Puntúe AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
@@ -174,7 +173,7 @@
     <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se haya borrado la cache durante el procesamiento.\nPor favor, inténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
-    <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
+    <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borrelo y vuelva a descargarlo.\n\nCausa original: %s</string>
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
@@ -189,13 +188,20 @@
     <string name="export_include_media">Incluir multimedia</string>
     <string name="confirm_apkg_export">¿Exportar colección como paquete Anki?</string>
     <string name="confirm_apkg_export_deck">¿Exportar \"%s\" como archivo apkg?</string>
+    <plurals name="confirm_apkg_export_selected_cards">
+        <item quantity="one">¿Exportar la tarjeta seleccionada como archivo apkg?</item>
+        <item quantity="other">¿Exportar %d tarjetas seleccionadas como archivo apkg?</item>
+    </plurals>
+    <plurals name="confirm_apkg_export_selected_notes">
+        <item quantity="one">¿Exportar la nota seleccionada como archivo apkg?</item>
+        <item quantity="other">¿Exportar %d notas seleccionadas como archivo apkg?</item>
+    </plurals>
     <string name="export_in_progress">Exportando archivo de paquete Anki&#8230;</string>
-    <string name="export_successful_title">¿Enviar paquete Anki?</string>
-    <string name="export_send_button">Enviar</string>
+    <string name="export_success_title">Colección exportada exitosamente</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
-    <string name="export_successful">El archivo \"%s\" fue exportado. ¿Desea enviarlo con otra aplicación?</string>
+    <string name="export_success_message">Puedes elegir un lugar donde guardar tu documento o compartirlo con otra aplicación.</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarjetas exportadas por AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        ¡Hola!
@@ -205,7 +211,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Error al exportar archivo apkg</string>
+    <string name="export_select_save_app">Elige donde guardar el documento</string>
+    <string name="export_select_share_app">Selecciona una aplicación para compartir</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
     <string name="menu__deck_options">Opciones de mazo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>
@@ -337,7 +344,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
+    <string name="email_id_empty">La dirección de correo electrónico es obligatoria</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
@@ -373,10 +380,19 @@
     <string name="scoped_storage_term_1_ankiweb">He sincronizado con AnkiWeb recientemente</string>
     <string name="scoped_storage_term_2">No desinstalaré la aplicación mientras se mueven los datos</string>
     <string name="scoped_storage_select_all_terms">Acepta nuestros términos para continuar</string>
-    <string name="scoped_storage_learn_more">Aprende más</string>
+    <string name="scoped_storage_learn_more">Más información</string>
     <string name="scoped_storage_postpone">Posponer</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">La búsqueda no ha devuelto resultados</string>
+    <string name="sync_impossible_during_migration">La sincronización estará deshabilitada hasta que finalice la migración.\n
+        %1$d archivos multimedia pendientes de migrar.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">Si reinstalas AnkiDroid, no podrá abrir tu colección.</string>
+    <string name="migration_update_request_dialog_download_warning">Si desinstalas AnkiDroid, necesitarás descargar tu colección completa de nuevo.</string>
+    <string name="migration_update_request">La política de acceso al almacenamiento Android requiere que cambiemos el lugar en el que almacenamos tu colección. Cuando tus datos sean migrados, AnkiDroid será más rápido y tus datos serán más seguros.
+    No podrás sincronizar durante la migración del almacenamiento.</string>
+    <string name="start_migration_progress_message">Iniciando migración de almacenamiento. Podrás seguir usando AnkiDroid en breve.</string>
+    <string name="migration_part_1_done_resume">Puedes seguir usando AnkiDroid.
+\nLa migración del almacenamiento continuará en segundo plano.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s no es un paquete válido de addon de javascript</string>
     <string name="could_not_create_dir">No se pudo crear el directorio %s</string>
@@ -393,11 +409,13 @@
     <string name="intro_short_ankidroid_explanation">El planificador de tarjetas Anki ahorra tiempo fortaleciendo tus recuerdos más débiles y preservando los más fuertes</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Empieza</string>
     <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
-    <string name="already_logged_in">Ya has iniciado sesión</string>
+    <string name="already_logged_in">Ya iniciaste sesión</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">El mazo ya existe</string>
     <string name="deck_created">Mazo creado</string>
     <string name="deck_renamed">Mazo renombrado</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Mazo eliminado. Por favor, elimina el acceso directo</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarjetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>

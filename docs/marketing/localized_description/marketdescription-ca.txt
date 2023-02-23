@@ -24,7 +24,7 @@ Afegiu material a través de l'aplicació d'escriptori Anki o directament a trav
 • podeu editar i afegir fitxes
 • navegador de fitxes
 • compatible amb tabletes
-• importació d'arxius de col·leccions existents (amb Anki Desktop)
+• importació d'arxius de col·leccions existents (amb Anki per a l'Escriptori)
 • afegiu fitxes a partir d'altres aplicacions com ara diccionaris
 • permet personalitzar el tipus de lletra
 • complet sistema de còpia de seguretat

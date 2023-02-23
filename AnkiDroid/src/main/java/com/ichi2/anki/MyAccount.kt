@@ -39,7 +39,6 @@ import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.lang.Exception
 import java.net.UnknownHostException
 
 /**
@@ -51,6 +50,7 @@ open class MyAccount : AnkiActivity() {
     private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
+
     @Suppress("Deprecation")
     private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
@@ -90,8 +90,7 @@ open class MyAccount : AnkiActivity() {
         }
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
         initAllContentViews()
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        if (preferences.getString("hkey", "")!!.isNotEmpty()) {
+        if (isLoggedIn()) {
             switchToState(STATE_LOGGED_IN)
         } else {
             switchToState(STATE_LOG_IN)
@@ -103,7 +102,7 @@ open class MyAccount : AnkiActivity() {
         }
     }
 
-    fun attemptLogin() {
+    private fun attemptLogin() {
         val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
@@ -118,7 +117,8 @@ open class MyAccount : AnkiActivity() {
                 mLoginListener,
                 Connection.Payload(
                     arrayOf(
-                        username, password,
+                        username,
+                        password,
                         getInstance(this)
                     )
                 )
@@ -157,7 +157,8 @@ open class MyAccount : AnkiActivity() {
                 mLoginListener,
                 Connection.Payload(
                     arrayOf(
-                        username, password,
+                        username,
+                        password,
                         getInstance(this)
                     )
                 )
@@ -166,15 +167,11 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun logout() {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        preferences.edit {
-            putString("username", "")
-            putString("hkey", "")
+        launchCatchingTask {
+            syncLogout(baseContext)
+            getInstance(this@MyAccount).reset()
+            switchToState(STATE_LOG_IN)
         }
-        getInstance(this).reset()
-        //  force media resync on deauth
-        col.media.forceResync()
-        switchToState(STATE_LOG_IN)
     }
 
     private fun resetPassword() {
@@ -255,7 +252,7 @@ open class MyAccount : AnkiActivity() {
     /**
      * Listeners
      */
-    val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
+    private val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
         override fun onProgressUpdate(vararg values: Any?) {
             // Pass
         }
@@ -264,8 +261,10 @@ open class MyAccount : AnkiActivity() {
             Timber.d("loginListener.onPreExecute()")
             if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
                 mProgressDialog = StyledProgressDialog.show(
-                    this@MyAccount, null,
-                    resources.getString(R.string.alert_logging_message), false
+                    this@MyAccount,
+                    null,
+                    resources.getString(R.string.alert_logging_message),
+                    false
                 )
             }
         }
@@ -293,7 +292,7 @@ open class MyAccount : AnkiActivity() {
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
-                    if (!result.isNullOrEmpty() && result[0] is Exception) {
+                    if (result.isNotEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(
                             title = message,
                             message = getHumanReadableLoginErrorMessage(result[0] as Exception),

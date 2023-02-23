@@ -55,7 +55,6 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
             mTempAudioPath = generateTempAudioFile(mActivity)
         }
 
-        // FIXME: We should move this outside the scrollview as it should always be on the screen.
         mAudioView = createRecorderInstance(
             context = mActivity,
             resPlay = R.drawable.ic_play_arrow_white_24dp,
@@ -70,7 +69,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
                 // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
                 // FIXME is this okay if it is still null?
                 mField.audioPath = mTempAudioPath
-                mField.setHasTemporaryMedia(true)
+                mField.hasTemporaryMedia = true
             }
         })
         layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT)

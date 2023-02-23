@@ -47,8 +47,6 @@
     <string name="multimedia_editor_popup_text">Advanced na editor</string>
     <string name="multimedia_editor_popup_cloze">Alisin ang pagtanggal</string>
     <string name="multimedia_editor_popup_clear_field">Clear field</string>
-    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
-    <string name="multimedia_editor_trans_translate">Isalin</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Load</string>
     <string name="multimedia_editor_pron_looking_up">Naghahanap ng pagbigkas</string>

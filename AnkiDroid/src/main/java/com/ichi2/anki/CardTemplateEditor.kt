@@ -41,11 +41,14 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.END
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.dialogs.*
+import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
@@ -54,7 +57,12 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Models.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.*
+import com.ichi2.utils.FunctionalInterfaces
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.jsonObjectIterable
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.regex.Pattern
 import kotlin.math.max
@@ -129,7 +137,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
     public override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
-            putAll(tempModel!!.toBundle())
+            tempModel?.let { putAll(it.toBundle()) }
             putLong(EDITOR_MODEL_ID, mModelId)
             putLong(EDITOR_NOTE_ID, mNoteId)
             putInt(EDITOR_START_ORD_ID, mStartingOrdId)
@@ -576,7 +584,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         return false
                     }
                 },
-                viewLifecycleOwner, Lifecycle.State.RESUMED
+                viewLifecycleOwner,
+                Lifecycle.State.RESUMED
             )
         }
 
@@ -680,7 +689,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
                 // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
                 if (col.models.getCardIdsForModel(tempModel.modelId, currentDeletes) == null) {
-
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:
@@ -740,7 +748,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     R.plurals.card_template_editor_confirm_delete,
                     numAffectedCards
                 ),
-                numAffectedCards, tmpl.optString("name")
+                numAffectedCards,
+                tmpl.optString("name")
             )
             d.setArgs(msg)
 
@@ -910,8 +919,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
+
         @Suppress("unused")
         private const val REQUEST_PREVIEWER = 0
+
         @Suppress("unused")
         private const val REQUEST_CARD_BROWSER_APPEARANCE = 1
     }

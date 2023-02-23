@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">Свалената база данни е повредена. Опитайте пак.</string>
     <string name="sync_overwrite_error">Вашата текущата колекция не може да бъде презаписана от изтегления файл</string>
     <string name="sync_connection_error">Изтече времето за изчакване на връзка. Интернет връзката Ви е с проблеми или имате много голям файл в папката на медиите.</string>
-    <string name="sync_write_access_error">Изтегленият файл не можа да бъде записан на SD карта. Картата е само за четене или няма достатъчно място на нея.</string>
+    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Синхронизиране на изтриванията&#8230;</string>
     <string name="sync_small_objects_message">Синхронизиране на малки обекти&#8230;</string>
