@@ -134,7 +134,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     lateinit var cardsListView: ListView
-    private lateinit var mSearchView: CardBrowserSearchView
+    private var mSearchView: CardBrowserSearchView? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
@@ -205,8 +205,12 @@ open class CardBrowser :
             closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
         }
         if (result.resultCode == RESULT_OK) {
-            mSearchTerms = mSearchView.query.toString()
-            searchCards()
+            if (mSearchView != null) {
+                mSearchTerms = mSearchView!!.query.toString()
+                searchCards()
+            } else {
+                Timber.w("Note was added from browser and on return mSearchView == null")
+            }
         }
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
@@ -372,7 +376,7 @@ open class CardBrowser :
             savedFiltersObj?.optString(searchName)?.apply {
                 Timber.d("OnSelection using search terms: %s", this)
                 mSearchTerms = this
-                mSearchView.setQuery(this, false)
+                mSearchView!!.setQuery(this, false)
                 mSearchItem!!.expandActionView()
                 searchCards()
             }
@@ -405,7 +409,7 @@ open class CardBrowser :
                 savedFiltersObj.put(searchName, searchTerms)
                 col.set_config("savedFilters", savedFiltersObj)
                 col.flush()
-                mSearchView.setQuery("", false)
+                mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
                 showThemedToast(
@@ -418,9 +422,9 @@ open class CardBrowser :
     }
 
     private fun onSearch() {
-        mSearchTerms = mSearchView.query.toString()
+        mSearchTerms = mSearchView!!.query.toString()
         if (mSearchTerms.isEmpty()) {
-            mSearchView.queryHint = resources.getString(R.string.deck_conf_cram_search)
+            mSearchView!!.queryHint = resources.getString(R.string.deck_conf_cram_search)
         }
         searchCards()
     }
@@ -572,7 +576,7 @@ open class CardBrowser :
 
     fun searchWithFilterQuery(filterQuery: String) {
         mSearchTerms = filterQuery
-        mSearchView.setQuery(mSearchTerms, true)
+        mSearchView!!.setQuery(mSearchTerms, true)
         searchCards()
     }
 
@@ -932,7 +936,7 @@ open class CardBrowser :
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
                     mSearchTerms = ""
-                    mSearchView.setQuery(mSearchTerms, false)
+                    mSearchView!!.setQuery(mSearchTerms, false)
                     searchCards()
                     // invalidate options menu so that disappeared icons would appear again
                     invalidateOptionsMenu()
@@ -941,9 +945,9 @@ open class CardBrowser :
                 }
             })
             mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
-            mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
-                    if (mSearchView.shouldIgnoreValueChange()) {
+                    if (mSearchView!!.shouldIgnoreValueChange()) {
                         return true
                     }
                     mSaveSearchItem?.isVisible = newText.isNotEmpty()
@@ -953,7 +957,7 @@ open class CardBrowser :
 
                 override fun onQueryTextSubmit(query: String): Boolean {
                     onSearch()
-                    mSearchView.clearFocus()
+                    mSearchView!!.clearFocus()
                     return true
                 }
             })
@@ -962,11 +966,11 @@ open class CardBrowser :
             if (!mTempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
                 mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
                 val toUse = if (!mTempSearchQuery.isNullOrEmpty()) mTempSearchQuery else mSearchTerms
-                mSearchView.setQuery(toUse!!, false)
+                mSearchView!!.setQuery(toUse!!, false)
             }
-            mSearchView.setOnSearchClickListener {
+            mSearchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                mSearchView.setQuery(mSearchTerms, false)
+                mSearchView!!.setQuery(mSearchTerms, false)
             }
         } else {
             // multi-select mode
@@ -990,7 +994,7 @@ open class CardBrowser :
             val search = intent.getCharSequenceExtra(Compat.EXTRA_PROCESS_TEXT)
             if (!search.isNullOrEmpty()) {
                 Timber.i("CardBrowser :: Called with search intent: %s", search.toString())
-                mSearchView.setQuery(search, true)
+                mSearchView!!.setQuery(search, true)
                 intent.action = Intent.ACTION_DEFAULT
             }
         }
@@ -1126,7 +1130,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_save_search -> {
-                val searchTerms = mSearchView.query.toString()
+                val searchTerms = mSearchView!!.query.toString()
                 showDialogFragment(
                     newInstance(
                         null,
@@ -1160,15 +1164,15 @@ open class CardBrowser :
             }
             R.id.action_show_marked -> {
                 mSearchTerms = "tag:marked"
-                mSearchView.setQuery("", false)
-                mSearchView.queryHint = resources.getString(R.string.card_browser_show_marked)
+                mSearchView!!.setQuery("", false)
+                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_marked)
                 searchCards()
                 return true
             }
             R.id.action_show_suspended -> {
                 mSearchTerms = "is:suspended"
-                mSearchView.setQuery("", false)
-                mSearchView.queryHint = resources.getString(R.string.card_browser_show_suspended)
+                mSearchView!!.setQuery("", false)
+                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_suspended)
                 searchCards()
                 return true
             }
@@ -1639,8 +1643,8 @@ open class CardBrowser :
     fun searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate()
-        if ("" != mSearchTerms) {
-            mSearchView.setQuery(mSearchTerms, false)
+        if ("" != mSearchTerms && mSearchView != null) {
+            mSearchView!!.setQuery(mSearchTerms, false)
             mSearchItem!!.expandActionView()
         }
         val searchText: String? = if (mSearchTerms.contains("deck:")) {
@@ -1668,7 +1672,7 @@ open class CardBrowser :
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/
-        if (!this::mSearchView.isInitialized || mSearchView.isIconified) {
+        if (mSearchView == null || mSearchView!!.isIconified) {
             return
         }
         if (hasSelectedAllDecks()) {
@@ -1778,9 +1782,9 @@ open class CardBrowser :
 
     private fun filterByTags(selectedTags: List<String>, option: Int) {
         // TODO: Duplication between here and CustomStudyDialog:onSelectedTags
-        mSearchView.setQuery("", false)
+        mSearchView!!.setQuery("", false)
         val tags = selectedTags.toString()
-        mSearchView.queryHint = resources.getString(
+        mSearchView!!.queryHint = resources.getString(
             R.string.CardEditorTags,
             tags.substring(1, tags.length - 1)
         )
@@ -1804,7 +1808,7 @@ open class CardBrowser :
 
     /** Updates search terms to only show cards with selected flag.  */
     private fun filterByFlag() {
-        mSearchView.setQuery("", false)
+        mSearchView!!.setQuery("", false)
         val flagSearchTerm = "flag:$mCurrentFlag"
         mSearchTerms = when {
             mSearchTerms.contains("flag:") -> mSearchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
