@@ -43,7 +43,6 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.libanki.utils.set
 import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
@@ -63,7 +62,6 @@ import java.util.*
 
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
-@KotlinCleanup("IDE lint")
 class DeckOptionsActivity :
     AppCompatPreferenceActivity<DeckOptionsActivity.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
@@ -73,7 +71,7 @@ class DeckOptionsActivity :
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptionsActivity: DeckOptionsActivity
+        private val deckOptionsActivity: DeckOptionsActivity
             get() = this@DeckOptionsActivity
 
         override fun cacheValues() {
@@ -582,8 +580,7 @@ class DeckOptionsActivity :
             } else if (pref is CheckBoxPreference) {
                 continue
             } else if (pref is ListPreference) {
-                val lp = pref
-                if (lp.entry != null) lp.entry.toString() else ""
+                if (pref.entry != null) pref.entry.toString() else ""
             } else {
                 this.pref.getString(key, "")
             }
@@ -604,7 +601,7 @@ class DeckOptionsActivity :
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    protected fun buildLists() {
+    private fun buildLists() {
         val deckConfPref = findPreference("deckConf") as ListPreference
         val confs = col.decks.allConf()
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
