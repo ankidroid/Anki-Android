@@ -86,7 +86,9 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling
+import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SoundSide
+import com.ichi2.libanki.SoundPlayer
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.themes.Themes
@@ -238,10 +240,12 @@ abstract class AbstractFlashcardViewer :
     @KotlinCleanup("made internal for tests")
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal var sched: AbstractSched? = null
-    protected val mSoundPlayer = Sound()
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal lateinit var mSoundPlayer: Sound
 
     /**
-     * Time taken to play all medias in mSoundPlayer
+     * Time taken to play all medias in [mSoundPlayer]
      * This is 0 if we have "Read card" enabled, as we can't calculate the duration.
      */
     private var mUseTimerDynamicMS: Long = 0
@@ -584,8 +588,12 @@ abstract class AbstractFlashcardViewer :
         super.onCollectionLoaded(col)
         sched = col.sched
         val mediaDir = col.media.dir()
-        mBaseUrl = Utils.getBaseUrl(mediaDir)
-        mViewerUrl = mBaseUrl + "__viewer__.html"
+        mBaseUrl = Utils.getBaseUrl(mediaDir).also { baseUrl ->
+            mSoundPlayer = Sound(baseUrl).also { sound ->
+                sound.setupVideoActivityCallback()
+            }
+            mViewerUrl = baseUrl + "__viewer__.html"
+        }
         mAssetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/") { path: String ->
                 try {
@@ -622,16 +630,18 @@ abstract class AbstractFlashcardViewer :
         automaticAnswer.disable()
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
-        mSoundPlayer.stopSounds()
-
+        if (this::mSoundPlayer.isInitialized) {
+            mSoundPlayer.stopSounds()
+        }
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
     }
 
     override fun onResume() {
         super.onResume()
-        // Set the context for the Sound manager
-        mSoundPlayer.setContext(WeakReference(this))
+        if (this::mSoundPlayer.isInitialized) {
+            mSoundPlayer.setupVideoActivityCallback()
+        }
         automaticAnswer.enable()
         // Reset the activity title
         setTitle()
@@ -882,7 +892,7 @@ abstract class AbstractFlashcardViewer :
 
     fun generateQuestionSoundList() {
         val tags = Sound.extractTagsFromLegacyContent(currentCard!!.qSimple())
-        mSoundPlayer.addSounds(mBaseUrl!!, tags, SoundSide.QUESTION)
+        mSoundPlayer.addSounds(tags, SingleSoundSide.QUESTION)
     }
 
     protected fun showDeleteNoteDialog() {
@@ -1451,7 +1461,7 @@ abstract class AbstractFlashcardViewer :
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
-            mSoundPlayer.addSounds(mBaseUrl!!, answerSounds.get(), SoundSide.ANSWER)
+            mSoundPlayer.addSounds(answerSounds.get(), SingleSoundSide.ANSWER)
             mAnswerSoundsAdded = true
         }
     }
@@ -1470,7 +1480,7 @@ abstract class AbstractFlashcardViewer :
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds()
             mAnswerSoundsAdded = false
-            mSoundPlayer.addSounds(mBaseUrl!!, content.getSoundTags(Side.FRONT), SoundSide.QUESTION)
+            mSoundPlayer.addSounds(content.getSoundTags(Side.FRONT), SingleSoundSide.QUESTION)
             if (automaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig!!.autoplay) {
                 addAnswerSounds { content.getSoundTags(Side.BACK) }
             }
@@ -1493,6 +1503,11 @@ abstract class AbstractFlashcardViewer :
         playSounds(false) // Play sounds if appropriate
     }
 
+    private fun currentSideHasSounds(): Boolean = when (displayAnswer) {
+        false -> mSoundPlayer.hasQuestion()
+        true -> mSoundPlayer.hasAnswer()
+    }
+
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
      *
@@ -1503,8 +1518,7 @@ abstract class AbstractFlashcardViewer :
         val replayQuestion = mCardSoundConfig!!.replayQuestion
         if (mCardSoundConfig!!.autoplay || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
-            val useTTS = mTTS.enabled &&
-                !(displayAnswer && mSoundPlayer.hasAnswer()) && !(!displayAnswer && mSoundPlayer.hasQuestion())
+            val useTTS = mTTS.enabled && !currentSideHasSounds()
             // We need to play the sounds from the proper side of the card
             if (!useTTS) { // Text to speech not in effect here
                 if (doAudioReplay && replayQuestion && displayAnswer) {
@@ -1526,10 +1540,10 @@ abstract class AbstractFlashcardViewer :
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
                     if (!displayAnswer || doAudioReplay && replayQuestion) {
-                        readCardTts(SoundSide.QUESTION)
+                        readCardTts(SingleSoundSide.QUESTION)
                     }
                     if (displayAnswer) {
-                        readCardTts(SoundSide.ANSWER)
+                        readCardTts(SingleSoundSide.ANSWER)
                     }
                 } else {
                     mReplayOnTtsInit = true
@@ -1538,11 +1552,9 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private fun readCardTts(soundSide: SoundSide) {
-        val tags = legacyGetTtsTags(currentCard!!, soundSide, this)
-        if (tags != null) {
-            mTTS.readCardText(tags, currentCard!!, soundSide)
-        }
+    private fun readCardTts(side: SingleSoundSide) {
+        val tags = legacyGetTtsTags(currentCard!!, side, this)
+        mTTS.readCardText(tags, currentCard!!, side.toSoundSide())
     }
 
     private fun playSounds(questionAndAnswer: SoundSide) {
@@ -2128,16 +2140,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    /**
-     * Public method to start new video player activity
-     */
-    fun playVideo(path: String?) {
-        Timber.i("Launching Video: %s", path)
-        val videoPlayer = Intent(this, VideoPlayer::class.java)
-        videoPlayer.putExtra("path", path)
-        startActivityWithoutAnimation(videoPlayer)
-    }
-
     /** Callback for when TTS has been initialized.  */
     fun ttsInitialized() {
         mTtsInitialized = true
@@ -2514,15 +2516,7 @@ abstract class AbstractFlashcardViewer :
                     Sound.getSoundPath(mBaseUrl!!, it)
                 } ?: return
             }
-            if (replacedUrl != mSoundPlayer.currentAudioUri || mSoundPlayer.isCurrentAudioFinished) {
-                onCurrentAudioChanged(replacedUrl)
-            } else {
-                mSoundPlayer.playOrPauseSound()
-            }
-        }
-
-        private fun onCurrentAudioChanged(url: String) {
-            mSoundPlayer.playSound(url, null, null, soundErrorListener)
+            mSoundPlayer.playAnotherSound(replacedUrl, soundErrorListener)
         }
 
         private fun decodeUrl(url: String): String {
@@ -2684,6 +2678,28 @@ abstract class AbstractFlashcardViewer :
                 Gesture.SWIPE_RIGHT -> ActivityTransitionAnimation.Direction.RIGHT
                 Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
                 else -> ActivityTransitionAnimation.Direction.FADE
+            }
+        }
+    }
+
+    /**
+     * Set the context for the calling activity (necessary for playing videos)
+     */
+    private fun SoundPlayer.setupVideoActivityCallback() {
+        val activityRef = WeakReference(this@AbstractFlashcardViewer)
+        this.playVideoExternallyCallback = { soundPath, onCompletionListener ->
+            val activity = activityRef.get()
+            if (activity == null) {
+                false
+            } else {
+                Timber.d("Requesting AbstractFlashcardViewer->VideoPlayer for video")
+                VideoPlayer.mediaCompletionListener = onCompletionListener
+                activity.startActivityWithoutAnimation(
+                    Intent(activity, VideoPlayer::class.java).apply {
+                        putExtra("path", soundPath)
+                    }
+                )
+                true
             }
         }
     }
