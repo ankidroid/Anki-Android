@@ -1805,12 +1805,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         editToolbarItemDialog: MaterialDialog
     ) {
         AlertDialog.Builder(this).show {
-            setTitle(R.string.remove_toolbar_item)
-            setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
+            title(R.string.remove_toolbar_item)
+            positiveButton(R.string.dialog_positive_delete) {
                 editToolbarItemDialog.dismiss()
                 removeButton(button)
             }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 

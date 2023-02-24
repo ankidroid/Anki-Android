@@ -21,6 +21,9 @@ import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 
 open class PageChromeClient : WebChromeClient() {
@@ -41,9 +44,9 @@ open class PageChromeClient : WebChromeClient() {
         result: JsResult?
     ): Boolean {
         AlertDialog.Builder(view.context).show {
-            message?.let { setMessage(message) }
-            setPositiveButton(R.string.dialog_ok) { _, _ -> result?.confirm() }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> result?.cancel() }
+            message?.let { message(text = message) }
+            positiveButton(R.string.dialog_ok) { result?.confirm() }
+            negativeButton(R.string.dialog_cancel) { result?.cancel() }
         }
         return true
     }
