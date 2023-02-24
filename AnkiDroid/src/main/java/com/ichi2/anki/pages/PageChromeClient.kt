@@ -18,9 +18,10 @@ package com.ichi2.anki.pages
 import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
+import com.ichi2.utils.show
 
 open class PageChromeClient : WebChromeClient() {
     override fun onJsAlert(
@@ -39,10 +40,10 @@ open class PageChromeClient : WebChromeClient() {
         message: String?,
         result: JsResult?
     ): Boolean {
-        MaterialDialog(view.context).show {
-            message?.let { message(text = message) }
-            positiveButton(R.string.dialog_ok) { result?.confirm() }
-            negativeButton(R.string.dialog_cancel) { result?.cancel() }
+        AlertDialog.Builder(view.context).show {
+            message?.let { setMessage(message) }
+            setPositiveButton(R.string.dialog_ok) { _, _ -> result?.confirm() }
+            setNegativeButton(R.string.dialog_cancel) { _, _ -> result?.cancel() }
         }
         return true
     }
