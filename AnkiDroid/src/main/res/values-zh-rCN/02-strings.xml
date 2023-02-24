@@ -401,6 +401,8 @@
     <string name="validation_deck_already_exists">牌组已存在</string>
     <string name="deck_created">已创建牌组</string>
     <string name="deck_renamed">重命名牌组</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">牌组已删除。请删除快捷方式</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">笔记</string>

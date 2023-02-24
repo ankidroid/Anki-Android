@@ -17,7 +17,6 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
-import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.AnkiFont
 import com.ichi2.libanki.Utils
@@ -79,9 +78,9 @@ class ReviewerCustomFonts(context: Context) {
     private fun getDominantFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
         if (mDominantFontStyle == null) {
             mDominantFontStyle = getOverrideFontStyle(context, customFontsMap)
-            if (TextUtils.isEmpty(mDominantFontStyle)) {
+            if (mDominantFontStyle.isNullOrEmpty()) {
                 mDominantFontStyle = getDefaultFontStyle(context, customFontsMap)
-                if (TextUtils.isEmpty(mDominantFontStyle)) {
+                if (mDominantFontStyle.isNullOrEmpty()) {
                     mDominantFontStyle = themeFontStyle
                 }
             }

@@ -47,9 +47,9 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Åpne navigasjonspanelet</string>
     <string name="drawer_close">Lukk navigasjonspanelet</string>
-    <string name="CardEditorCardDeck">Kortstokk:</string>
-    <string name="CardEditorNoteDeck">Kortstokk:</string>
-    <string name="CardEditorModel">Type:</string>
+    <string name="CardEditorCardDeck">Kortleik:</string>
+    <string name="CardEditorNoteDeck">Kortleik:</string>
+    <string name="CardEditorModel">Slag:</string>
     <string name="CardEditorTags">Etiketter: %1$s</string>
     <string name="CardEditorCards">Kort: %1$s</string>
     <string name="tag_name">Etikettnavn</string>
@@ -86,7 +86,7 @@
     <string-array name="browser_column2_headings">
         <item>Svar</item>
         <item>Kort</item>
-        <item>Kortstokk</item>
+        <item>Kortleik</item>
         <item>Notat</item>
         <item>Spørsmål</item>
         <item>Etiketter</item>
@@ -156,7 +156,7 @@
     <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Angi svar: ukjent felt %s</string>
-    <string name="delete_deck">Sletter kortstokk...\nVennligst vent.</string>
+    <string name="delete_deck">Slettar kortleiken &#8230;</string>
     <string name="info_rate">Bedøm AnkiDroid</string>
     <string name="import_title">Importerer</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Legg til</string>
@@ -213,8 +213,8 @@
         ]]></string>
     <string name="export_select_save_app">Select where to save file</string>
     <string name="export_select_share_app">Select application for sharing</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Innstillinger</string>
-    <string name="menu__deck_options">Deck options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Innstillingar</string>
+    <string name="menu__deck_options">Kortleikval</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Tilpasset studie</string>
@@ -350,12 +350,12 @@
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
+    <string name="download_deck">Hent kortleiken</string>
     <string name="try_again">Try Again</string>
     <string name="cancel_download">Cancel download</string>
     <string name="cancel_download_question_title">Cancel download?</string>
     <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
+    <string name="import_deck">Før inn kortleiken</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">Download failed</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
@@ -411,9 +411,11 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="validation_deck_already_exists">Kortleiken finst</string>
+    <string name="deck_created">Laga ein kortleik</string>
+    <string name="deck_renamed">Døypte om kortleiken</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Kortleiken er sletta. Tak bort snarvegen</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>

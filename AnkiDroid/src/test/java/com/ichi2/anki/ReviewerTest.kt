@@ -30,7 +30,6 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -40,6 +39,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import kotlin.test.assertFailsWith
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -47,6 +47,7 @@ class ReviewerTest : RobolectricTest() {
     @JvmField // required for Parameter
     @ParameterizedRobolectricTestRunner.Parameter
     var schedVersion = 0
+
     @Before
     override fun setUp() {
         super.setUp()
@@ -61,7 +62,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertThrowsSubclass<Exception> { reviewer.col } } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.col } } }
     }
 
     @Test
@@ -288,7 +289,6 @@ class ReviewerTest : RobolectricTest() {
 
     @Suppress("SameParameterValue")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
-
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
             jsApi.ankiGetNewCardCount(),

@@ -31,6 +31,7 @@ import org.junit.Test
 import org.mockito.kotlin.*
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertFailsWith
 
 class MoveConflictedFileTest : Test21And26(), OperationTest {
 
@@ -68,7 +69,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         // the method adds /conflict/, so don't do this outside the function call
         val params = InputParameters("conflict", sourceFileName = "tmp.txt")
 
-        val illegalStateException = assertThrows<IllegalStateException> { params.createOperation() }
+        val illegalStateException = assertFailsWith<IllegalStateException> { params.createOperation() }
 
         assertThat(illegalStateException.message, startsWith("can't move from a root path of 'conflict': "))
     }
@@ -95,7 +96,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
             deleteOnExit()
         }
 
-        assertThrowsSubclass<IOException> { params.createOperation().execute() }
+        assertFailsWith<IOException> { params.createOperation().execute() }
 
         assertThat("should be no progress", executionContext.progress, hasSize(0))
     }
@@ -152,7 +153,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
             }
         }
 
-        assertThrows<FileConflictResolutionFailedException> { params.createOperation().execute() }
+        assertFailsWith<FileConflictResolutionFailedException> { params.createOperation().execute() }
 
         assertThat("should be no progress", executionContext.progress, hasSize(0))
     }

@@ -414,6 +414,8 @@
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>

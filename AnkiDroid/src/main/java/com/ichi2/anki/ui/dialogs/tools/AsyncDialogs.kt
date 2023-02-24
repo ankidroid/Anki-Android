@@ -55,7 +55,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
     fun setMultiChoiceItems(
         items: List<CharSequence>,
         checkedItems: CheckedItems,
-        disablePositiveButtonIfNoItemsChosen: Boolean = true,
+        disablePositiveButtonIfNoItemsChosen: Boolean = true
     ) {
         this.checkedItems = when (checkedItems) {
             is CheckedItems.All -> BooleanArray(items.size) { true }
@@ -92,10 +92,13 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
 class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
     /** @see AlertDialog.Builder.setTitle */
     fun setTitle(@StringRes titleId: Int): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
+
     /** @see AlertDialog.Builder.setTitle */
     fun setTitle(title: CharSequence): AlertDialog.Builder = alertDialogBuilder.setTitle(title)
+
     /** @see AlertDialog.Builder.setMessage */
     fun setMessage(@StringRes messageId: Int): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
+
     /** @see AlertDialog.Builder.setMessage */
     fun setMessage(message: CharSequence): AlertDialog.Builder = alertDialogBuilder.setMessage(message)
 }

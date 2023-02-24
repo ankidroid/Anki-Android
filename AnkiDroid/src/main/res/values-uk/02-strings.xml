@@ -440,6 +440,8 @@
     <string name="validation_deck_already_exists">Колода вже існує</string>
     <string name="deck_created">Створена колода</string>
     <string name="deck_renamed">Перейменовано колоду</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Колоду було видалено. Будь ласка, видаліть ярлик</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Картки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>

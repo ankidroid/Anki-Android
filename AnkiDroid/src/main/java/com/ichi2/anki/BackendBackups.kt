@@ -39,7 +39,7 @@ fun DeckPicker.importColpkg(colpkgPath: String) {
                 if (progress.hasImporting()) {
                     text = progress.importing
                 }
-            },
+            }
         ) {
             CollectionManager.importColpkg(colpkgPath)
         }

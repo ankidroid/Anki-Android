@@ -17,7 +17,6 @@
 
 package com.ichi2.libanki.importer
 
-import android.text.TextUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.ImportExportException
@@ -69,6 +68,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
 
     /** If importing SchedV1 into SchedV2 we need to reset the learning cards  */
     private var mMustResetLearning = false
+
     @Throws(ImportExportException::class)
     override fun run() {
         publishProgress(0, 0, 0)
@@ -104,8 +104,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
             dst.media.db!!.database.beginTransaction()
-            if (!TextUtils.isEmpty(mDeckPrefix)) {
-                val id = dst.decks.id_safe(mDeckPrefix!!)
+            if (!mDeckPrefix.isNullOrEmpty()) {
+                val id = dst.decks.id_safe(mDeckPrefix)
                 dst.decks.select(id)
             }
             Timber.i("Preparing Import")
@@ -201,8 +201,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         dst.db.database.beginTransaction()
         try {
             src.db.database.query(
-                "select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes",
-                null
+                "select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes"
             ).use { cur ->
                 // Counters for progress updates
                 val total = cur.count
@@ -406,6 +405,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         mModelMap!![srcMid] = mid
         return mid
     }
+
     /*
      * Decks
      * ***********************************************************
@@ -421,11 +421,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         val g = src.decks.get(did)
         var name = g.getString("name")
         // if there's a prefix, replace the top level deck
-        if (!TextUtils.isEmpty(mDeckPrefix)) {
+        if (!mDeckPrefix.isNullOrEmpty()) {
             val parts = listOf(*Decks.path(name))
-            val tmpname = TextUtils.join("::", parts.subList(1, parts.size))
-            name = mDeckPrefix!!
-            if (!TextUtils.isEmpty(tmpname)) {
+            val tmpname = parts.subList(1, parts.size).joinToString("::")
+            name = mDeckPrefix
+            if (tmpname.isNotEmpty()) {
                 name += "::$tmpname"
             }
         }
@@ -433,7 +433,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         var head: String? = ""
         val parents = listOf(*Decks.path(name))
         for (parent in parents.subList(0, parents.size - 1)) {
-            if (!TextUtils.isEmpty(head)) {
+            if (!head.isNullOrEmpty()) {
                 head += "::"
             }
             head += parent
@@ -531,7 +531,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     val scid = cid // To keep track of card id in source
                     var did = cur.getLong(2)
                     val ord = cur.getInt(3)
+
                     @CARD_TYPE var type = cur.getInt(4)
+
                     @CARD_QUEUE var queue = cur.getInt(5)
                     var due = cur.getLong(6)
                     val ivl = cur.getLong(7)
@@ -696,7 +698,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         return try {
             BufferedInputStream(FileInputStream(path), MEDIAPICKLIMIT * 2)
         } catch (e: IOException) {
-            Timber.w(e)
             null
         }
     }
@@ -722,7 +723,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // Mark file addition to media db (see note in Media.java)
             dst.media.markFileAdd(fname)
         } catch (e: IOException) {
-
             // the user likely used subdirectories
             Timber.e(e, "Error copying file %s.", fname)
 

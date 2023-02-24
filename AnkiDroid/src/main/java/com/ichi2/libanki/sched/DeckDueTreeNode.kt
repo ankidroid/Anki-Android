@@ -46,8 +46,13 @@ class DeckDueTreeNode(
 ) : AbstractDeckTreeNode(fullDeckName, did, collapsed, filtered) {
     override fun toString(): String {
         return String.format(
-            Locale.US, "%s, %d, %d, %d, %d",
-            fullDeckName, did, revCount, lrnCount, newCount
+            Locale.US,
+            "%s, %d, %d, %d, %d",
+            fullDeckName,
+            did,
+            revCount,
+            lrnCount,
+            newCount
         )
     }
 
@@ -101,8 +106,13 @@ class DeckDueTreeNode(
     /** Line representing this string without its children. Used in timbers only.  */
     override fun toStringLine(): String {
         return String.format(
-            Locale.US, "%s, %d, %d, %d, %d\n",
-            fullDeckName, did, revCount, lrnCount, newCount
+            Locale.US,
+            "%s, %d, %d, %d, %d\n",
+            fullDeckName,
+            did,
+            revCount,
+            lrnCount,
+            newCount
         )
     }
 

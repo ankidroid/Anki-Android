@@ -33,6 +33,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
 
 /**
  * Test for [MoveDirectoryContent]
@@ -184,7 +185,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val sourceDirectory = Directory.createInstance(source)!!
         val destinationDirectory = generateDestinationDirectoryRef()
         source.delete()
-        assertThrows<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
+        assertFailsWith<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
     }
 
     @SuppressLint("NewApi") // NotDirectoryException
@@ -193,7 +194,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         val source_file = createTransientFile()
         val dir = Directory.createInstanceUnsafe(source_file)
         val destinationDirectory = generateDestinationDirectoryRef()
-        val ex = assertThrowsSubclass<IOException> { moveDirectoryContent(dir, destinationDirectory) }
+        val ex = assertFailsWith<IOException> { moveDirectoryContent(dir, destinationDirectory) }
         if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", ex, instanceOf(NotDirectoryException::class.java))
         }

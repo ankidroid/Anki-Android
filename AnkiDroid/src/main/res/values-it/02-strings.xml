@@ -413,6 +413,8 @@
     <string name="validation_deck_already_exists">Il mazzo esiste</string>
     <string name="deck_created">Mazzo creato</string>
     <string name="deck_renamed">Mazzo rinominato</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Carte</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Note</string>

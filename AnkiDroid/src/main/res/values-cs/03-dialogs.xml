@@ -106,6 +106,7 @@
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
+    <string name="storage_full_message">Není dostatek volného místa v úložišti pro otevření AnkiDroid. Uvolněte nějaké místo, abyste mohli pokračovat. </string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
     <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
@@ -132,7 +133,7 @@
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
     <string name="no_space_to_downgrade_title">Není místo</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného úložiště. Abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného místa v úložišti, abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
     <string name="restore_backup_title">Obnovit zálohu?</string>
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
     <string name="restore_backup_choose_another">Vybrat jinou</string>

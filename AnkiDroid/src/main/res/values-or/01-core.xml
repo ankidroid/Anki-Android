@@ -104,8 +104,8 @@
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
-    <string name="menu_dismiss_note">ଲୁଚାନ୍ତୁ / ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସୀଙ୍କ୍ ଖାତା</string>
+    <string name="menu_dismiss_note">ଲୁଚାଇବା / ଵିଲୋପ କରିବା</string>
     <string name="menu_bury_card">ପତ୍ର ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="menu_bury_note">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="menu_suspend_card">ପତ୍ର ନିଲମ୍ବିତ କରନ୍ତୁ</string>
@@ -164,22 +164,22 @@
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
-    <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ବିଷୟବସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
+    <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ଵିଷୟବସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
     <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
     <string name="studyoptions_empty_schedule">ଅଧ୍ୟୟନ ପାଇଁ କୌଣସି ପତ୍ର ନିର୍ଦ୍ଧାରିତ ହୋଇନାହିଁ</string>
     <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଏବେ ପାଇଁ ସବୁ ସମାପ୍ତ କରିଛନ୍ତି।</string>
-    <string name="studyoptions_congrats_more_rev">ଆଜିର ସୀମା ପହଞ୍ଚିଯାଇଛି, କିନ୍ତୁ ସମୀକ୍ଷା ପାଇଁ ଏବେ ବି ପତ୍ର ରହିଛି। ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ।</string>
+    <string name="studyoptions_congrats_more_rev">ଆଜିର ସୀମା ପହଞ୍ଚିଯାଇଛି, କିନ୍ତୁ ସମୀକ୍ଷା ପାଇଁ ଏବେ ବି ପତ୍ର ରହିଛି। ଆପଣ ଵିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ଵୃଦ୍ଧି କରିପାରିବେ।</string>
     <string name="studyoptions_congrats_more_new">ଦୈନିକ ସୀମା ପହଞ୍ଚିଛି। ଅଧିକ ନୂଆ ପତ୍ର ଉପଲବ୍ଧ ରହିଛି; ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ, କିନ୍ତୁ ଏହା ଆପଣଙ୍କ ସ୍ୱଳ୍ପକାଳୀନ ସମୀକ୍ଷା କାର୍ଯ୍ୟଭାର ବୃଦ୍ଧି କରିବ।</string>
     <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, “କଷ୍ଟମ୍ ଅଧ୍ୟୟନ” ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛିଟା କ୍ଲୋଜ୍-ଵିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
-    <string name="button_sync" comment="Text of the sync button">ସିଙ୍କ୍</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସିଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
+    <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସୀଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
-    <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
-    <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>
+    <string name="continue_sync">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
+    <string name="sync_cancelled">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
     <string name="export">ରପ୍ତାନି</string>
     <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରନ୍ତୁ</string>
@@ -241,4 +241,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ନକଲ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

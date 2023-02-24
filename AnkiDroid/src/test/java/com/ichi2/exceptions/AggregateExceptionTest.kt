@@ -17,11 +17,11 @@
 package com.ichi2.exceptions
 
 import com.ichi2.testutils.TestException
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 /**
  * Test for [AggregateException]
@@ -29,7 +29,7 @@ import org.junit.Test
 class AggregateExceptionTest {
     @Test
     fun exceptionIfNoElementsProvided() {
-        assertThrows<IllegalStateException> { AggregateException.raise("", emptyList()) }
+        assertFailsWith<IllegalStateException> { AggregateException.raise("", emptyList()) }
     }
 
     @Test

@@ -18,18 +18,18 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
-import android.Manifest
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.ContentValues
 import android.database.CursorWindow
 import android.net.Uri
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
+import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.async.TaskManager.Companion.waitToFinish
 import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
@@ -67,13 +67,11 @@ class ContentProviderTest : InstrumentedTest() {
     var schedVersion = 0
 
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule? = GrantPermissionRule.grant(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        FlashCardsContract.READ_WRITE_PERMISSION
-    )
+    var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.READ_WRITE_PERMISSION)
 
     // Whether tear down should be executed. I.e. if set up was not cancelled.
     private var mTearDown = false
+
     @KotlinCleanup("lateinit")
     private var mNumDecksBeforeTest = 0
 
@@ -293,7 +291,8 @@ class ContentProviderTest : InstrumentedTest() {
         col = reopenCol() // test that the changes are physically saved to the DB
         assertNotNull("Check template uri", templateUri)
         assertEquals(
-            "Check template uri ord", expectedOrd.toLong(),
+            "Check template uri ord",
+            expectedOrd.toLong(),
             ContentUris.parseId(
                 templateUri!!
             )
@@ -609,7 +608,8 @@ class ContentProviderTest : InstrumentedTest() {
                     i.toString()
                 )
                 assertThat(
-                    "Update rows", cr.update(tmplUri, cv, null, null),
+                    "Update rows",
+                    cr.update(tmplUri, cv, null, null),
                     `is`(
                         greaterThan(0)
                     )
@@ -652,7 +652,8 @@ class ContentProviderTest : InstrumentedTest() {
         assertNotNull(allModels)
         allModels.use {
             assertThat(
-                "Check that there is at least one result", allModels.count,
+                "Check that there is at least one result",
+                allModels.count,
                 `is`(greaterThan(0))
             )
             while (allModels.moveToNext()) {
@@ -692,7 +693,8 @@ class ContentProviderTest : InstrumentedTest() {
                     val numCards =
                         allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS))
                     assertThat(
-                        "Check that valid number of cards", numCards,
+                        "Check that valid number of cards",
+                        numCards,
                         `is`(
                             greaterThanOrEqualTo(1)
                         )
@@ -961,7 +963,11 @@ class ContentProviderTest : InstrumentedTest() {
         val col = col
         val sched = col.sched
         val reviewInfoCursor = contentResolver.query(
-            FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null
+            FlashCardsContract.ReviewInfo.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
         )
         assertNotNull(reviewInfoCursor)
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.count)
@@ -1005,7 +1011,11 @@ class ContentProviderTest : InstrumentedTest() {
         val selectedDeckBeforeTest = col.decks.selected()
         col.decks.select(1) // select Default deck
         val reviewInfoCursor = contentResolver.query(
-            FlashCardsContract.ReviewInfo.CONTENT_URI, null, deckSelector, deckArguments, null
+            FlashCardsContract.ReviewInfo.CONTENT_URI,
+            null,
+            deckSelector,
+            deckArguments,
+            null
         )
         assertNotNull(reviewInfoCursor)
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.count)
@@ -1171,7 +1181,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testSuspendCard() {
-
         // get the first card due
         // ----------------------
         val col = col
@@ -1193,6 +1202,7 @@ class ContentProviderTest : InstrumentedTest() {
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.note().id
         val cardOrd = card.ord
+
         @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
         val values = ContentValues().apply {
             val suspend = 1
@@ -1307,6 +1317,7 @@ class ContentProviderTest : InstrumentedTest() {
         private val TEST_MODEL_AFMT = arrayOf("{{BACK}}", "{{FRONTS}}")
         private val TEST_NOTE_FIELDS = arrayOf("dis is za Fr0nt", "Te\$t")
         private const val TEST_MODEL_CSS = "styleeeee"
+
         @Suppress("SameParameterValue")
         private fun setupNewNote(
             col: com.ichi2.libanki.Collection,
@@ -1321,7 +1332,8 @@ class ContentProviderTest : InstrumentedTest() {
             }
             newNote.addTag(tag)
             assertThat(
-                "At least one card added for note", col.addNote(newNote),
+                "At least one card added for note",
+                col.addNote(newNote),
                 `is`(
                     greaterThanOrEqualTo(1)
                 )

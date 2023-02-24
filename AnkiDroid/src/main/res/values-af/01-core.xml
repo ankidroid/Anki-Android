@@ -97,7 +97,7 @@
     <string name="undo">Ontdoen</string>
     <string name="undo_action_review">laaste hersiening</string>
     <string name="undo_action_change_deck_multi">Verander pakkie</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="move_all_to_deck">Skuif almal na pak</string>
     <string name="unbury">Onbegrawe</string>
     <string name="rename_deck">Hernoem pak</string>
     <string name="create_shortcut">Maak kortpad</string>
@@ -110,8 +110,8 @@
     <string name="menu_bury_note">Begrawe nota</string>
     <string name="menu_suspend_card">Skort kaart op</string>
     <string name="menu_suspend_note">Skort nota op</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
+    <string name="menu_bury">Bedek</string>
+    <string name="menu_suspend">Opskort</string>
     <string name="menu_delete_note">Verwyder nota</string>
     <string name="menu_flag">Merk</string>
     <string name="menu_flag_card">Merk kaart</string>
@@ -123,20 +123,20 @@
     <string name="menu_flag_card_five">Pink merk</string>
     <string name="menu_flag_card_six">Turkoois merk</string>
     <string name="menu_flag_card_seven">Pers merk</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Bewerk hegplaatjie</string>
     <string name="delete_note_message">Verwyder regtig hierdie nota en al die samegaande karte?\n%s</string>
     <string name="menu_search">Soek in %1$s</string>
     <string name="menu_mark_note">Merk nota</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_unmark_note">Ontmerk</string>
+    <string name="menu_toggle_mic_tool_bar">Sien uitspraak na</string>
     <string name="new_deck">Skep pak</string>
     <string name="new_dynamic_deck">Skep gefiltreerde kaartpak</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="directory_inaccessible">AnkiDroid gids is onbereikbaar</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Voorsien asseblief vir AnkiDroid die \'Stoor\' toestemming om voort te gaan</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -146,33 +146,33 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d u %2$d m</string>
     <string name="time_quantity_hours">%d u</string>
     <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d u</string>
     <string name="time_quantity_months">%.1f ma</string>
     <string name="time_quantity_years">%.1f ja</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Herbouing van gefilterde pak...</string>
     <string name="rebuild_cram_label">Herbou</string>
     <string name="empty_cram_label">Maak leeg</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Skep subpak</string>
+    <string name="empty_filtered_deck">Besig om die gefilterde pak leeg te maak...</string>
     <string name="custom_study_deck_name">Pasmaak studie sessie</string>
     <string name="custom_study_deck_exists">Hernoem die bestaande pasmaak kaartpak eers</string>
     <string name="empty_deck">Hierdie pak is leeg</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="search_deck" comment="Deck search for selecting it">Pak Soek</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pak Soek</string>
+    <string name="invalid_deck_name">Ongeldige pak naam</string>
     <string name="studyoptions_empty">Hierdie pak is leeg. Druk die + knoppie om nuwe inhoud by te voeg.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_limit_reached">Daaglikse studie limiet bereik</string>
+    <string name="studyoptions_empty_schedule">Geen kaarte vir studie geskeduleerd</string>
     <string name="studyoptions_congrats_finished">Geluk! Jy is klaar vir nou.</string>
     <string name="studyoptions_congrats_more_rev">Vandag se limiet is bereik, maar daar is steeds kaarte om te hersien. Jy kan die limiet verhoog in die opsies.</string>
     <string name="studyoptions_congrats_more_new">Vandag se limiet is bereik. Daar is nuwe kaarte beskikbaar; jy kan die beperking verhoog onder opsies, maar dit sal jou kort-termyn hersieningswerk verhoog.</string>
     <string name="studyoptions_congrats_custom">Om buite die normale skedule te leer, druk die \"Pasmaker studie\" knoppie onder</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="studyoptions_no_cards_due">Geen kaarte is al verskulding nie</string>
+    <string name="sd_card_not_mounted">Toestel bergplek is nie heg nie</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinkroniseer</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
@@ -241,4 +241,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

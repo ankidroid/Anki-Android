@@ -106,6 +106,7 @@
     <string name="answering_error_title">שגיאת מסד נתונים</string>
     <string name="answering_error_message">כתיבה לאוסף נכשלה. מאגר המידע אולי שבור או שאין מספיק מקום בדיסק.\n\n אם זה קורה שוב ושוב, אפשר לבדוק את מאגר המידע, לתקן את האוסף או לשחזר אותו מגיבוי. לחץ \'אפשרויות\' עבור כך. \n כמו כן ייתכן שזוהי תקלה בAnkiDroid. נא לדווח את השגיאה כדי שנוכל לבדוק זאת.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">לתקן את המאגר?\n\n
 לפני תחילת ניסיון התיקון, יתבצע שמירת העתק בתקייה %s</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
@@ -130,8 +131,8 @@
         <item quantity="many">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
         <item quantity="other">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">האיחסון מלא</string>
+    <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
     <string name="no_space_to_downgrade_title">אין מקום</string>
     <string name="no_space_to_downgrade_content">AnkiDroid זקוק ל-%s שטח אחסון פנוי כדי להמשיך. נא לפנות קצת מקום</string>
     <string name="restore_backup_title">לשחזר מגיבוי?</string>
@@ -139,11 +140,11 @@
     <string name="restore_backup_choose_another">אחר</string>
     <string name="dialog_cancel">ביטול</string>
     <string name="dialog_ok">אישור</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">אשר</string>
     <string name="dialog_no">לא</string>
     <string name="dialog_yes">כן</string>
     <string name="dialog_continue">המשך</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">מעבד...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">יצירה</string>
     <string name="dialog_positive_delete">מחיקה</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -246,7 +247,7 @@
     <string name="help_item_support_develop_ankidroid">פיתוח</string>
     <string name="help_item_support_rate_ankidroid">דירוג</string>
     <string name="help_item_support_other_ankidroid">אחר</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">תרגום</string>
     <string name="help_title_community">קהילה</string>
     <string name="help_item_anki_forums">הפורומים של Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -265,7 +266,7 @@
         <item quantity="many">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניות</item>
         <item quantity="other">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניות</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">החיבור שלך נמדד. העברת נתונים עשויה לעלות כסף</string>
     <string name="deck_picker_new">מספר הקלפים החדשים שניתן לראות היום בחפיסה זו.</string>
     <string name="deck_picker_rev">מספר הקלפים ללימוד היום בחפיסה זו.</string>
     <string name="deck_picker_lrn">מספר הקלפים בלמידה בחפיסה זו.</string>
@@ -275,17 +276,16 @@
     <string name="deck_picker_counts">פתח את דף סקירת החפיסה המכיל את מספר הקלפים שניתן לראות היום.</string>
     <string name="import_deck_package">חבילת חפיסות(.apkg)</string>
     <string name="import_collection_package">חבילת אוסף (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">קובץ טקסט (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">לא ניתן ליצור תת-חפיסה עבור כל החפיסות</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
-    </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="scoped_storage_require_user_to_accept_risk">עקב שינויים בפרטיות של Android, מיקום האחסון הנוכחי שלך לא יהיה נגיש אם האפליקציה תוסר.
+         \n\nאנחנו צריכים להעביר את הנתונים שלך למיקום פרטי לאפליקציית AnkiDroid.
+         \n\nייתכן שהנתונים במיקום פרטי זה יימחקו אם האפליקציה תוסר.
+         \n\nמיקום האחסון הנוכחי שלך הוא %1$s
+         \n\nמיקום האחסון הפרטי יהיה %2$s
+         \n\nאנא אשר כי תבצע גיבויים של תיקייה זו באופן קבוע.</string>
+    <string name="manual_backup">גיבוי ידני</string>
+    <string name="remind_me_later">הזכר לי מאוחר יותר</string>
 </resources>

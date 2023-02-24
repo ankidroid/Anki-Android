@@ -53,34 +53,34 @@
         <item quantity="one">%d note shown</item>
         <item quantity="other">%d notes shown</item>
     </plurals>
-    <string name="card_browser_all_decks">All decks</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
-    <string name="delete_card_title">Delete note?</string>
-    <string name="changed_deck_message">Moved to %s</string>
-    <string name="card_browser_show_marked">Filter marked</string>
-    <string name="card_browser_show_suspended">Filter suspended</string>
-    <string name="card_browser_search_by_tag">Filter by tag</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">My searches</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+    <string name="card_browser_all_decks">تمام ڈیک</string>
+    <string name="card_browser_delete_card">نوٹ حذف کریں</string>
+    <string name="card_browser_suspend_card">کارڈ معطل کریں</string>
+    <string name="card_browser_change_deck">ڈیک کو تبدیل کریں</string>
+    <string name="card_browser_unsuspend_card">غیر معطل ڈیک</string>
+    <string name="card_browser_mark_card">نوٹوں کو نشان زد کریں</string>
+    <string name="card_browser_unmark_card">نوٹوں کو غیر نشان زد کریں۔</string>
+    <string name="delete_card_title">نوٹ حذف کریں?</string>
+    <string name="changed_deck_message">%1$s پر منتقل کردیا گیا</string>
+    <string name="card_browser_show_marked">فلٹر نشان زد</string>
+    <string name="card_browser_show_suspended">فلٹر معطل</string>
+    <string name="card_browser_search_by_tag">ٹیگ کے ذریعہ فلٹر کریں۔</string>
+    <string name="card_browser_search_by_flag">پرچم کی طرف سے فلٹر</string>
+    <string name="card_browser_list_my_searches">میری تلاشیں</string>
+    <string name="card_browser_list_my_searches_save">تلاش کو محفوظ کریں</string>
+    <string name="card_browser_list_my_searches_title">محفوظ کردہ تلاش کا انتخاب کریں۔</string>
+    <string name="card_browser_list_my_searches_new_name">موجودہ تلاش کا نام</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">آپ نام کے بغیر تلاش کو محفوظ نہیں کرسکتے ہیں</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">نام موجود ہے</string>
     <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-    <string name="card_browser_change_display_order">Change display order</string>
+    <string name="card_browser_change_display_order">ڈسپلے آرڈر کو تبدیل کریں</string>
     <string name="card_browser_change_display_order_title">Choose display order</string>
     <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Due</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">بقایا</string>
+    <string name="card_details_tags">ٹیگز</string>
     <string-array name="card_browser_order_labels">
         <item>No sorting (faster)</item>
-        <item>By sort field</item>
+        <item>ترتیب کے میدان کے لحاظ سے</item>
         <item>By created time</item>
         <item>By note modification time</item>
         <item>By card modification time</item>
@@ -90,14 +90,14 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_select_all">تمام منتخب کریں</string>
+    <string name="card_browser_select_none">کچھ نہ چنیں</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_unknown_deck_name">نامعلوم</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Export card</item>

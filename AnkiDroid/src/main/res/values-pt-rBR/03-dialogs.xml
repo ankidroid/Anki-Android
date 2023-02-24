@@ -94,6 +94,7 @@
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Você realmente deseja tentar reparar o banco de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \"%s\".</string>
     <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar cards ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
@@ -112,11 +113,11 @@
     <string name="import_update_details">Atualizando %1$d de %2$d notas existentes.</string>
     <string name="import_update_ignored">Algumas atualizações foram ignoradas porque o tipo de nota mudou</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Cards importados: %2$d</item>
+        <item quantity="other">Arquivos importados: %1$d\nTotal de cards importados: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Armazenamento cheio</string>
+    <string name="storage_almost_full_title">Armazenamento quase cheio</string>
     <string name="no_space_to_downgrade_title">Sem espaço</string>
     <string name="no_space_to_downgrade_content">AnkiDroid precisa de %s de espaço de armazenamento livre para continuar. Por favor, limpe algum espaço</string>
     <string name="restore_backup_title">Restaurar backup?</string>
@@ -124,11 +125,11 @@
     <string name="restore_backup_choose_another">Procurar</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm">Confirmar</string>
     <string name="dialog_no">Não</string>
     <string name="dialog_yes">Sim</string>
     <string name="dialog_continue">Continuar</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Processando...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Criar</string>
     <string name="dialog_positive_delete">Excluir</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -229,7 +230,7 @@
     <string name="help_item_support_develop_ankidroid">Desenvolvedor</string>
     <string name="help_item_support_rate_ankidroid">Avaliar</string>
     <string name="help_item_support_other_ankidroid">Outros</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Traduzir</string>
     <string name="help_title_community">Comunidade</string>
     <string name="help_item_anki_forums">Fóruns Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -246,7 +247,7 @@
         <item quantity="one">Uma sincronização automática pode ser executada em %d segundos.</item>
         <item quantity="other">Uma sincronização automática pode ser executada em %d segundos.</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Sua conexão foi restringida. A transferência de dados pode custar dinheiro</string>
     <string name="deck_picker_new">Número de novos cards para ver hoje neste baralho.</string>
     <string name="deck_picker_rev">Número de cartões que vencem hoje neste baralho.</string>
     <string name="deck_picker_lrn">Número de cards em para aprender neste baralho.</string>
@@ -256,17 +257,17 @@
     <string name="deck_picker_counts">Abra a página de visão geral do deck contendo o número de cartas a serem vistas hoje.</string>
     <string name="import_deck_package">Baralho (.apkg)</string>
     <string name="import_collection_package">Coleção (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Arquivo de texto (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Você não pode criar um sub-baralho para todos os baralhos</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
+    <string name="scoped_storage_require_user_to_accept_risk">        Devido às alterações de privacidade do Android, seu local de armazenamento atual ficará inacessível se o aplicativo for desinstalado.
+        \n\nPrecisamos migrar seus dados para um local privado para o aplicativo AnkiDroid.
+        \n\nOs dados neste local privado podem ser excluídos se o aplicativo for desinstalado.
+        \n\nSeu local de armazenamento atual é %1$s
+        \n\nO local de armazenamento privado será %2$s
+        \n\n\n Por favor, confirme que você fará regularmente backups desta pasta.
     </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
+    <string name="manual_backup">Backup manual</string>
+    <string name="remind_me_later">Lembre-me mais tarde</string>
 </resources>

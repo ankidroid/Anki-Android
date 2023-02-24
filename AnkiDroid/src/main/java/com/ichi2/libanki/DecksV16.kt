@@ -29,7 +29,7 @@
     "MemberVisibilityCanBePrivate",
     "FunctionName",
     "ConvertToStringTemplate",
-    "LocalVariableName",
+    "LocalVariableName"
 )
 
 package com.ichi2.libanki
@@ -387,7 +387,8 @@ class DecksV16(private val col: CollectionV16) :
     @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
     fun allNames(dyn: bool = true, force_default: bool = true): MutableList<str> {
         return this.all_names_and_ids(
-            skip_empty_default = !force_default, include_filtered = dyn
+            skip_empty_default = !force_default,
+            include_filtered = dyn
         ).map { x ->
             x.name
         }.toMutableList()

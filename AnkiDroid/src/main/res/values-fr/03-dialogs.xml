@@ -94,6 +94,7 @@
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
     <string name="intent_aedict_empty">La catégorie « default » est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
@@ -116,7 +117,7 @@
         <item quantity="other">Fichiers importés : %1$d\nNombre total de cartes importées : %2$d</item>
     </plurals>
     <string name="storage_full_title">Stockage plein</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_almost_full_title">Il n\'y a presque plus d\'espace libre</string>
     <string name="no_space_to_downgrade_title">Aucun espace</string>
     <string name="no_space_to_downgrade_content">AnkiDroid a besoin de %s d\'espace libre pour continuer. Veuillez libérer de l\'espace</string>
     <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
@@ -229,7 +230,7 @@
     <string name="help_item_support_develop_ankidroid">Développer</string>
     <string name="help_item_support_rate_ankidroid">Évaluer</string>
     <string name="help_item_support_other_ankidroid">Autre</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Traduire</string>
     <string name="help_title_community">Communauté</string>
     <string name="help_item_anki_forums">Forums Anki</string>
     <string name="help_item_discord">Discord</string>

@@ -95,7 +95,7 @@ jobs:
           arguments: lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+        uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --check AnkiDroid/**/*.js
           dry: True

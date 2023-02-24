@@ -15,14 +15,16 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.customSyncBase
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.web.CustomSyncServer
+import com.ichi2.utils.show
 
 /**
  * Fragment with preferences related to syncing
@@ -39,35 +41,28 @@ class SyncSettingsFragment : SettingsFragment() {
 
         // Configure force full sync option
         requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
-            MaterialDialog(requireContext()).show {
-                title(R.string.force_full_sync_title)
-                message(R.string.force_full_sync_summary)
-                positiveButton(R.string.dialog_ok) {
-                    if (col == null) {
-                        showThemedToast(requireContext(), R.string.directory_inaccessible, false)
-                        return@positiveButton
+            AlertDialog.Builder(requireContext()).show {
+                setTitle(R.string.force_full_sync_title)
+                setMessage(R.string.force_full_sync_summary)
+                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    launchCatchingTask {
+                        withCol { modSchemaNoCheck() }
+                        showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
                     }
-                    col!!.modSchemaNoCheck()
-                    showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
                 }
-                negativeButton(R.string.dialog_cancel)
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
             true
         }
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
             val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
-            val collectionSyncUrl = CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(preferences)
-            val mediaSyncUrl = CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(preferences)
+            val url = customSyncBase(preferences)
 
-            if (collectionSyncUrl == null && mediaSyncUrl == null) {
+            if (url == null) {
                 getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
             } else {
-                getString(
-                    R.string.custom_sync_server_summary_both_or_either_of_the_two_servers_used,
-                    collectionSyncUrl ?: getString(R.string.custom_sync_server_summary_placeholder_default),
-                    mediaSyncUrl ?: getString(R.string.custom_sync_server_summary_placeholder_default)
-                )
+                url
             }
         }
     }

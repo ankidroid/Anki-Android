@@ -87,7 +87,7 @@
         <item>Çalışılacak sıraya göre</item>
         <item>Aralığa göre</item>
         <item>Kolaylığa göre</item>
-        <item>Tekrara göre</item>
+        <item>Tekrarlara göre</item>
         <item>Süresi dolana göre</item>
     </string-array>
     <string name="card_browser_select_all">Hepsini seç</string>
@@ -113,8 +113,8 @@
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Eklendi</string>
-    <string name="card_info_first_review">İlk tekrar</string>
-    <string name="card_info_latest_review">Son tekrar</string>
+    <string name="card_info_first_review">İlk Gözden Geçirme</string>
+    <string name="card_info_latest_review">En Son Gözden Geçirme</string>
     <string name="card_info_interval">Zaman Aralığı</string>
     <string name="card_info_ease">Kolaylık</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Tekrarlar</string>
@@ -130,9 +130,9 @@
     <string name="card_info_revlog_date">Tarih</string>
     <string name="card_info_revlog_rating">Derecelendirme</string>
     <string name="card_info_revlog_type">Tür</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Öğren</string>
-    <string name="card_info_revlog_review">Gözden geçir</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Yeniden öğren</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Öğrenme</string>
+    <string name="card_info_revlog_review">Gözden geçirme</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Yeniden öğrenme</string>
     <string name="card_info_revlog_filtered">Filtrelenmiş</string>
     <string name="card_info_ease_not_applicable">Yok</string>
 </resources>

@@ -85,7 +85,8 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         val f = File("test.svg")
         controller.setImagePreview(f, 100)
         assertThat(
-            "A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
+            "A SVG image file can't be previewed",
+            ShadowToast.getTextOfLatestToast(),
             equalTo(getResourceString(R.string.multimedia_editor_svg_preview))
         )
         assertThat("A SVG image file can't be previewed", controller.isShowingPreview, equalTo(false))
@@ -93,6 +94,9 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
     @Test
     fun invalidImageResultDoesNotCrashController() {
+        // TODO: This started failing after API 30:
+        //  showThemedToast threw an NPE. Diagnose the underlying issue.
+
         val controller = validControllerNoImage
         controller.registryToUse = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(

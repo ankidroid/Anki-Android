@@ -17,7 +17,6 @@
 package com.ichi2.compat
 
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
@@ -25,6 +24,7 @@ import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.junit.Test
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertFailsWith
 
 class CreateDirectoriesTest : Test21And26() {
 
@@ -59,7 +59,7 @@ class CreateDirectoriesTest : Test21And26() {
         }
         val child = File(file, "child")
         // We fail as it's a file
-        assertThrowsSubclass<IOException> { compat.createDirectories(child) }
+        assertFailsWith<IOException> { compat.createDirectories(child) }
     }
 
     @Test
@@ -69,6 +69,6 @@ class CreateDirectoriesTest : Test21And26() {
             deleteOnExit()
         }
         // We fail as it's a file
-        assertThrowsSubclass<IOException> { compat.createDirectories(file) }
+        assertFailsWith<IOException> { compat.createDirectories(file) }
     }
 }

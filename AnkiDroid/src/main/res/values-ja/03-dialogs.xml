@@ -88,6 +88,7 @@
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
     <string name="answering_error_report">エラーを報告する</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
     <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
@@ -251,9 +252,9 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Androidのプライバシー ポリシーの改定により、アプリをアンインストール後、現在の保存先にはアクセスできなくなります。
-        \n\nAnkiDroid専用の新しい保存先へファイルの移行をお願いしています。
-        \n\nこの新しい保存先にあるファイルは、アプリのアンインストール時にアプリといっしょに削除されます。
+    <string name="scoped_storage_require_user_to_accept_risk">        Androidのプライバシーポリシーの改定により、AnkiDroidを今後アンインストールすると、再度インストールしても現在のデータ保存先にはアクセスできなくなります。
+        \n\nそのリスクを避けるため、AnkiDroid専用の新しい保存先へのデータの移動を強く推奨しています。
+        \n\n新しい保存先に移動したデータは、アプリのアンインストール時にアプリと共に削除されます。
         \n\n現在の保存先: %1$s
         \n\n新しい保存先: %2$s
         \n\nこのフォルダのバックアップを定期的にとることをおすすめします。

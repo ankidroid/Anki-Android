@@ -26,6 +26,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -33,6 +34,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.view.children
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
@@ -40,6 +42,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -64,18 +67,11 @@ class Toolbar : FrameLayout {
     var formatListener: TextFormatListener? = null
     private val mToolbar: LinearLayout
     private val mToolbarLayout: LinearLayout
+
     /** A list of buttons, typically user-defined which modify text + selection */
     private val mCustomButtons: MutableList<View> = ArrayList()
     private val mRows: MutableList<LinearLayout> = ArrayList()
 
-    /**
-     * TODO HACK until API 21 - can be removed once tested.
-     *
-     * inside NoteEditor: use [insertItem] instead of accessing this
-     * and remove [R.id.note_editor_toolbar_button_cloze] from [R.layout.note_editor_toolbar]
-     */
-    var clozeIcon: View? = null
-        private set
     private var mStringPaint: Paint? = null
 
     constructor(context: Context) : super(context)
@@ -92,7 +88,6 @@ class Toolbar : FrameLayout {
         }
         mToolbar = findViewById(R.id.editor_toolbar_internal)
         mToolbarLayout = findViewById(R.id.toolbar_layout)
-        clozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze)
         setupDefaultButtons()
     }
 
@@ -109,6 +104,11 @@ class Toolbar : FrameLayout {
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
         findViewById<View>(R.id.note_editor_toolbar_button_font_size).setOnClickListener { displayFontSizeDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
+
+        val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
+        parentLayout.children.forEach { child ->
+            CompatHelper.compat.setTooltipTextByContentDescription(child)
+        }
     }
 
     /**
@@ -157,7 +157,7 @@ class Toolbar : FrameLayout {
         val context = context
         val button = AppCompatImageButton(context)
         button.id = id
-        button.background = drawable
+        button.setImageDrawable(drawable)
 
         /*
             Style didn't work
@@ -167,10 +167,13 @@ class Toolbar : FrameLayout {
         */
 
         // apply style
-        val margin = convertDpToPixel(8F, context).toInt()
-        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val background = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, background, true)
+        button.setBackgroundResource(background.resourceId)
+        // Use layout size from R.style.note_editor_toolbar_button
+        val buttonSize = convertDpToPixel(44F, context).toInt()
+        val params = LinearLayout.LayoutParams(buttonSize, buttonSize)
         params.gravity = Gravity.CENTER
-        params.setMargins(margin, margin / 2, margin, margin / 2)
         button.layoutParams = params
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)

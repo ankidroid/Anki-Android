@@ -20,7 +20,6 @@ package com.ichi2.libanki
 import android.database.Cursor
 import android.database.SQLException
 import android.net.Uri
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -228,6 +227,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         for (s in strings) {
             @Suppress("NAME_SHADOWING")
             var s = s
+
             // handle latex
             @KotlinCleanup("change to .map { }")
             val svg = model.optBoolean("latexsvg", false)
@@ -265,7 +265,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
             val buf = StringBuffer()
             m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(string)
             while (m.find()) {
-                if (!TextUtils.isEmpty(m.group(4))) {
+                if (!m.group(4).isNullOrEmpty()) {
                     m.appendReplacement(buf, "[$4]")
                 } else {
                     m.appendReplacement(buf, TemplateFilters.CLOZE_DELETION_REPLACEMENT)
@@ -574,7 +574,9 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         val mtime = _mtime(dir())
         return if (mod != 0L && mod == mtime) {
             null
-        } else mtime
+        } else {
+            mtime
+        }
     }
 
     @KotlinCleanup("destructure directly val (added, removed) = _changes()")
@@ -775,7 +777,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                         val csum = cur.getString(1)
                         fnames.add(fname)
                         val normName = Utils.nfcNormalized(fname)
-                        if (!TextUtils.isEmpty(csum)) {
+                        if (csum.isNotEmpty()) {
                             try {
                                 col.log("+media zip $fname")
                                 val file = File(dir(), fname)
@@ -876,7 +878,10 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         val path = File(dir(), fname).absolutePath
         db!!.execute(
             "insert or replace into media values (?,?,?,?)",
-            fname, _checksum(path), _mtime(path), 1
+            fname,
+            _checksum(path),
+            _mtime(path),
+            1
         )
     }
 
@@ -891,7 +896,10 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
         Timber.d("Marking media file removal in media db: %s", fname)
         db!!.execute(
             "insert or replace into media values (?,?,?,?)",
-            fname, null, 0, 1
+            fname,
+            null,
+            0,
+            1
         )
     }
 
@@ -1036,5 +1044,5 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>,
+    val invalidFileNames: List<String>
 )

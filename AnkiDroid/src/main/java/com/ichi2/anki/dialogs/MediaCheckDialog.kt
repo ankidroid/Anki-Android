@@ -5,7 +5,6 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Message
-import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.LinearLayout
@@ -82,7 +81,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 reportTextView.text = reportStr
                 if (unused.isNotEmpty()) {
                     reportTextView.append(getString(R.string.unused_strings))
-                    fileListTextView.append(TextUtils.join("\n", unused))
+                    fileListTextView.append(unused.joinToString("\n"))
                     fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
                     fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
                     dialog.positiveButton(R.string.check_media_delete_unused) {
@@ -125,7 +124,9 @@ class MediaCheckDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
                 resources.getString(R.string.check_media_title)
-            } else resources.getString(R.string.app_name)
+            } else {
+                resources.getString(R.string.app_name)
+            }
         }
 
     override val dialogHandlerMessage: Message

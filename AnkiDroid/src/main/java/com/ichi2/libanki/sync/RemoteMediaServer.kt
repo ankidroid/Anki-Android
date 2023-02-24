@@ -16,7 +16,6 @@
  ****************************************************************************************/
 package com.ichi2.libanki.sync
 
-import android.text.TextUtils
 import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.anki.web.CustomSyncServer
@@ -156,7 +155,7 @@ class RemoteMediaServer(
     @Throws(MediaSyncException::class)
     // NOTE: the original name of the method was _dataOnly which followed upstream naming
     private inline fun <reified T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
-        if (!TextUtils.isEmpty(resp.optString("err"))) {
+        if (resp.optString("err").isNotEmpty()) {
             val err = resp.getString("err")
             col?.log("error returned: $err")
             throw MediaSyncException("SyncError:$err")

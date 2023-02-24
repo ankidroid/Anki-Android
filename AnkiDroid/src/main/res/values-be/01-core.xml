@@ -74,16 +74,16 @@
         <item quantity="other">Засталося %d хвіліны</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d гадзіна %2$d засталася</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Засталася %1$d гадзіна %2$d</item>
+        <item quantity="few">Засталося %1$d гадзіны %2$d</item>
+        <item quantity="many">Засталося %1$d гадзін %2$d</item>
+        <item quantity="other">Засталося %1$d гадзіны %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d дзень %2$d застаўся</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Застаўся %1$d дзень %2$d</item>
+        <item quantity="few">Засталося %1$d дні %2$d</item>
+        <item quantity="many">Засталося %1$d дзён %2$d</item>
+        <item quantity="other">Засталося %1$d дні %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
@@ -186,7 +186,7 @@
     <string name="empty_cloze_warning">Адрэдагуйце гэты запіс і дадайце пропускі. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Сінхранізацыя часова адключана</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Перанос даных у сховішча</string>
     <string name="cancel_sync_confirm">Скасаваць сінхранізацыю?</string>
     <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled">Сiнхранiзацыя скасаваная</string>
@@ -256,5 +256,10 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s копія</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Немагчыма запісаць або стварыць файл %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Перанос вашых даных</string>
+    <string name="migration_successful_message">Перанос паспяхова завершаны</string>
+    <string name="migration_failed_message">Не ўдалося перанесці</string>
+    <string name="migration_transferred_size">Перанесена %1$.0f MB з %2$.0f МБ</string>
 </resources>

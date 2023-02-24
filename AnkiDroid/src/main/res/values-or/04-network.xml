@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">ଆପଣ ଅଫଲାଇନ ଅଛନ୍ତି</string>
     <string name="sync_even_if_offline">ତଥାପି ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="sync_error">ସିଙ୍କ୍ ତ୍ରୁଟି</string>
+    <string name="sync_error">ସୀଙ୍କ୍ ତ୍ରୁଟି</string>
     <string name="vague_error" comment="Network error dialog title">ତ୍ରୁଟି</string>
     <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="menu_get_shared_decks">ଅଂଶିଦାରୀ ତାସଖଣ୍ଡ ପାଆନ୍ତୁ</string>
@@ -73,11 +73,11 @@
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
-    <string name="sync_title">ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
+    <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ କରାଗଲା</string>
     <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ%2$s ଆଗପଛ ଅଛି। ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ୍ କରନ୍ତୁ।</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଟେ</string>
-    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସିଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
     <string name="sync_log_error_specific">ସିଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ବାର୍ତ୍ତା: %2$s</string>
@@ -101,11 +101,11 @@
     <string name="sync_check_download_file">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="sync_media_find">ପରିବର୍ତ୍ତିତ ମିଡିଆ ଖୋଜାହଉଛି&#8230;</string>
     <string name="sync_media_no_changes">ମିଡ଼ିଆ ଫାଇଲରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ</string>
-    <string name="sync_media_success">ମିଡ଼ିଆ ସିଙ୍କ୍ ହୋଇଛି</string>
+    <string name="sync_media_success">ମିଡ଼ିଆ ସୀଙ୍କ୍ ହୋଇଛି</string>
     <string name="sync_media_partial_updated">ମିଡ଼ିଆ ସିଙ୍କ୍ ଆଂଶିକ ଭାବେ ସମାପ୍ତ ହୋଇଛି:\n%1$d ଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି।\n%2$d ଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଅପଲୋଡ୍ ହୋଇଛି।</string>
     <string name="sync_media_changes_count">%dଟି ମିଡ଼ିଆ ପରିବର୍ତ୍ତନ ଅପଲୋଡ୍ କରିବା ବାକି ଅଛି</string>
     <string name="sync_media_downloaded_count">%dଟି ମିଡ଼ିଆ ଫାଇଲ ଡାଉନଲୋଡ୍ କରିବା ବାକି ଅଛି</string>
-    <string name="sync_sanity_failed">ସିଙ୍କ୍ କରିବା ପରେ, ସଂଗ୍ରହ ଏକ ଅସଙ୍ଗତ ଅବସ୍ଥାରେ ଥିଲା। ଏହି ସମସ୍ୟାର ସମାଧାନ ପାଇଁ, AnkiDroid ଏକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ କରିବାକୁ ବାଧ୍ୟ କରିବ। ଆପଣ କେଉଁ ପାର୍ଶ୍ୱକୁ ରଖିବାକୁ ଚାହୁଁଛନ୍ତି ବାଛନ୍ତୁ।</string>
+    <string name="sync_sanity_failed">ସିଙ୍କ୍ କରିବା ପରେ, ସଂଗ୍ରହ ଏକ ଅସଙ୍ଗତ ଅବସ୍ଥାରେ ଥିଲା। ଏହି ସମସ୍ୟାର ସମାଧାନ ପାଇଁ, AnkiDroid ଗୋଟେ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ବାଧ୍ୟ କରାଇବ। ଆପଣ କେଉଁ ପାର୍ଶ୍ୱକୁ ରଖିବାକୁ ଚାହୁଁଛନ୍ତି ବାଛନ୍ତୁ।</string>
     <string name="sync_media_sanity_failed">ମିଡ଼ିଆ ସିଙ୍କ୍ ସମାପ୍ତ ହୋଇଛି, କିନ୍ତୁ ମିଡ଼ିଆ ଗଣନା ସର୍ଵର୍ ସହ ସହମତ ନୁହେଁ। ଯେକୌଣସି ତ୍ରୁଟି ସଂଶୋଧନ କରିବାକୁ ପରଵର୍ତ୍ତୀ ମିଡ଼ିଆ ସିଙ୍କ୍ ରେ ପୂର୍ଣ୍ଣସିଙ୍କ୍ କରାଯିବ।</string>
     <string name="sync_media_db_error">ମିଡ଼ିଆ ସିଙ୍କ୍ ବିଫଳ ହେଲା କାରଣ ସାମ୍ପ୍ରତିକ ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହେଇଯାଇଛି। ଏକ ମିଡ଼ିଆ ଯାଞ୍ଚ ସୁପାରିଶ କରାଯାଏ।</string>
     <string name="sync_media_error">ମିଡ଼ିଆ ତଥ୍ୟ ସିଙ୍କ୍ କରିବାରେ ତ୍ରୁଟି</string>
@@ -118,7 +118,7 @@
     <string name="force_full_sync_summary">ପରଵର୍ତ୍ତୀ ସିଙ୍କ୍ ରେ, ଗୋଟିଏ ଦିଗରେ ପରିଵର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରିବ</string>
     <string name="force_full_sync_confirmation">ବାଧ୍ୟତାମୂଳକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="full_sync_confirmation">ଯେତେଵେଳେ ଆପଣ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ପରଵର୍ତ୍ତୀ ସମୟରେ ସିଙ୍କ୍ କରିବେ ସେତେଵେଳେ ଅନୁରୋଧ କରାଯାଇଥିବା ପରିଵର୍ତ୍ତନ ଡାଟାବେସର ସମ୍ପୂର୍ଣ୍ଣ ଅପଲୋଡ୍ ଆଵଶ୍ୟକ କରିବ। ଯଦି ଆପଣଙ୍କର ସମୀକ୍ଷା କିମ୍ବା ଅନ୍ୟାନ୍ୟ ପରିଵର୍ତ୍ତନ ଅନ୍ୟ ଡିଵାଇସରେ ଅପେକ୍ଷା କରିଛି ଯାହା ଏପର୍ଯ୍ୟନ୍ତ ଏଠାରେ ସିଙ୍କ୍ ହୋଇନାହିଁ, ସେଗୁଡ଼ିକ ହଜିଯିବ। ଜାରି ରଖିବେ ତ?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroid ର ପୂର୍ବରୁ ସ୍ଥାପିତ ସଂସ୍କରଣରେ ଏକ ତ୍ରୁଟି ହେତୁ, ଏହାକୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ କରିବାକୁ ବାଧ୍ୟ କରିବାକୁ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroidର ପୂର୍ଵ ଅଧିସ୍ଥାପିତ ସଂସ୍କରଣରେ ଗୋଟେ ବଗ୍ ରହିଥିବାରୁ, ଏକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ବାଧ୍ୟ କରାଇବା ଲାଗି ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="sync_error_407_proxy_required">ପ୍ରକ୍ସି ପ୍ରାମାଣିକିକରଣ ଆବଶ୍ୟକ।</string>
     <string name="sync_error_409">ଗୋଟିଏ ସମୟରେ କେବଳ ଜଣେ ଗ୍ରାହକ AnkiWeb କୁ ଆକସେସ୍ କରିପାରିବେ। ଯଦି ପୂର୍ବ ସିଙ୍କ୍ ବିଫଳ ହେଲା, ଦୟାକରି କିଛି ମିନିଟ୍ ମଧ୍ୟରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_error_413_collection_size">ଆପଣଙ୍କ ସଂଗ୍ରହ କିମ୍ୱା ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ସିଙ୍କ୍ ପାଇଁ ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ।</string>
@@ -127,7 +127,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb ରକ୍ଷଣାବେକ୍ଷଣରେ ଅଛି। ଦୟାକରି କିଛି ମିନିଟରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout ତ୍ରୁଟି ପ୍ରାପ୍ତ ହେଲା।</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">ସିଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
-    <string name="sync_menu_title_no_account">ସିଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
+    <string name="sync_menu_title_full_sync">ସୀଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
+    <string name="sync_menu_title_no_account">ସୀଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
     <string name="sync_error_unknown_host_readable">AnkiWeb ସହିତ ସଂଯୋଗ ହୋଇପାରିଲା ନାହିଁ। ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ କାମ କରୁଛି କି?\n\n%s</string>
 </resources>

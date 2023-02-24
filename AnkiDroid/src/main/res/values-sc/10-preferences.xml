@@ -86,7 +86,6 @@
     <string name="full_screen_off">Istudadu</string>
     <string name="full_screen_system">Cua sas barras de sistema</string>
     <string name="full_screen_complete">Cua sas barras de sistema e sos butones de risposta</string>
-    <string name="full_screen_error_gestures">Depes abilitare sos gestos pro cuare sos butones de risposta</string>
     <string name="answer_buttons_position" maxLength="41">Positzione de su butone de sas rispostas</string>
     <string-array name="answer_buttons_position_labels">
         <item>In bassu</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Permiti sos gestos tàtiles in sos àngulos de s\'ischermu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannellu de navigatzione a ischermu intreu</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Aberi su pannellu de navigatzione cando trìsinas cara a dereta dae cale si siat puntu de s\'ischermu</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Trìsina cara a artu</string>
     <string name="gestures_swipe_down" maxLength="41">Trìsina cara a bassu</string>
     <string name="gestures_swipe_left" maxLength="41">Trìsina cara a manca</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">Leghet sa pregunta e sa risposta si non b\'est unu documentu sonoru inclùdidu</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Recùpera sos mèdios cun sa sincronizatzione</string>
-    <string name="sync_fetch_missing_media_summ">Recùpera in manera automàtica sos elementos multimediales chi mancant in su mentres chi ses sincronizende</string>
     <string name="sync_account" maxLength="41">Contu de AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non ses intradu</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizatzione automàtica</string>
     <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Ammustra s\'istadu de sincronizatzione</string>
     <string name="sync_status_badge_summ">Muda s\'icona de sincronizatzione cando  sas modìficas si podent carrigare</string>
     <string name="metered_sync_title" maxLength="41">Permite sa sincronizatzione cun connessiones a consumu</string>
@@ -227,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Serbidore de sincronizatzione personalizadu</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">No impreadu</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Colletzione: %1$s\nMèdios: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">predefinidu</string>
-    <string name="custom_sync_server_help"><![CDATA[        Comente alternativa a sa sincronizatzione cun AnkiWeb,
-        dias pòdere impreare sos serbidores tuos pro sincronizare.
-        Podes ispetzificare sa colletzione, su serbidore de documentos multimediales o totu sos duos.
-        Si no est impostadu s\'ant a impreare imbetzes sos serbidores predefinidos de AnkiWeb.
-        A esèmpiu, dias pòdere impreare su serbidore de sincronizatzione integradu in Anki
-        Desktop pro sincronizare sa colletzione cando tenes petzi una rete locale,
-        e AnkiWeb pro sincronizare documentos multimediales cando tenes atzessu a s\'ìnternet generale.
-        <a href="%s">Impara de prus</a>
-        <br>
-        <br>Dae cara: a diferèntzia de comente fiat in sas versiones de AnkiDroid antepostas,
-        depes ispetzificare s\'URL de sincronizatzione personalizadu intreu,
-        a esèmpiu: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronizatzione</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronizatzione multimediale</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tecladu</string>
     <string name="bluetooth">Bluetooth</string>

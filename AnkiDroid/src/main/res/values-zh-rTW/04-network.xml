@@ -127,7 +127,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb 正在維護中。請在數分鐘後重試。</string>
     <string name="sync_error_504_gateway_timeout">接收到 504 網關逾時錯誤。</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">同步(完整)</string>
-    <string name="sync_menu_title_no_account">同步(登入)</string>
+    <string name="sync_menu_title_full_sync">同步 (完整)</string>
+    <string name="sync_menu_title_no_account">同步 (登入)</string>
     <string name="sync_error_unknown_host_readable">無法連結到 AnkiWeb。您的網路是否正常嗎？\n\n%s</string>
 </resources>

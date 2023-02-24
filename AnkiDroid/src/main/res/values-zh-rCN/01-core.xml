@@ -233,4 +233,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">迁移数据</string>
+    <string name="migration_successful_message">迁移成功</string>
+    <string name="migration_failed_message">迁移失败</string>
+    <string name="migration_transferred_size">迁移了 %1$.0f MB，共 %2$.0f MB</string>
 </resources>

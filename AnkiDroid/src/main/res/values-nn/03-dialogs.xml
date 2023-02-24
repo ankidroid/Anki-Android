@@ -48,14 +48,14 @@
     <string name="check_db_warning">Dette kan ta en lang tid</string>
     <string name="check_db_acknowledge">Database checked</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Slett kortstokk</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-    <string name="delete_deck_title">Slett kortstokk</string>
+    <string name="contextmenu_deckpicker_delete_deck">Slett kortleiken</string>
+    <string name="delete_deck_default_deck">Den forvalde kortleiken kan ikkje verta sletta</string>
+    <string name="delete_deck_title">Slett kortleiken?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
+    <string name="delete_cram_deck_message">Send alle korta i %s attende til deira opphavlege kortleikar?</string>
     <string name="no_tts_available_message">Ingen \"tekst til tale\"-språk tilgjengelige</string>
     <string name="initializing_tts">Initialiserer TTS&#8230;</string>
     <string name="tts_no_tts">Ikke snakk</string>
@@ -94,6 +94,7 @@
     <string name="answering_error_title">Databasefeil</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Rapporter feil</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Vil du virkelig prøve å reparere databasen?\n\nEn kopi vil bli opprettet i undermappen \'%s\' før forsøket starter.</string>
     <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
     <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>

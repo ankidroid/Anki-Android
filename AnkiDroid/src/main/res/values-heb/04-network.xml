@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">מסד הנתונים משובש. יש לנסות שנית.</string>
     <string name="sync_overwrite_error">אוסף החפיסות הנוכחי לא יכול היה להיות מוחלף בקובץ שהורד</string>
     <string name="sync_connection_error">הזמן שהוקצב להתחברות עבר. יתכן שיש בעיות בחיבור לאינטרנט, או שיש קובץ גדול מאוד בספריית המדיה.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">לא ניתן היה לשמור את הקובץ שהורדת באחסון שלך. או שהאחסון הוא לקריאה בלבד או שאין מספיק מקום.</string>
     <string name="sync_error_invalid_sync_server">שרת הסנכרון המותאם אישית בהגדרות מתקדמות אינו חוקי (%s). אנא הזן שרת חוקי, או השבת את ההגדרה.</string>
     <string name="sync_deletions_message">המחיקות מסונכרנות&#8230;</string>
     <string name="sync_small_objects_message">סנכרון פריטים קטנים&#8230;</string>

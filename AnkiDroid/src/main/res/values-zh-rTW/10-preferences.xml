@@ -72,7 +72,7 @@
     <string name="use_input_tag" maxLength="41">在卡片中輸入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一個文本框裡輸入答案</string>
     <string name="reset_languages" maxLength="41">重設語言</string>
-    <string name="reset_languages_summ">重置指定牌組語言（TTS和字典）</string>
+    <string name="reset_languages_summ">重置指定牌組語言 (TTS 和字典)</string>
     <string name="reset_languages_question">重設所有的語言？</string>
     <string name="reset_confirmation">重設所有狀態</string>
     <string name="card_zoom" maxLength="41">卡片縮放</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">關閉</string>
     <string name="full_screen_system">隱藏系統狀態欄</string>
     <string name="full_screen_complete">隱藏系統狀態欄和回答按鈕</string>
-    <string name="full_screen_error_gestures">您必須啟用手勢操作才能隱藏回答按鈕</string>
     <string name="answer_buttons_position" maxLength="41">顯示答案按鈕位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>頂部</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>
     <string name="gestures_fullscreen_nav_drawer_summary">從屏幕上任何地方向右劃，可以打開導航的抽屜。</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">向上撥動</string>
     <string name="gestures_swipe_down" maxLength="41">向下撥動</string>
     <string name="gestures_swipe_left" maxLength="41">向左撥動</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">如果沒有內含音訊檔案，則讀出問題和答案</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">同步時取得媒體檔案</string>
-    <string name="sync_fetch_missing_media_summ">同步時自動取得缺少的媒體檔案</string>
     <string name="sync_account" maxLength="41">AnkiWeb 帳號</string>
     <string name="sync_account_summ_logged_out">未登入</string>
     <string name="automatic_sync_choice" maxLength="41">自動同步</string>
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
     <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
     <string name="metered_sync_title" maxLength="41">允許按流量計費的連接同步</string>
@@ -165,7 +167,7 @@
     <string name="vertical_centering" maxLength="41">置中</string>
     <string name="vertical_centering_summ">垂直置中卡片內容</string>
     <string name="pref_backup_max" maxLength="41">最大備份數量</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔（毫秒）</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔 (毫秒)</string>
     <string name="pref_double_tap_time_interval_summary">如果時間不到，按二次答案按鍵是無效的，這樣可以避免不小心雙擊按鍵。</string>
     <string name="show_estimates" maxLength="41">顯示按鈕的時間</string>
     <string name="show_estimates_summ">在答案按鈕上顯示下一次複習的時間</string>
@@ -220,29 +222,19 @@
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">進階統計</string>
     <string name="enable_advanced_statistics_title" maxLength="41">啟用進階統計</string>
-    <string name="enable_advanced_statistics_summ">顯示預測統計：基於對未來複習進行的計算或模擬（啟用）和已安排好的未來複習（禁用）。</string>
+    <string name="enable_advanced_statistics_summ">顯示預測統計：基於對未來複習進行的計算或模擬 (啟用) 和已安排好的未來複習 (停用)。</string>
     <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">計算前 n 天，從而模擬出接下來的</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">計算精度</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">模擬的迭代次數</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自訂同步伺服器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">集合：%1$s\n媒體：%2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">默認</string>
-    <string name="custom_sync_server_help"><![CDATA[        作為用AnkiWeb進行同步的備選方案，
-        你可以使用自己的服務器來同步。
-        你可以指定牌組集服務器或媒體檔案伺服器，或者指定兩個服務器。
-        如未設定，將使用默認的AnkiWeb服務器。
-        比如，當你只有本地網絡時，你可以使用Anki案頭版
-        內寘的服務器來同步牌組集。 在可以訪問互聯網時使用
-        AnkiWeb來同步媒體檔案。
-        <a href=“%s”>瞭解更多</a>
-        <br>
-        <br>注：和先前的AnkiDroid版本不同，
-        你必須指定完整的自定義URL。
-        例如： https://example.com:8080/sync/ 。]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">媒體檔案同步地址</string>
     <!-- Key Bindings -->
     <string name="keyboard">鍵盤</string>
     <string name="bluetooth">藍芽</string>
@@ -251,7 +243,7 @@
     <string name="deck_conf_group_summ">改變牌組群組選項將影響多個牌組。如果你希望僅改變當前牌組，請先為群組新增選項</string>
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">牌組描述(僅影響當前牌組)</string>
+    <string name="deck_conf_deck_description" maxLength="41">牌組描述 (僅影響當前牌組)</string>
     <string name="deck_conf_group" maxLength="41">設定群組</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d 個牌組使用這個群組</item>
@@ -261,7 +253,7 @@
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘記</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
-    <string name="deck_conf_steps" maxLength="41">步(單位是分鐘)</string>
+    <string name="deck_conf_steps" maxLength="41">步 (單位是分鐘)</string>
     <string name="deck_conf_order" maxLength="41">順序</string>
     <string name="deck_conf_new_cards_day" maxLength="41">新卡片/每天</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">晉階成複習卡的間隔</string>
@@ -312,7 +304,7 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
     <string name="deck_conf_cram_filter_2_check">開啟第二個過濾器</string>
-    <string name="deck_conf_cram_steps" maxLength="41">自訂步伐（以分鐘計）</string>
+    <string name="deck_conf_cram_steps" maxLength="41">自訂步伐 (以分鐘計)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">設定自訂步數</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">為此牌組群組的牌組啟用提醒通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">提醒時間</string>
@@ -367,7 +359,7 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
+    <string name="pref__backup_options__title" maxLength="41">備份選項</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -377,29 +369,29 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動備份間隔 (分鐘)</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">要保留的每日備份</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">要保留的每週備份</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">要保留的每月備份</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">管理空間</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">錯誤</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">正在計算&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d 個檔案\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">刪除未使用的媒體檔案</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">刪除未使用的媒體檔案</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">刪除備份</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">刪除備份</string>
+    <string name="progress__deleting_backups">正在刪除備份&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
@@ -421,8 +413,8 @@
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">錯誤</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">正在擷取&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">正在計算&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
 </resources>

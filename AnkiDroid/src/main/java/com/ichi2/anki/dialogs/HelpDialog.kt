@@ -31,6 +31,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem.ActivityConsumer
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
+import com.ichi2.compat.CompatHelper.Companion.readSerializableCompat
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -52,18 +53,26 @@ object HelpDialog {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG)
         val allItems = arrayOf<RecursivePictureMenu.Item>(
             ItemHeader(
-                R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
+                R.string.help_title_using_ankidroid,
+                R.drawable.ic_manual_black_24dp,
+                UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
                 FunctionItem(
-                    R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL
+                    R.string.help_item_ankidroid_manual,
+                    R.drawable.ic_manual_black_24dp,
+                    UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL
                 ) { activity -> openManual(activity) },
                 LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_MANUAL, R.string.link_anki_manual),
                 LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_FAQ, R.string.link_ankidroid_faq)
             ),
             ItemHeader(
-                R.string.help_title_get_help, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_GET_HELP,
+                R.string.help_title_get_help,
+                R.drawable.ic_help_black_24dp,
+                UsageAnalytics.Actions.OPENED_GET_HELP,
                 LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
                 FunctionItem(
-                    R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG
+                    R.string.help_item_report_bug,
+                    R.drawable.ic_bug_report_black_24dp,
+                    UsageAnalytics.Actions.OPENED_REPORT_BUG
                 ) { activity -> openFeedback(activity) },
                 exceptionReportItem
             ),
@@ -77,7 +86,9 @@ object HelpDialog {
                 LinkItem(R.string.help_item_twitter, R.drawable.twitter, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
             ),
             ItemHeader(
-                R.string.help_title_privacy, R.drawable.ic_baseline_privacy_tip_24, UsageAnalytics.Actions.OPENED_PRIVACY,
+                R.string.help_title_privacy,
+                R.drawable.ic_baseline_privacy_tip_24,
+                UsageAnalytics.Actions.OPENED_PRIVACY,
                 LinkItem(R.string.help_item_ankidroid_privacy_policy, R.drawable.ic_baseline_policy_24, UsageAnalytics.Actions.OPENED_ANKIDROID_PRIVACY_POLICY, R.string.link_ankidroid_privacy_policy),
                 LinkItem(R.string.help_item_ankiweb_privacy_policy, R.drawable.ic_baseline_policy_24, UsageAnalytics.Actions.OPENED_ANKIWEB_PRIVACY_POLICY, R.string.link_ankiweb_privacy_policy),
                 LinkItem(R.string.help_item_ankiweb_terms_and_conditions, R.drawable.ic_baseline_description_24, UsageAnalytics.Actions.OPENED_ANKIWEB_TERMS_AND_CONDITIONS, R.string.link_ankiweb_terms_and_conditions)
@@ -96,7 +107,9 @@ object HelpDialog {
             rateAppItem,
             LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
             FunctionItem(
-                R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK
+                R.string.send_feedback,
+                R.drawable.ic_email_black_24dp,
+                UsageAnalytics.Actions.OPENED_SEND_FEEDBACK
             ) { activity -> openFeedback(activity) }
         )
         val itemList = ArrayList(listOf(*allItems))
@@ -191,9 +204,8 @@ object HelpDialog {
             mFunc.consume(activity)
         }
 
-        @Suppress("deprecation") // readSerializable
         private constructor(source: Parcel) : super(source) {
-            mFunc = source.readSerializable() as ActivityConsumer
+            mFunc = source.readSerializableCompat<ActivityConsumer>()!!
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {
@@ -234,7 +246,8 @@ object HelpDialog {
             val wasReportSent = CrashReportService.sendReport(activity)
             if (!wasReportSent) {
                 showThemedToast(
-                    activity, activity.getString(R.string.help_dialog_exception_report_debounce),
+                    activity,
+                    activity.getString(R.string.help_dialog_exception_report_debounce),
                     true
                 )
             }

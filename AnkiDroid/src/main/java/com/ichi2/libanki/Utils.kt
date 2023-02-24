@@ -26,7 +26,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.StatFs
-import android.text.TextUtils
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
@@ -187,7 +186,8 @@ object Utils {
         return if (time_s < TIME_HOUR_LONG) {
             // get time remaining, but never less than 1
             time_x = max(
-                (time_s / TIME_MINUTE).roundToInt(), 1
+                (time_s / TIME_MINUTE).roundToInt(),
+                1
             )
             res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x)
             // It used to be minutes only. So the word "minutes" is not
@@ -296,6 +296,7 @@ object Utils {
             )
         }
     }
+
     /*
      * Locale
      * ***********************************************************************************************
@@ -374,6 +375,7 @@ object Utils {
         htmlEntities.appendTail(sb)
         return sb.toString()
     }
+
     /*
      * IDs
      * ***********************************************************************************************
@@ -534,6 +536,7 @@ object Utils {
         // -1 ensures that we don't drop empty fields at the ends
         return fields.split(FIELD_SEPARATOR).toTypedArray()
     }
+
     /*
      * Checksums
      * ***********************************************************************************************
@@ -805,10 +808,13 @@ object Utils {
         try {
             Timber.d("Creating new file... = %s", destination)
             f.createNewFile()
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage") val startTimeMillis =
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val startTimeMillis =
                 System.currentTimeMillis()
             val sizeBytes = compat.copyFile(source, destination)
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage") val endTimeMillis =
+
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val endTimeMillis =
                 System.currentTimeMillis()
             Timber.d("Finished writeToFile!")
             val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
@@ -839,6 +845,7 @@ object Utils {
     fun isIntentAvailable(context: Context, action: String?): Boolean {
         return isIntentAvailable(context, action, null)
     }
+
     @KotlinCleanup("Use @JmOverloads, remove fun passing null for ComponentName")
     @KotlinCleanup("Simplify function body")
     @Suppress("deprecation") // queryIntentActivities
@@ -1013,8 +1020,10 @@ object Utils {
         // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
         val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
         return String.format(
-            Locale.US, "android:%s:%s",
-            Build.VERSION.RELEASE, model
+            Locale.US,
+            "android:%s:%s",
+            Build.VERSION.RELEASE,
+            model
         )
     }
 
@@ -1025,7 +1034,8 @@ object Utils {
         // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
         val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
         return String.format(
-            Locale.US, "android:%s:%s:%s",
+            Locale.US,
+            "android:%s:%s:%s",
             BuildConfig.VERSION_NAME,
             Build.VERSION.RELEASE,
             model
@@ -1042,7 +1052,9 @@ object Utils {
     fun nfcNormalized(txt: String): String {
         return if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
             Normalizer.normalize(txt, Normalizer.Form.NFC)
-        } else txt
+        } else {
+            txt
+        }
     }
 
     /**
@@ -1124,7 +1136,7 @@ object Utils {
         for (kv in fields.entries) {
             var value = kv.value
             value = stripHTMLMedia(value).trim { it <= ' ' }
-            if (!TextUtils.isEmpty(value)) {
+            if (value.isNotEmpty()) {
                 nonempty_fields.add(kv.key)
             }
         }

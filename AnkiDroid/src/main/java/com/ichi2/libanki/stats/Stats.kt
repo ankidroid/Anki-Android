@@ -17,10 +17,9 @@
 package com.ichi2.libanki.stats
 
 import android.content.Context
-import android.text.TextUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.anki.stats.StatsMetaInfo
@@ -184,7 +183,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         lims.add("did in " + _limit())
         val lim: String
         lim = if (!lims.isEmpty()) {
-            "where " + TextUtils.join(" and ", lims)
+            "where " + lims.joinToString(" and ")
         } else {
             ""
         }
@@ -195,6 +194,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         } else {
             3600.0 // hours
         }
+
         @Suppress("UNUSED_VARIABLE")
         val cut = col.sched.dayCutoff
         val cardCount = col.db.queryScalar("select count(id) from cards $lim")
@@ -216,7 +216,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
 
     private fun _deckAge(by: DeckAgeType): Long {
         var lim = _revlogLimit()
-        if (!TextUtils.isEmpty(lim)) {
+        if (lim.isNotEmpty()) {
             lim += " where $lim"
         }
         var t = 0.0
@@ -246,7 +246,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
     private fun getRevlogFilter(timespan: AxisType, inverseTimeSpan: Boolean): String {
         val lims = ArrayList<String>(2)
         val dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan)
-        if (!TextUtils.isEmpty(dayFilter)) {
+        if (dayFilter.isNotEmpty()) {
             lims.add(dayFilter)
         }
         var lim = _getDeckFilter().replace("[\\[\\]]".toRegex(), "")
@@ -257,7 +257,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
         lims.add("ease > 0")
         lim = "WHERE "
-        lim += TextUtils.join(" AND ", lims.toTypedArray())
+        lim += lims.toTypedArray().joinToString(" AND ")
         return lim
     }
 
@@ -466,7 +466,8 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         mHasColoredCumulative = false
         cumulative = createCumulative(
             arrayOf(
-                seriesList!![0], seriesList!![1]
+                seriesList!![0],
+                seriesList!![1]
             ),
             mZeroIndex
         )
@@ -521,7 +522,10 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
             R.string.statistics_mature
         )
         mColors = intArrayOf(
-            R.attr.stats_cram, R.attr.stats_learn, R.attr.stats_relearn, R.attr.stats_young,
+            R.attr.stats_cram,
+            R.attr.stats_learn,
+            R.attr.stats_relearn,
+            R.attr.stats_young,
             R.attr.stats_mature
         )
         var num = 0
@@ -602,8 +606,12 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
                 while (cur.moveToNext()) {
                     list.add(
                         doubleArrayOf(
-                            cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
-                            cur.getDouble(2), cur.getDouble(3)
+                            cur.getDouble(0),
+                            cur.getDouble(5),
+                            cur.getDouble(1),
+                            cur.getDouble(4),
+                            cur.getDouble(2),
+                            cur.getDouble(3)
                         )
                     )
                 }
@@ -885,7 +893,8 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         }
         Collections.sort(list) { s1: DoubleArray, s2: DoubleArray ->
             java.lang.Double.compare(
-                s1[0], s2[0]
+                s1[0],
+                s2[0]
             )
         }
         seriesList = Array(4) { DoubleArray(list.size) }
@@ -1257,6 +1266,13 @@ from cards where did in ${_limit()}"""
     companion object {
         const val SECONDS_PER_DAY = 86400L
         const val ALL_DECKS_ID = 0L
+        fun getDayOffset(col: com.ichi2.libanki.Collection): Int {
+            return when (col.schedVer()) {
+                2 -> col.get_config("rollover", Preferences.DEFAULT_ROLLOVER_VALUE)!!
+                // 1, or otherwise:
+                else -> col.crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
+            }
+        }
 
         /**
          * Note: NOT in libanki

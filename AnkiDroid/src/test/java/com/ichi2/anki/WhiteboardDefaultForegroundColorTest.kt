@@ -32,6 +32,7 @@ class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter(1)
     @JvmField // required for Parameter
     var mExpectedResult = 0
+
     @Test
     fun testDefaultForegroundColor() {
         assertThat(foregroundColor, equalTo(mExpectedResult))

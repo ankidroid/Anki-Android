@@ -23,7 +23,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -40,6 +39,7 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.test.assertFailsWith
 
 /**
  * Test for [MigrateEssentialFiles.migrateEssentialFiles]
@@ -58,6 +58,8 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
+
+        setLegacyStorage()
 
         // we need to access 'col' before we start
         col.basicCheck()
@@ -98,7 +100,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     fun exception_if_not_enough_free_space_migrate_essential_files() {
         ShadowStatFs.reset()
 
-        val ex = assertThrows<MigrateEssentialFiles.UserActionRequiredException.OutOfSpaceException> {
+        val ex = assertFailsWith<MigrateEssentialFiles.UserActionRequiredException.OutOfSpaceException> {
             migrateEssentialFiles()
         }
 
@@ -112,7 +114,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
 
         val newDestination = File(destinationPath, "again")
 
-        val ex = assertThrows<IllegalStateException> {
+        val ex = assertFailsWith<IllegalStateException> {
             MigrateEssentialFiles.migrateEssentialFiles(targetContext, newDestination)
         }
 
@@ -135,7 +137,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
             it.write(1)
         }
 
-        val ex = assertThrows<IllegalStateException> {
+        val ex = assertFailsWith<IllegalStateException> {
             migrateEssentialFiles()
         }
 
@@ -166,7 +168,6 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     }
 
     private fun migrateEssentialFiles(stubbing: (KStubbing<MigrateEssentialFiles>.(MigrateEssentialFiles) -> Unit)? = null) {
-
         fun mock(e: MigrateEssentialFiles): MigrateEssentialFiles {
             return if (stubbing == null) e else spy(e, stubbing)
         }

@@ -30,7 +30,6 @@ object InitialActivity {
     /** Returns null on success  */
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? {
-
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
             return StartupFailure.WEBVIEW_FAILED
@@ -50,6 +49,7 @@ object InitialActivity {
             CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
             CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
             CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED
+            CollectionHelper.CollectionOpenFailure.DISK_FULL -> StartupFailure.DISK_FULL
             null -> {
                 // if getColSafe returned null, this should never happen
                 null
@@ -112,6 +112,6 @@ object InitialActivity {
 
     enum class StartupFailure {
         SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED
+        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
     }
 }

@@ -35,7 +35,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.text.format.Formatter
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -61,6 +60,7 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.BitmapUtil
 import com.ichi2.utils.ExifUtil
@@ -97,10 +97,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return min(height * 0.4, width * 0.6).toInt()
         }
     private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
+
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 
-    @Suppress("deprecation") // getParcelable
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             Timber.i("loadInstanceState but null so nothing to load")
@@ -110,7 +110,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i("loadInstanceState loading saved state...")
         mViewModel = ImageViewModel.fromBundle(savedInstanceState)
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath")
-        mPreviousImageUri = savedInstanceState.getParcelable("mPreviousImageUri")
+        mPreviousImageUri = savedInstanceState.getParcelableCompat<Uri>("mPreviousImageUri")
     }
 
     override fun saveInstanceState(): Bundle {
@@ -206,7 +206,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 }
                 setPreviewImage(mViewModel.imagePath, maxImageSize)
             } else {
-                if (!TextUtils.isEmpty(mPreviousImagePath)) {
+                if (!mPreviousImagePath.isNullOrEmpty()) {
                     revertToPreviousImage()
                 }
                 // cropImage can give us more information. Not sure it is actionable so for now just log it.
@@ -366,7 +366,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             // Restore the old version of the image if the user cancelled
             when (requestCode) {
                 ACTIVITY_TAKE_PICTURE ->
-                    if (!TextUtils.isEmpty(mPreviousImagePath)) {
+                    if (!mPreviousImagePath.isNullOrEmpty()) {
                         revertToPreviousImage()
                     }
                 else -> {}
@@ -415,7 +415,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun showSomethingWentWrong() {
-        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
+        try {
+            UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
+        } catch (e: Exception) {
+            // ignore. A NullPointerException may occur in Robolectric
+            Timber.w(e, "Failed to display toast")
+        }
     }
 
     private fun showSVGPreviewToast() {
@@ -432,7 +437,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i(
             "handleSelectImageIntent() Intent: %s. extras: %s",
             data,
-            if (data.extras == null) "null" else TextUtils.join(", ", data.extras!!.keySet())
+            if (data.extras == null) "null" else data.extras!!.keySet().joinToString(", ")
         )
 
         val selectedImage = getImageUri(mActivity, data)

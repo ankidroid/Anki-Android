@@ -16,14 +16,13 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki
 
-import android.Manifest
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.libanki.DB
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.junit.Assert
@@ -37,8 +36,7 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 class DBTest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
 
     @Test
     @Throws(Exception::class)

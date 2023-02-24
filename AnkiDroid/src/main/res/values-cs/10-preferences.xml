@@ -86,7 +86,6 @@
     <string name="full_screen_off">Vypnout</string>
     <string name="full_screen_system">Skrýt panely systému</string>
     <string name="full_screen_complete">Skrýt panely systému a tlačítka odpovědí</string>
-    <string name="full_screen_error_gestures">Musíte povolit gesta, aby byla tlačítka odpovědí skryta</string>
     <string name="answer_buttons_position" maxLength="41">Pozice tlačítek odpovědí</string>
     <string-array name="answer_buttons_position_labels">
         <item>Nahoře</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
+    <string name="gestures_none" maxLength="41">Žádné</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Stáhnout multimédia při synchronizaci</string>
-    <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Vždy</string>
+    <string name="sync_media_only_unmetered">Pouze na neměřeném připojení</string>
+    <string name="sync_media_never">Nikdy</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="metered_sync_title" maxLength="41">Povolit synchronizaci na měřeném připojení</string>
@@ -227,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastní synchronizační server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nepoužívá se</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Kolekce: %1$s\nMultimédia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">výchozí</string>
-    <string name="custom_sync_server_help"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
-        můžete pro synchronizaci použít vlastní servery.
-        Můžete zadat server pro kolekci, multimédia, nebo obojí.
-        Jestliže nejsou nastaveny, použijí se místo toho výchozí AnkiWeb servery.
-        Například, můžete použít synchronizační server vestavěný v Anki
-        Desktop, abyste synchronizovali kolekci, když jste pouze v místní síti,
-        a AnkiWeb, abyste synchronizovali multimédia, když máte přístup k internetu.
-        <a href="%s">Dozvědět se více</a>
-        <br>
-        <br>Poznámka: na rozdíl od předchozích verzí AnkiDroid
-        musíte zadat úplnou adresu URL pro synchronizaci,
-        například: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
+        můžete k synchronizaci použít vlastní server.
+        Pokud není nastaven, bude místo toho použit výchozí AnkiWeb server.
+        <a href="%s">Zjistit více</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronizovat url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Sync url pro média</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>
@@ -374,19 +366,18 @@
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backup_options__title" maxLength="41">Možnosti zálohování</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid pravidelně zálohuje Vaši kolekci.
+        Jestliže jsou zálohy více než dva dny staré,
+        AnkiDroid začne odstraňovat některé z nich, aby uvolnil místo na disku.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Všimněte si, že multimediální soubory nejsou zálohovány.
+        Pro jistotu pravidelně synchronizujte vaši kolekci nebo zálohujte její exporty.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+        Můžete obnovit ze zálohy a exportovat vaši kolekci v nabídce seznamu balíčků.]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Počet minut mezi automatickými zálohami</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Počet denních záloh, které se mají zachovat</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Počet týdenních záloh, které se mají zachovat</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Počet měsíčních záloh, které se mají zachovat</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
@@ -403,7 +394,7 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Odstranit nepoužívané multimediální soubory</string>
     <string name="pref__delete_unused_media_files__summary">Odstranit obrázky a další multimédia, která nemají předponu _ a na které neodkazují žádné poznámky </string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="dialog__media_check_required__message">Vyžaduje se zkontrolovat multimédia, aby se našly nepoužívané multimediální soubory</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Odstranit nepoužívané multimediální soubory</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Odstranit zálohy</string>
@@ -429,9 +420,9 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Žádná kolekce</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Chyba</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Načítání&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Vypočítává se&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekce neexistuje</string>
 </resources>

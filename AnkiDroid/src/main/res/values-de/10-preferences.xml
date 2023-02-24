@@ -86,7 +86,6 @@
     <string name="full_screen_off">Aus</string>
     <string name="full_screen_system">Systemleisten ausblenden</string>
     <string name="full_screen_complete">Systemleisten und Antwortschaltflächen ausblenden</string>
-    <string name="full_screen_error_gestures">Sie müssen Gesten aktivieren, um die Antwortschaltflächen auszublenden</string>
     <string name="answer_buttons_position" maxLength="41">Position der Antwortschaltflächen</string>
     <string-array name="answer_buttons_position_labels">
         <item>Oben</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Vollbild-Navigationsleiste</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Navigationsleiste öffnen, wenn rechts von überall auf dem Bildschirm gewischt wird</string>
+    <string name="gestures_none" maxLength="41">Keine</string>
     <string name="gestures_swipe_up" maxLength="41">Nach oben wischen</string>
     <string name="gestures_swipe_down" maxLength="41">Nach unten wischen</string>
     <string name="gestures_swipe_left" maxLength="41">Nach links wischen</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">Liest Frage und Antwort vor, wenn keine anderen Sounds enthalten sind</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Mediadaten synchronisieren</string>
-    <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-Konto</string>
     <string name="sync_account_summ_logged_out">Nicht eingeloggt</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische Synchronisierung</string>
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Immer</string>
+    <string name="sync_media_only_unmetered">Nur bei unbegrenzten Verbindungen</string>
+    <string name="sync_media_never">Nie</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
     <string name="metered_sync_title" maxLength="41">Synchronisierung über Mobilfunk zulassen</string>
@@ -227,13 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Eigener Synchronisationsserver</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nicht in Gebrauch</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Sammlung: %1$s\nMedien: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">Standard</string>
-    <string name="custom_sync_server_help"><![CDATA[Als Alternative zur Synchronisierung mit AnkiWeb kannst du deine eigenen Server verwenden. Du kannst einen Sammlungsserver, einen Medienserver oder beide auswählen. Standardmäßig werden stattdessen die AnkiWeb-Server verwendet. Zum Beispiel könntest du den Server, der in die Desktopversion von Anki eingebaut ist verwenden, um deine Sammlung zu synchronisieren, wenn du nur ein lokales Netzwerk zur Verfügung hast. AnkiWeb könnte dann bei vollständigem Internetzugriff verwendet werden.
-<a href="%s">Lerne mehr darüber</a><br><br>
-Bitte beachte: anders als bei älteren AnkiDroid-Versionen musst du jetzt deine gesamte Synchronisierungs-URL angeben, zum Beispiel "https://example.com:8080/sync/".]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        Als Alternative zur Synchronisierung mit AnkiWeb
+        können Sie Ihren eigenen Server zur Synchronisierung verwenden.
+        Falls nicht gesetzt, wird der Standard AnkiWeb Server verwendet.
+        <a href="%s">Mehr erfahren</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronisations-URL</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Mediensynchronisations-URL</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tastatur</string>
     <string name="bluetooth">Bluetooth</string>
@@ -407,14 +408,14 @@ Bitte beachte: anders als bei älteren AnkiDroid-Versionen musst du jetzt deine 
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">App-Daten löschen</string>
     <string name="pref__delete_app_data__summary">Einstellungen und andere App-Daten löschen</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">App-Daten löschen</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Sind Sie sicher, dass Sie die App-Daten löschen möchten? Dazu gehören Einstellungen und andere App-Daten.\n\nHinweis: Diese Aktion schließt das Fenster.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Keine Sammlung</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Fehler</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Rufe ab...</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berechnen...</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Sammlung ist nicht vorhanden</string>
 </resources>

@@ -441,6 +441,8 @@
     <string name="validation_deck_already_exists">Калода ўжо існуе</string>
     <string name="deck_created">Створаная калода</string>
     <string name="deck_renamed">Перайменаваная калода</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Калода выдалена. Выдаліце ярлык</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>

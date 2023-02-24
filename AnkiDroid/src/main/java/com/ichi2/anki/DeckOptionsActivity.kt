@@ -28,7 +28,6 @@ import android.preference.CheckBoxPreference
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
-import android.text.TextUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
@@ -137,7 +136,9 @@ class DeckOptionsActivity :
 
                     mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
                     mValues["reminderTime"] = String.format(
-                        "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
+                        "%1$02d:%2$02d",
+                        reminderTime.getLong(0),
+                        reminderTime.getLong(1)
                     )
                 } else {
                     mValues["reminderEnabled"] = "false"
@@ -172,8 +173,10 @@ class DeckOptionsActivity :
         fun preConfChange() {
             val res = deckOptionsActivity.resources
             progressDialog = StyledProgressDialog.show(
-                deckOptionsActivity as Context, null,
-                res?.getString(R.string.reordering_cards), false
+                deckOptionsActivity as Context,
+                null,
+                res?.getString(R.string.reordering_cards),
+                false
             )
         }
 
@@ -259,7 +262,7 @@ class DeckOptionsActivity :
                             }
                             "confRename" -> {
                                 val newName = value as String
-                                if (!TextUtils.isEmpty(newName)) {
+                                if (newName.isNotEmpty()) {
                                     mOptions.put("name", newName)
                                 }
                             }
@@ -272,7 +275,7 @@ class DeckOptionsActivity :
                             }
                             "confAdd" -> {
                                 val newName = value as String
-                                if (!TextUtils.isEmpty(newName)) {
+                                if (newName.isNotEmpty()) {
                                     // New config clones current config
                                     val id = col.decks.confId(newName, mOptions.toString())
                                     deck.put("conf", id)
@@ -283,7 +286,8 @@ class DeckOptionsActivity :
                                 // Don't remove the options group if it's the default group
                                 UIUtils.showThemedToast(
                                     this@DeckOptionsActivity,
-                                    resources.getString(R.string.default_conf_delete_error), false
+                                    resources.getString(R.string.default_conf_delete_error),
+                                    false
                                 )
                             } else {
                                 // Remove options group, handling the case where the user needs to confirm full sync
@@ -347,7 +351,8 @@ class DeckOptionsActivity :
                                     applicationContext,
                                     mOptions.getLong("id").toInt(),
                                     Intent(applicationContext, ReminderService::class.java).putExtra(
-                                        ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")
+                                        ReminderService.EXTRA_DECK_OPTION_ID,
+                                        mOptions.getLong("id")
                                     ),
                                     0
                                 )
@@ -559,9 +564,7 @@ class DeckOptionsActivity :
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    @KotlinCleanup("remove reduntant val res = resources")
     override fun updateSummaries() {
-        val res = resources
         // for all text preferences, set summary as current database value
         for (key in pref.mValues.keys) {
             val pref = findPreference(key)
@@ -570,7 +573,7 @@ class DeckOptionsActivity :
                 val count = optionsGroupCount
                 // Escape "%" in groupName as it's treated as a token
                 groupName = groupName.replace("%".toRegex(), "%%")
-                pref!!.summary = res.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count)
+                pref!!.summary = resources.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count)
                 continue
             }
 
@@ -597,7 +600,7 @@ class DeckOptionsActivity :
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
         val subDeckCount = subdeckCount
-        findPreference("confSetSubdecks").summary = res.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount)
+        findPreference("confSetSubdecks").summary = resources.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount)
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
@@ -701,7 +704,6 @@ class DeckOptionsActivity :
 
     companion object {
         fun reminderToCalendar(time: Time, reminder: JSONObject): Calendar {
-
             val calendar = time.calendar()
 
             calendar[Calendar.HOUR_OF_DAY] = reminder.getJSONArray("time").getInt(0)

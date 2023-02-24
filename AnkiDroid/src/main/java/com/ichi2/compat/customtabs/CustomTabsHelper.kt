@@ -18,8 +18,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.text.TextUtils
 import androidx.browser.customtabs.CustomTabsService
+import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
+import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 
 /**
@@ -51,7 +52,7 @@ object CustomTabsHelper {
      * @param context [Context] to use for accessing [PackageManager].
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
-    @Suppress("deprecation") // resolveActivity queryIntentActivities resolveService
+    @Suppress("deprecation") // resolveActivity queryIntentActivities
     fun getPackageNameToUse(context: Context): String? {
         if (sPackageNameToUse != null) return sPackageNameToUse
         val pm = context.packageManager
@@ -70,7 +71,7 @@ object CustomTabsHelper {
             val serviceIntent = Intent()
             serviceIntent.action = CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION
             serviceIntent.setPackage(info.activityInfo.packageName)
-            if (pm.resolveService(serviceIntent, 0) != null) {
+            if (pm.resolveServiceCompat(serviceIntent, ResolveInfoFlagsCompat.EMPTY) != null) {
                 packagesSupportingCustomTabs.add(info.activityInfo.packageName)
             }
         }
@@ -81,7 +82,7 @@ object CustomTabsHelper {
             sPackageNameToUse = null
         } else if (packagesSupportingCustomTabs.size == 1) {
             sPackageNameToUse = packagesSupportingCustomTabs[0]
-        } else if (!TextUtils.isEmpty(defaultViewHandlerPackageName) &&
+        } else if (!defaultViewHandlerPackageName.isNullOrEmpty() &&
             !hasSpecializedHandlerIntents(context, activityIntent) &&
             packagesSupportingCustomTabs.contains(defaultViewHandlerPackageName)
         ) {

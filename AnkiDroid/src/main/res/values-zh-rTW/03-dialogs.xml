@@ -83,11 +83,12 @@
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">一張新卡片正在重新排程。重新排程也會將新卡片變為複習卡。使用選項「變更位置」來變更一張新卡片的新排序位置</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變（間格倍數會被設為%d%%）</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變 (間格倍數會被設為 %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的集合或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
@@ -247,7 +248,7 @@
     <string name="deck_picker_counts">開啟包含今天要查看的卡片數量的牌組概覽頁。</string>
     <string name="import_deck_package">卡包</string>
     <string name="import_collection_package">匯總打包</string>
-    <string name="import_csv">文檔（.txt、.csv）</string>
+    <string name="import_csv">文字檔案 (.txt、.csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能為所有牌組創建子牌組</string>
     <!-- scoped storage -->

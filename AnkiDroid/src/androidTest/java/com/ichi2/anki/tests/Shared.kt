@@ -16,7 +16,6 @@
 package com.ichi2.anki.tests
 
 import android.content.Context
-import android.text.TextUtils
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
@@ -55,7 +54,7 @@ object Shared {
      * @return See getTestDir.
      */
     private fun getTestDir(context: Context, name: String): File {
-        val suffix = if (!TextUtils.isEmpty(name)) {
+        val suffix = if (name.isNotEmpty()) {
             "-$name"
         } else {
             ""

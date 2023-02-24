@@ -33,6 +33,7 @@ abstract class TagManager {
      */
     @RustCleanup("Tags.java only")
     abstract fun load(json: String)
+
     @RustCleanup("Tags.java only")
     abstract fun flush()
 
@@ -43,15 +44,19 @@ abstract class TagManager {
 
     /** Given a list of tags, add any missing ones to tag registry. */
     fun register(tags: Iterable<String>) = register(tags, null)
+
     /** Given a list of tags, add any missing ones to tag registry. */
     fun register(tags: Iterable<String>, usn: Int? = null) = register(tags, usn, false)
+
     /** Given a list of tags, add any missing ones to tag registry.
      * @param clear_first Whether to clear the tags in the database before registering the provided tags
      * */
     abstract fun register(tags: Iterable<String>, usn: Int? = null, clear_first: Boolean = false)
     abstract fun all(): List<String>
+
     /** Add any missing tags from notes to the tags list. The old list is cleared first */
     fun registerNotes() = registerNotes(null)
+
     /**
      * Add any missing tags from notes to the tags list.
      * @param nids The old list is cleared first if this is null
@@ -59,8 +64,10 @@ abstract class TagManager {
     abstract fun registerNotes(nids: kotlin.collections.Collection<Long>? = null)
 
     abstract fun allItems(): Iterable<TagUsnTuple>
+
     @RustCleanup("Tags.java only")
     abstract fun save()
+
     /**
      * byDeck returns the tags of the cards in the deck
      * @param did the deck id
@@ -85,6 +92,7 @@ abstract class TagManager {
 
     /** Parse a string and return a list of tags. */
     abstract fun split(tags: String): MutableList<String>
+
     /** Join tags into a single string, with leading and trailing spaces. */
     abstract fun join(tags: kotlin.collections.Collection<String>): String
 
@@ -99,6 +107,7 @@ abstract class TagManager {
     /** Strip duplicates, adjust case to match existing tags, and sort. */
     @RustCleanup("List, not Collection")
     abstract fun canonify(tagList: List<String>): java.util.AbstractSet<String>
+
     /** @return True if TAG is in TAGS. Ignore case. */
     abstract fun inList(tag: String, tags: Iterable<String>): Boolean
 

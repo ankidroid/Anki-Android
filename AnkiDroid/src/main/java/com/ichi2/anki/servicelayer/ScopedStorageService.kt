@@ -19,6 +19,8 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
+import android.os.Environment
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
@@ -31,6 +33,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf
+import com.ichi2.utils.Permissions
 import timber.log.Timber
 import java.io.File
 
@@ -241,7 +244,9 @@ object ScopedStorageService {
         val internalScopedDir = File(internalScopedDirPath).canonicalFile
         Timber.i(
             "isLegacyStorage(): current dir: %s\nscoped external dirs: %s\nscoped internal dir: %s",
-            currentDirPath, externalScopedDirs.joinToString(", "), internalScopedDirPath
+            currentDirPath,
+            externalScopedDirs.joinToString(", "),
+            internalScopedDirPath
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
@@ -263,5 +268,31 @@ object ScopedStorageService {
         return true
     }
 
-    private data class DirectoryToExternalDirectory(val ancestorDirectory: File, val externalDirectory: File)
+    fun migrationStatus(context: Context): Status {
+        if (!isLegacyStorage(context) && !userMigrationIsInProgress(context)) {
+            return Status.COMPLETED
+        }
+
+        if (!Permissions.hasStorageAccessPermission(context)) {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Environment.isExternalStorageLegacy()) {
+                Status.PERMISSION_FAILED
+            } else {
+                Status.REQUIRES_PERMISSION
+            }
+        }
+
+        if (userMigrationIsInProgress(context)) {
+            return Status.IN_PROGRESS
+        }
+
+        return Status.NEEDS_MIGRATION
+    }
+
+    enum class Status {
+        NEEDS_MIGRATION,
+        REQUIRES_PERMISSION,
+        PERMISSION_FAILED,
+        IN_PROGRESS,
+        COMPLETED
+    }
 }

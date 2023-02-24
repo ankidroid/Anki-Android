@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.database.sqlite.SQLiteFullException
 import android.os.Environment
 import android.text.format.Formatter
 import androidx.annotation.CheckResult
@@ -74,7 +75,8 @@ open class CollectionHelper {
         Timber.i("Begin openCollection: %s", path)
         val backend = BackendFactory.getBackend(context)
         val collection = Storage.collection(
-            context, path,
+            context,
+            path,
             server = false,
             log = true,
             backend = backend
@@ -135,6 +137,10 @@ open class CollectionHelper {
             null
         } catch (e: BackendDbFileTooNewException) {
             lastOpenFailure = CollectionOpenFailure.FILE_TOO_NEW
+            Timber.w(e)
+            null
+        } catch (e: SQLiteFullException) {
+            lastOpenFailure = CollectionOpenFailure.DISK_FULL
             Timber.w(e)
             null
         } catch (e: Exception) {
@@ -218,13 +224,15 @@ open class CollectionHelper {
             }
             val required = Formatter.formatShortFileSize(context, mRequiredSpace)
             val insufficientSpace = context.resources.getString(
-                R.string.integrity_check_insufficient_space, required
+                R.string.integrity_check_insufficient_space,
+                required
             )
 
             // Also concat in the extra content showing the current free space.
             val currentFree = Formatter.formatShortFileSize(context, mFreeSpace)
             val insufficientSpaceCurrentFree = context.resources.getString(
-                R.string.integrity_check_insufficient_space_extra_content, currentFree
+                R.string.integrity_check_insufficient_space_extra_content,
+                currentFree
             )
             return insufficientSpace + insufficientSpaceCurrentFree
         }
@@ -277,7 +285,7 @@ open class CollectionHelper {
     }
 
     enum class CollectionOpenFailure {
-        FILE_TOO_NEW, CORRUPT, LOCKED
+        FILE_TOO_NEW, CORRUPT, LOCKED, DISK_FULL
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -452,9 +460,11 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            return if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
-                getAppSpecificExternalAnkiDroidDirectory(context)
-            } else legacyAnkiDroidDirectory
+            return if (!BuildConfig.LEGACY_STORAGE) {
+                File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
+            } else {
+                legacyAnkiDroidDirectory
+            }
         }
 
         /**
@@ -466,7 +476,7 @@ open class CollectionHelper {
          *
          * @return Absolute path to the AnkiDroid directory in primary shared/external storage
          */
-        private val legacyAnkiDroidDirectory: String
+        val legacyAnkiDroidDirectory: String
             get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath
 
         /**
@@ -532,10 +542,12 @@ open class CollectionHelper {
                     getDefaultAnkiDroidDirectory(context),
                     "androidTest"
                 ).absolutePath
-            } else PreferenceExtensions.getOrSetString(
-                preferences,
-                PREF_COLLECTION_PATH
-            ) { getDefaultAnkiDroidDirectory(context) }
+            } else {
+                PreferenceExtensions.getOrSetString(
+                    preferences,
+                    PREF_COLLECTION_PATH
+                ) { getDefaultAnkiDroidDirectory(context) }
+            }
         }
 
         /** Fetches additional collection data not required for

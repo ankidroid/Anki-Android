@@ -88,11 +88,14 @@ open class HttpSyncer(
     @Volatile
     private var mHttpClient: OkHttpClient? = null
     private val mHostNum: HostNum
+
     @KotlinCleanup("simplify with ?:")
     private val httpClient: OkHttpClient
         get() = if (mHttpClient != null) {
             mHttpClient!!
-        } else setupHttpClient()
+        } else {
+            setupHttpClient()
+        }
 
     // PERF: Thread safety isn't required for the current implementation
     @Synchronized

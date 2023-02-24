@@ -15,11 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki
 
-import android.Manifest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -42,8 +41,7 @@ class MediaTest : InstrumentedTest() {
     private var mTestCol: Collection? = null
 
     @get:Rule
-    var runtimePermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var runtimePermissionRule = GrantStoragePermission.instance
 
     @Before
     @Throws(IOException::class)

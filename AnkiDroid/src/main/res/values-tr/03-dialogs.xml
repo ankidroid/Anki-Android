@@ -76,31 +76,32 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d kartın zamanını değiştir</item>
+        <item quantity="one">%d kartı yeniden planla</item>
         <item quantity="other">%d kartın zamanını değiştir</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Şu anki aralık: %d gün</item>
         <item quantity="other">Şu anki aralık: %d gün</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Şu kadar gün sonra çalışmaya zamanla</string>
+    <string name="reschedule_card_dialog_message">Gözden geçirme için x gün sonra yeniden planla</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d kartın zamanı değiştirildi</item>
+        <item quantity="one">%d kart yeniden planlandı</item>
         <item quantity="other">%d kartın zamanı değiştirildi</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Yeni bir kartın zamanı değiştiriliyor. Zamanını değiştirmek yeni kartları aynı zamanda çalışılacak kartlara dönüştürür. Yeni sıranın içinde \"yeni kartın yerini değiştir\" opsiyonunu kullanabilirsiniz.</string>
+    <string name="reschedule_card_dialog_new_card_warning">Yeni bir kart yeniden planlanıyor. Yeniden planlamak aynı zamanda yeni kartları gözden geçirme kartlara dönüştürür. Yeni bir kartın yeni kuyruktaki konumunu değiştirmek için \"kartı yeniden yerleştir\" seçeneğini kullanın.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Zamanını değiştirmek aynı zamanda gelecekte zamanlayıcının karta muamelesini değiştirecek (kolaylık %d%% yapılacak)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Dosya yöneticinizden desteyi seçin veya içeri aktarmak için about:downloads sayfasını ziyaret edin </string>
     <string name="answering_error_title">Veritabanı hatası</string>
     <string name="answering_error_message">Koleksiyona yazılamadı. Veritabanı bozuk olabilir veya diskte yeterli boş alan olmayabilir.\n\nBu daha sık oluyorsa, veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin. Bunun için \"seçenekler\"e dokunun.\n\Veya bu bir AnkiDroid hatası da olabilir; Bunu kontrol edebilmemiz için lütfen hatayı bildirin.</string>
     <string name="answering_error_report">Hatayı bildir</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
     <string name="custom_study_new_total_new">Destede yeni kart: %d</string>
     <string name="custom_study_rev_total_rev">Destede çalışma sırası gelmiş kart: %d</string>
-    <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın/azaltın (“-3”) </string>
-    <string name="custom_study_rev_extend">Bugünün inceleme sınırını şu kadar artırın/azaltın (“-3”)</string>
+    <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar artırın/azaltın (“-3”) </string>
+    <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar artırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>
     <string name="custom_study_random">X kartları rastgele desteden seç:</string>
@@ -108,11 +109,11 @@
     <string name="custom_study_rebuild_deck_corrupt">Özel çalışma destesi yeniden oluşturulamadı</string>
     <string name="importing_collection">Koleksiyon içeri aktarılıyor...</string>
     <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor...</string>
-    <string name="import_progress">• Notlar aktarılıyor: %1$d%%\n• Kartlar aktarılıyor: %2$d%%\n• Sonişleme: %3$d%%</string>
+    <string name="import_progress">• Notlar içeri aktarılıyor: %1$d%%\n• Kartlar içeri aktarılıyor: %2$d%%\n• Sonişleme: %3$d%%</string>
     <string name="import_update_details">Mevcut %2$d notun %1$d tanesi güncellendi.</string>
     <string name="import_update_ignored">Bazı güncellemeler not türü değiştiği için yoksayıldı</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Aktarılan kart: %2$d</item>
+        <item quantity="one">İçeri aktarılan kart: %2$d</item>
         <item quantity="other">Aktarılan dosya: %1$d\nAktarılan toplam kart: %2$d</item>
     </plurals>
     <string name="storage_full_title">Depolama alanı dolu</string>
@@ -150,7 +151,7 @@
     <string name="check_media_unused">Medya klasöründe olup hiçbir kartta kullanılmayan dosyalar: %d</string>
     <string name="check_media_nohave">Kartlarda kullanılıp medya klasöründe olmayan dosyalar: %d</string>
     <string name="check_media_no_unused_missing">Kullanılmayan veya eksik dosya bulunmuyor.</string>
-    <string name="check_media_db_updated">Medya veritabanı yeniden inşa edildi.</string>
+    <string name="check_media_db_updated">Medya veritabanı yeniden oluşturuldu.</string>
     <string name="check_media_delete_unused">Kullanılmayanları sil</string>
     <string name="delete_media_message">Medya siliniyor...</string>
     <string name="delete_media_result_title">Silme sonuçları</string>
@@ -187,7 +188,7 @@
     <string name="card_browser_deck_change_error">Deste değiştirilemedi</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>
-    <string name="undo_succeeded">%s Geri alındı</string>
+    <string name="undo_succeeded">\"%s\" geri alındı</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Deste seçenekleri işlenemedi: %s</string>
     <!-- Database Errors-->

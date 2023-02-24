@@ -17,7 +17,6 @@
 package com.ichi2.anki.servicemodel
 
 import android.content.SharedPreferences
-import android.text.TextUtils
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
@@ -26,9 +25,9 @@ import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.RemovedPreferences
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil
+import com.ichi2.utils.LanguageUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.lessThan
@@ -36,6 +35,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class PreferenceUpgradeServiceTest : RobolectricTest() {
@@ -108,24 +109,15 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun `Legacy custom media sync URL is removed during upgrade`() {
-        val syncURL = "https://msync.ankiweb.net"
-        mPrefs.edit { putString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, syncURL) }
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null), equalTo(syncURL))
-        PreferenceUpgrade.RemoveLegacyMediaSyncUrl().performUpgrade(mPrefs)
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null), equalTo(null))
-    }
-
-    @Test
     fun note_editor_toolbar_button_text() {
         // add two example toolbar buttons
         val buttons = HashUtil.HashSetInit<String>(2)
 
         var values = arrayOf(0, "<h1>", "</h1>")
-        buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+        buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
         values = arrayOf(1, "<p>", "</p>")
-        buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+        buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
         mPrefs.edit {
             putStringSet("note_editor_custom_buttons", buttons)
@@ -171,32 +163,49 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun `Custom collection sync URL preference contains full path after upgrade`() {
-        mPrefs.edit {
-            putString(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE, "http://foo")
+    fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
+        // enabled -> always
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
+        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("always"))
+
+        // disabled -> never
+        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
+        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("never"))
+    }
+
+    // ############################
+    // ##### UpgradeAppLocale #####
+    // ############################
+    @Test
+    fun `Language preference value is updated to use language tags`() {
+        val upgradeAppLocale = PreferenceUpgrade.UpgradeAppLocale()
+        for (languageTag in LanguageUtil.APP_LANGUAGES.values) {
+            mPrefs.edit {
+                putString("language", Locale.forLanguageTag(languageTag).toString())
+            }
+            upgradeAppLocale.performUpgrade(mPrefs)
+            val correctLanguage = mPrefs.getString("language", null)
+            assertThat(languageTag, equalTo(correctLanguage))
+            assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(languageTag))
         }
-
-        PreferenceUpgrade.UpgradeCustomCollectionSyncUrl().performUpgrade(mPrefs)
-
-        assertThat(mPrefs.contains(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE), equalTo(false))
-        assertThat(mPrefs.getString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, ""), equalTo("http://foo/sync/"))
     }
 
     @Test
-    fun `Removed Use custom sync server preference is applied to both sync URL preferences after upgrade`() {
-        mPrefs.edit {
-            putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, "http://foo/sync/")
-            putBoolean(RemovedPreferences.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
-        }
+    fun `Language preference value is set to system default correctly if it hasn't been set`() {
+        PreferenceUpgrade.UpgradeAppLocale().performUpgrade(mPrefs)
 
-        assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
-        assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
+        assertNotNull(mPrefs.getString("language", null))
+        assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
+    }
 
-        PreferenceUpgrade.UpgradeCustomSyncServerEnabled().performUpgrade(mPrefs)
+    @Test
+    fun `Language preference value is set to system default correctly`() {
+        mPrefs.edit { putString("language", "") }
+        PreferenceUpgrade.UpgradeAppLocale().performUpgrade(mPrefs)
 
-        assertThat(mPrefs.getBoolean(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_SERVER_ENABLED, false), equalTo(true))
-        assertThat(mPrefs.getBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, false), equalTo(false))
-        assertThat(CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo("http://foo/sync/"))
-        assertThat(CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(mPrefs), equalTo(null))
+        assertThat(mPrefs.getString("language", null), equalTo(""))
+        assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
     }
 }

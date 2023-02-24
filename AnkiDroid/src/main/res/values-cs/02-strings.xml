@@ -408,7 +408,7 @@
     <string name="scoped_storage_select_all_terms">Abyste mohli pokračovat, prosím přijměte všechny body</string>
     <string name="scoped_storage_learn_more">Zjistit více</string>
     <string name="scoped_storage_postpone">Odložit</string>
-    <string name="scoped_storage_migrate">Migrovat</string>
+    <string name="scoped_storage_migrate">Přesunout</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
     <string name="sync_impossible_during_migration">Synchronizace je zakázána, dokud nebude dokončen přesun dat.\n
         %1$d multimediálních souborů zbývá přesunout.</string>
@@ -424,7 +424,7 @@
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
     <string name="malicious_archive_entry_outside">Škodlivý archiv. Obsahuje záznam mimo cílový adresář: %s</string>
     <string name="malicious_archive_exceeds_limit">Škodlivý archiv. Velikost přesahuje %1$s nebo obsahuje více než %2$d souborů</string>
-    <string name="file_extract_exceeds_storage_space">Rozbalený soubor je větší, než úložiště</string>
+    <string name="file_extract_exceeds_storage_space">Rozbalený soubor je větší, než místo v úložišti</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Rozbalit štítek „%s“</string>
     <!-- Manage note types -->
@@ -440,6 +440,8 @@
     <string name="validation_deck_already_exists">Balíček existuje</string>
     <string name="deck_created">Balíček vytvořen</string>
     <string name="deck_renamed">Balíček přejmenován</string>
+    <!-- Deck Deletion -->
+    <string name="deck_shortcut_doesnt_exist">Balíček smazán. Prosím odstraňte zástupce</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>

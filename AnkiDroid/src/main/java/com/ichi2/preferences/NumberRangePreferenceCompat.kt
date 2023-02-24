@@ -20,7 +20,6 @@ package com.ichi2.preferences
 import android.content.Context
 import android.text.InputFilter
 import android.text.InputType
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
@@ -32,7 +31,6 @@ import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-@NeedsTest("removing JvmOverloads should fail")
 open class NumberRangePreferenceCompat
 @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
 constructor(
@@ -104,7 +102,7 @@ constructor(
      * @return The input value within acceptable range.
      */
     private fun getValidatedRangeFromString(input: String): Int {
-        return if (TextUtils.isEmpty(input)) {
+        return if (input.isEmpty()) {
             min
         } else {
             try {

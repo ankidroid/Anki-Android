@@ -67,9 +67,9 @@
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d minut rămas</item>
+        <item quantity="few">%d minute rămase</item>
+        <item quantity="other">%d minute rămase</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
@@ -82,7 +82,7 @@
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Colecția este goală</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Puteți începe a adăuga\ncarduri folosind iconiţa +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>
@@ -249,4 +249,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

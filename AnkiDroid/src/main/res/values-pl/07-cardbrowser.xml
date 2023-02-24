@@ -53,9 +53,9 @@
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">%d note shown</item>
-        <item quantity="few">%d notes shown</item>
-        <item quantity="many">%d notes shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="few">%d notatek pokazanych</item>
+        <item quantity="many">%d notatek pokazanych</item>
+        <item quantity="other">%d notatek pokazanych</item>
     </plurals>
     <string name="card_browser_all_decks">Wszystkie talie</string>
     <string name="card_browser_delete_card">Usuń notatki</string>
@@ -102,7 +102,7 @@
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Przytnij zawartość</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Eksportuj kartę</item>
         <item quantity="few">Eksportuj karty</item>
@@ -110,10 +110,10 @@
         <item quantity="other">Eksportuj karty</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="few">Export notes</item>
-        <item quantity="many">Export notes</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Eksportuj notatkę</item>
+        <item quantity="few">Eksportuj notatki</item>
+        <item quantity="many">Eksportuj notatki</item>
+        <item quantity="other">Eksportuj notatki</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">Usunięto %d kartę</item>

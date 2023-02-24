@@ -19,10 +19,15 @@ package com.ichi2.libanki.sync
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.SyncStatusResponse
+import anki.sync.syncLoginRequest
 import com.ichi2.libanki.CollectionV16
 
 fun CollectionV16.syncLogin(username: String, password: String): SyncAuth {
-    return backend.syncLogin(username = username, password = password)
+    val req = syncLoginRequest {
+        this.username = username
+        this.password = password
+    }
+    return backend.syncLogin(req)
 }
 
 fun CollectionV16.syncCollection(auth: SyncAuth): SyncCollectionResponse {

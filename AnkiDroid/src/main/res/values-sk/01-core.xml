@@ -172,7 +172,7 @@
     <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
     <string name="empty_deck">Tento balíček je prázdny</string>
     <string name="search_deck" comment="Deck search for selecting it">Vyhľadávanie v balíčku</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Vyhľadávanie v balíčku</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
     <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>
     <string name="studyoptions_limit_reached">Denný limit učenia bol dosiahnutý</string>
@@ -257,4 +257,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kópia</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

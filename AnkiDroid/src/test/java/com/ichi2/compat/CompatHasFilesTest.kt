@@ -26,6 +26,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
+import kotlin.test.assertFailsWith
 
 /** Tests for [Compat.hasFiles] */
 class CompatHasFilesTest : Test21And26() {
@@ -47,14 +48,14 @@ class CompatHasFilesTest : Test21And26() {
         val dir = createTransientDirectory()
         dir.delete()
 
-        assertThrows<FileNotFoundException> { hasFiles(dir) }
+        assertFailsWith<FileNotFoundException> { hasFiles(dir) }
     }
 
     @Test
     fun has_files_on_file() {
         val file = createTransientFile("hello")
 
-        val exception = assertThrowsSubclass<IOException> { hasFiles(file) }
+        val exception = assertFailsWith<IOException> { hasFiles(file) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", exception, CoreMatchers.instanceOf(NotDirectoryException::class.java))
         }
@@ -68,7 +69,7 @@ class CompatHasFilesTest : Test21And26() {
     @Test
     fun reproduce_10358() {
         val permissionDenied = createPermissionDenied()
-        assertThrowsSubclass<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory.directory) }
+        assertFailsWith<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory.directory) }
     }
 
     private fun hasFiles(dir: File) = compat.hasFiles(dir)

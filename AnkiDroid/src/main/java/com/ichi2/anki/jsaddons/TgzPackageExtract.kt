@@ -125,7 +125,6 @@ class TgzPackageExtract(private val context: Context) {
      */
     @Throws(Exception::class)
     fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
-
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
         try {
@@ -285,7 +284,6 @@ class TgzPackageExtract(private val context: Context) {
                 while (total + BUFFER <= TOO_BIG_SIZE &&
                     tarInputStream.read(data, 0, BUFFER).also { count = it } != -1
                 ) {
-
                     bufferOutput.write(data, 0, count)
                     total += count
 

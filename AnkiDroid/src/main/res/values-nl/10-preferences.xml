@@ -86,7 +86,6 @@
     <string name="full_screen_off">Uit</string>
     <string name="full_screen_system">De systeembalken verbergen</string>
     <string name="full_screen_complete">De systeembalken en antwoordknoppen verbergen</string>
-    <string name="full_screen_error_gestures">U moet de gebaren inschakelen om de antwoordknoppen te kunnen verbergen</string>
     <string name="answer_buttons_position" maxLength="41">Antwoord knoppen positie</string>
     <string-array name="answer_buttons_position_labels">
         <item>Bovenaan</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Volledig scherm navigatiebalk</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigatiescherm wanneer je overal en op het scherm naar rechts veegt</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Omhoog vegen</string>
     <string name="gestures_swipe_down" maxLength="41">Omlaag vegen</string>
     <string name="gestures_swipe_left" maxLength="41">Naar links vegen</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">Vraag en antwoord voorlezen als er geen geluidsbestand is opgenomen</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Media downloaden</string>
-    <string name="sync_fetch_missing_media_summ">Haal automatisch ontbrekende media op tijdens synchronisatie.</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Niet aangemeld</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische synchronisatie</string>
     <string name="automatic_sync_choice_summ">Synchronizeer automatisch bij het starten en sluiten van de app indien de laatste synchronisatie meer dan 10 minuten geleden was.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Synchronisatiestatus weergeven</string>
     <string name="sync_status_badge_summ">Verander het synchronisatie-icoon wanneer wijzigingen kunnen worden geüpload</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
@@ -227,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Aangepaste synchronisatie-server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Niet gebruikt</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collectie: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">standaard</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL synchroniseren</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Toetsenbord</string>
     <string name="bluetooth">Bluetooth</string>

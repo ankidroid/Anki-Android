@@ -20,7 +20,6 @@
 package com.ichi2.anki.multimediacard.fields
 
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import java.io.File
 import java.util.regex.Pattern
 
@@ -43,15 +42,11 @@ abstract class AudioField : FieldBase(), IField {
 
     override var hasTemporaryMedia: Boolean = false
 
-    @KotlinCleanup("get() can be simplified with a scope function")
     override val formattedValue: String
-        get() {
-            if (audioPath == null) {
-                return ""
-            }
-            val file = File(audioPath!!)
-            return if (file.exists()) "[sound:${file.name}]" else ""
-        }
+        get() = audioPath?.let { path ->
+            val file = File(path)
+            if (file.exists()) "[sound:${file.name}]" else ""
+        } ?: ""
 
     override fun setFormattedString(col: Collection, value: String) {
         val p = Pattern.compile(PATH_REGEX)

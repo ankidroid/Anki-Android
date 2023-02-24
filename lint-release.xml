@@ -63,6 +63,8 @@
     <issue id="ImplicitSamInstance" severity="fatal" />
     <issue id="DrawAllocation" severity="fatal" />
 
+    <issue id="MonochromeLauncherIcon" severity="fatal" />
+
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 

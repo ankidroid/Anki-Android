@@ -57,6 +57,7 @@ object Aapt2Util {
     sealed class FormatData {
         /** Format string representing a date */
         object DateFormatData : FormatData()
+
         /**
          * Data regarding a string which will be passed into getString or getQuantityString
          * @param argCount The number of arguments
@@ -74,7 +75,6 @@ object Aapt2Util {
     }
 
     fun verifyJavaStringFormat(str: String): FormatData {
-
         var argCount = 0
         var nonpositional = false
 
@@ -82,7 +82,6 @@ object Aapt2Util {
         fun c() = str[index]
 
         while (index < str.length) {
-
             if (c() == '%' && index + 1 < str.length) {
                 index++
 

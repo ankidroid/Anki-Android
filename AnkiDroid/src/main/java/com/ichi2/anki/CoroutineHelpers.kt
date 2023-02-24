@@ -140,6 +140,20 @@ fun Fragment.launchCatchingTask(
     }
 }
 
+/** Launches a [CollectionManager.withCol] job while catching its errors with [launchCatchingTask] */
+fun <T> FragmentActivity.launchWithCol(block: Collection.() -> T): Job {
+    return launchCatchingTask {
+        withCol { block() }
+    }
+}
+
+/** See [FragmentActivity.launchWithCol] */
+fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
+    return launchCatchingTask {
+        withCol { block() }
+    }
+}
+
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
         MaterialDialog(context).show {
@@ -166,7 +180,7 @@ private fun showError(context: Context, msg: String, exception: Throwable) {
 suspend fun <T> Backend.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
-    block: suspend CoroutineScope.() -> T,
+    block: suspend CoroutineScope.() -> T
 ): T {
     return coroutineScope {
         val monitor = launch {
@@ -278,7 +292,7 @@ private suspend fun <T> withProgressDialog(
 private suspend fun monitorProgress(
     backend: Backend,
     extractProgress: ProgressContext.() -> Unit,
-    updateUi: ProgressContext.() -> Unit,
+    updateUi: ProgressContext.() -> Unit
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
@@ -299,7 +313,7 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null,
+    var amount: Pair<Int, Int>? = null
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation
@@ -343,7 +357,7 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     }
     val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
         MaterialDialog(this).show {
-            message(text = TR.deckConfigWillRequireFullSync())
+            message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
             positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
             negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
             onCancel { coroutine.resume(false) }

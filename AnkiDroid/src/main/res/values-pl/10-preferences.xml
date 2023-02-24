@@ -53,8 +53,8 @@
     <string name="pref_search_no_results">Brak wyników</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ogólne</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Ustawienia nauki</string>
+    <string name="pref_cat_system_wide" maxLength="41">Ogólnosystemowe</string>
     <string name="pref_cat_reviewing" maxLength="41">Przegląd</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizacja</string>
     <string name="pref_cat_scheduling" maxLength="41">Harmonogram</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">Wyłączony</string>
     <string name="full_screen_system">Ukryj paski systemowe</string>
     <string name="full_screen_complete">Ukryj paski systemowe i przyciski odpowiedzi</string>
-    <string name="full_screen_error_gestures">Musisz włączyć detekcję gestów, aby ukryć przyciski odpowiedzi</string>
     <string name="answer_buttons_position" maxLength="41">Położenie przycisków odpowiedzi</string>
     <string-array name="answer_buttons_position_labels">
         <item>Góra</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otwórz panel nawigacyjny po przesunięciu w prawo w dowolnym miejscu ekranu</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Przesuń w górę</string>
     <string name="gestures_swipe_down" maxLength="41">Przesuń w dół</string>
     <string name="gestures_swipe_left" maxLength="41">Przesuń w lewo</string>
@@ -125,15 +125,17 @@
     <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Pobierz media przy synchronizacji</string>
-    <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Nie zalogowany</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Zawsze</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Nigdy</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Zezwalaj na synchronizację przy połączeniach taryfowych</string>
+    <string name="metered_sync_summary">Jeśli wyłączone, zostaniesz ostrzeżony, jeśli spróbujesz zsynchronizować używając połączenia taryfowego</string>
     <string name="app_theme" maxLength="41">Motyw</string>
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
@@ -183,7 +185,7 @@
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
     <string name="new_timezone" maxLength="41">Obsługa nowej strefy czasowej</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s godzin po północy</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Północ</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
@@ -204,7 +206,7 @@
     <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Recenzent</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Ułatwienia dostępu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Wklej zdjęcia ze schowka jako PNG</string>
     <string name="paste_as_png_summary">Domyślnie by oszczędzać miejsce na dysku Anki wkleja obrazy ze schowka w formacie JPG. Możesz użyć tej opcji by zamiast tego używać formatu PNG</string>
@@ -214,9 +216,9 @@
     <string name="media_import_allow_all_files" maxLength="41">Zezwalaj na import wszystkich plików</string>
     <string name="media_import_allow_all_files_summ">Jeśli Android nie rozpoznaje pliku multimedialnego</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">Domyślna talia podczas otwierania statystyk</string>
+    <string name="stats_default_deck_current">Pokaż statystyki dla ostatnio używanej talii</string>
+    <string name="stats_default_deck_all">Pokaż statystyki dla wszystkich talii</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Zaawansowane statystyki</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Włącz zaawansowane statystyki</string>
@@ -227,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nie używane</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">domyślne</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Adres url synchronizacji</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Adres url synchronizacji mediów</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
     <string name="bluetooth">Bluetooth</string>
@@ -335,14 +327,14 @@
     <!-- About -->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
     <string name="pref_cat_about_title" maxLength="41">O programie</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="contributors_title">Współtwórcy</string>
+    <string name="about_contributors_description"><![CDATA[To są nasi wspaniali <a href=\"%1$s\">współtwórcy</a>. Możesz również pomóc AnkiDroid poprzez programowanie, tłumaczenie, darowiznę i <a href=\"%2$s\">więcej</a>!]]></string>
     <string name="license">Licencja</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid jest wydawany na licencji <a href=\"%1$s\">GPL-3.0</a> i <a href=\"%2$s\">AGPL-3.0</a> z kodem źródłowym dostępnym <a href=\"%3$s\">na GitHubie</a>]]></string>
+    <string name="donate_description"><![CDATA[Możesz wspierać rozwój AnkiDroida <a href=\"%1$s\">darowizną</a>. Jesteśmy wdzięczni za każdą kwotę.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Dodaj gest</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Zastąp gest</string>
     <string name="binding_add_key">Dodaj klawisz</string>
     <string name="binding_replace_key">Zamień klucz</string>
     <string name="key_picker_default_press_key">Naciśnij klawisz</string>
@@ -358,16 +350,16 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Usuń \'%s\'</string>
     <string name="bindings_already_bound">Już przypisane do %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">Eksperymentalne</string>
     <string name="experimental_pref_confirmation" maxLength="41">Włącz „%s”</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_title" maxLength="41">Użyj nowego backendu</string>
+    <string name="use_rust_backend_summary">Włącza nowsze funkcje Anki, takie jak silnik v3\nNIESTABILNY. Nie używaj na kolekcji, której nie możesz stracić. NIE cofaj po zamknięciu aplikacji</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Użyj harmonogramu v3</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
+    <string name="disable_dev_options">Wyłącz opcje dla programistów </string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
     <!-- #######################################################################################

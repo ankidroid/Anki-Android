@@ -66,8 +66,10 @@ abstract class AbstractDeckTreeNode(
     /** Line representing this string without its children. Used in timbers only.  */
     protected open fun toStringLine(): String? {
         return String.format(
-            Locale.US, "%s, %d",
-            fullDeckName, did
+            Locale.US,
+            "%s, %d",
+            fullDeckName,
+            did
         )
     }
 
@@ -131,19 +133,19 @@ abstract class AbstractDeckTreeNode(
     }
 
     /* Number of new cards to see today known to be in this deck and its descendants. The number to show to user*/
-    open var newCount: Int = 0
+    open val newCount: Int
         get() {
             throw UnsupportedOperationException()
         }
 
     /* Number of lrn cards (or repetition) to see today known to be in this deck and its descendants. The number to show to user*/
-    open var lrnCount: Int = 0
+    open val lrnCount: Int
         get() {
             throw UnsupportedOperationException()
         }
 
     /* Number of rev cards to see today known to be in this deck and its descendants. The number to show to user*/
-    open var revCount: Int = 0
+    open val revCount: Int
         get() {
             throw UnsupportedOperationException()
         }

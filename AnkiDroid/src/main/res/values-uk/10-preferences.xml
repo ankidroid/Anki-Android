@@ -86,7 +86,6 @@
     <string name="full_screen_off">Вимкнено</string>
     <string name="full_screen_system">Приховати системну панель</string>
     <string name="full_screen_complete">Приховати системну панель і панель кнопок відповіді</string>
-    <string name="full_screen_error_gestures">Включіть жести, щоб приховати панель кнопок відповіді</string>
     <string name="answer_buttons_position" maxLength="41">Положення кнопок відповіді</string>
     <string-array name="answer_buttons_position_labels">
         <item>Вгорі</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Дозволити сенсорні жести в кутах екрану</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Повноекранна панель навігації</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Відкривати панель навігації при проведенні вправо з будь-якого місця на екрані</string>
+    <string name="gestures_none" maxLength="41">Немає</string>
     <string name="gestures_swipe_up" maxLength="41">Провести пальцем вгору</string>
     <string name="gestures_swipe_down" maxLength="41">Провести пальцем донизу</string>
     <string name="gestures_swipe_left" maxLength="41">Провести пальцем вліво</string>
@@ -125,12 +125,14 @@
     <string name="tts_summ">Читає питання та відповіді, якщо відсутній аудіофайл</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Завантажувати медіафайли</string>
-    <string name="sync_fetch_missing_media_summ">Автоматично завантажувати відсутні медіафайли під час синхронізації</string>
     <string name="sync_account" maxLength="41">Профіль AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Завжди</string>
+    <string name="sync_media_only_unmetered">Лише під час безлімітного з\'єднання</string>
+    <string name="sync_media_never">Ніколи</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
@@ -228,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Користувацький сервер</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не використовується</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Колекція: %1$s\nМедіа: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">за замовчуванням</string>
-    <string name="custom_sync_server_help"><![CDATA[        Як альтернатива синхронізації з AnkiWeb,
-        ви можете використовувати власні сервери для синхронізації.
-        Ви можете вказати колекцію або медіа сервер, або і те, і інше.
-        Якщо нічого не вказано, буде використано стандартні сервери AnkiWeb.
-        Наприклад, ви можете використовувати сервер синхронізації вбудований в 
-        Anki Desktop, щоб синхронізувати колекцію, якщо у вас лише локальна мережа,
-        і AnkiWeb, щоб синхронізувати медіа, якщо в вас є доступ до інтернету.
+    <string name="custom_sync_server_help2"><![CDATA[        Замість синхронізації з AnkiWeb,
+        ви можете вибрати свій сервер для синхронізації.
+        Якщо нічого не вказано, буде використаний сервер AnkiWeb.
         <a href="%s">Дізнатися більше</a>
-        <br>
-        <br>Примітка: на відміну від попередніх версій AnkiDroid,
-        ви мусите вказати повну URL-адресу синхронізації,
-        наприклад: https://example.com:8080/sync/.]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронізації</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">URL Media-даних</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавіатура</string>
     <string name="bluetooth">Bluetooth</string>

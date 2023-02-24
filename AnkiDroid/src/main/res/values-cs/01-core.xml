@@ -52,7 +52,7 @@
     <string name="help">Nápověda</string>
     <string name="drawing">Kreslení</string>
     <string name="send_feedback">Odeslat zpětnou vazbu</string>
-    <string name="studyoptions_due_today">Dnes k zopakování:</string>
+    <string name="studyoptions_due_today">Dnes ke zkoušení:</string>
     <string name="studyoptions_new_total">Celkem nových karet:</string>
     <string name="studyoptions_total_cards">Celkem karet:</string>
     <string name="studyoptions_eta">Odhadovaný čas (min):</string>
@@ -257,4 +257,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Vaše data se přesouvají</string>
+    <string name="migration_successful_message">Přesun dat byl úspěšný</string>
+    <string name="migration_failed_message">Přesun dat se nezdařil</string>
+    <string name="migration_transferred_size">Přesunuto %1$.0f MB z %2$.0f MB</string>
 </resources>

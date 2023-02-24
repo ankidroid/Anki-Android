@@ -48,7 +48,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
             .cancelable(true)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_USER_NOT_LOGGED_IN_SYNC -> {
-
                 // User not logged in; take them to login screen
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -59,7 +58,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_CONNECTION_ERROR -> {
-
                 // Connection error; allow user to retry or cancel
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -73,7 +71,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_CONFLICT_RESOLUTION -> {
-
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -91,7 +88,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL -> {
-
                 // Confirmation before pushing local collection to server after sync conflict
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -104,7 +100,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE -> {
-
                 // Confirmation before overwriting local collection with server collection after sync conflict
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -117,7 +112,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_SANITY_ERROR -> {
-
                 // Sync sanity check error; allow user to cancel, or choose between local and remote versions
                 dialog.show {
                     positiveButton(R.string.sync_sanity_local) {
@@ -132,7 +126,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL -> {
-
                 // Confirmation before pushing local collection to server after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
@@ -143,7 +136,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE -> {
-
                 // Confirmation before overwriting local collection with server collection after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
@@ -201,7 +193,9 @@ class SyncErrorDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
                 resources.getString(R.string.sync_error)
-            } else title
+            } else {
+                title
+            }
         }
 
     private val message: String?
@@ -229,7 +223,9 @@ class SyncErrorDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
                 resources.getString(R.string.not_logged_in_title)
-            } else message
+            } else {
+                message
+            }
         }
 
     override val dialogHandlerMessage: Message

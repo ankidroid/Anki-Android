@@ -15,18 +15,18 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
+import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.LanguageUtil.getStringByLocale
 import com.ichi2.utils.LanguageUtil.getSystemLocale
 import kotlinx.coroutines.runBlocking
-import java.util.*
 
 class GeneralSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -35,27 +35,29 @@ class GeneralSettingsFragment : SettingsFragment() {
         get() = "prefs.general"
 
     override fun initSubscreen() {
-        val col = col!!
         // Build languages
-        initializeLanguageDialog()
+        initializeLanguagePref()
 
         // Deck for new cards
         // Represents in the collections pref "addToCur": i.e.
         // if true, then add note to current decks, otherwise let the note type's configuration decide
         // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
         requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
-            setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
+            launchCatchingTask {
+                val valueIndex = if (withCol { get_config("addToCur", true)!! }) 0 else 1
+                setValueIndex(valueIndex)
+            }
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("addToCur", "0" == newValue)
+                launchWithCol { set_config("addToCur", "0" == newValue) }
             }
         }
         // Paste PNG
         // Represents in the collection's pref "pastePNG" , i.e.
         // whether to convert clipboard uri to png format or not.
         requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
-            isChecked = col.get_config("pastePNG", false)!!
+            launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("pastePNG", newValue)
+                launchWithCol { set_config("pastePNG", newValue) }
             }
         }
         // Error reporting mode
@@ -80,35 +82,24 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
     }
 
-    @NeedsTest("")
-    private fun initializeLanguageDialog() {
-        val languageSelection = requirePreference<ListPreference>(R.string.pref_language_key)
+    private fun initializeLanguagePref() {
+        val sortedLanguages = LanguageUtil.APP_LANGUAGES.toSortedMap(java.lang.String.CASE_INSENSITIVE_ORDER)
+        val systemLocale = getSystemLocale()
+        requirePreference<ListPreference>(R.string.pref_language_key).apply {
+            entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
+            entryValues = arrayOf(LanguageUtil.DEFAULT_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
+            setOnPreferenceChangeListener { selectedLanguage ->
+                LanguageUtil.setDefaultBackendLanguages(selectedLanguage as String)
+                runBlocking { CollectionManager.discardBackend() }
 
-        val items: MutableMap<String, String> = TreeMap(java.lang.String.CASE_INSENSITIVE_ORDER)
-        for (localeCode in LanguageUtil.APP_LANGUAGES) {
-            val loc = LanguageUtil.getLocale(localeCode)
-            items[loc.getDisplayName(loc)] = loc.toString()
-        }
-        val languageDialogLabels = arrayOfNulls<CharSequence>(items.size + 1)
-        val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
-        languageDialogLabels[0] = resources.getString(R.string.language_system)
-        languageDialogValues[0] = "${getSystemLocale()}"
-        val itemsList = items.toList()
-        for (i in 1..itemsList.size) {
-            languageDialogLabels[i] = itemsList[i - 1].first
-            languageDialogValues[i] = itemsList[i - 1].second
-        }
-
-        languageSelection.entries = languageDialogLabels
-        languageSelection.entryValues = languageDialogValues
-
-        // It's only possible to change the language by recreating the activity,
-        // so do it if the language has changed.
-        languageSelection.setOnPreferenceChangeListener { newValue ->
-            LanguageUtil.setDefaultBackendLanguages(newValue as String)
-            runBlocking { CollectionManager.discardBackend() }
-
-            requireActivity().recreate()
+                val localeCode = if (selectedLanguage != LanguageUtil.DEFAULT_LANGUAGE_TAG) {
+                    selectedLanguage
+                } else {
+                    null
+                }
+                val localeList = LocaleListCompat.forLanguageTags(localeCode)
+                AppCompatDelegate.setApplicationLocales(localeList)
+            }
         }
     }
 }

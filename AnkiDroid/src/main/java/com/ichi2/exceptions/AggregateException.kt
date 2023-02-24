@@ -26,6 +26,10 @@ import java.lang.RuntimeException
  */
 class AggregateException(message: String, val exceptions: List<Exception>) : RuntimeException(message) {
 
+    override fun toString(): String {
+        return "$message\n ${exceptions.joinToString(separator = "\n") { it.stackTraceToString() }}"
+    }
+
     companion object {
         /**
          * Returns an [AggregateException] containing the provided exceptions

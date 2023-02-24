@@ -121,14 +121,17 @@ class Note : Cloneable {
             usn = col.usn()
         }
         val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields, col.models.sortIdx(mModel)
+            fields,
+            col.models.sortIdx(mModel)
         )
         val sfld = csumAndStrippedFieldField.first
         val tags = stringTags()
         val fields = joinedFields()
         if (mod == null && col.db.queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                this.id.toString(), tags, fields
+                this.id.toString(),
+                tags,
+                fields
             ) > 0
         ) {
             return
@@ -293,17 +296,19 @@ class Note : Cloneable {
             return DupeOrEmpty.EMPTY
         }
         val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields, 0
+            fields,
+            0
         )
         val csum = csumAndStrippedFieldField.second
         // find any matching csums and compare
         val strippedFirstField = csumAndStrippedFieldField.first
-        for (
-            flds in col.db.queryStringList(
-                "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                csum, this.id, mid
-            )
-        ) {
+        val fields = col.db.queryStringList(
+            "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
+            csum,
+            this.id,
+            mid
+        )
+        for (flds in fields) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]
                 ) == strippedFirstField

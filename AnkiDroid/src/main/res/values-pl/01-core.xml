@@ -186,7 +186,7 @@
     <string name="empty_cloze_warning">Edytuj notatkę i dodaj luki w tekście. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronizacja tymczasowo wyłączona</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migruj dane do przestrzeni dyskowej</string>
     <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
     <string name="continue_sync">Kontynuuj synchronizację</string>
     <string name="sync_cancelled">Synchronizacja przerwana</string>
@@ -256,5 +256,10 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">Kopia %s</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Nie można zapisać do lub utworzyć pliku %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

@@ -18,28 +18,32 @@ package com.ichi2.anki.pages
 import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 
 open class PageChromeClient : WebChromeClient() {
     override fun onJsAlert(
-        view: WebView?,
+        view: WebView,
         url: String?,
         message: String?,
         result: JsResult?
     ): Boolean {
-        UIUtils.showThemedToast(view?.context, message, shortLength = true)
+        UIUtils.showThemedToast(view.context, message ?: "", shortLength = true)
         return true
     }
 
     override fun onJsConfirm(
-        view: WebView?,
+        view: WebView,
         url: String?,
         message: String?,
         result: JsResult?
     ): Boolean {
-        MaterialDialog(view!!.context).show {
+        AlertDialog.Builder(view.context).show {
             message?.let { message(text = message) }
             positiveButton(R.string.dialog_ok) { result?.confirm() }
             negativeButton(R.string.dialog_cancel) { result?.cancel() }

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">La base de datos descargada estaba corrompida. Intente por favor nuevamente.</string>
     <string name="sync_overwrite_error">Su colección actual no pudo ser sobreescrita por el archivo descargado.</string>
     <string name="sync_connection_error">La conexión ha espirado. O bien su conexión a internet está teniendo problemas o bien tiene un archivo muy grande en su carpeta de archivos multimedia.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">El archivo descargado no pudo ser guardado en tu almacenamiento. Puede que el almacenamiento sea de lectura solo o no tenga suficiente espacio.</string>
     <string name="sync_error_invalid_sync_server">El servidor de sincronización personalizado en la configuración avanzada no es válido (%s). Por favor, introduzca un servidor válido o desactive el ajuste.</string>
     <string name="sync_deletions_message">Sincronizando eliminaciones...</string>
     <string name="sync_small_objects_message">Sincronizando pequeños objetos...</string>

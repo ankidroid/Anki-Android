@@ -30,12 +30,12 @@ import com.ichi2.libanki.template.Tokenizer.TokenKind.CLOSE_CONDITIONAL
 import com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_CONDITIONAL
 import com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_NEGATED
 import com.ichi2.libanki.template.Tokenizer.TokenKind.REPLACEMENT
-import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class TokenizerTest : RobolectricTest() {
@@ -371,12 +371,12 @@ class TokenizerTest : RobolectricTest() {
             legacy_tokenizer.next(),
             equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "iee "))
         )
-        assertThrows<NoClosingBrackets> {
+        assertFailsWith<NoClosingBrackets> {
             tokenizer.next()
         }.let { exc ->
             assertThat(exc.remaining, equalTo("{{!ien nnr"))
         }
-        assertThrows<NoClosingBrackets> {
+        assertFailsWith<NoClosingBrackets> {
             legacy_tokenizer.next()
         }.let { exc ->
             assertThat(exc.remaining, equalTo("<%!ien nnr"))

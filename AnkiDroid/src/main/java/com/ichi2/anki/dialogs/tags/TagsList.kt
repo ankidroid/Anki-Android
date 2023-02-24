@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TagsUtil.compareTag
 import com.ichi2.utils.TagsUtil.getTagAncestors
 import com.ichi2.utils.TagsUtil.getTagRoot
@@ -24,15 +23,16 @@ import com.ichi2.utils.UniqueArrayList.Companion.from
 import java.util.*
 
 /**
- * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter
+ * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter.
  * For example adding tags with different letter casing (eg. TAG, tag, Tag) will only add the first one.
+ * [TagsList] provides an iterator over all tags.
+ * Construct a new [TagsList] with possibility of indeterminate tags. For a tag to be in indeterminate state it should be present
+ * in checkedTags and also in uncheckedTags. Hierarchical tags will have their ancestors added temporarily.
  *
- * [TagsList] provides an iterator over all tags
+ * @param allTags A list of all available tags. Any duplicates will be ignored.
+ * @param checkedTags a list containing the currently selected tags. Any duplicates will be ignored.
+ * @param uncheckedTags a list containing the currently unselected tags. Any duplicates will be ignored.
  */
-@KotlinCleanup(
-    "the migration assigned the docs of the 2 previous java constructors to the init{} block, " +
-        "try to refactor that documentation into the class documentation"
-)
 class TagsList constructor(
     allTags: List<String>,
     checkedTags: List<String>,
@@ -53,28 +53,6 @@ class TagsList constructor(
      */
     private val mAllTags: UniqueArrayList<String>
 
-    /**
-     * Construct a new [TagsList] with possibility of indeterminate tags,
-     *
-     * for a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags,
-     *
-     * hierarchical tags will have their ancestors added temporarily
-     *
-     * @param allTags A list of all available tags
-     * any duplicates will be ignored
-     * @param checkedTags a list containing the currently selected tags
-     * any duplicates will be ignored
-     * @param uncheckedTags a list containing the currently unselected tags
-     * any duplicates will be ignored
-     */
-    /**
-     * Construct a new [TagsList]
-     *
-     * @param allTags A list of all available tags
-     * any duplicates will be ignored
-     * @param checkedTags a list containing the currently selected tags
-     * any duplicates will be ignored
-     */
     init {
         mCheckedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
         mCheckedTags.addAll(checkedTags)
@@ -151,6 +129,7 @@ class TagsList constructor(
         addAncestors(tag)
         return true
     }
+
     /**
      * Mark a tag as checked tag.
      * Optionally mark ancestors as indeterminate
@@ -160,11 +139,6 @@ class TagsList constructor(
      * @return true if the tag changed its check status
      * false if the tag was already checked or not in the list
      */
-    /**
-     * Mark a tag as checked tag.
-     * @see .check
-     */
-    @KotlinCleanup("fix the double documentation for this method")
     fun check(tag: String, processAncestors: Boolean = true): Boolean {
         if (!mAllTags.contains(tag)) {
             return false
@@ -298,10 +272,9 @@ class TagsList constructor(
         if (!mAllTags.contains(tag)) {
             return
         }
-        @KotlinCleanup("remove stream(), use kotlin iterators")
         getTagAncestors(tag)
-            .stream().filter { s: String -> !isChecked(s) }
-            .forEach { tagEntry: String -> setIndeterminate(tagEntry) }
+            .filterNot { isChecked(it) }
+            .forEach { setIndeterminate(it) }
     }
 
     /**
@@ -309,20 +282,17 @@ class TagsList constructor(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        @KotlinCleanup("use a lambda for the Comparator")
-        mAllTags.sortWith(
-            Comparator { lhs: String?, rhs: String? ->
-                val lhsRoot = getTagRoot(lhs!!)
-                val rhsRoot = getTagRoot(rhs!!)
-                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-                if (lhsChecked != rhsChecked) {
-                    if (lhsChecked) -1 else 1
-                } else {
-                    compareTag(lhs, rhs)
-                }
+        mAllTags.sortWith { lhs: String?, rhs: String? ->
+            val lhsRoot = getTagRoot(lhs!!)
+            val rhsRoot = getTagRoot(rhs!!)
+            val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
+            val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
+            if (lhsChecked != rhsChecked) {
+                if (lhsChecked) -1 else 1
+            } else {
+                compareTag(lhs, rhs)
             }
-        )
+        }
     }
 
     /**

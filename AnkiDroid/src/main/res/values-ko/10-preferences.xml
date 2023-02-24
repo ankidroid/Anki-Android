@@ -86,7 +86,6 @@
     <string name="full_screen_off">끔</string>
     <string name="full_screen_system">시스템 바 숨기기</string>
     <string name="full_screen_complete">시스템 바와 정답 버튼 숨기기</string>
-    <string name="full_screen_error_gestures">정답 버튼을 숨기려면 제스처를 사용하도록 해야 합니다.</string>
     <string name="answer_buttons_position" maxLength="41">정답 버튼 위치</string>
     <string-array name="answer_buttons_position_labels">
         <item>상단</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">화면 모서리의 터치 제스쳐 허용</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">위로 밀기</string>
     <string name="gestures_swipe_down" maxLength="41">아래로 밀기</string>
     <string name="gestures_swipe_left" maxLength="41">왼쪽 밀기</string>
@@ -125,11 +125,13 @@
     <string name="tts_summ">질문과 정답에 사운드 파일이 없을 경우 자동으로 읽어주기</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">동기화할 때 미디어파일 가져오기</string>
-    <string name="sync_fetch_missing_media_summ">동기화 할때 누락된 미디어를 자동으로 검색하여 가져오기합니다.</string>
     <string name="sync_account" maxLength="41">AnkiWeb 계정</string>
     <string name="sync_account_summ_logged_out">로그인 하지 않음</string>
     <string name="automatic_sync_choice" maxLength="41">자동 동기화</string>
     <string name="automatic_sync_choice_summ">마지막 동기화로부터 10분이 넘었을 경우 앱 시작 및 종료시 자동으로 동기화</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_never">Never</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
@@ -227,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">자체 동기화 서버</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">동기화 URL</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">미디어 동기화 URL</string>
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>

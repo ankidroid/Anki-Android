@@ -35,6 +35,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -85,7 +86,6 @@ class SharedDecksDownloadFragment : Fragment() {
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
     }
 
-    @Suppress("deprecation") // getSerializable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,7 +94,6 @@ class SharedDecksDownloadFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shared_decks_download, container, false)
     }
 
-    @Suppress("deprecation") // getSerializable
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -105,7 +104,7 @@ class SharedDecksDownloadFragment : Fragment() {
         mTryAgainButton = view.findViewById(R.id.try_again_deck_download)
         mCheckNetworkInfoText = view.findViewById(R.id.check_network_info_text)
 
-        val fileToBeDownloaded = arguments?.getSerializable(DOWNLOAD_FILE) as DownloadFile
+        val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         mDownloadManager = (activity as SharedDecksActivity).downloadManager
 
         downloadFile(fileToBeDownloaded)
@@ -141,7 +140,8 @@ class SharedDecksDownloadFragment : Fragment() {
         activity?.registerReceiver(mOnComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         val currentFileName = URLUtil.guessFileName(
-            fileToBeDownloaded.url, fileToBeDownloaded.contentDisposition,
+            fileToBeDownloaded.url,
+            fileToBeDownloaded.contentDisposition,
             fileToBeDownloaded.mimeType
         )
 
@@ -179,7 +179,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * When onReceive() is called, open the deck file in AnkiDroid to import it.
      */
     private var mOnComplete: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent?) {
             Timber.i("Download might be complete now, verify and continue with import")
 
             fun verifyDeckIsImportable() {
@@ -391,7 +391,7 @@ class SharedDecksDownloadFragment : Fragment() {
         try {
             context?.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
-            UIUtils.showThemedToast(context, R.string.something_wrong, false)
+            context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
             Timber.w(e)
         }
     }
@@ -407,12 +407,12 @@ class SharedDecksDownloadFragment : Fragment() {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
-                UIUtils.showThemedToast(activity, R.string.import_log_no_apkg, false)
+                context?.let { UIUtils.showThemedToast(it, R.string.import_log_no_apkg, false) }
                 // Go back if file is not a deck and cannot be imported
                 activity?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
-                UIUtils.showThemedToast(activity, R.string.something_wrong, false)
+                context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
                 // Update UI if download could not be successful
                 mTryAgainButton.visibility = View.VISIBLE
                 mCancelButton.visibility = View.GONE

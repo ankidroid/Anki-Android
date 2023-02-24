@@ -71,12 +71,12 @@ mga natitirang minuto</item>
         <item quantity="other">%d minutong natitira</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Isa</item>
+        <item quantity="other">Iba</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Isa</item>
+        <item quantity="other">Iba</item>
     </plurals>
     <string name="no_cards_placeholder_title">Walang laman ang tipon</string>
     <string name="no_cards_placeholder_description">Magsimula idadag ang mga cards\nusing the + icon.</string>
@@ -117,7 +117,7 @@ mga natitirang minuto</item>
     <string name="menu_flag">Watawat</string>
     <string name="menu_flag_card">Card ng isang watawat</string>
     <string name="menu_flag_card_zero">Walang watawat</string>
-    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_one">Pulang watawat</string>
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
@@ -242,4 +242,9 @@ mga natitirang minuto</item>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

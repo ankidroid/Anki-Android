@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki.utils
 
-import android.text.TextUtils
 import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONArray
 import org.json.JSONObject
@@ -67,7 +66,7 @@ fun <T> list(values: Collection<T>): List<T> = ArrayList(values)
 fun <T> set(values: List<T>): HashSet<T> = HashSet(values)
 
 fun String.join(values: Iterable<String>): String {
-    return TextUtils.join(this, values)
+    return values.joinToString(this)
 }
 
 fun <E> MutableList<E>.toJsonArray(): JSONArray {

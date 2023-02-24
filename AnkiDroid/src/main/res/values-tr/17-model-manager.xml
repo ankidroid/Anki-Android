@@ -45,18 +45,18 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Not türünü sil</string>
-    <string name="model_browser_rename" comment="Rename a note type">Adını değiştir</string>
+    <string name="model_browser_rename" comment="Rename a note type">Yeniden adlandır</string>
     <string name="model_browser_template">Kartları düzenle</string>
     <string name="model_browser_add">Not türü ekle</string>
     <!--Rename-->
-    <string name="rename_model">Not türlerini belirle</string>
+    <string name="rename_model">Not tipini yeniden adlandır</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Dil ipucunu %s olarak ayarla</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Alanları düzenle</string>
     <string name="model_field_editor_add">Alan ekle</string>
     <string name="model_field_editor_delete">Alanı sil</string>
-    <string name="model_field_editor_rename">Alanın ismini değiştir</string>
+    <string name="model_field_editor_rename">Alanı yeniden adlandır</string>
     <string name="model_field_editor_language_hint">Klavye dili ipucunu ayarla</string>
     <string name="model_field_editor_reposition_menu">Alanın yerini değiştir</string>
     <string name="model_field_editor_reposition">Alanın yerini değiştir (%1$d–%2$d arası bir değer girin)</string>

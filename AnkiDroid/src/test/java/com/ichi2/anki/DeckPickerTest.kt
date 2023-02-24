@@ -13,7 +13,6 @@ import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.utils.ResourceLoader
@@ -33,6 +32,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import java.io.File
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -198,7 +198,8 @@ class DeckPickerTest : RobolectricTest() {
         sched.card
         ensureCollectionLoadIsSynchronous()
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java, Intent()
+            DeckPicker::class.java,
+            Intent()
         )
         assertEquals(10, deckPicker.dueTree!![0].value.newCount.toLong())
     }
@@ -208,7 +209,8 @@ class DeckPickerTest : RobolectricTest() {
         val did = addDeck("Hello World")
         assertThat("Deck was added", col.decks.count(), equalTo(2))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java, Intent()
+            DeckPicker::class.java,
+            Intent()
         )
         deckPicker.confirmDeckDeletion(did)
         advanceRobolectricLooperWithSleep()
@@ -225,12 +227,14 @@ class DeckPickerTest : RobolectricTest() {
         // And they are more likely to be empty temporarily
         val did = addDynamicDeck("filtered")
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java, Intent()
+            DeckPicker::class.java,
+            Intent()
         )
         deckPicker.confirmDeckDeletion(did)
         val fragment = deckPicker.getDialogFragment<DialogFragment>()
         assertThat(
-            "deck deletion confirmation window should be shown", fragment,
+            "deck deletion confirmation window should be shown",
+            fragment,
             instanceOf(DeckPickerConfirmDeleteDeckDialog::class.java)
         )
     }
@@ -253,7 +257,8 @@ class DeckPickerTest : RobolectricTest() {
             BackendEmulatingOpenConflict.enable()
             InitialActivityWithConflictTest.setupForDatabaseConflict()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             assertThat(
                 "A specific dialog for a conflict should be shown",
@@ -280,7 +285,8 @@ class DeckPickerTest : RobolectricTest() {
             InitialActivityWithConflictTest.setupForDefault()
             BackendEmulatingOpenConflict.enable()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
 
             // grant permissions
@@ -307,7 +313,8 @@ class DeckPickerTest : RobolectricTest() {
             AnkiDroidApp.getSharedPrefs(targetContext).edit().putString("lastVersion", "0.1")
                 .apply()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             assertThat(
                 "Analytics opt-in should be displayed",
@@ -326,7 +333,8 @@ class DeckPickerTest : RobolectricTest() {
         try {
             enableNullCollection()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             d.updateMenuState()
             assertThat(
@@ -344,7 +352,8 @@ class DeckPickerTest : RobolectricTest() {
         try {
             grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             d.updateMenuState()
             assertThat(
@@ -364,13 +373,14 @@ class DeckPickerTest : RobolectricTest() {
             revokeWritePermissions()
             enableNullCollection()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
 
             // Neither collection, not its models will be initialized without storage permission
 
             // assert: Lazy Collection initialization CollectionTask.LoadCollectionComplete fails
-            assertThrowsSubclass<Exception> { d.col }
+            assertFailsWith<Exception> { d.col }
         } finally {
             disableNullCollection()
         }
@@ -381,7 +391,8 @@ class DeckPickerTest : RobolectricTest() {
         try {
             grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             assertThat(
                 "Collection initialization ensured by CollectionTask.LoadCollectionComplete",
@@ -389,7 +400,8 @@ class DeckPickerTest : RobolectricTest() {
                 notNullValue()
             )
             assertThat(
-                "Collection Models Loaded", d.col.models,
+                "Collection Models Loaded",
+                d.col.models,
                 notNullValue()
             )
         } finally {
@@ -408,7 +420,8 @@ class DeckPickerTest : RobolectricTest() {
             setupColV16()
             InitialActivityWithConflictTest.setupForValid(targetContext)
             val deckPicker: DeckPicker = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             waitForAsyncTasksToComplete()
             assertThat(
@@ -440,7 +453,8 @@ class DeckPickerTest : RobolectricTest() {
             DbUtils.performQuery(targetContext, "drop table decks")
             InitialActivityWithConflictTest.setupForValid(targetContext)
             val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             waitForAsyncTasksToComplete()
             assertThat(
@@ -463,7 +477,8 @@ class DeckPickerTest : RobolectricTest() {
             setupColV250()
             InitialActivityWithConflictTest.setupForValid(targetContext)
             val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
+                DeckPickerEx::class.java,
+                Intent()
             )
             waitForAsyncTasksToComplete()
             assertThat(
@@ -490,7 +505,8 @@ class DeckPickerTest : RobolectricTest() {
     fun checkDisplayOfStudyOptionsOnTablet() {
         assumeTrue("We are running on a tablet", mQualifiers!!.contains("xlarge"))
         val deckPickerEx = super.startActivityNormallyOpenCollectionWithIntent(
-            DeckPickerEx::class.java, Intent()
+            DeckPickerEx::class.java,
+            Intent()
         )
         val studyOptionsFragment =
             deckPickerEx.supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) as StudyOptionsFragment?
@@ -507,7 +523,8 @@ class DeckPickerTest : RobolectricTest() {
         // Reason for using 2 as the number of decks -> This deck + Default deck
         assertThat("Deck added", col.decks.count(), equalTo(2))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java, Intent()
+            DeckPicker::class.java,
+            Intent()
         )
         assertThat(
             "Deck is being displayed",
@@ -522,7 +539,8 @@ class DeckPickerTest : RobolectricTest() {
         // Default deck does not get displayed in the DeckPicker if the default deck is empty.
         assertThat("Contains only default deck", col.decks.count(), equalTo(1))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java, Intent()
+            DeckPicker::class.java,
+            Intent()
         )
         assertThat(
             "No deck is being displayed",
@@ -597,30 +615,6 @@ class DeckPickerTest : RobolectricTest() {
         override fun onPrepareOptionsMenu(menu: Menu): Boolean {
             optionsMenu = menu
             return super.onPrepareOptionsMenu(menu)
-        }
-    }
-
-    // Migration
-    @Test
-    fun `If user never postponed migration, shouldNotWaitMoreToOfferToMigrate() returns true`() {
-        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            scenario.onActivity { deckPicker: DeckPicker ->
-                assertThat("When no postpone occurred, it should be time to offer migration", deckPicker.shouldNotWaitMoreToOfferToMigrate())
-            }
-        }
-    }
-
-    @Test
-    fun `If user postpone, shouldNotWaitMoreToOfferToMigrate() returns false, an true later`() {
-        // Testing twice because the function may have side effect and normally we should not see different after two calls
-        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            scenario.onActivity { deckPicker: DeckPicker ->
-                deckPicker.setMigrationWasLastPostponedAtToNow()
-                assertThat("When postpone just occurred, we should not offer migration", !deckPicker.shouldNotWaitMoreToOfferToMigrate())
-                (TimeManager.time as MockTime).addD(POSTPONE_MIGRATION_INTERVAL_DAYS)
-                (TimeManager.time as MockTime).addM(1)
-                assertThat("When postpone occurred after our interval elapsed, it should be time to offer migration", deckPicker.shouldNotWaitMoreToOfferToMigrate())
-            }
         }
     }
 }

@@ -24,7 +24,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.provider.OpenableColumns
-import android.text.TextUtils
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
@@ -109,7 +108,7 @@ object ImportUtils {
             // This intent is used for opening apkg package files
             // We want to go immediately to DeckPicker, clearing any history in the process
             Timber.i("IntentHandler/ User requested to view a file")
-            val extras = if (intent.extras == null) "none" else TextUtils.join(", ", intent.extras!!.keySet())
+            val extras = if (intent.extras == null) "none" else intent.extras!!.keySet().joinToString(", ")
             Timber.i("Intent: %s. Data: %s", intent, extras)
             return try {
                 handleFileImportInternal(context, intent)
@@ -220,7 +219,6 @@ object ImportUtils {
         }
 
         private fun validateImportTypes(context: Context, dataList: ArrayList<Uri>): String? {
-
             var apkgCount = 0
             var colpkgCount = 0
 
@@ -369,7 +367,6 @@ object ImportUtils {
              * @param pathList list of path(s) to apkg file which will be imported
              */
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
-
                 // Get the filename from the path
                 val f = File(pathList.first())
                 val filename = f.name

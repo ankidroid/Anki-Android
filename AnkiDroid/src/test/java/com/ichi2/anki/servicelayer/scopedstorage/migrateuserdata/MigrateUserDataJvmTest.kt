@@ -21,7 +21,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Companion.createInstance
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MissingDirectoryException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserDataJvmTest.SourceType.*
-import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -29,6 +28,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import kotlin.test.assertFailsWith
 
 /**
  * A test for [MigrateUserData] which does not require Robolectric
@@ -70,7 +70,7 @@ class MigrateUserDataJvmTest {
     @Test
     fun error_if_settings_are_bad() {
         val preferences = getScopedStorageMigrationPreferences(source = NOT_SET, destination = VALID_DIR)
-        val exception = assertThrows<IllegalStateException> { createInstance(preferences) }
+        val exception = assertFailsWith<IllegalStateException> { createInstance(preferences) }
 
         assertThat(exception.message, equalTo("Expected either all or no migration directories set. 'migrationSourcePath': ''; 'migrationDestinationPath': '$destDir'"))
     }
@@ -78,14 +78,14 @@ class MigrateUserDataJvmTest {
     @Test
     fun error_if_source_does_not_exist() {
         val preferences = getScopedStorageMigrationPreferences(source = MISSING_DIR, destination = VALID_DIR)
-        val exception = assertThrows<MissingDirectoryException> { createInstance(preferences) }
+        val exception = assertFailsWith<MissingDirectoryException> { createInstance(preferences) }
         assertThat(exception.directories.single().file.canonicalPath, equalTo(missingDir))
     }
 
     @Test
     fun error_if_destination_does_not_exist() {
         val preferences = getScopedStorageMigrationPreferences(source = VALID_DIR, destination = MISSING_DIR)
-        val exception = assertThrows<MissingDirectoryException> { createInstance(preferences) }
+        val exception = assertFailsWith<MissingDirectoryException> { createInstance(preferences) }
         assertThat(exception.directories.single().file.canonicalPath, equalTo(missingDir))
     }
 
