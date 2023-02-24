@@ -26,7 +26,7 @@ import android.os.Message
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -291,7 +291,7 @@ object ImportUtils {
         fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
             val title = activity.resources.getString(R.string.import_title_error)
-            MaterialDialog(activity).show {
+            AlertDialog.Builder(activity).show {
                 title(text = title)
                 message(text = errorMessage!!)
                 positiveButton(R.string.dialog_ok) {
