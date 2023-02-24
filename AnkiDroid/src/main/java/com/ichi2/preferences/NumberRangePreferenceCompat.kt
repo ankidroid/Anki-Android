@@ -31,7 +31,6 @@ import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-@NeedsTest("removing JvmOverloads should fail")
 open class NumberRangePreferenceCompat
 @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
 constructor(

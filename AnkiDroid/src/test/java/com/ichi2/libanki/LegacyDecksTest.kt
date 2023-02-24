@@ -19,7 +19,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.assertThrows
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers
@@ -27,6 +26,7 @@ import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -46,7 +46,7 @@ class LegacyDecksTest : RobolectricTest() {
         assertNull(decks.byName("  test :: sub "))
 
         decks.newDyn("filtered")
-        assertThrows<DeckRenameException> { decks._ensureParents("filtered:: sub :: subdeck") }
+        assertFailsWith<DeckRenameException> { decks._ensureParents("filtered:: sub :: subdeck") }
     }
 
     @Test
@@ -87,7 +87,7 @@ class LegacyDecksTest : RobolectricTest() {
     fun descendantOfFiltered() {
         val decks = decks
         decks.newDyn("filtered")
-        assertThrows<DeckRenameException> { decks.id("filtered::subdeck::subsubdeck") }
+        assertFailsWith<DeckRenameException> { decks.id("filtered::subdeck::subsubdeck") }
 
         val subdeckId = decks.id_safe("filtered::subdeck::subsubdeck")
         val subdeck = decks.get(subdeckId)

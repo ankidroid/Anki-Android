@@ -27,7 +27,9 @@ import android.net.Uri
 import android.webkit.MimeTypeMap
 import com.ichi2.anki.*
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
+import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -204,7 +206,6 @@ class CardContentProvider : ContentProvider() {
                 col.db.query(sql, *(selectionArgs ?: arrayOf()))
             }
             NOTES -> {
-
                 /* Search for notes using the libanki browser syntax */
                 val proj = sanitizeNoteProjection(projection)
                 val query = selection ?: ""
@@ -218,7 +219,6 @@ class CardContentProvider : ContentProvider() {
                 }
             }
             NOTES_ID -> {
-
                 /* Direct access note with specific ID*/
                 val noteId = uri.pathSegments[1]
                 val proj = sanitizeNoteProjection(projection)
@@ -258,7 +258,6 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             MODELS_ID_TEMPLATES -> {
-
                 /* Direct access model templates */
                 val models = col.models
                 val currentModel = models.get(getModelIdFromUri(uri, col))
@@ -278,7 +277,6 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             MODELS_ID_TEMPLATES_ID -> {
-
                 /* Direct access model template with specific ID */
                 val models = col.models
                 val ord = uri.lastPathSegment!!.toInt()
@@ -410,7 +408,6 @@ class CardContentProvider : ContentProvider() {
         when (match) {
             NOTES_V2, NOTES -> throw IllegalArgumentException("Not possible to update notes directly (only through data URI)")
             NOTES_ID -> {
-
                 /* Direct access note details
                  */
                 val currentNote = getNoteFromUri(uri, col)
@@ -779,7 +776,6 @@ class CardContentProvider : ContentProvider() {
         // Find out what data the user is requesting
         return when (sUriMatcher.match(uri)) {
             NOTES -> {
-
                 /* Insert new note with specified fields and tags
                  */
                 val modelId = values!!.getAsLong(FlashCardsContract.Note.MID)
@@ -1263,19 +1259,22 @@ class CardContentProvider : ContentProvider() {
     private fun hasReadWritePermission(): Boolean {
         return if (BuildConfig.DEBUG) { // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
             context!!.checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
-        } else context!!.checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+        } else {
+            context!!.checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+        }
     }
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted  */
-    @Suppress("deprecation") // getPackageInfo
     private fun knownRogueClient(): Boolean {
         val pm = context!!.packageManager
         return try {
-            val callingPi = pm.getPackageInfo(callingPackage!!, PackageManager.GET_PERMISSIONS)
-            if (callingPi?.requestedPermissions == null) {
+            val callingPi = pm.getPackageInfoCompat(callingPackage!!, PackageInfoFlagsCompat.of(PackageManager.GET_PERMISSIONS.toLong())) ?: return false
+            if (callingPi.requestedPermissions == null) {
                 false
-            } else !listOf(*callingPi.requestedPermissions).contains(FlashCardsContract.READ_WRITE_PERMISSION)
+            } else {
+                !listOf(*callingPi.requestedPermissions).contains(FlashCardsContract.READ_WRITE_PERMISSION)
+            }
         } catch (e: PackageManager.NameNotFoundException) {
             Timber.w(e)
             false

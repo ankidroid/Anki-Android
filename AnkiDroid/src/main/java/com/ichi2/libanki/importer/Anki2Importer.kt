@@ -68,6 +68,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
 
     /** If importing SchedV1 into SchedV2 we need to reset the learning cards  */
     private var mMustResetLearning = false
+
     @Throws(ImportExportException::class)
     override fun run() {
         publishProgress(0, 0, 0)
@@ -200,8 +201,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         dst.db.database.beginTransaction()
         try {
             src.db.database.query(
-                "select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes",
-                null
+                "select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes"
             ).use { cur ->
                 // Counters for progress updates
                 val total = cur.count
@@ -405,6 +405,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         mModelMap!![srcMid] = mid
         return mid
     }
+
     /*
      * Decks
      * ***********************************************************
@@ -530,7 +531,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     val scid = cid // To keep track of card id in source
                     var did = cur.getLong(2)
                     val ord = cur.getInt(3)
+
                     @CARD_TYPE var type = cur.getInt(4)
+
                     @CARD_QUEUE var queue = cur.getInt(5)
                     var due = cur.getLong(6)
                     val ivl = cur.getLong(7)
@@ -695,7 +698,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         return try {
             BufferedInputStream(FileInputStream(path), MEDIAPICKLIMIT * 2)
         } catch (e: IOException) {
-            Timber.w(e)
             null
         }
     }
@@ -721,7 +723,6 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             // Mark file addition to media db (see note in Media.java)
             dst.media.markFileAdd(fname)
         } catch (e: IOException) {
-
             // the user likely used subdirectories
             Timber.e(e, "Error copying file %s.", fname)
 

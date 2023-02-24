@@ -250,7 +250,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
                     if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
-                        showThemedToast(context, R.string.cannot_create_subdeck_for_all_decks, true)
+                        context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
                     } else {
                         showSubDeckDialog(deckName)
                     }
@@ -344,11 +344,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             if (deckId == Stats.ALL_DECKS_ID) {
                 return if (other.deckId == Stats.ALL_DECKS_ID) {
                     0
-                } else -1
+                } else {
+                    -1
+                }
             }
             return if (other.deckId == Stats.ALL_DECKS_ID) {
                 1
-            } else DeckNameComparator.INSTANCE.compare(name, other.name)
+            } else {
+                DeckNameComparator.INSTANCE.compare(name, other.name)
+            }
         }
 
         companion object {

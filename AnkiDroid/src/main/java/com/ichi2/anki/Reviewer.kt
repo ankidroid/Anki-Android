@@ -82,15 +82,11 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.getColorFromAttr
+import com.ichi2.utils.*
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
-import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
-import com.ichi2.utils.iconAlpha
-import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
-import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.update
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -99,7 +95,9 @@ import java.lang.ref.WeakReference
 import java.util.function.Consumer
 
 @KotlinCleanup("too many to count")
-open class Reviewer : AbstractFlashcardViewer() {
+open class Reviewer :
+    AbstractFlashcardViewer(),
+    ReviewerUi {
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
@@ -123,6 +121,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var whiteboard: Whiteboard? = null
         protected set
+
     // Record Audio
     /** File of the temporary mic record  */
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -152,7 +151,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
-                resources.getQuantityString(toastResourceId, cardCount, cardCount), true
+                resources.getQuantityString(toastResourceId, cardCount, cardCount),
+                true
             )
         }
     }
@@ -200,10 +200,12 @@ open class Reviewer : AbstractFlashcardViewer() {
             if (actualValue == CardMarker.FLAG_NONE) {
                 return CardMarker.FLAG_NONE
             }
-            val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_FLAG)
-            return if (isShownInActionBar != null && isShownInActionBar && !mPrefFullscreenReview) {
+            val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton == true
+            return if (shownAsToolbarButton && !mPrefFullscreenReview) {
                 CardMarker.FLAG_NONE
-            } else actualValue
+            } else {
+                actualValue
+            }
         }
 
     override fun createWebView(): WebView {
@@ -227,10 +229,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (!markValue) {
             return false
         }
-        val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_MARK)
-        // If we don't know, show it.
-        // Otherwise, if it's in the action bar, don't show it again.
-        return isShownInActionBar == null || !isShownInActionBar || mPrefFullscreenReview
+
+        // If we don't know: assume it's not shown
+        val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_MARK)?.isActionButton == true
+        return !shownAsToolbarButton || mPrefFullscreenReview
     }
 
     protected open fun onMark(card: Card?) {
@@ -436,6 +438,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     mColorPalette!!.visibility = View.GONE
                 }
+                updateWhiteboardEditorPosition()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -601,7 +604,8 @@ open class Reviewer : AbstractFlashcardViewer() {
     private fun openOrToggleMicToolbar() {
         if (!canRecordAudio(this)) {
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.RECORD_AUDIO),
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
                 REQUEST_AUDIO_PERMISSION
             )
         } else {
@@ -633,7 +637,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             return
         }
         val lp2 = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
         audioView!!.layoutParams = lp2
         val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
@@ -925,7 +930,9 @@ open class Reviewer : AbstractFlashcardViewer() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         return if (mProcessor.onKeyUp(keyCode, event)) {
             true
-        } else super.onKeyUp(keyCode, event)
+        } else {
+            super.onKeyUp(keyCode, event)
+        }
     }
 
     private fun <T> setupSubMenu(menu: Menu, @IdRes parentMenu: Int, subMenuProvider: T) where T : ActionProvider?, T : SubMenuProvider? {
@@ -1040,6 +1047,26 @@ open class Reviewer : AbstractFlashcardViewer() {
     override fun updateActionBar() {
         super.updateActionBar()
         updateScreenCounts()
+    }
+
+    private fun updateWhiteboardEditorPosition() {
+        mAnswerButtonsPosition = AnkiDroidApp.getSharedPrefs(this)
+            .getString("answerButtonPosition", "bottom")
+        val layoutParams: RelativeLayout.LayoutParams
+        when (mAnswerButtonsPosition) {
+            "none", "top" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ABOVE)
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+            "bottom" -> {
+                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                mColorPalette!!.layoutParams = layoutParams
+            }
+        }
     }
 
     protected fun updateScreenCounts() {
@@ -1400,20 +1427,27 @@ open class Reviewer : AbstractFlashcardViewer() {
     private fun suspendNoteAvailable(): Boolean {
         return if (currentCard == null || isControlBlocked) {
             false
-        } else col.db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-            currentCard!!.nid, currentCard!!.id
-        ) == 1
+        } else {
+            col.db.queryScalar(
+                "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+                currentCard!!.nid,
+                currentCard!!.id
+            ) == 1
+        }
         // whether there exists a sibling not buried.
     }
+
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
         return if (currentCard == null || isControlBlocked) {
             false
-        } else col.db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-            currentCard!!.nid, currentCard!!.id
-        ) == 1
+        } else {
+            col.db.queryScalar(
+                "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+                currentCard!!.nid,
+                currentCard!!.id
+            ) == 1
+        }
         // Whether there exists a sibling which is neither suspended nor buried
     }
 

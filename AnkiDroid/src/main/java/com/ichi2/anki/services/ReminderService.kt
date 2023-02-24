@@ -115,7 +115,7 @@ class ReminderService : BroadcastReceiver() {
                         total
                     )
                 )
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_star_notify)
                 .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                 .setContentIntent(
                     CompatHelper.compat.getImmutableActivityIntent(
@@ -134,7 +134,6 @@ class ReminderService : BroadcastReceiver() {
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
     private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
-
         // Avoid crashes if the deck option group is deleted while we
         // are working
         if (col.dbClosed || col.decks.getConf(dConfId) == null) {

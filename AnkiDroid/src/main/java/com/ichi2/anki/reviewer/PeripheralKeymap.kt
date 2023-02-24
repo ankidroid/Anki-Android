@@ -55,7 +55,9 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return if (!mHasSetup || event.repeatCount > 0) {
             false
-        } else mKeyMap.onKeyUp(keyCode, event)
+        } else {
+            mKeyMap.onKeyUp(keyCode, event)
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")

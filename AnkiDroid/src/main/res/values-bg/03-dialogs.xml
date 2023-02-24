@@ -94,6 +94,7 @@
     <string name="answering_error_title">Грешка в базата данни</string>
     <string name="answering_error_message">Писането в колекцията е неуспешна. Базата данни може да е повредена или може да няма свободно пространство на диска.\n\nАко това се случва по-често, опитайте да проверите базата данни, да поправите колекцията или да възстановите я от резервно копия. Докоснете \"Опции\" за това.\n\Това може да е грешка в AnkiDroid; Моля, съобщете за тази грешка, да можем да я проверим.</string>
     <string name="answering_error_report">Доклад грешки</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
     <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
     <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>

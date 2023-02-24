@@ -86,7 +86,6 @@
     <string name="full_screen_off">Desactivat</string>
     <string name="full_screen_system">Amagar les barres del sistema</string>
     <string name="full_screen_complete">Amagar les barres del sistema i els botons de resposta</string>
-    <string name="full_screen_error_gestures">Has d\'habilitar els gestos per poder amagar els botons de resposta</string>
     <string name="answer_buttons_position" maxLength="41">Posició dels botons de resposta</string>
     <string-array name="answer_buttons_position_labels">
         <item>A dalt</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Permet gestos tàctils a les cantonades de la pantalla</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Carpeta de navegació a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Obriu la carpeta de navegació quan llisqueu a la dreta des de qualsevol lloc de la pantalla</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Passeu el dit cap amunt</string>
     <string name="gestures_swipe_down" maxLength="41">Passeu el dit cap a sota</string>
     <string name="gestures_swipe_left" maxLength="41">Passseu el dit cap a l\'esquerra</string>
@@ -229,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronització personalitzat</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Sense utilitzar</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Col·lecció: %1$s\nMitjà: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">per omissió</string>
-    <string name="custom_sync_server_help"><![CDATA[        Com a alternativa a la sincronització amb AnkiWeb, podeu
-         utilitzar els vostres propis servidors per a la sincronització.
-         Podeu indicar un servidor de col·lecció o multimèdia, o tots dos.
-         Si no s\'estableix, s\'utilitzaran els servidors AnkiWeb predeterminats.
-         Per exemple, podeu utilitzar el servidor de sincronització integrat a Anki per
-         a l\'Escriptori per sincronitzar la col·lecció quan només teniu una xarxa local,
-         i AnkiWeb per sincronitzar mitjans quan tingueu accés general a Internet.
-         <a href="%s">Més informació</a>
-         <br>
-         <br>Nota: a diferència de les versions anteriors d\'AnkiDroid,
-         heu d\'especificar l\'URL de sincronització personalitzat completa,
-         per exemple: https://example.com:8080/]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronització</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronització de multimèdia</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclat</string>
     <string name="bluetooth">Bluetooth</string>

@@ -36,7 +36,7 @@ fun interface GestureListener {
 }
 
 enum class Gesture(
-    @get:JvmName("getResourceId") val resourceId: Int,
+    @get:JvmName("getResourceId") val resourceId: Int
 ) {
     SWIPE_UP(R.string.gestures_swipe_up),
     SWIPE_DOWN(R.string.gestures_swipe_down),
@@ -75,6 +75,7 @@ enum class TapGestureMode {
      * are ambiguous in a nine-point system and thus not interchangeable
      */
     FOUR_POINT,
+
     /**
      * Divide the screen into 9 equally sized squares for touch targets.
      * Better for tablets

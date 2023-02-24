@@ -441,7 +441,7 @@
     <string name="deck_created">Колода создана</string>
     <string name="deck_renamed">Колода переименована</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Колода удалена — удалите ссылку</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>

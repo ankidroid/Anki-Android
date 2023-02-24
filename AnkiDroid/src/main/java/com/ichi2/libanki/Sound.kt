@@ -34,18 +34,17 @@ import com.ichi2.anki.ReadText
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.trimRight
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.regex.Pattern
 
-@KotlinCleanup("IDE Lint")
 // NICE_TO_HAVE: Abstract, then add tests for #6111
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
+@KotlinCleanup("IDE Lint")
 class Sound {
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
@@ -66,6 +65,7 @@ class Sound {
      * Weak reference to the activity which is attempting to play the sound
      */
     private var mCallingActivity: WeakReference<Activity?>? = null
+
     @VisibleForTesting
     fun getSounds(side: SoundSide): ArrayList<String>? {
         if (side == SoundSide.QUESTION_AND_ANSWER) {
@@ -367,7 +367,9 @@ class Sound {
     val currentAudioUri: String?
         get() = if (mCurrentAudioUri == null) {
             null
-        } else mCurrentAudioUri.toString()
+        } else {
+            mCurrentAudioUri.toString()
+        }
 
     fun notifyConfigurationChanged(videoView: VideoView) {
         if (mMediaPlayer != null) {
@@ -584,7 +586,9 @@ class Sound {
             val trimmedSound = sound.trim { it <= ' ' }
             return if (hasURIScheme(trimmedSound)) {
                 trimmedSound
-            } else soundDir + Uri.encode(trimRight(sound))
+            } else {
+                soundDir + Uri.encode(sound.trimEnd())
+            }
         }
 
         /**

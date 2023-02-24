@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">ଆପଣ ଅଫଲାଇନ ଅଛନ୍ତି</string>
     <string name="sync_even_if_offline">ତଥାପି ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="sync_error">ସିଙ୍କ୍ ତ୍ରୁଟି</string>
+    <string name="sync_error">ସୀଙ୍କ୍ ତ୍ରୁଟି</string>
     <string name="vague_error" comment="Network error dialog title">ତ୍ରୁଟି</string>
     <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="menu_get_shared_decks">ଅଂଶିଦାରୀ ତାସଖଣ୍ଡ ପାଆନ୍ତୁ</string>
@@ -73,11 +73,11 @@
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
-    <string name="sync_title">ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
+    <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ କରାଗଲା</string>
     <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ%2$s ଆଗପଛ ଅଛି। ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ୍ କରନ୍ତୁ।</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଟେ</string>
-    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସିଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
     <string name="sync_log_error_specific">ସିଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ବାର୍ତ୍ତା: %2$s</string>
@@ -101,7 +101,7 @@
     <string name="sync_check_download_file">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="sync_media_find">ପରିବର୍ତ୍ତିତ ମିଡିଆ ଖୋଜାହଉଛି&#8230;</string>
     <string name="sync_media_no_changes">ମିଡ଼ିଆ ଫାଇଲରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ</string>
-    <string name="sync_media_success">ମିଡ଼ିଆ ସିଙ୍କ୍ ହୋଇଛି</string>
+    <string name="sync_media_success">ମିଡ଼ିଆ ସୀଙ୍କ୍ ହୋଇଛି</string>
     <string name="sync_media_partial_updated">ମିଡ଼ିଆ ସିଙ୍କ୍ ଆଂଶିକ ଭାବେ ସମାପ୍ତ ହୋଇଛି:\n%1$d ଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି।\n%2$d ଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଅପଲୋଡ୍ ହୋଇଛି।</string>
     <string name="sync_media_changes_count">%dଟି ମିଡ଼ିଆ ପରିବର୍ତ୍ତନ ଅପଲୋଡ୍ କରିବା ବାକି ଅଛି</string>
     <string name="sync_media_downloaded_count">%dଟି ମିଡ଼ିଆ ଫାଇଲ ଡାଉନଲୋଡ୍ କରିବା ବାକି ଅଛି</string>
@@ -127,7 +127,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb ରକ୍ଷଣାବେକ୍ଷଣରେ ଅଛି। ଦୟାକରି କିଛି ମିନିଟରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout ତ୍ରୁଟି ପ୍ରାପ୍ତ ହେଲା।</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">ସିଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
-    <string name="sync_menu_title_no_account">ସିଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
+    <string name="sync_menu_title_full_sync">ସୀଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
+    <string name="sync_menu_title_no_account">ସୀଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
     <string name="sync_error_unknown_host_readable">AnkiWeb ସହିତ ସଂଯୋଗ ହୋଇପାରିଲା ନାହିଁ। ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ କାମ କରୁଛି କି?\n\n%s</string>
 </resources>

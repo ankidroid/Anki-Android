@@ -16,7 +16,6 @@
 package com.ichi2.utils
 
 import android.app.ActivityManager
-import android.content.ComponentName
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -29,6 +28,8 @@ import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compat.Compat.ResolveInfoFlags
 import com.ichi2.compat.CompatHelper.Companion.resolveActivity
+import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.util.*
 
@@ -52,7 +53,7 @@ object AdaptionUtil {
             Timber.w(e)
             false
         }
-    val isRunningUnderFirebaseTestLab: Boolean
+    private val isRunningUnderFirebaseTestLab: Boolean
         get() = try {
             isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
         } catch (e: Exception) {
@@ -98,12 +99,11 @@ object AdaptionUtil {
         return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
-    @Suppress("deprecation") // getPackageInfo
     private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
         return if (packageName != null) {
             try {
-                val info = pm.getPackageInfo(packageName, 0)
-                info?.applicationInfo != null &&
+                val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) ?: return false
+                info.applicationInfo != null &&
                     info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
@@ -168,3 +168,5 @@ object AdaptionUtil {
             return true
         }
 }
+
+val isRobolectric get() = Build.FINGERPRINT?.startsWith("robolectric") ?: false

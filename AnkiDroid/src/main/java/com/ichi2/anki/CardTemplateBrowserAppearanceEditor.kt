@@ -22,8 +22,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.annotation.CheckResult
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import org.jetbrains.annotations.Contract
 import org.json.JSONObject
 import timber.log.Timber
@@ -96,7 +100,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showRestoreDefaultDialog() {
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             positiveButton(R.string.dialog_ok) {
                 restoreDefaultAndClose()
             }
@@ -187,13 +191,15 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             fun fromIntent(intent: Intent?): Result? {
                 return if (intent == null) {
                     null
-                } else try {
-                    val question = intent.getStringExtra(INTENT_QUESTION_FORMAT)
-                    val answer = intent.getStringExtra(INTENT_ANSWER_FORMAT)
-                    Result(question, answer)
-                } catch (e: Exception) {
-                    Timber.w(e, "Could not read result from intent")
-                    null
+                } else {
+                    try {
+                        val question = intent.getStringExtra(INTENT_QUESTION_FORMAT)
+                        val answer = intent.getStringExtra(INTENT_ANSWER_FORMAT)
+                        Result(question, answer)
+                    } catch (e: Exception) {
+                        Timber.w(e, "Could not read result from intent")
+                        null
+                    }
                 }
             }
         }
@@ -205,6 +211,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         /** Specified the card browser should use the default template formatter  */
         const val VALUE_USE_DEFAULT = ""
+
         @CheckResult
         fun getIntentFromTemplate(context: Context, template: JSONObject): Intent {
             val browserQuestionTemplate = template.getString("bqfmt")

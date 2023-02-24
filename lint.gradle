@@ -1,13 +1,15 @@
+// see .editorconfig for ktlint-related rules
+
 android {
-    lintOptions {
-        textReport true
-        textOutput "stdout"
+    lint {
+        abortOnError true
+        checkReleaseBuilds true
+        checkTestSources true
         explainIssues false
+        lintConfig file('../lint-release.xml')
         showAll true
-        abortOnError = true
+        // To output the lint report to stdout set textReport=true, and leave textOutput unset.
+        textReport true
         warningsAsErrors true
-        lintConfig file("../lint-release.xml")
-        checkReleaseBuilds = true
-        checkTestSources = true
     }
 }

@@ -219,7 +219,6 @@ object ImportUtils {
         }
 
         private fun validateImportTypes(context: Context, dataList: ArrayList<Uri>): String? {
-
             var apkgCount = 0
             var colpkgCount = 0
 
@@ -368,7 +367,6 @@ object ImportUtils {
              * @param pathList list of path(s) to apkg file which will be imported
              */
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
-
                 // Get the filename from the path
                 val f = File(pathList.first())
                 val filename = f.name

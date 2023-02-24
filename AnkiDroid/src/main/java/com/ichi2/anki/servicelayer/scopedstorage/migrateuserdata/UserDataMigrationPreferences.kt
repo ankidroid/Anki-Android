@@ -34,6 +34,7 @@ class UserDataMigrationPreferences private constructor(val source: String, val d
     val migrationInProgress = source.isNotEmpty()
     val sourceFile get() = File(source)
     val destinationFile get() = File(destination)
+
     // Throws if migration can't occur as expected.
     fun check() {
         // ensure that both are set, or both are empty

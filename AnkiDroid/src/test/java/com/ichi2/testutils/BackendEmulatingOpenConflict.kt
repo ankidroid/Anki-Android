@@ -31,7 +31,6 @@ class BackendEmulatingOpenConflict(context: Context) : Backend(context) {
         collectionPath: String,
         mediaFolderPath: String,
         mediaDbPath: String,
-        logPath: String,
         forceSchema11: Boolean
     ) {
         val error = Mockito.mock(BackendError::class.java)

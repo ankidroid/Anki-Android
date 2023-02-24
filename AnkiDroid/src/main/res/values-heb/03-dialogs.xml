@@ -106,6 +106,7 @@
     <string name="answering_error_title">שגיאת מסד נתונים</string>
     <string name="answering_error_message">כתיבה לאוסף נכשלה. מאגר המידע אולי שבור או שאין מספיק מקום בדיסק.\n\n אם זה קורה שוב ושוב, אפשר לבדוק את מאגר המידע, לתקן את האוסף או לשחזר אותו מגיבוי. לחץ \'אפשרויות\' עבור כך. \n כמו כן ייתכן שזוהי תקלה בAnkiDroid. נא לדווח את השגיאה כדי שנוכל לבדוק זאת.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">לתקן את המאגר?\n\n
 לפני תחילת ניסיון התיקון, יתבצע שמירת העתק בתקייה %s</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>

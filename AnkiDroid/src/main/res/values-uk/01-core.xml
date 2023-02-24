@@ -257,4 +257,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">Копія %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Неможливо записати чи створити файл %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Дані переносяться</string>
+    <string name="migration_successful_message">Дані успішно перенесено</string>
+    <string name="migration_failed_message">Не вдалось перенести дані</string>
+    <string name="migration_transferred_size">Перенесено %1$.0f МБ з %2$.0f МБ</string>
 </resources>

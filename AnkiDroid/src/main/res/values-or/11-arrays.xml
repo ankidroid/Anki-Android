@@ -43,8 +43,8 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">ସର୍ବଦା ରିପୋର୍ଟ କରନ୍ତୁ</string>
-    <string name="error_reporting_choice_never_report">କଦାପି ରିପୋର୍ଟ କରନ୍ତୁ ନାହିଁ</string>
+    <string name="error_reporting_choice_always_report">ସର୍ଵଦା ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="error_reporting_choice_never_report">କେବେ ବି ରିପୋର୍ଟ କରନ୍ତୁନି</string>
     <string name="error_reporting_choice_ask_user">ମୋତେ ପଚାରନ୍ତୁ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
@@ -71,7 +71,7 @@
     <string name="new_spread_new_before_review">ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂଆ ପତ୍ର</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</string>
-    <string name="override_font_always" comment="Option to always override font">ସର୍ବଦା</string>
+    <string name="override_font_always" comment="Option to always override font">ସର୍ଵଦା</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ସିଷ୍ଟମ୍ କୁ ଅନୁସରଣ କରିବା</string>
     <!-- day_theme_labels -->

@@ -14,7 +14,9 @@ class DeckRenameException
     override val message: String?
         get() = if (errorCode == FILTERED_NOSUBDECKS) {
             "Deck $mDeckName has filtered ancestor $mFilteredAncestorName"
-        } else super.message
+        } else {
+            super.message
+        }
 
     fun getLocalizedMessage(res: Resources): String {
         return when (errorCode) {

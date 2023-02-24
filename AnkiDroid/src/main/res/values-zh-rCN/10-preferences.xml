@@ -86,7 +86,6 @@
     <string name="full_screen_off">关闭</string>
     <string name="full_screen_system">隐藏系统状态栏</string>
     <string name="full_screen_complete">隐藏系统状态栏和回答按钮</string>
-    <string name="full_screen_error_gestures">您必须启用手势操作才能隐藏回答按钮</string>
     <string name="answer_buttons_position" maxLength="41">显示答案按钮位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>顶部</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏导航抽屉</string>
     <string name="gestures_fullscreen_nav_drawer_summary">从屏幕上的任何地方向右滑动时打开导航抽屉</string>
+    <string name="gestures_none" maxLength="41">无</string>
     <string name="gestures_swipe_up" maxLength="41">向上滑动</string>
     <string name="gestures_swipe_down" maxLength="41">向下滑动</string>
     <string name="gestures_swipe_left" maxLength="41">向左滑动</string>
@@ -129,9 +129,9 @@
     <string name="sync_account_summ_logged_out">未登录</string>
     <string name="automatic_sync_choice" maxLength="41">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">始终</string>
+    <string name="sync_media_only_unmetered">仅在不按流量计费的的连接时</string>
+    <string name="sync_media_never">从不</string>
     <string name="sync_status_badge" maxLength="41">显示同步状态</string>
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
     <string name="metered_sync_title" maxLength="41">允许通过按流量计费连接同步</string>
@@ -229,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">集合: %1$s\n媒体: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">默认</string>
-    <string name="custom_sync_server_help"><![CDATA[        作为用 AnkiWeb 进行同步的备选方案,
-        你可以使用自己的服务器来同步。
-        你可以指定牌组集服务器或媒体文件服务器，或者指定两个服务器。
-        如未设置，将使用默认的 AnkiWeb 服务器。
-        比如，当你只有本地网络时，你可以使用 Anki 桌面版
-        内置的服务器来同步牌组集。在可以访问互联网时使用
-        AnkiWeb 来同步媒体文件。
+    <string name="custom_sync_server_help2"><![CDATA[        作为与AnkiWeb同步的替代方法，
+        您可以使用自己的服务器进行同步。
+        如果未设置，将使用默认AnkiWeb服务器。
         <a href="%s">了解更多</a>
-        <br>
-        <br>注：和先前的 AnkiDroid 版本不同，
-        你必须指定完整的自定义 URL。
-        例如： https://example.com:8080/sync/。]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">媒体文件同步地址</string>
     <!-- Key Bindings -->
     <string name="keyboard">键盘</string>
     <string name="bluetooth">蓝牙</string>

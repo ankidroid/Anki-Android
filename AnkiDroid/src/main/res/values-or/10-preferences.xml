@@ -56,7 +56,7 @@
     <string name="pref_cat_studying" maxLength="41">ଅଧ୍ୟୟନ କରିବା</string>
     <string name="pref_cat_system_wide" maxLength="41">ସିଷ୍ଟମ୍-ବ୍ୟାପୀ</string>
     <string name="pref_cat_reviewing" maxLength="41">ସମୀକ୍ଷା</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସିଙ୍କ୍</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସୀଙ୍କ୍</string>
     <string name="pref_cat_scheduling" maxLength="41">ନିର୍ଦ୍ଧାରଣ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ଧଳାପଟା</string>
     <string name="pref_cat_appearance" maxLength="41">ରୂପ</string>
@@ -86,7 +86,6 @@
     <string name="full_screen_off">ବନ୍ଦ</string>
     <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
     <string name="full_screen_complete">ସିଷ୍ଟମ୍ ବାର୍ ଏବଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାନ୍ତୁ</string>
-    <string name="full_screen_error_gestures">ଉତ୍ତର ବଟନଗୁଡ଼ିକୁ ଲୁଚାଇବା ପାଇଁ ଆପଣ ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରିବା ଆବଶ୍ୟକ </string>
     <string name="answer_buttons_position" maxLength="41">ଉତ୍ତର ବଟନ୍ ଅଵସ୍ଥାନ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ଶୀର୍ଷ</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">ସ୍କ୍ରିନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରିନର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_down" maxLength="41">ତଳକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_left" maxLength="41">ବାମକୁ ସ୍ଵାଇପ୍ କଲେ</string>
@@ -127,12 +127,12 @@
     <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
-    <string name="automatic_sync_choice" maxLength="41">ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
+    <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
-    <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">ସର୍ଵଦା</string>
+    <string name="sync_media_only_unmetered">କେଵଳ ମିଟର୍ ନଥିବା ସଂଯୋଜନାଗୁଡ଼ିକରେ</string>
+    <string name="sync_media_never">କଦାପି ନୁହେଁ</string>
+    <string name="sync_status_badge" maxLength="41">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରିବା</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="metered_sync_title" maxLength="41">ମିଟର୍ ସଂଯୋଜନାଗୁଡ଼ିକରେ ସିଙ୍କ୍ କରିବାକୁ ଦେବା</string>
     <string name="metered_sync_summary">ଯଦି ଅକ୍ଷମ କରାଗଲା, ଆଉ ଆପଣ କୌଣସି ମିଟର୍ ହେଉଥିବା ସଂଯୋଜନାରେ ସିଙ୍କ୍ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତି ତେବେ ଆପଣଙ୍କୁ ଚେତାଵନୀ ଦିଆଯିବ</string>
@@ -196,8 +196,8 @@
     <string name="enable_api_summary">ଅନ୍ୟ ଆପସ୍ କୁ AnkiDroid ସହିତ ସଂଯୋଗ କରି ଆପଣଙ୍କ ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅନ୍ତୁ</string>
     <string name="custom_buttons" maxLength="41">ଆପ୍ ବାର୍ ବଟନ୍</string>
     <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
-    <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
-    <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
+    <string name="custom_buttons_setting_always_show">ସର୍ଵଦା ଦେଖାଅ</string>
+    <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାଅ</string>
     <string name="custom_buttons_setting_menu_only">କେଵଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
@@ -227,24 +227,14 @@
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">ଗଣନର ସଠିକତା</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">ଅନୁକରଣର ପୁନରାବୃତ୍ତି ସଂଖ୍ୟା</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍</string>
+    <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସୀଙ୍କ୍ ସର୍ଵର୍</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ଵ୍ୟଵହାର ହୋଇନାହିଁ</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">ସଂଗ୍ରହ: %1$s\nମିଡ଼ିଆ: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">ଡିଫଲ୍ଟ</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">ସିଙ୍କ୍ url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
+        ]]></string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">ସୀଙ୍କ୍ url</string>
     <!-- Key Bindings -->
     <string name="keyboard">କୀବୋର୍ଡ୍</string>
     <string name="bluetooth">Bluetooth</string>
@@ -371,17 +361,18 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backup_options__title" maxLength="41">ବ୍ୟାକଅପ୍ ଵିକଳ୍ପ</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid ପର୍ଯ୍ୟାୟକ୍ରମେ ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନିଏ।
+        ବ୍ୟାକଅପ୍ ଦୁଇ ଦିନରୁ ଅଧିକ ପୁରୁଣା ହେବା ପରେ,
+        AnkiDroid ଡିସ୍କ ସ୍ପେସ୍ ମୁକ୍ତ କରିବାକୁ ସେମାନଙ୍କ ମଧ୍ୟରୁ କିଛିଟି ଅପସାରଣ କରିବା ଆରମ୍ଭ କରିବ।
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        ଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ମିଡ଼ିଆ ଫାଇଲର ବ୍ୟାକଅପ୍ ନିଆଯାଏନି।
+        ସୁରକ୍ଷିତ ରହିବାକୁ, ଦୟାକରି ପର୍ଯ୍ୟାୟକ୍ରମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ସୀଙ୍କ୍ରୋନାଇଜ୍ କରୁଥାନ୍ତୁ,
+        କିମ୍ୱା ସଂଗ୍ରହର ରପ୍ତାନି କରି ବ୍ୟାକଅପ୍ ରଖନ୍ତୁ।
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        ଆପଣ ଗୋଟେ ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରିପାରିବେ ଏଵଂ ଡେକ୍ ତାଲିକା ମେନୁରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ରପ୍ତାନି କରିପାରିବେ।
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ମଧ୍ୟରେ କେତେ ମିନିଟର ଅନ୍ତର</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">କେତୋଟି ଦୈନିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">କେତୋଟି ସାପ୍ତାହିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">କେତୋଟି ମାସିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>

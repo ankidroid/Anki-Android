@@ -239,6 +239,7 @@ open class CardBrowser :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isInMultiSelectMode = false
         private set
+
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isTruncated = false
     private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())
@@ -399,7 +400,8 @@ open class CardBrowser :
             if (searchName.isNullOrEmpty()) {
                 showThemedToast(
                     this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true
+                    getString(R.string.card_browser_list_my_searches_new_search_error_empty_name),
+                    true
                 )
                 return
             }
@@ -413,7 +415,8 @@ open class CardBrowser :
             } else {
                 showThemedToast(
                     this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_dup), true
+                    getString(R.string.card_browser_list_my_searches_new_search_error_dup),
+                    true
                 )
             }
         }
@@ -443,8 +446,8 @@ open class CardBrowser :
      * Change Deck
      * @param did Id of the deck
      */
-    @VisibleForTesting
     // TODO: This function can be simplified a lot
+    @VisibleForTesting
     fun moveSelectedCardsToDeck(did: DeckId) {
         val selectedDeck = col.decks.get(did)
         // TODO: Currently try-catch is at every level which isn't required, simplify that
@@ -577,7 +580,8 @@ open class CardBrowser :
         val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
         val column1Adapter = ArrayAdapter.createFromResource(
             this,
-            R.array.browser_column1_headings, android.R.layout.simple_spinner_item
+            R.array.browser_column1_headings,
+            android.R.layout.simple_spinner_item
         )
         column1Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
         cardsColumn1Spinner.adapter = column1Adapter
@@ -606,7 +610,8 @@ open class CardBrowser :
         val cardsColumn2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
         val column2Adapter = ArrayAdapter.createFromResource(
             this,
-            R.array.browser_column2_headings, android.R.layout.simple_spinner_item
+            R.array.browser_column2_headings,
+            android.R.layout.simple_spinner_item
         )
         // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
         column2Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
@@ -638,7 +643,8 @@ open class CardBrowser :
         cardsAdapter = MultiColumnListAdapter(
             this,
             R.layout.card_item_browser,
-            columnsContent, intArrayOf(R.id.card_sfld, R.id.card_column2),
+            columnsContent,
+            intArrayOf(R.id.card_sfld, R.id.card_column2),
             sflRelativeFontSize,
             sflCustomFont
         )
@@ -666,12 +672,7 @@ open class CardBrowser :
         cardsListView!!.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
                 var hasChanged = false
-                for (
-                    i in min(mLastSelectedPosition, position)..max(
-                        mLastSelectedPosition,
-                        position
-                    )
-                ) {
+                for (i in min(mLastSelectedPosition, position)..max(mLastSelectedPosition, position)) {
                     val card = cardsListView!!.getItemAtPosition(i) as CardCache
 
                     // Add to the set of checked cards
@@ -697,8 +698,12 @@ open class CardBrowser :
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val deckId = col.decks.selected()
         deckSpinnerSelection = DeckSpinnerSelection(
-            this, col, findViewById(R.id.toolbar_spinner),
-            showAllDecks = true, alwaysShowDefault = false, showFilteredDecks = true
+            this,
+            col,
+            findViewById(R.id.toolbar_spinner),
+            showAllDecks = true,
+            alwaysShowDefault = false,
+            showFilteredDecks = true
         )
         inCardsMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("inCardsMode", true)
         isTruncated = AnkiDroidApp.getSharedPrefs(this).getBoolean("isTruncated", false)
@@ -738,7 +743,6 @@ open class CardBrowser :
                 }
             }
             KeyEvent.KEYCODE_E -> {
-
                 // Ctrl+Shift+E: Export (TODO)
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+E: Add Note")
@@ -973,19 +977,8 @@ open class CardBrowser :
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
 
             menu.findItem(R.id.action_export_selected).apply {
-                if (BackendFactory.defaultLegacySchema) {
-                    this.isVisible = false
-                } else {
-                    // Only visible if new backend is being used
-                    this.isVisible = true
-
-                    // TODO: currently forcing plural use. This should be changed to use the correct singular/plural form
-                    this.title = if (inCardsMode) {
-                        resources.getQuantityString(R.plurals.card_browser_export_cards, 10)
-                    } else {
-                        resources.getQuantityString(R.plurals.card_browser_export_notes, 10)
-                    }
-                }
+                // Only visible if new backend is being used
+                this.isVisible = !BackendFactory.defaultLegacySchema
             }
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
@@ -1053,6 +1046,13 @@ open class CardBrowser :
             checkSelectedCardsJob = launchCatchingTask {
                 val result = withProgress { checkCardSelection(mCheckedCards) }
                 onSelectedCardsChecked(result)
+            }
+        }
+        mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
+            this.title = if (inCardsMode) {
+                resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
+            } else {
+                resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
@@ -1131,8 +1131,10 @@ open class CardBrowser :
                 val searchTerms = mSearchView!!.query.toString()
                 showDialogFragment(
                     newInstance(
-                        null, mMySearchesDialogListener,
-                        searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE
+                        null,
+                        mMySearchesDialogListener,
+                        searchTerms,
+                        CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE
                     )
                 )
                 return true
@@ -1146,8 +1148,10 @@ open class CardBrowser :
                 )
                 showDialogFragment(
                     newInstance(
-                        savedFilters, mMySearchesDialogListener,
-                        "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
+                        savedFilters,
+                        mMySearchesDialogListener,
+                        "",
+                        CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
                     )
                 )
                 return true
@@ -1570,7 +1574,9 @@ open class CardBrowser :
         mTagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
             TagsDialog.DialogType.EDIT_TAGS,
-            checkedTags, uncheckedTags, allTags
+            checkedTags,
+            uncheckedTags,
+            allTags
         )
         showDialogFragment(dialog)
     }
@@ -1578,7 +1584,9 @@ open class CardBrowser :
     private fun showFilterByTagsDialog() {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
-            TagsDialog.DialogType.FILTER_BY_TAG, ArrayList(0), col.tags.all()
+            TagsDialog.DialogType.FILTER_BY_TAG,
+            ArrayList(0),
+            col.tags.all()
         )
         showDialogFragment(dialog)
     }
@@ -1712,10 +1720,12 @@ open class CardBrowser :
     override val subtitleText: String
         get() {
             val count = cardCount
-            @androidx.annotation.StringRes val subtitleId = if (inCardsMode)
+
+            @androidx.annotation.StringRes val subtitleId = if (inCardsMode) {
                 R.plurals.card_browser_subtitle
-            else
+            } else {
                 R.plurals.card_browser_subtitle_notes_mode
+            }
             return resources.getQuantityString(subtitleId, count, count)
         }
 
@@ -1888,7 +1898,7 @@ open class CardBrowser :
     }
 
     private fun showUndoSnackbar(message: CharSequence) {
-        showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+        showSnackbar(message, Snackbar.LENGTH_LONG) {
             setAction(R.string.undo) { TaskManager.launchCollectionTask(Undo().toDelegate(), mUndoHandler) }
             mUndoSnackbar = this
         }
@@ -2039,8 +2049,11 @@ open class CardBrowser :
     protected suspend fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>) {
         Timber.d("Starting Q&A background rendering")
         val result = renderBrowserQA(
-            cards, firstVisibleItem, visibleItemCount,
-            mColumn1Index, mColumn2Index
+            cards,
+            firstVisibleItem,
+            visibleItemCount,
+            mColumn1Index,
+            mColumn2Index
         ) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
@@ -2470,7 +2483,9 @@ open class CardBrowser :
             }
             return if (javaClass != other.javaClass) {
                 false
-            } else id == (other as CardCache).id
+            } else {
+                id == (other as CardCache).id
+            }
         }
 
         override fun hashCode(): Int {

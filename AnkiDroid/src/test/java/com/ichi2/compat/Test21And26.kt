@@ -18,7 +18,6 @@ package com.ichi2.compat
 
 import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
-import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*
 import org.junit.AfterClass
@@ -29,6 +28,7 @@ import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertFailsWith
 
 /**
  * Allows to test with CompatV21 and V26.
@@ -40,13 +40,13 @@ abstract class Test21And26 {
     companion object {
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
-
         fun data(): Iterable<Array<Any>> = sequence {
             yield(arrayOf(CompatV21(), "CompatV21"))
             yield(arrayOf(CompatV26(), "CompatV26"))
         }.asIterable()
 
         lateinit var staticCompat: Compat
+
         @BeforeClass
         @JvmStatic // required for @BeforeClass
         fun setupClass() {
@@ -107,7 +107,7 @@ abstract class Test21And26 {
          * the exception is not caught.
          */
         fun assertThrowsWhenPermissionDenied(test: () -> Unit): IOException =
-            runWithPermissionDenied { assertThrowsSubclass(test) }
+            runWithPermissionDenied { assertFailsWith { test() } }
     }
 
     /**

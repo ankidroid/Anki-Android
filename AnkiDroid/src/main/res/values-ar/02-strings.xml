@@ -464,7 +464,7 @@
     <string name="deck_created">كيفية </string>
     <string name="deck_renamed">Minato </string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>

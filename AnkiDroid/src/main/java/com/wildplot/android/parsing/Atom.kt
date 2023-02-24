@@ -53,9 +53,12 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
                 expression = expressionInBrackets
                 atomType = EXP_IN_BRACKETS
                 true
-            } else false
-        } else
+            } else {
+                false
+            }
+        } else {
             false
+        }
     }
 
     private fun initAsFunctionMath(atomString: String): Boolean {
@@ -64,7 +67,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = FUNCTION_MATH
             atomObject = mathFunctionAtom
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     private fun initAsFunctionX(atomString: String): Boolean {
@@ -73,7 +78,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = FUNCTION_X
             atomObject = functionXAtom
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     private fun initAsFunctionXY(atomString: String): Boolean {
@@ -82,7 +89,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = FUNCTION_X_Y
             atomObject = functionXYAtom
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     private fun initAsNumber(atomString: String): Boolean {
@@ -91,7 +100,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = numberAtom.getAtomType()
             atomObject = numberAtom
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     private fun initAsXVariable(atomString: String): Boolean {
@@ -99,7 +110,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = VARIABLE
             atomObject = XVariableAtom(parser)
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     private fun initAsYVariable(atomString: String): Boolean {
@@ -107,7 +120,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = VARIABLE
             atomObject = YVariableAtom(parser)
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     private fun initAsVariable(atomString: String): Boolean {
@@ -116,7 +131,9 @@ class Atom(private val parser: TopLevelParser) : TreeElement {
             atomType = variableAtom.atomType
             atomObject = variableAtom
             true
-        } else false
+        } else {
+            false
+        }
     }
 
     @get:Throws(ExpressionFormatException::class)

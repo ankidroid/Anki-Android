@@ -31,6 +31,7 @@ class AudioRecorderTest {
 
     @InjectMocks
     private lateinit var mInjectedRecorder: AudioRecorder
+
     @Before
     fun before() {
         MockitoAnnotations.openMocks(this)

@@ -12,8 +12,8 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.ui.ButtonItemAdapter
-import com.ichi2.utils.BundleUtils.getSerializableWithCast
 import timber.log.Timber
 
 // TODO: Add different classes for the two different dialogs
@@ -35,7 +35,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         val dialog = MaterialDialog(requireActivity())
         val type = requireArguments().getInt("type")
         if (type == CARD_BROWSER_MY_SEARCHES_TYPE_LIST) {
-            savedFilters = requireArguments().getSerializableWithCast<HashMap<String, String>>("savedFilters")
+            savedFilters = requireArguments().getSerializableCompat("savedFilters")
 
             savedFilters?.let {
                 savedFilterKeys = ArrayList(it.keys)

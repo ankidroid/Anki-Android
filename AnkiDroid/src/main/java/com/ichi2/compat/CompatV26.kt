@@ -23,6 +23,7 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.NotificationChannels
 import com.ichi2.utils.KotlinCleanup
@@ -38,6 +39,9 @@ open class CompatV26 : CompatV23(), Compat {
      */
     override fun setupNotificationChannel(context: Context) {
         NotificationChannels.setup(context)
+    }
+
+    override fun setTooltipTextByContentDescription(view: View) { /* Nothing to do API26+ */
     }
 
     @Suppress("DEPRECATION")

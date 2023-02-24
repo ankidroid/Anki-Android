@@ -19,4 +19,4 @@ updates:
   # We cannot update this one until API26. Ignore range should slide with known versions so we stay informed.
   - dependency-name: org.apache.commons:commons-compress
     versions:
-    - ">= 1.12, < 1.22"
+    - ">= 1.12, < 1.23"

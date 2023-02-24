@@ -86,7 +86,6 @@
     <string name="full_screen_off">Disabilitato</string>
     <string name="full_screen_system">Nascondi le barre di sistema</string>
     <string name="full_screen_complete">Nascondi le barre di sistema e i pulsanti di risposta</string>
-    <string name="full_screen_error_gestures">È necessario abilitare i gesti per nascondere i pulsanti di risposta</string>
     <string name="answer_buttons_position" maxLength="41">Posizione dei pulsanti di risposta</string>
     <string-array name="answer_buttons_position_labels">
         <item>In alto</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannello di navigazione a schermo intero</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Apri il pannello di navigazione quando scorri a destra da qualsiasi punto dello schermo</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Scorri su</string>
     <string name="gestures_swipe_down" maxLength="41">Scorri giù</string>
     <string name="gestures_swipe_left" maxLength="41">Scorri a sinistra</string>
@@ -229,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Server di sincronizzazione personalizzato</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilizzato</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collezione: %1$s\nContenuti multimediali: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">predefinito</string>
-    <string name="custom_sync_server_help"><![CDATA[        Come alternativa alla sincronizzazione con AnkiWeb
-        è possibile utilizzare i propri server per la sincronizzazione.
-        Puoi specificare il server per la collezione o per i contenuti multimediali, o entrambi.
-        Se non impostato, i server AnkiWeb predefiniti verranno usati.
-        Per esempio, è possibile utilizzare il server di sincronizzazione integrato in Anki
-        Desktop per sincronizzare la collezione quando si ha solo accesso a una rete locale,
-        e AnkiWeb per sincronizzare contenuti multimediali quando si ha accesso internet generale.
-        <a href="%s">Scopri di più</a>
-        <br>
-        <br>Nota: diversamente dalle versioni precedenti di AnkiDroid,
-        è necessario specificare l\'URL di sincronizzazione personalizzata completo,
-        per esempio: https://example.com:8080/sync/.]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url di sincronizzazione</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Url di sincronizzazione del contenuto multimediale</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tastiera</string>
     <string name="bluetooth">Bluetooth</string>

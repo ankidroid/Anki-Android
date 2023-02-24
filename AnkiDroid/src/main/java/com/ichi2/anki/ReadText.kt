@@ -59,7 +59,7 @@ object ReadText {
         val result = textToSpeech!!.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             showThemedToast(
-                flashCardViewer.get(),
+                flashCardViewer.get()!!,
                 flashCardViewer.get()!!.getString(R.string.no_tts_available_message) +
                     " (" + loc + ")",
                 false
@@ -225,7 +225,7 @@ object ReadText {
             // (after notifying them first that no TTS voice was found for the locale
             // they originally requested)
             showThemedToast(
-                flashCardViewer.get(),
+                flashCardViewer.get()!!,
                 flashCardViewer.get()!!.getString(R.string.no_tts_available_message) +
                     " (" + originalLocaleCode + ")",
                 false

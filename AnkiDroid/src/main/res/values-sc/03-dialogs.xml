@@ -98,6 +98,7 @@
                                              Si custu acontesset prus de su sòlitu proa a verificare sa base de datos, ariparare sa colletzione o a la ripristinare dae una còpia de seguresa. Incarca in “optziones” pro lu fàghere.\n
                                              \\O diat pòdere èssere fintzas unu problema de AnkiDroid; pro praghere sinnala s\'errore pro nos permìtere de lu verificare.</string>
     <string name="answering_error_report">Sinnala una faddina</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Cheres a beru proare a riparare sa base de datos?\n
                    \n
                    In antis de incumintzare cun sa proa s\'at a creare una còpia in sa suta-cartella “%s”.</string>

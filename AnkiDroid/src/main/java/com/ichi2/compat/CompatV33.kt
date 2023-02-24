@@ -12,12 +12,13 @@
  *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.want to keep this issue as an 'easy first step' to onboard users, or to be handled on a case-by-case basis when it causes issues with PRs.
  */
 package com.ichi2.compat
 
 import android.annotation.TargetApi
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Bundle
@@ -42,6 +43,13 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: Compat.ResolveInfoFlags): ResolveInfo? {
         return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+        
+    override fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T? {
+        return bundle.getSerializable(key, clazz)
+    }
+
+    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
+        return parcel.readSerializable(loader, clazz)
     }
 
     override fun <T> readSparseArray(
@@ -50,5 +58,29 @@ open class CompatV33 : CompatV31(), Compat {
         clazz: Class<T>
     ): SparseArray<T>? {
         return parcel.readSparseArray(loader, clazz)
+    }
+
+    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
+        packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.value))
+
+    override fun resolveService(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): ResolveInfo? {
+        return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+    }
+
+    override fun <T> readList(
+        parcel: Parcel,
+        outVal: MutableList<in T>,
+        classLoader: ClassLoader?,
+        clazz: Class<T>
+    ) {
+        parcel.readList(outVal, classLoader, clazz)
+    }
+
+    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
+        return bundle.getParcelable(key, clazz)
     }
 }

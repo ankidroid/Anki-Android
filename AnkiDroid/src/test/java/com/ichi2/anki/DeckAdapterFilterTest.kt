@@ -71,7 +71,7 @@ class DeckAdapterFilterTest {
                 TreeNode(DeckTreeNode("Chanson::Important", 6)),
                 TreeNode(DeckTreeNode("Chanson::Important::Stuff", 7)),
                 TreeNode(DeckTreeNode("Chanson::Important::Math", 8)),
-                TreeNode(DeckTreeNode("Chanson::Important::Stuff::Other Stuff", 9)),
+                TreeNode(DeckTreeNode("Chanson::Important::Stuff::Other Stuff", 9))
             )
 
             deckList.getByDid(0).children.addAll(deckList.getByDids(1, 4, 6))

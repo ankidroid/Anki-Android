@@ -17,9 +17,7 @@
 
 package com.ichi2.anki
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
@@ -28,13 +26,15 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.TestUtils.activityInstance
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.TestUtils.isScreenSw600dp
 import com.ichi2.anki.TestUtils.wasBuiltOnCI
 import com.ichi2.anki.tests.InstrumentedTest.Companion.isEmulator
+import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils.sleep
+import com.ichi2.anki.testutil.grantPermissions
+import com.ichi2.anki.testutil.notificationPermission
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
@@ -48,12 +48,7 @@ class DeckPickerTest {
     val mActivityRule = ActivityScenarioRule(DeckPicker::class.java)
 
     @get:Rule
-    val mRuntimePermissionRule: GrantPermissionRule =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
+    val mRuntimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
     @Ignore("This test appears to be flaky everywhere")
     @Test

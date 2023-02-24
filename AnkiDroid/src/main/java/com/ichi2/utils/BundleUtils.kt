@@ -32,7 +32,9 @@ object BundleUtils {
     fun getNullableLong(bundle: Bundle?, key: String): Long? {
         return if (bundle == null || !bundle.containsKey(key)) {
             null
-        } else bundle.getLong(key)
+        } else {
+            bundle.getLong(key)
+        }
     }
 
     /**
@@ -47,10 +49,5 @@ object BundleUtils {
             throw IllegalStateException("key: '$key' not found")
         }
         return getLong(key)
-    }
-
-    @Suppress("deprecation") // getSerializable
-    inline fun <reified T> Bundle.getSerializableWithCast(key: String): T {
-        return getSerializable(key) as T
     }
 }

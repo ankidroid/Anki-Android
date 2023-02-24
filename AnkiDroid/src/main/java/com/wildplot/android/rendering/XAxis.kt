@@ -122,7 +122,8 @@ class XAxis
         }
         pixelDistance = Math.abs(
             plotSheet.xToGraphic(0.0, field) - plotSheet.xToGraphic(
-                tic, field
+                tic,
+                field
             )
         )
         if (tic < 1e-2 || tic > 1e2) {
@@ -156,7 +157,8 @@ class XAxis
         val arrowheadPos = floatArrayOf(
             plotSheet.xToGraphic(
                 Math.min(
-                    plotSheet.getxRange()[1], end
+                    plotSheet.getxRange()[1],
+                    end
                 ),
                 field
             ),
@@ -186,7 +188,8 @@ class XAxis
                 floatArrayOf(plotSheet.xToGraphic(0.0, field), plotSheet.yToGraphic(yOffset, field))
             if (mHasName) {
                 g.drawString(
-                    name, field.width / 2 - width / 2,
+                    name,
+                    field.width / 2 - width / 2,
                     Math.round(
                         middlePosition[1] + fontHeight * 2.5f
                     ).toFloat()

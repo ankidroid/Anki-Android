@@ -86,7 +86,6 @@
     <string name="full_screen_off">關閉</string>
     <string name="full_screen_system">隱藏系統狀態欄</string>
     <string name="full_screen_complete">隱藏系統狀態欄和回答按鈕</string>
-    <string name="full_screen_error_gestures">您必須啟用手勢操作才能隱藏回答按鈕</string>
     <string name="answer_buttons_position" maxLength="41">顯示答案按鈕位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>頂部</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>
     <string name="gestures_fullscreen_nav_drawer_summary">從屏幕上任何地方向右劃，可以打開導航的抽屜。</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">向上撥動</string>
     <string name="gestures_swipe_down" maxLength="41">向下撥動</string>
     <string name="gestures_swipe_left" maxLength="41">向左撥動</string>
@@ -229,22 +229,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自訂同步伺服器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">集合：%1$s\n媒體：%2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">默認</string>
-    <string name="custom_sync_server_help"><![CDATA[        作為用AnkiWeb進行同步的備選方案，
-        你可以使用自己的服務器來同步。
-        你可以指定牌組集服務器或媒體檔案伺服器，或者指定兩個服務器。
-        如未設定，將使用默認的AnkiWeb服務器。
-        比如，當你只有本地網絡時，你可以使用Anki案頭版
-        內寘的服務器來同步牌組集。 在可以訪問互聯網時使用
-        AnkiWeb來同步媒體檔案。
-        <a href=“%s”>瞭解更多</a>
-        <br>
-        <br>注：和先前的AnkiDroid版本不同，
-        你必須指定完整的自定義URL。
-        例如： https://example.com:8080/sync/ 。]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
+        <a href="%s">Learn more</a>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">媒體檔案同步地址</string>
     <!-- Key Bindings -->
     <string name="keyboard">鍵盤</string>
     <string name="bluetooth">藍芽</string>

@@ -178,7 +178,8 @@ class MediaSyncer(
                 }
                 con.publishProgress(
                     String.format(
-                        AnkiDroidApp.appResources.getString(R.string.sync_media_changes_count), toSend
+                        AnkiDroidApp.appResources.getString(R.string.sync_media_changes_count),
+                        toSend
                     )
                 )
                 val changes = server.uploadChanges(zip)
@@ -190,7 +191,9 @@ class MediaSyncer(
                     String.format(
                         Locale.US,
                         "processed %d, serverUsn %d, clientUsn %d",
-                        processedCnt, serverLastUsn, lastUsn
+                        processedCnt,
+                        serverLastUsn,
+                        lastUsn
                     )
                 )
                 if (serverLastUsn - processedCnt == lastUsn) {
@@ -243,7 +246,8 @@ class MediaSyncer(
                 }
                 con.publishProgress(
                     String.format(
-                        AnkiDroidApp.appResources.getString(R.string.sync_media_downloaded_count), mDownloadCount
+                        AnkiDroidApp.appResources.getString(R.string.sync_media_downloaded_count),
+                        mDownloadCount
                     )
                 )
             } catch (e: IOException) {

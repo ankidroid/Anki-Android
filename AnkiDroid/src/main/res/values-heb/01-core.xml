@@ -258,4 +258,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">לא ניתן לכתוב או ליצור קובץ %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">מעביר את הנתונים שלך</string>
+    <string name="migration_successful_message">העברה מוצלחת</string>
+    <string name="migration_failed_message">העברה נכשלה</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

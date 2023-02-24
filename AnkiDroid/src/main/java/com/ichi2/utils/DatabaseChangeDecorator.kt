@@ -66,13 +66,19 @@ class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLit
         return insert
     }
 
-    override fun delete(table: String, whereClause: String, whereArgs: Array<Any>): Int {
+    override fun delete(table: String, whereClause: String?, whereArgs: Array<out Any?>?): Int {
         val delete = wrapped.delete(table, whereClause, whereArgs)
         markDataAsChanged()
         return delete
     }
 
-    override fun update(table: String, conflictAlgorithm: Int, values: ContentValues, whereClause: String?, whereArgs: Array<Any>?): Int {
+    override fun update(
+        table: String,
+        conflictAlgorithm: Int,
+        values: ContentValues,
+        whereClause: String?,
+        whereArgs: Array<out Any?>?
+    ): Int {
         val update = wrapped.update(table, conflictAlgorithm, values, whereClause, whereArgs)
         markDataAsChanged()
         return update
@@ -85,7 +91,7 @@ class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLit
     }
 
     @Throws(SQLException::class)
-    override fun execSQL(sql: String, bindArgs: Array<Any>) {
+    override fun execSQL(sql: String, bindArgs: Array<out Any?>) {
         wrapped.execSQL(sql, bindArgs)
         checkForChanges(sql)
     }

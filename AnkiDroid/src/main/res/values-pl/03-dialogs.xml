@@ -106,6 +106,7 @@
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>

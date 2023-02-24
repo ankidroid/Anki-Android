@@ -54,7 +54,7 @@ class NotificationService : BroadcastReceiver() {
                     Channel.GENERAL.id
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                    .setSmallIcon(R.drawable.ic_stat_notify)
+                    .setSmallIcon(R.drawable.ic_star_notify)
                     .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText)
@@ -69,7 +69,9 @@ class NotificationService : BroadcastReceiver() {
                 val resultIntent = Intent(context, DeckPicker::class.java)
                 resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 val resultPendingIntent = CompatHelper.compat.getImmutableActivityIntent(
-                    context, 0, resultIntent,
+                    context,
+                    0,
+                    resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
                 builder.setContentIntent(resultPendingIntent)

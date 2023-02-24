@@ -104,7 +104,7 @@
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସୀଙ୍କ୍ ଖାତା</string>
     <string name="menu_dismiss_note">ଲୁଚାଇବା / ଵିଲୋପ କରିବା</string>
     <string name="menu_bury_card">ପତ୍ର ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="menu_bury_note">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
@@ -174,12 +174,12 @@
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛିଟା କ୍ଲୋଜ୍-ଵିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
-    <string name="button_sync" comment="Text of the sync button">ସିଙ୍କ୍</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସିଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
+    <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସୀଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
-    <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
-    <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>
+    <string name="continue_sync">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
+    <string name="sync_cancelled">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
     <string name="export">ରପ୍ତାନି</string>
     <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରନ୍ତୁ</string>
@@ -241,4 +241,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ନକଲ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migration_successful_message">Migration successful</string>
+    <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

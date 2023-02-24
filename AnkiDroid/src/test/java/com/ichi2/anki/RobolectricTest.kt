@@ -42,6 +42,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
@@ -83,6 +84,10 @@ open class RobolectricTest : CollectionGetter {
 
     @get:Rule
     val mTaskScheduler = TaskSchedulerRule()
+
+    /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
+    @get:Rule
+    val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 
     @Before
     @CallSuper
@@ -133,7 +138,6 @@ open class RobolectricTest : CollectionGetter {
     @After
     @CallSuper
     open fun tearDown() {
-
         // If you don't clean up your ActivityControllers you will get OOM errors
         for (controller in mControllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString())
@@ -330,9 +334,9 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @Throws(JSONException::class)
-    protected fun getCurrentDatabaseModelCopy(modelName: String?): Model {
+    protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
         val collectionModels = col.models
-        return Model(collectionModels.byName(modelName!!).toString().trim { it <= ' ' })
+        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {

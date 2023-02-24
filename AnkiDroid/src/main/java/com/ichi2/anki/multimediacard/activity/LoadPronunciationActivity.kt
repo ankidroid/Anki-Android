@@ -103,7 +103,8 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
         mLanguageLister = LanguageListerBeolingus()
         mSpinnerFrom = Spinner(this)
         val adapter = ArrayAdapter(
-            this, android.R.layout.simple_spinner_item,
+            this,
+            android.R.layout.simple_spinner_item,
             mLanguageLister.languages
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

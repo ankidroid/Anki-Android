@@ -101,7 +101,7 @@
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralho</string>
     <string name="create_shortcut">Criar atalho</string>
-    <string name="browse_cards">Buscar cards</string>
+    <string name="browse_cards">Procurar cartões</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
@@ -121,8 +121,8 @@
     <string name="menu_flag_card_three">Sinalização verde</string>
     <string name="menu_flag_card_four">Sinalização azul</string>
     <string name="menu_flag_card_five">Sinalização rosa</string>
-    <string name="menu_flag_card_six">Sinalização turquesa</string>
-    <string name="menu_flag_card_seven">Sinalização roxa</string>
+    <string name="menu_flag_card_six">Bandeira turquesa</string>
+    <string name="menu_flag_card_seven">Bandeira roxa</string>
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_search">Pesquisar em %1$s</string>
@@ -161,7 +161,7 @@
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_deck" comment="Deck search for selecting it">Pesquisa do deck</string>
+    <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
@@ -191,7 +191,7 @@
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aparência do Navegador de Cartões</string>
-    <string name="card_template_editor_deck_override">Sobreposição do baralho</string>
+    <string name="card_template_editor_deck_override">Colocar no baralho</string>
     <string name="card_template_editor_insert_field">Inserir campo </string>
     <string name="card_template_editor_select_field">Selecionar campo</string>
     <string name="card_template_editor_cant_delete">Ao menos um tipo de cartão é necessário.</string>
@@ -241,4 +241,9 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copiar</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Não é possível gravar ou criar o arquivo %s</string>
+    <!-- Scoped Storage Migration -->
+    <string name="migrating_data_message">Migrando seus dados</string>
+    <string name="migration_successful_message">Migração bem sucedida</string>
+    <string name="migration_failed_message">A Migração falhou</string>
+    <string name="migration_transferred_size">Migrados %1$.0f MB de %2$.0f MB</string>
 </resources>

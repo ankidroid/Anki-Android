@@ -34,6 +34,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.CheckCameraPermission
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -101,7 +102,8 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         if (field is AudioRecordingField && !Permissions.canRecordAudio(this)) {
             Timber.d("Requesting Audio Permissions")
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.RECORD_AUDIO),
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
                 REQUEST_AUDIO_PERMISSION
             )
             return true
@@ -113,7 +115,8 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         ) {
             Timber.d("Requesting Camera Permissions")
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.CAMERA),
+                this,
+                arrayOf(Manifest.permission.CAMERA),
                 REQUEST_CAMERA_PERMISSION
             )
             return true
@@ -258,6 +261,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
     }
 
+    @Deprecated("Deprecated in Java")
     @Suppress("deprecation") // onActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Timber.d("onActivityResult()")
@@ -456,8 +460,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
         @KotlinCleanup("see if we can make this non-null")
         @VisibleForTesting
-        @Suppress("deprecation", "UNCHECKED_CAST") // getSerializable
-        fun getFieldFromIntent(intent: Intent) = intent.extras!!.getSerializable(EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY) as MultimediaEditFieldActivityExtra?
+        fun getFieldFromIntent(intent: Intent) = intent.extras!!.getSerializableCompat<MultimediaEditFieldActivityExtra>(EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY)
     }
 }
 

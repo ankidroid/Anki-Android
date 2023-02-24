@@ -57,14 +57,14 @@
     <string name="cram_deck_conf_order_random">შემთხვევით</string>
     <string name="cram_deck_conf_order_increasing_intervals">ზრდადი შუალედები</string>
     <string name="cram_deck_conf_order_decreasing_intervals">კლებადი შუალედები</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
+    <string name="cram_deck_conf_order_most_lapsed">ყველაზე ხშირად გადავიწყებული</string>
+    <string name="cram_deck_conf_order_order_added">დამატების თანმიმდევრობა</string>
     <string name="cram_deck_conf_order_order_due">Order due</string>
     <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_decide_by_note_type">შენიშვნის ტიპის მიხედვით გადაწყვეტა</string>
     <!-- new_spread_labels -->
     <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
     <string name="new_spread_new_after_review">New cards after reviews</string>
@@ -95,7 +95,7 @@
     <string name="gesture_answer_4">პასუხის ღილაკი 4</string>
     <string name="gesture_answer_green">Answer recommended (green)</string>
     <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_play">Play media</string>
+    <string name="gesture_play">მედიაფაილების დაკვრა</string>
     <string name="gesture_abort_learning">სწავლის შეწყვეტა</string>
     <string name="gesture_flag_red">წითელი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_orange">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>
@@ -105,8 +105,8 @@
     <string name="gesture_flag_turquoise">ფირუზისფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_purple">იისფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_remove">დროშის მოძრობა</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_page_up">გვერდით მაღლა</string>
+    <string name="gesture_page_down">გვერდით დაბლა</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">დაფის ჩართვა/გამორთვა</string>
     <string name="gesture_show_hint">მინიშნების ჩვენება</string>

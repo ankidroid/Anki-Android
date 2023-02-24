@@ -42,7 +42,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         super.onCreate(savedInstanceState)
         val options = listOf(
             getString(R.string.export_select_save_app),
-            getString(R.string.export_select_share_app),
+            getString(R.string.export_select_share_app)
         )
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)

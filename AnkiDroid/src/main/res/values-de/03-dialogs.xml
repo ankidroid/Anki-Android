@@ -94,6 +94,7 @@
     <string name="answering_error_title">Datenbankfehler</string>
     <string name="answering_error_message">Es konnte nicht in die Sammlung geschrieben werden. Dies kann an einer beschädigten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid vorliegen. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>
     <string name="answering_error_report">Fehler melden</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
     <string name="intent_aedict_empty">Kategorie »Standard« ist leer</string>
     <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>

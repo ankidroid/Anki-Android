@@ -86,7 +86,6 @@
     <string name="full_screen_off">Kikapcsol</string>
     <string name="full_screen_system">Rendszer sávok elrejtése</string>
     <string name="full_screen_complete">Rendszer sávok és válasz gombok elrejtése</string>
-    <string name="full_screen_error_gestures">Engedélyezni kell a gesztusokat a válasz gombok elrejtéséhez</string>
     <string name="answer_buttons_position" maxLength="41">A válasz gombok elhelyezkedése</string>
     <string-array name="answer_buttons_position_labels">
         <item>Oldal teteje</item>
@@ -99,6 +98,7 @@
     <string name="gestures_corner_touch_summary">Érintési gesztusok engedélyezése a képernyő sarkaiban</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigációs sáv bezárása</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Navigációs sáv megnyitása amikor a képernyő jobb oldalára csúsztat</string>
+    <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down" maxLength="41">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left" maxLength="41">Balra csúsztatás</string>
@@ -230,22 +230,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Egyéni szinkronizáló kiszolgáló</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_summary_both_or_either_of_the_two_servers_used" comment="This summary is shown when either or both custom sync servers are used.         The placeholders read either “default” or the custom URL.">Collection: %1$s\nMedia: %2$s</string>
-    <string name="custom_sync_server_summary_placeholder_default" comment="This is shown in Custom sync server summary when either of the two sync servers         is not used. E.g. “Collection: default” would mean that the default server,         that is AnkiWeb, will be used for synchronization.">default</string>
-    <string name="custom_sync_server_help"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own servers for synchronization.
-        You may specify either collection or media server, or both.
-        If not set, the default AnkiWeb servers will be used instead.
-        For example, you could use the sync server built into Anki
-        Desktop to sync the collection when you only have a local network,
-        and AnkiWeb to sync media when you have general internet access.
+    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+        you may use your own server for synchronization.
+        If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
-        <br>
-        <br>Note: unlike in previous AnkiDroid versions,
-        you must specify the full custom sync URL,
-        for example: https://example.com:8080/sync/.]]></string>
+        ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Szinkronizáló Url</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">Média szinkronizáló url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Billentyűzet</string>
     <string name="bluetooth">Bluetooth</string>

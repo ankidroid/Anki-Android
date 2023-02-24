@@ -71,8 +71,9 @@ open class DiffEngine {
 
         /** Prevents combining marks not getting highlighted properly if a span starts with them, by adding a "&nbsp;" before them (#10665) */
         fun escapeLoneMarks(s: String): String {
-            if (s[0].category.code.startsWith("M"))
+            if (s[0].category.code.startsWith("M")) {
                 return "\\xa0$s"
+            }
             return s
         }
 

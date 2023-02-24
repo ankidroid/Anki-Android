@@ -19,7 +19,7 @@ package com.ichi2.libanki.sync
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.web.CustomSyncServer
+import com.ichi2.anki.SyncPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -65,7 +65,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(null)
         setCustomMediaServer(customServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/msync/"))
     }
 
     @Test
@@ -73,7 +73,7 @@ class RemoteMediaServerTest {
         val underTest = getServerWithHostNum(1)
         setCustomMediaServer(customServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, equalTo("https://sync.example.com/msync"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/msync/"))
     }
 
     @Test
@@ -95,15 +95,15 @@ class RemoteMediaServerTest {
     private fun setCustomServerWithNoUrl() {
         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
             .edit {
-                putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, true)
+                putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
             }
     }
 
     private fun setCustomMediaServer(s: String) {
         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
             .edit {
-                putBoolean(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_SERVER_ENABLED, true)
-                putString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, s)
+                putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
+                putString(SyncPreferences.CUSTOM_SYNC_URI, s)
             }
     }
 
@@ -113,8 +113,8 @@ class RemoteMediaServerTest {
 
     companion object {
         // COULD_BE_BETTER: We currently fail on a trailing flash in these variables.
-        private const val customServerWithNoFormatting = "https://sync.example.com/msync"
-        private const val customServerWithFormatting = "https://sync%s.example.com/msync"
+        private const val customServerWithNoFormatting = "https://sync.example.com/"
+        private const val customServerWithFormatting = "https://sync%s.example.com/"
         private const val defaultUrlNoHostNum = "https://sync.ankiweb.net/msync/"
         private const val defaultUrlWithHostNum = "https://sync1.ankiweb.net/msync/"
     }

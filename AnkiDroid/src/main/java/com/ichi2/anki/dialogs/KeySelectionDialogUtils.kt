@@ -31,7 +31,7 @@ object KeySelectionDialogUtils {
             KeyEvent.KEYCODE_ALT_RIGHT,
             KeyEvent.KEYCODE_META_LEFT,
             KeyEvent.KEYCODE_META_RIGHT,
-            KeyEvent.KEYCODE_FUNCTION,
+            KeyEvent.KEYCODE_FUNCTION
         )
         return { !modifierKeyCodes.contains(it) }
     }
