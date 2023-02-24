@@ -81,6 +81,7 @@ import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.SchedV2
@@ -1539,9 +1540,8 @@ abstract class AbstractFlashcardViewer :
                 }
             } catch (e: Exception) {
                 Timber.w(e)
-                return@OnErrorListener false
             }
-            false
+            ErrorHandling.CONTINUE_AUDIO
         }
 
     /**
