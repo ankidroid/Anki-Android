@@ -56,7 +56,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -1730,7 +1730,7 @@ open class DeckPicker :
                         // Show confirmation dialog to check if the user wants to cancel the sync
                         AlertDialog.Builder(mProgressDialog!!.context).show {
                             message(R.string.cancel_sync_confirm)
-                                .setCancelable(false)
+                                .cancelable(false)
                             positiveButton(R.string.dialog_ok) {
                                 @Suppress("Deprecation")
                                 mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
@@ -2909,10 +2909,10 @@ open class DeckPicker :
         }
         // TODO: maybe handle onStorageMigrationCompleted()
         // TODO: sync_impossible_during_migration needs changing
-        AlertDialog.Builder(this).show {
+        MaterialDialog(this).show {
             message(text = resources.getString(R.string.sync_impossible_during_migration, 5) + text)
-            positiveButton(R.string.dialog_ok)
-            negativeButton(R.string.scoped_storage_learn_more) {
+            positiveButton(res = R.string.dialog_ok)
+            negativeButton(res = R.string.scoped_storage_learn_more) {
                 openUrl(R.string.link_scoped_storage_faq)
             }
         }
