@@ -8,11 +8,12 @@
             android:title="@string/search_decks"
             ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
             ankidroid:showAsAction="always|collapseActionView"/>
+        <!--        TODO: add a title for this action-->
         <item
             android:id="@+id/action_migration_progress"
-            ankidroid:showAsAction="always"
             android:visible="false"
-            ankidroid:actionLayout="@layout/migration_progress_menu_layout" />
+            ankidroid:actionLayout="@layout/migration_progress_menu_layout"
+            ankidroid:showAsAction="always" />
         <!--
         We want sync on the right, to be consistent with past version: #7737.
         We're OK to do this as we're using "always" so it won't be hidden
