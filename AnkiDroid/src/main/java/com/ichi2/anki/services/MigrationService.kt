@@ -270,6 +270,22 @@ class MigrationService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder = LocalBinder()
+
+    /**
+     * A file was expected at the provided location, but wasn't found
+     * If it exists in the old location, attempt to migrate it.
+     * Block until migrated.
+     *
+     * @return Whether the migration was successful (or unnecessary)
+     */
+    fun migrateFileImmediately(expectedFileLocation: File): Boolean {
+        try {
+            migrateUserDataTask.migrateFileImmediately(expectedFileLocation)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to migrate file")
+        }
+        return expectedFileLocation.exists()
+    }
 }
 
 /** Hides a progress bar if previously shown on a notification */
