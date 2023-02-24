@@ -41,6 +41,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
@@ -90,6 +91,7 @@ import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
+import com.ichi2.utils.show
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
@@ -1802,7 +1804,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         button: CustomToolbarButton,
         editToolbarItemDialog: MaterialDialog
     ) {
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             title(R.string.remove_toolbar_item)
             positiveButton(R.string.dialog_positive_delete) {
                 editToolbarItemDialog.dismiss()
