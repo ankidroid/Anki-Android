@@ -35,7 +35,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
     /** Call this after a valid card has been added */
     private val sounds by lazy {
-        val ret = super.startRegularActivity<ReviewerSoundAccessor>()
+        val ret = super.startRegularActivity<Reviewer>()
         assertThat("activity was started before it had cards", ret.isDestroyed, equalTo(false))
         ret
     }
@@ -149,17 +149,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
         addNoteUsingModelName("NoFrontSide", front, back)
     }
 
-    class ReviewerSoundAccessor : Reviewer() {
-        fun a(): ArrayList<String>? {
-            return super.mSoundPlayer.getSounds(Sound.SoundSide.ANSWER)
-        }
-
-        fun q(): ArrayList<String>? {
-            return super.mSoundPlayer.getSounds(Sound.SoundSide.QUESTION)
-        }
-
-        fun qa(): ArrayList<String>? {
-            return super.mSoundPlayer.getSounds(Sound.SoundSide.QUESTION_AND_ANSWER)
-        }
-    }
+    fun Reviewer.a() = mSoundPlayer.getSounds(Sound.SoundSide.ANSWER)
+    fun Reviewer.q() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION)
+    fun Reviewer.qa() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION_AND_ANSWER)
 }
