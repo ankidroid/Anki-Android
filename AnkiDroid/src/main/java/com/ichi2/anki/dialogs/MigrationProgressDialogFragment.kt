@@ -46,21 +46,11 @@ class MigrationProgressDialogFragment :
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 progressViewModel.migrationProgressFlow.collect { state ->
-                    val progressPercentage: String = if (state.totalMb == 0) {
-                        "100.00"
-                    } else {
-                        String.format(
-                            "%.2f",
-                            (state.transferredMb.toFloat() / state.totalMb.toFloat()) * 100
-                        )
-                    }
-                    val progressText = resources.getString(
-                        R.string.scoped_storage_migration_progress,
-                        progressPercentage
-                    )
                     progressBar.max = state.totalMb
                     progressBar.progress = state.transferredMb
-                    messageTextView.text = progressText
+                    messageTextView.text = resources.getString(
+                        R.string.scoped_storage_migration_progress
+                    )
                 }
             }
         }
