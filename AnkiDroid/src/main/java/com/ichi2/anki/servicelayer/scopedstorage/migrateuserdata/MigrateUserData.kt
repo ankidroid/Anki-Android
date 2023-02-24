@@ -25,6 +25,7 @@ import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
+import com.ichi2.anki.servicelayer.scopedstorage.MoveFile
 import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
@@ -32,6 +33,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.exceptions.AggregateException
 import timber.log.Timber
 import java.io.File
+import java.util.concurrent.CountDownLatch
 
 typealias NumberOfBytes = Long
 
@@ -284,6 +286,19 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
         /** A list of operations to perform if the operation should be retried */
         open val retryOperations get() = emptyList<Operation>()
+    }
+
+    class AwaitableOperation(private val operation: Operation) : Operation() {
+        private val completion = CountDownLatch(1)
+
+        override fun execute(context: MigrationContext): List<Operation> {
+            try {
+                return operation.execute(context)
+            } finally {
+                this.completion.countDown()
+            }
+        }
+        fun await() = completion.await()
     }
 
     /**
@@ -587,6 +602,37 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         }
 
         return true
+    }
+
+    /**
+     * Migrate a file to [expectedFileLocation] if it exists inside [source]
+     * @param expectedFileLocation A file which should exist inside [destination]
+     * */
+    fun migrateFileImmediately(expectedFileLocation: File) {
+        // It is possible, but unlikely that a file at the location already exists
+        if (expectedFileLocation.exists()) {
+            Timber.d("nothing to migrate: file already exists")
+            return
+        }
+
+        // convert to a relative path WRT the destination (our current collection)
+        val relativeDataPath = RelativeFilePath.fromPaths(destination.directory, expectedFileLocation)
+            ?: throw IllegalStateException("Could not create relative path between ${destination.directory} and $expectedFileLocation")
+
+        // get a reference to the source file
+        val sourceFile = DiskFile.createInstance(relativeDataPath.toFile(source))
+        if (sourceFile == null) {
+            Timber.w("couldn't migrate: source file not found or not a file. Maybe a bad card. Maybe already moved")
+            return
+        }
+
+        val moveFile = MoveFile(sourceFile, expectedFileLocation)
+        AwaitableOperation(moveFile).also { operation ->
+            this.executor.preempt(operation)
+            operation.await()
+        }
+
+        Timber.w("complete migration: %s $relativeDataPath $sourceFile", expectedFileLocation)
     }
 }
 

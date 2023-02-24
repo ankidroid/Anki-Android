@@ -42,6 +42,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
@@ -70,8 +71,11 @@ import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.Undo
+import com.ichi2.anki.services.MigrationService
+import com.ichi2.anki.services.ServiceConnection
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -115,6 +119,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
+import kotlin.collections.HashSet
 import kotlin.math.abs
 
 @KotlinCleanup("lots to deal with")
@@ -279,6 +284,8 @@ abstract class AbstractFlashcardViewer :
         automaticAnswer.onShowAnswer()
         displayCardAnswer()
     }
+
+    private val migrationService = ServiceConnection<MigrationService>()
 
     init {
         ChangeManager.subscribe(this)
@@ -542,6 +549,18 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (ScopedStorageService.userMigrationIsInProgress(this)) {
+            migrationService.bind(this, MigrationService::class.java)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        migrationService.unbind(this)
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -1531,17 +1550,38 @@ abstract class AbstractFlashcardViewer :
     }
 
     private val soundErrorListener: Sound.OnErrorListener
-        get() = Sound.OnErrorListener { _: MediaPlayer?, what: Int, extra: Int, path: String? ->
-            Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra)
-            try {
-                val file = File(path!!)
-                if (!file.exists()) {
-                    mMissingImageHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+        get() = object : Sound.OnErrorListener {
+            private var handledError: HashSet<String> = hashSetOf()
+
+            override fun onError(
+                mp: MediaPlayer?,
+                which: Int,
+                extra: Int,
+                path: String?
+            ): ErrorHandling {
+                Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", which, extra)
+                try {
+                    val file = Uri.parse(path).toFile()
+                    if (!file.exists()) {
+                        if (handleStorageMigrationError(file)) {
+                            return ErrorHandling.RETRY_AUDIO
+                        }
+                        mMissingImageHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+                    }
+                } catch (e: Exception) {
+                    Timber.w(e)
                 }
-            } catch (e: Exception) {
-                Timber.w(e)
+                return ErrorHandling.CONTINUE_AUDIO
             }
-            ErrorHandling.CONTINUE_AUDIO
+
+            private fun handleStorageMigrationError(file: File): Boolean {
+                val migrationService = migrationService.instance ?: return false
+                if (handledError.contains(file.absolutePath)) {
+                    return false
+                }
+                handledError.add(file.absolutePath)
+                return migrationService.migrateFileImmediately(file)
+            }
         }
 
     /**
@@ -2230,8 +2270,11 @@ abstract class AbstractFlashcardViewer :
                     return WebResourceResponse("text/html", "utf-8", ByteArrayInputStream(response.toByteArray()))
                 }
             }
-            if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
-                mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
+            if (url.toString().startsWith("file://")) {
+                if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
+                    mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
+                }
+                url.path?.let { path -> migrationService.instance?.migrateFileImmediately(File(path)) }
             }
             return null
         }
