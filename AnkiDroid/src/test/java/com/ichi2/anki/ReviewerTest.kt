@@ -29,7 +29,9 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
+import com.ichi2.testutils.OS
 import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -73,6 +75,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Flaky(os = OS.WINDOWS, "startUp: BackendCollectionAlreadyOpenException")
     fun exitCommandWorksAfterControlsAreBlocked() {
         ensureCollectionLoadIsSynchronous()
         ActivityScenario.launchActivityForResult(Reviewer::class.java).use { scenario ->
@@ -221,6 +224,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "startReviewer: NullPointerException - baseDeckName")
     fun baseDeckName() {
         val models = col.models
 
