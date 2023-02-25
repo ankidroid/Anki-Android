@@ -61,6 +61,7 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -266,6 +267,13 @@ open class RobolectricTest : CollectionGetter {
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
         protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(testClass: RobolectricTest, clazz: Class<T>?, i: Intent?): T {
+            if (AbstractFlashcardViewer::class.java.isAssignableFrom(clazz!!)) {
+                // fixes 'Don't know what to do with dataSource...' inside Sounds.kt
+                // solution from https://github.com/robolectric/robolectric/issues/4673
+                ShadowMediaPlayer.setMediaInfoProvider {
+                    ShadowMediaPlayer.MediaInfo(1, 0)
+                }
+            }
             val controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible()
             advanceRobolectricLooperWithSleep()
