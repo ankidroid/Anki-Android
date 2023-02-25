@@ -449,4 +449,6 @@
     <string name="toggle_browser_mode_help">Перемкнути показ карток або записів у браузері</string>
     <string name="truncate_content_help">Скоротіть висоту кожного рядка браузера, щоб показати лише перші 3 рядки вмісту</string>
     <string name="browser_options_dialog_heading">Параметри браузера</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

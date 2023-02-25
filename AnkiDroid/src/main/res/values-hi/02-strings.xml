@@ -423,4 +423,6 @@
     <string name="toggle_browser_mode_help">ब्राउज़र में कार्ड्ज़ और नोट्स दिखाना टॉगल करें</string>
     <string name="truncate_content_help">सामग्री की केवल पहली 3 पंक्तियाँ दिखाने के लिए ब्राउज़र की प्रत्येक पंक्ति की ऊँचाई को छोटा करें</string>
     <string name="browser_options_dialog_heading">ब्राउज़र विकल्प</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

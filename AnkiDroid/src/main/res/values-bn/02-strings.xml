@@ -423,4 +423,6 @@
     <string name="toggle_browser_mode_help">ব্রাউজার এ কার্ড নাকি নোট দেখাবে?</string>
     <string name="truncate_content_help">ব্রাউজারের প্রতি সারীর উচ্চতা প্রথম ৩ লাইনে সীমাবদ্ধ করুন</string>
     <string name="browser_options_dialog_heading">ব্রাউজার অপশন</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

@@ -324,7 +324,7 @@
     <!-- About -->
     <string name="open_changelog">Open Changelog</string>
     <string name="pref_cat_about_title" maxLength="41">შესახებ</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="contributors_title">მონაწილეები</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">ლიცენზია</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
