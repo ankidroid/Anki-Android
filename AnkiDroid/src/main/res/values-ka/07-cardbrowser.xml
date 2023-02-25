@@ -86,7 +86,7 @@
         <item>ბარათის მოდიფიკაციის დროის მიხედვით</item>
         <item>დაგეგმილი სწავლის დროის მიხედვით</item>
         <item>შუალედის მიხედვით</item>
-        <item>სიადვილეს მიხედვით</item>
+        <item>სიმარტივეს მიხედვით</item>
         <item>გადახედვის სიხშირის მიხედვით</item>
         <item>გადავიწყების სიხშირის მიხედვით</item>
     </string-array>
@@ -116,7 +116,7 @@
     <string name="card_info_first_review">პირველი გადახედვა</string>
     <string name="card_info_latest_review">უახლესი გადახედვა</string>
     <string name="card_info_interval">შუალედი</string>
-    <string name="card_info_ease">სიადვილე</string>
+    <string name="card_info_ease">სიმარტივე</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">გადახედვა</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">გადავიწყება</string>
     <string name="card_info_average_time">საშუალო დრო</string>

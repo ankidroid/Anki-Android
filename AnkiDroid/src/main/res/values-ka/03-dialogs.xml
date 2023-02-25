@@ -99,7 +99,7 @@
     <string name="intent_aedict_empty">კატეგორია „ნაგულისხმევი“ ცარიელია</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">ახალი ბარათი დასტაში: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_rev_total_rev">გადასახედი დასტაში: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">დღევანდელი გადახედვების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">მეხსიერება სავსეა</string>
     <string name="storage_almost_full_title">მეხსიერება თითქმის გავსებულია</string>
-    <string name="no_space_to_downgrade_title">მეხსიერების სივრცე არ არის</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">მეხსიერების სივრცე არ არის</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">რეზერვის აღდგენა?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">აირჩიეთ სხვა</string>
     <string name="dialog_cancel">გაუქმება</string>
-    <string name="dialog_ok">დიახ</string>
-    <string name="dialog_confirm">დადასტურება</string>
+    <string name="dialog_ok">კარგი</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">დადასტურება</string>
     <string name="dialog_no">არა</string>
     <string name="dialog_yes">კი</string>
     <string name="dialog_continue">გაგრძელება</string>
@@ -260,14 +260,4 @@
     <string name="import_csv">ტექსტური ფაილი (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
-    </string>
-    <string name="manual_backup">მექანიკური დარეზერვება</string>
-    <string name="remind_me_later">შემახსენე მოგვიანებით</string>
 </resources>

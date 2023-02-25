@@ -111,14 +111,14 @@
     </plurals>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
-    <string name="no_space_to_downgrade_title">空き容量が不足</string>
-    <string name="no_space_to_downgrade_content">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量が不足</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
     <string name="restore_backup">現在のコレクション（全デッキ）が、以前バックアップしたものに置き換えられます。また、バックアップ後に変更した内容は全て失われます。</string>
     <string name="restore_backup_choose_another">他を選択</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">確認</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_yes">はい</string>
     <string name="dialog_continue">続行</string>
@@ -251,14 +251,4 @@
     <string name="import_csv">テキストファイル (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Androidのプライバシーポリシーの改定により、AnkiDroidを今後アンインストールすると、再度インストールしても現在のデータ保存先にはアクセスできなくなります。
-        \n\nそのリスクを避けるため、AnkiDroid専用の新しい保存先へのデータの移動を強く推奨しています。
-        \n\n新しい保存先に移動したデータは、アプリのアンインストール時にアプリと共に削除されます。
-        \n\n現在の保存先: %1$s
-        \n\n新しい保存先: %2$s
-        \n\nこのフォルダのバックアップを定期的にとることをおすすめします。
-    </string>
-    <string name="manual_backup">手動バックアップ</string>
-    <string name="remind_me_later">後で再通知</string>
 </resources>

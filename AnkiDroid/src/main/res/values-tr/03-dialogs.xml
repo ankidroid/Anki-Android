@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">Depolama alanı dolu</string>
     <string name="storage_almost_full_title">Depolama alanı nerdeyse dolu</string>
-    <string name="no_space_to_downgrade_title">Hiç alan yok</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid\'in devam etmesi için %s boş depolama alanına ihtiyacı var. Lütfen biraz yer açın.</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Hiç alan yok</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid\'in devam etmesi için %s boş depolama alanına ihtiyacı var. Lütfen biraz yer açın.</string>
     <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
     <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
     <string name="restore_backup_choose_another">Başka seç</string>
     <string name="dialog_cancel">İptal</string>
     <string name="dialog_ok">Tamam</string>
-    <string name="dialog_confirm">Onayla</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Onayla</string>
     <string name="dialog_no">Hayır</string>
     <string name="dialog_yes">Evet</string>
     <string name="dialog_continue">Devam Et</string>
@@ -260,14 +260,4 @@
     <string name="import_csv">Metin dosyası (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Bütün desteler için bir altdeste oluşturamazsınız</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa şimdiki depolama yerinize erişilemeyecek.
-        \n\nVerilerinizi AnkiDroid uygulamasına özel bir yere geçirmemiz gerekiyor.
-        \n\nBu özel yerdeki veriler uygulama kaldırılırsa silinebilir.
-        \n\nŞimdiki depolama yeriniz %1$s
-        \n\nÖzel depolama yeri %2$s olacak
-        \n\nLütfen düzenli olarak bu klasörün yedeklerini alacağınızı onaylayın.
-    </string>
-    <string name="manual_backup">Elle yedekleme</string>
-    <string name="remind_me_later">Sonra hatırlat</string>
 </resources>

@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title">Mankas spaco</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid postulas %s da libera spaco por pluigi. Liberigu iom da spaco.</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Mankas spaco</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid postulas %s da libera spaco por pluigi. Liberigu iom da spaco.</string>
     <string name="restore_backup_title">Ĉu restarigi sekurkopion?</string>
     <string name="restore_backup">Via kolekto estos anstataŭigita per eksa kopio. Ĉiu nekonservita progreso perdiĝos.</string>
     <string name="restore_backup_choose_another">Elekti alian</string>
     <string name="dialog_cancel">Nuligi</string>
     <string name="dialog_ok">Bone</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Jes</string>
     <string name="dialog_continue">Pluigi</string>
@@ -260,14 +260,4 @@
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
-    </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
 </resources>

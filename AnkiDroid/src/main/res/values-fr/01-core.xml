@@ -242,8 +242,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Impossible d\'éditer ou de créer le fichier %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migrating_data_message">Migration de vos données en cours</string>
+    <string name="migration_successful_message">Migration réussie</string>
+    <string name="migration_failed_message">Migration échouée</string>
+    <string name="migration_transferred_size">%1$.0f Mo sur %2$.0f Mo migrés</string>
 </resources>
