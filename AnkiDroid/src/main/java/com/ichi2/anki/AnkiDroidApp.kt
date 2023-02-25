@@ -105,7 +105,11 @@ open class AnkiDroidApp : Application() {
         CrashReportService.initialize(this)
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
-            Timber.plant(DebugTree())
+            if (isRobolectric) {
+                Timber.plant(RobolectricDebugTree())
+            } else {
+                Timber.plant(DebugTree())
+            }
         } else {
             Timber.plant(ProductionCrashReportingTree())
         }
@@ -386,5 +390,15 @@ open class AnkiDroidApp : Application() {
                 }
                 return ExceptionUtil.getExceptionMessage(error)
             }
+    }
+
+    class RobolectricDebugTree : DebugTree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            // This is noisy in test environments
+            if (tag == "Backend\$checkMainThreadOp") {
+                return
+            }
+            super.log(priority, tag, message, t)
+        }
     }
 }
