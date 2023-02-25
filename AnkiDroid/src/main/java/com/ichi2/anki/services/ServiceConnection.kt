@@ -30,7 +30,7 @@ import timber.log.Timber
  *
  * @param T The service to encapsulate. Note: service's [Service.onBind] must return a [SimpleBinder]
  */
-abstract class ServiceConnection<T : Service> {
+open class ServiceConnection<T : Service> {
     var instance: T? = null
         private set
 
