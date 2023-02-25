@@ -73,11 +73,9 @@ import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.Undo
-import com.ichi2.anki.services.MigrationService
-import com.ichi2.anki.services.ServiceConnection
+import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -103,15 +101,11 @@ import com.ichi2.utils.*
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
-import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.ClipboardUtil.getText
-import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
-import com.ichi2.utils.iconAttr
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -126,7 +120,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
-import kotlin.collections.HashSet
 import kotlin.math.abs
 
 @KotlinCleanup("lots to deal with")
@@ -295,7 +288,7 @@ abstract class AbstractFlashcardViewer :
         displayCardAnswer()
     }
 
-    private val migrationService = ServiceConnection<MigrationService>()
+    private val migrationService by migrationServiceWhileStartedOrNull()
 
     init {
         ChangeManager.subscribe(this)
@@ -559,18 +552,6 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (ScopedStorageService.userMigrationIsInProgress(this)) {
-            migrationService.bind(this, MigrationService::class.java)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        migrationService.unbind(this)
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -1605,7 +1586,7 @@ abstract class AbstractFlashcardViewer :
             }
 
             private fun handleStorageMigrationError(file: File): Boolean {
-                val migrationService = migrationService.instance ?: return false
+                val migrationService = migrationService ?: return false
                 if (handledError.contains(file.absolutePath)) {
                     return false
                 }
@@ -2261,7 +2242,7 @@ abstract class AbstractFlashcardViewer :
                 if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
                     mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
                 }
-                url.path?.let { path -> migrationService.instance?.migrateFileImmediately(File(path)) }
+                url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
             return null
         }

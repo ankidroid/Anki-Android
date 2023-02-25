@@ -19,51 +19,78 @@ package com.ichi2.anki.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.format.Formatter.formatShortFileSize
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.viewmodels.MigrationProgressViewModel
+import com.ichi2.anki.services.MigrationService
+import com.ichi2.anki.services.withBoundTo
 import kotlinx.coroutines.launch
 
-class MigrationProgressDialogFragment :
-    DialogFragment() {
-    private val progressViewModel by activityViewModels<MigrationProgressViewModel>()
+/**
+ * A dialog showing the progress of migration of the collection
+ * from public storage to app-private storage.
+ * It attaches to the migration service, and, while showing,
+ * constantly updates the amount of transferred data,
+ * and displays messages in cases of success or failure.
+ * Dismissible.
+ */
+class MigrationProgressDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val messageTextView: TextView
-        val progressBar: ProgressBar
-        val progressView =
-            requireActivity().layoutInflater.inflate(R.layout.indeterminate_progress_bar, null)
-        progressBar = progressView.findViewById(R.id.indeterminate_progressBar)
-        messageTextView = progressView.findViewById(R.id.migration_text)
+        val layout = requireActivity().layoutInflater.inflate(R.layout.indeterminate_progress_bar, null)
+        val progressBar = layout.findViewById<ProgressBar>(R.id.indeterminate_progressBar)
+        val textView = layout.findViewById<TextView>(R.id.migration_text)
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                progressViewModel.migrationProgressFlow.collect { state ->
-                    progressBar.max = state.totalMb
-                    progressBar.progress = state.transferredMb
-                    messageTextView.text = resources.getString(
-                        R.string.scoped_storage_migration_progress
-                    )
+        progressBar.max = Int.MAX_VALUE
+
+        fun publishProgress(progress: MigrationService.Progress) {
+            when (progress) {
+                is MigrationService.Progress.CalculatingTransferSize -> {
+                    progressBar.isIndeterminate = true
+                    textView.text = getString(R.string.migration__calculating_transfer_size)
+                }
+
+                is MigrationService.Progress.Transferring -> {
+                    val transferredSizeText = formatShortFileSize(requireContext(), progress.transferredBytes)
+                    val totalSizeText = formatShortFileSize(requireContext(), progress.totalBytes)
+
+                    progressBar.isIndeterminate = false
+                    progressBar.progress = (progress.ratio * Int.MAX_VALUE).toInt()
+                    textView.text = getString(R.string.migration__transferred_x_of_y, transferredSizeText, totalSizeText)
+                }
+
+                is MigrationService.Progress.Success -> {
+                    progressBar.isIndeterminate = false
+                    progressBar.progress = Int.MAX_VALUE
+                    textView.text = getString(R.string.migration_successful_message)
+                }
+
+                is MigrationService.Progress.Failure -> {
+                    textView.text = getString(R.string.migration__failed, progress.e)
                 }
             }
         }
-        return AlertDialog.Builder(activity)
-            .setView(progressView)
-            .setPositiveButton(R.string.dialog_ok) { _, _ ->
-                dismiss()
+
+        lifecycleScope.launch {
+            requireContext().withBoundTo<MigrationService> { service ->
+                service.flowOfProgress
+                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                    .collect { progress -> publishProgress(progress) }
             }
+        }
+
+        return AlertDialog.Builder(activity)
+            .setView(layout)
+            .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }
             .setNegativeButton(R.string.scoped_storage_learn_more) { _, _ ->
                 (requireActivity() as AnkiActivity).openUrl(R.string.link_scoped_storage_faq)
             }
             .create()
     }
 }
-
-data class MigrationProgress(val transferredMb: Int, val totalMb: Int)

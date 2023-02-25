@@ -18,8 +18,6 @@ package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
@@ -507,7 +505,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @throws AggregateException If multiple exceptions were thrown when executing
      * @throws RuntimeException Various other failings if only a single exception was thrown
      */
-    fun migrateFiles(progressListener: MigrationProgressListener): Boolean {
+    fun migrateFiles(progressListener: MigrationProgressListener) {
         val context = initializeContext(progressListener)
 
         // define the function here, so we can execute it on retry
@@ -529,14 +527,11 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         // otherwise, there were a few exceptions which didn't stop execution, throw these.
         if (!context.successfullyCompleted) {
             context.terminatedWith?.let { throw it }
-            val migrationFailedMessage = AnkiDroidApp.instance.getString(R.string.migration_failed_message)
-            throw AggregateException.raise(migrationFailedMessage, context.loggedExceptions)
+            throw AggregateException.raise("Migration failed", context.loggedExceptions)
         }
 
         // we are successfully migrated here
         // TODO: fix "conflicts" - check to see if conflicts are due to partially copied files in the destination
-
-        return true
     }
 
     @VisibleForTesting

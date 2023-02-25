@@ -36,7 +36,6 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -48,6 +47,8 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,12 +89,11 @@ import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.toMB
+import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.services.MigrationService
-import com.ichi2.anki.services.ServiceConnection
+import com.ichi2.anki.services.withBoundTo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
-import com.ichi2.anki.viewmodels.MigrationProgressViewModel
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -204,9 +204,6 @@ open class DeckPicker :
     private var mStartupError = false
     private var mEmptyCardTask: Cancellable? = null
 
-    // MigrationProgress Dialog state flow viewModel
-    private val migrationProgressViewModel by viewModels<MigrationProgressViewModel>()
-
     /** See [OptionsMenuState]. */
     @VisibleForTesting
     var optionsMenuState: OptionsMenuState? = null
@@ -253,15 +250,6 @@ open class DeckPicker :
     @VisibleForTesting
     var createMenuJob: Job? = null
     private var loadDeckCounts: Job? = null
-
-    private val migrationService: ServiceConnection<MigrationService> = object : ServiceConnection<MigrationService>() {
-        override fun onServiceConnected(service: MigrationService) {
-            service.migrationCompletedListener = { onStorageMigrationCompleted() }
-        }
-        override fun onServiceDisconnected(service: MigrationService) {
-            service.migrationCompletedListener = null
-        }
-    }
 
     init {
         ChangeManager.subscribe(this)
@@ -601,28 +589,52 @@ open class DeckPicker :
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun updateMigrationState(menu: Menu, migrationInProgress: Boolean) {
-        val menuProgressIcon: MenuItem = menu.findItem(R.id.action_migration_progress)
-        menuProgressIcon.isVisible = migrationInProgress
-        val progressBar: ProgressBar =
-            menuProgressIcon.actionView!!.findViewById(R.id.ic_progressDonut)
-        if (migrationInProgress) {
-            migrationService.instance?.let { service ->
-                service.totalToTransfer?.let { totalToTransfer ->
-                    val total = totalToTransfer.toDouble().toInt()
-                    progressBar.max = total
-                    lifecycleScope.launch {
-                        while (service.currentProgress < total) {
-                            progressBar.progress = service.currentProgress.toInt()
-                            delay(50)
-                        }
-                        progressBar.progress = total
-                    }
+    private var migrationProgressPublishingJob: Job? = null
+
+    private fun setupMigrationProgressMenuItem(menu: Menu, migrationInProgress: Boolean) {
+        val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
+            .apply { isVisible = migrationInProgress }
+
+        suspend fun ProgressBar.publishProgress(progress: MigrationService.Progress) {
+            when (progress) {
+                is MigrationService.Progress.CalculatingTransferSize -> {
+                    this.isIndeterminate = true
+                }
+
+                is MigrationService.Progress.Transferring -> {
+                    val shownProgressRatio = progress.ratio.translate(fromRange = 0f..1f, toRange = 0.05f..1f)
+
+                    this.isIndeterminate = false
+                    this.progress = (shownProgressRatio * Int.MAX_VALUE).toInt()
+                }
+
+                // TODO Perhaps handle the cases of success & failure differently?
+                is MigrationService.Progress.Done -> {
+                    updateMenuState()
+                    updateMenuFromState(menu)
                 }
             }
-            progressBar.setOnClickListener {
-                warnNoSyncDuringMigration()
+        }
+
+        if (migrationInProgress) {
+            val progressBar = migrationProgressMenuItem.actionView!!
+                .findViewById<ProgressBar>(R.id.ic_progressDonut)
+                .apply {
+                    max = Int.MAX_VALUE
+                    setOnClickListener { warnNoSyncDuringMigration() }
+                }
+
+            migrationProgressPublishingJob?.cancel()
+            migrationProgressPublishingJob = lifecycleScope.launch {
+                withBoundTo<MigrationService> { service ->
+                    service.flowOfProgress
+                        .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                        .collect { progress -> progressBar.publishProgress(progress) }
+                }
             }
+        } else {
+            migrationProgressPublishingJob?.cancel()
+            migrationProgressPublishingJob = null
         }
     }
 
@@ -670,7 +682,7 @@ open class DeckPicker :
             updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), syncIcon)
             menu.findItem(R.id.action_scoped_storage_migrate).isVisible = offerToMigrate
-            updateMigrationState(menu, migrationInProgress)
+            setupMigrationProgressMenuItem(menu, migrationInProgress)
         }
     }
 
@@ -941,18 +953,6 @@ open class DeckPicker :
         }
     }
 
-    fun onStorageMigrationCompleted() {
-        migrationService.unbind(this)
-        invalidateOptionsMenu() // reapply the sync icon
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (userMigrationIsInProgress(this)) {
-            migrationService.bind(this, MigrationService::class.java)
-        }
-    }
-
     override fun onPause() {
         Timber.d("onPause()")
         mActivityPaused = true
@@ -964,7 +964,6 @@ open class DeckPicker :
     override fun onStop() {
         Timber.d("onStop()")
         super.onStop()
-        migrationService.unbind(this)
         if (colIsOpen()) {
             WidgetStatus.update(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
@@ -2475,29 +2474,14 @@ open class DeckPicker :
     private fun startMigrateUserDataService() {
         // TODO: Handle lack of disk space - most common error
         Timber.i("Starting Migrate User Data Service")
-        migrationService.startForeground(this, MigrationService::class.java)
+        ContextCompat.startForegroundService(this, Intent(this, MigrationService::class.java))
     }
 
     /**
      * Show a dialog that explains no sync can occur during migration.
      */
     private fun warnNoSyncDuringMigration() {
-        // TODO: maybe handle onStorageMigrationCompleted()
-        migrationService.instance?.let { service ->
-            service.totalToTransfer?.let { totalToTransfer ->
-                lifecycleScope.launch {
-                    while (migrationService.instance?.totalToTransfer != null) {
-                        migrationProgressViewModel.migrationProgressFlow.value = MigrationProgress(
-                            service.currentProgress.toMB(),
-                            totalToTransfer.toMB()
-                        )
-                        delay(100)
-                    }
-                }
-            }
-        }
-        val progressDialog = MigrationProgressDialogFragment()
-        progressDialog.show(supportFragmentManager, "MigrationProgressDialogFragment")
+        MigrationProgressDialogFragment().show(supportFragmentManager, "MigrationProgressDialogFragment")
     }
 
     /**
@@ -2696,4 +2680,10 @@ class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
         fun fromMessage(message: Message): DialogHandlerMessage =
             ForceFullSyncDialog(message.data.getString("message"))
     }
+}
+
+// TODO Move to a file dedicated to math utils
+private fun Float.translate(fromRange: ClosedFloatingPointRange<Float>, toRange: ClosedFloatingPointRange<Float>): Float {
+    val ratio = (this - fromRange.start) / (fromRange.endInclusive - fromRange.start)
+    return toRange.start + ratio * (toRange.endInclusive - toRange.start)
 }
