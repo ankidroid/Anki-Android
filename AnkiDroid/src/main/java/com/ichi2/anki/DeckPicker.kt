@@ -51,6 +51,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -119,15 +120,14 @@ import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
+import java.lang.Runnable
 import kotlin.math.abs
 import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
@@ -693,6 +693,31 @@ open class DeckPicker :
         return super.onCreateOptionsMenu(menu)
     }
 
+    private fun updateMigrationState(menu: Menu, migrationInProgress: Boolean) {
+        val menuProgressIcon: MenuItem = menu.findItem(R.id.action_migration_progress)
+        menuProgressIcon.isVisible = migrationInProgress
+        val progressBar: ProgressBar =
+            menuProgressIcon.actionView!!.findViewById(R.id.ic_progressDonut)
+        if (migrationInProgress) {
+            migrationService.instance?.let { service ->
+                service.totalToTransfer?.let { totalToTransfer ->
+                    val total = totalToTransfer.toDouble().toInt()
+                    progressBar.max = total
+                    lifecycleScope.launch {
+                        while (service.currentProgress < total) {
+                            progressBar.progress = service.currentProgress.toInt()
+                            delay(50)
+                        }
+                        progressBar.progress = total
+                    }
+                }
+            }
+            progressBar.setOnClickListener {
+                warnNoSyncDuringMigration()
+            }
+        }
+    }
+
     private fun setupSearchIcon(menuItem: MenuItem) {
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
@@ -737,6 +762,7 @@ open class DeckPicker :
             updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), syncIcon)
             menu.findItem(R.id.action_scoped_storage_migrate).isVisible = offerToMigrate
+            updateMigrationState(menu, migrationInProgress)
         }
     }
 
@@ -778,7 +804,7 @@ open class DeckPicker :
             }
             SyncIconState.Disabled -> {
                 BadgeDrawableBuilder.removeBadge(menuItem)
-                menuItem.setIcon(R.drawable.ic_sync_lock_24)
+                menuItem.isVisible = false
             }
         }
     }
@@ -790,7 +816,8 @@ open class DeckPicker :
             val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
             val offerToUpgrade = shouldOfferToUpgrade(context)
-            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade)
+            val migrationInProgress = userMigrationIsInProgress(context)
+            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade, migrationInProgress)
         }
     }
 
@@ -2979,7 +3006,8 @@ data class OptionsMenuState(
     /** If undo is available, a string describing the action. */
     val undoIcon: String?,
     val syncIcon: SyncIconState,
-    val offerToMigrate: Boolean
+    val offerToMigrate: Boolean,
+    val migrationInProgress: Boolean
 )
 
 enum class SyncIconState {
