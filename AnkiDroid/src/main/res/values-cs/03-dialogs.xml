@@ -132,14 +132,14 @@
     </plurals>
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
-    <string name="no_space_to_downgrade_title">Není místo</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného místa v úložišti, abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Není místo</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid potřebuje %s volného místa v úložišti, abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
     <string name="restore_backup_title">Obnovit zálohu?</string>
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
     <string name="restore_backup_choose_another">Vybrat jinou</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
-    <string name="dialog_confirm">Potvrdit</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Potvrdit</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Ano</string>
     <string name="dialog_continue">Pokračovat</string>
@@ -278,14 +278,4 @@
     <string name="import_csv">Textový soubor (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nemůžete vytvořit podřízený balíček pro všechny balíčky</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Kvůli změnám ochrany osobních údajů v Androidu bude vaše aktuální úložiště nedostupné, pokud bude aplikace odinstalována.
-        \n\nPotřebujeme přesunout vaše data do místa, které je vyhrazeno pro AnkiDroid aplikaci.
-        \n\nData v tomto vyhrazeném umístění mohou být odstraněna, pokud se odinstaluje aplikace.
-        \n\nVaše aktuální úložiště je %1$s
-        \n\nUmístění vyhrazeného úložiště bude %2$s
-        \n\nProsím potvrďte, že budete pravidelně zálohovat tuto složku.
-    </string>
-    <string name="manual_backup">Ruční záloha</string>
-    <string name="remind_me_later">Připomenout později</string>
 </resources>

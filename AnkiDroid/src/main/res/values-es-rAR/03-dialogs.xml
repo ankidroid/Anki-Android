@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">Almacenamiento lleno</string>
     <string name="storage_almost_full_title">Almacenamiento casi lleno</string>
-    <string name="no_space_to_downgrade_title">Sin spacio</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid necesita %s espacio de almacenamiento libre para continuar. Por favor, borre algo de memoria</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sin spacio</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid necesita %s espacio de almacenamiento libre para continuar. Por favor, borre algo de memoria</string>
     <string name="restore_backup_title">¿Restaurar copia de seguridad?</string>
     <string name="restore_backup">Su colección será reemplazada con una copia más antigua. Cualquier progreso no salvado se perderá.</string>
     <string name="restore_backup_choose_another">Elige otro</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirmar</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmar</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Sí</string>
     <string name="dialog_continue">Continuar</string>
@@ -260,15 +260,4 @@
     <string name="import_csv">Archivo de texto (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">No puedes crear un submazo para todos los mazos</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Debido a los cambios de privacidad de Android, tu ubicación de almacenamiento actual será inaccesible si la aplicación es 
-        desinstalada.
-        \n\nNecesitamos migrar tus datos a una ubicación privada de la aplicación AnkiDroid.
-        \n\nLos datos en esta ubicación privada pueden ser eliminados si la aplicación es desinstalada.
-        \n\nTu ubicación de almacenamiento actual es %1$s
-        \n\nLa ubicación de almacenamiento privada será %2$s
-        \n\nPor favor, confirma que harás copias de seguridad de esta carpeta regularmente.
-    </string>
-    <string name="manual_backup">Copia de seguridad manual</string>
-    <string name="remind_me_later">Recuérdamelo más tarde</string>
 </resources>

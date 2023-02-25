@@ -132,14 +132,14 @@
     </plurals>
     <string name="storage_full_title">Сховішча запоўнена</string>
     <string name="storage_almost_full_title">Сховішча амаль запоўнена</string>
-    <string name="no_space_to_downgrade_title">Памяць запоўненая</string>
-    <string name="no_space_to_downgrade_content">Для працягу праграме неабходна %s свабоднага месца. Вызваліце неабходнае месца на сваёй прыладзе</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Памяць запоўненая</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Для працягу праграме неабходна %s свабоднага месца. Вызваліце неабходнае месца на сваёй прыладзе</string>
     <string name="restore_backup_title">Аднавіць з рэзервовай копіі?</string>
     <string name="restore_backup">Ваша калекцыя будзе заменена больш старой копіяй. Незахаваныя дасягненні будуць страчаныя.</string>
     <string name="restore_backup_choose_another">Выбраць іншую</string>
     <string name="dialog_cancel">Адмяніць</string>
     <string name="dialog_ok">Добра</string>
-    <string name="dialog_confirm">Пацвердзіць</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Пацвердзіць</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Так</string>
     <string name="dialog_continue">Працягнуць</string>
@@ -278,14 +278,4 @@
     <string name="import_csv">Тэкставы файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Вы не можаце ствараць падкалоды для ўсіх калод</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Па прычыне змянення палітыкі прыватнасці, ваша бягучае сховішча будзе недаступна, калі вы выдаліце праграму.
-        \n\nНам неабходна перанесці вашы даныя ў прыватнае месца праграмы AnkiDroid.
-        \n\nДаныя ў гэтым прыватным месцы могуць быць выдалены разам з праграмай.
-        \n\nВаша бягучае месца захоўвання %1$s
-        \n\nПрыватным месцам размяшчэння даных будзе %2$s
-        \n\nПацвердзіце, што вы рэгулярна будзеце рабіць рэзервовую копію гэтай папкі.
-    </string>
-    <string name="manual_backup">Рэзервовае капіяванне ўручную</string>
-    <string name="remind_me_later">Нагадаць мне пазней</string>
 </resources>

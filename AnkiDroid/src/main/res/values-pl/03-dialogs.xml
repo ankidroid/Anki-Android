@@ -132,14 +132,14 @@
     </plurals>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
-    <string name="no_space_to_downgrade_title">Brak miejsca</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
     <string name="restore_backup_title">Odtworzyć kopię zapasową?</string>
     <string name="restore_backup">Kolekcja zostanie zastąpione starszą kopią. Wszelkie niezapisane postępy zostaną utracone.</string>
     <string name="restore_backup_choose_another">Wybierz inny</string>
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Potwierdź</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Potwierdź</string>
     <string name="dialog_no">Nie</string>
     <string name="dialog_yes">Tak</string>
     <string name="dialog_continue">Kontynuuj</string>
@@ -278,14 +278,4 @@
     <string name="import_csv">Plik tekstowy (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nie można utworzyć podtalii dla wszystkich talii</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Ze względu na zmiany warunków użytkowania Androida, aktualna lokalizacja plików będzie niedostępna, jeśli aplikacja zostanie odinstalowana.
-        \n\nMusimy przenieść Twoje dane na prywatną lokalizację do aplikacji AnkiDroid.
-        \n\nDane w tej lokalizacji prywatnej mogą zostać usunięte, jeśli aplikacja zostanie odinstalowana.
-        \n\nTwoja aktualna lokalizacja plików to %1$s
-        \n\nLokalizacja prywatnego folderu to %2$s
-        \n\nPotwierdź, że będziesz regularnie wykonywać kopie zapasowe tego folderu.
-    </string>
-    <string name="manual_backup">Ręczna kopia zapasowa</string>
-    <string name="remind_me_later">Przypomnij mi później</string>
 </resources>

@@ -132,14 +132,14 @@
     </plurals>
     <string name="storage_full_title">Хранилище заполнено</string>
     <string name="storage_almost_full_title">Хранилище почти заполнено</string>
-    <string name="no_space_to_downgrade_title">Нет места</string>
-    <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Нет места</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Подтвердить</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Подтвердить</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_yes">Да</string>
     <string name="dialog_continue">Продолжить</string>
@@ -279,14 +279,4 @@
     <string name="import_csv">Текстовый файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Вы не можете создать подколоду для всех колод</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        В связи с изменениями конфиденциальности Android, ваше текущее хранилище будет недоступно, если приложение будет удалено.
-        \n\nНам нужно перенести ваши данные в место, закрытое для приложения AnkiDroid.
-        \n\nДанные в этом  месте могут быть удалены, если приложение будет удалено.
-        \n\nВаше текущее хранилище - %1$s
-        \n\nЛичное хранилище будет %2$s
-        \n\nПожалуйста, подтвердите, что Вы будете регулярно делать резервные копии в этой папке.
-    </string>
-    <string name="manual_backup">Резервное копирование</string>
-    <string name="remind_me_later">Напомнить позже</string>
 </resources>

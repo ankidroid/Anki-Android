@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title">Nincs hely</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid-nak szüksége van %s szabad tárterületre a folytatáshoz. Szabadíts fel helyet, légyszíves!</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nincs hely</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid-nak szüksége van %s szabad tárterületre a folytatáshoz. Szabadíts fel helyet, légyszíves!</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
     <string name="restore_backup">A gyűjteményed egy régi másolattal felül lesz írva. A nem mentett változások elvesznek.</string>
     <string name="restore_backup_choose_another">Válasszon másikat</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
     <string name="dialog_no">Nem</string>
     <string name="dialog_yes">Igen</string>
     <string name="dialog_continue">Folytatás</string>
@@ -260,14 +260,4 @@
     <string name="import_csv">Szöveges fájl (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nem hozhatsz létre alpaklit minden paklihoz</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Due to Android privacy changes, your current storage location will be inaccessible if the app is uninstalled.
-        \n\nWe need to migrate your data to a location private to the AnkiDroid app.
-        \n\nData in this private location may be deleted if the app is uninstalled.
-        \n\nYour current storage location is %1$s
-        \n\nThe private storage location will be %2$s
-        \n\nPlease confirm that you will regularly make backups of this folder.
-    </string>
-    <string name="manual_backup">Manual backup</string>
-    <string name="remind_me_later">Remind me later</string>
 </resources>

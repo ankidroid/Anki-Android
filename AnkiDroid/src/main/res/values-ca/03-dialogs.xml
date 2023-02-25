@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
-    <string name="no_space_to_downgrade_title">Sense espai</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid necessita %s d\'espai lliure per continuar. Allibereu una mica d\'espai si us plau </string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid necessita %s d\'espai lliure per continuar. Allibereu una mica d\'espai si us plau </string>
     <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
     <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
     <string name="restore_backup_choose_another">Trieu-ne un altre</string>
     <string name="dialog_cancel">Cancel·la</string>
     <string name="dialog_ok">D\'acord</string>
-    <string name="dialog_confirm">Confirmeu-ho</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmeu-ho</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Sí</string>
     <string name="dialog_continue">Continuar</string>
@@ -260,14 +260,4 @@
     <string name="import_csv">Arxiu de text (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">No podeu generar un subgrup per tots els paquets</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Degut als canvis de privadesa d\'Android, la vostra carpeta actual serà inaccessible si l\'aplicació es desinstal·la.
-         \n\nCal moure les vostres dades a una ubicació privada de l\'aplicació AnkiDroid.
-         \n\nLes dades d\'aquesta ubicació privada es poden suprimir si es desinstal·la l\'aplicació.
-         \n\nLa vostra carpeta actual és %1$s
-         \n\nLa ubicació privada serà %2$s
-         \n\nSi us plau, confirmeu que fareu regularment còpies de seguretat d\'aquesta carpeta.
-    </string>
-    <string name="manual_backup">Còpia de seguretat manual</string>
-    <string name="remind_me_later">Recorda-m\'ho més tard</string>
 </resources>

@@ -94,7 +94,7 @@
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Il n\'y a pas assez d\'espace de stockage libre pour ouvrir AnkiDroid. Libérez de l\'espace pour continuer. </string>
     <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
     <string name="intent_aedict_empty">La catégorie « default » est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">Stockage plein</string>
     <string name="storage_almost_full_title">Il n\'y a presque plus d\'espace libre</string>
-    <string name="no_space_to_downgrade_title">Aucun espace</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid a besoin de %s d\'espace libre pour continuer. Veuillez libérer de l\'espace</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Aucun espace</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid a besoin de %s d\'espace libre pour continuer. Veuillez libérer de l\'espace</string>
     <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
     <string name="restore_backup">Votre collection sera remplacée par une copie plus ancienne. Tout progrès non enregistré sera perdu.</string>
     <string name="restore_backup_choose_another">En choisir un autre</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Confirmer</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmer</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_yes">Oui</string>
     <string name="dialog_continue">Continuer</string>
@@ -260,14 +260,4 @@
     <string name="import_csv">Fichier texte (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Vous ne pouvez pas créer un sous-paquet pour tous les paquets</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        En raison de modifications de la confidentialité d\'Android, votre emplacement de stockage actuel sera inaccessible si l\'application est désinstallée.
-        \n\nNous avons besoin de migrer vos données vers un emplacement privé vers l\'application AnkiDroid.
-        \n\nLes données de cet emplacement privé peuvent être supprimées si l\'application est désinstallée.
-        \n\nVotre emplacement de stockage actuel est %1$s
-        \n\nL\'emplacement de stockage privé sera %2$s
-        \n\nVeuillez confirmer que vous ferez régulièrement des sauvegardes de ce dossier.
-    </string>
-    <string name="manual_backup">Sauvegarde manuelle</string>
-    <string name="remind_me_later">Me le rappeler plus tard</string>
 </resources>

@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Autoriser les gestes dans les coins de l\'écran</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panneau de navigation plein écran</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Ouvrir le panneau de navigation lors d\'un balayage vers la droite de n\'importe où sur l\'écran</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Aucun</string>
     <string name="gestures_swipe_up" maxLength="41">Glissez vers le haut</string>
     <string name="gestures_swipe_down" maxLength="41">Glissez vers le bas</string>
     <string name="gestures_swipe_left" maxLength="41">Faites glisser vers la gauche</string>
@@ -129,9 +129,9 @@
     <string name="sync_account_summ_logged_out">Pas connecté</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronisation automatique</string>
     <string name="automatic_sync_choice_summ">Synchroniser automatiquement à la sortie de l\'application si la dernière synchronisation était il y a plus de 10 minutes.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Toujours</string>
+    <string name="sync_media_only_unmetered">Seulement via des connexions illimitées</string>
+    <string name="sync_media_never">Jamais</string>
     <string name="sync_status_badge" maxLength="41">Afficher l\'état de la synchronisation</string>
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
     <string name="metered_sync_title" maxLength="41">Autoriser la synchronisation sur les connexions limitées</string>
@@ -229,10 +229,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Serveur de synchronisation personnalisé</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilisé</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        En tant qu\'alternative à la synchronisation avec AnkiWeb,
+        vous pouvez utiliser votre propre serveur pour la synchronisation.
+        Si non défini, le serveur AnkiWeb par défaut sera utilisé à la place.
+        <a href="%s">En savoir plus</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchroniser l’URL</string>
     <!-- Key Bindings -->

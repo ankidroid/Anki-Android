@@ -111,14 +111,14 @@
     </plurals>
     <string name="storage_full_title">存储空间已满</string>
     <string name="storage_almost_full_title">存储空间几乎满了</string>
-    <string name="no_space_to_downgrade_title">没有空间</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">没有空间</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
     <string name="restore_backup">你的牌组集合将会被替换成一个旧的副本，任何未保存的进程都将丢失。</string>
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
-    <string name="dialog_confirm">确认</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">确认</string>
     <string name="dialog_no">否</string>
     <string name="dialog_yes">是</string>
     <string name="dialog_continue">继续</string>
@@ -251,14 +251,4 @@
     <string name="import_csv">文本文件(.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
-    <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        由于 Android 隐私变化，如应用被卸载，您当前的存储位置将不可访问。
-        \n\n我们需要将您的数据迁移到一个对 AnkiDroid 应用来说秘密的地方。
-        \n\n如果应用被卸载，这个私有位置中的数据可能会被删除。
-        \n\n您当前的存储位置是 %1$s
-        \n\n私有存储位置将是 %2$s
-        \n\n请确保您将定期备份此文件夹。
-    </string>
-    <string name="manual_backup">手动备份</string>
-    <string name="remind_me_later">稍后提醒我</string>
 </resources>
