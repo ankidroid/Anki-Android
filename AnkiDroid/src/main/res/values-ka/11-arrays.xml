@@ -59,7 +59,7 @@
     <string name="cram_deck_conf_order_decreasing_intervals">კლებადი შუალედები</string>
     <string name="cram_deck_conf_order_most_lapsed">ყველაზე ხშირად გადავიწყებული</string>
     <string name="cram_deck_conf_order_order_added">დამატების თანმიმდევრობა</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
+    <string name="cram_deck_conf_order_order_due">სასწავლო ბარათების თანმიმდევრობა</string>
     <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->

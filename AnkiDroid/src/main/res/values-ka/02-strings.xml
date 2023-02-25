@@ -219,7 +219,7 @@
     <string name="select_tts">ხმოვანი წამკითხველის ენის არჩევა</string>
     <string name="custom_study">ინდივიდუალური სწავლა</string>
     <string name="more_options">მეტი</string>
-    <string name="dyn_deck_desc">ეს მიზნობრივი დასტაა, რომელიც საშუალებას გაძლევთ, ჩვეულებრივი განრიგის დამოუკიდებლად ისწავლოთ. მეცადინეობის შემდეგ ბარათები ავტომატურად დაუბრუნდება საწყის დასტას. თუ დასტა ამოიშალა დასტების სიიდან, ყველა დარჩენილი ბარათი შესაბამის საწყის დასტას დაუბრუნდება.</string>
+    <string name="dyn_deck_desc">ეს მიზნობრივი დასტაა, რომელიც საშუალებას გაძლევთ, ჩვეულებრივი განრიგი უგულებელყოფოთ და სურვილისამებრ ისწავლოთ. მეცადინეობის შემდეგ ბარათები საწყის დასტას ავტომატურად დაუბრუნდება. დასტის დასტების სიიდან ამოშლის შემთხვევაში ყველა დარჩენილი ბარათი შესაბამის საწყის დასტას დაუბრუნდება.</string>
     <string name="steps_error">ნაბიჯების რაოდენობა უნდა აღემატებოდეს 0-ს</string>
     <string name="steps_min_error">საჭიროა სულ მცირე ერთი ნაბიჯი მაინც</string>
     <string name="sched_end">(დასასრული)</string>
@@ -423,4 +423,6 @@
     <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების ბრაუზერში ჩვენების გადართვა</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">ბრაუზერის პარამეტრები</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

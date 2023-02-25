@@ -449,4 +449,6 @@
     <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
     <string name="browser_options_dialog_heading">Настройки браузера</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>
