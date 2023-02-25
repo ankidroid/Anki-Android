@@ -28,7 +28,7 @@ import android.preference.CheckBoxPreference
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.CollectionManager.withCol
@@ -52,6 +52,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.themeFollowsSystem
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
+import com.ichi2.utils.*
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
@@ -297,7 +298,7 @@ class DeckOptionsActivity :
                                     e.log()
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    MaterialDialog(this@DeckOptionsActivity).show {
+                                    AlertDialog.Builder(this@DeckOptionsActivity).show {
                                         message(R.string.full_sync_confirmation)
                                         positiveButton(R.string.dialog_ok) {
                                             col.modSchemaNoCheck()
