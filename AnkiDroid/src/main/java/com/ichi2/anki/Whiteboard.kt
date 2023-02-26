@@ -68,12 +68,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     var isCurrentlyDrawing = false
         private set
 
-    /**
-     * @return true if the undo queue has had any strokes added to it since the last clear
-     */
-    var isUndoModeActive = false
-        private set
-
     @get:CheckResult
     @get:VisibleForTesting
     var foregroundColor = 0
@@ -181,7 +175,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      * Clear the whiteboard.
      */
     fun clear() {
-        isUndoModeActive = false
         mBitmap.eraseColor(0)
         mUndo.clear()
         invalidate()
@@ -256,7 +249,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         val action = if (pm.length > 0) DrawPath(Path(mPath), paint) else DrawPoint(mX, mY, paint)
         action.apply(mCanvas)
         mUndo.add(action)
-        isUndoModeActive = true
         // kill the path so we don't double draw
         mPath.reset()
         if (mUndo.size() == 1) {
