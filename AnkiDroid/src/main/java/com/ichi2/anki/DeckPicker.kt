@@ -1450,6 +1450,10 @@ open class DeckPicker :
 
     // Show dialogs to deal with database loading issues etc
     open fun showDatabaseErrorDialog(id: Int) {
+        if (id == DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK && userMigrationIsInProgress(this)) {
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+            return
+        }
         val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(id)
         showAsyncDialogFragment(newFragment)
     }
@@ -1561,6 +1565,12 @@ open class DeckPicker :
 
     // Callback method to handle database integrity check
     override fun integrityCheck() {
+        if (userMigrationIsInProgress(this)) {
+            // The only path which can still display this is a sync error, which shouldn't be possible
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+            return
+        }
+
         // #5852 - We were having issues with integrity checks where the users had run out of space.
         // display a dialog box if we don't have the space
         val status = CollectionIntegrityStorageCheck.createInstance(this)
