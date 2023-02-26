@@ -21,6 +21,7 @@ import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder
 import org.junit.Assert.*
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mockStatic
@@ -77,6 +78,7 @@ class UniqueArrayListTest {
     }
 
     @Test // #8807
+    @Ignore("Silently breaks tests: Exception in thread \"Test worker\" ")
     fun test_sorting_will_not_call_collectionsSort() {
         val longs = mutableListOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
 
