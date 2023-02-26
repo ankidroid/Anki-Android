@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.ichi2.anki.*
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
@@ -109,7 +110,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
-                } else {
+                } else if (!ScopedStorageService.userMigrationIsInProgress(requireContext())) {
                     // fix integrity
                     options.add(res.getString(R.string.check_db))
                     values.add(1)
