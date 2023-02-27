@@ -85,12 +85,10 @@ import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
-import com.ichi2.anki.servicelayer.DeckService
+import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
-import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.toMB
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.ServiceConnection
@@ -1459,6 +1457,10 @@ open class DeckPicker :
     }
 
     override fun showMediaCheckDialog(dialogType: Int) {
+        if (dialogType == MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK && userMigrationIsInProgress(this)) {
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+            return
+        }
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
     }
 
@@ -1611,10 +1613,10 @@ open class DeckPicker :
         val failedCheck = getString(R.string.check_media_failed)
         if (hasStorageAccessPermission(this)) {
             launchCatchingTask {
-                val result = withProgress(R.string.check_media_message) {
-                    withCol { media.performFullCheck() }
+                val result = checkMedia()
+                if (result != null) {
+                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
                 }
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
             }
         } else {
             requestStoragePermission()
