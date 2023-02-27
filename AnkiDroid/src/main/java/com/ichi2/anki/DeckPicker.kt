@@ -872,7 +872,7 @@ open class DeckPicker :
             }
             R.id.action_import -> {
                 Timber.i("DeckPicker:: Import button pressed")
-                showDialogFragment(ImportFileSelectionFragment.createInstance(this))
+                showImportDialog()
                 return true
             }
             R.id.action_new_filtered_deck -> {
@@ -926,6 +926,14 @@ open class DeckPicker :
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showImportDialog() {
+        if (userMigrationIsInProgress(this)) {
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+            return
+        }
+        showDialogFragment(ImportFileSelectionFragment.createInstance(this))
     }
 
     fun exportCollection(includeMedia: Boolean) {
