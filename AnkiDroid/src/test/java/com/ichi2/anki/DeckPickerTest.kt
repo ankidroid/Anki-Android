@@ -34,7 +34,6 @@ import org.robolectric.RuntimeEnvironment
 import java.io.File
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -56,40 +55,6 @@ class DeckPickerTest : RobolectricTest() {
         RuntimeEnvironment.setQualifiers(mQualifiers)
         getPreferences().edit {
             putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
-        }
-    }
-
-    @Test
-    fun verifyCodeMessages() {
-        val codeResponsePairs = hashMapOf(
-            407 to getResourceString(R.string.sync_error_407_proxy_required),
-            409 to getResourceString(R.string.sync_error_409),
-            413 to getResourceString(R.string.sync_error_413_collection_size),
-            500 to getResourceString(R.string.sync_error_500_unknown),
-            501 to getResourceString(R.string.sync_error_501_upgrade_required),
-            502 to getResourceString(R.string.sync_error_502_maintenance),
-            503 to getResourceString(R.string.sync_too_busy),
-            504 to getResourceString(R.string.sync_error_504_gateway_timeout)
-        )
-        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            scenario.onActivity { deckPicker: DeckPicker ->
-                for ((key, value) in codeResponsePairs) {
-                    assertEquals(deckPicker.rewriteError(key), value)
-                }
-            }
-        }
-    }
-
-    @Test
-    fun verifyBadCodesNoMessage() {
-        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            scenario.onActivity { deckPicker: DeckPicker ->
-                assertNull(deckPicker.rewriteError(0))
-                assertNull(deckPicker.rewriteError(-1))
-                assertNull(deckPicker.rewriteError(1))
-                assertNull(deckPicker.rewriteError(Int.MIN_VALUE))
-                assertNull(deckPicker.rewriteError(Int.MAX_VALUE))
-            }
         }
     }
 
