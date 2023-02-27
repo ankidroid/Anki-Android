@@ -44,6 +44,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
 
     // Add Note Drawable Icon
     private val addNoteIcon: Int = R.drawable.ic_add_note
+
     // Add White Icon
     private val addWhiteIcon: Int = R.drawable.ic_add_white
 
