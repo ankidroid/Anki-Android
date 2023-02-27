@@ -19,10 +19,10 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.annotation.StringRes
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import anki.sync.SyncAuth
@@ -660,7 +660,7 @@ fun DeckPicker.createSyncListener() = object : Connection.CancellableTaskListene
                     else -> {
                         if (result.isNotEmpty() && result[0] is Int) {
                             val code = result[0] as Int
-                            dialogMessage = rewriteError(code)
+                            dialogMessage = getMessageFromSyncErrorCode(resources, code)
                             if (dialogMessage == null) {
                                 dialogMessage = res.getString(
                                     R.string.sync_log_error_specific,
@@ -765,23 +765,16 @@ fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: 
     }
 }
 
-@VisibleForTesting
-fun DeckPicker.rewriteError(code: Int): String? {
-    // PREF: Unit tests on this method can be sped up (remove 'DeckPicker' reference)
-    val msg: String?
-    val res = resources
-    msg = when (code) {
-        407 -> res.getString(R.string.sync_error_407_proxy_required)
-        409 -> res.getString(R.string.sync_error_409)
-        413 -> res.getString(R.string.sync_error_413_collection_size)
-        500 -> res.getString(R.string.sync_error_500_unknown)
-        501 -> res.getString(R.string.sync_error_501_upgrade_required)
-        502 -> res.getString(R.string.sync_error_502_maintenance)
-        503 -> res.getString(R.string.sync_too_busy)
-        504 -> res.getString(R.string.sync_error_504_gateway_timeout)
-        else -> null
-    }
-    return msg
+fun getMessageFromSyncErrorCode(res: Resources, code: Int): String? = when (code) {
+    407 -> res.getString(R.string.sync_error_407_proxy_required)
+    409 -> res.getString(R.string.sync_error_409)
+    413 -> res.getString(R.string.sync_error_413_collection_size)
+    500 -> res.getString(R.string.sync_error_500_unknown)
+    501 -> res.getString(R.string.sync_error_501_upgrade_required)
+    502 -> res.getString(R.string.sync_error_502_maintenance)
+    503 -> res.getString(R.string.sync_too_busy)
+    504 -> res.getString(R.string.sync_error_504_gateway_timeout)
+    else -> null
 }
 
 fun joinSyncMessages(dialogMessage: String?, syncMessage: String?): String? {
