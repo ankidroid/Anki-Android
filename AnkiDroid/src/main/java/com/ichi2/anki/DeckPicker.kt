@@ -1100,8 +1100,8 @@ open class DeckPicker :
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
         val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
-
-        if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
+        val isMigratingStorage = userMigrationIsInProgress(this)
+        if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
