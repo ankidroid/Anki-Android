@@ -48,6 +48,7 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -1186,26 +1187,20 @@ open class DeckPicker :
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 val res = resources
-                val handlerMessage = Message.obtain()
-                handlerMessage.what = DialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG
-                val handlerMessageData = Bundle()
-                handlerMessageData.putString(
-                    "message",
-                    """
+                val message = """
      ${res.getString(R.string.full_sync_confirmation_upgrade)}
      
      ${res.getString(R.string.full_sync_confirmation)}
-                    """.trimIndent()
-                )
-                handlerMessage.data = handlerMessageData
-                dialogHandler.sendMessage(handlerMessage)
+                """.trimIndent()
+
+                dialogHandler.sendMessage(ForceFullSyncDialog(message).toMessage())
             }
         }
         automaticSync()
     }
 
     private fun showCollectionErrorDialog() {
-        dialogHandler.sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG)
+        dialogHandler.sendMessage(CollectionLoadingErrorDialog().toMessage())
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -2674,3 +2669,42 @@ enum class SyncIconState {
  * @param errList: a string describing the errors. Null if no error.
  */
 data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)
+
+class CollectionLoadingErrorDialog : DialogHandlerMessage(
+    WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
+    "CollectionLoadErrorDialog"
+) {
+    override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        // Collection could not be opened
+        deckPicker.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
+    }
+
+    override fun toMessage() = emptyMessage(this.what)
+}
+
+class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
+    which = WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG,
+    analyticName = "ForceFullSyncDialog"
+) {
+    override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        // Confirmation dialog for forcing full sync
+        val dialog = ConfirmationDialog()
+        val confirm = Runnable {
+            // Bypass the check once the user confirms
+            CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+        }
+        dialog.setConfirm(confirm)
+        dialog.setArgs(message)
+        deckPicker.showDialogFragment(dialog)
+    }
+
+    override fun toMessage(): Message = Message.obtain().apply {
+        what = this@ForceFullSyncDialog.what
+        data = bundleOf("message" to message)
+    }
+
+    companion object {
+        fun fromMessage(message: Message): DialogHandlerMessage =
+            ForceFullSyncDialog(message.data.getString("message"))
+    }
+}
