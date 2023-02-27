@@ -622,7 +622,7 @@ open class DeckPicker :
                 positiveButton(R.string.close) {
                     exit()
                 }
-                    .setCancelable(false)
+                cancelable(false)
             }
             DISK_FULL -> displayNoStorageError()
             DB_ERROR -> displayDatabaseFailure()
@@ -1295,7 +1295,7 @@ open class DeckPicker :
                     negativeButton(R.string.close) {
                         recreate()
                     }
-                        .setCancelable(false)
+                    cancelable(false)
                 }
                 return
             }
@@ -1730,7 +1730,7 @@ open class DeckPicker :
                         // Show confirmation dialog to check if the user wants to cancel the sync
                         AlertDialog.Builder(mProgressDialog!!.context).show {
                             message(R.string.cancel_sync_confirm)
-                                .cancelable(false)
+                            cancelable(false)
                             positiveButton(R.string.dialog_ok) {
                                 @Suppress("Deprecation")
                                 mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
