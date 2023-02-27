@@ -36,6 +36,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.AnkiPackageExporter
@@ -64,6 +65,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private lateinit var mExportFileName: String
 
     fun showExportDialog(params: ExportDialogParams) {
+        if (ScopedStorageService.userMigrationIsInProgress(activity)) {
+            activity.showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+            return
+        }
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(params))
     }
 
