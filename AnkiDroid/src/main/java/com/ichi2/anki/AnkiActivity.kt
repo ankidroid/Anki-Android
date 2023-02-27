@@ -482,7 +482,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         } catch (e: IllegalStateException) {
             Timber.w(e)
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
-            DialogHandler.storeMessage(newFragment.dialogHandlerMessage)
+            DialogHandler.storeMessage(newFragment.dialogHandlerMessage?.toMessage())
             // Show a basic notification to the user in the notification bar in the meantime
             val title = newFragment.notificationTitle
             val message = newFragment.notificationMessage

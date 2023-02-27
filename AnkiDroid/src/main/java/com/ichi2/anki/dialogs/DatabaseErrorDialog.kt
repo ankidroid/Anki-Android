@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
 import android.view.KeyEvent
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -406,15 +407,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     override val notificationMessage: String? get() = message
     override val notificationTitle: String get() = resources.getString(R.string.answering_error_title)
 
-    override val dialogHandlerMessage: Message
-        get() {
-            val msg = Message.obtain()
-            msg.what = DialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG
-            val b = Bundle()
-            b.putParcelable("dialog", requireDialogType())
-            msg.data = b
-            return msg
-        }
+    override val dialogHandlerMessage
+        get() = ShowDatabaseErrorDialog(requireDialogType())
 
     private fun requireDialogType() = requireArguments().getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
 
@@ -460,6 +454,30 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             args.putParcelable("dialog", dialogType)
             f.arguments = args
             return f
+        }
+    }
+
+    /** Database error dialog */
+    class ShowDatabaseErrorDialog(val dialogType: DatabaseErrorDialogType) : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
+        analyticName = "DatabaseErrorDialog"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.showDatabaseErrorDialog(dialogType)
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            what = this@ShowDatabaseErrorDialog.what
+            data = bundleOf(
+                "dialog" to dialogType
+            )
+        }
+
+        companion object {
+            fun fromMessage(message: Message): ShowDatabaseErrorDialog {
+                val dialogType = message.data.getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
+                return ShowDatabaseErrorDialog(dialogType)
+            }
         }
     }
 }

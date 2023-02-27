@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs
 
-import android.os.Message
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 
 abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
@@ -25,5 +24,5 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
        the onPostExecute() method of an AsyncTask */
     abstract val notificationMessage: String?
     abstract val notificationTitle: String
-    open val dialogHandlerMessage: Message? get() = null
+    open val dialogHandlerMessage: DialogHandlerMessage? get() = null
 }
