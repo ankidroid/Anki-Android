@@ -832,7 +832,7 @@ open class DeckPicker :
     private fun fetchSyncStatus(col: Collection): SyncIconState {
         val auth = syncAuth()
         return when (SyncStatus.getSyncStatus(col, this, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
+            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES -> {
                 SyncIconState.Normal
             }
             SyncStatus.ONGOING_MIGRATION -> {
