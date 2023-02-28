@@ -2927,6 +2927,7 @@ open class DeckPicker :
             }
             if (elapsedMillisDuringEssentialFilesMigration > 800) {
                 showSnackbar(R.string.migration_part_1_done_resume)
+                refreshState()
             }
         }
     }
