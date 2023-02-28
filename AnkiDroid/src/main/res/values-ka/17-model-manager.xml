@@ -65,8 +65,8 @@
     <string name="model_field_editor_sort_field">ამ ველის მიხედვით დახარისხება</string>
     <string name="model_clone_suffix">ასლი</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
-    <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+    <string name="model_delete_warning">ნამდვილად გსურთ ამ შენიშვნის ტიპის წაშლა?</string>
+    <string name="field_delete_warning">ნამდვილად გსურთ ამ ველის წაშლა?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">დამატება: %1$s</string>
     <!--This prefix is used for standard note types-->
@@ -78,8 +78,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">აღდგეს ნაგულისხმევი მონაცემები?</string>
     <string name="card_template_browser_appearance_saving_note">ცვლილებების მისადაგება ბარათის შაბლონის შენახვისთანავე ხდება</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
+    <string name="card_template_editor_deck_override_on">დასტაზე გადაწერა (ჩართული)</string>
+    <string name="card_template_editor_deck_override_off">დასტაზე გადაწერა (გამორთული)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
