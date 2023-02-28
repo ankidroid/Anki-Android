@@ -37,9 +37,7 @@ import android.provider.Settings
 import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
-import android.view.WindowManager.BadTokenException
 import android.widget.*
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -99,7 +97,6 @@ import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.*
-import com.ichi2.async.Connection.CancellableTaskListener
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
@@ -110,8 +107,6 @@ import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
-import com.ichi2.libanki.sync.CustomSyncServerUrlException
-import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
@@ -127,7 +122,6 @@ import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
-import kotlin.math.abs
 import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
 
@@ -177,7 +171,7 @@ open class DeckPicker :
     private lateinit var mDeckPickerContent: RelativeLayout
 
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
-    private var mProgressDialog: android.app.ProgressDialog? = null
+    var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var recyclerView: RecyclerView
@@ -186,7 +180,9 @@ open class DeckPicker :
     private val mSnackbarShowHideCallback = Snackbar.Callback()
     private lateinit var mExportingDelegate: ActivityExportingDelegate
     private lateinit var mNoDecksPlaceholder: LinearLayout
-    private lateinit var mPullToSyncWrapper: SwipeRefreshLayout
+    lateinit var mPullToSyncWrapper: SwipeRefreshLayout
+        private set
+
     private lateinit var mReviewSummaryTextView: TextView
 
     @KotlinCleanup("make lateinit, but needs more changes")
@@ -197,7 +193,8 @@ open class DeckPicker :
     private var mRecommendFullSync = false
 
     // flag keeping track of when the app has been paused
-    private var mActivityPaused = false
+    var mActivityPaused = false
+        private set
 
     // Flag to keep track of startup error
     private var mStartupError = false
@@ -1493,46 +1490,6 @@ open class DeckPicker :
         showAsyncDialogFragment(newFragment, Channel.SYNC)
     }
 
-    /**
-     * Show simple error dialog with just the message and OK button. Reload the activity when dialog closed.
-     */
-    private fun showSyncErrorMessage(message: String?) {
-        val title = resources.getString(R.string.sync_error)
-        showSimpleMessageDialog(title = title, message = message, reload = true)
-    }
-
-    /**
-     * Show a simple snackbar message or notification if the activity is not in foreground
-     * @param messageResource String resource for message
-     */
-    fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
-        if (mActivityPaused) {
-            val res = AnkiDroidApp.appResources
-            showSimpleNotification(
-                res.getString(R.string.app_name),
-                res.getString(messageResource),
-                Channel.SYNC
-            )
-        } else {
-            if (syncMessage.isNullOrEmpty()) {
-                if (messageResource == R.string.youre_offline && !Connection.allowLoginSyncOnNoConnection) {
-                    // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
-                    showSnackbar(messageResource) {
-                        setAction(R.string.sync_even_if_offline) {
-                            Connection.allowLoginSyncOnNoConnection = true
-                            sync()
-                        }
-                    }
-                } else {
-                    showSnackbar(messageResource)
-                }
-            } else {
-                val res = AnkiDroidApp.appResources
-                showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
-            }
-        }
-    }
-
     fun showImportDialog(id: Int, messageList: ArrayList<String>) {
         Timber.d("showImportDialog() delegating to ImportDialog")
         if (messageList.isEmpty()) {
@@ -1711,7 +1668,7 @@ open class DeckPicker :
                 handleNewSync(conflict, shouldFetchMedia())
             } else {
                 val data = arrayOf(hkey, shouldFetchMedia(), conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(mSyncListener, Connection.Payload(data))
+                Connection.sync(createSyncListener(), Connection.Payload(data))
             }
         }
         // Warn the user in case the connection is metered
@@ -1725,339 +1682,6 @@ open class DeckPicker :
         } else {
             doSync()
         }
-    }
-
-    private val mSyncListener: Connection.TaskListener = object : CancellableTaskListener {
-        private var mCurrentMessage: String? = null
-        private var mCountUp: Long = 0
-        private var mCountDown: Long = 0
-        private var mDialogDisplayFailure = false
-        override fun onDisconnected() {
-            showSyncLogMessage(R.string.youre_offline, "")
-        }
-
-        override fun onCancelled() {
-            showSyncLogMessage(R.string.sync_cancelled, "")
-            if (!mDialogDisplayFailure) {
-                mProgressDialog!!.dismiss()
-                // update deck list in case sync was cancelled during media sync and main sync was actually successful
-                updateDeckList()
-            }
-            // reset our display failure fate, just in case it is re-used
-            mDialogDisplayFailure = false
-        }
-
-        override fun onPreExecute() {
-            mCountUp = 0
-            mCountDown = 0
-            val syncStartTime = TimeManager.time.intTimeMS()
-            if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
-                try {
-                    mProgressDialog = StyledProgressDialog.show(
-                        this@DeckPicker,
-                        resources.getString(R.string.sync_title),
-                        """
-                                ${resources.getString(R.string.sync_title)}
-                                ${resources.getString(R.string.sync_up_down_size, mCountUp, mCountDown)}
-                        """.trimIndent(),
-                        false
-                    )
-                } catch (e: BadTokenException) {
-                    // If we could not show the progress dialog to start even, bail out - user will get a message
-                    Timber.w(e, "Unable to display Sync progress dialog, Activity not valid?")
-                    mDialogDisplayFailure = true
-                    Connection.cancel()
-                    return
-                }
-
-                // Override the back key so that the user can cancel a sync which is in progress
-                mProgressDialog!!.setOnKeyListener { _: DialogInterface?, keyCode: Int, event: KeyEvent ->
-                    // Make sure our method doesn't get called twice
-                    if (event.action != KeyEvent.ACTION_DOWN) {
-                        return@setOnKeyListener true
-                    }
-                    if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable &&
-                        !Connection.isCancelled
-                    ) {
-                        // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
-                            Connection.cancel()
-                            @Suppress("Deprecation")
-                            mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
-                            return@setOnKeyListener true
-                        }
-                        // Show confirmation dialog to check if the user wants to cancel the sync
-                        AlertDialog.Builder(mProgressDialog!!.context).show {
-                            message(R.string.cancel_sync_confirm)
-                            cancelable(false)
-                            positiveButton(R.string.dialog_ok) {
-                                @Suppress("Deprecation")
-                                mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
-                                Connection.cancel()
-                            }
-                            negativeButton(R.string.continue_sync)
-                        }
-                        return@setOnKeyListener true
-                    } else {
-                        return@setOnKeyListener false
-                    }
-                }
-            }
-
-            // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
-            // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
-            getSharedPrefs(baseContext).edit { putLong("lastSyncTime", syncStartTime) }
-        }
-
-        override fun onProgressUpdate(vararg values: Any?) {
-            val res = resources
-            if (values[0] is Int) {
-                val id = values[0] as Int
-                if (id != 0) {
-                    mCurrentMessage = res.getString(id)
-                }
-                if (values.size >= 3) {
-                    mCountUp = values[1] as Long
-                    mCountDown = values[2] as Long
-                }
-            } else if (values[0] is String) {
-                mCurrentMessage = values[0] as String
-                if (values.size >= 3) {
-                    mCountUp = values[1] as Long
-                    mCountDown = values[2] as Long
-                }
-            }
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                @Suppress("Deprecation")
-                mProgressDialog!!.setMessage(
-                    """
-    $mCurrentMessage
-    
-                    """.trimIndent() +
-                        res
-                            .getString(R.string.sync_up_down_size, mCountUp / 1024, mCountDown / 1024)
-                )
-            }
-        }
-
-        override fun onPostExecute(data: Connection.Payload) {
-            mPullToSyncWrapper.isRefreshing = false
-            var dialogMessage: String? = ""
-            Timber.d("Sync Listener onPostExecute()")
-            val res = resources
-            try {
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
-                }
-            } catch (e: IllegalArgumentException) {
-                Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running")
-                CrashReportService.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
-            }
-            val syncMessage = data.message
-            Timber.i("Sync Listener: onPostExecute: Data: %s", data.toString())
-            if (!data.success) {
-                val result = data.result
-                val resultType = data.resultType
-                if (resultType != null) {
-                    when (resultType) {
-                        ConnectionResultType.BAD_AUTH -> {
-                            // delete old auth information
-                            getSharedPrefs(baseContext).edit {
-                                putString("username", "")
-                                putString("hkey", "")
-                            }
-                            // then show not logged in dialog
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
-                        }
-                        ConnectionResultType.NO_CHANGES -> {
-                            SyncStatus.markSyncCompleted()
-                            // show no changes message, use false flag so we don't show "sync error" as the Dialog title
-                            showSyncLogMessage(R.string.sync_no_changes_message, "")
-                        }
-                        ConnectionResultType.CLOCK_OFF -> {
-                            val diff = result[0] as Long
-                            dialogMessage = when {
-                                diff >= 86100 -> {
-                                    // The difference if more than a day minus 5 minutes acceptable by ankiweb error
-                                    res.getString(
-                                        R.string.sync_log_clocks_unsynchronized,
-                                        diff,
-                                        res.getString(R.string.sync_log_clocks_unsynchronized_date)
-                                    )
-                                }
-                                abs(diff % 3600.0 - 1800.0) >= 1500.0 -> {
-                                    // The difference would be within limit if we adjusted the time by few hours
-                                    // It doesn't work for all timezones, but it covers most and it's a guess anyway
-                                    res.getString(
-                                        R.string.sync_log_clocks_unsynchronized,
-                                        diff,
-                                        res.getString(R.string.sync_log_clocks_unsynchronized_tz)
-                                    )
-                                }
-                                else -> {
-                                    res.getString(R.string.sync_log_clocks_unsynchronized, diff, "")
-                                }
-                            }
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.FULL_SYNC -> if (col.isEmpty) {
-                            // don't prompt user to resolve sync conflict if local collection empty
-                            sync(ConflictResolution.FULL_DOWNLOAD)
-                            // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
-                            // implements it
-                        } else {
-                            // If can't be resolved then automatically then show conflict resolution dialog
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION)
-                        }
-                        ConnectionResultType.BASIC_CHECK_FAILED -> {
-                            dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db))
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_BASIC_CHECK_ERROR, joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.DB_ERROR -> showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage)
-                        ConnectionResultType.OVERWRITE_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_overwrite_error)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.REMOTE_DB_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_remote_db_error)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.SD_ACCESS_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_write_access_error_on_storage)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.FINISH_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_log_finish_error)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.CONNECTION_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_connection_error)
-                            if (result[0] is Exception) {
-                                dialogMessage += """
-                                    
-                                    
-                                    ${(result[0] as Exception).localizedMessage}
-                                """.trimIndent()
-                            }
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.IO_EXCEPTION -> handleDbError()
-                        ConnectionResultType.GENERIC_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_generic_error)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.OUT_OF_MEMORY_ERROR -> {
-                            dialogMessage = res.getString(R.string.error_insufficient_memory)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.SANITY_CHECK_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_sanity_failed)
-                            showSyncErrorDialog(
-                                SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage)
-                            )
-                        }
-                        ConnectionResultType.SERVER_ABORT -> // syncMsg has already been set above, no need to fetch it here.
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        ConnectionResultType.MEDIA_SYNC_SERVER_ERROR -> {
-                            dialogMessage = res.getString(R.string.sync_media_error_check)
-                            showSyncErrorDialog(
-                                SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage)
-                            )
-                        }
-                        ConnectionResultType.CUSTOM_SYNC_SERVER_URL -> {
-                            val url = if (result.isNotEmpty() && result[0] is CustomSyncServerUrlException) (result[0] as CustomSyncServerUrlException).url else "unknown"
-                            dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url)
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                        ConnectionResultType.NETWORK_ERROR -> {
-                            showSnackbar(R.string.check_network) {
-                                setAction(R.string.sync_even_if_offline) {
-                                    Connection.allowLoginSyncOnNoConnection = true
-                                    sync()
-                                }
-                            }
-                        }
-                        else -> {
-                            if (result.isNotEmpty() && result[0] is Int) {
-                                val code = result[0] as Int
-                                dialogMessage = rewriteError(code)
-                                if (dialogMessage == null) {
-                                    dialogMessage = res.getString(
-                                        R.string.sync_log_error_specific,
-                                        code.toString(),
-                                        result[1]
-                                    )
-                                }
-                            } else {
-                                dialogMessage = res.getString(R.string.sync_log_error_specific, (-1).toString(), resultType)
-                            }
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                        }
-                    }
-                } else {
-                    dialogMessage = res.getString(R.string.sync_generic_error)
-                    showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
-                }
-            } else {
-                Timber.i("Sync was successful")
-                if (data.data[2] != null && "" != data.data[2]) {
-                    Timber.i("Syncing had additional information")
-                    // There was a media error, so show it
-                    // Note: Do not log this data. May contain user email.
-                    val message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2]
-                    showSimpleMessageDialog(message)
-                } else if (data.data.isNotEmpty() && data.data[0] is ConflictResolution) {
-                    // A full sync occurred
-                    when (data.data[0] as ConflictResolution) {
-                        ConflictResolution.FULL_UPLOAD -> {
-                            Timber.i("Full Upload Completed")
-                            showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage)
-                        }
-                        ConflictResolution.FULL_DOWNLOAD -> {
-                            Timber.i("Full Download Completed")
-                            showSyncLogMessage(R.string.backup_full_sync_from_server, syncMessage)
-                        }
-                    }
-                } else {
-                    Timber.i("Regular sync completed successfully")
-                    showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage)
-                }
-                // Mark sync as completed - then refresh the sync icon
-                SyncStatus.markSyncCompleted()
-                invalidateOptionsMenu()
-                updateDeckList()
-                WidgetStatus.update(this@DeckPicker)
-                if (fragmented) {
-                    try {
-                        loadStudyOptionsFragment(false)
-                    } catch (e: IllegalStateException) {
-                        // Activity was stopped or destroyed when the sync finished. Losing the
-                        // fragment here is fine since we build a fresh fragment on resume anyway.
-                        Timber.w(e, "Failed to load StudyOptionsFragment after sync.")
-                    }
-                }
-            }
-        }
-    }
-
-    @VisibleForTesting
-    fun rewriteError(code: Int): String? {
-        val msg: String?
-        val res = resources
-        msg = when (code) {
-            407 -> res.getString(R.string.sync_error_407_proxy_required)
-            409 -> res.getString(R.string.sync_error_409)
-            413 -> res.getString(R.string.sync_error_413_collection_size)
-            500 -> res.getString(R.string.sync_error_500_unknown)
-            501 -> res.getString(R.string.sync_error_501_upgrade_required)
-            502 -> res.getString(R.string.sync_error_502_maintenance)
-            503 -> res.getString(R.string.sync_too_busy)
-            504 -> res.getString(R.string.sync_error_504_gateway_timeout)
-            else -> null
-        }
-        return msg
     }
 
     override fun loginToSyncServer() {
@@ -2094,7 +1718,7 @@ open class DeckPicker :
      * modify the filter settings before being shown the fragment. The fragment itself will handle
      * rebuilding the deck if the settings change.
      */
-    private fun loadStudyOptionsFragment(withDeckOptions: Boolean) {
+    fun loadStudyOptionsFragment(withDeckOptions: Boolean) {
         val details = StudyOptionsFragment.newInstance(withDeckOptions)
         supportFragmentManager.commit {
             replace(R.id.studyoptions_fragment, details)
@@ -2875,20 +2499,6 @@ open class DeckPicker :
         // 10 minutes in milliseconds.
         const val AUTOMATIC_SYNC_MIN_INTERVAL: Long = 600000
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
-        fun joinSyncMessages(dialogMessage: String?, syncMessage: String?): String? {
-            // If both strings have text, separate them by a new line, otherwise return whichever has text
-            return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
-                """
-     $dialogMessage
-     
-     $syncMessage
-                """.trimIndent()
-            } else if (!dialogMessage.isNullOrEmpty()) {
-                dialogMessage
-            } else {
-                syncMessage
-            }
-        }
 
         // Animation utility methods used by renderPage() method
         fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
