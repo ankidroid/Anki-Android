@@ -21,8 +21,8 @@ import android.os.Bundle
 import android.os.Message
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.joinSyncMessages
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.utils.contentNullable
@@ -209,7 +209,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 val syncMessage = requireArguments().getString("dialogMessage")
                 val repairUrl = getString(R.string.repair_deck)
                 val dialogMessage = getString(R.string.sync_corrupt_database, repairUrl)
-                DeckPicker.joinSyncMessages(dialogMessage, syncMessage)
+                joinSyncMessages(dialogMessage, syncMessage)
             }
             else -> requireArguments().getString("dialogMessage")
         }

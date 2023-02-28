@@ -59,7 +59,8 @@ abstract class NavigationDrawerActivity :
     /**
      * Navigation Drawer
      */
-    protected var fragmented = false
+    var fragmented = false
+        protected set
     private var mNavButtonGoesBack = false
 
     // Navigation drawer list item entries
