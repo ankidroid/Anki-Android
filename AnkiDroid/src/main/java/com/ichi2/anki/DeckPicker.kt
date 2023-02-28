@@ -612,7 +612,7 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             }
-            WEBVIEW_FAILED -> MaterialDialog(this).show {
+            WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
                 message(
                     text = getString(
@@ -1325,7 +1325,7 @@ open class DeckPicker :
                 Timber.i("showStartupScreensAndDialogs() running integrityCheck()")
                 // #5852 - since we may have a warning about disk space, we don't want to force a check database
                 // and show a warning before the user knows what is happening.
-                MaterialDialog(this).show {
+                AlertDialog.Builder(this).show {
                     title(R.string.integrity_check_startup_title)
                     message(R.string.integrity_check_startup_content)
                     positiveButton(R.string.check_db) {
@@ -1334,7 +1334,6 @@ open class DeckPicker :
                     negativeButton(R.string.close) {
                         recreate()
                     }
-                    cancelOnTouchOutside(false)
                     cancelable(false)
                 }
                 return
@@ -1566,7 +1565,7 @@ open class DeckPicker :
         val status = CollectionIntegrityStorageCheck.createInstance(this)
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
-            MaterialDialog(this).show {
+            AlertDialog.Builder(this).show {
                 title(R.string.check_db_title)
                 message(text = status.getWarningDetails(this@DeckPicker))
                 positiveButton(R.string.integrity_check_continue_anyway) {
@@ -1698,7 +1697,7 @@ open class DeckPicker :
         // Warn the user in case the connection is metered
         val meteredSyncIsAllowed = preferences.getBoolean(getString(R.string.metered_sync_key), false)
         if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
-            MaterialDialog(this).show {
+            AlertDialog.Builder(this).show {
                 message(R.string.metered_sync_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
@@ -1768,7 +1767,7 @@ open class DeckPicker :
                             return@setOnKeyListener true
                         }
                         // Show confirmation dialog to check if the user wants to cancel the sync
-                        MaterialDialog(mProgressDialog!!.context).show {
+                        AlertDialog.Builder(mProgressDialog!!.context).show {
                             message(R.string.cancel_sync_confirm)
                             cancelable(false)
                             positiveButton(R.string.dialog_ok) {
@@ -2158,7 +2157,7 @@ open class DeckPicker :
     }
 
     private fun promptUserToUpdateScheduler() {
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             message(text = col.tr.schedulingUpdateRequired())
             positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
@@ -2656,7 +2655,7 @@ open class DeckPicker :
         private val mOnePercent: Int = mNumberOfCards / 100
         private var mIncreaseSinceLastUpdate = 0
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
-            MaterialDialog(deckPicker).show {
+            AlertDialog.Builder(deckPicker).show {
                 message(R.string.confirm_cancel)
                 positiveButton(R.string.dialog_yes) {
                     task.safeCancel()
