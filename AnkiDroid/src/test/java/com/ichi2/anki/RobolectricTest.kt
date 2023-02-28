@@ -42,6 +42,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
@@ -68,7 +69,7 @@ import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-open class RobolectricTest : CollectionGetter {
+open class RobolectricTest : CollectionGetter, AndroidTest {
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -127,14 +128,13 @@ open class RobolectricTest : CollectionGetter {
         return false
     }
 
-    protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory {
+    protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory =
         if (useInMemoryDatabase()) {
             Timber.w("Using in-memory database for test. Collection should not be re-opened")
-            return InMemorySQLiteOpenHelperFactory()
+            InMemorySQLiteOpenHelperFactory()
         } else {
-            return FrameworkSQLiteOpenHelperFactory()
+            FrameworkSQLiteOpenHelperFactory()
         }
-    }
 
     @After
     @CallSuper
@@ -158,7 +158,7 @@ open class RobolectricTest : CollectionGetter {
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.instance.closeCollection(false, "RobolectricTest: End")
         } catch (ex: BackendException) {
-            if ("CollectionNotOpen".equals(ex.message)) {
+            if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
             } else {
                 throw ex
@@ -180,6 +180,7 @@ open class RobolectricTest : CollectionGetter {
      * Ensure that each task in backgrounds are executed immediately instead of being queued.
      * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     fun runTasksInForeground() {
         TaskManager.setTaskManager(ForegroundTaskManager(this))
         mBackground = false
@@ -193,7 +194,7 @@ open class RobolectricTest : CollectionGetter {
         mBackground = true
     }
 
-    protected fun clickDialogButton(button: WhichButton?, checkDismissed: Boolean) {
+    protected fun clickDialogButton(button: WhichButton?, @Suppress("SameParameterValue") checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
         if (checkDismissed) {
@@ -206,7 +207,7 @@ open class RobolectricTest : CollectionGetter {
      *
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
-    protected fun getDialogText(checkDismissed: Boolean): String? {
+    protected fun getDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
         val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
@@ -290,7 +291,7 @@ open class RobolectricTest : CollectionGetter {
             } catch (e: IllegalStateException) {
                 if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
                     // Explicitly ignore the inner exception - generates line noise
-                    throw IllegalStateException("Annotate class: '" + javaClass.simpleName + "' with '@RunWith(AndroidJUnit4.class)'")
+                    throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4.class)'")
                 }
                 throw e
             }
@@ -308,7 +309,7 @@ open class RobolectricTest : CollectionGetter {
         return targetContext.getString(res)
     }
 
-    protected fun getQuantityString(res: Int, quantity: Int, vararg formatArgs: Any?): String {
+    protected fun getQuantityString(res: Int, quantity: Int, vararg formatArgs: Any): String {
         return targetContext.resources.getQuantityString(res, quantity, *formatArgs)
     }
 
@@ -363,7 +364,7 @@ open class RobolectricTest : CollectionGetter {
         return addNoteUsingModelName("Basic", front, back)
     }
 
-    protected fun addRevNoteUsingBasicModelDueToday(front: String, back: String): Note {
+    protected fun addRevNoteUsingBasicModelDueToday(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
@@ -376,7 +377,7 @@ open class RobolectricTest : CollectionGetter {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
-    protected fun addNoteUsingBasicTypedModel(front: String, back: String): Note {
+    protected fun addNoteUsingBasicTypedModel(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
@@ -456,9 +457,9 @@ open class RobolectricTest : CollectionGetter {
             override fun onPostExecute(result: Result?) {
                 require(!(result == null || !result.succeeded())) { "Task failed" }
                 completed[0] = true
-                val RobolectricTest = ReentrantLock()
-                val condition = RobolectricTest.newCondition()
-                RobolectricTest.withLock { condition.signal() }
+                val robolectricTest = ReentrantLock()
+                val condition = robolectricTest.newCondition()
+                robolectricTest.withLock { condition.signal() }
                 // synchronized(this@RobolectricTest) { this@RobolectricTest.notify() }
             }
         }
@@ -551,6 +552,7 @@ open class RobolectricTest : CollectionGetter {
      * editPreferences { putString("key", value) }
      * ```
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
         getPreferences().edit(action = action)
 
@@ -604,7 +606,7 @@ open class RobolectricTest : CollectionGetter {
         context: CoroutineContext = EmptyCoroutineContext,
         dispatchTimeoutMs: Long = 60_000L,
         testBody: suspend TestScope.() -> Unit
-    ): TestResult {
+    ) {
         kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs) {
             CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
             testBody()
