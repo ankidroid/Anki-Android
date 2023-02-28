@@ -30,7 +30,9 @@ import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
+import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
+import com.ichi2.testutils.OS
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
 import net.ankiweb.rsdroid.RustCleanup
@@ -112,6 +114,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "Expected `true`, got `false`")
     fun browserIsInMultiSelectModeWhenSelectingAll() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
