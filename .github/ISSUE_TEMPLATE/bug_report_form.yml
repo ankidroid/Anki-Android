@@ -44,6 +44,7 @@ body:
       label: Debug info
       description: Refer to the [support page](https://ankidroid.org/docs/help.html) if you are unsure where to get the "debug info"
       placeholder: AnkiDroid Debug Info (Starts with "AnkiDroid Version")
+      render: text
     validations:
       required: true
 
