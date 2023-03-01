@@ -566,13 +566,14 @@ open class CardBrowser :
         }
         mOnboarding.onCreate()
 
-        val modalBottomSheet = FilterSheetBottomFragment()
+        /*Floating Action Button is hidden so this functionality not needed anymore */
+        // val modalBottomSheet = FilterSheetBottomFragment()
 
-        val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
+        // val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
 
-        filterButton.setOnClickListener {
-            modalBottomSheet.show(supportFragmentManager, FilterSheetBottomFragment.TAG)
-        }
+        // filterButton.setOnClickListener {
+        //     modalBottomSheet.show(supportFragmentManager, FilterSheetBottomFragment.TAG)
+        // }
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
