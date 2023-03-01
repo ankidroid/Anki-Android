@@ -176,7 +176,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             }
             // Show dialog to sync if user hasn't synced in a while
             val preferences = AnkiDroidApp.getSharedPrefs(windowContext)
-            return millisecondsSinceLastSync(preferences) <= ONE_DAY_IN_MS * 7
+            return millisecondsSinceLastSync(preferences) >= ONE_DAY_IN_MS * 7
         }
 
         // Non-legacy locations may be deleted by the user on uninstall
