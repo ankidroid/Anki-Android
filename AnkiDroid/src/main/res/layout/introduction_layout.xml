@@ -111,7 +111,7 @@
         style="@style/LargeFilledButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="62dp"
+        android:layout_marginBottom="80dp"
         android:backgroundTint="@color/material_blue_500"
         android:minWidth="200dp"
         android:text="@string/intro_sync_from_ankiweb"
