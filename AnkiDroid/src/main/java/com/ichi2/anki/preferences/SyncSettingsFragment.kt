@@ -39,8 +39,8 @@ class SyncSettingsFragment : SettingsFragment() {
         // AnkiWeb Account
         updateSyncAccountSummary()
 
-        // Enable/disable force full sync
-        updateForceFullSync()
+        // Enable/disable force full sync if the user is logged in or not
+        updateForceFullSyncEnabledState()
 
         // Configure force full sync option
         requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
@@ -76,7 +76,7 @@ class SyncSettingsFragment : SettingsFragment() {
             .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
     }
 
-    private fun updateForceFullSync() {
+    private fun updateForceFullSyncEnabledState() {
         val isLoggedIn = Preferences.hasAnkiWebAccount(AnkiDroidApp.getSharedPrefs(requireContext()))
         requirePreference<Preference>(R.string.force_full_sync_key).isEnabled = isLoggedIn
     }
@@ -85,7 +85,7 @@ class SyncSettingsFragment : SettingsFragment() {
     override fun onResume() {
         // Trigger a summary update in case the user logged in/out on MyAccount activity
         updateSyncAccountSummary()
-        updateForceFullSync()
+        updateForceFullSyncEnabledState()
         super.onResume()
     }
 }
