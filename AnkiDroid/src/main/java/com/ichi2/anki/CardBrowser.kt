@@ -35,7 +35,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.list.SingleChoiceListener
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
@@ -565,15 +564,6 @@ open class CardBrowser :
             }
         }
         mOnboarding.onCreate()
-
-        /*Floating Action Button is hidden so this functionality not needed anymore */
-        // val modalBottomSheet = FilterSheetBottomFragment()
-
-        // val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
-
-        // filterButton.setOnClickListener {
-        //     modalBottomSheet.show(supportFragmentManager, FilterSheetBottomFragment.TAG)
-        // }
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
