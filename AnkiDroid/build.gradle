@@ -267,14 +267,14 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:24.0.0'
+            force 'org.jetbrains:annotations:24.0.1'
         }
     }
 
     lintChecks project(":lint-rules")
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
-    compileOnly 'org.jetbrains:annotations:24.0.0'
+    compileOnly 'org.jetbrains:annotations:24.0.1'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
