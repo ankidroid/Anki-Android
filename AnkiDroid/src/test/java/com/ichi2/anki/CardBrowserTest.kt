@@ -348,6 +348,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
     fun previewWorksAfterSort() {
         // #7286
         val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
