@@ -1767,7 +1767,7 @@ open class DeckPicker :
         startActivityWithAnimation(intent, START)
     }
 
-    private fun openStudyOptions(withDeckOptions: Boolean) {
+    private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
