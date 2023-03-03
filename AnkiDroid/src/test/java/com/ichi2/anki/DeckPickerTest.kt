@@ -8,7 +8,7 @@ import android.view.Menu
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.test.core.app.ActivityScenario
-import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
@@ -211,7 +211,7 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker.handleStartupFailure(InitialActivity.StartupFailure.DATABASE_LOCKED)
         assertThat(
             deckPicker.databaseErrorDialog,
-            equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+            equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
         )
     }
 
@@ -228,7 +228,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "A specific dialog for a conflict should be shown",
                 d.databaseErrorDialog,
-                equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+                equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             )
             assertThat(
                 "No exception reports should be thrown",
@@ -260,7 +260,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "A specific dialog for a conflict should be shown",
                 d.databaseErrorDialog,
-                equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+                equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             )
         } finally {
             BackendEmulatingOpenConflict.disable()
@@ -429,7 +429,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "An error dialog should be displayed",
                 deckPicker.databaseErrorDialog,
-                equalTo(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+                equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
             )
         } finally {
             InitialActivityWithConflictTest.setupForDefault()
@@ -453,7 +453,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "An error dialog should be displayed",
                 deckPicker.databaseErrorDialog,
-                equalTo(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION)
+                equalTo(DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION)
             )
             assertThat(
                 CollectionHelper.getDatabaseVersion(targetContext),
@@ -556,12 +556,12 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     private class DeckPickerEx : DeckPicker() {
-        var databaseErrorDialog = 0
+        var databaseErrorDialog: DatabaseErrorDialogType? = null
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
 
-        override fun showDatabaseErrorDialog(id: Int) {
-            databaseErrorDialog = id
+        override fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+            databaseErrorDialog = errorDialogType
         }
 
         fun onStoragePermissionGranted() {
