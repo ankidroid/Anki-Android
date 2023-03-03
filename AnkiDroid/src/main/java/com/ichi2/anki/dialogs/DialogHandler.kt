@@ -21,6 +21,8 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.NetworkUtils
@@ -46,7 +48,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
         val deckPicker = mActivity.get() as DeckPicker
         if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
             // Collection could not be opened
-            deckPicker.showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+            deckPicker.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
             // Handle import of collection package APKG
             deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getStringArrayList("importPath")!!)
@@ -71,7 +73,8 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
             // Database error dialog
-            deckPicker.showDatabaseErrorDialog(msgData.getInt("dialogType"))
+            val errorDialogType = msgData.getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
+            deckPicker.showDatabaseErrorDialog(errorDialogType)
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
             val dialog = ConfirmationDialog()

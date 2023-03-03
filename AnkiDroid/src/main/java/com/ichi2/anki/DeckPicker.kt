@@ -69,6 +69,7 @@ import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.*
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
@@ -601,11 +602,11 @@ open class DeckPicker :
             }
             FUTURE_ANKIDROID_VERSION -> {
                 Timber.i("Displaying database versioning")
-                showDatabaseErrorDialog(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION)
             }
             DATABASE_LOCKED -> {
                 Timber.i("Displaying database locked error")
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
             WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
@@ -628,11 +629,11 @@ open class DeckPicker :
 
     private fun displayDatabaseFailure() {
         Timber.i("Displaying database failure")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
     private fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DISK_FULL)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
@@ -887,7 +888,7 @@ open class DeckPicker :
             }
             R.id.action_check_database -> {
                 Timber.i("DeckPicker:: Check database button pressed")
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK)
                 return true
             }
             R.id.action_check_media -> {
@@ -913,7 +914,7 @@ open class DeckPicker :
             }
             R.id.action_restore_backup -> {
                 Timber.i("DeckPicker:: Restore from backup button pressed")
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
                 return true
             }
             R.id.action_export -> {
@@ -1451,12 +1452,12 @@ open class DeckPicker :
     }
 
     // Show dialogs to deal with database loading issues etc
-    open fun showDatabaseErrorDialog(id: Int) {
-        if (id == DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK && userMigrationIsInProgress(this)) {
+    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+        if (errorDialogType == DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK && userMigrationIsInProgress(this)) {
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
-        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(id)
+        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
         showAsyncDialogFragment(newFragment)
     }
 
@@ -1607,12 +1608,12 @@ open class DeckPicker :
 
     open fun handleDbError() {
         Timber.i("Displaying Database Error")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
 
     open fun handleDbLocked() {
         Timber.i("Displaying Database Locked")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
     }
 
     fun restoreFromBackup(path: String) {
