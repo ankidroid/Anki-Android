@@ -82,7 +82,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
-import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
@@ -104,7 +103,6 @@ import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
-import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
@@ -290,105 +288,6 @@ open class DeckPicker :
         Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
         showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
         true
-    }
-
-    private val mImportAddListener = ImportAddListener(this)
-
-    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: ImporterData?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            // If result.errFlag and result are both set, we are signalling
-            // some files were imported successfully & some errors occurred.
-            // If result.impList is null & result.errList is set
-            // we are signalling all the files which were selected threw error
-            if (result!!.impList == null && result.errList != null) {
-                Timber.w("Import: Add Failed: %s", result.errList)
-                context.showSimpleMessageDialog(result.errList)
-            } else {
-                Timber.i("Import: Add succeeded")
-
-                var fileCount = 0
-                var totalCardCount = 0
-
-                var errorMsg = ""
-
-                for (data in result.impList!!) {
-                    // Check if mLog is not null or empty
-                    // If mLog is not null or empty that indicates an error has occurred.
-                    if (data.log.isEmpty()) {
-                        fileCount += 1
-                        totalCardCount += data.cardCount
-                    } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
-                }
-
-                var dialogMsg = context.resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
-                if (result.errList != null) {
-                    errorMsg += result.errList
-                }
-                if (errorMsg.isNotEmpty()) {
-                    dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
-                }
-
-                context.showSimpleMessageDialog(dialogMsg)
-                context.updateDeckList()
-            }
-        }
-
-        override fun actualOnPreExecute(context: DeckPicker) {
-            if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog = StyledProgressDialog.show(
-                    context,
-                    context.resources.getString(R.string.import_title),
-                    null,
-                    false
-                )
-            }
-        }
-
-        override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            @Suppress("Deprecation")
-            context.mProgressDialog!!.setMessage(value)
-        }
-    }
-
-    private fun importReplaceListener(): ImportReplaceListener {
-        return ImportReplaceListener(this)
-    }
-
-    private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
-            Timber.i("Import: Replace Task Completed")
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            val res = context.resources
-            if (result!!.succeeded()) {
-                context.updateDeckList()
-            } else {
-                context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
-            }
-        }
-
-        override fun actualOnPreExecute(context: DeckPicker) {
-            if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog = StyledProgressDialog.show(
-                    context,
-                    context.resources.getString(R.string.import_title),
-                    context.resources.getString(R.string.import_replacing),
-                    false
-                )
-            }
-        }
-
-        /**
-         * @param value A message
-         */
-        override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            @Suppress("Deprecation")
-            context.mProgressDialog!!.setMessage(value)
-        }
     }
 
     // ----------------------------------------------------------------------------
@@ -930,14 +829,6 @@ open class DeckPicker :
         }
     }
 
-    private fun showImportDialog() {
-        if (userMigrationIsInProgress(this)) {
-            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
-            return
-        }
-        showDialogFragment(ImportFileSelectionFragment.createInstance(this))
-    }
-
     fun exportCollection(includeMedia: Boolean) {
         mExportingDelegate.showExportDialog(
             ExportDialogParams(
@@ -980,13 +871,9 @@ open class DeckPicker :
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation()
         } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
-            val importResult = ImportUtils.handleFileImport(this, data!!)
-            if (!importResult.isSuccess) {
-                ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
-            }
+            onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
-            val path = ImportUtils.getFileCachedCopy(this, data!!) ?: return
-            startActivity(CsvImporter.getIntent(this, path))
+            onSelectedCsvForImport(data!!)
         }
     }
 
@@ -1489,15 +1376,6 @@ open class DeckPicker :
         showAsyncDialogFragment(newFragment, Channel.SYNC)
     }
 
-    fun showImportDialog(id: Int, messageList: ArrayList<String>) {
-        Timber.d("showImportDialog() delegating to ImportDialog")
-        if (messageList.isEmpty()) {
-            messageList.add("")
-        }
-        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
-        showAsyncDialogFragment(newFragment)
-    }
-
     fun onSdCardNotMounted() {
         showThemedToast(this, resources.getString(R.string.sd_card_not_mounted), false)
         finishWithoutAnimation()
@@ -1694,7 +1572,7 @@ open class DeckPicker :
     override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
         if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
+            TaskManager.launchCollectionTask(ImportAdd(importPath), importAddListener())
         } else {
             importApkgs(importPath)
         }
@@ -2673,12 +2551,6 @@ enum class SyncIconState {
      */
     Disabled
 }
-
-/**
- * @param impList: List of packages to import
- * @param errList: a string describing the errors. Null if no error.
- */
-data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)
 
 class CollectionLoadingErrorDialog : DialogHandlerMessage(
     WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
