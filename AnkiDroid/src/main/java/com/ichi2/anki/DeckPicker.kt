@@ -466,22 +466,6 @@ open class DeckPicker :
                 startMigrateUserDataService()
                 return false
             }
-            // If legacy storage is being used, ensure storage permission is obtained in order to access Legacy Directories
-            ScopedStorageService.Status.REQUIRES_PERMISSION -> {
-                // if a dialog was not shown, continue
-                val storagePermissionsResult = startupStoragePermissionManager.checkPermissions()
-                if (storagePermissionsResult.requiresPermissionDialog) {
-                    Timber.i("postponing startup code - dialog shown")
-                    startupStoragePermissionManager.displayStoragePermissionDialog()
-                    return true
-                }
-                return false
-            }
-            ScopedStorageService.Status.PERMISSION_FAILED -> {
-                // TODO: Handle "user reinstalled & kept data" scenario.
-                //  (Or edge case of permission removal)
-                return false
-            }
             // App is already using Scoped Storage Directory for user data, no need to migrate & can proceed with startup
             ScopedStorageService.Status.COMPLETED, ScopedStorageService.Status.NOT_NEEDED -> return false
         }
@@ -524,9 +508,13 @@ open class DeckPicker :
             }
             DIRECTORY_NOT_ACCESSIBLE -> {
                 Timber.i("AnkiDroid directory inaccessible")
-                val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
-                showThemedToast(this, R.string.directory_inaccessible, false)
+                if (ScopedStorageService.collectionInaccessibleAfterUninstall(this)) {
+                    showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
+                } else {
+                    val i = AdvancedSettingsFragment.getSubscreenIntent(this)
+                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
+                    showThemedToast(this, R.string.directory_inaccessible, false)
+                }
             }
             FUTURE_ANKIDROID_VERSION -> {
                 Timber.i("Displaying database versioning")
@@ -1470,6 +1458,7 @@ open class DeckPicker :
     }
 
     fun exit() {
+        Timber.i("exit()")
         CollectionHelper.instance.closeCollection(false, "DeckPicker:exit()")
         finishWithoutAnimation()
     }
