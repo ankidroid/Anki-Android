@@ -452,7 +452,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @param newFragment  the DialogFragment you want to show
      */
     open fun showDialogFragment(newFragment: DialogFragment) {
-        showDialogFragment(this, newFragment)
+        runOnUiThread {
+            showDialogFragment(this, newFragment)
+        }
     }
 
     /**
