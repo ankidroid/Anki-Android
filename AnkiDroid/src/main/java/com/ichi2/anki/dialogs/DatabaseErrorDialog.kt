@@ -18,10 +18,13 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
 import android.view.KeyEvent
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -35,9 +38,8 @@ import com.ichi2.async.Connection
 import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.utils.*
 import com.ichi2.utils.UiUtil.makeBold
-import com.ichi2.utils.contentNullable
-import com.ichi2.utils.iconAttr
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -340,6 +342,101 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                 }
             }
+            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
+                val listItems = UninstallListItem.createList()
+                dialog.show {
+                    contentNullable(message)
+                    listItems(items = listItems.map { getString(it.stringRes) }, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
+                        val listItem = listItems[index]
+                        listItem.onClick(activity as DeckPicker)
+                        if (listItem.dismissesDialog) {
+                            this.dismiss()
+                        }
+                    }
+                    noAutoDismiss()
+                    cancelable(false)
+                }
+            }
+        }
+    }
+
+    /** List items for [DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL] */
+    private enum class UninstallListItem(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (DeckPicker) -> Unit) {
+
+        RESTORE_FROM_ANKIWEB(
+            R.string.restore_data_from_ankiweb,
+            dismissesDialog = true,
+            {
+                this.displayResetToNewDirectoryDialog(it)
+            }
+        ),
+        INSTALL_NON_PLAY_APP_RECOMMENDED(
+            R.string.install_non_play_store_ankidroid_recommended,
+            dismissesDialog = false,
+            {
+                val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
+                it.openUrl(restoreUi)
+            }
+        ),
+        INSTALL_NON_PLAY_APP_NORMAL(
+            R.string.install_non_play_store_ankidroid,
+            dismissesDialog = false,
+            {
+                val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
+                it.openUrl(restoreUi)
+            }
+        ),
+        RESTORE_FROM_BACKUP(
+            R.string.restore_data_from_backup,
+            dismissesDialog = true,
+            {
+                // TODO:
+                //  it.showImportDialog() - colpkg only
+                //  import to the default location
+                //  AND on completion, reset the directory to here
+                //  AND handle errors/partial restores
+            }
+        ),
+        GET_HELP(
+            R.string.help_title_get_help,
+            dismissesDialog = false,
+            {
+                it.openUrl(Uri.parse(it.getString(R.string.link_forum)))
+            }
+        ),
+        RECREATE_COLLECTION(
+            R.string.create_new_collection,
+            dismissesDialog = false,
+            {
+                this.displayResetToNewDirectoryDialog(it)
+            }
+        );
+
+        companion object {
+            /** A dialog which creates a new collection in an unsafe location */
+            fun displayResetToNewDirectoryDialog(context: DeckPicker) {
+                AlertDialog.Builder(context).show {
+                    title(R.string.backup_new_collection)
+                    iconAttr(R.attr.dialogErrorIcon)
+                    message(R.string.new_unsafe_collection)
+                    positiveButton(R.string.dialog_positive_create) {
+                        Timber.w("Creating new collection")
+                        val ch = CollectionHelper.instance
+                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        CollectionHelper.resetAnkiDroidDirectory(context)
+                        context.exit()
+                    }
+                    negativeButton(R.string.dialog_cancel)
+                    cancelable(false)
+                }
+            }
+            fun createList(): List<UninstallListItem> {
+                return if (isLoggedIn()) {
+                    listOf(RESTORE_FROM_ANKIWEB, INSTALL_NON_PLAY_APP_NORMAL, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
+                } else {
+                    listOf(INSTALL_NON_PLAY_APP_RECOMMENDED, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
+                }.filter { it != RESTORE_FROM_BACKUP } // filter non-implemented member
+            }
         }
     }
 
@@ -386,6 +483,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     databaseVersion
                 )
             }
+            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> getString(R.string.directory_inaccessible_after_uninstall_summary, CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()))
             else -> requireArguments().getString("dialogMessage")
         }
     private val title: String
@@ -402,6 +500,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             INCOMPATIBLE_DB_VERSION -> resources.getString(R.string.incompatible_database_version_title)
             DIALOG_DB_ERROR -> resources.getString(R.string.answering_error_title)
             DIALOG_DISK_FULL -> resources.getString(R.string.storage_full_title)
+            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> resources.getString(R.string.directory_inaccessible_after_uninstall)
         }
 
     override val notificationMessage: String? get() = message
@@ -435,7 +534,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         INCOMPATIBLE_DB_VERSION,
 
         /** If the disk space is full **/
-        DIALOG_DISK_FULL;
+        DIALOG_DISK_FULL,
+
+        /** If [android.R.attr.preserveLegacyExternalStorage] is no longer active */
+        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL;
     }
 
     companion object {

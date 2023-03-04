@@ -22,6 +22,7 @@ import android.os.Environment
 import android.text.format.Formatter
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.DeleteOnUninstall
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.Preferences
@@ -550,6 +551,18 @@ open class CollectionHelper {
                     PREF_COLLECTION_PATH
                 ) { getDefaultAnkiDroidDirectory(context) }
             }
+        }
+
+        /**
+         * Resets the AnkiDroid directory to the [getDefaultAnkiDroidDirectory]
+         * Note: if [android.R.attr.preserveLegacyExternalStorage] is in use
+         * this will represent a change from `/AnkiDroid` to `/Android/data/...`
+         */
+        fun resetAnkiDroidDirectory(context: Context) {
+            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val directory = getDefaultAnkiDroidDirectory(context)
+            Timber.d("resetting AnkiDroid directory to %s", directory)
+            preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
         }
 
         /** Fetches additional collection data not required for
