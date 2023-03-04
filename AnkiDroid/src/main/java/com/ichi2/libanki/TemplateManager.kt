@@ -33,7 +33,6 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
-import timber.log.Timber
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
@@ -119,17 +118,16 @@ class TemplateManager {
         template: JSONObject? = null,
         fill_empty: Boolean = false
     ) {
-
-        @RustCleanup("internal variables should be private, revert them once we're on V16")
         @RustCleanup("this was a WeakRef")
-        internal val _col: Collection = col
-        internal var _card: Card = card
-        internal var _note: Note = note
-        internal var _browser: Boolean = browser
-        internal var _template: JSONObject? = template
-        internal var _fill_empty: Boolean = fill_empty
-        private var _fields: HashMap<String, String>? = null
-        internal var _note_type: NotetypeJson = notetype ?: note.model()
+        private val _col: Collection = col
+        private var _card: Card = card
+        private var _note: Note = note
+        private var _browser: Boolean = browser
+        private var _template: JSONObject? = template
+        private var _fill_empty: Boolean = fill_empty
+
+//      private var _fields: HashMap<String, String>? = null
+        private var _note_type: NotetypeJson = notetype ?: note.model()
 
         companion object {
             fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {
@@ -156,30 +154,6 @@ class TemplateManager {
 
         fun col() = _col
 
-        fun fields(): HashMap<String, String> {
-            Timber.w(".fields() is obsolete, use .note() or .card()")
-            if (_fields == null) {
-                // fields from note
-                val fields = _note.items().map { Pair(it[0]!!, it[1]!!) }.toMap().toMutableMap()
-
-                // add (most) special fields
-                fields["Tags"] = _note.stringTags().trim()
-                fields["Type"] = _note_type.name
-                fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
-                fields["Subdeck"] = Decks.basename(fields["Deck"]!!)
-                if (_template != null) {
-                    fields["Card"] = _template!!["name"] as String
-                } else {
-                    fields["Card"] = ""
-                }
-
-                val flag = _card.userFlag()
-                fields["CardFlag"] = if (flag != 0) "flag$flag" else ""
-                _fields = HashMap(fields)
-            }
-            return _fields!!
-        }
-
         /**
          * Returns the card being rendered.
          * Be careful not to call .q() or .a() on the card, or you'll create an
@@ -189,16 +163,6 @@ class TemplateManager {
 
         fun note() = _note
         fun noteType() = _note_type
-
-        @RustCleanup("legacy")
-        fun qfmt(): String {
-            return templatesForCard(card(), _browser).first
-        }
-
-        @RustCleanup("legacy")
-        fun afmt(): String {
-            return templatesForCard(card(), _browser).second
-        }
 
         fun render(): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
@@ -226,6 +190,7 @@ class TemplateManager {
                     val fileName = match.groupValues[1]
                     val extension = fileName.substringAfterLast(".", "")
                     if (extension in VIDEO_EXTENSIONS) {
+                        @Suppress("HtmlUnknownAttribute") // controlsList is valid, but marked as invalid in the IDE
                         @Language("HTML")
                         val result =
                             """<video src="$fileName" controls controlsList="nodownload"></video>"""
@@ -283,11 +248,7 @@ class TemplateManager {
 
         /** Stores the rendered templates and extracted AV tags. */
         data class TemplateRenderOutput(
-            @get:JvmName("getQuestionText")
-            @set:JvmName("setQuestionText")
             var question_text: String,
-            @get:JvmName("getAnswerText")
-            @set:JvmName("setAnswerText")
             var answer_text: String,
             val question_av_tags: List<AvTag>,
             val answer_av_tags: List<AvTag>,
@@ -296,23 +257,6 @@ class TemplateManager {
 
             fun questionAndStyle() = "<style>$css</style>$question_text"
             fun answerAndStyle() = "<style>$css</style>$answer_text"
-        }
-
-        @RustCleanup("legacy")
-        fun templatesForCard(card: Card, browser: Boolean): Pair<String, String> {
-            val template = card.template()
-            var a: String? = null
-            var q: String? = null
-
-            if (browser) {
-                q = template.getString("bqfmt")
-                a = template.getString("bafmt")
-            }
-
-            q = q ?: template.getString("qfmt")
-            a = a ?: template.getString("afmt")
-
-            return Pair(q!!, a!!)
         }
 
         /** Complete rendering by applying any pending custom filters. */
