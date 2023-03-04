@@ -32,7 +32,7 @@ fun DeckPicker.performBackupInBackground() {
     }
 }
 
-fun DeckPicker.importColpkg(colpkgPath: String) {
+fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiActivity, Activity : ImportColpkgListener {
     launchCatchingTask {
         withProgress(
             extractProgress = {
@@ -44,8 +44,7 @@ fun DeckPicker.importColpkg(colpkgPath: String) {
             CollectionManager.importColpkg(colpkgPath)
         }
 
-        invalidateOptionsMenu()
-        updateDeckList()
+        onImportColpkg(colpkgPath)
     }
 }
 

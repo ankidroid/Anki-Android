@@ -39,6 +39,10 @@ import timber.log.Timber
 // BackendBackups/BackendImporting - new backend for importing
 // importReplaceListener - old backend listener for importing
 
+fun interface ImportColpkgListener {
+    fun onImportColpkg(colpkgPath: String?)
+}
+
 fun DeckPicker.onSelectedPackageToImport(data: Intent) {
     val importResult = ImportUtils.handleFileImport(this, data)
     if (!importResult.isSuccess) {
@@ -76,7 +80,7 @@ private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithCo
         }
         val res = context.resources
         if (result!!.succeeded()) {
-            context.updateDeckList()
+            context.onImportColpkg(colpkgPath = null)
         } else {
             context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
         }

@@ -164,7 +164,8 @@ open class DeckPicker :
     MediaCheckDialogListener,
     OnRequestPermissionsResultCallback,
     CustomStudyListener,
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    ImportColpkgListener {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -2522,6 +2523,11 @@ open class DeckPicker :
     // Scoped Storage migration
     private fun setMigrationWasLastPostponedAtToNow() {
         migrationWasLastPostponedAt = TimeManager.time.intTime()
+    }
+
+    override fun onImportColpkg(colpkgPath: String?) {
+        invalidateOptionsMenu()
+        updateDeckList()
     }
 }
 
