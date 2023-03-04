@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.async.Connection
 import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
@@ -388,13 +389,25 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         ),
         RESTORE_FROM_BACKUP(
             R.string.restore_data_from_backup,
-            dismissesDialog = true,
-            {
-                // TODO:
-                //  it.showImportDialog() - colpkg only
-                //  import to the default location
-                //  AND on completion, reset the directory to here
-                //  AND handle errors/partial restores
+            dismissesDialog = false,
+            { deckPicker ->
+                Timber.i("Restoring from colpkg")
+                val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(deckPicker)
+                deckPicker.importColpkgListener = DatabaseRestorationListener(deckPicker, newAnkiDroidDirectory)
+
+                deckPicker.launchCatchingTask {
+                    CollectionHelper.ankiDroidDirectoryOverride = newAnkiDroidDirectory
+
+                    CollectionManager.withCol {
+                        deckPicker.showImportDialog(
+                            ImportOptions(
+                                importTextFile = false,
+                                importColpkg = true,
+                                importApkg = false
+                            )
+                        )
+                    }
+                }
             }
         ),
         GET_HELP(
@@ -435,7 +448,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listOf(RESTORE_FROM_ANKIWEB, INSTALL_NON_PLAY_APP_NORMAL, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
                 } else {
                     listOf(INSTALL_NON_PLAY_APP_RECOMMENDED, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
-                }.filter { it != RESTORE_FROM_BACKUP } // filter non-implemented member
+                }
             }
         }
     }
