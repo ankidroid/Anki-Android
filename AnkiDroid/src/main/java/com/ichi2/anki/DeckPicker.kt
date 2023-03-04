@@ -226,6 +226,8 @@ open class DeckPicker :
      */
     private var mFocusedDeck: Long = 0
 
+    var importColpkgListener: ImportColpkgListener? = null
+
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
@@ -917,12 +919,21 @@ open class DeckPicker :
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen)
         savedInstanceState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
+        importColpkgListener?.let {
+            if (it is DatabaseRestorationListener) {
+                savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
+            }
+        }
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         mFloatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
         migrateStorageAfterMediaSyncCompleted = savedInstanceState.getBoolean("migrateStorageAfterMediaSyncCompleted")
+        savedInstanceState.getString("dbRestorationPath")?.let { path ->
+            CollectionHelper.ankiDroidDirectoryOverride = path
+            importColpkgListener = DatabaseRestorationListener(this, path)
+        }
     }
 
     fun onStorageMigrationCompleted() {
@@ -2605,6 +2616,7 @@ open class DeckPicker :
     override fun onImportColpkg(colpkgPath: String?) {
         invalidateOptionsMenu()
         updateDeckList()
+        importColpkgListener?.onImportColpkg(colpkgPath)
     }
 
     override fun onMediaSyncCompleted(data: SyncCompletion) {

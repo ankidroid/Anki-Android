@@ -533,6 +533,9 @@ open class CollectionHelper {
             return File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).absolutePath
         }
 
+        /** A temporary override for [getCurrentAnkiDroidDirectory] */
+        var ankiDroidDirectoryOverride: String? = null
+
         /**
          * @return the absolute path to the AnkiDroid directory.
          */
@@ -545,6 +548,8 @@ open class CollectionHelper {
                     getDefaultAnkiDroidDirectory(context),
                     "androidTest"
                 ).absolutePath
+            } else if (ankiDroidDirectoryOverride != null) {
+                ankiDroidDirectoryOverride!!
             } else {
                 PreferenceExtensions.getOrSetString(
                     preferences,
