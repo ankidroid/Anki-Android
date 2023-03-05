@@ -99,7 +99,13 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             addNoteLabel.alpha = 1f
             mAddSharedLayout.translationY = 0f
             mAddDeckLayout.translationY = 0f
-            addNoteLabel.translationY = 0f
+            addNoteLabel.translationX = 0f
+
+            // During without animation maintain the original color of FAB
+            mFabMain.apply {
+                backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                setImageResource(addNoteIcon)
+            }
         }
     }
 
@@ -164,6 +170,8 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
                 addNoteLabel.visibility = View.GONE
+
+                mFabMain.setImageResource(addWhiteIcon)
             }
         } else {
             mLinearLayout.alpha = 1f
@@ -209,6 +217,8 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
                 addNoteLabel.visibility = View.GONE
+
+                mFabMain.setImageResource(addWhiteIcon)
             }
         }
     }
@@ -251,7 +261,12 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
-                val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+                val createDeckDialog = CreateDeckDialog(
+                    context,
+                    R.string.new_deck,
+                    CreateDeckDialog.DeckDialogType.DECK,
+                    null
+                )
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
                 closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
