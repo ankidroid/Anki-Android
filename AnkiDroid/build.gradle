@@ -131,6 +131,9 @@ android {
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
             if (project.hasProperty("customSuffix")) {
                 applicationIdSuffix project.property("customSuffix")
+                resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
+            } else {
+                resValue "string", "applicationId", defaultConfig.applicationId
             }
             if (project.hasProperty("customName")) {
                 resValue "string", "app_name", project.property("customName")
@@ -138,7 +141,6 @@ android {
 
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
-            resValue "string", "applicationId", defaultConfig.applicationId
         }
     }
 
