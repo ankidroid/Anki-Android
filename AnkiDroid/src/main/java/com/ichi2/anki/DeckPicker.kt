@@ -581,6 +581,7 @@ open class DeckPicker :
         mFloatingActionMenu.closeFloatingActionMenu()
         menuInflater.inflate(R.menu.deck_picker, menu)
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
+        mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         // ...then launch a task to possibly update the visible icons.
