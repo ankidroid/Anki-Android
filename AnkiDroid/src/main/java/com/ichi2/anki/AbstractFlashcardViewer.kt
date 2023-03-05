@@ -77,6 +77,7 @@ import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.ServiceConnection
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -133,6 +134,7 @@ abstract class AbstractFlashcardViewer :
     WhiteboardMultiTouchMethods,
     AutomaticallyAnswered,
     OnPageFinishedCallback,
+    BaseSnackbarBuilderProvider,
     ChangeManager.Subscriber {
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
@@ -856,14 +858,14 @@ abstract class AbstractFlashcardViewer :
             fun legacyUndo() {
                 Undo().runWithHandler(
                     answerCardHandler(false)
-                        .alsoExecuteAfter { showSnackbarAboveAnswerButtons(message, Snackbar.LENGTH_SHORT) }
+                        .alsoExecuteAfter { showSnackbar(message, Snackbar.LENGTH_SHORT) }
                 )
             }
             if (BackendFactory.defaultLegacySchema) {
                 legacyUndo()
             } else {
                 return launchCatchingTask {
-                    if (!backendUndoAndShowPopup(findViewById(R.id.flip_card))) {
+                    if (!backendUndoAndShowPopup()) {
                         legacyUndo()
                     }
                 }
@@ -929,7 +931,7 @@ abstract class AbstractFlashcardViewer :
         @StringRes textResource: Int,
         duration: Int = Snackbar.LENGTH_SHORT
     ) {
-        showSnackbarAboveAnswerButtons(textResource, duration) {
+        showSnackbar(textResource, duration) {
             setAction(R.string.undo) { undo() }
         }
     }
@@ -938,7 +940,7 @@ abstract class AbstractFlashcardViewer :
         text: String,
         duration: Int = Snackbar.LENGTH_SHORT
     ) {
-        showSnackbarAboveAnswerButtons(text, duration) {
+        showSnackbar(text, duration) {
             setAction(R.string.undo) { undo() }
         }
     }
@@ -1845,31 +1847,13 @@ abstract class AbstractFlashcardViewer :
         closeReviewer(RESULT_ABORT_AND_SYNC, true)
     }
 
-    /** Displays a snackbar which does not obscure the answer buttons  */
-    private fun showSnackbarAboveAnswerButtons(
-        text: CharSequence,
-        duration: Int = Snackbar.LENGTH_LONG,
-        snackbarBuilder: SnackbarBuilder? = null
-    ) {
-        // BUG: Moving from full screen to non-full screen obscures the buttons
-        showSnackbar(text, duration) {
-            snackbarBuilder?.let { it() }
-
-            if (mAnswerButtonsPosition == "bottom") {
-                val easeButtons = findViewById<View>(R.id.answer_options_layout)
-                val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
-                anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
-            }
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        // Configure the snackbar to avoid the bottom answer buttons
+        if (mAnswerButtonsPosition == "bottom") {
+            val easeButtons = findViewById<View>(R.id.answer_options_layout)
+            val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
+            anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
         }
-    }
-
-    private fun showSnackbarAboveAnswerButtons(
-        @StringRes textResource: Int,
-        duration: Int = Snackbar.LENGTH_LONG,
-        snackbarBuilder: SnackbarBuilder? = null
-    ) {
-        val text = getString(textResource)
-        showSnackbarAboveAnswerButtons(text, duration, snackbarBuilder)
     }
 
     private fun onPageUp() {
@@ -2561,13 +2545,13 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
-        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_could_not_find_image, filename)) {
+        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
         }
     }
 
     private fun displayMediaUpgradeRequiredSnackbar() {
-        showSnackbarAboveAnswerButtons(R.string.card_viewer_media_relative_protocol) {
+        showSnackbar(R.string.card_viewer_media_relative_protocol) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
         }
     }
