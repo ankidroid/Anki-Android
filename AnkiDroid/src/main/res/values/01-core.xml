@@ -241,5 +241,6 @@
     <string name="migrating_data_message">Migrating your data</string>
     <string name="migration_successful_message">Migration successful</string>
     <string name="migration_failed_message">Migration failed</string>
+    <string name="migration_fail_notification">Migration failed please restart the application</string>
     <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
 </resources>

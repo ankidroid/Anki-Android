@@ -169,10 +169,13 @@ class MigrationService : Service() {
         fun notifyError(e: Exception) {
             // TODO: Add a button for 'Get Help'
             val copyIntent = IntentHandler.copyStringToClipboardIntent(this.context, e.toString())
-
+            var error = e.toString()
+            if (e is java.lang.IllegalStateException) {
+                error = context.getString(R.string.migration_fail_notification)
+            }
             val copyDebugIntent = compat.getImmutableActivityIntent(this.context, COPY_DEBUG, copyIntent, 0)
             notificationBuilder.setContentTitle(context.getString(R.string.migration_failed_message))
-                .setContentText(e.toString())
+                .setContentText(error)
                 .setOngoing(false)
                 .hideProgressBar()
                 .addAction(R.drawable.ic_star_notify, context.getString(R.string.feedback_copy_debug), copyDebugIntent)
