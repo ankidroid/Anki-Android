@@ -454,7 +454,6 @@
         and AnkiDroid was minimised when the sync completed"
         >Tap to start storage migration</string>
 
-
     <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_required_message">You must sync before performing a storage migration</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>
