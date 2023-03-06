@@ -2438,6 +2438,12 @@ open class DeckPicker :
             // This should not ever occurs.
             return
         }
+
+        if (mActivityPaused) {
+            sendNotificationForAsyncOperation(MigrateStorageOnSyncSuccess(this.resources), Channel.SYNC)
+            return
+        }
+
         launchCatchingTask {
             val elapsedMillisDuringEssentialFilesMigration = measureTimeMillis {
                 withProgress(getString(R.string.start_migration_progress_message)) {

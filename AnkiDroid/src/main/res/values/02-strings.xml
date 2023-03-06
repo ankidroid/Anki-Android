@@ -451,4 +451,9 @@
         comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">
         This functionality is unavailable during a storage migration
     </string>
+
+    <string name="storage_migration_sync_notification"
+        comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync
+        and AnkiDroid was minimised when the sync completed"
+        >Tap to start storage migration</string>
 </resources>
