@@ -18,7 +18,10 @@ package com.ichi2.anki
 
 import android.content.Intent
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -55,6 +58,15 @@ fun DeckPicker.onSelectedCsvForImport(data: Intent) {
     startActivity(CsvImporter.getIntent(this, path))
 }
 
+fun DeckPicker.showImportDialog(id: Int, messageList: ArrayList<String>) {
+    Timber.d("showImportDialog() delegating to ImportDialog")
+    if (messageList.isEmpty()) {
+        messageList.add("")
+    }
+    val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
+    showAsyncDialogFragment(newFragment)
+}
+
 fun DeckPicker.showImportDialog() {
     if (ScopedStorageService.userMigrationIsInProgress(this)) {
         showSnackbar(
@@ -63,7 +75,12 @@ fun DeckPicker.showImportDialog() {
         )
         return
     }
-    showDialogFragment(ImportFileSelectionFragment.createInstance(this))
+    val options = ImportOptions(
+        importApkg = true,
+        importColpkg = true,
+        importTextFile = true
+    )
+    showDialogFragment(ImportFileSelectionFragment.createInstance(this, options))
 }
 
 /* Legacy Backend */
