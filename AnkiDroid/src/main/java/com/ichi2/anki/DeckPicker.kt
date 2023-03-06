@@ -116,7 +116,6 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
-import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -2528,15 +2527,7 @@ open class DeckPicker :
             return
         }
 
-        val ifYouUninstallMessageId = when {
-            isLoggedIn() -> R.string.migration_warning_risk_of_data_loss_if_no_update
-            else -> R.string.migration_update_request_dialog_download_warning
-        }
-
-        @Language("HTML")
-        val message = """${getString(R.string.migration_update_request)}
-            <br>
-            <br>${getString(ifYouUninstallMessageId)}"""
+        val message = getString(R.string.migration_update_request_requires_media_sync)
 
         fun onPostponeOnce() {
             if (shownAutomatically) {
@@ -2565,7 +2556,12 @@ open class DeckPicker :
             .setPositiveButton(
                 getString(R.string.scoped_storage_migrate)
             ) { _, _ ->
-                migrate()
+                if (!BuildConfig.ALLOW_UNSAFE_MIGRATION) {
+                    performMediaSyncBeforeStorageMigration()
+                } else {
+                    Timber.i("Performing unsafe storage migration")
+                    migrate()
+                }
             }
             .setNegativeButton(
                 getString(R.string.scoped_storage_postpone)
@@ -2584,6 +2580,12 @@ open class DeckPicker :
             }
         }
         dialog.addScopedStorageLearnMoreLinkAndShow(message)
+    }
+
+    private fun performMediaSyncBeforeStorageMigration() {
+        Timber.i("Syncing before storage migration")
+        migrateStorageAfterMediaSyncCompleted = true
+        sync()
     }
 
     // Scoped Storage migration
