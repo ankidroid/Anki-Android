@@ -241,6 +241,8 @@ open class DeckPicker :
         callback = handleStoragePermissionsCheckForCheckMedia(WeakReference(this))
     )
 
+    private var migrateStorageAfterMediaSyncCompleted = false
+
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
@@ -923,11 +925,13 @@ open class DeckPicker :
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen)
+        savedInstanceState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         mFloatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
+        migrateStorageAfterMediaSyncCompleted = savedInstanceState.getBoolean("migrateStorageAfterMediaSyncCompleted")
     }
 
     fun onStorageMigrationCompleted() {
@@ -2428,6 +2432,8 @@ open class DeckPicker :
      * Migrate the user data in a service
      */
     fun migrate() {
+        migrateStorageAfterMediaSyncCompleted = false
+
         if (userMigrationIsInProgress(this) || !isLegacyStorage(this)) {
             // This should not ever occurs.
             return
@@ -2592,6 +2598,9 @@ open class DeckPicker :
 
     override fun onMediaSyncCompleted(data: SyncCompletion) {
         Timber.i("Media sync completed. Success: %b", data.isSuccess)
+        if (migrateStorageAfterMediaSyncCompleted) {
+            migrate()
+        }
     }
 }
 
