@@ -166,6 +166,7 @@ open class DeckPicker :
     OnRequestPermissionsResultCallback,
     CustomStudyListener,
     ChangeManager.Subscriber,
+    SyncCompletionListener,
     ImportColpkgListener {
     // Short animation duration from system
     private var mShortAnimDuration = 0
@@ -1528,8 +1529,9 @@ open class DeckPicker :
             if (!BackendFactory.defaultLegacySchema) {
                 handleNewSync(conflict, shouldFetchMedia())
             } else {
-                val data = arrayOf(hkey, shouldFetchMedia(), conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(createSyncListener(), Connection.Payload(data))
+                val fetchMedia = shouldFetchMedia()
+                val data = arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
+                Connection.sync(createSyncListener(isFetchingMedia = fetchMedia), Connection.Payload(data))
             }
         }
         // Warn the user in case the connection is metered
@@ -2586,6 +2588,10 @@ open class DeckPicker :
     override fun onImportColpkg(colpkgPath: String?) {
         invalidateOptionsMenu()
         updateDeckList()
+    }
+
+    override fun onMediaSyncCompleted(data: SyncCompletion) {
+        Timber.i("Media sync completed. Success: %b", data.isSuccess)
     }
 }
 
