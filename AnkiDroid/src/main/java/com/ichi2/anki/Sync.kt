@@ -63,6 +63,11 @@ object SyncPreferences {
     const val HOSTNUM = "hostNum"
 }
 
+data class SyncCompletion(val isSuccess: Boolean)
+interface SyncCompletionListener {
+    fun onMediaSyncCompleted(data: SyncCompletion)
+}
+
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
     val hkey = preferences.getString(SyncPreferences.HKEY, null)
@@ -356,9 +361,10 @@ private suspend fun handleMediaSync(
     } finally {
         dialog.dismiss()
     }
+    deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = true))
 }
 
-fun DeckPicker.createSyncListener() = object : Connection.CancellableTaskListener {
+fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connection.CancellableTaskListener {
     private var mCurrentMessage: String? = null
     private var mCountUp: Long = 0
     private var mCountDown: Long = 0
@@ -726,6 +732,9 @@ fun DeckPicker.createSyncListener() = object : Connection.CancellableTaskListene
                     // fragment here is fine since we build a fresh fragment on resume anyway.
                     Timber.w(e, "Failed to load StudyOptionsFragment after sync.")
                 }
+            }
+            if (isFetchingMedia) {
+                onMediaSyncCompleted(SyncCompletion(isSuccess = true))
             }
         }
     }
