@@ -23,7 +23,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
@@ -31,9 +30,10 @@ import timber.log.Timber
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
+    data class ImportOptions(val importColpkg: Boolean = true, val importApkg: Boolean = true, val importTextFile: Boolean = true)
+
     companion object {
-        @KotlinCleanup("convert importItems to java ArrayList")
-        fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker): RecursivePictureMenu {
+        fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker, options: ImportOptions): RecursivePictureMenu {
             // this needs a deckPicker for now. See use of PICK_APKG_FILE
 
             // This is required for serialization of the lambda
@@ -48,23 +48,28 @@ class ImportFileSelectionFragment {
                 }
             }
 
-            val importItems = arrayListOf<RecursivePictureMenu.Item>(
-                FunctionItem(
-                    R.string.import_deck_package,
-                    R.drawable.ic_manual_black_24dp,
-                    UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                    OpenFilePicker(DeckPicker.PICK_APKG_FILE, true)
-                ),
-                FunctionItem(
-                    R.string.import_collection_package,
-                    R.drawable.ic_manual_black_24dp,
-                    UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
-                    OpenFilePicker(DeckPicker.PICK_APKG_FILE)
-                )
-            )
-            if (!BackendFactory.defaultLegacySchema) {
-                val mimes = arrayOf("text/plain", "text/comma-separated-values", "text/csv", "text/tab-separated-values")
-                importItems.add(
+            val importItems = arrayListOf<RecursivePictureMenu.Item?>(
+                if (options.importApkg) {
+                    FunctionItem(
+                        R.string.import_deck_package,
+                        R.drawable.ic_manual_black_24dp,
+                        UsageAnalytics.Actions.IMPORT_APKG_FILE,
+                        OpenFilePicker(DeckPicker.PICK_APKG_FILE, true)
+                    )
+                } else {
+                    null
+                },
+                if (options.importColpkg) {
+                    FunctionItem(
+                        R.string.import_collection_package,
+                        R.drawable.ic_manual_black_24dp,
+                        UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
+                        OpenFilePicker(DeckPicker.PICK_APKG_FILE)
+                    )
+                } else {
+                    null
+                },
+                if (options.importTextFile && !BackendFactory.defaultLegacySchema) {
                     FunctionItem(
                         R.string.import_csv,
                         R.drawable.ic_baseline_description_24,
@@ -73,11 +78,13 @@ class ImportFileSelectionFragment {
                             DeckPicker.PICK_CSV_FILE,
                             multiple = false,
                             mimeType = "*/*",
-                            extraMimes = mimes
+                            extraMimes = arrayOf("text/plain", "text/comma-separated-values", "text/csv", "text/tab-separated-values")
                         )
                     )
-                )
-            }
+                } else {
+                    null
+                }
+            ).filterNotNull()
             return RecursivePictureMenu.createInstance(ArrayList(importItems), R.string.menu_import)
         }
 
