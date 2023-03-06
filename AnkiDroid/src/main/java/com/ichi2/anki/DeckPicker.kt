@@ -1518,21 +1518,13 @@ open class DeckPicker :
             return
         }
 
-        fun shouldFetchMedia(): Boolean {
-            val always = getString(R.string.sync_media_always_value)
-            val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
-            val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
-            return shouldFetchMedia == always ||
-                (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
-        }
-
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, shouldFetchMedia())
+                handleNewSync(conflict, shouldFetchMedia(preferences))
             } else {
-                val fetchMedia = shouldFetchMedia()
+                val fetchMedia = shouldFetchMedia(preferences)
                 val data = arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
                 Connection.sync(createSyncListener(isFetchingMedia = fetchMedia), Connection.Payload(data))
             }
@@ -2556,12 +2548,7 @@ open class DeckPicker :
             .setPositiveButton(
                 getString(R.string.scoped_storage_migrate)
             ) { _, _ ->
-                if (!BuildConfig.ALLOW_UNSAFE_MIGRATION) {
-                    performMediaSyncBeforeStorageMigration()
-                } else {
-                    Timber.i("Performing unsafe storage migration")
-                    migrate()
-                }
+                performMediaSyncBeforeStorageMigration()
             }
             .setNegativeButton(
                 getString(R.string.scoped_storage_postpone)
@@ -2583,9 +2570,28 @@ open class DeckPicker :
     }
 
     private fun performMediaSyncBeforeStorageMigration() {
-        Timber.i("Syncing before storage migration")
-        migrateStorageAfterMediaSyncCompleted = true
-        sync()
+        // if we allow an unsafe migration, the 'sync required' dialog shows an unsafe migration confirmation dialog
+        val showUnsafeSyncDialog = (BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn())
+
+        if (shouldFetchMedia(getSharedPrefs(this)) && !showUnsafeSyncDialog) {
+            Timber.i("Syncing before storage migration")
+            migrateStorageAfterMediaSyncCompleted = true
+            sync()
+        } else {
+            Timber.i("media sync disabled: displaying dialog")
+            AlertDialog.Builder(this).show {
+                setTitle(R.string.media_sync_required_title)
+                iconAttr(R.attr.dialogErrorIcon)
+                setMessage(R.string.media_sync_unavailable_message)
+                setPositiveButton(getString(R.string.scoped_storage_migrate)) { _, _ ->
+                    Timber.i("Performing unsafe storage migration")
+                    migrate()
+                }
+                setNegativeButton(getString(R.string.scoped_storage_postpone)) { _, _ ->
+                    setMigrationWasLastPostponedAtToNow()
+                }
+            }
+        }
     }
 
     // Scoped Storage migration

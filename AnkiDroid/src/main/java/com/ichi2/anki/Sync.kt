@@ -330,6 +330,20 @@ private fun cancelMediaSync(backend: Backend) {
     backend.abortMediaSync()
 }
 
+/**
+ * Whether media should be fetched on sync. Options from preferences are:
+ * * Always
+ * * Only if unmetered
+ * * Never
+ */
+fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
+    val always = getString(R.string.sync_media_always_value)
+    val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
+    val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
+    return shouldFetchMedia == always ||
+        (shouldFetchMedia == onlyIfUnmetered && !NetworkUtils.isActiveNetworkMetered())
+}
+
 private suspend fun handleMediaSync(
     deckPicker: DeckPicker,
     auth: SyncAuth
