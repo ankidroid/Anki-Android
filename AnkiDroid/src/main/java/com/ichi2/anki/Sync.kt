@@ -31,10 +31,12 @@ import anki.sync.syncAuth
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.HostNumFactory
+import com.ichi2.async.AsyncOperation
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
@@ -362,6 +364,28 @@ private suspend fun handleMediaSync(
         dialog.dismiss()
     }
     deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = true))
+}
+
+/**
+ * Called from [DeckPicker.onMediaSyncCompleted] -> [DeckPicker.migrate] if the app is backgrounded
+ */
+class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
+    override val notificationMessage = res.getString(R.string.storage_migration_sync_notification)
+    override val notificationTitle = res.getString(R.string.sync_database_acknowledge)
+
+    override val handlerMessage: DialogHandlerMessage
+        get() = MigrateOnSyncSuccessHandler()
+
+    class MigrateOnSyncSuccessHandler : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS,
+        analyticName = "SyncSuccessHandler"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.migrate()
+        }
+
+        override fun toMessage() = emptyMessage(this.what)
+    }
 }
 
 fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connection.CancellableTaskListener {
