@@ -265,7 +265,7 @@ object ScopedStorageService {
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
-        // for app-specific external or internal storage - the only directories which will be accessible without
+        // for app-private external or internal storage - the only directories which will be accessible without
         // permissions under scoped storage
         val scopedDirectories = externalScopedDirs + internalScopedDir
         var currentDirParent: File? = currentDir
@@ -278,7 +278,7 @@ object ScopedStorageService {
             currentDirParent = currentDirParent.parentFile?.canonicalFile
         }
 
-        // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
+        // If the current AnkiDroid directory isn't a sub directory of the app-private external or internal storage
         // directories, then it must be in a legacy storage directory
         return true
     }

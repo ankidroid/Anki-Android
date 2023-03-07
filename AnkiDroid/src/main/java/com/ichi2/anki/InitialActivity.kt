@@ -138,7 +138,7 @@ sealed interface AnkiDroidFolder {
     class PublicFolder(val requiredPermissions: Array<String>) : AnkiDroidFolder
 
     /**
-     * AnkiDroid will use the app-specific folder: `~/Android/data/com.ichi2.anki[.A]/files/AnkiDroid`.
+     * AnkiDroid will use the app-private folder: `~/Android/data/com.ichi2.anki[.A]/files/AnkiDroid`.
      * The user may delete when they uninstall the app, risking data loss.
      * No permission dialog is required.
      * Google will not allow [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE], so this is default on the Play Store.
@@ -149,7 +149,7 @@ sealed interface AnkiDroidFolder {
 /**
  * Returns in which folder AnkiDroid data is saved.
  * [AnkiDroidFolder.PublicFolder] is preferred, as it reduce risk of data loss.
- * When impossible, we use the app-specific directory.
+ * When impossible, we use the app-private directory.
  * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
  */
 internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroidFolder {
