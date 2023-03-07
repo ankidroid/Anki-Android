@@ -121,7 +121,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             SIMPLE_NOTIFICATION_ID
         )
         // Show any pending dialogs which were stored persistently
-        dialogHandler.readMessage()
+        dialogHandler.executeMessage()
     }
 
     override fun onDestroy() {
