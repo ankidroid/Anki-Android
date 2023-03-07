@@ -35,9 +35,8 @@ object Permissions {
         return hasPermission(context, Manifest.permission.RECORD_AUDIO)
     }
 
-    private fun hasPermission(context: Context, permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-    }
+    fun hasPermission(context: Context, vararg permissions: String): Boolean =
+        permissions.all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }
 
     /**
      * Check if we have write access permission to the external storage
