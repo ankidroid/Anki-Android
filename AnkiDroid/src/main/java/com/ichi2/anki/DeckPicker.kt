@@ -27,13 +27,11 @@ package com.ichi2.anki
 
 import android.Manifest
 import android.content.*
-import android.content.pm.PackageManager
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.*
-import android.provider.Settings
 import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
@@ -41,7 +39,6 @@ import android.widget.*
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -81,6 +78,9 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
+import com.ichi2.anki.permissions.PermissionManager
+import com.ichi2.anki.permissions.PermissionsRequestRawResults
+import com.ichi2.anki.permissions.PermissionsRequestResults
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
@@ -121,6 +121,7 @@ import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
+import java.lang.ref.WeakReference
 import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
 
@@ -227,6 +228,16 @@ open class DeckPicker :
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
+
+    private val startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
+
+    // used for check media
+    private val checkMediaStoragePermissionCheck = PermissionManager.register(
+        this,
+        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        useCallbackIfActivityRecreated = true,
+        callback = handleStoragePermissionsCheckForCheckMedia(WeakReference(this))
+    )
 
     // stored for testing purposes
     @VisibleForTesting
@@ -452,8 +463,9 @@ open class DeckPicker :
             }
             // If legacy storage is being used, ensure storage permission is obtained in order to access Legacy Directories
             ScopedStorageService.Status.REQUIRES_PERMISSION -> {
-                requestStoragePermission()
-                return true
+                Timber.i("postponing startup code - dialog shown")
+                startupStoragePermissionManager.displayStoragePermissionDialog()
+                return false
             }
             ScopedStorageService.Status.PERMISSION_FAILED -> {
                 // TODO: Handle "user reinstalled & kept data" scenario.
@@ -469,24 +481,27 @@ open class DeckPicker :
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
      */
-    private fun handleStartup() {
+    fun handleStartup() {
+        val storagePermissionsResult = startupStoragePermissionManager.checkPermissions()
+        if (storagePermissionsResult.requiresPermissionDialog) {
+            Timber.i("postponing startup code - dialog shown")
+            startupStoragePermissionManager.displayStoragePermissionDialog()
+            return
+        }
+
         if (startingStorageMigrationInterruptsStartup()) return
 
         Timber.d("handleStartup: Continuing. unaffected by storage migration")
-        if (hasStorageAccessPermission(this)) {
-            val failure = InitialActivity.getStartupFailureType(this)
-            mStartupError = if (failure == null) {
-                // Show any necessary dialogs (e.g. changelog, special messages, etc)
-                val sharedPrefs = getSharedPrefs(this)
-                showStartupScreensAndDialogs(sharedPrefs, 0)
-                false
-            } else {
-                // Show error dialogs
-                handleStartupFailure(failure)
-                true
-            }
+        val failure = InitialActivity.getStartupFailureType(this)
+        mStartupError = if (failure == null) {
+            // Show any necessary dialogs (e.g. changelog, special messages, etc)
+            val sharedPrefs = getSharedPrefs(this)
+            showStartupScreensAndDialogs(sharedPrefs, 0)
+            false
         } else {
-            requestStoragePermission()
+            // Show error dialogs
+            handleStartupFailure(failure)
+            true
         }
     }
 
@@ -560,19 +575,6 @@ open class DeckPicker :
             view.background = drawable
             true
         }
-    }
-
-    /**
-     * precondition: [hasStorageAccessPermission] should return false
-     */
-    private fun requestStoragePermission() {
-        // DEFECT #5847: This fails if the activity is killed.
-        // Even if the dialog is showing, we want to show it again.
-        val storagePermissions = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -875,26 +877,6 @@ open class DeckPicker :
             onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
             onSelectedCsvForImport(data!!)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.isNotEmpty()) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                invalidateOptionsMenu()
-                handleStartup()
-            } else {
-                // User denied access to file storage  so show error toast and display "App Info"
-                showThemedToast(this, R.string.startup_no_storage_permission, false)
-                finishWithoutAnimation()
-                // Open the Android settings page for our app so that the user can grant the missing permission
-                val intent = Intent()
-                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                val uri = Uri.fromParts("package", packageName, null)
-                intent.data = uri
-                startActivityWithoutAnimation(intent)
-            }
         }
     }
 
@@ -1450,19 +1432,7 @@ open class DeckPicker :
      * If has the storage permission, job is scheduled, otherwise storage permission is asked first.
      */
     override fun mediaCheck() {
-        // TODO show to the user this message when failing
-        @Suppress("UNUSED_VARIABLE")
-        val failedCheck = getString(R.string.check_media_failed)
-        if (hasStorageAccessPermission(this)) {
-            launchCatchingTask {
-                val result = checkMedia()
-                if (result != null) {
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
-                }
-            }
-        } else {
-            requestStoragePermission()
-        }
+        checkMediaStoragePermissionCheck.launchDialogOrExecuteCallbackNow()
     }
 
     override fun deleteUnused(unused: List<String>) {
@@ -2384,6 +2354,26 @@ open class DeckPicker :
         // 10 minutes in milliseconds.
         const val AUTOMATIC_SYNC_MIN_INTERVAL: Long = 600000
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
+
+        /**
+         * Handles a [PermissionsRequestResults] for storage permissions to launch 'checkMedia'
+         * Static to avoid a context leak
+         */
+        fun handleStoragePermissionsCheckForCheckMedia(deckPickerRef: WeakReference<DeckPicker>): (permissionResultRaw: PermissionsRequestRawResults) -> Unit {
+            fun inner(permissionResultRaw: PermissionsRequestRawResults) {
+                val deckPicker = deckPickerRef.get() ?: return
+                val permissionResult = PermissionsRequestResults.from(deckPicker, permissionResultRaw)
+                if (permissionResult.allGranted) {
+                    deckPicker.launchCatchingTask {
+                        val mediaCheckResult = deckPicker.checkMedia() ?: return@launchCatchingTask
+                        deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+                    }
+                } else {
+                    showThemedToast(deckPicker, R.string.check_media_failed, true)
+                }
+            }
+            return ::inner
+        }
 
         // Animation utility methods used by renderPage() method
         fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
