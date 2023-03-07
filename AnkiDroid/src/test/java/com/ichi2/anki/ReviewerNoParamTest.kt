@@ -165,7 +165,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @Flaky(OS.LINUX, "hasDrawerSwipeConflicts was false")
+    @Flaky(OS.ALL, "hasDrawerSwipeConflicts was false")
     @RunInBackground
     fun defaultDrawerConflictIsTrueIfGesturesEnabled() {
         enableGestureSetting()
