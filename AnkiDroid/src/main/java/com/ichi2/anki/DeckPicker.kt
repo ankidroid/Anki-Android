@@ -978,7 +978,7 @@ open class DeckPicker :
     }
 
     private fun showMigrationCompletedNotification(context: Context) {
-        val builder =NotificationCompat.Builder(
+        val builder = NotificationCompat.Builder(
             context,
             Channel.SCOPED_STORAGE_MIGRATION.id
         )
@@ -986,9 +986,10 @@ open class DeckPicker :
             .setContentTitle(resources.getString(R.string.migration_successful_message))
             .setContentText(resources.getString(R.string.migration_completed))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVibrate( longArrayOf(0, 500, 250, 500))
+            .setVibrate(longArrayOf(0, 500, 250, 500))
 
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0, builder.build())
     }
 
@@ -997,7 +998,8 @@ open class DeckPicker :
         val appProcesses = activityManager.runningAppProcesses ?: return false
         for (appProcess in appProcesses) {
             if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
-                && appProcess.processName == context.packageName) {
+                && appProcess.processName == context.packageName
+            ) {
                 return true
             }
         }
