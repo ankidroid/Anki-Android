@@ -1098,7 +1098,7 @@ open class DeckPicker :
             findInDeckTree(dueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
                 collapsed = !collapsed
             }
-            renderPage()
+            renderPage(col.isEmpty)
             dismissAllDialogFragments()
         }
     }
@@ -1797,9 +1797,11 @@ open class DeckPicker :
         if (quick) {
             launchCatchingTask {
                 withProgress {
-                    val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> =
-                        withCol { sched.quickDeckDueTree() }
-                    onDecksLoaded(decks)
+                    val deckData = withCol {
+                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> = sched.quickDeckDueTree()
+                        Pair(decks, isEmpty)
+                    }
+                    onDecksLoaded(deckData.first, deckData.second)
                 }
             }
         } else {
@@ -1808,14 +1810,16 @@ open class DeckPicker :
                 Timber.d("Refreshing deck list")
                 withProgress {
                     Timber.d("doInBackgroundLoadDeckCounts")
-                    val deckData = withCol { sched.deckDueTree(null) }
-                    onDecksLoaded(deckData)
+                    val deckData = withCol {
+                        Pair(sched.deckDueTree(null), this.isEmpty)
+                    }
+                    onDecksLoaded(deckData.first, deckData.second)
                 }
             }
         }
     }
 
-    private fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
+    private fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?, collectionIsEmpty: Boolean) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
@@ -1829,7 +1833,7 @@ open class DeckPicker :
         }
         @Suppress("UNCHECKED_CAST")
         dueTree = result as List<TreeNode<AbstractDeckTreeNode>>?
-        renderPage()
+        renderPage(collectionIsEmpty)
         // Update the mini statistics bar as well
         launchCatchingTask {
             val reviewSummaryStatsSting = AnkiStatsTaskHandler.getReviewSummaryStatisticsString(this@DeckPicker)
@@ -1842,7 +1846,7 @@ open class DeckPicker :
         Timber.d("Startup - Deck List UI Completed")
     }
 
-    private fun renderPage() {
+    private fun renderPage(collectionIsEmpty: Boolean) {
         if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -1851,7 +1855,7 @@ open class DeckPicker :
         }
 
         // Check if default deck is the only available and there are no cards
-        val isEmpty = dueTree!!.size == 1 && dueTree!![0].value.did == 1L && col.isEmpty
+        val isEmpty = dueTree!!.size == 1 && dueTree!![0].value.did == 1L && collectionIsEmpty
         if (animationDisabled()) {
             mDeckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
