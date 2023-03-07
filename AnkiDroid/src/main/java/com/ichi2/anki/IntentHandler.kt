@@ -95,7 +95,7 @@ class IntentHandler : Activity() {
     /**
      * Execute the runnable if one of the two following conditions are satisfied:
      *
-     *  * AnkiDroid is using an app-specific directory to store user data
+     *  * AnkiDroid is using an app-private directory to store user data
      *  * AnkiDroid is using a legacy directory to store user data but has access to it since storage permission
      * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
