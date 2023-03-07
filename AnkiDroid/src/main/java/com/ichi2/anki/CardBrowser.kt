@@ -1166,15 +1166,13 @@ open class CardBrowser :
             R.id.action_show_marked -> {
                 mSearchTerms = "tag:marked"
                 mSearchView!!.setQuery("", false)
-                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_marked)
-                searchCards()
+                searchWithFilterQuery(mSearchTerms)
                 return true
             }
             R.id.action_show_suspended -> {
                 mSearchTerms = "is:suspended"
                 mSearchView!!.setQuery("", false)
-                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_suspended)
-                searchCards()
+                searchWithFilterQuery(mSearchTerms)
                 return true
             }
             R.id.action_search_by_tag -> {
