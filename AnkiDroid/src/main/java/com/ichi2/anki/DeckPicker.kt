@@ -26,6 +26,9 @@
 package com.ichi2.anki
 
 import android.Manifest
+import android.app.ActivityManager
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.*
 import android.content.pm.PackageManager
 import android.database.SQLException
@@ -43,6 +46,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -228,6 +232,9 @@ open class DeckPicker :
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
+
+    // flag for migration completion
+    private var isMigrated: Boolean = false
 
     // stored for testing purposes
     @VisibleForTesting
@@ -678,6 +685,20 @@ open class DeckPicker :
         }
     }
 
+    private fun migrationSuccessDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(resources.getString(R.string.migration_successful_message))
+        builder.setMessage(resources.getString(R.string.migration_completed))
+        builder.setPositiveButton(R.string.dialog_ok) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+        if (isAppInForeground(this)) {
+            isMigrated = false
+        }
+    }
+
     private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
         menuItem.setTitle(
             when (syncIcon) {
@@ -903,6 +924,11 @@ open class DeckPicker :
         super.onResume()
         refreshState()
         // Migration
+        if(!isAppInForeground(this) && isMigrated){
+            runOnUiThread{
+                migrationSuccessDialog()
+            }
+        }
     }
 
     fun refreshState() {
@@ -942,6 +968,40 @@ open class DeckPicker :
     fun onStorageMigrationCompleted() {
         migrationService.unbind(this)
         invalidateOptionsMenu() // reapply the sync icon
+        isMigrated = true
+        showMigrationCompletedNotification(this)
+        runOnUiThread {
+            if (isMigrated) {
+                migrationSuccessDialog()
+            }
+        }
+    }
+
+    private fun showMigrationCompletedNotification(context: Context) {
+        val builder =NotificationCompat.Builder(
+            context,
+            Channel.SCOPED_STORAGE_MIGRATION.id
+        )
+            .setSmallIcon(R.drawable.ic_star_notify)
+            .setContentTitle(resources.getString(R.string.migration_successful_message))
+            .setContentText(resources.getString(R.string.migration_completed))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setVibrate( longArrayOf(0, 500, 250, 500))
+
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(0, builder.build())
+    }
+
+    private fun isAppInForeground(context: Context): Boolean {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val appProcesses = activityManager.runningAppProcesses ?: return false
+        for (appProcess in appProcesses) {
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+                && appProcess.processName == context.packageName) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun onStart() {
