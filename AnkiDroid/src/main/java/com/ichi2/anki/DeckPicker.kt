@@ -892,9 +892,13 @@ open class DeckPicker :
 
     override fun onResume() {
         Timber.d("onResume()")
+        // stop onResume() processing the message.
+        // we need to process the message after `loadDeckCounts` is added in refreshState
+        // As `loadDeckCounts` is cancelled in `migrate()`
+        val message = dialogHandler.popMessage()
         super.onResume()
         refreshState()
-        // Migration
+        message?.let { dialogHandler.sendStoredMessage(it) }
     }
 
     fun refreshState() {

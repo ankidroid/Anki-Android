@@ -43,15 +43,28 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     }
 
     /**
-     * Read and handle Message which was stored via storeMessage()
+     * Returns the current message (if any) and stops further processing of it
      */
-    fun readMessage() {
+    fun popMessage(): Message? {
+        val toReturn = sStoredMessage
+        sStoredMessage = null
+        return toReturn
+    }
+
+    /**
+     * Read and handle Message which was stored via [storeMessage]
+     */
+    fun executeMessage() {
         Timber.d("Reading persistent message")
         if (sStoredMessage != null) {
-            Timber.i("Dispatching persistent message: %d", sStoredMessage!!.what)
-            sendMessage(sStoredMessage!!)
+            sendStoredMessage(sStoredMessage!!)
         }
         sStoredMessage = null
+    }
+
+    fun sendStoredMessage(message: Message) {
+        Timber.i("Dispatching persistent message: %d", message.what)
+        sendMessage(message)
     }
 
     companion object {
