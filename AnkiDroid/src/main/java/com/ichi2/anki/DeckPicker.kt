@@ -28,7 +28,6 @@ package com.ichi2.anki
 import android.Manifest
 import android.app.ActivityManager
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.*
 import android.content.pm.PackageManager
 import android.database.SQLException
@@ -924,8 +923,8 @@ open class DeckPicker :
         super.onResume()
         refreshState()
         // Migration
-        if(!isAppInForeground(this) && isMigrated){
-            runOnUiThread{
+        if (!isAppInForeground(this) && isMigrated) {
+            runOnUiThread {
                 migrationSuccessDialog()
             }
         }
@@ -997,9 +996,7 @@ open class DeckPicker :
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val appProcesses = activityManager.runningAppProcesses ?: return false
         for (appProcess in appProcesses) {
-            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
-                && appProcess.processName == context.packageName
-            ) {
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName == context.packageName) {
                 return true
             }
         }
