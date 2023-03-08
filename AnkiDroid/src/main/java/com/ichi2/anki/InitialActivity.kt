@@ -153,10 +153,10 @@ sealed interface AnkiDroidFolder {
  * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
  */
 internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroidFolder {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
-        // since it's fast & safe up to & including 'P'
-        // If a user upgrades their OS from Android 9 to 10 then storage speed is severely reduced
+        // since it's fast & safe up to & including 'Q'
+        // If a user upgrades their OS from Android 10 to 11 then storage speed is severely reduced
         // and a user should use one of the below options to provide aster speeds
         return AnkiDroidFolder.PublicFolder(
             arrayOf(
@@ -164,10 +164,6 @@ internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroid
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         )
-    }
-
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-        return AnkiDroidFolder.DeleteOnUninstall
     }
 
     // If the user can manage external storage, we can access the safe folder & access is fast
