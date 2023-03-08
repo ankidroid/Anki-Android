@@ -2524,8 +2524,28 @@ open class DeckPicker :
             <br>
             <br>${getString(ifYouUninstallMessageId)}"""
 
-        // TODO: Checkbox to disable permanently if `timesStorageMigrationPostponed > 1`
-        AlertDialog.Builder(this)
+        fun onPostponeOnce() {
+            if (shownAutomatically) {
+                timesStorageMigrationPostponed += 1
+            }
+            setMigrationWasLastPostponedAtToNow()
+        }
+
+        fun onPostponePermanently() {
+            BackupPromptDialog.showPermanentlyDismissDialog(
+                this,
+                onCancel = { onPostponeOnce() },
+                onDisableReminder = {
+                    getSharedPrefs(this).edit {
+                        putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, -1)
+                        remove(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS)
+                    }
+                }
+            )
+        }
+
+        var userCheckedDoNotShowAgain = false
+        var dialog = AlertDialog.Builder(this)
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
             .setPositiveButton(
@@ -2536,11 +2556,20 @@ open class DeckPicker :
             .setNegativeButton(
                 getString(R.string.scoped_storage_postpone)
             ) { _, _ ->
-                if (shownAutomatically) {
-                    timesStorageMigrationPostponed += 1
+                if (userCheckedDoNotShowAgain) {
+                    onPostponePermanently()
+                } else {
+                    onPostponeOnce()
                 }
-                setMigrationWasLastPostponedAtToNow()
-            }.addScopedStorageLearnMoreLinkAndShow(message)
+            }
+        // allow the user to dismiss the automatic dialog after it's been seen twice
+        if (shownAutomatically && timesStorageMigrationPostponed > 1) {
+            dialog.checkBoxPrompt(R.string.button_do_not_show_again) { checked ->
+                Timber.d("Don't show again checked: %b", checked)
+                userCheckedDoNotShowAgain = checked
+            }
+        }
+        dialog.addScopedStorageLearnMoreLinkAndShow(message)
     }
 
     // Scoped Storage migration
