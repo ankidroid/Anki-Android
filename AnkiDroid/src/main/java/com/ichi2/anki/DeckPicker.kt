@@ -126,6 +126,7 @@ import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
+const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -778,7 +779,7 @@ open class DeckPicker :
             }
             R.id.action_scoped_storage_migrate -> {
                 Timber.i("DeckPicker:: migrate button pressed")
-                showDialogThatOffersToMigrateStorage()
+                showDialogThatOffersToMigrateStorage(shownAutomatically = false)
                 return true
             }
             R.id.action_import -> {
@@ -1054,7 +1055,12 @@ open class DeckPicker :
             // new code triggers backup in updateDeckList()
         }
 
-        launchCatchingTask { BackupPromptDialog.showIfAvailable(this@DeckPicker) }
+        launchCatchingTask {
+            val shownBackupDialog = BackupPromptDialog.showIfAvailable(this@DeckPicker)
+            if (!shownBackupDialog && shouldOfferToUpgrade(this@DeckPicker) && timeToShowStorageMigrationDialog()) {
+                showDialogThatOffersToMigrateStorage(shownAutomatically = true)
+            }
+        }
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -2323,6 +2329,8 @@ open class DeckPicker :
 
     companion object {
 
+        private const val ONE_DAY_IN_SECONDS: Int = 60 * 60 * 24
+
         /** Import Error variable so to access the resource directory without
          * causing a crash
          */
@@ -2483,9 +2491,23 @@ open class DeckPicker :
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
 
     /**
-     * Show a dialog offering to migrate, postpone or learn more.
+     * The number of times the storage migration was postponed. -1 for 'disabled'
      */
-    private fun showDialogThatOffersToMigrateStorage() {
+    private var timesStorageMigrationPostponed: Int
+        get() = getSharedPrefs(baseContext).getInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, 0)
+        set(value) = getSharedPrefs(baseContext)
+            .edit { putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, value) }
+
+    /** Whether the user has disabled the dialog from [showDialogThatOffersToMigrateStorage] */
+    private val disabledScopedStorageReminder: Boolean
+        get() = timesStorageMigrationPostponed == -1
+
+    /**
+     * Show a dialog offering to migrate, postpone or learn more.
+     * @return shownAutomatically `true` if the dialog was shown automatically, `false` if the user
+     * pressed a button to open the dialog
+     */
+    private fun showDialogThatOffersToMigrateStorage(shownAutomatically: Boolean) {
         Timber.i("Displaying dialog to migrate storage")
         if (userMigrationIsInProgress(baseContext)) {
             // This should not occur. We should have not called the function in this case.
@@ -2502,6 +2524,7 @@ open class DeckPicker :
             <br>
             <br>${getString(ifYouUninstallMessageId)}"""
 
+        // TODO: Checkbox to disable permanently if `timesStorageMigrationPostponed > 1`
         AlertDialog.Builder(this)
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
@@ -2513,6 +2536,9 @@ open class DeckPicker :
             .setNegativeButton(
                 getString(R.string.scoped_storage_postpone)
             ) { _, _ ->
+                if (shownAutomatically) {
+                    timesStorageMigrationPostponed += 1
+                }
                 setMigrationWasLastPostponedAtToNow()
             }.addScopedStorageLearnMoreLinkAndShow(message)
     }
@@ -2520,6 +2546,12 @@ open class DeckPicker :
     // Scoped Storage migration
     private fun setMigrationWasLastPostponedAtToNow() {
         migrationWasLastPostponedAt = TimeManager.time.intTime()
+    }
+
+    private fun timeToShowStorageMigrationDialog(): Boolean {
+        return !disabledScopedStorageReminder &&
+            // A reminder was shown more than 4 days ago
+            migrationWasLastPostponedAt + ONE_DAY_IN_SECONDS * 4 <= TimeManager.time.intTime()
     }
 
     override fun onImportColpkg(colpkgPath: String?) {

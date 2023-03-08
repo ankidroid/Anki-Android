@@ -140,10 +140,11 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     companion object {
         private const val ONE_DAY_IN_MS = 1000 * 60 * 60 * 24
 
-        suspend fun showIfAvailable(deckPicker: DeckPicker) {
+        /** @return Whether the dialog was shown */
+        suspend fun showIfAvailable(deckPicker: DeckPicker): Boolean {
             val backupPrompt = BackupPromptDialog(deckPicker)
             if (!backupPrompt.shouldShowDialog()) {
-                return
+                return false
             }
 
             val isLoggedIn = isLoggedIn()
@@ -157,6 +158,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                 }
                 materialDialog.show()
             }
+            return true
         }
     }
 
