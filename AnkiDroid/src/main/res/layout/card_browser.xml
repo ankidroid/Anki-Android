@@ -52,20 +52,21 @@
 
     <include layout="@layout/anki_progress"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filter_sheet_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="29dp"
-        android:gravity="center_vertical"
-        android:backgroundTint="?attr/fab_normal"
-        app:borderWidth="0dp"
-        android:src="@drawable/ic_filter_list"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton	
+        android:id="@+id/filter_sheet_fab"	
+        android:layout_width="wrap_content"	
+        android:layout_height="wrap_content"	
+        android:visibility="gone"	
+        android:layout_gravity="end|bottom"	
+        android:layout_marginEnd="32dp"	
+        android:layout_marginStart="10dp"	
+        android:layout_marginBottom="29dp"	
+        android:gravity="center_vertical"	
+        android:backgroundTint="?attr/fab_normal"	
+        app:borderWidth="0dp"	
+        android:src="@drawable/ic_filter_list"	
         app:fabSize="normal" />
-
+        
     <FrameLayout
         android:id="@+id/card_browser_tutorial"
         android:layout_width="match_parent"
