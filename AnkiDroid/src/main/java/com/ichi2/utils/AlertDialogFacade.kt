@@ -38,7 +38,7 @@ fun DialogInterfaceListener.toClickListener(): OnClickListener {
  */
 fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? = null): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         setTitle(stringRes)
@@ -49,7 +49,7 @@ fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? =
 
 fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSequence? = null): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         setMessage(stringRes)
@@ -73,7 +73,7 @@ fun AlertDialog.Builder.positiveButton(
     click: DialogInterfaceListener? = null
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         this.setPositiveButton(stringRes, click?.toClickListener())
@@ -88,7 +88,7 @@ fun AlertDialog.Builder.neutralButton(
     click: DialogInterfaceListener? = null
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         this.setNeutralButton(stringRes, click?.toClickListener())
@@ -103,7 +103,7 @@ fun AlertDialog.Builder.negativeButton(
     click: DialogInterfaceListener? = null
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         this.setNegativeButton(stringRes, click?.toClickListener())
