@@ -102,7 +102,8 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
-@Suppress("LeakingThis") // The class is only 'open' due to testing
+@Suppress("LeakingThis")
+// The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
@@ -1163,12 +1164,16 @@ open class CardBrowser :
                 showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
+
+            @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
                 mSearchTerms = "tag:marked"
                 mSearchView!!.setQuery("", false)
                 searchWithFilterQuery(mSearchTerms)
                 return true
             }
+
+            @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
                 mSearchTerms = "is:suspended"
                 mSearchView!!.setQuery("", false)
