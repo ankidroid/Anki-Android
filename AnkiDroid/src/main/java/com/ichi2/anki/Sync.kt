@@ -66,13 +66,7 @@ object SyncPreferences {
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
     val hkey = preferences.getString(SyncPreferences.HKEY, null)
-    val currentEndpoint = preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)
-    val customEndpoint = if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-        preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
-    } else {
-        null
-    }
-    val resolvedEndpoint = currentEndpoint ?: customEndpoint
+    val resolvedEndpoint = getEndpoint(this)
     return hkey?.let {
         syncAuth {
             this.hkey = hkey
@@ -81,6 +75,17 @@ fun DeckPicker.syncAuth(): SyncAuth? {
             }
         }
     }
+}
+
+fun getEndpoint(context: Context): String? {
+    val preferences = AnkiDroidApp.getSharedPrefs(context)
+    val currentEndpoint = preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)
+    val customEndpoint = if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+        preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+    } else {
+        null
+    }
+    return currentEndpoint ?: customEndpoint
 }
 
 fun customSyncBase(preferences: SharedPreferences): String? {
@@ -160,11 +165,12 @@ fun DeckPicker.handleNewSync(
 }
 
 fun MyAccount.handleNewLogin(username: String, password: String) {
+    val endpoint = getEndpoint(this)
     launchCatchingTask {
         val auth = try {
             withProgress({}, onCancel = ::cancelSync) {
                 withCol {
-                    newBackend.syncLogin(username, password)
+                    newBackend.syncLogin(username, password, endpoint)
                 }
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
