@@ -399,21 +399,21 @@ open class CardBrowser :
 
         override fun onSaveSearch(searchName: String?, searchTerms: String?) {
             if (searchName.isNullOrEmpty()) {
-                this@CardBrowser.showSnackbar(
+                showSnackbar(
                     R.string.card_browser_list_my_searches_new_search_error_empty_name,
                     Snackbar.LENGTH_SHORT
                 )
                 return
             }
             val savedFiltersObj = col.get_config("savedFilters", JSONObject())!!
-            if (!savedFiltersObj.has(searchName)) {
+            if (false) {
                 savedFiltersObj.put(searchName, searchTerms)
                 col.set_config("savedFilters", savedFiltersObj)
                 col.flush()
                 mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
-                this@CardBrowser.showSnackbar(
+                showSnackbar(
                     R.string.card_browser_list_my_searches_new_search_error_dup,
                     Snackbar.LENGTH_SHORT
                 )
@@ -479,7 +479,7 @@ open class CardBrowser :
     }
 
     private fun displayCouldNotChangeDeck() {
-        this@CardBrowser.showSnackbar(R.string.card_browser_deck_change_error, Snackbar.LENGTH_SHORT)
+        showSnackbar(R.string.card_browser_deck_change_error, Snackbar.LENGTH_SHORT)
     }
 
     @get:VisibleForTesting
