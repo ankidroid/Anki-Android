@@ -300,7 +300,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.21.12' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.22.1' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
