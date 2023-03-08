@@ -80,27 +80,17 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     private fun onDismiss() {
         Timber.i("BackupPromptDialog dismissed")
         if (userCheckedDoNotShowAgain) {
-            permanentlyDismissDialog()
+            showPermanentlyDismissDialog(
+                this.windowContext,
+                onCancel = { dialogPermanentlyDismissed = true },
+                onDisableReminder = {
+                    userCheckedDoNotShowAgain = false
+                    onDismiss()
+                }
+            )
         } else {
             timesDialogDismissed += 1
             nextTimeToShowDialog = calculateNextTimeToShowDialog()
-        }
-    }
-
-    private fun permanentlyDismissDialog() {
-        val message = if (userIsPreservingLegacyStorage()) R.string.dismiss_backup_warning_upgrade else R.string.dismiss_backup_warning_new_user
-
-        AlertDialog.Builder(windowContext).show {
-            title(R.string.dismiss_backup_warning_title)
-            message(message)
-            iconAttr(R.attr.dialogErrorIcon)
-            positiveButton(R.string.dialog_cancel) {
-                dialogPermanentlyDismissed = true
-            }
-            negativeButton(R.string.button_disable_reminder) {
-                userCheckedDoNotShowAgain = false
-                onDismiss()
-            }
         }
     }
 
@@ -160,15 +150,36 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             }
             return true
         }
+
+        /** Explains to the user they should sync as they risk to have data deleted or inaccessible (depending on whether legacy storage permission is kept) */
+        fun showPermanentlyDismissDialog(context: Context, onCancel: () -> Unit, onDisableReminder: () -> Unit) {
+            // TODO this ignores f-droid uesrs / full builds for now - handle in #13431
+            val message = if (userIsPreservingLegacyStorage(context)) R.string.dismiss_backup_warning_upgrade else R.string.dismiss_backup_warning_new_user
+
+            AlertDialog.Builder(context).show {
+                title(R.string.dismiss_backup_warning_title)
+                message(message)
+                iconAttr(R.attr.dialogErrorIcon)
+                positiveButton(R.string.dialog_cancel) { onCancel() }
+                negativeButton(R.string.button_disable_reminder) { onDisableReminder() }
+            }
+        }
+
+        /**
+         * Whether the user still has the legacy storage permissions
+         * ([Manifest.permission.READ_EXTERNAL_STORAGE] and [Manifest.permission.WRITE_EXTERNAL_STORAGE])
+         * on Android 11 or later, where the permission was removed from Play store releases
+         * @return true if the user Android's version is ≥ 11 and upgraded the app without removing the permission,
+         * or false if the user has removed the permission, uninstalled the app or Android's version is < 11
+         */
+        fun userIsPreservingLegacyStorage(context: Context): Boolean {
+            // TODO: Confirm this is correct after 13261 is merged.
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
+                Permissions.hasStorageAccessPermission(context)
+        }
     }
 
     private suspend fun shouldShowDialog(): Boolean = !userIsNewToAnkiDroid() && canProvideBackupOption() && timeToShowDialogAgain()
-
-    private fun userIsPreservingLegacyStorage(): Boolean {
-        // TODO: Confirm this is correct after 13261 is merged.
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
-            Permissions.hasStorageAccessPermission(windowContext)
-    }
 
     private fun canProvideBackupOption(): Boolean {
         if (isLoggedIn()) {
@@ -190,7 +201,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         // The user may have upgraded, in which it's unsafe to uninstall as Android
         // will permanently revoke access to the legacy folder
         // The collection won't be lost, but it will be inaccessible.
-        return this.userIsPreservingLegacyStorage()
+        return userIsPreservingLegacyStorage(this.windowContext)
     }
 
     private fun timeToShowDialogAgain(): Boolean =
