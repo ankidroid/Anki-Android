@@ -130,11 +130,11 @@ class InitialActivityTest : RobolectricTest() {
     fun startupQ() {
         assertThat(
             selectAnkiDroidFolder(false),
-            instanceOf(DeleteOnUninstall::class.java)
+            instanceOf(PublicFolder::class.java)
         )
         assertThat(
             selectAnkiDroidFolder(true),
-            instanceOf(DeleteOnUninstall::class.java)
+            instanceOf(PublicFolder::class.java)
         )
     }
 
