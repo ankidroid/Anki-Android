@@ -406,7 +406,7 @@ open class CardBrowser :
                 return
             }
             val savedFiltersObj = col.get_config("savedFilters", JSONObject())!!
-            if (false) {
+            if (!savedFiltersObj.has(searchName)) {
                 savedFiltersObj.put(searchName, searchTerms)
                 col.set_config("savedFilters", savedFiltersObj)
                 col.flush()
@@ -861,7 +861,7 @@ open class CardBrowser :
             openNoteEditorForCard(selectedCardIds[0])
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
-            this@CardBrowser.showSnackbar(
+            showSnackbar(
                 R.string.multimedia_editor_something_wrong,
                 Snackbar.LENGTH_LONG
             )
