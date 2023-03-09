@@ -232,9 +232,6 @@ open class DeckPicker :
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
-    // flag for migration completion
-    private var isMigrated: Boolean = false
-
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
@@ -316,6 +313,8 @@ open class DeckPicker :
 
         asyncMessageContent = resources.getString(R.string.import_interrupted)
         asyncMessageTitle = resources.getString(R.string.import_title)
+        migrationSuccessMessage = resources.getString(R.string.migration_completed)
+        migrationSuccessTitle = resources.getString(R.string.migration_successful_message)
 
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
@@ -684,20 +683,6 @@ open class DeckPicker :
         }
     }
 
-    private fun migrationSuccessDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(resources.getString(R.string.migration_successful_message))
-        builder.setMessage(resources.getString(R.string.migration_completed))
-        builder.setPositiveButton(R.string.dialog_ok) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-        }
-        val dialog = builder.create()
-        dialog.show()
-        if (isAppInForeground(this)) {
-            isMigrated = false
-        }
-    }
-
     private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
         menuItem.setTitle(
             when (syncIcon) {
@@ -922,12 +907,6 @@ open class DeckPicker :
         Timber.d("onResume()")
         super.onResume()
         refreshState()
-        // Migration
-        if (!isAppInForeground(this) && isMigrated) {
-            runOnUiThread {
-                migrationSuccessDialog()
-            }
-        }
     }
 
     fun refreshState() {
@@ -967,41 +946,8 @@ open class DeckPicker :
     fun onStorageMigrationCompleted() {
         migrationService.unbind(this)
         invalidateOptionsMenu() // reapply the sync icon
-        isMigrated = true
-        showMigrationCompletedNotification(this)
-        runOnUiThread {
-            if (isMigrated) {
-                migrationSuccessDialog()
-            }
+        showAsyncDialogFragment(MigrationSuccessDialog(), Channel.SCOPED_STORAGE_MIGRATION)
         }
-    }
-
-    private fun showMigrationCompletedNotification(context: Context) {
-        val builder = NotificationCompat.Builder(
-            context,
-            Channel.SCOPED_STORAGE_MIGRATION.id
-        )
-            .setSmallIcon(R.drawable.ic_star_notify)
-            .setContentTitle(resources.getString(R.string.migration_successful_message))
-            .setContentText(resources.getString(R.string.migration_completed))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVibrate(longArrayOf(0, 500, 250, 500))
-
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0, builder.build())
-    }
-
-    private fun isAppInForeground(context: Context): Boolean {
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val appProcesses = activityManager.runningAppProcesses ?: return false
-        for (appProcess in appProcesses) {
-            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName == context.packageName) {
-                return true
-            }
-        }
-        return false
-    }
 
     override fun onStart() {
         super.onStart()
@@ -2410,6 +2356,8 @@ open class DeckPicker :
          */
         lateinit var asyncMessageContent: String
         lateinit var asyncMessageTitle: String
+        lateinit var migrationSuccessMessage: String
+        lateinit var migrationSuccessTitle: String
 
         /**
          * Result codes from other activities
