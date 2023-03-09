@@ -23,11 +23,11 @@ import com.ichi2.anki.DeckPicker.Companion.migrationSuccessTitle
 
 import com.ichi2.anki.R
 
-class MigrationSuccessDialog: AsyncDialogFragment()  {
+class MigrationSuccessDialog : AsyncDialogFragment() {
     override val notificationMessage: String?
-    get() = migrationSuccessMessage
+        get() = migrationSuccessMessage
     override val notificationTitle: String
-    get() = migrationSuccessTitle
+        get() = migrationSuccessTitle
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
@@ -35,7 +35,6 @@ class MigrationSuccessDialog: AsyncDialogFragment()  {
             .setMessage(resources.getString(R.string.migration_completed))
             .setPositiveButton(R.string.dialog_ok) { _, _ ->
                 dismiss()
-            }
-            .create()
+            }.create()
     }
 }

@@ -26,8 +26,6 @@
 package com.ichi2.anki
 
 import android.Manifest
-import android.app.ActivityManager
-import android.app.NotificationManager
 import android.content.*
 import android.content.pm.PackageManager
 import android.database.SQLException
@@ -45,7 +43,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -947,7 +944,7 @@ open class DeckPicker :
         migrationService.unbind(this)
         invalidateOptionsMenu() // reapply the sync icon
         showAsyncDialogFragment(MigrationSuccessDialog(), Channel.SCOPED_STORAGE_MIGRATION)
-        }
+    }
 
     override fun onStart() {
         super.onStart()
