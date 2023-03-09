@@ -20,7 +20,6 @@ import android.app.Dialog
 import android.os.Bundle
 import com.ichi2.anki.DeckPicker.Companion.migrationSuccessMessage
 import com.ichi2.anki.DeckPicker.Companion.migrationSuccessTitle
-
 import com.ichi2.anki.R
 
 class MigrationSuccessDialog : AsyncDialogFragment() {
