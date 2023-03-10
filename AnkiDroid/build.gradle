@@ -356,7 +356,7 @@ dependencies {
     api project(":api")
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.mockito:mockito-inline:5.1.1'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
