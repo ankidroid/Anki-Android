@@ -42,8 +42,12 @@ open class CompatV33 : CompatV31(), Compat {
     }
 
     override fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: Compat.ResolveInfoFlags): ResolveInfo? {
-        return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
-        
+        return packageManager.resolveActivity(
+            intent,
+            PackageManager.ResolveInfoFlags.of(flags.value)
+        )
+    }
+
     override fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T? {
         return bundle.getSerializable(key, clazz)
     }

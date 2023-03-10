@@ -16,6 +16,7 @@
 package com.ichi2.utils
 
 import android.app.ActivityManager
+import android.content.ComponentName
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -27,8 +28,8 @@ import android.os.Build
 import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compat.Compat.ResolveInfoFlags
-import com.ichi2.compat.CompatHelper.Companion.resolveActivity
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.CompatHelper.Companion.resolveActivity
 import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.util.*

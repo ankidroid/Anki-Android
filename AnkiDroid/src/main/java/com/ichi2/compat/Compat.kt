@@ -20,7 +20,6 @@ package com.ichi2.compat
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
@@ -108,7 +107,7 @@ interface Compat {
     fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
     /**
-    
+
      * Retrieve various kinds of information related to the application packages that are currently
      * installed on the device.
      * @param packageManager
@@ -131,6 +130,7 @@ interface Compat {
         }
     }
 
+    /**
      * Returns the value associated with the given key, or `null` if:
      * * No mapping of the desired type exists for the given key.
      * * A `null` value is explicitly associated with the key.
@@ -159,7 +159,6 @@ interface Compat {
      */
     @Throws(NameNotFoundException::class)
     fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo?
-
 
     /**
      * Copy file at path [source] to path [target]
