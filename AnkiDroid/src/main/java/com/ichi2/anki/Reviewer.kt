@@ -101,7 +101,7 @@ open class Reviewer :
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
-    private var mColorPalette: LinearLayout? = null
+    private lateinit var mColorPalette: LinearLayout
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -111,7 +111,7 @@ open class Reviewer :
     private lateinit var mTextBarNew: TextView
     private lateinit var mTextBarLearn: TextView
     private lateinit var mTextBarReview: TextView
-    protected lateinit var answerTimer: AnswerTimer
+    private lateinit var answerTimer: AnswerTimer
     private var mPrefHideDueCount = false
 
     // Whiteboard
@@ -127,7 +127,7 @@ open class Reviewer :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var audioView: AudioView? = null
         protected set
-    protected var tempAudioPath: String? = null
+    private var tempAudioPath: String? = null
 
     // ETA
     private var mEta = 0
@@ -433,10 +433,10 @@ open class Reviewer :
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
-                if (mColorPalette!!.visibility == View.GONE) {
-                    mColorPalette!!.visibility = View.VISIBLE
+                if (mColorPalette.visibility == View.GONE) {
+                    mColorPalette.visibility = View.VISIBLE
                 } else {
-                    mColorPalette!!.visibility = View.GONE
+                    mColorPalette.visibility = View.GONE
                 }
                 updateWhiteboardEditorPosition()
             }
@@ -533,7 +533,7 @@ open class Reviewer :
         setWhiteboardEnabledState(prefWhiteboard)
         setWhiteboardVisibility(prefWhiteboard)
         if (!prefWhiteboard) {
-            mColorPalette!!.visibility = View.GONE
+            mColorPalette.visibility = View.GONE
         }
         refreshActionBar()
     }
@@ -768,7 +768,7 @@ open class Reviewer :
                 //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
             } else {
                 // In this case, there is no object word for the verb, "Undo",
-                // so in some languages such as Japanese, which have pre/postpositional particle with the object,
+                // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                 // we need to use the string for just "Undo" instead of the string for "Undo %s".
                 undoIcon.title = resources.getString(R.string.undo)
             }
@@ -812,7 +812,7 @@ open class Reviewer :
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 changePenColorIcon.isEnabled = false
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
-                mColorPalette!!.visibility = View.GONE
+                mColorPalette.visibility = View.GONE
             }
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
@@ -1053,21 +1053,21 @@ open class Reviewer :
         val layoutParams: RelativeLayout.LayoutParams
         when (mAnswerButtonsPosition) {
             "none", "top" -> {
-                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ABOVE)
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                mColorPalette!!.layoutParams = layoutParams
+                mColorPalette.layoutParams = layoutParams
             }
             "bottom" -> {
-                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                mColorPalette!!.layoutParams = layoutParams
+                mColorPalette.layoutParams = layoutParams
             }
         }
     }
 
-    protected fun updateScreenCounts() {
+    private fun updateScreenCounts() {
         if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
@@ -1119,7 +1119,7 @@ open class Reviewer :
     }
 
     @VisibleForTesting
-    public override fun displayCardAnswer() {
+    override fun displayCardAnswer() {
         delayedHide(100)
         super.displayCardAnswer()
     }
@@ -1604,17 +1604,17 @@ open class Reviewer :
 
     inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
         @JavascriptInterface
-        override fun ankiGetNewCardCount(): String? {
+        override fun ankiGetNewCardCount(): String {
             return mNewCount.toString()
         }
 
         @JavascriptInterface
-        override fun ankiGetLrnCardCount(): String? {
+        override fun ankiGetLrnCardCount(): String {
             return mLrnCount.toString()
         }
 
         @JavascriptInterface
-        override fun ankiGetRevCardCount(): String? {
+        override fun ankiGetRevCardCount(): String {
             return mRevCount.toString()
         }
 
