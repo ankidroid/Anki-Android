@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.animation.Animator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.provider.Settings
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
@@ -29,12 +30,17 @@ import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.ui.DoubleTapListener
 import timber.log.Timber
 
-class DeckPickerFloatingActionMenu(private val context: Context, view: View, private val deckPicker: DeckPicker) {
+class DeckPickerFloatingActionMenu(
+    private val context: Context,
+    view: View,
+    private val deckPicker: DeckPicker
+) {
     private val mFabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
     private val mAddSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
     private val mAddDeckLayout: LinearLayout = view.findViewById(R.id.add_deck_layout)
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
-    private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
+    private val mLinearLayout: LinearLayout =
+        view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     private val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
 
@@ -65,8 +71,15 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             mFabBGLayout.visibility = View.VISIBLE
             addNoteLabel.visibility = View.VISIBLE
             mFabMain.animate().apply {
-                // Changes the background color of FAB
-                mFabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
+                /**
+                 * If system animations are true changes the FAB color otherwise it remains the same
+                 */
+                if (areSystemAnimationsEnabled()) {
+                    mFabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
+                } else {
+                    // Changes the background color of FAB
+                    mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                }
                 // Rotates FAB to 90 degrees
                 rotationBy(90f)
                 duration = 30
@@ -237,6 +250,26 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         }
     }
 
+    // Returns false if any of the mentioned system animations are disabled (0f)
+    private fun areSystemAnimationsEnabled(): Boolean {
+        val duration: Float = Settings.Global.getFloat(
+            context.contentResolver,
+            Settings.Global.ANIMATOR_DURATION_SCALE,
+            1f
+        )
+        val transition: Float = Settings.Global.getFloat(
+            context.contentResolver,
+            Settings.Global.TRANSITION_ANIMATION_SCALE,
+            1f
+        )
+        val windowAnimation: Float = Settings.Global.getFloat(
+            context.contentResolver,
+            Settings.Global.WINDOW_ANIMATION_SCALE,
+            1f
+        )
+        return duration != 0f && transition != 0f && windowAnimation != 0f
+    }
+
     init {
         val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_action)
         val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_action)
@@ -269,6 +302,8 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 )
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
+                /* val resp = areSystemAnimationsEnabled()
+                 Timber.i("Response Anim : $resp")*/
                 closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
             }
         }
