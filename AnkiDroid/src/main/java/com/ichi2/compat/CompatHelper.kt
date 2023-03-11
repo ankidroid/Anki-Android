@@ -164,7 +164,7 @@ class CompatHelper private constructor() {
          */
         fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
             return compat.queryIntentActivities(this, intent, flags)
-        }    
+        }
 
         /**
          * Returns the value associated with the given key or `null` if:
