@@ -22,13 +22,12 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.CheckBoxPreference
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.CollectionManager.withCol
@@ -49,9 +48,8 @@ import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.themeFollowsSystem
-import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
+import com.ichi2.utils.*
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
@@ -136,7 +134,9 @@ class DeckOptionsActivity :
 
                     mValues["reminderEnabled"] = reminder.getBoolean("enabled").toString()
                     mValues["reminderTime"] = String.format(
-                        "%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)
+                        "%1$02d:%2$02d",
+                        reminderTime.getLong(0),
+                        reminderTime.getLong(1)
                     )
                 } else {
                     mValues["reminderEnabled"] = "false"
@@ -171,8 +171,10 @@ class DeckOptionsActivity :
         fun preConfChange() {
             val res = deckOptionsActivity.resources
             progressDialog = StyledProgressDialog.show(
-                deckOptionsActivity as Context, null,
-                res?.getString(R.string.reordering_cards), false
+                deckOptionsActivity as Context,
+                null,
+                res?.getString(R.string.reordering_cards),
+                false
             )
         }
 
@@ -282,7 +284,8 @@ class DeckOptionsActivity :
                                 // Don't remove the options group if it's the default group
                                 UIUtils.showThemedToast(
                                     this@DeckOptionsActivity,
-                                    resources.getString(R.string.default_conf_delete_error), false
+                                    resources.getString(R.string.default_conf_delete_error),
+                                    false
                                 )
                             } else {
                                 // Remove options group, handling the case where the user needs to confirm full sync
@@ -292,7 +295,7 @@ class DeckOptionsActivity :
                                     e.log()
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    MaterialDialog(this@DeckOptionsActivity).show {
+                                    AlertDialog.Builder(this@DeckOptionsActivity).show {
                                         message(R.string.full_sync_confirmation)
                                         positiveButton(R.string.dialog_ok) {
                                             col.modSchemaNoCheck()
@@ -346,7 +349,8 @@ class DeckOptionsActivity :
                                     applicationContext,
                                     mOptions.getLong("id").toInt(),
                                     Intent(applicationContext, ReminderService::class.java).putExtra(
-                                        ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")
+                                        ReminderService.EXTRA_DECK_OPTION_ID,
+                                        mOptions.getLong("id")
                                     ),
                                     0
                                 )
@@ -470,20 +474,6 @@ class DeckOptionsActivity :
         override fun actualOnPreExecute(context: DeckPreferenceHack) = context.preConfChange()
 
         override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) = context.postConfChange()
-    }
-
-    @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val newNightModeStatus = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        // Check if theme should change
-        if (Themes.systemIsInNightMode != newNightModeStatus) {
-            Themes.systemIsInNightMode = newNightModeStatus
-            if (themeFollowsSystem()) {
-                updateCurrentTheme()
-                recreate()
-            }
-        }
     }
 
     // conversion to fragments tracked as #5019 in github
@@ -698,7 +688,6 @@ class DeckOptionsActivity :
 
     companion object {
         fun reminderToCalendar(time: Time, reminder: JSONObject): Calendar {
-
             val calendar = time.calendar()
 
             calendar[Calendar.HOUR_OF_DAY] = reminder.getJSONArray("time").getInt(0)

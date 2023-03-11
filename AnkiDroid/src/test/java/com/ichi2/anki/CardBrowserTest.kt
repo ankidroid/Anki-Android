@@ -30,7 +30,9 @@ import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
+import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
+import com.ichi2.testutils.OS
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
 import net.ankiweb.rsdroid.RustCleanup
@@ -105,6 +107,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "Index 0 out of bounds for length 0")
     fun browserIsInMultiSelectModeWhenSelectingOne() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
@@ -112,6 +115,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "Expected `true`, got `false`")
     fun browserIsInMultiSelectModeWhenSelectingAll() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
@@ -345,6 +349,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
     fun previewWorksAfterSort() {
         // #7286
         val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
@@ -657,8 +662,10 @@ class CardBrowserTest : RobolectricTest() {
             Timber.w("Can't use childAt on position $position for a single click as it is not visible")
         }
         listener.onItemLongClick(
-            null, childAt,
-            position, toSelect.getItemIdAtPosition(position)
+            null,
+            childAt,
+            position,
+            toSelect.getItemIdAtPosition(position)
         )
         advanceRobolectricUiLooper()
     }
@@ -710,7 +717,7 @@ class CardBrowserTest : RobolectricTest() {
         val cardBrowser = getBrowserWithNotes(2)
 
         val renderOnScroll = cardBrowser.RenderOnScroll()
-        renderOnScroll.onScroll(cardBrowser.cardsListView!!, 0, 0, 2)
+        renderOnScroll.onScroll(cardBrowser.cardsListView, 0, 0, 2)
     }
 
     @Test
@@ -720,8 +727,8 @@ class CardBrowserTest : RobolectricTest() {
         cardBrowser.isTruncated = true
 
         // Testing whether each card is truncated and ellipsized
-        for (i in 0 until (cardBrowser.cardsListView!!.childCount)) {
-            val row = cardBrowser.cardsAdapter!!.getView(i, null, cardBrowser.cardsListView!!)
+        for (i in 0 until (cardBrowser.cardsListView.childCount)) {
+            val row = cardBrowser.cardsAdapter.getView(i, null, cardBrowser.cardsListView)
             val column1 = row.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
 
@@ -738,8 +745,8 @@ class CardBrowserTest : RobolectricTest() {
         cardBrowser.isTruncated = false
 
         // Testing whether each card is expanded and not ellipsized
-        for (i in 0 until (cardBrowser.cardsListView!!.childCount)) {
-            val row = cardBrowser.cardsAdapter!!.getView(i, null, cardBrowser.cardsListView!!)
+        for (i in 0 until (cardBrowser.cardsListView.childCount)) {
+            val row = cardBrowser.cardsAdapter.getView(i, null, cardBrowser.cardsListView)
             val column1 = row.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
 

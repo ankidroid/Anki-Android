@@ -14,6 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 @file:Suppress("PackageName") // AtomTypes: copied from wildplot library
+
 package com.wildplot.android.parsing.AtomTypes
 
 import com.wildplot.android.parsing.Expression
@@ -71,19 +72,21 @@ class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) :
     override val value: Double
         get() = if (hasSavedValue) {
             savedValue
-        } else when (mathType) {
-            MathType.SIN -> sin(expression!!.value)
-            MathType.COS -> cos(expression!!.value)
-            MathType.TAN -> tan(expression!!.value)
-            MathType.SQRT -> sqrt(expression!!.value)
-            MathType.ACOS -> acos(expression!!.value)
-            MathType.ASIN -> asin(expression!!.value)
-            MathType.ATAN -> atan(expression!!.value)
-            MathType.SINH -> sinh(expression!!.value)
-            MathType.COSH -> cosh(expression!!.value)
-            MathType.LOG -> log10(expression!!.value)
-            MathType.LN -> ln(expression!!.value)
-            MathType.INVALID -> throw ExpressionFormatException("Number is Invalid, cannot parse")
+        } else {
+            when (mathType) {
+                MathType.SIN -> sin(expression!!.value)
+                MathType.COS -> cos(expression!!.value)
+                MathType.TAN -> tan(expression!!.value)
+                MathType.SQRT -> sqrt(expression!!.value)
+                MathType.ACOS -> acos(expression!!.value)
+                MathType.ASIN -> asin(expression!!.value)
+                MathType.ATAN -> atan(expression!!.value)
+                MathType.SINH -> sinh(expression!!.value)
+                MathType.COSH -> cosh(expression!!.value)
+                MathType.LOG -> log10(expression!!.value)
+                MathType.LN -> ln(expression!!.value)
+                MathType.INVALID -> throw ExpressionFormatException("Number is Invalid, cannot parse")
+            }
         }
 
     @get:Throws(ExpressionFormatException::class)

@@ -7,9 +7,7 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioManager
@@ -54,7 +52,6 @@ import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
-import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.AndroidUiUtils
@@ -67,7 +64,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
     val dialogHandler = DialogHandler(this)
-    private lateinit var mPreviousTheme: Theme
 
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
@@ -85,12 +81,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
-        Themes.systemIsInNightMode =
-            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        Themes.updateCurrentTheme()
         Themes.setTheme(this)
         Themes.disableXiaomiForceDarkMode(this)
-        mPreviousTheme = Themes.currentTheme
         super.onCreate(savedInstanceState)
         // Disable the notifications bar if running under the test monkey.
         if (AdaptionUtil.isUserATestClient) {
@@ -104,31 +96,16 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         }
     }
 
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
-    }
-
     override fun onStart() {
         Timber.i("AnkiActivity::onStart - %s", mActivityName)
         super.onStart()
         customTabActivityHelper.bindCustomTabsService(this)
-        // Reload theme in case it was changed on another activity
-        if (mPreviousTheme != Themes.currentTheme) {
-            recreate()
-        }
     }
 
     override fun onStop() {
         Timber.i("AnkiActivity::onStop - %s", mActivityName)
         super.onStop()
         customTabActivityHelper.unbindCustomTabsService(this)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (Themes.updateCurrentThemeByUiMode(newConfig.uiMode) == Themes.ThemeChanged.Yes) {
-            recreate()
-        }
     }
 
     override fun onPause() {
@@ -505,7 +482,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         } catch (e: IllegalStateException) {
             Timber.w(e)
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
-            DialogHandler.storeMessage(newFragment.dialogHandlerMessage)
+            DialogHandler.storeMessage(newFragment.dialogHandlerMessage?.toMessage())
             // Show a basic notification to the user in the notification bar in the meantime
             val title = newFragment.notificationTitle
             val message = newFragment.notificationMessage

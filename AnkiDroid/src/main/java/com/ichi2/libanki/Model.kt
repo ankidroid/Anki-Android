@@ -50,6 +50,7 @@ class Model : JSONObject {
     constructor(json: JSONObject) : super() {
         json.deepClonedInto(this)
     }
+
     /**
      * Creates a model object form json string
      */

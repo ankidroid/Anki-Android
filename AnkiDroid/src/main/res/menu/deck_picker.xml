@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
     <group android:id="@+id/allItems">
         <item
@@ -7,6 +8,12 @@
             android:title="@string/search_decks"
             ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
             ankidroid:showAsAction="always|collapseActionView"/>
+        <!--        TODO: add a title for this action-->
+        <item
+            android:id="@+id/action_migration_progress"
+            android:visible="false"
+            ankidroid:actionLayout="@layout/migration_progress_menu_layout"
+            ankidroid:showAsAction="always" />
         <!--
         We want sync on the right, to be consistent with past version: #7737.
         We're OK to do this as we're using "always" so it won't be hidden

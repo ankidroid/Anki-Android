@@ -47,10 +47,10 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
-import com.afollestad.materialdialogs.MaterialDialog
 import com.canhub.cropper.*
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -60,12 +60,9 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.BitmapUtil
-import com.ichi2.utils.ExifUtil
-import com.ichi2.utils.FileUtil
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.Permissions
+import com.ichi2.utils.*
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -96,10 +93,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return min(height * 0.4, width * 0.6).toInt()
         }
     private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
+
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 
-    @Suppress("deprecation") // getParcelable
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             Timber.i("loadInstanceState but null so nothing to load")
@@ -109,7 +106,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i("loadInstanceState loading saved state...")
         mViewModel = ImageViewModel.fromBundle(savedInstanceState)
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath")
-        mPreviousImageUri = savedInstanceState.getParcelable("mPreviousImageUri")
+        mPreviousImageUri = savedInstanceState.getParcelableCompat<Uri>("mPreviousImageUri")
     }
 
     override fun saveInstanceState(): Bundle {
@@ -668,16 +665,16 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             Timber.w("showCropDialog called with null URI or Path")
             return
         }
-        val dialog = MaterialDialog(mActivity)
-            .message(text = content)
-            .positiveButton(R.string.dialog_ok) {
+
+        AlertDialog.Builder(mActivity).show {
+            message(text = content)
+            positiveButton(R.string.dialog_ok) {
                 mViewModel = requestCrop(mViewModel)
             }
-            .negativeButton(R.string.dialog_no) {
+            negativeButton(R.string.dialog_no) {
                 negativeCallback?.invoke() // Using invoke since negativeCallback is nullable
             }
-
-        dialog.show()
+        }
     }
 
     private fun handleCropResult(result: CropImageView.CropResult) {

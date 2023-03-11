@@ -35,9 +35,11 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseArray
+import android.view.View
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
+import java.util.*
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -77,6 +79,7 @@ import java.io.*
  */
 interface Compat {
     fun setupNotificationChannel(context: Context)
+    fun setTooltipTextByContentDescription(view: View)
     fun setTime(picker: TimePicker, hour: Int, minute: Int)
     fun getHour(picker: TimePicker): Int
     fun getMinute(picker: TimePicker): Int
@@ -86,6 +89,7 @@ interface Compat {
     fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
+    fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
 
     /**
      * Retrieve extended data from the intent.
@@ -114,6 +118,13 @@ interface Compat {
      * @return a Serializable value, or `null`
      */
     fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
+
+    /**
+     * Read and return a new Serializable object from the parcel.
+     * @return the Serializable object, or null if the Serializable name
+     * wasn't found in the parcel.
+     */
+    fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T?
 
     /**
      * Retrieve overall information about an application package that is
@@ -278,6 +289,13 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
+
+    /**
+     * Read into an existing List object from the parcel at the current
+     * dataPosition(), using the given class loader to load any enclosed
+     * Parcelables.  If it is null, the default class loader is used.
+     */
+    fun <T> readList(parcel: Parcel, outVal: MutableList<in T>, classLoader: ClassLoader?, clazz: Class<T>)
 
     companion object {
         /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */

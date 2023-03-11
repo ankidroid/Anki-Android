@@ -146,14 +146,14 @@
     </plurals>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
     <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
-    <string name="no_space_to_downgrade_title">لا توجد مساحة</string>
-    <string name="no_space_to_downgrade_content">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">لا توجد مساحة</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
     <string name="restore_backup">ستُستبدل مجموعتك بنسخة أقدم. ستفقد أي تغيير غير محفوظ.</string>
     <string name="restore_backup_choose_another">اختر نسخة أخرى</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
-    <string name="dialog_confirm">تأكيد</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">تأكيد</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_continue">استمرار</string>
@@ -297,7 +297,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">لا يمكنك إنشاء رزمة فرعية لكل الرزم</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        بسبب تغييرات تتعلق بالخصوصية في أندرويد، سيصبح مكان تخزين البيانات الحالي غير متاح للوصول إذا حذفت التطبيق.        \n\nنحتاج لنقل بياناتك إلى موقع خاص بتطبيق أنكيدرويد.        \n\nقد تُحذف البيانات في ذلك الموقع الخاص إذا حذفت التطبيق.        \nموقع التخزين الحالي هو %1$s        \n\nالموقع الخاص سيصبح %2$s        \n\nيرجى تأكيد أنك ستأخذ نسخ احتياطية بانتظام لهذا المجلد.    </string>
-    <string name="manual_backup">نسخ احتياطي يدوي</string>
-    <string name="remind_me_later">ذكرني لاحقًا</string>
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    </string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>

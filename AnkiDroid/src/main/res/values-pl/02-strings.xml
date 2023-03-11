@@ -449,4 +449,6 @@
     <string name="toggle_browser_mode_help">Przełącz wyświetlanie kart lub notatek w przeglądarce</string>
     <string name="truncate_content_help">Przycinaj wysokość każdego wiersza przeglądarki, aby pokazać tylko pierwsze 3 linie treści</string>
     <string name="browser_options_dialog_heading">Opcje przeglądarki</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

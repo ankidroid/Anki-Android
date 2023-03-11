@@ -472,4 +472,6 @@
     <string name="toggle_browser_mode_help">تبديل عرض البطاقات أو الملحوظات في المتصفح</string>
     <string name="truncate_content_help">حد ارتفاع كل صف من المتصفح لإظهار أول 3 سطور فقط</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

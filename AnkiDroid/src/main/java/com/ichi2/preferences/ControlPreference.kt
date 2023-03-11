@@ -19,6 +19,7 @@ package com.ichi2.preferences
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -36,6 +37,7 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.ui.KeyPicker
+import com.ichi2.utils.*
 import java.util.*
 
 /**
@@ -49,10 +51,17 @@ import java.util.*
  * * Allow maps other than the reviewer
  */
 class ControlPreference : ListPreference {
-    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    @Suppress("unused") constructor(context: Context) : super(context)
+    @Suppress("unused")
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+
+    @Suppress("unused")
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    @Suppress("unused")
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
+    @Suppress("unused")
+    constructor(context: Context) : super(context)
 
     fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
@@ -208,7 +217,7 @@ class ControlPreference : ListPreference {
     private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: MaterialDialog) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 
-        MaterialDialog(context).show {
+        AlertDialog.Builder(context).show {
             title(text = title)
             message(text = context.getString(R.string.bindings_already_bound, commandName))
             positiveButton(R.string.dialog_positive_replace) {

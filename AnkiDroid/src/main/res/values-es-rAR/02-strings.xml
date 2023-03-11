@@ -295,7 +295,7 @@
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
     <string name="title_whiteboard_pen_color">Color del lápiz</string>
-    <string name="title_whiteboard_editor">Hola</string>
+    <string name="title_whiteboard_editor">Editor de pizarra</string>
     <string name="user_is_a_robot">Prueba automatizada detectada. Si eres un humano, ponte en contacto con el soporte de AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Esta tarjeta utiliza características de AnkiDroid no compatibles. Contacte con el desarrollador %1$s o vea la wiki. %2$s</string>
@@ -423,4 +423,6 @@
     <string name="toggle_browser_mode_help">Alternar la muestra de tarjetas o notas en el navegador</string>
     <string name="truncate_content_help">Limita la altura de cada fila del navegador de tal manera que solo muestra las primeras 3 líneas de contenido</string>
     <string name="browser_options_dialog_heading">Opciones del navegador</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

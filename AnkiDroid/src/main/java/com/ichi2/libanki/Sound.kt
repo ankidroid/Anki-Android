@@ -32,20 +32,20 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.ReadText
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.trimRight
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.regex.Pattern
 
-@KotlinCleanup("IDE Lint")
 // NICE_TO_HAVE: Abstract, then add tests for #6111
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
+@KotlinCleanup("IDE Lint")
 class Sound {
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
@@ -66,6 +66,7 @@ class Sound {
      * Weak reference to the activity which is attempting to play the sound
      */
     private var mCallingActivity: WeakReference<Activity?>? = null
+
     @VisibleForTesting
     fun getSounds(side: SoundSide): ArrayList<String>? {
         if (side == SoundSide.QUESTION_AND_ANSWER) {
@@ -252,13 +253,16 @@ class Sound {
         val errorHandler = errorListener
             ?: OnErrorListener { _: MediaPlayer?, what: Int, extra: Int, _: String? ->
                 Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra)
-                false
+                CONTINUE_AUDIO
             }
         if ("tts" == soundPath.substring(0, 3)) {
             // TODO: give information about did
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
-        } else {
+            return
+        }
+
+        fun playMedia() {
             // Check if the file extension is that of a known video format
             val extension =
                 soundPath.substring(soundPath.lastIndexOf(".") + 1).lowercase(Locale.getDefault())
@@ -305,12 +309,24 @@ class Sound {
                     }
                 }
                 mMediaPlayer!!.setOnErrorListener { mp: MediaPlayer?, which: Int, extra: Int ->
-                    errorHandler.onError(
+                    val errorHandling = errorHandler.onError(
                         mp,
                         which,
                         extra,
                         soundPath
                     )
+                    // returning false calls onComplete()
+                    return@setOnErrorListener when (errorHandling) {
+                        CONTINUE_AUDIO -> false
+                        OnErrorListener.ErrorHandling.RETRY_AUDIO -> {
+                            playMedia()
+                            true
+                        }
+                        OnErrorListener.ErrorHandling.STOP_AUDIO -> {
+                            stopSounds()
+                            true
+                        }
+                    }
                 }
                 // Setup the MediaPlayer
                 @KotlinCleanup("simplify with scope function on mediaPlayer")
@@ -341,18 +357,25 @@ class Sound {
                 CompatHelper.compat.requestAudioFocus(mAudioManager!!, afChangeListener, mAudioFocusRequest)
             } catch (e: Exception) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath)
-                if (!errorHandler.onError(
+                when (
+                    errorHandler.onError(
                         mMediaPlayer,
                         MediaPlayer.MEDIA_ERROR_UNSUPPORTED,
                         0,
                         soundPath
                     )
                 ) {
-                    Timber.d("Force playing next sound.")
-                    playAllListener.onCompletion(mMediaPlayer)
+                    CONTINUE_AUDIO -> {
+                        Timber.d("Force playing next sound.")
+                        playAllListener.onCompletion(mMediaPlayer)
+                    }
+                    OnErrorListener.ErrorHandling.STOP_AUDIO -> stopSounds()
+                    OnErrorListener.ErrorHandling.RETRY_AUDIO -> playMedia()
                 }
             }
         }
+
+        playMedia()
     }
 
     @KotlinCleanup("simplify code with ?. or make uri non-null")
@@ -367,7 +390,9 @@ class Sound {
     val currentAudioUri: String?
         get() = if (mCurrentAudioUri == null) {
             null
-        } else mCurrentAudioUri.toString()
+        } else {
+            mCurrentAudioUri.toString()
+        }
 
     fun notifyConfigurationChanged(videoView: VideoView) {
         if (mMediaPlayer != null) {
@@ -460,7 +485,18 @@ class Sound {
     }
 
     fun interface OnErrorListener {
-        fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): Boolean
+        fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): ErrorHandling
+
+        enum class ErrorHandling {
+            /** Stop playing audio */
+            STOP_AUDIO,
+
+            /** Continue to the next audio (if any) */
+            CONTINUE_AUDIO,
+
+            /** Retry the current audio */
+            RETRY_AUDIO
+        }
     }
 
     companion object {
@@ -584,7 +620,9 @@ class Sound {
             val trimmedSound = sound.trim { it <= ' ' }
             return if (hasURIScheme(trimmedSound)) {
                 trimmedSound
-            } else soundDir + Uri.encode(trimRight(sound))
+            } else {
+                soundDir + Uri.encode(sound.trimEnd())
+            }
         }
 
         /**

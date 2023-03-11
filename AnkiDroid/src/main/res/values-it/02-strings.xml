@@ -414,7 +414,7 @@
     <string name="deck_created">Mazzo creato</string>
     <string name="deck_renamed">Mazzo rinominato</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Mazzo eliminato. Rimuovi la scorciatoia</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Carte</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Note</string>
@@ -422,4 +422,6 @@
     <string name="toggle_browser_mode_help">Passa a Visualizzazione di carte o note nel browser</string>
     <string name="truncate_content_help">Tronca l\'altezza di ogni riga del browser per mostrare solo le prime 3 righe di contenuto</string>
     <string name="browser_options_dialog_heading">Opzioni Browser</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

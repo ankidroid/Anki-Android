@@ -106,7 +106,7 @@
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Недостаточно свободного места для запуска AnkiDroid. Освободите немного места на устройстве,  чтобы продолжить.</string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку «%s».</string>
     <string name="intent_aedict_empty">Категория «default» пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории «Notepad» или создайте категорию «default»</string>
@@ -132,14 +132,14 @@
     </plurals>
     <string name="storage_full_title">Хранилище заполнено</string>
     <string name="storage_almost_full_title">Хранилище почти заполнено</string>
-    <string name="no_space_to_downgrade_title">Нет места</string>
-    <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Нет места</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Подтвердить</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Подтвердить</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_yes">Да</string>
     <string name="dialog_continue">Продолжить</string>
@@ -280,13 +280,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Вы не можете создать подколоду для всех колод</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        В связи с изменениями конфиденциальности Android, ваше текущее хранилище будет недоступно, если приложение будет удалено.
-        \n\nНам нужно перенести ваши данные в место, закрытое для приложения AnkiDroid.
-        \n\nДанные в этом  месте могут быть удалены, если приложение будет удалено.
-        \n\nВаше текущее хранилище - %1$s
-        \n\nЛичное хранилище будет %2$s
-        \n\nПожалуйста, подтвердите, что Вы будете регулярно делать резервные копии в этой папке.
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
-    <string name="manual_backup">Резервное копирование</string>
-    <string name="remind_me_later">Напомнить позже</string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>

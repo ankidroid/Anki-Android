@@ -94,9 +94,8 @@ jobs:
           # "lintPlayDebug" doesn't test the API
           arguments: lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
 
-# Disabled temporarily: #13296
-#      - name: Prettify code
-#        uses: creyD/prettier_action@v4.2
-#        with:
-#          prettier_options: --check AnkiDroid/**/*.js
-#          dry: True
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --check AnkiDroid/**/*.js
+          dry: True

@@ -38,7 +38,9 @@ import android.os.Parcelable
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.util.SparseArray
+import android.view.View
 import android.widget.TimePicker
+import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.*
@@ -49,6 +51,11 @@ import java.io.*
 open class CompatV21 : Compat {
     // Until API26, ignore notification channels
     override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
+    }
+
+    // Until API26, tooltips cannot be defined declaratively in layouts
+    override fun setTooltipTextByContentDescription(view: View) {
+        TooltipCompat.setTooltipText(view, view.contentDescription)
     }
 
     // Until API 23 the methods have "current" in the name
@@ -92,6 +99,10 @@ open class CompatV21 : Compat {
         return packageManager.queryIntentActivities(intent, flags.value.toInt())
     }
 
+    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
+        return bundle.getParcelable(key)
+    }
+
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
@@ -122,6 +133,11 @@ open class CompatV21 : Compat {
         key: String,
         clazz: Class<T>
     ): T? = bundle.getSerializable(key) as? T?
+
+    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
+        @Suppress("UNCHECKED_CAST")
+        return parcel.readSerializable() as T
+    }
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
@@ -220,7 +236,8 @@ open class CompatV21 : Compat {
         audioFocusRequest: AudioFocusRequest?
     ) {
         audioManager.requestAudioFocus(
-            audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+            audioFocusChangeListener,
+            AudioManager.STREAM_MUSIC,
             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
         )
     }
@@ -282,6 +299,15 @@ open class CompatV21 : Compat {
                 return paths[mOrd++]
             }
         }
+    }
+
+    override fun <T> readList(
+        parcel: Parcel,
+        outVal: MutableList<in T>,
+        classLoader: ClassLoader?,
+        clazz: Class<T>
+    ) {
+        parcel.readList(outVal, classLoader)
     }
 
     companion object {

@@ -44,6 +44,7 @@ class AbstractSchedTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField // required for Parameter
     var schedVersion = 0
+
     @Before
     override fun setUp() {
         super.setUp()

@@ -410,4 +410,6 @@
     <string name="toggle_browser_mode_help">在瀏覽器中切換顯示卡片或筆記</string>
     <string name="truncate_content_help">截斷瀏覽器每行高度僅顯示內容前三行</string>
     <string name="browser_options_dialog_heading">瀏覽器選項</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    </string>
 </resources>

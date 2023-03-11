@@ -61,8 +61,10 @@ class SimpleMessageDialog : AsyncDialogFragment() {
     companion object {
         /** The title of the notification/dialog */
         private const val ARGS_TITLE = "title"
+
         /** The content of the notification/dialog */
         private const val ARGS_MESSAGE = "message"
+
         /**
          * If the calling activity should be reloaded when 'OK' is pressed.
          * @see SimpleMessageDialogListener.dismissSimpleMessageDialog

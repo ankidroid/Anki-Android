@@ -1,6 +1,6 @@
 plugins {
  // Gradle plugin portal
- id 'com.github.triplet.play' version '3.7.0'
+ id 'com.github.triplet.play' version '3.8.1'
 }
 
 apply plugin: 'com.android.application'
@@ -36,6 +36,7 @@ android {
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "LEGACY_STORAGE", "false"
+        buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -59,8 +60,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600193
-        versionName="2.16alpha93"
+        versionCode=21600194
+        versionName="2.16alpha94"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -98,6 +99,10 @@ android {
                 if (localProperties["legacy_schema"] != null) {
                     buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
+                // allows the scoped storage migration when the user is not logged in
+                if (localProperties["allow_unsafe_migration"] != null) {
+                    buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", localProperties["allow_unsafe_migration"]
+                }
                 // allow disabling leak canary
                 if (localProperties["enable_leak_canary"] != null) {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", localProperties["enable_leak_canary"]
@@ -126,6 +131,9 @@ android {
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
             if (project.hasProperty("customSuffix")) {
                 applicationIdSuffix project.property("customSuffix")
+                resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
+            } else {
+                resValue "string", "applicationId", defaultConfig.applicationId
             }
             if (project.hasProperty("customName")) {
                 resValue "string", "app_name", project.property("customName")
@@ -133,7 +141,6 @@ android {
 
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
-            resValue "string", "applicationId", defaultConfig.applicationId
         }
     }
 
@@ -274,7 +281,7 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
     implementation 'androidx.activity:activity-ktx:1.6.1'
-    implementation 'androidx.annotation:annotation:1.5.0'
+    implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
     implementation 'androidx.browser:browser:1.5.0'
     implementation "androidx.core:core-ktx:1.9.0"
@@ -333,7 +340,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.arcao:slf4j-timber:3.1'
     implementation 'com.jakewharton.timber:timber:5.0.1'
-    implementation 'org.jsoup:jsoup:1.15.3'
+    implementation 'org.jsoup:jsoup:1.15.4'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'

@@ -31,7 +31,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         listOf(
-            R.string.custom_sync_server_collection_url_key,
+            R.string.custom_sync_server_collection_url_key
         ).forEach {
             requirePreference<VersatileTextPreference>(it).continuousValidator =
                 VersatileTextPreference.Validator { value ->

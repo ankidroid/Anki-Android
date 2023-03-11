@@ -35,8 +35,10 @@ object AnimationUtil {
         }
         val set = AnimationSet(true)
         val expandAnimation = ScaleAnimation(
-            1f, 1f,
-            1f, 0.5f
+            1f,
+            1f,
+            1f,
+            0.5f
         )
         expandAnimation.duration = DURATION_MILLIS.toLong()
         expandAnimation.setAnimationListener(object : Animation.AnimationListener {
@@ -67,8 +69,10 @@ object AnimationUtil {
         // Sadly this seems necessary - yScale didn't work.
         val set = AnimationSet(true)
         val resetEditTextScale = ScaleAnimation(
-            1f, 1f,
-            1f, 1f
+            1f,
+            1f,
+            1f,
+            1f
         )
         resetEditTextScale.duration = DURATION_MILLIS.toLong()
         val alphaAnimation = AlphaAnimation(0.0f, 1.0f)

@@ -68,6 +68,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             val did = deckId
             val dyn = collection.decks.isDyn(did)
             val contextMenuOptions = ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
+            contextMenuOptions.add(DeckPickerContextMenuOption.ADD_CARD)
             contextMenuOptions.add(DeckPickerContextMenuOption.BROWSE_CARDS)
             if (dyn) {
                 contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD)
@@ -152,6 +153,12 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 val intent = Intent(activity, CardBrowser::class.java)
                 (activity as DeckPicker).startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }
+            DeckPickerContextMenuOption.ADD_CARD -> {
+                Timber.i("Add selected")
+                collection.decks.select(deckId)
+                (activity as DeckPicker).addNote()
+                (activity as AnkiActivity).dismissAllDialogFragments()
+            }
         }
     }
 
@@ -166,7 +173,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         CUSTOM_STUDY_EMPTY(7, R.string.empty_cram_label),
         CREATE_SUBDECK(8, R.string.create_subdeck),
         CREATE_SHORTCUT(9, R.string.create_shortcut),
-        BROWSE_CARDS(10, R.string.browse_cards);
+        BROWSE_CARDS(10, R.string.browse_cards),
+        ADD_CARD(11, R.string.menu_add);
 
         companion object {
             fun fromId(targetId: Int): DeckPickerContextMenuOption {
@@ -180,7 +188,9 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             val cls = loadFragmentClass(classLoader, className)
             return if (cls == DeckPickerContextMenu::class.java) {
                 newDeckPickerContextMenu()
-            } else super.instantiate(classLoader, className)
+            } else {
+                super.instantiate(classLoader, className)
+            }
         }
 
         private fun newDeckPickerContextMenu(): DeckPickerContextMenu =

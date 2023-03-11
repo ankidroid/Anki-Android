@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -25,8 +26,8 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.FileProvider
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
+import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
@@ -34,10 +35,15 @@ import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
+import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
+import com.ichi2.utils.copyToClipboard
+import com.ichi2.utils.trimToLength
 import timber.log.Timber
 import java.io.File
 import java.util.function.Consumer
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Class which handles how the application responds to different intents, forcing it to always be single task,
@@ -69,7 +75,22 @@ class IntentHandler : Activity() {
                 Timber.d("onCreate() performing default action")
                 launchDeckPickerIfNoOtherTasks(reloadIntent)
             }
+            LaunchType.COPY_DEBUG_INFO -> {
+                copyDebugInfoToClipboard(intent)
+                finish()
+            }
         }
+    }
+
+    private fun copyDebugInfoToClipboard(intent: Intent) {
+        Timber.i("Copying debug info to clipboard")
+        if (!this.copyToClipboard(intent.getStringExtra(CLIPBOARD_INTENT_EXTRA_DATA)!!)) {
+            Timber.w("Failed to obtain ClipboardManager")
+            showThemedToast(this, R.string.something_wrong, true)
+            return
+        }
+
+        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug, true)
     }
 
     /**
@@ -157,10 +178,13 @@ class IntentHandler : Activity() {
     // COULD_BE_BETTER: Also extract the parameters into here to reduce coupling
     @VisibleForTesting
     enum class LaunchType {
-        DEFAULT_START_APP_IF_NEW, FILE_IMPORT, SYNC, REVIEW
+        DEFAULT_START_APP_IF_NEW, FILE_IMPORT, SYNC, REVIEW, COPY_DEBUG_INFO
     }
 
     companion object {
+        private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
+        private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
+
         private fun isValidViewIntent(intent: Intent): Boolean {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
             // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
@@ -177,6 +201,8 @@ class IntentHandler : Activity() {
                 LaunchType.SYNC
             } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
                 LaunchType.REVIEW
+            } else if (action == CLIPBOARD_INTENT) {
+                LaunchType.COPY_DEBUG_INFO
             } else {
                 LaunchType.DEFAULT_START_APP_IF_NEW
             }
@@ -186,11 +212,52 @@ class IntentHandler : Activity() {
          * Send a Message to AnkiDroidApp so that the DialogMessageHandler forces a sync
          */
         fun sendDoSyncMsg() {
-            // Create a new message for DialogHandler
-            val handlerMessage = Message.obtain()
-            handlerMessage.what = DialogHandler.MSG_DO_SYNC
             // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-            storeMessage(handlerMessage)
+            storeMessage(DoSync().toMessage())
+        }
+
+        fun copyStringToClipboardIntent(context: Context, textToCopy: String) =
+            Intent(context, IntentHandler::class.java).also {
+                it.action = CLIPBOARD_INTENT
+                // max length for an intent is 500KB.
+                // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
+                it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
+            }
+
+        class DoSync : DialogHandlerMessage(
+            which = WhichDialogHandler.MSG_DO_SYNC,
+            analyticName = "DoSyncDialog"
+        ) {
+            override fun handleAsyncMessage(deckPicker: DeckPicker) {
+                val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
+                val res = deckPicker.resources
+                val hkey = preferences.getString("hkey", "")
+                val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
+                val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
+                if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
+                    deckPicker.sync()
+                } else {
+                    val err = res.getString(R.string.sync_error)
+                    if (limited) {
+                        val remainingTimeInSeconds = max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                        // getQuantityString needs an int
+                        val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
+                        val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
+                        deckPicker.showSimpleNotification(err, message, Channel.SYNC)
+                    } else {
+                        deckPicker.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
+                    }
+                }
+                deckPicker.finishWithoutAnimation()
+            }
+
+            override fun toMessage(): Message = emptyMessage(this.what)
+
+            companion object {
+                const val INTENT_SYNC_MIN_INTERVAL = (
+                    2 * 60000 // 2min minimum sync interval
+                    ).toLong()
+            }
         }
     }
 }

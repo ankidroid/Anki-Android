@@ -55,6 +55,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private var mOrigBackground: Drawable? = null
     private var mSelectionChangeListener: TextSelectionListener? = null
     private var mImageListener: ImagePasteListener? = null
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var clipboard: ClipboardManager? = null
 
@@ -103,7 +104,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         val inputConnection = super.onCreateInputConnection(editorInfo) ?: return null
         EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES)
         ViewCompat.setOnReceiveContentListener(
-            this, IMAGE_MIME_TYPES,
+            this,
+            IMAGE_MIME_TYPES,
             object : OnReceiveContentListener {
                 override fun onReceiveContent(view: View, payload: ContentInfoCompat): ContentInfoCompat? {
                     val pair = payload.partition { item -> item.uri != null }
@@ -219,7 +221,9 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private fun onImagePaste(imageUri: Uri?): Boolean {
         return if (imageUri == null) {
             false
-        } else mImageListener!!.onImagePaste(this, imageUri)
+        } else {
+            mImageListener!!.onImagePaste(this, imageUri)
+        }
     }
 
     override fun onRestoreInstanceState(state: Parcelable) {

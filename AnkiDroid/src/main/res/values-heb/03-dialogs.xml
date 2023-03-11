@@ -133,14 +133,14 @@
     </plurals>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
-    <string name="no_space_to_downgrade_title">אין מקום</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid זקוק ל-%s שטח אחסון פנוי כדי להמשיך. נא לפנות קצת מקום</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">אין מקום</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid זקוק ל-%s שטח אחסון פנוי כדי להמשיך. נא לפנות קצת מקום</string>
     <string name="restore_backup_title">לשחזר מגיבוי?</string>
     <string name="restore_backup">האוסף שלך יוחלף בעותק ישן יותר. כל תהליך שלא נשמר ילך לאיבוד.</string>
     <string name="restore_backup_choose_another">אחר</string>
     <string name="dialog_cancel">ביטול</string>
     <string name="dialog_ok">אישור</string>
-    <string name="dialog_confirm">אשר</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">אשר</string>
     <string name="dialog_no">לא</string>
     <string name="dialog_yes">כן</string>
     <string name="dialog_continue">המשך</string>
@@ -280,12 +280,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">לא ניתן ליצור תת-חפיסה עבור כל החפיסות</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">עקב שינויים בפרטיות של Android, מיקום האחסון הנוכחי שלך לא יהיה נגיש אם האפליקציה תוסר.
-         \n\nאנחנו צריכים להעביר את הנתונים שלך למיקום פרטי לאפליקציית AnkiDroid.
-         \n\nייתכן שהנתונים במיקום פרטי זה יימחקו אם האפליקציה תוסר.
-         \n\nמיקום האחסון הנוכחי שלך הוא %1$s
-         \n\nמיקום האחסון הפרטי יהיה %2$s
-         \n\nאנא אשר כי תבצע גיבויים של תיקייה זו באופן קבוע.</string>
-    <string name="manual_backup">גיבוי ידני</string>
-    <string name="remind_me_later">הזכר לי מאוחר יותר</string>
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    </string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>

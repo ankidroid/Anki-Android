@@ -86,9 +86,11 @@ class GestureMapper {
     fun gesture(height: Int, width: Int, posX: Float, posY: Float): Gesture? {
         return if (width == 0 || height == 0) {
             null
-        } else when (tapGestureMode) {
-            TapGestureMode.FOUR_POINT -> fromTap(height, width, posX, posY)
-            TapGestureMode.NINE_POINT -> fromTapCorners(height, width, posX, posY)
+        } else {
+            when (tapGestureMode) {
+                TapGestureMode.FOUR_POINT -> fromTap(height, width, posX, posY)
+                TapGestureMode.NINE_POINT -> fromTapCorners(height, width, posX, posY)
+            }
         }
     }
 
@@ -159,7 +161,9 @@ class GestureMapper {
             }
             return if (valueFloor < 1) {
                 TriState.LOW
-            } else TriState.MID
+            } else {
+                TriState.MID
+            }
         }
     }
 }

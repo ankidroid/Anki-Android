@@ -20,19 +20,25 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Message
+import android.os.Parcelable
 import android.view.KeyEvent
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.ichi2.anki.*
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.async.Connection
+import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
 import com.ichi2.utils.iconAttr
+import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
@@ -47,7 +53,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val type = requireArguments().getInt("dialogType")
         val res = resources
         val dialog = MaterialDialog(requireActivity())
         val isLoggedIn = isLoggedIn()
@@ -62,9 +67,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         } catch (e: InterruptedException) {
             Timber.w(e)
         }
-        return when (type) {
+        return when (requireDialogType()) {
             DIALOG_LOAD_FAILED -> {
-
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
                 dialog.show {
@@ -81,7 +85,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_ERROR -> {
-
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
                 dialog.show {
@@ -103,7 +106,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_ERROR_HANDLING -> {
-
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
                 val options = ArrayList<String>(6)
@@ -112,7 +114,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
-                } else {
+                } else if (!ScopedStorageService.userMigrationIsInProgress(requireContext())) {
                     // fix integrity
                     options.add(res.getString(R.string.check_db))
                     values.add(1)
@@ -176,7 +178,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_REPAIR_COLLECTION -> {
-
                 // Allow user to run BackupManager.repairCollection()
                 dialog.show {
                     contentNullable(message)
@@ -189,7 +190,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_RESTORE_BACKUP -> {
-
                 // Allow user to restore one of the backups
                 val path = CollectionHelper.getCollectionPath(requireContext())
                 mBackups = BackupManager.getBackups(File(path))
@@ -244,7 +244,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog
             }
             DIALOG_NEW_COLLECTION -> {
-
                 // Allow user to create a new empty collection
                 dialog.show {
                     contentNullable(message)
@@ -263,7 +262,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_CONFIRM_DATABASE_CHECK -> {
-
                 // Confirmation dialog for database check
                 dialog.show {
                     contentNullable(message)
@@ -275,7 +273,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_CONFIRM_RESTORE_BACKUP -> {
-
                 // Confirmation dialog for backup restore
                 dialog.show {
                     contentNullable(message)
@@ -287,7 +284,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_FULL_SYNC_FROM_SERVER -> {
-
                 // Allow user to do a full-sync from the server
                 dialog.show {
                     contentNullable(message)
@@ -299,7 +295,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_LOCKED -> {
-
                 // If the database is locked, all we can do is ask the user to exit.
                 dialog.show {
                     contentNullable(message)
@@ -345,7 +340,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                 }
             }
-            else -> null!!
         }
     }
 
@@ -356,7 +350,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
     // Show a specific message appropriate for the situation
     private val message: String?
-        get() = when (requireArguments().getInt("dialogType")) {
+        get() = when (requireDialogType()) {
             DIALOG_LOAD_FAILED -> if (databaseCorruptFlag) {
                 // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
                 // Show a specific message appropriate for the situation
@@ -395,7 +389,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             else -> requireArguments().getString("dialogMessage")
         }
     private val title: String
-        get() = when (requireArguments().getInt("dialogType")) {
+        get() = when (requireDialogType()) {
             DIALOG_LOAD_FAILED -> resources.getString(R.string.open_collection_failed_title)
             DIALOG_ERROR_HANDLING -> resources.getString(R.string.error_handling_title)
             DIALOG_REPAIR_COLLECTION -> resources.getString(R.string.dialog_positive_repair)
@@ -408,58 +402,82 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             INCOMPATIBLE_DB_VERSION -> resources.getString(R.string.incompatible_database_version_title)
             DIALOG_DB_ERROR -> resources.getString(R.string.answering_error_title)
             DIALOG_DISK_FULL -> resources.getString(R.string.storage_full_title)
-            else -> resources.getString(R.string.answering_error_title)
         }
 
     override val notificationMessage: String? get() = message
     override val notificationTitle: String get() = resources.getString(R.string.answering_error_title)
 
-    override val dialogHandlerMessage: Message
-        get() {
-            val msg = Message.obtain()
-            msg.what = DialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG
-            val b = Bundle()
-            b.putInt("dialogType", requireArguments().getInt("dialogType"))
-            msg.data = b
-            return msg
-        }
+    override val dialogHandlerMessage
+        get() = ShowDatabaseErrorDialog(requireDialogType())
+
+    private fun requireDialogType() = requireArguments().getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
 
     fun dismissAllDialogFragments() {
         (activity as DeckPicker).dismissAllDialogFragments()
     }
 
-    companion object {
-        const val DIALOG_LOAD_FAILED = 0
-        const val DIALOG_DB_ERROR = 1
-        const val DIALOG_ERROR_HANDLING = 2
-        const val DIALOG_REPAIR_COLLECTION = 3
-        const val DIALOG_RESTORE_BACKUP = 4
-        const val DIALOG_NEW_COLLECTION = 5
-        const val DIALOG_CONFIRM_DATABASE_CHECK = 6
-        const val DIALOG_CONFIRM_RESTORE_BACKUP = 7
-        const val DIALOG_FULL_SYNC_FROM_SERVER = 8
+    @Parcelize
+    enum class DatabaseErrorDialogType : Parcelable {
+        DIALOG_LOAD_FAILED,
+        DIALOG_DB_ERROR,
+        DIALOG_ERROR_HANDLING,
+        DIALOG_REPAIR_COLLECTION,
+        DIALOG_RESTORE_BACKUP,
+        DIALOG_NEW_COLLECTION,
+        DIALOG_CONFIRM_DATABASE_CHECK,
+        DIALOG_CONFIRM_RESTORE_BACKUP,
+        DIALOG_FULL_SYNC_FROM_SERVER,
 
         /** If the database is locked, all we can do is reset the app  */
-        const val DIALOG_DB_LOCKED = 9
+        DIALOG_DB_LOCKED,
 
         /** If the database is at a version higher than what we can currently handle  */
-        const val INCOMPATIBLE_DB_VERSION = 10
+        INCOMPATIBLE_DB_VERSION,
+
         /** If the disk space is full **/
-        const val DIALOG_DISK_FULL = 11
+        DIALOG_DISK_FULL;
+    }
+
+    companion object {
+
         // public flag which lets us distinguish between inaccessible and corrupt database
         var databaseCorruptFlag = false
 
         /**
          * A set of dialogs which deal with problems with the database when it can't load
          *
-         * @param dialogType An integer which specifies which of the sub-dialogs to show
+         * @param dialogType the sub-dialog to show
          */
-        fun newInstance(dialogType: Int): DatabaseErrorDialog {
+        fun newInstance(dialogType: DatabaseErrorDialogType): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
-            args.putInt("dialogType", dialogType)
+            args.putParcelable("dialog", dialogType)
             f.arguments = args
             return f
+        }
+    }
+
+    /** Database error dialog */
+    class ShowDatabaseErrorDialog(val dialogType: DatabaseErrorDialogType) : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
+        analyticName = "DatabaseErrorDialog"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.showDatabaseErrorDialog(dialogType)
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            what = this@ShowDatabaseErrorDialog.what
+            data = bundleOf(
+                "dialog" to dialogType
+            )
+        }
+
+        companion object {
+            fun fromMessage(message: Message): ShowDatabaseErrorDialog {
+                val dialogType = message.data.getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
+                return ShowDatabaseErrorDialog(dialogType)
+            }
         }
     }
 }

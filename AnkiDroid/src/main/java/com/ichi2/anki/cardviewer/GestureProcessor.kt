@@ -54,8 +54,9 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         val associatedCommands = HashMap<Gesture, ViewerCommand>()
         for (command in ViewerCommand.values()) {
             for (mappableBinding in MappableBinding.fromPreference(preferences, command)) {
-                if (mappableBinding.binding.isGesture)
+                if (mappableBinding.binding.isGesture) {
                     associatedCommands[mappableBinding.binding.gesture!!] = command
+                }
             }
         }
         gestureDoubleTap = associatedCommands[Gesture.DOUBLE_TAP]

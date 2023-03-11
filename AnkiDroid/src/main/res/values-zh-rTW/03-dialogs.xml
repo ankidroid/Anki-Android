@@ -111,14 +111,14 @@
     </plurals>
     <string name="storage_full_title">存儲已滿</string>
     <string name="storage_almost_full_title">存儲空間幾乎滿了</string>
-    <string name="no_space_to_downgrade_title">沒有空間</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid 需要%s可用儲存空間以繼續。請清除一些空間</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">沒有空間</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid 需要%s可用儲存空間以繼續。請清除一些空間</string>
     <string name="restore_backup_title">回復備份嗎？</string>
     <string name="restore_backup">你的集合將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
     <string name="restore_backup_choose_another">選擇其他時間</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
-    <string name="dialog_confirm">確認</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">否</string>
     <string name="dialog_yes">是</string>
     <string name="dialog_continue">繼續</string>
@@ -252,13 +252,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能為所有牌組創建子牌組</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        由於Android隱私變化，如應用被卸載，您當前的存儲位置將不可訪問。
-        \n\n我們需要將您的數據遷移到一個對AnkiDroid應用來說秘密的地方。
-        \n\n如果應用被卸載，這個私有位置中的數據可能會被删除。
-        \n\n您當前的存儲位置是%1$s
-        \n\n私有存儲位置將是%2$s
-        \n\n請確保您將定期備份此資料夾。
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
-    <string name="manual_backup">手動備份</string>
-    <string name="remind_me_later">稍後提醒我</string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>

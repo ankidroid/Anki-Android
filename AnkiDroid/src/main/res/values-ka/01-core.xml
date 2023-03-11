@@ -81,8 +81,8 @@
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">დღეს ნასწავლია %1$d ბარათი %2$s-ში</item>
-        <item quantity="other">დღეს ნასწავლია %1$d ბარათი %2$s-ში</item>
+        <item quantity="one">დღეს ნასწავლია %1$d ბარათი %2$s</item>
+        <item quantity="other">დღეს ნასწავლია %1$d ბარათი %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">პასუხის ჩაწერა</string>
@@ -97,6 +97,7 @@
     <string name="undo">აღდგენა</string>
     <string name="undo_action_review">ბოლო გადახედვა</string>
     <string name="undo_action_change_deck_multi">დასტების შეცვლა</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ხაზის გაუქმება</string>
     <string name="move_all_to_deck">ყველას გადატანა დასტაში</string>
     <string name="unbury">გამოჩენა</string>
     <string name="rename_deck">დასტის სახელის შეცვლა</string>
@@ -242,8 +243,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ფაილზე %s ჩაწერა ვერ მოხერხდა ან ფაილი ვერ შეიქმნა</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migrating_data_message">მონაცემემთა მიგრაცია</string>
+    <string name="migration_successful_message">მიგრაცია წარმატებით დასრულდა</string>
+    <string name="migration_failed_message">მიგრაცია ვერ მოხერხდა</string>
+    <string name="migration_transferred_size">მიგრირებულია %1$.0f MB %2$.0f MB-დან</string>
 </resources>

@@ -46,18 +46,18 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="one">ნაჩვენებია %d ბარათი</item>
+        <item quantity="other">ნაჩვენებია %d ბარათი</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">ნაჩვენებია %d შენიშვნა</item>
+        <item quantity="other">ნაჩვენებია %d შენიშვნა</item>
     </plurals>
     <string name="card_browser_all_decks">ყველა დასტა</string>
     <string name="card_browser_delete_card">შენიშვნების წაშლა</string>
     <string name="card_browser_suspend_card">ბარათების გამოტოვება</string>
     <string name="card_browser_change_deck">დასტის შეცვლა</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_unsuspend_card">\"გამოტოვების\" გაუქმება</string>
     <string name="card_browser_mark_card">შენიშვნების მონიშვნა</string>
     <string name="card_browser_unmark_card">მონიშვნის გაუქმება</string>
     <string name="delete_card_title">წაიშალოს შენიშვნა?</string>
@@ -70,12 +70,12 @@
     <string name="card_browser_list_my_searches_save">ძიების შენახვა</string>
     <string name="card_browser_list_my_searches_title">აირჩიეთ შენახული ძიება</string>
     <string name="card_browser_list_my_searches_new_name">სახელი მიმდინარე ძიებისთვის</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">უსათაურო ძიებას ვერ შეინახავთ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">სახელი უკვე არსებობს</string>
     <string name="card_browser_list_my_searches_remove_content">„%1$s“ წაიშალოს?</string>
     <string name="card_browser_change_display_order">ჩვენების თანმიმდევრობის შეცვლა</string>
     <string name="card_browser_change_display_order_title">ჩვენების თანმიმდევრობის არჩევა</string>
-    <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+    <string name="card_browser_change_display_order_reverse">თანმიმდევრობის ამოსაბრუნებლად ველი ორჯერ მონიშნეთ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">სასწავლო</string>
     <string name="card_details_tags">იარლიყები</string>
     <string-array name="card_browser_order_labels">
@@ -86,7 +86,7 @@
         <item>ბარათის მოდიფიკაციის დროის მიხედვით</item>
         <item>დაგეგმილი სწავლის დროის მიხედვით</item>
         <item>შუალედის მიხედვით</item>
-        <item>სიადვილეს მიხედვით</item>
+        <item>სიმარტივეს მიხედვით</item>
         <item>გადახედვის სიხშირის მიხედვით</item>
         <item>გადავიწყების სიხშირის მიხედვით</item>
     </string-array>
@@ -95,10 +95,10 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ახალი)</string>
     <string name="card_browser_due_filtered_card">(გაფილტრული)</string>
     <string name="card_browser_interval_learning_card">(ისწავლება)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_no_cards_in_deck">ვერ მოიძებნა ბარათები დასტაში \"%s\"</string>
+    <string name="card_browser_search_all_decks">ყველა დასტაში ძებნა</string>
     <string name="card_browser_unknown_deck_name">უცნობი</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">შიგთავსის დამოკლება</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">ბარათის ექსპორტირება</item>
         <item quantity="other">ბარათების ექსპორტირება</item>
@@ -116,7 +116,7 @@
     <string name="card_info_first_review">პირველი გადახედვა</string>
     <string name="card_info_latest_review">უახლესი გადახედვა</string>
     <string name="card_info_interval">შუალედი</string>
-    <string name="card_info_ease">სიადვილე</string>
+    <string name="card_info_ease">სიმარტივე</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">გადახედვა</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">გადავიწყება</string>
     <string name="card_info_average_time">საშუალო დრო</string>

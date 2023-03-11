@@ -41,7 +41,7 @@ class PreferencesSimpleTest {
                 Arguments.of(arrayOf(""), ""),
                 Arguments.of(arrayOf("foo"), "foo"),
                 Arguments.of(arrayOf("foo", "bar"), "foo • bar"),
-                Arguments.of(arrayOf("foo", "bar", "hi", "there"), "foo • bar • hi • there"),
+                Arguments.of(arrayOf("foo", "bar", "hi", "there"), "foo • bar • hi • there")
             )
         }
     }

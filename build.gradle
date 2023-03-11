@@ -1,15 +1,13 @@
 import org.gradle.internal.jvm.Jvm
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.8.10'
-    ext.lint_version = '30.4.1'
+    ext.lint_version = '30.4.2'
     ext.acra_version = '5.9.7'
-    ext.ankidroid_backend_version = '0.1.21-anki2.1.58'
+    ext.ankidroid_backend_version = '0.1.21-anki2.1.60'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.9.2'
     ext.coroutines_version = '1.6.4'
@@ -26,13 +24,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.1'
+        classpath 'com.android.tools.build:gradle:7.4.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.1.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.2.0"
     }
 }
 
@@ -74,14 +72,6 @@ subprojects {
                 systemProperties['junit.jupiter.execution.parallel.enabled'] = true
                 systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
             }
-        }
-
-        ktlint {
-            // remove version override when ktlint gradle plugin releases with 0.45+ transitive
-            // check for "ktlint" here:
-            // https://github.com/JLLeitschuh/ktlint-gradle/blob/master/plugin/gradle/libs.versions.toml
-            version = "0.45.2"
-            disabledRules = ["no-wildcard-imports"]
         }
 
         /**
@@ -147,8 +137,8 @@ ext {
         // the CI machines don't have enough RAM to do that without going in to swap quite a bit
         // so for CI machines only - to improve reliability despite compilation speed hit, compile kotlin in process
         println "CI build detected: setting compiler execution strategy to IN_PROCESS"
-        tasks.withType(KotlinCompile).configureEach {
-            compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.IN_PROCESS)
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            compilerExecutionStrategy.set(org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy.IN_PROCESS)
         }
     } else {
         // Use 50% of cores to account for SMT which doesn't help this workload

@@ -45,6 +45,10 @@ open class CompatV33 : CompatV31(), Compat {
         return bundle.getSerializable(key, clazz)
     }
 
+    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
+        return parcel.readSerializable(loader, clazz)
+    }
+
     override fun <T> readSparseArray(
         parcel: Parcel,
         loader: ClassLoader,
@@ -66,5 +70,18 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+    }
+
+    override fun <T> readList(
+        parcel: Parcel,
+        outVal: MutableList<in T>,
+        classLoader: ClassLoader?,
+        clazz: Class<T>
+    ) {
+        parcel.readList(outVal, classLoader, clazz)
+    }
+
+    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
+        return bundle.getParcelable(key, clazz)
     }
 }

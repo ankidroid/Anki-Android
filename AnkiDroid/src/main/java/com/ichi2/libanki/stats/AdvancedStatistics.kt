@@ -174,8 +174,10 @@ class AdvancedStatistics {
                 ).toDouble() // Y-Axis: # Young
             seriesList[REVIEW_TYPE_RELEARN_PLUS_1][t] = data[REVIEW_TYPE_LEARN_PLUS_1]
                 .toDouble() // Y-Axis: # Learn
-            if (data[TIME] > lastElement) lastElement = data[TIME]
-                .toDouble() // X-Axis: Max. value (only for TYPE_LIFE)
+            if (data[TIME] > lastElement) {
+                lastElement = data[TIME]
+                    .toDouble() // X-Axis: Max. value (only for TYPE_LIFE)
+            }
             if (data[TIME] == 0) {
                 zeroIndex = t // Because we retrieve dues in the past and we should not cumulate them
             }
@@ -314,9 +316,17 @@ class AdvancedStatistics {
                     nInState[i][CARD_TYPE_NEW].toDouble()
                 )
             } else {
-                if (i == 0) nInStateCum[i] = doubleArrayOf(
-                    i.toDouble(), 0.0, 0.0, 0.0, 0.0
-                ) else nInStateCum[i] = nInStateCum[i - 1]
+                if (i == 0) {
+                    nInStateCum[i] = doubleArrayOf(
+                        i.toDouble(),
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    )
+                } else {
+                    nInStateCum[i] = nInStateCum[i - 1]
+                }
             }
         }
 
@@ -478,10 +488,12 @@ class AdvancedStatistics {
             mProbabilities[CARD_TYPE_NEW] =
                 calculateProbabilitiesForNewEaseForCurrentEase(queryNew, mPriorNew)
             mProbabilities[CARD_TYPE_YOUNG] = calculateProbabilitiesForNewEaseForCurrentEase(
-                queryYoung, mPriorYoung
+                queryYoung,
+                mPriorYoung
             )
             mProbabilities[CARD_TYPE_MATURE] = calculateProbabilitiesForNewEaseForCurrentEase(
-                queryMature, mPriorMature
+                queryMature,
+                mPriorMature
             )
             mProbabilitiesCumulative[CARD_TYPE_NEW] = cumsum(
                 mProbabilities[CARD_TYPE_NEW]
@@ -736,15 +748,19 @@ class AdvancedStatistics {
             // Since it's the average, it can be a non-integer
             // Adding a review to a non-integer can make it exceed the maximum # reviews per day, but not by 1 or more
             // So if we take the floor when displaying it, we will display the maximum # reviews
-            simulationResult = if (mSettings!!.computeNDays > 0) SimulationResult(
-                nTimeBins,
-                timeBinLength,
-                DOUBLE_TO_INT_MODE_FLOOR
-            ) else SimulationResult(
-                nTimeBins,
-                timeBinLength,
-                DOUBLE_TO_INT_MODE_ROUND
-            )
+            simulationResult = if (mSettings!!.computeNDays > 0) {
+                SimulationResult(
+                    nTimeBins,
+                    timeBinLength,
+                    DOUBLE_TO_INT_MODE_FLOOR
+                )
+            } else {
+                SimulationResult(
+                    nTimeBins,
+                    timeBinLength,
+                    DOUBLE_TO_INT_MODE_ROUND
+                )
+            }
 
             // nSmooth=1
 
@@ -880,10 +896,14 @@ class AdvancedStatistics {
             for (i in 0 until m) {
                 intMatrix[i] = IntArray(n)
                 for (j in 0 until n) {
-                    if (doubleToIntMode == DOUBLE_TO_INT_MODE_ROUND) intMatrix[i]!![j] =
-                        Math.round(
-                            doubleMatrix[i][j]
-                        ).toInt() else intMatrix[i]!![j] = doubleMatrix[i][j].toInt()
+                    if (doubleToIntMode == DOUBLE_TO_INT_MODE_ROUND) {
+                        intMatrix[i]!![j] =
+                            Math.round(
+                                doubleMatrix[i][j]
+                            ).toInt()
+                    } else {
+                        intMatrix[i]!![j] = doubleMatrix[i][j].toInt()
+                    }
                 }
             }
             return intMatrix.requireNoNulls()
@@ -1307,8 +1327,12 @@ class AdvancedStatistics {
             mOutcome = 0
 
             // # Rate-limit new cards by shifting starting time
-            if (card.type == CARD_TYPE_NEW) t = newCardSimulator.simulateNewCard(mDeck) else t =
-                card.due
+            if (card.type == CARD_TYPE_NEW) {
+                t = newCardSimulator.simulateNewCard(mDeck)
+            } else {
+                t =
+                    card.due
+            }
 
             // Set state of card between start and first review
             // New reviews happen with probability 1
@@ -1347,9 +1371,13 @@ class AdvancedStatistics {
                 mNewCard!!.setAll(mCard)
                 val reviewOutcome: ReviewOutcome
                 reviewOutcome =
-                    if (t >= mSettings!!.computeNDays || mProb < mSettings!!.computeMaxError) mClassifier.simSingleReview(
-                        mNewCard
-                    ) else mClassifier.simSingleReview(mNewCard, mOutcome)
+                    if (t >= mSettings!!.computeNDays || mProb < mSettings!!.computeMaxError) {
+                        mClassifier.simSingleReview(
+                            mNewCard
+                        )
+                    } else {
+                        mClassifier.simSingleReview(mNewCard, mOutcome)
+                    }
 
                 // Timber.d("Simulation at t=" + tElapsed + ": outcome " + outcomeIdx + ": " + reviewOutcome.toString() );
                 mNewCard = reviewOutcome.card
@@ -1359,11 +1387,13 @@ class AdvancedStatistics {
                 mNewCard!!.lastReview = t
 
                 // If card failed, update "relearn" count
-                if (mNewCard!!.correct == 0) mSimulationResult.incrementNReviews(
-                    3,
-                    t,
-                    mProb * outcomeProb
-                )
+                if (mNewCard!!.correct == 0) {
+                    mSimulationResult.incrementNReviews(
+                        3,
+                        t,
+                        mProb * outcomeProb
+                    )
+                }
 
                 // Set state of card between current and next review
                 mSimulationResult.updateNInState(

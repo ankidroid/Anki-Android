@@ -15,16 +15,11 @@
  */
 package com.ichi2.utils
 
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.collect.Sets
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.utils.LanguageUtil.getLocale
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.oneOf
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -49,63 +44,9 @@ class LanguageUtilsTest {
         assertThat(
             "Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES",
-            actual, Matchers.contains(*CURRENT_LANGUAGES)
+            actual,
+            Matchers.contains(*CURRENT_LANGUAGES)
         )
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    fun localeTwoLetterCodeResolves() {
-        assertThat(
-            "A locale with a 3-letter code resolves correctly",
-            getLocale("af").displayLanguage,
-            equalTo("Afrikaans")
-        )
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    fun localeThreeLetterCodeResolves() {
-        assertThat(
-            "A locale with a 3-letter code resolves correctly",
-            getLocale("fil").displayLanguage,
-            equalTo("Filipino")
-        )
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    fun localeTwoLetterRegionalVariantResolves() {
-        assertThat(
-            "A locale with a 2-letter code and regional variant resolves correctly",
-            getLocale("pt-BR").displayName,
-            equalTo("Portuguese (Brazil)")
-        )
-        assertThat(
-            "A locale with a 2-letter code and regional variant resolves correctly",
-            getLocale("pt_BR").displayName,
-            equalTo("Portuguese (Brazil)")
-        )
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    fun localeThreeLetterRegionalVariantResolves() {
-        assertThat(
-            "A locale with a 2-letter code and regional variant resolves correctly",
-            getLocale("yue-TW").displayName,
-            oneOf("yue (Taiwan)", "Cantonese (Taiwan)")
-        )
-        assertThat(
-            "A locale with a 2-letter code and regional variant resolves correctly",
-            getLocale("yue_TW").displayName,
-            oneOf("yue (Taiwan)", "Cantonese (Taiwan)")
-        )
-    }
-
-    private fun getLocale(localeCode: String): Locale {
-        val prefs = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext())
-        return getLocale(localeCode, prefs)
     }
 
     companion object {

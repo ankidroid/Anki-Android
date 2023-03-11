@@ -244,7 +244,9 @@ object ScopedStorageService {
         val internalScopedDir = File(internalScopedDirPath).canonicalFile
         Timber.i(
             "isLegacyStorage(): current dir: %s\nscoped external dirs: %s\nscoped internal dir: %s",
-            currentDirPath, externalScopedDirs.joinToString(", "), internalScopedDirPath
+            currentDirPath,
+            externalScopedDirs.joinToString(", "),
+            internalScopedDirPath
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories

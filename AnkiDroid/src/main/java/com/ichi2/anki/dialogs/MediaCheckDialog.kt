@@ -9,8 +9,10 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.libanki.MediaCheckResult
 
@@ -124,20 +126,19 @@ class MediaCheckDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
                 resources.getString(R.string.check_media_title)
-            } else resources.getString(R.string.app_name)
+            } else {
+                resources.getString(R.string.app_name)
+            }
         }
 
-    override val dialogHandlerMessage: Message
+    override val dialogHandlerMessage: MediaCheckCompleteDialog
         get() {
-            val msg = Message.obtain()
-            msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG
-            val b = Bundle()
-            b.putStringArrayList("nohave", requireArguments().getStringArrayList("nohave"))
-            b.putStringArrayList("unused", requireArguments().getStringArrayList("unused"))
-            b.putStringArrayList("invalid", requireArguments().getStringArrayList("invalid"))
-            b.putInt("dialogType", requireArguments().getInt("dialogType"))
-            msg.data = b
-            return msg
+            val dialogType = requireArguments().getInt("dialogType")
+            val nohave = requireArguments().getStringArrayList("nohave")
+            val unused = requireArguments().getStringArrayList("unused")
+            val invalid = requireArguments().getStringArrayList("invalid")
+
+            return MediaCheckCompleteDialog(dialogType, nohave, unused, invalid)
         }
 
     companion object {
@@ -163,6 +164,42 @@ class MediaCheckDialog : AsyncDialogFragment() {
             args.putInt("dialogType", dialogType)
             f.arguments = args
             return f
+        }
+    }
+
+    class MediaCheckCompleteDialog(
+        private val dialogType: Int,
+        private val noHave: ArrayList<String>?,
+        private val unused: ArrayList<String>?,
+        private val invalid: ArrayList<String>?
+    ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG, "MediaCheckCompleteDialog") {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            // Media check results
+            val id = dialogType
+            if (id != MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
+                val checkList = MediaCheckResult(noHave!!, unused!!, invalid!!)
+                deckPicker.showMediaCheckDialog(id, checkList)
+            }
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            what = this@MediaCheckCompleteDialog.what
+            data = bundleOf(
+                "nohave" to noHave,
+                "unused" to unused,
+                "invalid" to invalid,
+                "dialogType" to dialogType
+            )
+        }
+
+        companion object {
+            fun fromMessage(message: Message): MediaCheckCompleteDialog {
+                val dialogType = message.data.getInt("dialogType")
+                val noHave = message.data.getStringArrayList("noHave")
+                val unused = message.data.getStringArrayList("unused")
+                val invalid = message.data.getStringArrayList("invalid")
+                return MediaCheckCompleteDialog(dialogType, noHave, unused, invalid)
+            }
         }
     }
 }

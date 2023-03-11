@@ -33,6 +33,7 @@ import kotlin.test.assertFailsWith
 class StorageLockingTest : RobolectricTest() {
 
     private var toCleanup: Collection? = null
+
     @After
     fun after() {
         toCleanup?.close()

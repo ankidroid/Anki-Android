@@ -583,7 +583,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun rebuildUi(result: DeckStudyData?, refreshDecklist: Boolean) {
         dismissProgressDialog()
         if (result != null) {
-
             // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
             if (activity == null) {
                 Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
@@ -718,8 +717,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          */
         @Suppress("unused")
         private const val BROWSE_CARDS = 3
+
         @Suppress("unused")
         private const val STATISTICS = 4
+
         @Suppress("unused")
         private const val DECK_OPTIONS = 5
 

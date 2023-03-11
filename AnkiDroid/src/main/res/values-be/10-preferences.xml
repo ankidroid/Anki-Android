@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Поўнаэкранная панэль навігацыі</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Адкрываць навігацыйную панэль, калі чыркаеце ўправа ў любым месцы экрана.</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Няма</string>
     <string name="gestures_swipe_up" maxLength="41">Чырканне ўверх</string>
     <string name="gestures_swipe_down" maxLength="41">Чырканне ўніз</string>
     <string name="gestures_swipe_left" maxLength="41">Чырканне ўлева</string>
@@ -131,8 +131,8 @@
     <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
         калі з часу апошняй сінхранізацыі мінула больш чым 10 хвілін.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Заўсёды</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_only_unmetered">Толькі на злучэннях без уліку трафіку</string>
+    <string name="sync_media_never">Ніколі</string>
     <string name="sync_status_badge" maxLength="41">Адлюстроўваць статус сінхранізацыі</string>
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="metered_sync_title" maxLength="41">Дазволіць сінхранізацыю пры тарыфікацыі злучэння</string>
@@ -367,26 +367,27 @@
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backup_options__title" maxLength="41">Параметры рэзервовага капіявання</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid перыядычна робіць рэзервовую копію вашай калекцыі.
+        AnkiDroid выдаляе рэзервовыя копіі, якія старэйшыя за два дні, 
+        каб вызваліць месца на дыску.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Заўважце, што мультымедыйныя файлы не рэзервуюцца.
+        Перыядычна сінхранізуйце сваю калекцыю або экспартуйце рэзервовыя копіі,                 
+        каб пазбегнуць страты даных.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Вы можаце аднавіць з рэзервовай копіі і экспартаваць сваю калекцыю ў меню спісу калод.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Хвілін паміж аўтаматычнымі рэзервовымі копіямі</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Колькасць рэзервовых копій у дзень</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Колькасць рэзервовых копій у тыдзень</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Колькасць рэзервовых копій у месяц</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Кіраванне прасторай</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Памылка</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Падлік&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d файл\n%2$s</item>
         <item quantity="few">%1$d файлы\n%2$s</item>
@@ -395,8 +396,8 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="pref__delete_unused_media_files__summary">Выдаліць відарысы і іншыя мультымедыйныя файлы ў якіх адсутнічае прэфікс _ і якія не спасылаюцца на ніякія нататкі</string>
+    <string name="dialog__media_check_required__message">Неабходна праверка мультымедыйных файлаў, каб знайсці тыя, якія не выкарыстоўваюцца</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Выдаліць рэзервовыя копіі</string>
@@ -404,7 +405,7 @@
     <string name="progress__deleting_backups">Выдаленне рэзервовых копій&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Выдаліць калекцыю</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="pref__delete_collection__summary">Выдаліць калекцыю, мультымедыйныя файлы і рэзервовыя копіі. Налады праграмы не будуць выдалены</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Выдаліць калекцыю</string>
     <string name="dialog__delete_collection__message">Вы сапраўды хочаце выдаліць сваю калекцыю, медыя і рэзервовыя копіі?</string>
     <string name="progress__deleting_collection">Выдаленне калекцыі...</string>
@@ -412,12 +413,12 @@
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Выдаліць усё</string>
     <string name="pref__delete_everything__summary">Выдаліць калекцыю, медыя, рэзервовыя копіі і налады</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Выдаліць усё</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Вы сапраўды хочаце выдаліць усе даныя? Яны ўключаюць вашы калекцыі, мультымедыйныя файлы, рэзервовыя копіі і налады праграмы\n\nНататка: гэта дзеянне прывядзе да закрыцця акна.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Выдаліць даныя праграмы</string>
     <string name="pref__delete_app_data__summary">Выдаліць налады і іншыя даныя праграмы</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Выдаліць даныя праграмы</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Вы сапраўды хочаце выдаліць даныя праграмы? Яны ўключаюць налады і іншыя даныя праграмы.\n\nНататка: гэта дзеянне прывядзе да закрыцця акна.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
@@ -425,6 +426,6 @@
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Няма калекцыі</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Памылка</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Атрыманне&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Падлік&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Калекцыя не існуе</string>
 </resources>

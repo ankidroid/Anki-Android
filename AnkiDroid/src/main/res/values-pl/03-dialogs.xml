@@ -132,14 +132,14 @@
     </plurals>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
-    <string name="no_space_to_downgrade_title">Brak miejsca</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
     <string name="restore_backup_title">Odtworzyć kopię zapasową?</string>
     <string name="restore_backup">Kolekcja zostanie zastąpione starszą kopią. Wszelkie niezapisane postępy zostaną utracone.</string>
     <string name="restore_backup_choose_another">Wybierz inny</string>
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Potwierdź</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Potwierdź</string>
     <string name="dialog_no">Nie</string>
     <string name="dialog_yes">Tak</string>
     <string name="dialog_continue">Kontynuuj</string>
@@ -279,13 +279,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nie można utworzyć podtalii dla wszystkich talii</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Ze względu na zmiany warunków użytkowania Androida, aktualna lokalizacja plików będzie niedostępna, jeśli aplikacja zostanie odinstalowana.
-        \n\nMusimy przenieść Twoje dane na prywatną lokalizację do aplikacji AnkiDroid.
-        \n\nDane w tej lokalizacji prywatnej mogą zostać usunięte, jeśli aplikacja zostanie odinstalowana.
-        \n\nTwoja aktualna lokalizacja plików to %1$s
-        \n\nLokalizacja prywatnego folderu to %2$s
-        \n\nPotwierdź, że będziesz regularnie wykonywać kopie zapasowe tego folderu.
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
-    <string name="manual_backup">Ręczna kopia zapasowa</string>
-    <string name="remind_me_later">Przypomnij mi później</string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>

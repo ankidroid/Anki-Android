@@ -19,7 +19,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.core.os.LocaleListCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -30,9 +32,10 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Consts
-import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
 
 private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
@@ -84,6 +87,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeGesturesToControls())
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeFetchMedia())
+                yield(UpgradeAppLocale())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -265,7 +269,7 @@ object PreferenceUpgradeService {
                 Pair(37, ViewerCommand.TOGGLE_WHITEBOARD),
                 Pair(41, ViewerCommand.SHOW_HINT),
                 Pair(42, ViewerCommand.SHOW_ALL_HINTS),
-                Pair(43, ViewerCommand.ADD_NOTE),
+                Pair(43, ViewerCommand.ADD_NOTE)
             )
 
             override fun upgrade(preferences: SharedPreferences) {
@@ -348,9 +352,6 @@ object PreferenceUpgradeService {
                     }
                     remove("invertedColors")
                 }
-                if (AnkiDroidApp.isInitialized) {
-                    Themes.updateCurrentTheme()
-                }
             }
         }
 
@@ -362,6 +363,40 @@ object PreferenceUpgradeService {
                     remove(RemovedPreferences.SYNC_FETCHES_MEDIA)
                     putString("syncFetchMedia", status)
                 }
+            }
+        }
+
+        internal class UpgradeAppLocale : PreferenceUpgrade(10) {
+            override fun upgrade(preferences: SharedPreferences) {
+                fun getLocale(localeCode: String): Locale {
+                    // Language separators are '_' or '-' at different times in display/resource fetch
+                    val locale: Locale = if (localeCode.contains("_") || localeCode.contains("-")) {
+                        try {
+                            val localeParts = localeCode.split("[_-]".toRegex(), 2).toTypedArray()
+                            Locale(localeParts[0], localeParts[1])
+                        } catch (e: ArrayIndexOutOfBoundsException) {
+                            Timber.w(e, "getLocale variant split fail, using code '%s' raw.", localeCode)
+                            Locale(localeCode)
+                        }
+                    } else {
+                        Locale(localeCode) // guaranteed to be non null
+                    }
+                    return locale
+                }
+                // 1. upgrade value from `locale.toString()` to `locale.toLanguageTag()`,
+                // because the new API uses language tags
+                val languagePrefValue = preferences.getString("language", "")!!
+                val languageTag = if (languagePrefValue.isNotEmpty()) {
+                    getLocale(languagePrefValue).toLanguageTag()
+                } else {
+                    null
+                }
+                preferences.edit {
+                    putString("language", languageTag ?: "")
+                }
+                // 2. Set the locale with the new AndroidX API
+                val localeList = LocaleListCompat.forLanguageTags(languageTag)
+                AppCompatDelegate.setApplicationLocales(localeList)
             }
         }
     }

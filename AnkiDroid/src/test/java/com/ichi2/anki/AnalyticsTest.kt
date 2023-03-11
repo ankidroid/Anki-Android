@@ -44,6 +44,7 @@ class AnalyticsTest {
 
     @Mock
     private lateinit var mMockSharedPreferencesEditor: SharedPreferences.Editor
+
     @Before
     fun setUp() {
         UsageAnalytics.resetForTests()

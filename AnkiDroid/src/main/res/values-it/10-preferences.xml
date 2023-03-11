@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannello di navigazione a schermo intero</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Apri il pannello di navigazione quando scorri a destra da qualsiasi punto dello schermo</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Nessuno</string>
     <string name="gestures_swipe_up" maxLength="41">Scorri su</string>
     <string name="gestures_swipe_down" maxLength="41">Scorri giù</string>
     <string name="gestures_swipe_left" maxLength="41">Scorri a sinistra</string>
@@ -129,9 +129,9 @@
     <string name="sync_account_summ_logged_out">Non connesso</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizzazione automatica</string>
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Sempre</string>
+    <string name="sync_media_only_unmetered">Solo su connessioni non misurate</string>
+    <string name="sync_media_never">Mai</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>
     <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
     <string name="metered_sync_title" maxLength="41">Consenti sincronizzazione con connessione a consumo.</string>
@@ -229,10 +229,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Server di sincronizzazione personalizzato</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilizzato</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        In alternativa alla sincronizzazione con AnkiWeb,
+        è possibile utilizzare il proprio server per la sincronizzazione.
+        Se non impostato, verrà utilizzato il server AnkiWeb predefinito.
+        <a href="%s">Scopri di più</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url di sincronizzazione</string>
     <!-- Key Bindings -->
@@ -361,7 +361,7 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
+    <string name="pref__backup_options__title" maxLength="41">Opzioni backup</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

@@ -34,7 +34,7 @@ fun DeckPicker.handleDatabaseCheck() {
                     }
                 }
             },
-            onCancel = null,
+            onCancel = null
         ) {
             withCol {
                 newBackend.fixIntegrity()

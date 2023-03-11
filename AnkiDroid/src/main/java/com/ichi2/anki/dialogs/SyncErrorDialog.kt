@@ -19,10 +19,12 @@ package com.ichi2.anki.dialogs
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.joinSyncMessages
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.utils.contentNullable
@@ -48,7 +50,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
             .cancelable(true)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_USER_NOT_LOGGED_IN_SYNC -> {
-
                 // User not logged in; take them to login screen
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -59,7 +60,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_CONNECTION_ERROR -> {
-
                 // Connection error; allow user to retry or cancel
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -73,7 +73,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_CONFLICT_RESOLUTION -> {
-
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -91,7 +90,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL -> {
-
                 // Confirmation before pushing local collection to server after sync conflict
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -104,7 +102,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE -> {
-
                 // Confirmation before overwriting local collection with server collection after sync conflict
                 dialog.show {
                     iconAttr(R.attr.dialogSyncErrorIcon)
@@ -117,7 +114,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_SANITY_ERROR -> {
-
                 // Sync sanity check error; allow user to cancel, or choose between local and remote versions
                 dialog.show {
                     positiveButton(R.string.sync_sanity_local) {
@@ -132,7 +128,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL -> {
-
                 // Confirmation before pushing local collection to server after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
@@ -143,7 +138,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE -> {
-
                 // Confirmation before overwriting local collection with server collection after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
@@ -201,7 +195,9 @@ class SyncErrorDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
                 resources.getString(R.string.sync_error)
-            } else title
+            } else {
+                title
+            }
         }
 
     private val message: String?
@@ -215,7 +211,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 val syncMessage = requireArguments().getString("dialogMessage")
                 val repairUrl = getString(R.string.repair_deck)
                 val dialogMessage = getString(R.string.sync_corrupt_database, repairUrl)
-                DeckPicker.joinSyncMessages(dialogMessage, syncMessage)
+                joinSyncMessages(dialogMessage, syncMessage)
             }
             else -> requireArguments().getString("dialogMessage")
         }
@@ -229,18 +225,16 @@ class SyncErrorDialog : AsyncDialogFragment() {
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
                 resources.getString(R.string.not_logged_in_title)
-            } else message
+            } else {
+                message
+            }
         }
 
-    override val dialogHandlerMessage: Message
+    override val dialogHandlerMessage: SyncErrorDialogMessageHandler
         get() {
-            val msg = Message.obtain()
-            msg.what = DialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG
-            val b = Bundle()
-            b.putInt("dialogType", requireArguments().getInt("dialogType"))
-            b.putString("dialogMessage", requireArguments().getString("dialogMessage"))
-            msg.data = b
-            return msg
+            val dialogType = requireArguments().getInt("dialogType")
+            val dialogMessage = requireArguments().getString("dialogMessage")
+            return SyncErrorDialogMessageHandler(dialogType, dialogMessage)
         }
 
     fun dismissAllDialogFragments() {
@@ -273,6 +267,31 @@ class SyncErrorDialog : AsyncDialogFragment() {
             args.putString("dialogMessage", dialogMessage)
             f.arguments = args
             return f
+        }
+    }
+
+    class SyncErrorDialogMessageHandler(
+        private val dialogType: Int,
+        private val dialogMessage: String?
+    ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.showSyncErrorDialog(dialogType, dialogMessage)
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            what = this@SyncErrorDialogMessageHandler.what
+            data = bundleOf(
+                "dialogType" to dialogType,
+                "dialogMessage" to dialogMessage
+            )
+        }
+
+        companion object {
+            fun fromMessage(message: Message): SyncErrorDialogMessageHandler {
+                val dialogType = message.data.getInt("dialogType")
+                val dialogMessage = message.data.getString("dialogMessage")
+                return SyncErrorDialogMessageHandler(dialogType, dialogMessage)
+            }
         }
     }
 }

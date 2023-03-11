@@ -21,17 +21,16 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.os.Message
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
-import com.afollestad.materialdialogs.MaterialDialog
-import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
+import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
+import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.dialogs.DialogHandlerMessage
+import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.compat.CompatHelper
 import org.apache.commons.compress.archivers.zip.ZipFile
 import org.jetbrains.annotations.Contract
@@ -219,7 +218,6 @@ object ImportUtils {
         }
 
         private fun validateImportTypes(context: Context, dataList: ArrayList<Uri>): String? {
-
             var apkgCount = 0
             var colpkgCount = 0
 
@@ -292,7 +290,7 @@ object ImportUtils {
         fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
             val title = activity.resources.getString(R.string.import_title_error)
-            MaterialDialog(activity).show {
+            AlertDialog.Builder(activity).show {
                 title(text = title)
                 message(text = errorMessage!!)
                 positiveButton(R.string.dialog_ok) {
@@ -368,25 +366,16 @@ object ImportUtils {
              * @param pathList list of path(s) to apkg file which will be imported
              */
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
-
                 // Get the filename from the path
-                val f = File(pathList.first())
-                val filename = f.name
+                val filename = File(pathList.first()).name
 
-                // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
-                val handlerMessage = Message.obtain()
-                val msgData = Bundle()
-                msgData.putStringArrayList("importPath", pathList)
-                handlerMessage.data = msgData
-                if (isCollectionPackage(filename)) {
-                    // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
-                    handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG
+                val dialogMessage = if (isCollectionPackage(filename)) {
+                    CollectionImportReplace(pathList)
                 } else {
-                    // Otherwise show confirmation dialog asking to confirm import with add
-                    handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG
+                    CollectionImportAdd(pathList)
                 }
                 // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-                DialogHandler.storeMessage(handlerMessage)
+                DialogHandler.storeMessage(dialogMessage.toMessage())
             }
 
             internal fun isDeckPackage(filename: String?): Boolean {
@@ -481,6 +470,48 @@ object ImportUtils {
                 CrashReportService.sendExceptionReport(e, "Import - invalid zip", "improve UI message here", true)
                 return ctx.getString(R.string.import_log_failed_unzip, e.localizedMessage)
             }
+        }
+    }
+
+    /** Show confirmation dialog asking to confirm import with replace when file called "collection.apkg" */
+    class CollectionImportReplace(private val pathList: ArrayList<String>) : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
+        analyticName = "ImportReplaceDialog"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            // Handle import of collection package APKG
+            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, pathList)
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            data = bundleOf("importPath" to pathList)
+            what = this@CollectionImportReplace.what
+        }
+
+        companion object {
+            fun fromMessage(message: Message): CollectionImportReplace =
+                CollectionImportReplace(message.data.getStringArrayList("importPath")!!)
+        }
+    }
+
+    /** Show confirmation dialog asking to confirm import with add */
+    class CollectionImportAdd(private val pathList: ArrayList<String>) : DialogHandlerMessage(
+        WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
+        "ImportAddDialog"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            // Handle import of deck package APKG
+            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, pathList)
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            data = bundleOf("importPath" to pathList)
+            what = this@CollectionImportAdd.what
+        }
+
+        companion object {
+            fun fromMessage(message: Message): CollectionImportAdd =
+                CollectionImportAdd(message.data.getStringArrayList("importPath")!!)
         }
     }
 }

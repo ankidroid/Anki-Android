@@ -126,14 +126,14 @@
     </plurals>
     <string name="storage_full_title">Memòria prena</string>
     <string name="storage_almost_full_title">Memòria belle prena</string>
-    <string name="no_space_to_downgrade_title">Non b\'at ispàtziu</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Non b\'at ispàtziu</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
     <string name="restore_backup_title">Ripristinare sa còpia de seguresa?</string>
     <string name="restore_backup">Sa colletzione tua s\'at a remplasare cun una còpia prus betza. Cale si siat progressu non sarvadu s\'at a pèrdere.</string>
     <string name="restore_backup_choose_another">Issèbera·nde un\'àteru</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">AB</string>
-    <string name="dialog_confirm">Cunfirma</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Cunfirma</string>
     <string name="dialog_no">Nono</string>
     <string name="dialog_yes">Eja</string>
     <string name="dialog_continue">Sighi</string>
@@ -278,13 +278,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Non podes creare unu suta-matzu pro totu sos matzos</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        Pro neghe de sas modìficas de sa riservadesa de Android sa positzione de archiviatzione tua no at a èssere atzessìbile si s\'aplicatzione no est installada.
-        \n\nDepimus tramudare sos datos tuos a unu tretu privadu de s\'aplicatzione AnkiDroid.
-        \n\nSos datos in custu logu privadu si diant pòdere iscantzellare si disinstallas s\'aplicatzione.
-        \n\nSa positzione de archiviatzione atuale tua est %1$s
-        \n\nSa positzione de archiviatzione privada at a èssere %2$s
-        \n\nPro praghere cunfirma chi as a fàghere còpias de seguresa de custa cartella in manera regulare.
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
-    <string name="manual_backup">Còpia de seguresa manuale</string>
-    <string name="remind_me_later">Ammenta·mi·lu prus a tardu</string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>

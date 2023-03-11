@@ -123,7 +123,8 @@ class Preferences :
         pref: Preference
     ): Boolean {
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
-            classLoader, pref.fragment!!
+            classLoader,
+            pref.fragment!!
         )
         fragment.arguments = pref.extras
         supportFragmentManager.commit {
@@ -285,11 +286,6 @@ class Preferences :
 
         Timber.i("Highlighting key '%s' on %s", result.key, fragmentToHighlight)
         result.highlight(fragmentToHighlight as PreferenceFragmentCompat)
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
     }
 
     companion object {

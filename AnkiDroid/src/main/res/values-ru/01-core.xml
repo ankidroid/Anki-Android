@@ -107,6 +107,7 @@
     <string name="undo">Отменить</string>
     <string name="undo_action_review">последнее повторение</string>
     <string name="undo_action_change_deck_multi">сменить колоды</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>

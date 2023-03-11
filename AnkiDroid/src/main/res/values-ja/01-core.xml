@@ -92,6 +92,7 @@
     <string name="undo">元に戻す</string>
     <string name="undo_action_review">最後の復習</string>
     <string name="undo_action_change_deck_multi">デッキを変更</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
@@ -234,7 +235,7 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
+    <string name="migrating_data_message">ユーザーデータを移行中です</string>
     <string name="migration_successful_message">移行に成功しました</string>
     <string name="migration_failed_message">移行に失敗しました</string>
     <string name="migration_transferred_size">%2$.0f MB 中 %1$.0f MB を移行しました</string>

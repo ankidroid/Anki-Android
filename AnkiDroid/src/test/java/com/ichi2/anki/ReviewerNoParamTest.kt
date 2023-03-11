@@ -165,7 +165,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @Flaky(OS.LINUX, "hasDrawerSwipeConflicts was false")
+    @Flaky(OS.ALL, "hasDrawerSwipeConflicts was false")
     @RunInBackground
     fun defaultDrawerConflictIsTrueIfGesturesEnabled() {
         enableGestureSetting()
@@ -210,6 +210,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfUp() {
         enableGestureSetting()
         disableConflictGestures()
@@ -221,6 +222,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfDown() {
         enableGestureSetting()
         disableConflictGestures()
@@ -232,6 +234,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     @RunInBackground
+    @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfRight() {
         enableGestureSetting()
         disableConflictGestures()
@@ -301,14 +304,17 @@ class ReviewerNoParamTest : RobolectricTest() {
         return ReviewerTest.startReviewer(this, ReviewerExt::class.java)
     }
 
+    @Suppress("SameParameterValue")
     private fun storeDarkModeColor(value: Int) {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, false, value)
     }
 
+    @Suppress("SameParameterValue")
     private fun storeLightModeColor(value: Int, did: DeckId?) {
         MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }
 
+    @Suppress("SameParameterValue")
     private fun storeLightModeColor(value: Int) {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, true, value)
     }

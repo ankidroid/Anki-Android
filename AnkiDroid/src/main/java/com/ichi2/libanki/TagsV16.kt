@@ -99,10 +99,11 @@ class TagsV16(val col: CollectionV16) : TagManager() {
     /* Remove space-separated tags from provided notes. */
     fun bulkRemove(
         noteIds: List<Long>,
-        tags: String,
+        tags: String
     ): OpChangesWithCount {
         return col.backend.removeNoteTags(
-            noteIds = noteIds, tags = tags
+            noteIds = noteIds,
+            tags = tags
         )
     }
 
@@ -138,7 +139,6 @@ class TagsV16(val col: CollectionV16) : TagManager() {
 
     /** Add tags if they don't exist, and canonify. */
     fun addToStr(addtags: String, tags: String): String {
-
         val currentTags = split(tags)
         for (tag in split(addtags)) {
             if (!inList(tag, currentTags)) {

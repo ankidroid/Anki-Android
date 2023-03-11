@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants.*
@@ -95,7 +96,8 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
             if (it.matches(INVALID_FORMAT_PATTERN) && it != "XXX%") {
                 val location = context.createLocationHandle(element).resolve()
                 context.report(
-                    ISSUE, location,
+                    ISSUE,
+                    location,
                     "You have specified the string in wrong format" +
                         "Please check that '%' sign been applied only to valid parameters. " +
                         "Your string might be having a regular word with '%' sign after it. " +

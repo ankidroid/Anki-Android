@@ -62,7 +62,9 @@ class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManag
         task: TaskDelegateBase<Progress, Result>?,
         listener: TaskListener<in Progress, in Result?>?
     ) : CollectionTask<Progress, Result>(
-        task!!, listener, null
+        task!!,
+        listener,
+        null
     )
 
     companion object {

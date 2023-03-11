@@ -44,6 +44,7 @@ class Models(col: Collection) : ModelManager(col) {
      */
 
     private var mChanged = false
+
     @KotlinCleanup("lateinit")
     private var mModels: HashMap<Long, Model>? = null
 
@@ -58,6 +59,7 @@ class Models(col: Collection) : ModelManager(col) {
         mChanged = false
         mModels = HashMap()
         val modelarray = JSONObject(json)
+
         @KotlinCleanup("simplify with ?.forEach{}")
         val ids = modelarray.names()
         if (ids != null) {
@@ -116,6 +118,7 @@ class Models(col: Collection) : ModelManager(col) {
             false
         }
     }
+
     /*
       Retrieving and creating models
       ***********************************************************************************************
@@ -465,7 +468,9 @@ class Models(col: Collection) : ModelManager(col) {
                     r.add(
                         arrayOf(
                             Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
-                            time.intTime(), col.usn(), cur.getLong(0)
+                            time.intTime(),
+                            col.usn(),
+                            cur.getLong(0)
                         )
                     )
                 }
@@ -524,7 +529,10 @@ class Models(col: Collection) : ModelManager(col) {
         col.db
             .execute(
                 "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                col.usn(), time.intTime(), m.getLong("id"), ord
+                col.usn(),
+                time.intTime(),
+                m.getLong("id"),
+                ord
             )
         tmpls = m.getJSONArray("tmpls")
         val tmpls2 = JSONArray()
@@ -576,7 +584,9 @@ class Models(col: Collection) : ModelManager(col) {
         col.db.execute(
             "update cards set ord = (case " + sb +
                 " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-            col.usn(), time.intTime(), m.getLong("id")
+            col.usn(),
+            time.intTime(),
+            m.getLong("id")
         )
     }
 
@@ -584,6 +594,7 @@ class Models(col: Collection) : ModelManager(col) {
         @Suppress("UNUSED_VARIABLE") // unused upstream as well
         val rem = col.genCards(nids(m), m)!!
     }
+
     /*
       Model changing ***********************************************************************************************
      */
@@ -640,7 +651,8 @@ class Models(col: Collection) : ModelManager(col) {
         val nmType = newModel.getInt("type")
         val nflds = newModel.getJSONArray("tmpls").length()
         col.db.query(
-            "select id, ord from cards where nid = ?", nid
+            "select id, ord from cards where nid = ?",
+            nid
         ).use { cur ->
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
@@ -832,6 +844,7 @@ class Models(col: Collection) : ModelManager(col) {
         private val fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}")
         private val fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>")
         private val fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.*?\\}\\}")
+
         @KotlinCleanup("Use triple quotes for this properties and maybe `@language('json'')`")
         const val DEFAULT_MODEL = (
             "{\"sortf\": 0, " +
@@ -922,9 +935,12 @@ class Models(col: Collection) : ModelManager(col) {
                 // For cloze, getting the list of cloze numbes is linear in the size of the template
                 // So computing the full list is almost as efficient as checking for a particular number
                 !_availClozeOrds(m, sfld, false).contains(ord)
-            } else emptyStandardCard(
-                m.getJSONArray("tmpls").getJSONObject(ord), m.nonEmptyFields(sfld)
-            )
+            } else {
+                emptyStandardCard(
+                    m.getJSONArray("tmpls").getJSONObject(ord),
+                    m.nonEmptyFields(sfld)
+                )
+            }
         }
 
         /**
@@ -955,12 +971,14 @@ class Models(col: Collection) : ModelManager(col) {
                     sfld,
                     allowEmpty == AllowEmpty.TRUE || allowEmpty == AllowEmpty.ONLY_CLOZE
                 )
-            } else _availStandardOrds(
-                m,
-                sfld,
-                nodes!!,
-                allowEmpty == AllowEmpty.TRUE
-            )
+            } else {
+                _availStandardOrds(
+                    m,
+                    sfld,
+                    nodes!!,
+                    allowEmpty == AllowEmpty.TRUE
+                )
+            }
         }
 
         fun availOrds(
@@ -974,7 +992,9 @@ class Models(col: Collection) : ModelManager(col) {
                     sfld,
                     allowEmpty == AllowEmpty.TRUE || allowEmpty == AllowEmpty.ONLY_CLOZE
                 )
-            } else _availStandardOrds(m, sfld, allowEmpty == AllowEmpty.TRUE)
+            } else {
+                _availStandardOrds(m, sfld, allowEmpty == AllowEmpty.TRUE)
+            }
         }
 
         fun _availStandardOrds(
@@ -1031,17 +1051,13 @@ class Models(col: Collection) : ModelManager(col) {
             }
             return namesOfFieldsContainingClozeCache[question]!!
         }
+
         /**
          * @param m A note type with cloze
          * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
          * @param allowEmpty Whether we allow to generate at least one card even if they are all empty
          * @return The indexes (in increasing order) of cards that should be generated according to req rules.
          * If empty is not allowed, it will contains ord 1.
-         */
-        /**
-         * @param m A note type with cloze
-         * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
-         * @return The indexes (in increasing order) of cards that should be generated according to req rules.
          */
         @KotlinCleanup("sflds: String? to string")
         @KotlinCleanup("return arrayListOf(0)")
@@ -1068,7 +1084,9 @@ class Models(col: Collection) : ModelManager(col) {
             return if (ords.isEmpty() && allowEmpty) {
                 // empty clozes use first ord
                 ArrayList(listOf(0))
-            } else ArrayList(ords)
+            } else {
+                ArrayList(ords)
+            }
         }
     }
     // private long mCrt = mCol.getTime().intTime();

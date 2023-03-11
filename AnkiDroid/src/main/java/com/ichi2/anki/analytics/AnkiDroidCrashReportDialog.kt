@@ -18,7 +18,6 @@ package com.ichi2.anki.analytics
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
@@ -41,10 +40,6 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     private var mUserComment: EditText? = null
     private var mHelper: CrashReportDialogHelper? = null
 
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
@@ -66,7 +61,9 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     override fun buildCustomView(savedInstanceState: Bundle?): View {
         val preferences = AnkiDroidApp.getSharedPrefs(this)
         val inflater = layoutInflater
-        @SuppressLint("InflateParams") val rootView = // when you inflate into an alert dialog, you have no parent view
+
+        @SuppressLint("InflateParams")
+        val rootView = // when you inflate into an alert dialog, you have no parent view
             inflater.inflate(R.layout.feedback, null)
         mAlwaysReportCheckBox = rootView.findViewById(R.id.alwaysReportCheckbox)
         mAlwaysReportCheckBox?.isChecked = preferences.getBoolean("autoreportCheckboxValue", true)

@@ -27,7 +27,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
@@ -152,7 +151,9 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             Timber.d("getString(key=%s, defValue=%s)", key, defValue)
             return if (!mValues.containsKey(key)) {
                 defValue
-            } else mValues[key]
+            } else {
+                mValues[key]
+            }
         }
 
         override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
@@ -185,10 +186,6 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         } else {
             finish()
         }
-    }
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,15 +14,18 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.lint.utils
+package com.ichi2.anki.export
 
-/** Use when code can be changed after further conversion to Kotlin */
-@Target(
-    AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
-    AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE
-)
-@Retention(AnnotationRetention.SOURCE)
-@Repeatable
-@MustBeDocumented
-annotation class KotlinCleanup(val value: String)
+import com.ichi2.libanki.CardId
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.NoteId
+
+/**
+ * Ways that a user may export data
+ */
+sealed interface ExportType {
+    class ExportNotes(val nodeIds: List<NoteId>) : ExportType
+    class ExportCards(val cardIds: List<CardId>) : ExportType
+    class ExportDeck(val deckId: DeckId) : ExportType
+    object ExportCollection : ExportType
+}

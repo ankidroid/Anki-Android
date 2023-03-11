@@ -20,16 +20,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.annotation.StringRes
-import androidx.preference.EditTextPreference
-import androidx.preference.Preference
-import androidx.preference.SwitchPreference
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.*
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.show
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -49,6 +50,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
+            disableIfStorageMigrationInProgress()
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val newPath = newValue as String
                 try {
@@ -57,12 +59,10 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     true
                 } catch (e: StorageAccessException) {
                     Timber.e(e, "Could not initialize directory: %s", newPath)
-                    MaterialDialog(requireContext()).show {
-                        title(R.string.dialog_collection_path_not_dir)
-                        positiveButton(R.string.dialog_ok) {
-                            dismiss()
-                        }
-                        negativeButton(R.string.reset_custom_buttons) {
+                    AlertDialog.Builder(requireContext()).show {
+                        setTitle(R.string.dialog_collection_path_not_dir)
+                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                        setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
                             text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())
                         }
                     }
@@ -79,16 +79,16 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
-            MaterialDialog(requireContext()).show {
-                title(R.string.reset_languages)
-                icon(R.drawable.ic_warning_black)
-                message(R.string.reset_languages_question)
-                positiveButton(R.string.dialog_ok) {
+            AlertDialog.Builder(requireContext()).show {
+                setTitle(R.string.reset_languages)
+                setIcon(R.drawable.ic_warning_black)
+                setMessage(R.string.reset_languages_question)
+                setPositiveButton(R.string.dialog_ok) { _, _ ->
                     if (MetaDB.resetLanguages(requireContext())) {
                         showSnackbar(R.string.reset_confirmation)
                     }
                 }
-                negativeButton(R.string.dialog_cancel)
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
             true
         }
@@ -151,6 +151,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 isEnabled = false
                 isChecked = true
             }
+            disableIfStorageMigrationInProgress()
             setOnPreferenceChangeListener { newValue ->
                 if (newValue == true) {
                     confirmExperimentalChange(
@@ -178,12 +179,12 @@ class AdvancedSettingsFragment : SettingsFragment() {
         val prefTitleString = getString(prefTitle)
         val dialogTitle = getString(R.string.experimental_pref_confirmation, prefTitleString)
 
-        MaterialDialog(requireContext()).show {
-            title(text = dialogTitle)
-            message(message)
-            positiveButton(R.string.dialog_ok) { onConfirm() }
-            negativeButton(R.string.dialog_cancel) { onCancel() }
-            cancelOnTouchOutside(false) // to avoid `onCancel` not being triggered on outside cancels
+        AlertDialog.Builder(requireContext()).show {
+            setTitle(dialogTitle)
+            message?.let { setMessage(it) }
+            setPositiveButton(R.string.dialog_ok) { _, _ -> onConfirm() }
+            setNegativeButton(R.string.dialog_cancel) { _, _ -> onCancel() }
+            setCancelable(false) // to avoid `onCancel` not being triggered on outside cancels
         }
     }
 
@@ -203,6 +204,20 @@ class AdvancedSettingsFragment : SettingsFragment() {
             if (doubleScrolling != null) {
                 preferenceScreen.removePreference(doubleScrolling)
             }
+        }
+    }
+
+    private fun Preference.disableIfStorageMigrationInProgress() {
+        try {
+            if (ScopedStorageService.userMigrationIsInProgress(requireContext())) {
+                isEnabled = false
+                summaryProvider = null // needs to be disabled to set .summary
+                summary = getString(R.string.functionality_disabled_during_storage_migration)
+            }
+        } catch (e: Exception) {
+            // This screen is vital and must not crash. Trust the user knows what they're doing.
+            // This exists only as a precaution.
+            Timber.w(e)
         }
     }
 

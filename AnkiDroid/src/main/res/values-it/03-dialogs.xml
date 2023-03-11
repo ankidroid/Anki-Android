@@ -94,7 +94,7 @@
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
     <string name="answering_error_report">Segnala errori</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Non c\'è abbastanza spazio libero per aprire AnkiDroid. Libera spazio per continuare. </string>
     <string name="repair_deck_dialog">Vuoi veramente provare a riparare il database?\n\nPrima di iniziare il tentativo, verrà creata una copia nella sottocartella \'%s\'.</string>
     <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
@@ -118,14 +118,14 @@
     </plurals>
     <string name="storage_full_title">Spazio di archiviazione pieno</string>
     <string name="storage_almost_full_title">Spazio di archiviazione quasi pieno</string>
-    <string name="no_space_to_downgrade_title">Nessuno spazio</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid ha bisogno di %s di archiviazione, libera dello spazio per continuare</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nessuno spazio</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid ha bisogno di %s di archiviazione, libera dello spazio per continuare</string>
     <string name="restore_backup_title">Ripristinare il backup?</string>
     <string name="restore_backup">La tua collezione verrà sostituita con una copia meno recente. I cambiamenti non salvati verranno persi.</string>
     <string name="restore_backup_choose_another">Scegli un altro</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm">Conferma</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Conferma</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Si</string>
     <string name="dialog_continue">Continua</string>
@@ -230,7 +230,7 @@
     <string name="help_item_support_develop_ankidroid">Sviluppa</string>
     <string name="help_item_support_rate_ankidroid">Valuta</string>
     <string name="help_item_support_other_ankidroid">Altro</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Traduci</string>
     <string name="help_title_community">Community</string>
     <string name="help_item_anki_forums">Forum di Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -261,13 +261,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Non puoi creare un sottomazzo per tutti i mazzi</string>
     <!-- scoped storage -->
-    <string name="scoped_storage_require_user_to_accept_risk">        A causa di variazioni alla privacy di Android, la tua posizione di archiviazione attuale sarà inaccessibile se l\'applicazione verrà disinstallata.
-        \n\nAbbiamo bisogno di migrare i tuoi dati in un luogo privato all\'app AnkiDroid.
-        \n\nI dati in questa posizione privata potrebbero essere cancellati se l\'applicazione venisse disinstallata.
-        \n\nLa tua posizione di archiviazione attuale è %1$s
-        \n\nLa posizione di archiviazione privata sarà %2$s
-        \n\nSi prega di confermare che si faranno backup regolari di questa cartella.
+    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
-    <string name="manual_backup">Backup manuale</string>
-    <string name="remind_me_later">Ricordamelo più tardi</string>
+    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    </string>
 </resources>
