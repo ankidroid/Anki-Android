@@ -40,11 +40,16 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     val isFragmented: Boolean
         get() = mStudyOptionsFrame != null
 
+    private fun animationEnabled(): Boolean {
+        val preferences = AnkiDroidApp.getSharedPrefs(context)
+        return !preferences.getBoolean("safeDisplay", false)
+    }
+
     private fun showFloatingActionMenu() {
         mLinearLayout.alpha = 0.5f
         mStudyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
-        if (deckPicker.animationEnabled()) {
+        if (animationEnabled()) {
             // Show with animation
             mAddNoteLayout.visibility = View.VISIBLE
             mAddSharedLayout.visibility = View.VISIBLE
@@ -77,7 +82,7 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
-        if (deckPicker.animationEnabled()) {
+        if (animationEnabled()) {
             // Close with animation
             mFabMain.animate().rotation(0f)
             mAddNoteLayout.animate().translationY(200f).duration = 30
