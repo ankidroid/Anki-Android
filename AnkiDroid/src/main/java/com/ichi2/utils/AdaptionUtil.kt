@@ -27,7 +27,9 @@ import android.os.Build
 import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
+import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 import java.util.*
 
@@ -65,7 +67,6 @@ object AdaptionUtil {
         return "true" == testLabSetting
     }
 
-    @Suppress("deprecation") // queryIntentActivities
     private fun checkHasWebBrowser(context: Context): Boolean {
         // The test monkey often gets stuck on the Shared Decks WebView, ignore it as it shouldn't crash.
         if (isUserATestClient) {
@@ -73,7 +74,7 @@ object AdaptionUtil {
         }
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
         val pm = context.packageManager
-        val list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
         for (ri in list) {
             if (!isValidBrowser(ri)) {
                 continue

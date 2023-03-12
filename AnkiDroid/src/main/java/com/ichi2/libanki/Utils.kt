@@ -33,6 +33,8 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.HashUtil.HashSetInit
@@ -848,7 +850,6 @@ object Utils {
 
     @KotlinCleanup("Use @JmOverloads, remove fun passing null for ComponentName")
     @KotlinCleanup("Simplify function body")
-    @Suppress("deprecation") // queryIntentActivities
     fun isIntentAvailable(
         context: Context,
         action: String?,
@@ -857,7 +858,7 @@ object Utils {
         val packageManager = context.packageManager
         val intent = Intent(action)
         intent.component = componentName
-        val list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        val list = packageManager.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
         return list.isNotEmpty()
     }
 
