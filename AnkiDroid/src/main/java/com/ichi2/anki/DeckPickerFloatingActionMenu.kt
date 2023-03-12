@@ -192,7 +192,7 @@ class DeckPickerFloatingActionMenu(
             isFABOpen = false
             mFabBGLayout.visibility = View.GONE
             addNoteLabel.visibility = View.GONE
-            if (animationEnabled()) {
+            if (deckPicker.animationEnabled()) {
                 // Changes the background color of FAB to default
                 mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 // Close with animation
@@ -250,24 +250,30 @@ class DeckPickerFloatingActionMenu(
         }
     }
 
-    // Returns false if any of the mentioned system animations are disabled (0f)
+    /**
+     * This function returns false if any of the mentioned system animations are disabled (0f)
+     *
+     * ANIMATION_DURATION_SCALE - controls app switching animation speed.
+     * TRANSITION_ANIMATION_SCALE - controls app window opening and closing animation speed
+     * WINDOW_ANIMATION_SCALE - controls pop-up window opening and closing animation speed
+     */
     private fun areSystemAnimationsEnabled(): Boolean {
-        val duration: Float = Settings.Global.getFloat(
+        val animDuration: Float = Settings.Global.getFloat(
             context.contentResolver,
             Settings.Global.ANIMATOR_DURATION_SCALE,
             1f
         )
-        val transition: Float = Settings.Global.getFloat(
+        val animTransition: Float = Settings.Global.getFloat(
             context.contentResolver,
             Settings.Global.TRANSITION_ANIMATION_SCALE,
             1f
         )
-        val windowAnimation: Float = Settings.Global.getFloat(
+        val animWindow: Float = Settings.Global.getFloat(
             context.contentResolver,
             Settings.Global.WINDOW_ANIMATION_SCALE,
             1f
         )
-        return duration != 0f && transition != 0f && windowAnimation != 0f
+        return animDuration != 0f && animTransition != 0f && animWindow != 0f
     }
 
     init {
@@ -302,8 +308,6 @@ class DeckPickerFloatingActionMenu(
                 )
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
-                /* val resp = areSystemAnimationsEnabled()
-                 Timber.i("Response Anim : $resp")*/
                 closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
             }
         }
