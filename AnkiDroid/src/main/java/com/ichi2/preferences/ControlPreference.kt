@@ -19,6 +19,7 @@ package com.ichi2.preferences
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import com.afollestad.materialdialogs.MaterialDialog
@@ -114,7 +115,11 @@ class ControlPreference : ListPreference {
                         }
                     }
                     negativeButton(R.string.dialog_cancel) { dismiss() }
-                    customView(view = gesturePicker)
+                    customView(
+                        view = ScrollView(context).apply {
+                            addView(gesturePicker)
+                        }
+                    )
 
                     gesturePicker.onGestureChanged { gesture ->
                         showToastIfBindingIsUsed(fromGesture(gesture))
