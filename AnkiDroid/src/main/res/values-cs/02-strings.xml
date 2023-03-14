@@ -398,14 +398,6 @@
     <string name="note_editor_toggle_sticky">Pamatovat si obsah pole %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Přesun úložiště</string>
-    <string name="scoped_storage_initial_message">AnkiDroid musí přesunout svá data, aby splňoval nová pravidla ochrany osobních údajů Android
-\n\nPokud před přesunem dat odinstalujete AnkiDroid, vaše data budou ztracena
-\n\nProsím proveďte přesun dat co nejdříve</string>
-    <string name="scoped_storage_terms_message">Přesun dat bude probíhat na pozadí. Během přesunu dat nebudete moci synchronizovat\n\nPředpokládaná doba trvání: %s</string>
-    <string name="scoped_storage_term_1">Zálohoval jsem svá data</string>
-    <string name="scoped_storage_term_1_ankiweb">Nedávno jsem synchronizoval s AnkiWeb</string>
-    <string name="scoped_storage_term_2">Během přesunu dat neodinstaluji aplikaci</string>
-    <string name="scoped_storage_select_all_terms">Abyste mohli pokračovat, prosím přijměte všechny body</string>
     <string name="scoped_storage_learn_more">Zjistit více</string>
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Přesunout</string>

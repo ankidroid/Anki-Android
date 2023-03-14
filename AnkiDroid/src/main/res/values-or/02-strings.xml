@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">%s କ୍ଷେତ୍ରଟିକୁ sticky କରନ୍ତୁ</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ</string>
-    <string name="scoped_storage_initial_message">ନୂତନ ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ନିୟମ ପୂରଣ କରିବା ପାଇଁ AnkiDroid ନିଶ୍ଚିତ ଭାବରେ ଏହାର ଡାଟା ଘୁଞ୍ଚାଇବ
-\n\nଯଦି ଆପଣ ସ୍ଥାନାନ୍ତରଣ ପୂର୍ବରୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ କରନ୍ତି, ତେବେ ଆପଣଙ୍କ ଡାଟା ହଜିଯିବ
-\n\nଦୟାକରି ଯଥାଶୀଘ୍ର ସ୍ଥାନାନ୍ତରଣ କରନ୍ତୁ</string>
-    <string name="scoped_storage_terms_message">ପୃଷ୍ଠଭୂମିରେ ସ୍ଥାନାନ୍ତରଣ ଘଟିବ। ସ୍ଥାନାନ୍ତର କରିବା ସମୟରେ ଆପଣ ସିଙ୍କ୍ କରିବାକୁ ଅସମର୍ଥ ହେବେ\n\nଆନୁମାନିକ ଅବଧି: %s</string>
-    <string name="scoped_storage_term_1">ମୁଁ ମୋର ଡାଟାର ବ୍ୟାକଅପ୍ ନେଇଛି</string>
-    <string name="scoped_storage_term_1_ankiweb">ମୁଁ ନିକଟରେ AnkiWeb ସହିତ ସିଙ୍କ୍ କରିଛି</string>
-    <string name="scoped_storage_term_2">ଡାଟା ଘୁଞ୍ଚାଇବାବେଳେ ମୁଁ ଆପ୍ ଅନଇନଷ୍ଟଲ୍ କରିବି ନାହିଁ</string>
-    <string name="scoped_storage_select_all_terms">ଜାରି ରଖିବାକୁ ଦୟାକରି ସମସ୍ତ ଆଇଟମ୍ ଗ୍ରହଣ କରନ୍ତୁ</string>
     <string name="scoped_storage_learn_more">ଅଧିକ ଜାଣନ୍ତୁ</string>
     <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
     <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>

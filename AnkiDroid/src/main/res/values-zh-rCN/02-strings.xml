@@ -359,14 +359,6 @@
     <string name="note_editor_toggle_sticky">固定字段 %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">存储迁移</string>
-    <string name="scoped_storage_initial_message">AnkiDroid 必须移动其数据以符合新的 Android 隐私规则
-\n\n如果您在迁移前卸载 AnkiDroid，您的数据将丢失
-\n\n请尽快执行迁移。</string>
-    <string name="scoped_storage_terms_message">迁移将发生在后台。迁移时您将无法同步\n\n预计持续时间: %s </string>
-    <string name="scoped_storage_term_1">我已备份我的数据</string>
-    <string name="scoped_storage_term_1_ankiweb">我最近已与 AnkiWeb 同步</string>
-    <string name="scoped_storage_term_2">移动数据时我不会卸载应用</string>
-    <string name="scoped_storage_select_all_terms">请接受所有项目以继续</string>
     <string name="scoped_storage_learn_more">了解更多</string>
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>

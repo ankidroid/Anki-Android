@@ -372,12 +372,6 @@
     <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Transfert du stockage</string>
-    <string name="scoped_storage_initial_message">AnkiDroid doit dépacer ses données pour être conforme aux nouvelles règles de confidentialité d\'Android\n\nSi vous désinstallez AnkiDroid avant le transfert, vos données seront perdu\n\nVeuillez réaliser le transfert de vos données dès que possible</string>
-    <string name="scoped_storage_terms_message">Le transfert va se dérouler en arrière-plan. Vous ne pourrez pas vous synchronisez pendant ce temps\n\nTemps estimé : %s</string>
-    <string name="scoped_storage_term_1">J\'ai fait une sauvegarde de mes données</string>
-    <string name="scoped_storage_term_1_ankiweb">J\'ai récemment synchronisé avec AnkiWeb </string>
-    <string name="scoped_storage_term_2">Je ne vais pas désinstaller l\'application pendant le transfert des données</string>
-    <string name="scoped_storage_select_all_terms">Veuillez accepter tous les éléments pour continuer</string>
     <string name="scoped_storage_learn_more">En savoir plus</string>
     <string name="scoped_storage_postpone">Reporter</string>
     <string name="scoped_storage_migrate">Transférer</string>

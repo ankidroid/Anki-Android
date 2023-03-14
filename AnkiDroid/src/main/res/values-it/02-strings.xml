@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">Appunta il campo %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Migrazione dei dati</string>
-    <string name="scoped_storage_initial_message">AnkiDroid deve spostare i suoi dati per soddisfare le nuove regole sulla privacy di Android
-\n\nSe disinstalli AnkiDroid prima della migrazione, i tuoi dati verranno persi
-\n\nPer favore esegui la migrazione il prima possibile</string>
-    <string name="scoped_storage_terms_message">La migrazione avverrà in background. Non sarai in grado di eseguire la sincronizzazione durante la migrazione\n\nDurata stimata: %s</string>
-    <string name="scoped_storage_term_1">Ho eseguito il backup dei miei dati</string>
-    <string name="scoped_storage_term_1_ankiweb">Ho sincronizzato con AnkiWeb di recente</string>
-    <string name="scoped_storage_term_2">Non disinstallerò l\'applicazione mentre i dati vengono spostati</string>
-    <string name="scoped_storage_select_all_terms">Si prega di accettare tutti gli elementi per continuare</string>
     <string name="scoped_storage_learn_more">Per saperne di più</string>
     <string name="scoped_storage_postpone">Posticipa</string>
     <string name="scoped_storage_migrate">Migra</string>

@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">A %s mező kitűzőcédulára</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Tárhely mozgatás</string>
-    <string name="scoped_storage_initial_message">AnkiDroidnak is úgy kell kezelni az adatokat, ahogy az új Android privacy szabályok előírják
-\n\nHa letörli az AnkiDroidot a mozgatás előtt, akkor az adatok el fognak veszni
-\n\nKérjük mihamarabb végezd el a mozgatást (migrációt)</string>
-    <string name="scoped_storage_terms_message">Adatmigráció fog indulni a háttérben. Ön nem fog tudni szinkronozni, amíg zajlik. \n\nVárható időtartam: %s</string>
-    <string name="scoped_storage_term_1">Mentettem az adatokat</string>
-    <string name="scoped_storage_term_1_ankiweb">Nemrég szinkronizáltam az AnkiWeb-bel</string>
-    <string name="scoped_storage_term_2">Nem távolítjuk el az app-ot, amíg adatmozgatás történik</string>
-    <string name="scoped_storage_select_all_terms">Kérjük fogadj el minden tételt a folytatáshoz</string>
     <string name="scoped_storage_learn_more">Tudj meg többet</string>
     <string name="scoped_storage_postpone">Elhalasztás</string>
     <string name="scoped_storage_migrate">Áttelepítés</string>

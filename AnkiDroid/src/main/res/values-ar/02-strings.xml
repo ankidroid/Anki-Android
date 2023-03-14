@@ -424,12 +424,6 @@
     <string name="note_editor_toggle_sticky">تفعيل ثبات النص لـ %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">نقل التخزين</string>
-    <string name="scoped_storage_initial_message">يجب أن ينقل أنكيدرويد بياناته لكي يمتثل لقوانين خصوصية جديدة في أندرويد\n\nإذا حذفت أنكيدرويد قبل النقل، فستفقد بياناتك\n\nيرجى إجراء النقل بأسرع وقت ممكن</string>
-    <string name="scoped_storage_terms_message">سيجري النقل في الخلفية. لن تكون قادرًا على المزامنة أثناء النقل\n\nالمدة المقدرة: %s</string>
-    <string name="scoped_storage_term_1">أخذت نسخة احتياطية لبياناتي</string>
-    <string name="scoped_storage_term_1_ankiweb">أجريت مزامنة مع أنكي ويب مؤخرًا</string>
-    <string name="scoped_storage_term_2">لن أحذف التطبيق بينما يتم نقل البيانات</string>
-    <string name="scoped_storage_select_all_terms">يرجى قبول كل الشروط قبل الاستكمال</string>
     <string name="scoped_storage_learn_more">تعلم المزيد</string>
     <string name="scoped_storage_postpone">تأجيل</string>
     <string name="scoped_storage_migrate">نقل</string>

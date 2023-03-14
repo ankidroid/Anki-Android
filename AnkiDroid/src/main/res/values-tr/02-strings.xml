@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">%s alanını yapışkan yap</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Depolama geçişi</string>
-    <string name="scoped_storage_initial_message">AnkiDroid, Android\'in yeni gizlilik kurallarını karşılamak için verilerini taşımalı
-\n\nAnkiDroid\'i taşıma işleminden önce kaldırırsanız verileriniz kaybolur
-\n\nLütfen taşıma işlemini mümkün olan en kısa sürede gerçekleştirin</string>
-    <string name="scoped_storage_terms_message">Taşıma arka planda gerçekleşecek. Taşıma sırasında senkronizasyon yapamayacaksınız\n\nTahmini süre: %s</string>
-    <string name="scoped_storage_term_1">Verilerimi yedekledim</string>
-    <string name="scoped_storage_term_1_ankiweb">Az önce AkiWeb ile senkronizasyon yaptım</string>
-    <string name="scoped_storage_term_2">Veriler taşınırken uygulamayı kaldırmayacağım</string>
-    <string name="scoped_storage_select_all_terms">Devam etmek için lütfen tüm öğeleri kabul edin</string>
     <string name="scoped_storage_learn_more">Daha fazlasını öğren</string>
     <string name="scoped_storage_postpone">Ertele</string>
     <string name="scoped_storage_migrate">Taşı</string>

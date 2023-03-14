@@ -378,14 +378,6 @@
     <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Tràmuda de sos datos</string>
-    <string name="scoped_storage_initial_message">AnkiDroid depet mòvere sos datos suos pro rispetare sas règulas de riservadesa noas de Android
-\n\nSi as a disinstallare AnkiDroid in antis de su tramudòngiu sos datos tuos s\'ant a pèrdere
-\n\nPro praghere faghe su tramudòngiu su prus in presse chi podes</string>
-    <string name="scoped_storage_terms_message">Su tramudòngiu s\'at a fàghere in s\'isfundu. In su mentres no as a pòdere fàghere sincronizatziones\n\nDurada carculada: %s</string>
-    <string name="scoped_storage_term_1">Apo fatu una còpia de seguresa de sos datos meos</string>
-    <string name="scoped_storage_term_1_ankiweb">Apo fatu dae pagu una sicronizatzione cun AnkiWeb</string>
-    <string name="scoped_storage_term_2">No apo a disinstallare s\'aplicatzione durante su tramudòngiu de sos datos</string>
-    <string name="scoped_storage_select_all_terms">Atzeta totu sos elementos pro sighire</string>
     <string name="scoped_storage_learn_more">Àteras informatziones</string>
     <string name="scoped_storage_postpone">Postìtzipa</string>
     <string name="scoped_storage_migrate">Tràmuda</string>
