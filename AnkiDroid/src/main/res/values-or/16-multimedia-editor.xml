@@ -99,8 +99,8 @@
     <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">ରେକର୍ଡିଂ ବିଫଳ ହେଲା</string>
-    <string name="multimedia_editor_audio_view_playing_failed">ଚଲେଇବା ବିଫଳ ହେଲା</string>
+    <string name="multimedia_editor_audio_view_recording_failed">ରେକର୍ଡିଂ ଵିଫଳ ହେଲା</string>
+    <string name="multimedia_editor_audio_view_playing_failed">ଚଲେଇବା ଵିଫଳ ହେଲା</string>
     <string name="multimedia_editor_audio_view_create_failed">ରେକର୍ଡର୍ ଟୁଲ୍ ବାର୍ ସୃଷ୍ଟି କରିବାରେ ଅସମର୍ଥ</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">କ୍ଷେତ୍ରଟିକୁ ସମ୍ପାଦନ କରୁଛି</string>

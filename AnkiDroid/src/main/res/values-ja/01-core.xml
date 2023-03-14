@@ -221,13 +221,13 @@
     <string name="wrong_tag_closed">{{/%1$s}}\'が見つかりましたが、期待されていた \'{{/%2$s}}\'</string>
     <string name="filter_error">フィルター %s にエラーがあります</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">コレクションを結合できません。\nどちらのコレクションを保持しますか？</string>
+    <string name="sync_conflict_message_new">コレクションを統合できません。\nどちらのコレクションを維持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroidのコレクションをAnkiWebのコレクションに置き換えますか？</string>
-    <string name="sync_conflict_local_confirm_new">AnkiWebのコレクションをAnkiDroidのコレクションに置き換えますか？</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb上のコレクションのデータを、AnkiDroid内のコレクションのデータで上書きしますか？</string>
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
-    <string name="sync_conflict_replace_title">コレクションを置換</string>
+    <string name="sync_conflict_replace_title">コレクションを上書き</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
@@ -235,7 +235,7 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">ユーザーデータを移行中です</string>
+    <string name="migrating_data_message">ユーザーデータを移行中</string>
     <string name="migration_successful_message">移行に成功しました</string>
     <string name="migration_failed_message">移行に失敗しました</string>
     <string name="migration_transferred_size">%2$.0f MB 中 %1$.0f MB を移行しました</string>

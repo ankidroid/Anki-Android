@@ -94,7 +94,7 @@
     <string name="answering_error_title">Грешка в базата данни</string>
     <string name="answering_error_message">Писането в колекцията е неуспешна. Базата данни може да е повредена или може да няма свободно пространство на диска.\n\nАко това се случва по-често, опитайте да проверите базата данни, да поправите колекцията или да възстановите я от резервно копия. Докоснете \"Опции\" за това.\n\Това може да е грешка в AnkiDroid; Моля, съобщете за тази грешка, да можем да я проверим.</string>
     <string name="answering_error_report">Доклад грешки</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Няма достатъчно място в хранилището, за да се отвори AnkiDroid. Освободете някакво място, за да продължите. </string>
     <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
     <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
     <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
@@ -116,8 +116,8 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Импортирано файли: %1$d\nОбщо импортирани карти: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Пълно хранилище</string>
+    <string name="storage_almost_full_title">Почти пълно хранилище</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Няма място</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid трябва %s свободно пространство за да продължи. Моля, освободете малко място</string>
     <string name="restore_backup_title">Възстановяване от архив?</string>
@@ -125,7 +125,7 @@
     <string name="restore_backup_choose_another">Изберете друго</string>
     <string name="dialog_cancel">Отказ</string>
     <string name="dialog_ok">Да</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Потвърждаване</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Да</string>
     <string name="dialog_continue">Продължи</string>
@@ -178,7 +178,7 @@
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid е обновен</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid се надгради. Това надграждане включва поправки за възможни проблеми с базата данни и ви съветваме да започнете проверка на базата данни сега.</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
@@ -194,17 +194,17 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Базата данни заключена</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_title">Несъвместима версия на базата от данни</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
+    <string name="background_image_applied">Фоновият образ приложен</string>
+    <string name="background_image_removed">Фоновият образ премахнат</string>
     <string name="no_image_selected">Няма избрано изображение</string>
     <string name="error_selecting_image">Грешка, избирайки изображение. Прегледайте наръчника. %s</string>
     <string name="error_deleting_image">Грешка, изтривайки изображението</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="failed_to_apply_background_image">Провал на прилагането на фонов образ %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed">Максималният позволен размер на образ %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
@@ -214,7 +214,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_title">Избор на език на клавиатурата</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Употреба на AnkiDroid</string>
@@ -230,16 +230,16 @@
     <string name="help_item_support_develop_ankidroid">Разработка</string>
     <string name="help_item_support_rate_ankidroid">Оценете</string>
     <string name="help_item_support_other_ankidroid">Друго</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Превод</string>
     <string name="help_title_community">Общност</string>
     <string name="help_item_anki_forums">Форуми на Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Поверителност</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">Политика за поверителност на AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Политика за поверителност на AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Правила и условия на AnkiWeb</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->
@@ -247,7 +247,7 @@
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Вашата мрежова връзка е по тарифа. Прехвърлянето на данни може да струва пари</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -255,19 +255,19 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_deck_package">Пакет тесте (.apkg)</string>
+    <string name="import_collection_package">Пакет на колекция (.colpkg)</string>
+    <string name="import_csv">Текстов файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="backup_your_collection">Резервно копие на колекцията ви</string>
+    <string name="backup_collection_message">Не сте правили резервно копие на колекцията си от известно време. Трябва да направите това сега, за да предотвратите загуба на данни</string>
+    <string name="button_backup">Резервно копиране</string>
+    <string name="button_disable_reminder">Изключване на напомняне</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">По-късно</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Без ново показване</string>
+    <string name="dismiss_backup_warning_title">Предупреждение за загуба на данни</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled

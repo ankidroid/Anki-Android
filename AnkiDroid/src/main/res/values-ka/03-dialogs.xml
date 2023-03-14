@@ -71,8 +71,8 @@
     <string name="reset_card_dialog_title">Reset card progress</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d ბარათი დაყენდა საწყის მდგომარეობაში</item>
+        <item quantity="other">%d ბარათი დაყენდა საწყის მდგომარეობაში</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">

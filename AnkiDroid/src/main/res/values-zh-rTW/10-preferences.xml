@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>
     <string name="gestures_fullscreen_nav_drawer_summary">從屏幕上任何地方向右劃，可以打開導航的抽屜。</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">無</string>
     <string name="gestures_swipe_up" maxLength="41">向上撥動</string>
     <string name="gestures_swipe_down" maxLength="41">向下撥動</string>
     <string name="gestures_swipe_left" maxLength="41">向左撥動</string>
@@ -129,9 +129,9 @@
     <string name="sync_account_summ_logged_out">未登入</string>
     <string name="automatic_sync_choice" maxLength="41">自動同步</string>
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">總是</string>
+    <string name="sync_media_only_unmetered">只在非計費連線時</string>
+    <string name="sync_media_never">從不</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
     <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
     <string name="metered_sync_title" maxLength="41">允許按流量計費的連接同步</string>
@@ -229,10 +229,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自訂同步伺服器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        作為與 AnkiWeb 同步的替代方案，
+        你可以選擇用自己的伺服器進行同步。
+        如果未設定，預設的 AnkiWeb 伺服器將被使用。
+        <a href="%s">了解更多</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
     <!-- Key Bindings -->
@@ -360,14 +360,14 @@
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backup_options__title" maxLength="41">備份選項</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid 週期性備份你的集合。
+        在備份久於兩日後，
+        AnkiDroid 會將其中部分移除以節省磁碟空間。
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        請注意媒體檔案將不會備份。
+        為保證安全性，請週期性同步你的集合，或者備份其匯出檔案。
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        你可以在牌組清單選單中匯出你的集合。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動備份間隔 (分鐘)</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">要保留的每日備份</string>
@@ -385,36 +385,36 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">刪除未使用的媒體檔案</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="pref__delete_unused_media_files__summary">刪除前置不是 _ 以及不被任何筆記引用的圖像和其它媒體</string>
+    <string name="dialog__media_check_required__message">需要進行媒體檢查以找出未使用媒體檔案</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">刪除未使用的媒體檔案</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">刪除備份</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">刪除備份</string>
     <string name="progress__deleting_backups">正在刪除備份&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">刪除集合</string>
+    <string name="pref__delete_collection__summary">刪除集合、媒體和備份。應用程式設定將不會被刪除</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">刪除集合</string>
+    <string name="dialog__delete_collection__message">確定要刪除你的集合、媒體和備份嗎？</string>
+    <string name="progress__deleting_collection">刪除集合中&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">刪除所有內容</string>
+    <string name="pref__delete_everything__summary">刪除集合、媒體、備份和設定</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">刪除所有內容</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">確定要刪除所有資料嗎？這包括你的集合、媒體、備份和設定。\n\n注意：此操作將關閉視窗。</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">刪除應用程式資料</string>
+    <string name="pref__delete_app_data__summary">刪除設定和其它應用程式資料</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">刪除應用程式資料</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">確定要刪除應用程式資料嗎？這包括設定和其它應用程式資料。\n\n注意：此操作將關閉視窗。</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">沒有集合</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">錯誤</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">正在擷取&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">正在計算&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">集合不存在</string>
 </resources>
