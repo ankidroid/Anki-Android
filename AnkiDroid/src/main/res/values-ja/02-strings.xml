@@ -359,12 +359,6 @@
     <string name="note_editor_toggle_sticky">フィールド「%s」の内容を固定する</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">ストレージ移行</string>
-    <string name="scoped_storage_initial_message">Androidがプライバシーに関する新しい方針を導入したことに伴い、AnkiDroidのデータの保存先（ストレージ）を変更する必要があります。\n\nこのストレージ移行を済ませる前にAnkiDroidをアンインストールした場合、AnkiDroidであなたが使用していたデッキやメディアファイルなどのデータも削除されます。\n\nできるだけ早期にストレージ移行を行うことを強く推奨します</string>
-    <string name="scoped_storage_terms_message">移行をバックグラウンドで行います。移行中は、同期は行えません\n\n移行終了までの時間（推定）: %s</string>
-    <string name="scoped_storage_term_1">データのバックアップを取りました</string>
-    <string name="scoped_storage_term_1_ankiweb">最近AnkiWebとの同期を行いました</string>
-    <string name="scoped_storage_term_2">データの移動中はアプリをアンインストールしません</string>
-    <string name="scoped_storage_select_all_terms">続行するにはすべての項目を承認してください</string>
     <string name="scoped_storage_learn_more">詳細</string>
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>

@@ -398,14 +398,6 @@
     <string name="note_editor_toggle_sticky">Закрепить поле %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Перенос хранилища</string>
-    <string name="scoped_storage_initial_message">AnkiDroid должен перенести данные, чтобы соответствовать новым правилам конфиденциальности Android
-\n\nЕсли вы удалите AnkiDroid перед переносом, данные будут потеряны
-\n\nПожалуйста, выполните миграцию как можно скорее</string>
-    <string name="scoped_storage_terms_message">Перенос будет идти в фоне, и в это время нельзя будет синхронизироваться.\n\nПримерное время: %s</string>
-    <string name="scoped_storage_term_1">Вы сделали резервную копию</string>
-    <string name="scoped_storage_term_1_ankiweb">Недавно была синхронизация с AnkiWeb</string>
-    <string name="scoped_storage_term_2">Вы не будете удалять приложение во время переноса данных</string>
-    <string name="scoped_storage_select_all_terms">Подтвердите, что:</string>
     <string name="scoped_storage_learn_more">Подробнее</string>
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>

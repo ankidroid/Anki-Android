@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">Feu que el camp %s sigui enganxós</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Migració de la carpeta</string>
-    <string name="scoped_storage_initial_message">Cal moure les dades per complir amb les noves normes de privadesa d\'Android
-\n\nSi desinstal·leu l\'AnkiDroid abans de la migració, les vostres dades es perdran
-\n\nSi us plau, realitzeu la migració tan aviat com sigui possible</string>
-    <string name="scoped_storage_terms_message">La migració s\'executarà en segon pla. No podreu sincronitzar durant la migració\n\nLa durada estimada és: %s</string>
-    <string name="scoped_storage_term_1">He fet una còpia de seguretat de les meves dades</string>
-    <string name="scoped_storage_term_1_ankiweb">He sincronitzat amb l\'AnkiWeb recentment</string>
-    <string name="scoped_storage_term_2">No desinstal·laré l\'aplicació mentre les dades es canvien de lloc</string>
-    <string name="scoped_storage_select_all_terms">Si us plau, accepteu tots els elements per a continuar.</string>
     <string name="scoped_storage_learn_more">Vull saber-ne més</string>
     <string name="scoped_storage_postpone">Ajorna-ho</string>
     <string name="scoped_storage_migrate">Migra</string>

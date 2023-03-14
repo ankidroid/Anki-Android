@@ -370,14 +370,6 @@
     <string name="note_editor_toggle_sticky">بخش %s را بچسبان</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">مهاجرت انبار</string>
-    <string name="scoped_storage_initial_message">AnkiDroid باید اطلاعات خود را جا‌به‌جا کند که بتواند قوانین حریم خصوصی Android را رعایت کند
-/n/nاگر شما AnkiDroid را قبل از مهاجرت حذف کنید، اطلاعات شما گم خواهد شد
-/n/nلطفا هر‌چه زودتر مهاجرت را انجام دهید</string>
-    <string name="scoped_storage_terms_message">محاجرت در پشت صحنه در حال انجام است. شما نمیتوانید همگام کنید زمانی که برنامه در حال محاجرت است\n\nزمان تقریبی: %s</string>
-    <string name="scoped_storage_term_1">من از اطلاعات خود پشتیبانی گرفتم</string>
-    <string name="scoped_storage_term_1_ankiweb">من به تازگی با AnkiWeb همگام شده‌ام</string>
-    <string name="scoped_storage_term_2">من برنامه را حذف نمیکنم تا اطلاعات جا‌به‌جا شود</string>
-    <string name="scoped_storage_select_all_terms">برای ادامه لطفا همه موارد را بپذیرید</string>
     <string name="scoped_storage_learn_more">بیشتر بدانید</string>
     <string name="scoped_storage_postpone">به تعویق انداختن</string>
     <string name="scoped_storage_migrate">مهاجرت</string>

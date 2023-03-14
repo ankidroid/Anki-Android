@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">Pin veld %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Opslagmigratie</string>
-    <string name="scoped_storage_initial_message">AnkiDroid moet zijn data verplaatsen om te voldoen aan de nieuwe Android-privacyregels
-\n\nAls je AnkiDroid verwijdert voor de migratie, zullen uw gegevens verloren gaan
-\n\nGelieve de migratie zo snel mogelijk uit te voeren</string>
-    <string name="scoped_storage_terms_message">Migratie zal plaatsvinden op de achtergrond. Je kunt tijdens het migreren niet synchroniseren\n\nGeschatte duur: %s</string>
-    <string name="scoped_storage_term_1">Ik heb een backup van mijn data</string>
-    <string name="scoped_storage_term_1_ankiweb">Ik heb onlangs gesynchroniseerd met AnkiWeb</string>
-    <string name="scoped_storage_term_2">Ik zal de app niet verwijderen wanneer data wordt verplaatst</string>
-    <string name="scoped_storage_select_all_terms">Accepteerd alstublieft alle items om door te gaan</string>
     <string name="scoped_storage_learn_more">Meer leren</string>
     <string name="scoped_storage_postpone">Stel uit</string>
     <string name="scoped_storage_migrate">Migreren</string>

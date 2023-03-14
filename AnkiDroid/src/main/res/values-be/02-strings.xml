@@ -398,14 +398,6 @@
     <string name="note_editor_toggle_sticky">Зрабіць поле %s ліпучым</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Перанос сховішча</string>
-    <string name="scoped_storage_initial_message">AnkiDroid павінен перанесці даныя, каб адпавядаць новым правілам прыватнасці Android
-\n\nКалі выдаліць AnkiDroid перад пераносам, то ўсе вашы даныя будуць згубленыя
-\n\nКалі ласка, выканайце перанос як толькі ў вас будзе такая магчымасць</string>
-    <string name="scoped_storage_terms_message">Перанос будзе адбывацца ў фоне. Падчас пераносу вы не зможаце зрабіць сінхранізацыю\n\nПрыблізны час: %s</string>
-    <string name="scoped_storage_term_1">Я зрабіў рэзервовую копію сваіх даных</string>
-    <string name="scoped_storage_term_1_ankiweb">Я нядаўна рабіў сінхранізацыю з AnkiWeb</string>
-    <string name="scoped_storage_term_2">Я не буду выдаляць праграму падчас пераносу даных</string>
-    <string name="scoped_storage_select_all_terms">Калі ласка, прыміце ўсе пункты для працягу</string>
     <string name="scoped_storage_learn_more">Падрабязней</string>
     <string name="scoped_storage_postpone">Адкласці</string>
     <string name="scoped_storage_migrate">Перанесці </string>

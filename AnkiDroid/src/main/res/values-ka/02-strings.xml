@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">%s ველის ჩამაგრება</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">საცავის მიგრაცია</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">შენახული მაქვს მონაცემების სარეზერვო ასლი</string>
-    <string name="scoped_storage_term_1_ankiweb">სულ ცოტა ხნის წინ მოვახდინე AnkiWeb-თან სინქრონიზაცია</string>
-    <string name="scoped_storage_term_2">არ მოვახდენ აპლიკაციის დეინსტალაციას მონაცემების გადაადგილებისას</string>
-    <string name="scoped_storage_select_all_terms">გასაგრძელებლად გთხოვთ მიიღოთ ყველა ელემენტი</string>
     <string name="scoped_storage_learn_more">გაიგეთ მეტი</string>
     <string name="scoped_storage_postpone">გადადება</string>
     <string name="scoped_storage_migrate">მონაცემების მიგრაცია</string>

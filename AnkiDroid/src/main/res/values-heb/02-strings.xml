@@ -400,14 +400,6 @@
     <string name="note_editor_toggle_sticky">הפוך שדה %s לדביק</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">העברת אחסון</string>
-    <string name="scoped_storage_initial_message">AnkiDroid חייבת להעביר את הנתונים שלה כדי לעמוד בכללי הפרטיות החדשים של אנדרואיד
-\n\nאם תסיר את ההתקנה של AnkiDroid לפני ההעברה, הנתונים שלך יאבדו
-\n\nאנא בצע את ההעברה בהקדם האפשרי</string>
-    <string name="scoped_storage_terms_message">העברת הנתונים תתרחש ברקע. לא תוכל לסנכרן בזמן ההעברה\n\nמשך זמן משוער: %s</string>
-    <string name="scoped_storage_term_1">גיביתי את המידע</string>
-    <string name="scoped_storage_term_1_ankiweb">הסתנכרנתי עם AnkiWeb לאחרונה</string>
-    <string name="scoped_storage_term_2">אני לא אסיר את ההתקנה של האפליקציה בזמן העברת הנתונים</string>
-    <string name="scoped_storage_select_all_terms">נא לאשר הכול על מנת למשיך</string>
     <string name="scoped_storage_learn_more">מידע נוסף</string>
     <string name="scoped_storage_postpone">לדחות</string>
     <string name="scoped_storage_migrate">הסבה</string>

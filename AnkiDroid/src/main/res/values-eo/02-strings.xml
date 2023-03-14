@@ -372,14 +372,6 @@
     <string name="note_editor_toggle_sticky">Alpingli la kampon %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Movado de datumoj</string>
-    <string name="scoped_storage_initial_message">AnkiDroid devas movi siajn datumojn por kongrui kun la novaj privatecaj reguloj de Android.
-\n\nSe vi malinstalos AnkiDroid antaŭ la movado, viaj datumoj perdiĝos.
-\n\nPlenumu movadon de datumoj kiel eble plej frue.</string>
-    <string name="scoped_storage_terms_message">Movado de datumoj fariĝos fone. Samtempigo estas nedisponebla dum movado.\n\nProksimuma tempo: %s</string>
-    <string name="scoped_storage_term_1">Mi faris sekurkopion de miaj datumoj</string>
-    <string name="scoped_storage_term_1_ankiweb">Mi antaŭnelonge samtempigis datumojn kun la servo AnkiWeb</string>
-    <string name="scoped_storage_term_2">Mi ne malinstalos la aplikaĵon dum movado de datumoj</string>
-    <string name="scoped_storage_select_all_terms">Akceptu ĉiujn kondiĉojn por pluigi</string>
     <string name="scoped_storage_learn_more">Pli da informoj</string>
     <string name="scoped_storage_postpone">Ne nun</string>
     <string name="scoped_storage_migrate">Movi datumojn</string>
