@@ -130,7 +130,7 @@
     <string name="dialog_positive_overwrite">上書き</string>
     <string name="dialog_positive_remove">削除</string>
     <string name="dialog_positive_repair">修復</string>
-    <string name="dialog_positive_replace">置換</string>
+    <string name="dialog_positive_replace">上書き</string>
     <string name="dialog_positive_restore">戻す</string>
     <string name="dialog_positive_set">適用</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
@@ -252,12 +252,12 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_your_collection">コレクションをバックアップ</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup">バックアップ</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">今後表示しない</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>

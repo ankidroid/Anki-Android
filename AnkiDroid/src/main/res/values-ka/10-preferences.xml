@@ -69,18 +69,18 @@
     <string name="pref_cat_plugins" maxLength="41">დანამატები</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ხაზის სისქე</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
+    <string name="use_input_tag" maxLength="41">ბარათში პასუხის აკრეფა</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="reset_languages" maxLength="41">Reset languages</string>
+    <string name="reset_languages" maxLength="41">ენების გადატვირთვა</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom" maxLength="41">ბარათის ზომა</string>
     <string name="image_zoom" maxLength="41">სურათის ზომა</string>
     <string name="button_size" maxLength="41">პასუხის ღილაკის ზომა</string>
-    <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_font_size" maxLength="41">შრიფტის ზომა ბარათების საძიებოში</string>
+    <string name="card_browser_hide_media" maxLength="41">ფაილის სახელების ჩვენება ბარათების საძიებოში</string>
+    <string name="card_browser_hide_media_summary">მედიაფაილების სახელების ჩვენება ბარათების საძიებოს კითხვა/პასუხის ველებში</string>
     <string name="col_path" maxLength="41">AnkiDroid-ის საქაღალდე</string>
     <string name="fullscreen_review" maxLength="41">სრულეკრანიანი რეჟიმი</string>
     <string name="full_screen_off">გამორთულია</string>
@@ -127,7 +127,7 @@
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
     <string name="sync_account" maxLength="41">AnkiWeb ანგარიში</string>
     <string name="sync_account_summ_logged_out">არ ხართ შესული</string>
-    <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
+    <string name="automatic_sync_choice" maxLength="41">ავტომატური სინქრონიზაცია</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ყოველთვის</string>
@@ -172,12 +172,12 @@
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons" maxLength="41">დიდი პასუხის ღილაკების ჩვენება</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">ზედა ზოლის ჩვენება</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">დარჩენილის ჩვენება</string>
-    <string name="show_progress_summ">Show remaining card count</string>
+    <string name="show_progress_summ">ბარათების დარჩენილი რაოდენობის ჩვენება</string>
     <string name="show_eta" maxLength="41">სავარაუდოდ დარჩენილი დროის ჩვენება</string>
     <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
@@ -245,7 +245,7 @@
     <string name="studyoptions_limit_select_tags">იარლიყების მონიშვნა</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
-    <string name="deck_conf_group" maxLength="41">Options group</string>
+    <string name="deck_conf_group" maxLength="41">პარამეტრების ჯგუფი</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d deck uses this group</item>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
@@ -277,7 +277,7 @@
     <string name="deck_conf_min_ivl" maxLength="41">მინიმალური შუალედი</string>
     <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
     <string name="deck_conf_fails">XXX გადავიწყება</string>
-    <string name="deck_conf_leech_action" maxLength="41">Leech action</string>
+    <string name="deck_conf_leech_action" maxLength="41">მოქმედება შემაფერხებელი ბარათებისთვის</string>
     <string name="deck_conf_max_time" maxLength="41">მაქსიმალური საპასუხო დრო</string>
     <string name="deck_conf_seconds">XXX წამი</string>
     <string name="deck_conf_timer" maxLength="41">Show answer timer</string>
@@ -299,7 +299,7 @@
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
+    <string name="pref_browser_editor_font" maxLength="41">შრიფტი ბარათების საძიებოსა და რედაქტორისთვის</string>
     <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
     <string name="deck_conf_cram_limit" maxLength="41">ზღვარი</string>
@@ -388,7 +388,7 @@
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">უხმარი მედიაფაილების წაშლა</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>

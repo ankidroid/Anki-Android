@@ -281,7 +281,7 @@
     <string name="check_integrity_recovered_deck_name">აღდგენილი ბარათები</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ფონი</string>
-    <string name="choose_an_image">სურათის მონიშვნა</string>
+    <string name="choose_an_image">სურათის არჩევა</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ნაგულისხმევის აღდგენა</string>
     <string name="cloze_sample_text">ეს {{%1$s::sample}} გამოტოვებული ადგილია.</string>
@@ -420,9 +420,9 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ბარათები</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
-    <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების ბრაუზერში ჩვენების გადართვა</string>
+    <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">ბრაუზერის პარამეტრები</string>
+    <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
 </resources>

@@ -191,7 +191,7 @@
     <string name="card_template_editor_front">წინა შაბლონი</string>
     <string name="card_template_editor_back">უკანა შაბლონი</string>
     <string name="card_template_editor_styling">სტილი</string>
-    <string name="card_template_editor_menu_card_browser_appearance">ბარათის საძიებელის გარეგნობა</string>
+    <string name="card_template_editor_menu_card_browser_appearance">ბარათების საძიებოს გარეგნობა</string>
     <string name="card_template_editor_deck_override">დასტის გადატანა</string>
     <string name="card_template_editor_insert_field">ველის ჩასმა</string>
     <string name="card_template_editor_select_field">ველის არჩევა</string>
@@ -209,7 +209,7 @@
     <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
     <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">საძიებლის გარეგნობა</string>
+    <string name="card_template_browser_appearance_title">საძიებოს გარეგნობა</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">ბარათის ინფო</string>

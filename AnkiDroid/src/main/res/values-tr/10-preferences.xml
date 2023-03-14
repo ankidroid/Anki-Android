@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Tam ekran gezinme çekmecesi</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Ekranın üzerindeki herhangi bir yerden sağa doğru parmağınızı kaydırdığınızda bütün dosyaların genel görünümü için bir önizleme açılacaktır</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Hiçbiri</string>
     <string name="gestures_swipe_up" maxLength="41">Yukarı sürükleme</string>
     <string name="gestures_swipe_down" maxLength="41">Aşağı sürükleme</string>
     <string name="gestures_swipe_left" maxLength="41">Sola sürükleme</string>
@@ -229,10 +229,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Özel senkronizasyon sunucusu</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Kullanılmıyor</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb\'le senkronize etmeye alternatif olarak,
+        senkronizasyon için kendi sunucunuzu kullanabilirsiniz.
+        Ayarlanmazsa yerine varsayılan AnkiWeb sunucusu kullanılır.
+        <a href="%s">Daha fazlasını öğren</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
     <!-- Key Bindings -->

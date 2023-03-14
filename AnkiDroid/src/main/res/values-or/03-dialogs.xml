@@ -146,7 +146,7 @@
     <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
     <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="check_media_acknowledge">ମିଡ଼ିଆ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ବିଫଳ ହେଲା</string>
+    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ଵିଫଳ ହେଲା</string>
     <string name="check_media_invalid">ଅବୈଧ ଏନକୋଡିଂ ସହିତ ଫାଇଲଗୁଡିକ: %d</string>
     <string name="check_media_unused">ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ଗଚ୍ଛିତ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହାର ହେଉନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
     <string name="check_media_nohave">ପତ୍ରରେ ବ୍ୟବହୃତ କିନ୍ତୁ ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
@@ -263,10 +263,10 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Backup your collection</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
+    <string name="button_backup">ବ୍ୟାକଅପ୍</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ପରେ</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ପୁନଃ ଦେଖାନ୍ତୁନି</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>

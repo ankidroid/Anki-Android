@@ -81,7 +81,7 @@
     <string name="sync_no_changes_message">ცვლილებები ვერ მოიძებნა</string>
     <string name="sync_database_acknowledge">კოლექციის სინქრონიზაცია წარმატებით განხორციელდა</string>
     <string name="sync_log_error_specific">სინქრონიზაციის შეცდომა, ტიპი: %1$s, შეტყობინება: %2$s</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="sync_corrupt_database">თქვენი მონაცემთა ბაზა დაზიანებულია. გთხოვთ, სინქრონიზების ხელახლა ცდამდე პრობლემა აღმოფხვრათ.\n\nმონაცემთა ბაზის გამოსასწორებლად საჭირო ინფორმაციისთვის იხილეთ %s.</string>
     <string name="sync_too_busy">სერვერი დაკავებულია. სცადეთ მოგვიანებით.</string>
     <string name="sync_remote_db_error">ჩამოტვირთული მონაცემთა ბაზა დაზიანებული იყო. გთხოვთ ხელახლა სცადოთ.</string>
     <string name="sync_overwrite_error">მიმდინარე კოლექცია ვერ ჩანაცვლდა ჩამოტვირთული ფაილით</string>
@@ -100,7 +100,7 @@
     <string name="sync_check_upload_file">ფაილის შემოწმება ატვირთვამდე&#8230;</string>
     <string name="sync_check_download_file">ჩამოტვირთული ფაილის შემოწმება&#8230;</string>
     <string name="sync_media_find">იძებნება შეცვლილი მედიაფაილები&#8230;</string>
-    <string name="sync_media_no_changes">No changes to media files</string>
+    <string name="sync_media_no_changes">მედიაფაილები არ შეცვლილა</string>
     <string name="sync_media_success">მედიაფაილები სინქრონიზებულია</string>
     <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">ასატვირთია %d შეცვლილი მედიაფაილი</string>

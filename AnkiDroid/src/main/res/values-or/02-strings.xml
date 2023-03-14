@@ -357,7 +357,7 @@
     <string name="downloading_file">%s ଡାଉନଲୋଡ୍ ହେଉଛି</string>
     <string name="import_deck">ତାସଖଣ୍ଡ ଆମଦାନୀ କରନ୍ତୁ</string>
     <string name="something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି, ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="download_failed">ଡାଉନଲୋଡ୍ ବିଫଳ ହୋଇଛି</string>
+    <string name="download_failed">ଡାଉନଲୋଡ୍ ଵିଫଳ ହେଲା</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
