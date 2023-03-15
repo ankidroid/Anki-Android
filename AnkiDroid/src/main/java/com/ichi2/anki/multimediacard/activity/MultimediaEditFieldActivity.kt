@@ -97,7 +97,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         finishWithoutAnimation()
     }
 
-    private fun performPermissionRequest(field: IField): Boolean {
+    private fun hasPerformedPermissionRequestForField(field: IField): Boolean {
         // Request permission to record if audio field
         if (field is AudioRecordingField && !Permissions.canRecordAudio(this)) {
             Timber.d("Requesting Audio Permissions")
@@ -142,7 +142,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
         // If we went through the permission check once, we don't need to do it again.
         // As we only get here a second time if we have the required permissions
-        if (newUI.requiresPermissionCheck && performPermissionRequest(newUI.field)) {
+        if (newUI.requiresPermissionCheck && hasPerformedPermissionRequestForField(newUI.field)) {
             newUI.markAsPermissionRequested()
             return
         }
