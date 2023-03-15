@@ -56,7 +56,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -2469,10 +2468,10 @@ open class DeckPicker :
         }
         // TODO: maybe handle onStorageMigrationCompleted()
         // TODO: sync_impossible_during_migration needs changing
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             message(text = resources.getString(R.string.sync_impossible_during_migration, 5) + text)
-            positiveButton(res = R.string.dialog_ok)
-            negativeButton(res = R.string.scoped_storage_learn_more) {
+            positiveButton(R.string.dialog_ok)
+            negativeButton(R.string.scoped_storage_learn_more) {
                 openUrl(R.string.link_scoped_storage_faq)
             }
         }
