@@ -132,7 +132,7 @@ class DeckSpinnerSelection(
     /**
      * @return All decks, except maybe default if it should be hidden.
      */
-    private fun computeDropDownDecks(): List<Deck> {
+    fun computeDropDownDecks(): List<Deck> {
         val sortedDecks = collection.decks.allSorted().toMutableList()
         if (shouldHideDefaultDeck()) {
             sortedDecks.removeIf { x: Deck -> x.getLong("id") == Consts.DEFAULT_DECK_ID }
