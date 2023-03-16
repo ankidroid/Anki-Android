@@ -372,7 +372,7 @@
     <string name="download_deck">Download deck</string>
     <string name="try_again">Try Again</string>
     <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="cancel_download_title">Do you want to cancel?</string>
     <string name="downloading_file">Downloading %s</string>
     <string name="import_deck">Import Deck</string>
     <string name="something_wrong">Something went wrong, please try again</string>
