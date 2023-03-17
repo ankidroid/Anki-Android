@@ -157,16 +157,12 @@ fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.vague_error)
-            .setMessage(msg)
-            .setPositiveButton(R.string.dialog_ok) { _,_ ->
+        AlertDialog.Builder(context).setTitle(R.string.vague_error).setMessage(msg)
+            .setPositiveButton(R.string.dialog_ok) { _, _ ->
                 CrashReportService.sendExceptionReport(
-                    exception,
-                    origin = context::class.java.simpleName
+                    exception, origin = context::class.java.simpleName
                 )
-            }
-            .show()
+            }.show()
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
