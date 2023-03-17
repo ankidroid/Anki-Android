@@ -2,6 +2,7 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:focusableInTouchMode="true"
+android:fitsSystemWindows="true"
 xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Main content that takes up the fullscreen -->
     <RelativeLayout
@@ -28,15 +29,12 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/bottom_area_layout"/>
         <include layout="@layout/reviewer_answer_buttons"/>
-    </RelativeLayout>
-    <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-        <include layout="@layout/toolbar"
+        <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"/>
-    </FrameLayout>
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+            <include layout="@layout/toolbar"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
