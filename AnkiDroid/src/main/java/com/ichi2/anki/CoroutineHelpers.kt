@@ -159,7 +159,8 @@ private fun showError(context: Context, msg: String, exception: Throwable) {
         AlertDialog.Builder(context).setTitle(R.string.vague_error).setMessage(msg)
             .setPositiveButton(R.string.dialog_ok) { _, _ ->
                 CrashReportService.sendExceptionReport(
-                    exception, origin = context::class.java.simpleName
+                    exception,
+                    origin = context::class.java.simpleName
                 )
             }.show()
     } catch (ex: BadTokenException) {
