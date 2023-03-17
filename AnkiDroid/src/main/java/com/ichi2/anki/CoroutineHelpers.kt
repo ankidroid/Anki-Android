@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
@@ -156,17 +157,16 @@ fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
-        MaterialDialog(context).show {
-            title(R.string.vague_error)
-            message(text = msg)
-            positiveButton(R.string.dialog_ok)
-            onDismiss {
+        AlertDialog.Builder(context)
+            .setTitle(R.string.vague_error)
+            .setMessage(msg)
+            .setPositiveButton(R.string.dialog_ok) { _,_ ->
                 CrashReportService.sendExceptionReport(
                     exception,
                     origin = context::class.java.simpleName
                 )
             }
-        }
+            .show()
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
