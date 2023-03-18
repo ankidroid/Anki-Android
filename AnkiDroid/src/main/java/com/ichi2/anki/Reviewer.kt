@@ -185,7 +185,9 @@ open class Reviewer :
     override fun onResume() {
         answerTimer.resume()
         super.onResume()
-        answerField!!.focusWithKeyboard()
+        if (answerField != null) {
+            answerField!!.focusWithKeyboard()
+        }
     }
 
     @NeedsTest("is hidden if flag is on app bar")
