@@ -26,11 +26,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.os.Parcelable
+import android.os.*
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
@@ -189,6 +185,7 @@ open class Reviewer :
     override fun onResume() {
         answerTimer.resume()
         super.onResume()
+        answerField!!.focusWithKeyboard()
     }
 
     @NeedsTest("is hidden if flag is on app bar")
