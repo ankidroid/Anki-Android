@@ -39,6 +39,7 @@ import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -156,13 +157,19 @@ fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
-        AlertDialog.Builder(context).setTitle(R.string.vague_error).setMessage(msg)
-            .setPositiveButton(R.string.dialog_ok) { _, _ ->
-                CrashReportService.sendExceptionReport(
-                    exception,
-                    origin = context::class.java.simpleName
-                )
-            }.show()
+        val builder = MaterialAlertDialogBuilder(context)
+        builder.setTitle(R.string.vague_error)
+        builder.setMessage(msg)
+        builder.setPositiveButton(R.string.dialog_ok) { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.setOnDismissListener {
+            CrashReportService.sendExceptionReport(
+                exception, origin = context::class.java.simpleName
+            )
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
