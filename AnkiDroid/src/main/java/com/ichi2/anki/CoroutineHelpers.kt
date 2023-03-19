@@ -27,6 +27,7 @@ import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -38,7 +39,6 @@ import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
