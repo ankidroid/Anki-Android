@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
@@ -165,7 +164,8 @@ private fun showError(context: Context, msg: String, exception: Throwable) {
         }
         builder.setOnDismissListener {
             CrashReportService.sendExceptionReport(
-                exception, origin = context::class.java.simpleName
+                exception,
+                origin = context::class.java.simpleName
             )
         }
         val alertDialog = builder.create()
