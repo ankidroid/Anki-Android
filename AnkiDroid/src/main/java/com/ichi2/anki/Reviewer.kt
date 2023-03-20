@@ -26,11 +26,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.os.Parcelable
+import android.os.*
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
@@ -745,15 +741,14 @@ open class Reviewer :
         }
 
         // Undo button
-        @DrawableRes val undoIconId: Int
         val undoEnabled: Boolean
         val whiteboardIsShownAndHasStrokes = mShowWhiteboard && whiteboard?.undoEmpty() == false
-        if (whiteboardIsShownAndHasStrokes) {
-            undoIconId = R.drawable.eraser
-            undoEnabled = true
+
+        @DrawableRes val undoIconId: Int = R.drawable.ic_undo_white
+        undoEnabled = if (whiteboardIsShownAndHasStrokes) {
+            true
         } else {
-            undoIconId = R.drawable.ic_undo_white
-            undoEnabled = colIsOpen() && col.undoAvailable()
+            colIsOpen() && col.undoAvailable()
         }
         val alphaUndo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
