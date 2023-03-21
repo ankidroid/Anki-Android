@@ -179,7 +179,7 @@ fun View.showSnackbar(
     snackbarBuilder: SnackbarBuilder? = null
 ) {
     val snackbar = Snackbar.make(this, text, duration)
-    snackbar.setMaxLines(2)
+    snackbar.setMaxLines(4)
     snackbar.behavior = SwipeDismissBehaviorFix()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
