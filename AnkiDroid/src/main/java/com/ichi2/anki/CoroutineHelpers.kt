@@ -40,7 +40,6 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
