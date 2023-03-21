@@ -88,7 +88,6 @@ import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
-import com.ichi2.utils.show
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
@@ -1826,12 +1825,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             .negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
-        val view = layoutInflater.inflate(R.layout.note_editor_toolbar_add_custom_item, null)
+        val v = layoutInflater.inflate(R.layout.note_editor_toolbar_add_custom_item, null)
         toolbarDialog.show {
             title(R.string.add_toolbar_item)
             setView(R.layout.note_editor_toolbar_add_custom_item)
             positiveButton(R.string.dialog_positive_create) {
-                val view = view
+                val view = v
                 val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
                 val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
                 val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
