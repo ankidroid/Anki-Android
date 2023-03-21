@@ -170,7 +170,8 @@ private fun showError(context: Context, msg: String, exception: Throwable) {
             }
             setOnDismissListener {
                 CrashReportService.sendExceptionReport(
-                    exception, origin = context::class.java.simpleName
+                    exception,
+                    origin = context::class.java.simpleName
                 )
             }
         }.show()
