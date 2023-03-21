@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
@@ -27,7 +28,6 @@ import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -39,6 +39,7 @@ import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -156,20 +157,23 @@ fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
-        val builder = MaterialAlertDialogBuilder(context)
-        builder.setTitle(R.string.vague_error)
-        builder.setMessage(msg)
-        builder.setPositiveButton(R.string.dialog_ok) { dialog, _ ->
-            dialog.dismiss()
+        val alertDialogFacade = object {
+            fun getString(id: Int): String {
+                return context.getString(id)
+            }
         }
-        builder.setOnDismissListener {
-            CrashReportService.sendExceptionReport(
-                exception,
-                origin = context::class.java.simpleName
-            )
-        }
-        val alertDialog = builder.create()
-        alertDialog.show()
+        AlertDialog.Builder(context).apply {
+            setTitle(alertDialogFacade.getString(R.string.vague_error))
+            setMessage(msg)
+            setPositiveButton(R.string.dialog_ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            setOnDismissListener {
+                CrashReportService.sendExceptionReport(
+                    exception, origin = context::class.java.simpleName
+                )
+            }
+        }.show()
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
