@@ -102,7 +102,7 @@ class PermissionManager private constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && willRequestManageExternalStorage(activity)) {
             // Open an external screen and close the activity.
             // Accepting this permission closes the app
-            UIUtils.showThemedToast(activity, R.string.startup_no_storage_permission, false)
+            UIUtils.showThemedToast(activity, R.string.startup_all_files_access_permission, false)
             activity.finishActivityAndShowManageAllFilesScreen()
             return
         }
