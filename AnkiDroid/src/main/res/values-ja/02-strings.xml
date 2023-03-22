@@ -61,6 +61,8 @@
     <string name="updated_version">バージョン%sへアップデートしました</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ホワイトボードの内容を保存</string>
+    <string name="enable_stylus">スタイラスモードオン</string>
+    <string name="disable_stylus">スタイラスモードオフ</string>
     <string name="enable_whiteboard">ホワイトボード機能をオン</string>
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
     <string name="show_whiteboard">ホワイトボードを表示する</string>
