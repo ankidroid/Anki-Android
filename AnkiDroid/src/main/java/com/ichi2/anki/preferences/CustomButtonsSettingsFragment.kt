@@ -66,7 +66,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                         // #9263: refresh the screen to display the changes
                         refreshScreen()
                     }
-                    .negativeButton(R.string.cancel, null)
+                    .negativeButton(R.string.dialog_cancel, null)
             }
             true
         }
