@@ -65,6 +65,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private var mSecondFingerY = 0f
     private var mSecondFingerPointerId = 0
     private var mSecondFingerWithinTapTolerance = false
+    private var mToogleStylus = false
     var isCurrentlyDrawing = false
         private set
 
@@ -107,6 +108,11 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private fun handleDrawEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
+
+        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && mToogleStylus == true) {
+            return false
+        }
+
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 drawStart(x, y)
@@ -169,6 +175,14 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         } else {
             false
         }
+    }
+
+    /**
+     * Toggle stylus mode
+     */
+    fun toggleStylus(): Boolean {
+        mToogleStylus = !mToogleStylus
+        return mToogleStylus
     }
 
     /**
