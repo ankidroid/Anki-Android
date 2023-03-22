@@ -100,7 +100,7 @@ open class Reviewer :
     ReviewerUi {
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
-    private var mToggleStylus = false
+    private var toggleStylus = false
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
 
@@ -465,8 +465,8 @@ open class Reviewer :
                 refreshActionBar()
             }
             R.id.action_toggle_stylus -> { // toggle stylus mode
-                Timber.i("Reviewer:: Stylus set to %b", !mToggleStylus)
-                mToggleStylus = whiteboard!!.toggleStylus()
+                Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
+                toggleStylus = whiteboard!!.toggleStylusMode()
                 refreshActionBar()
             }
             R.id.action_toggle_whiteboard -> {
@@ -816,7 +816,7 @@ open class Reviewer :
                 hideWhiteboardIcon.setTitle(R.string.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
-                if (mToggleStylus) {
+                if (toggleStylus) {
                     toggleStylusIcon.setTitle(R.string.disable_stylus)
                     stylusIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 } else {
