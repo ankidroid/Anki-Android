@@ -18,11 +18,13 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.utils.*
 
 class CustomButtonsSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -34,30 +36,38 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
         // Reset toolbar button customizations
         val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
         resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            AnkiDroidApp.getSharedPrefs(requireContext()).edit {
-                remove("customButtonUndo")
-                remove("customButtonScheduleCard")
-                remove("customButtonEditCard")
-                remove("customButtonTags")
-                remove("customButtonAddCard")
-                remove("customButtonReplay")
-                remove("customButtonCardInfo")
-                remove("customButtonSelectTts")
-                remove("customButtonDeckOptions")
-                remove("customButtonMarkCard")
-                remove("customButtonToggleMicToolBar")
-                remove("customButtonBury")
-                remove("customButtonSuspend")
-                remove("customButtonFlag")
-                remove("customButtonDelete")
-                remove("customButtonEnableWhiteboard")
-                remove("customButtonSaveWhiteboard")
-                remove("customButtonWhiteboardPenColor")
-                remove("customButtonClearWhiteboard")
-                remove("customButtonShowHideWhiteboard")
+            AlertDialog.Builder(requireContext()).show {
+                title(R.string.reset_settings_to_default)
+                    .message(R.string.reset_confirmation_text)
+                    .positiveButton(R.string.reset) {
+                        // Reset the settings to default
+                        AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                            remove("customButtonUndo")
+                            remove("customButtonScheduleCard")
+                            remove("customButtonEditCard")
+                            remove("customButtonTags")
+                            remove("customButtonAddCard")
+                            remove("customButtonReplay")
+                            remove("customButtonCardInfo")
+                            remove("customButtonSelectTts")
+                            remove("customButtonDeckOptions")
+                            remove("customButtonMarkCard")
+                            remove("customButtonToggleMicToolBar")
+                            remove("customButtonBury")
+                            remove("customButtonSuspend")
+                            remove("customButtonFlag")
+                            remove("customButtonDelete")
+                            remove("customButtonEnableWhiteboard")
+                            remove("customButtonSaveWhiteboard")
+                            remove("customButtonWhiteboardPenColor")
+                            remove("customButtonClearWhiteboard")
+                            remove("customButtonShowHideWhiteboard")
+                        }
+                        // #9263: refresh the screen to display the changes
+                        refreshScreen()
+                    }
+                    .negativeButton(R.string.cancel, null)
             }
-            // #9263: refresh the screen to display the changes
-            refreshScreen()
             true
         }
     }

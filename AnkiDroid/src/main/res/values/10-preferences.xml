@@ -178,6 +178,10 @@
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
     <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
+    <string name="reset_settings_to_default">Reset Settings to Default</string>
+    <string name="reset_confirmation_text" maxLength="41">Are you sure you want to reset your settings to default?</string>
+    <string name="reset">Reset</string>
+    <string name="cancel">Cancel</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
 
