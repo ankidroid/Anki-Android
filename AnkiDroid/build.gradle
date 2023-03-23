@@ -331,7 +331,7 @@ dependencies {
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
-    implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
+    implementation 'org.apache.commons:commons-compress:1.23.0' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'commons-io:commons-io:2.11.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
