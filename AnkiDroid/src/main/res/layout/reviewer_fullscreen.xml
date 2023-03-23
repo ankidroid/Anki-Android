@@ -2,13 +2,13 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:focusableInTouchMode="true"
-android:fitsSystemWindows="true"
 xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Main content that takes up the fullscreen -->
     <RelativeLayout
         android:id="@+id/fullscreen_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
         <include layout="@layout/reviewer_topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
