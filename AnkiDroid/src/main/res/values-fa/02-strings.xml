@@ -374,10 +374,10 @@
     <string name="scoped_storage_postpone">به تعویق انداختن</string>
     <string name="scoped_storage_migrate">مهاجرت</string>
     <string name="search_card_js_api_no_results">جست و جوی شما نتیجه‌ای نداشت</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="sync_impossible_during_migration">هم‌گام سازی تا زمانی که انتقال در حال انجام است متوقف شده است.\n
+        %1$d فایل رسانه‌ای برای انتقال کردن مانده است.</string>
+    <string name="migration_warning_risk_of_data_loss_if_no_update">اگر AnkiDroid را از اول نصب کنید، توانایی باز کردن مجموعه شما را نخواهد داشت.</string>
+    <string name="migration_update_request_dialog_download_warning">اگر AnkiDroid را حضف کنید، مجبور به نصب دوباره مجموعه کامل خود میشوید</string>
     <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
     You will not be able to sync during the storage migration.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
@@ -394,10 +394,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">دسترسی به مجموعه ناموقف بود. لطفا دوباره تلاش کنید</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_ankidroid_tagline_one">کمتر مطالعه کنید</string>
+    <string name="intro_ankidroid_tagline_two">بیشتر به خاطر بسپارید</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">از اول شروع کنید</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->

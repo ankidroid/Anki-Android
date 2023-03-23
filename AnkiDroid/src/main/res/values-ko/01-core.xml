@@ -45,7 +45,7 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">카드 묶음</string>
+    <string name="decks">덱</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">카드 탐색기</string>
     <string name="statistics">통계</string>
     <string name="settings">설정</string>
