@@ -244,14 +244,14 @@ class Toolbar : FrameLayout {
      */
     @SuppressLint("CheckResult")
     private fun displayInsertHeadingDialog() {
-        var headingList = arrayOf("h1", "h2", "h3", "h4", "h5")
+        val headingList = arrayOf("h1", "h2", "h3", "h4", "h5")
         AlertDialog.Builder(context).show {
             setItems(headingList) { _, index ->
-                var charSequence = headingList[index]
+                val charSequence = headingList[index]
                 val formatter = TextWrapper(prefix = "<$charSequence>", suffix = "</$charSequence>")
                 onFormat(formatter)
             }
-            title(R.string.menu_font_size)
+            title(R.string.insert_heading)
         }
     }
 
