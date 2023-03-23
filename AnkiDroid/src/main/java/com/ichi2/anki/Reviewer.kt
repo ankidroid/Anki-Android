@@ -100,9 +100,9 @@ open class Reviewer :
     ReviewerUi {
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
-    private var toggleStylus = false
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
+    private var toggleStylus = false
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -352,6 +352,7 @@ open class Reviewer :
             setWhiteboardEnabledState(true)
             setWhiteboardVisibility(whiteboardVisibility)
         }
+        toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
         col.sched.deferReset() // Reset schedule in case card was previously loaded
         col.startTimebox()
         GetCard().runWithHandler(answerCardHandler(false))
@@ -467,6 +468,7 @@ open class Reviewer :
             R.id.action_toggle_stylus -> { // toggle stylus mode
                 Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
                 toggleStylus = whiteboard!!.toggleStylusMode()
+                MetaDB.storeWhiteboardStylusState(this, parentDid, toggleStylus)
                 refreshActionBar()
             }
             R.id.action_toggle_whiteboard -> {

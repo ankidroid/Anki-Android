@@ -33,7 +33,7 @@ object MetaDB {
     private const val DATABASE_NAME = "ankidroid.db"
 
     /** The Database Version, increase if you want updates to happen on next upgrade.  */
-    private const val DATABASE_VERSION = 6
+    private const val DATABASE_VERSION = 7
     // Possible values for the qa column of the languages table.
     /** The language refers to the question.  */
     const val LANGUAGES_QA_QUESTION = 0
@@ -106,7 +106,7 @@ object MetaDB {
         if (columnCount <= 0) {
             metaDb.execSQL(
                 "CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER)"
+                    "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER, stylus INTEGER NOT NULL)"
             )
             return
         }
@@ -120,6 +120,10 @@ object MetaDB {
             Timber.i("Added 'lightpencolor' column to whiteboardState")
             metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN darkpencolor INTEGER DEFAULT NULL")
             Timber.i("Added 'darkpencolor' column to whiteboardState")
+        }
+        if (columnCount < 7) {
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN stylus INTEGER NOT NULL DEFAULT '0'")
+            Timber.i("Added 'stylus mode' column to whiteboardState")
         }
     }
 
@@ -347,6 +351,58 @@ object MetaDB {
             }
         } catch (e: Exception) {
             Timber.e(e, "Error storing whiteboard state in MetaDB ")
+        }
+    }
+
+    /**
+     * Returns the state of the whiteboard stylus mode for the given deck.
+     *
+     * @return 1 if the whiteboard stylus mode should be enabled, 0 otherwise
+     */
+    fun getWhiteboardStylusState(context: Context, did: DeckId): Boolean {
+        openDBIfClosed(context)
+        try {
+            mMetaDb!!.rawQuery(
+                "SELECT stylus FROM whiteboardState WHERE did = ?",
+                arrayOf(java.lang.Long.toString(did))
+            ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
+        } catch (e: Exception) {
+            Timber.e(e, "Error retrieving whiteboard stylus mode state from MetaDB ")
+            return false
+        }
+    }
+
+    /**
+     * Stores the state of the whiteboard stylus mode for a given deck.
+     *
+     * @param did deck id to store whiteboard stylus mode state for
+     * @param whiteboardStylusState 1 if the whiteboard stylus mode should be enabled, 0 otherwise
+     */
+    fun storeWhiteboardStylusState(context: Context, did: DeckId, whiteboardStylusState: Boolean) {
+        val state = if (whiteboardStylusState) 1 else 0
+        openDBIfClosed(context)
+        try {
+            val metaDb = mMetaDb!!
+            metaDb.rawQuery(
+                "SELECT _id FROM whiteboardState WHERE did = ?",
+                arrayOf(java.lang.Long.toString(did))
+            ).use { cur ->
+                if (cur.moveToNext()) {
+                    metaDb.execSQL(
+                        "UPDATE whiteboardState SET did = ?, stylus=? WHERE _id=?;",
+                        arrayOf<Any>(did, state, cur.getString(0))
+                    )
+                    Timber.d("Store whiteboard stylus mode state (%d) for deck %d", state, did)
+                } else {
+                    metaDb.execSQL(
+                        "INSERT INTO whiteboardState (did, stylus) VALUES (?, ?)",
+                        arrayOf<Any>(did, state)
+                    )
+                    Timber.d("Store whiteboard stylus mode state (%d) for deck %d", state, did)
+                }
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Error storing whiteboard stylus mode state in MetaDB ")
         }
     }
 
