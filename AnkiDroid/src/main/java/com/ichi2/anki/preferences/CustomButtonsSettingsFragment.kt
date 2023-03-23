@@ -38,35 +38,34 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
         resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {
                 title(R.string.reset_settings_to_default)
-                    .message(R.string.reset_confirmation_text)
-                    .positiveButton(R.string.reset) {
-                        // Reset the settings to default
-                        AnkiDroidApp.getSharedPrefs(requireContext()).edit {
-                            remove("customButtonUndo")
-                            remove("customButtonScheduleCard")
-                            remove("customButtonEditCard")
-                            remove("customButtonTags")
-                            remove("customButtonAddCard")
-                            remove("customButtonReplay")
-                            remove("customButtonCardInfo")
-                            remove("customButtonSelectTts")
-                            remove("customButtonDeckOptions")
-                            remove("customButtonMarkCard")
-                            remove("customButtonToggleMicToolBar")
-                            remove("customButtonBury")
-                            remove("customButtonSuspend")
-                            remove("customButtonFlag")
-                            remove("customButtonDelete")
-                            remove("customButtonEnableWhiteboard")
-                            remove("customButtonSaveWhiteboard")
-                            remove("customButtonWhiteboardPenColor")
-                            remove("customButtonClearWhiteboard")
-                            remove("customButtonShowHideWhiteboard")
-                        }
-                        // #9263: refresh the screen to display the changes
-                        refreshScreen()
+                positiveButton(R.string.reset) {
+                    // Reset the settings to default
+                    AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                        remove("customButtonUndo")
+                        remove("customButtonScheduleCard")
+                        remove("customButtonEditCard")
+                        remove("customButtonTags")
+                        remove("customButtonAddCard")
+                        remove("customButtonReplay")
+                        remove("customButtonCardInfo")
+                        remove("customButtonSelectTts")
+                        remove("customButtonDeckOptions")
+                        remove("customButtonMarkCard")
+                        remove("customButtonToggleMicToolBar")
+                        remove("customButtonBury")
+                        remove("customButtonSuspend")
+                        remove("customButtonFlag")
+                        remove("customButtonDelete")
+                        remove("customButtonEnableWhiteboard")
+                        remove("customButtonSaveWhiteboard")
+                        remove("customButtonWhiteboardPenColor")
+                        remove("customButtonClearWhiteboard")
+                        remove("customButtonShowHideWhiteboard")
                     }
-                    .negativeButton(R.string.dialog_cancel, null)
+                    // #9263: refresh the screen to display the changes
+                    refreshScreen()
+                }
+                negativeButton(R.string.dialog_cancel, null)
             }
             true
         }
