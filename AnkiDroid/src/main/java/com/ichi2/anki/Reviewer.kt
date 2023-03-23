@@ -351,9 +351,9 @@ open class Reviewer :
             val whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, parentDid)
             setWhiteboardEnabledState(true)
             setWhiteboardVisibility(whiteboardVisibility)
+            toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
+            whiteboard!!.setStylusMode(toggleStylus)
         }
-        toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
-        whiteboard!!.setStylusMode(toggleStylus)
         col.sched.deferReset() // Reset schedule in case card was previously loaded
         col.startTimebox()
         GetCard().runWithHandler(answerCardHandler(false))
