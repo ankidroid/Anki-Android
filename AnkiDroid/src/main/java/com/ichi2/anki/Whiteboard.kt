@@ -176,11 +176,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     /**
-     * Toggle stylus mode
+     * Set stylus mode
      */
-    fun toggleStylusMode(): Boolean {
-        toogleStylus = !toogleStylus
-        return toogleStylus
+    fun setStylusMode(stylusMode: Boolean) {
+        toogleStylus = stylusMode
     }
 
     /**

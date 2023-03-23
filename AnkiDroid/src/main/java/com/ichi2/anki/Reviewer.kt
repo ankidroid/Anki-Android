@@ -353,6 +353,7 @@ open class Reviewer :
             setWhiteboardVisibility(whiteboardVisibility)
         }
         toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
+        whiteboard!!.setStylusMode(toggleStylus)
         col.sched.deferReset() // Reset schedule in case card was previously loaded
         col.startTimebox()
         GetCard().runWithHandler(answerCardHandler(false))
@@ -467,7 +468,8 @@ open class Reviewer :
             }
             R.id.action_toggle_stylus -> { // toggle stylus mode
                 Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
-                toggleStylus = whiteboard!!.toggleStylusMode()
+                toggleStylus = !toggleStylus
+                whiteboard!!.setStylusMode(toggleStylus)
                 MetaDB.storeWhiteboardStylusState(this, parentDid, toggleStylus)
                 refreshActionBar()
             }

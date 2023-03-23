@@ -106,7 +106,7 @@ object MetaDB {
         if (columnCount <= 0) {
             metaDb.execSQL(
                 "CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER, stylus INTEGER NOT NULL)"
+                    "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER, stylus INTEGER)"
             )
             return
         }
@@ -122,7 +122,7 @@ object MetaDB {
             Timber.i("Added 'darkpencolor' column to whiteboardState")
         }
         if (columnCount < 7) {
-            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN stylus INTEGER NOT NULL DEFAULT '0'")
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN stylus INTEGER")
             Timber.i("Added 'stylus mode' column to whiteboardState")
         }
     }
