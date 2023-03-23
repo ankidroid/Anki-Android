@@ -55,6 +55,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -590,22 +591,47 @@ open class DeckPicker :
     }
 
     private var migrationProgressPublishingJob: Job? = null
+    private var cachedMigrationProgressMenuItemActionView: View? = null
 
+    /**
+     * Set up the menu item that shows circular progress of storage migration.
+     * Can be called multiple times without harm.
+     *
+     * Note that, somewhat unconventionally, AnkiDroid will often call [invalidateOptionsMenu],
+     * which results in [onCreateOptionsMenu] being called and the menu recreated from scratch,
+     * with the state of individual menu items reset.
+     *
+     * This also means that the view showing progress can be swapped for another view at any time.
+     * This is not a problem with [ProgressBar], but [CircularProgressIndicator],
+     * which comes with sensible drawables out of the box--including rounded corners--
+     * seems to be failing to draw right away when its `progress` is set, resulting in a flicker.
+     *
+     * To overcome these issues, we:
+     *   * set visibility of the menu item on every call, and
+     *   * cache and reuse the view that shows progress.
+     *
+     * TODO Investigate whether we can stop recreating the menu,
+     *   relying instead on modifying it directly and/or using [onPrepareOptionsMenu].
+     *   Note an issue with the latter: https://github.com/ankidroid/Anki-Android/issues/7755
+     *
+     * TODO Add tooltip text to the image button.
+     *   Menu items normally have titles that are shown on long tap.
+     *   As this menu item delegates the UI to the action view, it is up to that to handle presses.
+     *   When we decide on the text, use `TooltipCompat.setTooltipText` on the button to set it.
+     */
     private fun setupMigrationProgressMenuItem(menu: Menu, migrationInProgress: Boolean) {
         val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
             .apply { isVisible = migrationInProgress }
 
-        suspend fun ProgressBar.publishProgress(progress: MigrationService.Progress) {
+        suspend fun CircularProgressIndicator.publishProgress(progress: MigrationService.Progress) {
             when (progress) {
                 is MigrationService.Progress.CalculatingTransferSize -> {
                     this.isIndeterminate = true
                 }
 
                 is MigrationService.Progress.Transferring -> {
-                    val shownProgressRatio = progress.ratio.translate(fromRange = 0f..1f, toRange = 0.05f..1f)
-
                     this.isIndeterminate = false
-                    this.progress = (shownProgressRatio * Int.MAX_VALUE).toInt()
+                    this.progress = (progress.ratio * Int.MAX_VALUE).toInt()
                 }
 
                 // TODO Perhaps handle the cases of success & failure differently?
@@ -617,22 +643,30 @@ open class DeckPicker :
         }
 
         if (migrationInProgress) {
-            val progressBar = migrationProgressMenuItem.actionView!!
-                .findViewById<ProgressBar>(R.id.ic_progressDonut)
-                .apply {
-                    max = Int.MAX_VALUE
-                    setOnClickListener { warnNoSyncDuringMigration() }
-                }
+            if (cachedMigrationProgressMenuItemActionView == null) {
+                val actionView = migrationProgressMenuItem.actionView!!
+                    .also { cachedMigrationProgressMenuItemActionView = it }
 
-            migrationProgressPublishingJob?.cancel()
-            migrationProgressPublishingJob = lifecycleScope.launch {
-                withBoundTo<MigrationService> { service ->
-                    service.flowOfProgress
-                        .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                        .collect { progress -> progressBar.publishProgress(progress) }
+                val progressIndicator = actionView
+                    .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
+                    .apply { max = Int.MAX_VALUE }
+
+                actionView.findViewById<ImageButton>(R.id.button)
+                    .setOnClickListener { warnNoSyncDuringMigration() }
+
+                migrationProgressPublishingJob = lifecycleScope.launch {
+                    withBoundTo<MigrationService> { service ->
+                        service.flowOfProgress
+                            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                            .collect { progress -> progressIndicator.publishProgress(progress) }
+                    }
                 }
+            } else {
+                migrationProgressMenuItem.actionView = cachedMigrationProgressMenuItemActionView
             }
         } else {
+            cachedMigrationProgressMenuItemActionView = null
+
             migrationProgressPublishingJob?.cancel()
             migrationProgressPublishingJob = null
         }
@@ -2680,10 +2714,4 @@ class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
         fun fromMessage(message: Message): DialogHandlerMessage =
             ForceFullSyncDialog(message.data.getString("message"))
     }
-}
-
-// TODO Move to a file dedicated to math utils
-private fun Float.translate(fromRange: ClosedFloatingPointRange<Float>, toRange: ClosedFloatingPointRange<Float>): Float {
-    val ratio = (this - fromRange.start) / (fromRange.endInclusive - fromRange.start)
-    return toRange.start + ratio * (toRange.endInclusive - toRange.start)
 }
