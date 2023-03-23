@@ -151,7 +151,7 @@
         <item quantity="other">%d ბარათი დაემატა</item>
     </plurals>
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
-    <string name="check_media">მედია ფაილების შემოწმება</string>
+    <string name="check_media">მედიაფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
     <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
     <string name="empty_card_warning">ბარათი ცარიელია. გამოიყენეთ \"ცარიელი ბარათების\" ღილაკი დასტების სიის ეკრანზე არსებული მენიუდან</string>
@@ -185,7 +185,7 @@
     <string name="import_replacing">კოლექციის ჩანაცვლება...</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
-    <string name="export_include_media">მედია ფაილების მოცვა</string>
+    <string name="export_include_media">მედიაფაილების მოცვა</string>
     <string name="confirm_apkg_export">გსურთ კოლექციის Anki-პაკეტად ექსპორტირება?</string>
     <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
     <plurals name="confirm_apkg_export_selected_cards">
@@ -198,7 +198,7 @@
     </plurals>
     <string name="export_in_progress">მიმდინარეობს Аnki-პაკეტის ფაილის ექსპორტი&#8230;</string>
     <string name="export_success_title">კოლექციის ექსპორტი წარმატებით დასრულდა</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება…</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
     <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
@@ -379,7 +379,7 @@
     <string name="sync_impossible_during_migration">სინქრონიზაცია გამორთული იქნება, სანამ მიგრაცია არ დასრულდება.\n
         დარჩენილია %1$d მედიაფაილი</string>
     <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
+    <string name="migration_update_request_dialog_download_warning">თუ მოახდენთ AnkiDroid-ის დეინსტალაციას მოგიწევთ თქვენი სრული კოლექციის ხელახლა ჩამოტვირთვა</string>
     <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
     You will not be able to sync during the storage migration.</string>
     <string name="start_migration_progress_message">იწყება მეხსიერების მიგრაცია. AnkiDroid-ის გამოყენების შესაძლებლობა ცოტა ხანში აღდგება</string>
@@ -413,7 +413,7 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
     <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">ბრაუზერის თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
     <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>

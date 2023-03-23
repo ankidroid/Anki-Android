@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Khi không có phông chữ nào được chỉ định trên thẻ flashcard</string>
     <string name="override_font_always" comment="Option to always override font">Luôn cho phép</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Theo hệ thống</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Sáng</string>
     <string name="day_theme_plain">Đơn giản</string>
@@ -109,8 +109,8 @@
     <string name="gesture_page_down">Trang dưới</string>
     <string name="gesture_abort_sync">Bỏ học và đồng bộ hóa</string>
     <string name="gesture_toggle_whiteboard">Chuyển đổi Bảng trắng</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">Hiển thị gợi ý</string>
+    <string name="gesture_show_all_hints">Hiện tất cả gợi ý</string>
     <string name="record_voice">Ghi âm giọng nói</string>
     <string name="replay_voice">Phát lại giọng nói</string>
     <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>

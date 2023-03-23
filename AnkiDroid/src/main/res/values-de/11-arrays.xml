@@ -107,7 +107,7 @@
     <string name="gesture_flag_remove">Flagge entfernen</string>
     <string name="gesture_page_up">Seite nach oben</string>
     <string name="gesture_page_down">Seite nach unten</string>
-    <string name="gesture_abort_sync">Lernen und Synchronisation abbrechen</string>
+    <string name="gesture_abort_sync">Lernen abbrechen und synchronisieren</string>
     <string name="gesture_toggle_whiteboard">Whiteboard ein-/ausschalten</string>
     <string name="gesture_show_hint">Hinweis anzeigen</string>
     <string name="gesture_show_all_hints">Alle Hinweise anzeigen</string>

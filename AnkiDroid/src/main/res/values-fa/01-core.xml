@@ -245,6 +245,6 @@
     <!-- Scoped Storage Migration -->
     <string name="migrating_data_message">در حال انتقال داده های شما</string>
     <string name="migration_successful_message">مهاجرت با موفقیت انجام شد</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migration_failed_message">مهاجرت ناموفق بود</string>
+    <string name="migration_transferred_size">%1$.0f MB از %2$.0f MB انتقال شد</string>
 </resources>

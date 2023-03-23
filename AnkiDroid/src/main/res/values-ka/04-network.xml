@@ -104,7 +104,7 @@
     <string name="sync_media_success">მედიაფაილები სინქრონიზებულია</string>
     <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">ასატვირთია %d შეცვლილი მედიაფაილი</string>
-    <string name="sync_media_downloaded_count">%d media files downloaded</string>
+    <string name="sync_media_downloaded_count">ჩამოტვირთულია %d მედიაფაილი</string>
     <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
     <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
