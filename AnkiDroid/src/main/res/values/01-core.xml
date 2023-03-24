@@ -242,5 +242,5 @@
     <string name="migration_successful_message">Migration successful</string>
     <string name="migration_failed_message">Migration failed</string>
     <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
-    <string name="migration_completed">The migration process has been completed successfully.</string>
+    <string name="migration_completed">The migration process has completed successfully</string>
 </resources>

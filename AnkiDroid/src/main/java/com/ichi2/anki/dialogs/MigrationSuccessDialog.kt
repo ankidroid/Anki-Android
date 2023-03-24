@@ -19,15 +19,12 @@ package com.ichi2.anki.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import com.ichi2.anki.DeckPicker.Companion.migrationSuccessMessage
-import com.ichi2.anki.DeckPicker.Companion.migrationSuccessTitle
 import com.ichi2.anki.R
 
-class MigrationSuccessDialog : AsyncDialogFragment() {
-    override val notificationMessage: String?
-        get() = migrationSuccessMessage
+class MigrationSuccessDialog(
+    override val notificationMessage: String?,
     override val notificationTitle: String
-        get() = migrationSuccessTitle
+) : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())

@@ -310,8 +310,6 @@ open class DeckPicker :
 
         asyncMessageContent = resources.getString(R.string.import_interrupted)
         asyncMessageTitle = resources.getString(R.string.import_title)
-        migrationSuccessMessage = resources.getString(R.string.migration_completed)
-        migrationSuccessTitle = resources.getString(R.string.migration_successful_message)
 
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
@@ -943,7 +941,7 @@ open class DeckPicker :
     fun onStorageMigrationCompleted() {
         migrationService.unbind(this)
         invalidateOptionsMenu() // reapply the sync icon
-        showAsyncDialogFragment(MigrationSuccessDialog(), Channel.SCOPED_STORAGE_MIGRATION)
+        showAsyncDialogFragment(MigrationSuccessDialog(resources.getString(R.string.migration_completed), resources.getString(R.string.migration_successful_message)), Channel.SCOPED_STORAGE_MIGRATION)
     }
 
     override fun onStart() {
@@ -2353,8 +2351,6 @@ open class DeckPicker :
          */
         lateinit var asyncMessageContent: String
         lateinit var asyncMessageTitle: String
-        lateinit var migrationSuccessMessage: String
-        lateinit var migrationSuccessTitle: String
 
         /**
          * Result codes from other activities
