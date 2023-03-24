@@ -1023,7 +1023,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         addInstanceStateToBundle(noteEditorBundle)
         noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
         previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW)
+        startActivityWithoutAnimation(previewer)
     }
 
     /**
@@ -2225,7 +2225,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val REQUEST_ADD = 0
         const val REQUEST_MULTIMEDIA_EDIT = 2
         const val REQUEST_TEMPLATE_EDIT = 3
-        const val REQUEST_PREVIEW = 4
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"
