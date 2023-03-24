@@ -32,7 +32,7 @@
     <string name="extra_field_name_new">裏（追記）</string>
     <string name="field_to_ask_front_name">裏面カードを追加する</string>
     <!--Card type-->
-    <string name="card_n_name">カード:%d</string>
+    <string name="card_n_name">カード %d</string>
     <!--Note type-->
     <string name="basic_model_name">基本</string>
     <string name="cloze_model_name">穴埋め</string>

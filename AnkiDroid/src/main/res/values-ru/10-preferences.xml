@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Если есть место</string>
     <string name="custom_buttons_setting_menu_only">Только меню</string>
     <string name="reset_custom_buttons" maxLength="41">Сбросить</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
     <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>

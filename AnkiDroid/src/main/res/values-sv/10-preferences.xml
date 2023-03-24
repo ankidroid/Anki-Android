@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Visa om möjligt</string>
     <string name="custom_buttons_setting_menu_only">Endast meny</string>
     <string name="reset_custom_buttons" maxLength="41">Nollställ</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Tredjeparts API-appar</string>
     <string name="thirdparty_apps_summary">Se en lista över alla applikationer som använder AnkiDroids API, exempelvis ordböcker och händiga verktyg.</string>
     <string name="html_javascript_debugging" maxLength="41">Avlusning - HTML / Javascript</string>

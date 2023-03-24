@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Mutasd ha van hely</string>
     <string name="custom_buttons_setting_menu_only">Csak a menü</string>
     <string name="reset_custom_buttons" maxLength="41">Alapértelmezett értékek visszaállítása</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Külsős API alkalmazások</string>
     <string name="thirdparty_apps_summary">Egy lista az alkalmazásokról, amik az AnkiDroid API-t használják, mint például szótárak és segédprogramok.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript hibakeresés</string>

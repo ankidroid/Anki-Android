@@ -378,10 +378,7 @@
     <string name="search_card_js_api_no_results">Suche lieferte keine Ergebnisse</string>
     <string name="sync_impossible_during_migration">Die Synchronisierung bleibt bis zum Abschluss der Migration deaktiviert.\n
 %1$d Mediendateien verbleibend.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">Wenn du AnkiDroid neu installierst, wird es nicht in der Lage sein, deine Sammlung zu öffnen.</string>
-    <string name="migration_update_request_dialog_download_warning">Falls du AnkiDroid deinstallierst, wirst du die gesamte Sammlung erneut herunterladen müssen.</string>
-    <string name="migration_update_request">Die Speicherzugriffsrichtlinie von Android erfordert, dass wir den Speicherort deiner Sammlung ändern. Sobald deine Daten migriert worden sind, wird AnkiDroid schneller laufen und deine Daten werden sicherer sein.
-Du wirst nicht in der Lage sein, Anki während der Speichermigration zu synchronisieren.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Die Speichermigration hat begonnen. Du wirst AnkiDroid in Kürze weiterverwenden können.</string>
     <string name="migration_part_1_done_resume">Du kannst jetzt AnkiDroid weiterverwenden.
 \nDie Speichermigration wird im Hintergrund fortfahren.</string>
@@ -415,6 +412,8 @@ Du wirst nicht in der Lage sein, Anki während der Speichermigration zu synchron
     <string name="toggle_browser_mode_help">Das Anzeigen von Karten oder Notizen umschalten</string>
     <string name="truncate_content_help">Die Höhe jeder Zeile der Kartenübersicht anpassen, sodass nur die ersten 3 Zeilen des Inhalts zu sehen sind.</string>
     <string name="browser_options_dialog_heading">Kartenübersichts-Einstellungen</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Diese Funktion ist während der Speichermigration nicht verfügbar</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

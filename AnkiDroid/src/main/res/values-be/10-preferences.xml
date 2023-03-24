@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Паказваць, калі ёсць месца</string>
     <string name="custom_buttons_setting_menu_only">Толькі меню</string>
     <string name="reset_custom_buttons" maxLength="41">Скінуць да стандартных</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Праграмныя API іншых распрацоўшчыкаў</string>
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>

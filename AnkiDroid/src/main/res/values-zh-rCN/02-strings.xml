@@ -365,10 +365,7 @@
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
     <string name="sync_impossible_during_migration">同步功能被禁用，直到迁移完成。\n
         %1$d 个媒体文件留待迁移。</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">如果您重新安装 AnkiDroid，它将无法打开您的牌组集。</string>
-    <string name="migration_update_request_dialog_download_warning">如果您卸载 AnkiDroid，您需要再次下载您的全部牌组集。</string>
-    <string name="migration_update_request">Android 存储访问策略要求我们更改存储牌组集的位置。 迁移数据后，AnkiDroid 将更快，您的数据将更安全。
-    您将无法在存储迁移过程中同步。</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid 啦。</string>
     <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
 \n存储迁移将在后台继续。</string>
@@ -404,4 +401,7 @@
     <string name="browser_options_dialog_heading">浏览器选项</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        此功能在存储迁移期间不可用
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Μόνο μενού</string>
     <string name="reset_custom_buttons" maxLength="41">Επαναφορά στις προεπιλογές</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Εφαρμογές API τρίτων</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">Έλεγχος σφαλμάτων HTML/Javascript</string>
