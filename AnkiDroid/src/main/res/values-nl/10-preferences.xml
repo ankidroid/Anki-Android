@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Toon als er ruimte is</string>
     <string name="custom_buttons_setting_menu_only">Alleen menu</string>
     <string name="reset_custom_buttons" maxLength="41">Standaardinstellingen herstellen</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">API-apps van derden</string>
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript debugging</string>

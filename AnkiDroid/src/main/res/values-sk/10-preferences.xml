@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Ukázať, ak je miesto</string>
     <string name="custom_buttons_setting_menu_only">Iba menu</string>
     <string name="reset_custom_buttons" maxLength="41">Obnoviť pôvodné nastavenia</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplikácie API od tretích strán</string>
     <string name="thirdparty_apps_summary">Pozrite si zoznam aplikácií, ktoré využívajú Ankidroid API ako sú slovníky, služby.</string>
     <string name="html_javascript_debugging" maxLength="41">Ladenie HTML / Javascript</string>

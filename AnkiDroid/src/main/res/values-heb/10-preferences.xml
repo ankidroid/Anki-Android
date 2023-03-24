@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">הצג אם יש מקום</string>
     <string name="custom_buttons_setting_menu_only">תפריט בלבד</string>
     <string name="reset_custom_buttons" maxLength="41">איפוס לבררת מחדל</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">יישומי צד שלישי</string>
     <string name="thirdparty_apps_summary">ראה רשימת יישומים המשתמשים ב- API של AnkiDroid כגון מילונים, כלי עזר.</string>
     <string name="html_javascript_debugging" maxLength="41">איתור באגים ב- HTML / Javascript</string>

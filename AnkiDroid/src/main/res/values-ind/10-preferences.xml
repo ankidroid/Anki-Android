@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Tampilkan jika muat</string>
     <string name="custom_buttons_setting_menu_only">Menu saja</string>
     <string name="reset_custom_buttons" maxLength="41">Setel ulang ke awal</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplikasi API pihak ketiga</string>
     <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
     <string name="html_javascript_debugging" maxLength="41">Pengawakutuan HTML / Javascript</string>

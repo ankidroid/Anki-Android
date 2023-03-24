@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
     <string name="custom_buttons_setting_menu_only">Apenas o menu</string>
     <string name="reset_custom_buttons" maxLength="41">Redefinir valores padrão</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>

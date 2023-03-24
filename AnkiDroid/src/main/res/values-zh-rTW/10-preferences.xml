@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">有空間時顯示</string>
     <string name="custom_buttons_setting_menu_only">僅限菜單</string>
     <string name="reset_custom_buttons" maxLength="41">重置為預設</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">第三方 API 應用程式</string>
     <string name="thirdparty_apps_summary">查看一系列使用 AnkiDroid API 的應用程式，如字典，實用工具。</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 偵錯</string>

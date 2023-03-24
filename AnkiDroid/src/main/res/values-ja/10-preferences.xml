@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
     <string name="custom_buttons_setting_menu_only">文字メニューでのみ表示</string>
     <string name="reset_custom_buttons" maxLength="41">初期設定にリセット</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">サードパーティ製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>

@@ -104,7 +104,7 @@
         <item quantity="other">ノートをエクスポート</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="other">%d 枚のカードが削除されました</item>
+        <item quantity="other">%d枚のカードを削除しました</item>
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">作成日</string>

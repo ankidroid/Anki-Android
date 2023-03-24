@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">ჩვენება ადგილის არსებობის შემთხვევაში</string>
     <string name="custom_buttons_setting_menu_only">მხოლოდ მენიუ</string>
     <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">იხილეთ სია იმ აპლიკაციებისა, როგორებიცაა მაგალითად ლექსიკონები, რომლებიც AnkiDroid-ის API-ს მოიხმარებენ.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>

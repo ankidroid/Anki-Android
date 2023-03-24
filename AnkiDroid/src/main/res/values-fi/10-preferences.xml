@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Näytä, jos tilaa</string>
     <string name="custom_buttons_setting_menu_only">Vain valikossa</string>
     <string name="reset_custom_buttons" maxLength="41">Palauta oletukset</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Kolmannen osapuolen API-sovellukset</string>
     <string name="thirdparty_apps_summary">Listaa sovellukset jotka käyttävät AnkiDroid API:ta, kuten kansioita ja työkaluja.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
