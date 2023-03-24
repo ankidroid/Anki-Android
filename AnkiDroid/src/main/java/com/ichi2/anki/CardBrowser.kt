@@ -1026,6 +1026,7 @@ open class CardBrowser :
 
     private fun updatePreviewMenuItem() {
         mPreviewItem?.isVisible = cardCount > 0
+        mSearchItem?.isVisible = cardCount != 0
     }
 
     /** Returns the number of cards that are visible on the screen  */
