@@ -26,8 +26,8 @@ import android.widget.AdapterView.OnItemLongClickListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -45,8 +45,9 @@ import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
+import com.ichi2.utils.*
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.show
 import com.ichi2.widget.WidgetStatus.update
 import kotlinx.coroutines.Job
 import timber.log.Timber
@@ -343,8 +344,8 @@ class ModelBrowser : AnkiActivity() {
             modelNameEditText.setText(mModels!![mModelListPosition].getString("name"))
             modelNameEditText.setSelection(modelNameEditText.text.length)
 
-            MaterialDialog(this).show {
-                customView(view = modelNameEditText, scrollable = true)
+            AlertDialog.Builder(this).show {
+                setView(modelNameEditText)
                 title(R.string.rename_model)
                 positiveButton(R.string.rename) {
                     val model = mModels!![mModelListPosition]
@@ -367,7 +368,7 @@ class ModelBrowser : AnkiActivity() {
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
-                displayKeyboard(modelNameEditText)
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
             }
         }
     }
