@@ -20,12 +20,12 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.text.format.Formatter.formatShortFileSize
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.services.MigrationService
@@ -43,9 +43,9 @@ import kotlinx.coroutines.launch
 class MigrationProgressDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val layout = requireActivity().layoutInflater.inflate(R.layout.indeterminate_progress_bar, null)
-        val progressBar = layout.findViewById<ProgressBar>(R.id.indeterminate_progressBar)
-        val textView = layout.findViewById<TextView>(R.id.migration_text)
+        val layout = requireActivity().layoutInflater.inflate(R.layout.dialog_with_progress_indicator, null)
+        val progressBar = layout.findViewById<CircularProgressIndicator>(R.id.progress_indicator)
+        val textView = layout.findViewById<TextView>(R.id.text)
 
         progressBar.max = Int.MAX_VALUE
 

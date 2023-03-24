@@ -15,28 +15,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="6dp"
-    android:padding="16dp">
+    android:gravity="center_vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="16dp"
+    >
 
-    <ProgressBar
-        android:id="@+id/indeterminate_progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_gravity="start|center"
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/progress" />
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorSize="40dp"
+        app:trackCornerRadius="6dp"
+        app:trackThickness="6dp"
+        app:trackColor="#e0e0e0"
+        app:indicatorColor="@color/wb_fg_color_inv"
+        />
 
     <TextView
-        android:id="@+id/migration_text"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:padding="8dp"
-        android:layout_gravity="center"/>
+        />
 
 </LinearLayout>
