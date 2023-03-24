@@ -761,6 +761,7 @@ abstract class AbstractFlashcardViewer :
 
     val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
+            Timber.i("Returned from deck options -> Restarting activity")
             performReload()
         }
     }
