@@ -65,7 +65,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private var mSecondFingerY = 0f
     private var mSecondFingerPointerId = 0
     private var mSecondFingerWithinTapTolerance = false
-    private var toogleStylus = false
+    private var toggleStylus = false
     var isCurrentlyDrawing = false
         private set
 
