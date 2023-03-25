@@ -46,6 +46,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
@@ -149,8 +150,9 @@ open class Reviewer :
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
             val cardCount: Int = result!!.value.result.size
-            this.showSnackbar(
-                resources.getQuantityString(toastResourceId, cardCount, cardCount)
+            showSnackbar(
+                resources.getQuantityString(toastResourceId, cardCount, cardCount),
+                Snackbar.LENGTH_SHORT
             )
         }
     }
@@ -443,10 +445,10 @@ open class Reviewer :
                 if (whiteboard != null) {
                     try {
                         val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
-                        this.showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName))
+                        showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
                     } catch (e: Exception) {
                         Timber.w(e)
-                        this.showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage))
+                        showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
                     }
                 }
             }
@@ -691,7 +693,7 @@ open class Reviewer :
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (currentCard == null) {
-            this.showSnackbar(getString(R.string.multimedia_editor_something_wrong))
+            showSnackbar(getString(R.string.multimedia_editor_something_wrong))
             return
         }
         val intent = if (BackendFactory.defaultLegacySchema) {
