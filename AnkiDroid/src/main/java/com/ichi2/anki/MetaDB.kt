@@ -376,7 +376,7 @@ object MetaDB {
      * Stores the state of the whiteboard stylus mode for a given deck.
      *
      * @param did deck id to store whiteboard stylus mode state for
-     * @param whiteboardStylusState 1 if the whiteboard stylus mode should be enabled, 0 otherwise
+     * @param whiteboardStylusState true if the whiteboard stylus mode should be enabled, false otherwise
      */
     fun storeWhiteboardStylusState(context: Context, did: DeckId, whiteboardStylusState: Boolean) {
         val state = if (whiteboardStylusState) 1 else 0
