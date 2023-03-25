@@ -357,7 +357,7 @@ object MetaDB {
     /**
      * Returns the state of the whiteboard stylus mode for the given deck.
      *
-     * @return 1 if the whiteboard stylus mode should be enabled, 0 otherwise
+     * @return true if the whiteboard stylus mode should be enabled, false otherwise
      */
     fun getWhiteboardStylusState(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
