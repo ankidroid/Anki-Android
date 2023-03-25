@@ -41,7 +41,6 @@ import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
@@ -508,7 +507,7 @@ open class CardBrowser :
         Timber.d("onCreate()")
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
+            showSnackbar(getString(R.string.intent_handler_failed_no_storage_permission))
             displayDeckPickerForPermissionsDialog()
             return
         }
