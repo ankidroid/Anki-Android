@@ -22,7 +22,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 /**
  * Functionality:
  *
- * * Execution of recursive tasks (folder copying etc..)
+ * * Execution of recursive tasks (directory copying etc..)
  *
  * This is a mock as it's not tested, but will eventually be moved to a real class with a slightly different API
  *

@@ -63,8 +63,8 @@ fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
  * This storage directory is accessible without permissions after scoped storage changes,
  * and is much faster to access
  *
- * When uninstalling: A user will be asked if they want to delete this folder
- * A folder here may be modifiable via USB. In AnkiDroid's case, all collection folders should
+ * When uninstalling: A user will be asked if they want to delete this directory
+ * A directory here may be modifiable via USB. In AnkiDroid's case, all collection directorys should
  * be modifiable
  *
  * @see [isLegacyStorage]
@@ -116,7 +116,7 @@ object ScopedStorageService {
     const val PREF_MIGRATION_DESTINATION = "migrationDestinationPath"
 
     /**
-     * The maximum allowed number of 'AnkiDroid' folders
+     * The maximum allowed number of 'AnkiDroid' directorys
      *
      * Exists as un unreachable bound through normal activity.
      */
@@ -138,11 +138,11 @@ object ScopedStorageService {
         // of the current collection path
         val bestRootDestination = getBestDefaultRootDirectory(context, File(collectionPath))
 
-        // append a folder name to the root destination.
+        // append a directory name to the root destination.
         // If the root destination was /storage/emulated/0/Android/com.ichi2.anki/files
-        // we add a subfolder name to allow for more than one AnkiDroid data directory to be migrated.
+        // we add a subdirectory name to allow for more than one AnkiDroid data directory to be migrated.
         // This is useful as:
-        // * Multiple installations of AnkiDroid go to different folders
+        // * Multiple installations of AnkiDroid go to different directorys
         // * It will allow us to add profiles without changing directories again
         val bestProfileDirectory = (1..MAX_ANKIDROID_DIRECTORIES).asSequence()
             .map { File(bestRootDestination, "AnkiDroid$it") }

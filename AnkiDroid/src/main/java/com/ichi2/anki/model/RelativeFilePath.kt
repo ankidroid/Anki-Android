@@ -22,8 +22,8 @@ import java.nio.file.Path
 
 /**
  * A relative path, with the final component representing the filename.
- * During a recursive copy of a folder `source` to `destination`, this relative file path `relative`
- * can be used both on top of source and destination folder to get the path of `source/relative`
+ * During a recursive copy of a directory `source` to `destination`, this relative file path `relative`
+ * can be used both on top of source and destination directory to get the path of `source/relative`
  * and `destination/relative`.
  * It can also be used to move `source/relative` to `source/conflict/relative` in case of conflict.
  */
@@ -61,7 +61,7 @@ class RelativeFilePath private constructor(
     companion object {
 
         /**
-         * Return the relative path from Folder [baseDir] to file [file]. If [file]
+         * Return the relative path from Directory [baseDir] to file [file]. If [file]
          * is contained in [baseDir], return `null`.
          * Similar to [Path.relativize], but available in all APIs.
          */
@@ -71,7 +71,7 @@ class RelativeFilePath private constructor(
             fromCanonicalFiles(baseDir.canonicalFile, file.canonicalFile)
 
         /**
-         * Return the relative path from Folder [baseDir] to file [file]. If [file]
+         * Return the relative path from Directory [baseDir] to file [file]. If [file]
          * is contained in [baseDir], return `null`.
          * Assumes that [file] is actually a file and [baseDir] a directory, hence distinct.
          * Similar to [Path.relativize], but available in all APIs.

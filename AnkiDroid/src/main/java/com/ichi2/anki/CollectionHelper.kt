@@ -23,7 +23,7 @@ import android.text.format.Formatter
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidFolder.DeleteOnUninstall
+import com.ichi2.anki.AnkiDroidDirectory.DeleteOnUninstall
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.libanki.Collection
@@ -38,8 +38,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
-import kotlin.Throws
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
@@ -462,7 +460,7 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidFolder(context) != DeleteOnUninstall
+            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidDirectory(context) != DeleteOnUninstall
             return if (!legacyStorage) {
                 File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
             } else {

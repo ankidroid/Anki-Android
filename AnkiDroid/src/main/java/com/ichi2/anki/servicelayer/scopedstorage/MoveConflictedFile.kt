@@ -30,7 +30,7 @@ import java.io.File
 /**
  * Moves a file from [sourceFile] to [proposedDestinationFile].
  *
- * Ensures that the folder underneath [proposedDestinationFile] exists, and renames the destination file.
+ * Ensures that the directory underneath [proposedDestinationFile] exists, and renames the destination file.
  * if the file at [proposedDestinationFile] exists and has a distinct content, it will increment the filename, attempting to find a filename which is not in use.
  * if the file at [proposedDestinationFile] exists and has the same content, [sourceFile] is deleted and move is assumed to be successful.
  *
@@ -49,8 +49,8 @@ class MoveConflictedFile private constructor(
 ) : Operation() {
 
     override fun execute(context: MigrationContext): List<Operation> {
-        // create the "conflict" folder if it didn't exist, and the relative path to the file
-        // example: "AnkiDroid/conflict/collection.media/subfolder"
+        // create the "conflict" directory if it didn't exist, and the relative path to the file
+        // example: "AnkiDroid/conflict/collection.media/subdirectory"
         createDirectory(proposedDestinationFile.parentFile!!)
 
         // wrap the context so we can handle internal file conflict exceptions, and set the correct
@@ -83,7 +83,7 @@ class MoveConflictedFile private constructor(
         MoveFile(sourceFile, potentialDestinationFile).execute(wrappedContext)
     }
 
-    private fun createDirectory(folder: File) = CompatHelper.compat.createDirectories(folder)
+    private fun createDirectory(directory: File) = CompatHelper.compat.createDirectories(directory)
 
     companion object {
         const val CONFLICT_DIRECTORY = "conflict"

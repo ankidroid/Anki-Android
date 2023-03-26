@@ -39,7 +39,7 @@ import timber.log.Timber
  * If dismissed, it will not appear for a period of time (~2 weeks): [calculateNextTimeToShowDialog]
  * After 2 dismissals, the user may hide the dialog permanently.
  *
- * This exists to inform the user their data is at risk when in a scoped folder.
+ * This exists to inform the user their data is at risk when in a scoped directory.
  *
  * See [shouldShowDialog] for the criteria to display the dialog
  */
@@ -199,7 +199,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         }
 
         // The user may have upgraded, in which it's unsafe to uninstall as Android
-        // will permanently revoke access to the legacy folder
+        // will permanently revoke access to the legacy directory
         // The collection won't be lost, but it will be inaccessible.
         return userIsPreservingLegacyStorage(this.windowContext)
     }

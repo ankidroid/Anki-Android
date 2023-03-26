@@ -51,7 +51,7 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
         val from = migratedFrom.listFiles()!!.associateBy { it.name }.toMutableMap()
         val to = migratedTo.listFiles()!!.associateBy { it.name }.toMutableMap()
 
-        assertThat("target folder name should be set", migratedTo.name, equalTo("AnkiDroid1"))
+        assertThat("target directory name should be set", migratedTo.name, equalTo("AnkiDroid1"))
         assertThat("target should be under scoped storage", ScopedStorageService.isLegacyStorage(migratedTo.absolutePath, targetContext), equalTo(false))
         assertThat("bare files should be moved", to.keys, equalTo(from.keys))
     }

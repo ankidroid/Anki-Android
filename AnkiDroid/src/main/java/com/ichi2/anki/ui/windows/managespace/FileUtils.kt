@@ -142,9 +142,9 @@ fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
 }
 
 /*
- * Retrieves folders such as /storage/emulated/0/Android/data/com.ichi2.anki.
- * User can put files into these folders, but there seems to be no API to fetch them.
- * Since this folder is usually a parent of folders such as `externalCacheDir`,
+ * Retrieves directorys such as /storage/emulated/0/Android/data/com.ichi2.anki.
+ * User can put files into these directorys, but there seems to be no API to fetch them.
+ * Since this directory is usually a parent of directorys such as `externalCacheDir`,
  * and ends in package name, attempting to determine it by other API methods seems reasonable.
  */
 private val Context.externalDirs: Set<File> get() =

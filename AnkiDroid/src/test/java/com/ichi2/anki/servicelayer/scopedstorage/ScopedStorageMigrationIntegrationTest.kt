@@ -131,7 +131,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         val result = underTest.execTask()
 
-        assertThat("migrating empty folder should succeed", result, equalTo(true))
+        assertThat("migrating empty directory should succeed", result, equalTo(true))
     }
 
     /**
@@ -148,7 +148,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         assertThat("all files should be in the destination", underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
         assertThat("one file is conflicted", underTest.conflictedFilesCount, equalTo(1))
-        assertThat("expect to have conflict/maybeConflicted.log in source (file & folder)", underTest.sourceFilesCount, equalTo(2))
+        assertThat("expect to have conflict/maybeConflicted.log in source (file & directory)", underTest.sourceFilesCount, equalTo(2))
         assertThat(underTest.conflictedFilePaths.single(), anyOf(endsWith("/conflict/maybeConflicted.log"), endsWith("\\conflict\\maybeConflicted.log")))
 
         assertThat("even with a conflict, the operation should succeed", result, equalTo(true))

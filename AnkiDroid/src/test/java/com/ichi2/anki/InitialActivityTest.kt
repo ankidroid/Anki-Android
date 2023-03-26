@@ -22,7 +22,7 @@ import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AnkiDroidFolder.*
+import com.ichi2.anki.AnkiDroidDirectory.*
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
@@ -116,11 +116,11 @@ class InitialActivityTest : RobolectricTest() {
 
         // force a safe startup before Q
         assertThat(
-            (selectAnkiDroidFolder(false) as PublicFolder).requiredPermissions.asIterable(),
+            (selectAnkiDroidDirectory(false) as PublicDirectory).requiredPermissions.asIterable(),
             contains(*expectedPermissions)
         )
         assertThat(
-            (selectAnkiDroidFolder(true) as PublicFolder).requiredPermissions.asIterable(),
+            (selectAnkiDroidDirectory(true) as PublicDirectory).requiredPermissions.asIterable(),
             contains(*expectedPermissions)
         )
     }
@@ -129,12 +129,12 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun startupQ() {
         assertThat(
-            selectAnkiDroidFolder(false),
-            instanceOf(PublicFolder::class.java)
+            selectAnkiDroidDirectory(false),
+            instanceOf(PublicDirectory::class.java)
         )
         assertThat(
-            selectAnkiDroidFolder(true),
-            instanceOf(PublicFolder::class.java)
+            selectAnkiDroidDirectory(true),
+            instanceOf(PublicDirectory::class.java)
         )
     }
 
@@ -144,11 +144,11 @@ class InitialActivityTest : RobolectricTest() {
     fun startupAfterQWithManageExternalStorage() {
         val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
 
-        selectAnkiDroidFolder(
+        selectAnkiDroidDirectory(
             canManageExternalStorage = true
         ).let {
             assertThat(
-                (it as PublicFolder).requiredPermissions.asIterable(),
+                (it as PublicDirectory).requiredPermissions.asIterable(),
                 contains(*expectedPermissions)
             )
         }
@@ -158,7 +158,7 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun startupAfterQWithoutManageExternalStorage() {
         assertThat(
-            selectAnkiDroidFolder(canManageExternalStorage = false),
+            selectAnkiDroidDirectory(canManageExternalStorage = false),
             instanceOf(DeleteOnUninstall::class.java)
         )
     }

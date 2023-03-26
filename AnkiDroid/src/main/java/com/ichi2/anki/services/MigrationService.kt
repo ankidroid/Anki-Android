@@ -248,9 +248,9 @@ class MigrationService : Service() {
             val ignoredFiles = MigrateEssentialFiles.iterateEssentialFiles(task.source) +
                 File(task.source.directory, MoveConflictedFile.CONFLICT_DIRECTORY)
             val ignoredSpace = ignoredFiles.sumOf { FileUtil.getSize(it) }
-            val folderSize = FileUtil.DirectoryContentInformation.fromDirectory(task.source.directory).totalBytes
-            val remainingSpaceToMigrate = folderSize - ignoredSpace
-            Timber.d("folder size: %d, safe: %d, remaining: %d", folderSize, ignoredSpace, remainingSpaceToMigrate)
+            val directorySize = FileUtil.DirectoryContentInformation.fromDirectory(task.source.directory).totalBytes
+            val remainingSpaceToMigrate = directorySize - ignoredSpace
+            Timber.d("directory size: %d, safe: %d, remaining: %d", directorySize, ignoredSpace, remainingSpaceToMigrate)
             return remainingSpaceToMigrate
         } catch (e: Exception) {
             Timber.w(e, "Failed to get directory size")

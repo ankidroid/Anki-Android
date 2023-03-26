@@ -155,7 +155,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
     /**
      * If the number of retries was exceeded when resolving a file conflict via moving it to the
-     * /conflict/ folder.
+     * /conflict/ directory.
      */
     class FileConflictResolutionFailedException(val sourceFile: DiskFile, val attemptedDestination: File) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
 
@@ -179,7 +179,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          * This is not attempted for directories: very unlikely to work as we're copying across
          * mount points.
          * Android has internal logic which recovers renames from /storage/emulated
-         * But this hasn't worked for me for folders
+         * But this hasn't worked for me for directorys
          */
         var attemptRename: Boolean = true
 
@@ -425,8 +425,8 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         private var consecutiveExceptionsWithoutProgress = 0
         override fun reportError(throwingOperation: Operation, ex: Exception) {
             when (ex) {
-                is FileConflictException -> { moveToConflictedFolder(ex.source) }
-                is FileDirectoryConflictException -> { moveToConflictedFolder(ex.source) }
+                is FileConflictException -> { moveToConflictedDirectory(ex.source) }
+                is FileDirectoryConflictException -> { moveToConflictedDirectory(ex.source) }
                 is DirectoryNotEmptyException -> {
                     // If a directory isn't empty, some more files may have been added. Retry (after all others are completed)
                     if (throwingOperation.retryOperations.any() && retriedDirectories.add(ex.directory.directory)) {
@@ -463,13 +463,13 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
         /**
          * On a conflicted file, move it from `<path>` to `/conflict/<path>`.
-         * Files in this folder will not be moved again
+         * Files in this directory will not be moved again
          *
          * We perform this action immediately
          *
          * @see MoveConflictedFile
          */
-        private fun moveToConflictedFolder(conflictedFile: DiskFile) {
+        private fun moveToConflictedDirectory(conflictedFile: DiskFile) {
             val relativePath = RelativeFilePath.fromPaths(source, conflictedFile)!!
             val operation: MoveConflictedFile = MoveConflictedFile.createInstance(conflictedFile, source, relativePath)
             executor.prepend(operation)
@@ -500,7 +500,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         private set
 
     /**
-     * Migrates all files and folders to [destination], aside from [getEssentialFiles]
+     * Migrates all files and directorys to [destination], aside from [getEssentialFiles]
      *
      * @throws MissingDirectoryException
      * @throws EquivalentFileException
@@ -561,7 +561,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
             }.sortedWith(
                 compareBy {
                     // Have user-generated files take priority over the media.
-                    // the 'fonts' folder will impact UX
+                    // the 'fonts' directory will impact UX
                     // 'card.html' is often regenerated and is likely to cause a conflict
                     // We want all the backups to be restorable ASAP)
                     when (it.sourceFile.name) {

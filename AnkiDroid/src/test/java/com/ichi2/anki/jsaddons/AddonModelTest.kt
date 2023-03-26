@@ -53,7 +53,7 @@ class AddonModelTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
 
-        // for mapping json from assets folder
+        // for mapping json from assets directory
         mapper = AnkiSerialization.objectMapper
 
         validNpmPackageJson = FileOperation.getFileResource("valid-ankidroid-js-addon-test.json")

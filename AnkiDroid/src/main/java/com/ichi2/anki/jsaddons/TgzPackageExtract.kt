@@ -124,7 +124,7 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(Exception::class)
-    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
+    fun extractTarGzipToAddonDirectory(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
         try {

@@ -96,7 +96,7 @@ internal constructor(
 
         val destinationPath = destinationDirectory.path
 
-        ensureFolderIsEmpty(destinationPath)
+        ensureDirectoryIsEmpty(destinationPath)
 
         // ensure the current collection is the one in sourcePath
         ensurePathIsCurrentCollectionPath(sourceDirectory)
@@ -136,7 +136,7 @@ internal constructor(
 
         // updatePreferences() opened the collection in the new location, which will have created
         // a -wal file if the new backend code is active. Close it again, so that tests don't
-        // fail due to the presence of a -wal file in the destination folder.
+        // fail due to the presence of a -wal file in the destination directory.
         if (!BackendFactory.defaultLegacySchema) {
             closeCollection()
         }
@@ -146,7 +146,7 @@ internal constructor(
      * Ensures that [directory] is empty
      * @throws IllegalStateException if [directory] is not empty
      */
-    private fun ensureFolderIsEmpty(directory: AnkiDroidDirectory) {
+    private fun ensureDirectoryIsEmpty(directory: AnkiDroidDirectory) {
         val listFiles = directory.listFiles()
 
         if (listFiles.any()) {
@@ -553,7 +553,7 @@ internal constructor(
 
             val destinationDirectory = Directory.createInstance(destination)!!
             // ensure destination is under scoped storage
-            val destinationAnkiDroidDirectory = ScopedAnkiDroidDirectory.createInstance(destinationDirectory, context) ?: throw IllegalStateException("Destination folder was not under scoped storage '$destinationDirectory'")
+            val destinationAnkiDroidDirectory = ScopedAnkiDroidDirectory.createInstance(destinationDirectory, context) ?: throw IllegalStateException("Destination directory was not under scoped storage '$destinationDirectory'")
 
             val originalAlgo = MigrateEssentialFiles(
                 context,

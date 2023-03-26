@@ -29,7 +29,7 @@ class BackendEmulatingOpenConflict(context: Context) : Backend(context) {
     @Suppress("UNUSED_PARAMETER")
     override fun openCollection(
         collectionPath: String,
-        mediaFolderPath: String,
+        mediaDirectoryPath: String,
         mediaDbPath: String,
         forceSchema11: Boolean
     ) {

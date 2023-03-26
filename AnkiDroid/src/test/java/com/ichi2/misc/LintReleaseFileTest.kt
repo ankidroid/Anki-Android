@@ -30,7 +30,7 @@ class LintReleaseFileTest {
 
     @Test
     fun failsWithMultipleDeclarations() {
-        // this runs in the AnkiDroid module folder so we need go up one level
+        // this runs in the AnkiDroid module directory so we need go up one level
         val lintReleaseFile = File("../lint-release.xml")
         assertTrue(lintReleaseFile.exists(), "lint-release.xml was not found")
         val parser = SAXParserFactory.newInstance().newSAXParser()

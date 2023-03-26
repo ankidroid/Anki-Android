@@ -71,7 +71,7 @@ class TgzPackageExtractTest : RobolectricTest() {
     }
 
     /**
-     * Test if extracted file exists in the output folder.
+     * Test if extracted file exists in the output directory.
      * The current test will extract in .tgz in following structure
      * tempAddonDir
      * - package
@@ -84,11 +84,11 @@ class TgzPackageExtractTest : RobolectricTest() {
      */
     @Test
     @Throws(IOException::class, ArchiveException::class)
-    fun extractTarGzipToAddonFolderTest() {
-        // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file
-        addonPackage.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
+    fun extractTarGzipToAddonDirectoryTest() {
+        // extract file to tempAddonDirectory, the function first unGzip .tgz to .tar then unTar(extract) .tar file
+        addonPackage.extractTarGzipToAddonDirectory(File(tarballPath), addonDir)
 
-        // test if package folder exists
+        // test if package directory exists
         val packagePath = File(addonDir, "package")
         assertThat(packagePath, anExistingDirectory())
 
@@ -106,7 +106,7 @@ class TgzPackageExtractTest : RobolectricTest() {
     }
 
     /**
-     * Test if .tar file unTar successfully to temp folder
+     * Test if .tar file unTar successfully to temp directory
      *
      * @throws IOException
      * @throws ArchiveException
@@ -117,10 +117,10 @@ class TgzPackageExtractTest : RobolectricTest() {
         // first unGzip .tgz file to .tar
         val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
 
-        // unTar .tar file to temp folder, it is same as extract of files to tempAddonDir
+        // unTar .tar file to temp directory, it is same as extract of files to tempAddonDir
         addonPackage.unTar(unGzipFile, addonDir)
 
-        // test if package folder exists
+        // test if package directory exists
         val packagePath = File(addonDir, "package")
         assertThat(packagePath, anExistingDirectory())
 

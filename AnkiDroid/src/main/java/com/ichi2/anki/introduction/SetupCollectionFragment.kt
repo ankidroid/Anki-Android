@@ -54,7 +54,7 @@ import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
  * This exists for two reasons:
  * 1) Ensuring that a user does not create two profiles: one for Anki Desktop and one for AnkiDroid
  * 2) Adds a screen that allows for 'advanced' setup.
- * for example: selecting a 'safe' folder using scoped storage, which would not have been deleted
+ * for example: selecting a 'safe' directory using scoped storage, which would not have been deleted
  * if the app is uninstalled.
  */
 class SetupCollectionFragment : Fragment() {

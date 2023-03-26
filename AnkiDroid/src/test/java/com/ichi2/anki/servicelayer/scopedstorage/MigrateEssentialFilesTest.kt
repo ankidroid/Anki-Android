@@ -231,13 +231,13 @@ class MigrateEssentialFilesTest : RobolectricTest() {
      * This is only the initial stage which does not delete data
      */
     private fun executeAlgorithmSuccessfully(
-        ankiDroidFolder: String,
+        ankiDroidDirectory: String,
         optionalDestinationPath: File? = null,
         stubbing: (KStubbing<MigrateEssentialFiles>.(MigrateEssentialFiles) -> Unit)? = null
     ): File {
         val destinationPath = optionalDestinationPath ?: getMigrationDestinationPath()
 
-        var algo = getAlgorithm(ankiDroidFolder, destinationPath)
+        var algo = getAlgorithm(ankiDroidDirectory, destinationPath)
 
         if (stubbing != null) {
             algo = spy(algo, stubbing)

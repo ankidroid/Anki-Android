@@ -82,7 +82,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
 
         assertThat("provided 'sourceFile' parameter is unchanged", operation.sourceFile.file, equalTo(params.sourceFile))
 
-        // this is "path", but with a "conflict" subfolder.
+        // this is "path", but with a "conflict" subdirectory.
         assertThat("'conflict' is prepended to the path", operation.proposedDestinationFile, equalTo(params.intendedDestinationFilePath))
     }
 
@@ -222,7 +222,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
      *
      * [createOperation] returns the operation to move this source file to [destinationTopLevel]
      *
-     * @param directoryComponents components to the folder holding the source file ["collection.media"]
+     * @param directoryComponents components to the directory holding the source file ["collection.media"]
      * @param sourceFileName The name of the source file: "file.ext"
      * @param content The content of the source file
      */
