@@ -23,7 +23,7 @@ import android.text.format.Formatter
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidFolder.DeleteOnUninstall
+import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.libanki.Collection
@@ -462,7 +462,7 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidFolder(context) != DeleteOnUninstall
+            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidFolder(context) != AppPrivateFolder
             return if (!legacyStorage) {
                 File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
             } else {
