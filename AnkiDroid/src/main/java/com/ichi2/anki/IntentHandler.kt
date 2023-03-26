@@ -89,7 +89,7 @@ class IntentHandler : Activity() {
             return
         }
 
-        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug, true)
+        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug_info, true)
     }
 
     /**
