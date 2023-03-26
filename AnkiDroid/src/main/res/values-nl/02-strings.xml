@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Weergave</string>
     <string name="anki_js_error_code">(Foutcode: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Debuginformatie gekopieerd naar klembord</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Fout bij kopiëren van debuginformatie naar het klembord</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fout met de kaartinhoud: Laden van ‘%s ’ is mislukt</string>
@@ -362,12 +362,13 @@
     <string name="check_network">Controleer alsrublief uw internetconnectie</string>
     <string name="search_using_deck_name">Zoek met setnaam</string>
     <string name="home">Startpagina</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Verborgen kaart</string>
-    <string name="buried_note">Verborgen notitie</string>
-    <string name="deleted_note">Verwijderde notitie</string>
-    <string name="suspended_card">Geschorste kaart</string>
-    <string name="suspended_note">Geschorste notitie</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Pin veld %s</string>
     <!-- Scoped Storage Migration -->

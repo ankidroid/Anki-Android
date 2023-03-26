@@ -311,7 +311,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Pòmpia</string>
     <string name="anki_js_error_code">(Còdighe de errore: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Informatziones de depuratzione copiadas in punta de billete</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">B\'at àpidu una faddina copiende sas informatziones de depuratzione in punta de billete</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore de cuntenutu de sa carta: carrigamentu de ‘%s’ fallidu</string>
@@ -368,12 +368,13 @@
     <string name="check_network">Verìfica sa connessione de retze tua</string>
     <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
     <string name="home">Pàgina printzipale</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Carta interrada</string>
-    <string name="buried_note">Nota interrada</string>
-    <string name="deleted_note">Nota iscantzellada</string>
-    <string name="suspended_card">Carta suspesa</string>
-    <string name="suspended_note">Nota suspesa</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
     <!-- Scoped Storage Migration -->

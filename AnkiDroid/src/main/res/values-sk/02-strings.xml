@@ -331,7 +331,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Zobraziť</string>
     <string name="anki_js_error_code">(Kód chyby: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Informácie o chybe sa skopírovali do schránky</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Chyba pri kopírovaní chybových informácií do schránky</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu kartičky: Nepodarilo sa načítať ‘%s’</string>
@@ -388,12 +388,15 @@
     <string name="check_network">Prosím, skontrolujte vaše sieťové pripojenie</string>
     <string name="search_using_deck_name">Hľadať pomocou názvu balíčka</string>
     <string name="home">Domov</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Kartička zahrabaná.</string>
-    <string name="buried_note">Poznámka zahrabaná.</string>
-    <string name="deleted_note">Poznámka vymazaná.</string>
-    <string name="suspended_card">Kartička pozastavená.</string>
-    <string name="suspended_note">Poznámka pozastavená.</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="few">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
@@ -427,8 +430,8 @@
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_created">Deck created</string>
+    <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->

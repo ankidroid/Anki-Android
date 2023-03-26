@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Visa</string>
     <string name="anki_js_error_code">(Felkod: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Kopierade felsökningsinformation till urklipp</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Fel vid kopiering av felsökningsinformation till urklipp</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
@@ -362,12 +362,13 @@
     <string name="check_network">Kontrollera din nätverksanslutning</string>
     <string name="search_using_deck_name">Sök efter kortlekens namn</string>
     <string name="home">Hem</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Nedgrävt kort</string>
-    <string name="buried_note">Nedgrävd anteckning</string>
-    <string name="deleted_note">Borttagen anteckning</string>
-    <string name="suspended_card">Uteslutet kort</string>
-    <string name="suspended_note">Utesluten anteckning</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Gör fältet %s klibbigt</string>
     <!-- Scoped Storage Migration -->
@@ -402,8 +403,8 @@
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_created">Deck created</string>
+    <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->

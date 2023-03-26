@@ -331,7 +331,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Выгляд</string>
     <string name="anki_js_error_code">(Код памылкі: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Адладачная інфармацыя скапіяваная ў буфер абмену</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Памылка капіявання адладачнай інфармацыі ў буфер абмену</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
@@ -388,12 +388,15 @@
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="home">Галоўная</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Адкладзеная картка</string>
-    <string name="buried_note">Адкладзеныя карткі</string>
-    <string name="deleted_note">Выдалены запіс</string>
-    <string name="suspended_card">Прыпыненыя карткі</string>
-    <string name="suspended_note">Прыпыненыя запісы</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="few">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зрабіць поле %s ліпучым</string>
     <!-- Scoped Storage Migration -->

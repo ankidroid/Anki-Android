@@ -408,7 +408,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">מחק אוסף</string>
     <string name="pref__delete_collection__summary">מחק אוסף, מדיה וגיבויים. הגדרות האפליקציה לא נמחקות</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">מחק אוסף</string>
-    <string name="dialog__delete_collection__message">האם אתה בטוח שברצונך למחוק את האוסף, המדיה והגיבויים שלך?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">האם אתה בטוח שברצונך למחוק את האוסף, המדיה והגיבויים שלך?</string>
     <string name="progress__deleting_collection">מוחק אוסף&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">מחק הכל</string>

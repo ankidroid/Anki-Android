@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Visualizza</string>
     <string name="anki_js_error_code">(Codice errore: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Informazioni di debug copiate negli appunti</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Errore nella copia delle informazioni di debug negli appunti</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
@@ -362,12 +362,13 @@
     <string name="check_network">Controlla la tua connessione di rete</string>
     <string name="search_using_deck_name">Cerca usando il nome del mazzo</string>
     <string name="home">Pagina principale</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Carta sepolta</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Carta sospesa</string>
-    <string name="suspended_note">Nota sospesa</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Appunta il campo %s</string>
     <!-- Scoped Storage Migration -->

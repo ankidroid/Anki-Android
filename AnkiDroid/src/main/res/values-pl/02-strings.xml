@@ -331,7 +331,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Pokaż</string>
     <string name="anki_js_error_code">(Kod błędu: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Skopiowano informacje debugowania do schowka</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Błąd kopiowania informacji debugowania do schowka</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
@@ -388,12 +388,15 @@
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
     <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
     <string name="home">Strona główna</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Ukryta karta</string>
-    <string name="buried_note">Notatka zakopana</string>
-    <string name="deleted_note">Notatka usunięta</string>
-    <string name="suspended_card">Karta zawieszona</string>
-    <string name="suspended_note">Notatka zawieszona</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="few">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Przypnij pole %s</string>
     <!-- Scoped Storage Migration -->
