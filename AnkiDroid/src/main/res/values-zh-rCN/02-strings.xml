@@ -365,7 +365,7 @@
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
     <string name="sync_impossible_during_migration">同步功能被禁用，直到迁移完成。\n
         %1$d 个媒体文件留待迁移。</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid 需要迁移其存储空间以遵守 Android 10 安全政策。\n\n这将提高媒体同步性能。&lt;br&gt;&lt;br&gt;迁移过程中，您将无法同步，一些设置将被禁用。 迁移开始前为了保护您的数据安全，将会发生媒体同步。&lt;br&gt;&lt;br&gt;在此过程中使用或关闭 AnkiDroid 是安全的。</string>
     <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid 啦。</string>
     <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
 \n存储迁移将在后台继续。</string>
@@ -401,7 +401,7 @@
     <string name="browser_options_dialog_heading">浏览器选项</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        此功能在存储迁移期间不可用
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">轻按开始存储迁移</string>
+    <string name="media_sync_required_title">需要进行媒体同步</string>
+    <string name="media_sync_unavailable_message">媒体同步在设置中被禁用。请同步并备份任何尚未同步的媒体，然后继续</string>
 </resources>

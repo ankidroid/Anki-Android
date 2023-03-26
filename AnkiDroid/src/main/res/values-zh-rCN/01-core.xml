@@ -133,7 +133,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">请授予 AnkiDroid “存储”权限以继续</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">要继续请授予 AnkiDroid “访问所有文件”权限</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
