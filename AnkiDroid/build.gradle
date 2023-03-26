@@ -152,6 +152,10 @@ android {
         amazon {
             dimension "appStore"
         }
+        // A 'full' build has no restrictions on storage/camera. Distributed on GitHub/F-Droid
+        full {
+            dimension "appStore"
+        }
     }
 
     /**
