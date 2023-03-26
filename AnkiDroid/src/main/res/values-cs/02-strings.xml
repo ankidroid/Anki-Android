@@ -331,7 +331,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Zobrazit</string>
     <string name="anki_js_error_code">(Kód chyby: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Ladicí informace zkopírovány do schránky</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Chyba při kopírování ladicích informací do schránky</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
@@ -388,12 +388,15 @@
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
     <string name="search_using_deck_name">Hledat pomocí názvu balíčku</string>
     <string name="home">Domů</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Karta přeskočena</string>
-    <string name="buried_note">Poznámka přeskočena</string>
-    <string name="deleted_note">Poznámka odstraněna</string>
-    <string name="suspended_card">Karta vyřazena</string>
-    <string name="suspended_note">Poznámka vyřazena</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="few">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Pamatovat si obsah pole %s</string>
     <!-- Scoped Storage Migration -->

@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ᱫᱮᱠᱷᱟᱣ</string>
     <string name="anki_js_error_code">(ᱵᱷᱩᱞ ᱠᱳᱰ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱚᱞ ᱮᱱᱟ</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱟᱞ ᱵᱷᱩᱞ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
@@ -362,12 +362,13 @@
     <string name="check_network">ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱱᱮᱴᱣᱟᱨᱠ ᱠᱳᱱᱮᱠᱥᱚᱱ ᱡᱟᱸᱪ ᱢᱮ</string>
     <string name="search_using_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="home">ᱚᱲᱟᱜ</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">ᱱᱳᱴ ᱢᱮᱴᱟᱣ ᱢᱳᱰ</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
@@ -401,7 +402,7 @@
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">ᱰᱮᱠ ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
-    <string name="deck_created">Created deck</string>
+    <string name="deck_created">Deck created</string>
     <string name="deck_renamed">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱮᱱᱟ</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>

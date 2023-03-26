@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ხედი</string>
     <string name="anki_js_error_code">(შეცდომის კოდი: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">გამართვის ინფორმაცია გაცვლის ბუფერზე დაკოპირდა</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">შეცდომა გამართვის ინფორმაციის გაცვლის ბუფერზე დაკოპირებისას</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ბარათის შიგთავსის შეცდომა: „%s“ ვერ ჩაიტვირთა</string>
@@ -362,12 +362,13 @@
     <string name="check_network">გთხოვთ შეამოწმოთ ქსელთან კავშირი</string>
     <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
     <string name="home">მთავარი</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">დამალული ბარათი</string>
-    <string name="buried_note">დამალული შენიშვნა</string>
-    <string name="deleted_note">შენიშვნა წაიშალა</string>
-    <string name="suspended_card">გამოტოვებული ბარათი</string>
-    <string name="suspended_note">გამოტოვებული შენიშვნა</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s ველის ჩამაგრება</string>
     <!-- Scoped Storage Migration -->

@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Veure</string>
     <string name="anki_js_error_code">(Codi d\'error: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">S\'ha copiat al porta-retalls la informació de depuració</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copiant al porta-retalls informació de depuració</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
@@ -362,12 +362,13 @@
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
     <string name="home">Inici</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Targeta enterrada</string>
-    <string name="buried_note">Nota enterrada</string>
-    <string name="deleted_note">Nota suprimida</string>
-    <string name="suspended_card">Targeta suspesa</string>
-    <string name="suspended_note">Nota suspesa</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feu que el camp %s sigui enganxós</string>
     <!-- Scoped Storage Migration -->

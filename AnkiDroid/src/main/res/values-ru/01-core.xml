@@ -264,4 +264,12 @@
     <string name="migration_successful_message">Данные успешно перенесены</string>
     <string name="migration_failed_message">Не удалось перенести данные</string>
     <string name="migration_transferred_size">Перенесено %1$.0f МБ из %2$.0f МБ</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
+    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
+    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
+    <string name="create_new_collection">Create a new collection</string>
+    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
 </resources>

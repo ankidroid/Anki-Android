@@ -333,7 +333,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">תצוגה</string>
     <string name="anki_js_error_code">(קוד שגיאה: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">השגיאה הועתקה</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">תקלה בהעתקת הודעת השגיאה</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
@@ -390,12 +390,15 @@
     <string name="check_network">נא בדוק את החיבור לרשת</string>
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="home">בית</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">קלף נקבר</string>
-    <string name="buried_note">רשומה נקברה</string>
-    <string name="deleted_note">רשומה נמחקה</string>
-    <string name="suspended_card">קלף הוקפא</string>
-    <string name="suspended_note">רשומה הוקפאה</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="two">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">הפוך שדה %s לדביק</string>
     <!-- Scoped Storage Migration -->

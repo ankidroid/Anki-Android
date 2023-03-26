@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">देखें</string>
     <string name="anki_js_error_code">(त्रुटि कोड: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">क्लिपबोर्ड पर डिबग जानकारी की प्रतिलिपि बनाई गई</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">क्लिपबोर्ड पर डिबग जानकारी कॉपी करने में त्रुटि</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
@@ -362,12 +362,13 @@
     <string name="check_network">कृपया अपने नेटवर्क कनेक्शन की जांच करें</string>
     <string name="search_using_deck_name">डेक नाम का उपयोग करके खोजें</string>
     <string name="home">गृह</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">हटाया गया नोट</string>
-    <string name="suspended_card">निलंबित कार्ड</string>
-    <string name="suspended_note">निलंबित नोट</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">फ़ील्ड %s को चिपचिपा बनाएं</string>
     <!-- Scoped Storage Migration -->

@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Visualizar</string>
     <string name="anki_js_error_code">(Código de erro: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Informações de debug copiadas para a área de transferência.</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informações de debug para a área de transferência.</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
@@ -362,12 +362,13 @@
     <string name="check_network">Por favor verifique sua conexão de rede</string>
     <string name="search_using_deck_name">Pesquisar usando o nome do baralho</string>
     <string name="home">Início</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Cartão enterrado</string>
-    <string name="buried_note">Nota enterrada</string>
-    <string name="deleted_note">Nota excluída</string>
-    <string name="suspended_card">Cartão suspenso</string>
-    <string name="suspended_note">Nota suspensa</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fixar o campo %s</string>
     <!-- Scoped Storage Migration -->

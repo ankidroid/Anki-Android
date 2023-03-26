@@ -292,7 +292,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">查看</string>
     <string name="anki_js_error_code">（错误代码：%d）</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">已复制调试信息到剪贴板</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">复制调试信息到剪贴板时出错</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
@@ -349,12 +349,12 @@
     <string name="check_network">请检查您的网络连接。</string>
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="home">主页</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">搁置的卡片</string>
-    <string name="buried_note">隐藏的笔记</string>
-    <string name="deleted_note">删除的笔记</string>
-    <string name="suspended_card">搁置的卡牌</string>
-    <string name="suspended_note">搁置的笔记</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">固定字段 %s</string>
     <!-- Scoped Storage Migration -->
