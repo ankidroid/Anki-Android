@@ -239,7 +239,7 @@ open class DeckPicker :
         this,
         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
         useCallbackIfActivityRecreated = true,
-        callback = handleStoragePermissionsCheckForCheckMedia(WeakReference(this))
+        callback = callbackHandlingStoragePermissionsCheckForCheckMedia(WeakReference(this))
     )
 
     private var migrateStorageAfterMediaSyncCompleted = false
@@ -2379,8 +2379,8 @@ open class DeckPicker :
          * Handles a [PermissionsRequestResults] for storage permissions to launch 'checkMedia'
          * Static to avoid a context leak
          */
-        fun handleStoragePermissionsCheckForCheckMedia(deckPickerRef: WeakReference<DeckPicker>): (permissionResultRaw: PermissionsRequestRawResults) -> Unit {
-            fun inner(permissionResultRaw: PermissionsRequestRawResults) {
+        fun callbackHandlingStoragePermissionsCheckForCheckMedia(deckPickerRef: WeakReference<DeckPicker>): (permissionResultRaw: PermissionsRequestRawResults) -> Unit {
+            fun handleStoragePermissionsCheckForCheckMedia(permissionResultRaw: PermissionsRequestRawResults) {
                 val deckPicker = deckPickerRef.get() ?: return
                 val permissionResult = PermissionsRequestResults.from(deckPicker, permissionResultRaw)
                 if (permissionResult.allGranted) {
@@ -2392,7 +2392,7 @@ open class DeckPicker :
                     showThemedToast(deckPicker, R.string.check_media_failed, true)
                 }
             }
-            return ::inner
+            return ::handleStoragePermissionsCheckForCheckMedia
         }
 
         // Animation utility methods used by renderPage() method
