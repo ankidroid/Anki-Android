@@ -33,7 +33,7 @@ BUILDNAMES='A B C D E'
 for BUILD in $BUILDNAMES; do
     LCBUILD=`tr '[:upper:]' '[:lower:]' <<< $BUILD`
     ./gradlew --stop
-    if ! ./gradlew assemblePlayRelease -PcustomSuffix="$LCBUILD" -PcustomName="AnkiDroid.$BUILD" -Duniversal-apk=true
+    if ! ./gradlew assembleFullRelease -PcustomSuffix="$LCBUILD" -PcustomName="AnkiDroid.$BUILD" -Duniversal-apk=true
     then
       echo "Unable to build parallel target $BUILD"
       exit 1
