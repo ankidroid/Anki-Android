@@ -103,6 +103,14 @@ open class CompatV21 : Compat {
         return bundle.getParcelable(key)
     }
 
+    override fun <T : Parcelable> getSparseParcelableArray(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>
+    ): SparseArray<T>? {
+        return bundle.getSparseParcelableArray(key)
+    }
+
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,

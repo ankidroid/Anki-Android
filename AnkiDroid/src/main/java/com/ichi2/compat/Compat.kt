@@ -90,6 +90,7 @@ interface Compat {
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
     fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
+    fun <T : Parcelable> getSparseParcelableArray(bundle: Bundle, key: String, clazz: Class<T>): SparseArray<T>?
 
     /**
      * Retrieve extended data from the intent.
