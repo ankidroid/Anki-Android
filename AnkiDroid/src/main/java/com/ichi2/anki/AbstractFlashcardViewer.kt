@@ -759,11 +759,9 @@ abstract class AbstractFlashcardViewer :
         return text ?: ""
     }
 
-    val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            Timber.i("Returned from deck options -> Restarting activity")
-            performReload()
-        }
+    val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+        Timber.i("Returned from deck options -> Restarting activity")
+        performReload()
     }
 
     @Suppress("deprecation") // super.onActivityResult
