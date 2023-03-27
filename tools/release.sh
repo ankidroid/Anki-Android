@@ -129,17 +129,17 @@ fi  #API30
 
 # Now build the universal release also
 ./gradlew --stop
-echo "Running 'assemblePlayRelease' target with universal APK flag"
-if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
+echo "Running 'assembleFullRelease' target with universal APK flag"
+if ! ./gradlew assembleFullRelease -Duniversal-apk=true
 then
-  echo "unable to build universal APK for play release"
+  echo "unable to build universal APK for full release"
   exit 1
 fi
 
 # Copy universal APK to cwd
 ABIS='universal arm64-v8a x86 x86_64 armeabi-v7a'
 for ABI in $ABIS; do
-  cp AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
+  cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
 done
 
 # Push to Github Releases.
