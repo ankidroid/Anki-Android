@@ -65,7 +65,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private var mSecondFingerY = 0f
     private var mSecondFingerPointerId = 0
     private var mSecondFingerWithinTapTolerance = false
-    private var toggleStylus = false
+
+    var toggleStylus = false
     var isCurrentlyDrawing = false
         private set
 
@@ -173,13 +174,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         } else {
             false
         }
-    }
-
-    /**
-     * Set stylus mode
-     */
-    fun setStylusMode(stylusMode: Boolean) {
-        toggleStylus = stylusMode
     }
 
     /**
