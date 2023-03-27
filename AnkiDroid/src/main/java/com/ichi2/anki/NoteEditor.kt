@@ -51,6 +51,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -657,14 +658,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             changed = true
             sourceText = null
             refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-            UIUtils.showThemedToast(
-                this,
-                resources.getQuantityString(
-                    R.plurals.factadder_cards_added,
-                    noOfAddedCards,
-                    noOfAddedCards
-                ),
-                true
+            showSnackbar(
+                resources.getQuantityString(R.plurals.factadder_cards_added, noOfAddedCards, noOfAddedCards),
+                Snackbar.LENGTH_SHORT
             )
         } else {
             displayErrorSavingNote()
