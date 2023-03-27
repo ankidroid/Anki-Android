@@ -1677,22 +1677,6 @@ abstract class AbstractFlashcardViewer :
         invalidateOptionsMenu()
     }
 
-    /**
-     * Select Text in the webview and automatically sends the selected text to the clipboard. From
-     * http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
-     */
-    @Suppress("deprecation") // Tracked separately in Github as #5024
-    private fun selectAndCopyText() {
-        mIsSelecting = try {
-            val shiftPressEvent = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0)
-            processCardAction { receiver: WebView? -> shiftPressEvent.dispatch(receiver) }
-            shiftPressEvent.isShiftPressed
-            true
-        } catch (e: Exception) {
-            throw AssertionError(e)
-        }
-    }
-
     internal fun buryCard(): Boolean {
         return dismiss(BuryCard(currentCard!!)) {
             showSnackbarWithUndoButton(R.string.card_buried)
