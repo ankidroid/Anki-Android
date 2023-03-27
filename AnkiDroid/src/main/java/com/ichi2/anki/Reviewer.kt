@@ -472,7 +472,7 @@ open class Reviewer :
                 } else {
                     com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
                 }
-                startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
+                deckOptionsLauncher.launch(i)
             }
             R.id.action_select_tts -> {
                 Timber.i("Reviewer:: Select TTS button pressed")

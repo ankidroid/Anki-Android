@@ -37,6 +37,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.*
 import android.webkit.WebView.HitTestResult
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -759,6 +760,11 @@ abstract class AbstractFlashcardViewer :
         return text ?: ""
     }
 
+    val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+        Timber.i("Returned from deck options -> Restarting activity")
+        performReload()
+    }
+
     @Suppress("deprecation") // super.onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -786,8 +792,6 @@ abstract class AbstractFlashcardViewer :
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard()
             }
-        } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            performReload()
         }
     }
 
@@ -2630,7 +2634,6 @@ abstract class AbstractFlashcardViewer :
          * Available options performed by other activities.
          */
         const val EDIT_CURRENT_CARD = 0
-        const val DECK_OPTIONS = 1
         const val EASE_1 = 1
         const val EASE_2 = 2
         const val EASE_3 = 3
