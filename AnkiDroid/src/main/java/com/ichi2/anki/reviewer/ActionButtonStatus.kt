@@ -59,6 +59,7 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
         setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_toggle_stylus, "customButtonToggleStylus", SHOW_AS_ACTION_IF_ROOM)
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
     }
@@ -105,6 +106,10 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
 
     fun hideWhiteboardIsDisabled(): Boolean {
         return mCustomButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
+    }
+
+    fun toggleStylusIsDisabled(): Boolean {
+        return mCustomButtons[R.id.action_toggle_stylus] == MENU_DISABLED
     }
 
     fun clearWhiteboardIsDisabled(): Boolean {

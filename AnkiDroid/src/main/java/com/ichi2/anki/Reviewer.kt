@@ -102,6 +102,7 @@ open class Reviewer :
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
+    private var toggleStylus = false
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -350,6 +351,8 @@ open class Reviewer :
             val whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, parentDid)
             setWhiteboardEnabledState(true)
             setWhiteboardVisibility(whiteboardVisibility)
+            toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
+            whiteboard!!.setStylusMode(toggleStylus)
         }
         col.sched.deferReset() // Reset schedule in case card was previously loaded
         col.startTimebox()
@@ -461,6 +464,13 @@ open class Reviewer :
             R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
                 Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
                 setWhiteboardVisibility(!mShowWhiteboard)
+                refreshActionBar()
+            }
+            R.id.action_toggle_stylus -> { // toggle stylus mode
+                Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
+                toggleStylus = !toggleStylus
+                whiteboard!!.setStylusMode(toggleStylus)
+                MetaDB.storeWhiteboardStylusState(this, parentDid, toggleStylus)
                 refreshActionBar()
             }
             R.id.action_toggle_whiteboard -> {
@@ -777,6 +787,7 @@ open class Reviewer :
             mOnboarding.onUndoButtonEnabled()
         }
         val toggleWhiteboardIcon = menu.findItem(R.id.action_toggle_whiteboard)
+        val toggleStylusIcon = menu.findItem(R.id.action_toggle_stylus)
         val hideWhiteboardIcon = menu.findItem(R.id.action_hide_whiteboard)
         val changePenColorIcon = menu.findItem(R.id.action_change_whiteboard_pen_color)
         // White board button
@@ -785,6 +796,9 @@ open class Reviewer :
             toggleWhiteboardIcon.setTitle(R.string.disable_whiteboard)
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
             toggleWhiteboardIcon.isVisible = true
+            if (!mActionButtons.status.toggleStylusIsDisabled()) {
+                toggleStylusIcon.isVisible = true
+            }
             if (!mActionButtons.status.hideWhiteboardIsDisabled()) {
                 hideWhiteboardIcon.isVisible = true
             }
@@ -798,6 +812,7 @@ open class Reviewer :
                 changePenColorIcon.isVisible = true
             }
             val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
+            val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
             val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, null)!!.mutate()
             if (mShowWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
@@ -805,11 +820,22 @@ open class Reviewer :
                 hideWhiteboardIcon.setTitle(R.string.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
+                if (toggleStylus) {
+                    toggleStylusIcon.setTitle(R.string.disable_stylus)
+                    stylusIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+                } else {
+                    toggleStylusIcon.setTitle(R.string.enable_stylus)
+                    stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                }
+                toggleStylusIcon.icon = stylusIcon
             } else {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
                 hideWhiteboardIcon.setTitle(R.string.show_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                toggleStylusIcon.isEnabled = false
+                toggleStylusIcon.icon = stylusIcon
                 changePenColorIcon.isEnabled = false
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
                 mColorPalette.visibility = View.GONE
