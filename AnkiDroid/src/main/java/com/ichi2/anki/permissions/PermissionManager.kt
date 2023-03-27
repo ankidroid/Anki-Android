@@ -103,7 +103,7 @@ class PermissionManager private constructor(
             // Open an external screen and close the activity.
             // Accepting this permission closes the app
             UIUtils.showThemedToast(activity, R.string.startup_all_files_access_permission, false)
-            activity.finishActivityAndShowManageAllFilesScreen()
+            activity.showManageAllFilesScreen()
             return
         }
 
@@ -150,7 +150,7 @@ fun AnkiActivity.finishActivityAndShowAppPermissionManagementScreen() {
 }
 
 private fun AnkiActivity.showAppPermissionManagementScreen() {
-    this.startActivityWithoutAnimation(
+    startActivity(
         Intent(
             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
             Uri.fromParts("package", this.packageName, null)
@@ -159,15 +159,20 @@ private fun AnkiActivity.showAppPermissionManagementScreen() {
 }
 
 /**
- * Closes the activity and opens the Android 'MANAGE_ALL_FILES' page if the phone provides this feature.
+ * Opens the Android 'MANAGE_ALL_FILES' page if the phone provides this feature.
  */
 @RequiresApi(Build.VERSION_CODES.R)
-fun AnkiActivity.finishActivityAndShowManageAllFilesScreen() {
+fun AnkiActivity.showManageAllFilesScreen() {
     // This screen is simpler than the one from displayAppPermissionManagementScreen:
     // In 'AppPermissionManagement' a user has to go to permissions -> storage -> 'allow management of all files' -> dialog warning
     // In 'ManageAllFiles': a user selects the app which has permission
-    // We finish the activity as setting permissions terminates the app
-    this.finishWithoutAnimation()
+    val accessAllFilesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (Permissions.isExternalStorageManager()) {
+            recreate()
+        } else {
+            finish()
+        }
+    }
 
     val intent = Intent(
         Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
@@ -176,11 +181,10 @@ fun AnkiActivity.finishActivityAndShowManageAllFilesScreen() {
 
     // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]
     // In some cases, a matching Activity may not exist, so ensure you safeguard against this.
-
     if (intent.resolveActivity(packageManager) != null) {
-        startActivityWithoutAnimation(intent)
+        accessAllFilesLauncher.launch(intent)
     } else {
         // This also allows management of the all files permission (worse UI)
-        showAppPermissionManagementScreen()
+        finishActivityAndShowAppPermissionManagementScreen()
     }
 }
