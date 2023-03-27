@@ -93,7 +93,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
-import java.lang.Exception
 import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import java.util.*
@@ -943,16 +942,23 @@ open class CardBrowser :
                 }
             })
             mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
-            mSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)?.let {
-                // Simplify the code once we have min SDK > 29
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    it.textCursorDrawable = AppCompatResources.getDrawable(applicationContext, R.drawable.cursor)
-                } else {
-                    val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
-                    field.isAccessible = true
-                    field.set(it, R.drawable.cursor)
+
+            try {
+                mSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)?.let {
+                    // Simplify the code once we have min SDK > 29
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        it.textCursorDrawable =
+                            AppCompatResources.getDrawable(applicationContext, R.drawable.cursor)
+                    } else {
+                        val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+                        field.isAccessible = true
+                        field.set(it, R.drawable.cursor)
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.e("SearchBar custom view error : $e")
             }
+
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (mSearchView!!.shouldIgnoreValueChange()) {
