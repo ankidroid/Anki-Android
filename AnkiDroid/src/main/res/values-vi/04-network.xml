@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">CSDL tải về đã bị hỏng. Xin thử lại.</string>
     <string name="sync_overwrite_error">Không thể ghi đè bộ sưu tập hiện tại bằng tập tin đã tải xuống</string>
     <string name="sync_connection_error">Đã hết thời gian kết nối. Hoặc là kết nối mạng của bạn đang gặp vấn đề hoặc bạn có một tệp rất lớn trong thư mục đa phương tiện.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">Tệp đã tải xuống không thể được lưu vào bộ nhớ của bạn. Hoặc bộ nhớ chỉ đọc hoặc không đủ dung lượng.</string>
     <string name="sync_error_invalid_sync_server">Máy chủ Đồng bộ hóa Tùy chỉnh trong Cài đặt Nâng cao không hợp lệ (%s). Vui lòng nhập một máy chủ hợp lệ hoặc tắt cài đặt.</string>
     <string name="sync_deletions_message">Đồng bộ phần đã xoá&#8230;</string>
     <string name="sync_small_objects_message">Đồng bộ các phần nhỏ&#8230;</string>
@@ -125,9 +125,9 @@
     <string name="sync_error_500_unknown">AnkiWeb đã gặp lỗi. Vui lòng thử lại sau vài phút và nếu sự cố vẫn tiếp diễn, vui lòng gửi báo cáo lỗi.</string>
     <string name="sync_error_501_upgrade_required">Xin nâng cấp lên phiên bản AnkiDroid mới nhất</string>
     <string name="sync_error_502_maintenance">AnkiWeb đang được bảo trì. Vui lòng thử lại trong vài phút.</string>
-    <string name="sync_error_504_gateway_timeout">Lỗi 504 gateway timeout</string>
+    <string name="sync_error_504_gateway_timeout">Đã nhận được lỗi hết thời gian chờ cổng 504.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Đồng bộ hóa (đầy đủ)</string>
-    <string name="sync_menu_title_no_account">Đồng bộ hóa (đăng nhập)</string>
+    <string name="sync_menu_title_full_sync">Đồng bộ (đầy đủ)</string>
+    <string name="sync_menu_title_no_account">Đồng bộ (đăng nhập)</string>
     <string name="sync_error_unknown_host_readable">Không thể kết nối với AnkiWeb. Internet của bạn có hoạt động không? \n\n%s</string>
 </resources>

@@ -35,7 +35,6 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
-        buildConfigField "Boolean", "LEGACY_STORAGE", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         resValue "string", "app_name", "AnkiDroid"
 
@@ -64,7 +63,7 @@ android {
         versionName="2.16alpha94"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
-        targetSdkVersion 29 // change .travis.yml platform download at same time
+        targetSdkVersion 30 // change .tests_emulator.yml
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
@@ -109,10 +108,6 @@ android {
                 } else {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "true"
                 }
-                // allow setting legacy storage on install
-                if (localProperties["legacy_storage"] != null) {
-                    buildConfigField "Boolean", "LEGACY_STORAGE", localProperties["legacy_storage"]
-                }
             } else {
                 testCoverageEnabled true
             }
@@ -155,6 +150,10 @@ android {
             dimension "appStore"
         }
         amazon {
+            dimension "appStore"
+        }
+        // A 'full' build has no restrictions on storage/camera. Distributed on GitHub/F-Droid
+        full {
             dimension "appStore"
         }
     }
@@ -269,18 +268,18 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:24.0.0'
+            force 'org.jetbrains:annotations:24.0.1'
         }
     }
 
     lintChecks project(":lint-rules")
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
-    compileOnly 'org.jetbrains:annotations:24.0.0'
+    compileOnly 'org.jetbrains:annotations:24.0.1'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
-    implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation 'androidx.activity:activity-ktx:1.7.0'
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
     implementation 'androidx.browser:browser:1.5.0'
@@ -288,12 +287,12 @@ dependencies {
     implementation 'androidx.exifinterface:exifinterface:1.3.6'
     implementation "androidx.fragment:fragment-ktx:$fragments_version"
     implementation "androidx.preference:preference-ktx:1.2.0"
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.sqlite:sqlite-framework:2.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.3.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.webkit:webkit:1.6.0'
+    implementation 'androidx.webkit:webkit:1.6.1'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
@@ -302,7 +301,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.21.12' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.22.2' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -358,7 +357,7 @@ dependencies {
     api project(":api")
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-    testImplementation 'org.mockito:mockito-inline:5.1.1'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'

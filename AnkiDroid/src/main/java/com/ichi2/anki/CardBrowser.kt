@@ -35,7 +35,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.list.SingleChoiceListener
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
@@ -102,7 +101,8 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
-@Suppress("LeakingThis") // The class is only 'open' due to testing
+@Suppress("LeakingThis")
+// The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
@@ -398,10 +398,9 @@ open class CardBrowser :
 
         override fun onSaveSearch(searchName: String?, searchTerms: String?) {
             if (searchName.isNullOrEmpty()) {
-                showThemedToast(
-                    this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_empty_name),
-                    true
+                showSnackbar(
+                    R.string.card_browser_list_my_searches_new_search_error_empty_name,
+                    Snackbar.LENGTH_SHORT
                 )
                 return
             }
@@ -413,10 +412,9 @@ open class CardBrowser :
                 mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
-                showThemedToast(
-                    this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_dup),
-                    true
+                showSnackbar(
+                    R.string.card_browser_list_my_searches_new_search_error_dup,
+                    Snackbar.LENGTH_SHORT
                 )
             }
         }
@@ -480,7 +478,7 @@ open class CardBrowser :
     }
 
     private fun displayCouldNotChangeDeck() {
-        showThemedToast(this, getString(R.string.card_browser_deck_change_error), true)
+        showSnackbar(R.string.card_browser_deck_change_error, Snackbar.LENGTH_SHORT)
     }
 
     @get:VisibleForTesting
@@ -565,14 +563,6 @@ open class CardBrowser :
             }
         }
         mOnboarding.onCreate()
-
-        val modalBottomSheet = FilterSheetBottomFragment()
-
-        val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
-
-        filterButton.setOnClickListener {
-            modalBottomSheet.show(supportFragmentManager, FilterSheetBottomFragment.TAG)
-        }
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -862,7 +852,10 @@ open class CardBrowser :
             openNoteEditorForCard(selectedCardIds[0])
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false)
+            showSnackbar(
+                R.string.multimedia_editor_something_wrong,
+                Snackbar.LENGTH_LONG
+            )
         }
     }
 
@@ -1163,18 +1156,20 @@ open class CardBrowser :
                 showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
+
+            @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
                 mSearchTerms = "tag:marked"
                 mSearchView!!.setQuery("", false)
-                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_marked)
-                searchCards()
+                searchWithFilterQuery(mSearchTerms)
                 return true
             }
+
+            @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
                 mSearchTerms = "is:suspended"
                 mSearchView!!.setQuery("", false)
-                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_suspended)
-                searchCards()
+                searchWithFilterQuery(mSearchTerms)
                 return true
             }
             R.id.action_search_by_tag -> {
@@ -1751,7 +1746,7 @@ open class CardBrowser :
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
-        get() = deckSpinnerSelection!!.dropDownDecks
+        get() = deckSpinnerSelection!!.computeDropDownDecks()
             .filterNot { d -> Decks.isDynamic(d) }
 
     @RustCleanup("this isn't how Desktop Anki does it")

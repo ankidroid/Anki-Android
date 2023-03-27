@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ଦେଖନ୍ତୁ</string>
     <string name="anki_js_error_code">(ତ୍ରୁଟି କୋଡ୍: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରାଯାଇଛି </string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
@@ -357,39 +357,29 @@
     <string name="downloading_file">%s ଡାଉନଲୋଡ୍ ହେଉଛି</string>
     <string name="import_deck">ତାସଖଣ୍ଡ ଆମଦାନୀ କରନ୍ତୁ</string>
     <string name="something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି, ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="download_failed">ଡାଉନଲୋଡ୍ ବିଫଳ ହୋଇଛି</string>
+    <string name="download_failed">ଡାଉନଲୋଡ୍ ଵିଫଳ ହେଲା</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="home">ଗୃହ</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା</string>
-    <string name="buried_note">ନୋଟ୍ ସ୍ଥଗିତ କରାଗଲା</string>
-    <string name="deleted_note">ନୋଟ୍ ଵିଲୋପ କରାଗଲା</string>
-    <string name="suspended_card">ପତ୍ର ନିଲମ୍ବିତ କରାଗଲା</string>
-    <string name="suspended_note">ନୋଟ୍ ନିଲମ୍ବିତ କରାଗଲା</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s କ୍ଷେତ୍ରଟିକୁ sticky କରନ୍ତୁ</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ</string>
-    <string name="scoped_storage_initial_message">ନୂତନ ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ନିୟମ ପୂରଣ କରିବା ପାଇଁ AnkiDroid ନିଶ୍ଚିତ ଭାବରେ ଏହାର ଡାଟା ଘୁଞ୍ଚାଇବ
-\n\nଯଦି ଆପଣ ସ୍ଥାନାନ୍ତରଣ ପୂର୍ବରୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ କରନ୍ତି, ତେବେ ଆପଣଙ୍କ ଡାଟା ହଜିଯିବ
-\n\nଦୟାକରି ଯଥାଶୀଘ୍ର ସ୍ଥାନାନ୍ତରଣ କରନ୍ତୁ</string>
-    <string name="scoped_storage_terms_message">ପୃଷ୍ଠଭୂମିରେ ସ୍ଥାନାନ୍ତରଣ ଘଟିବ। ସ୍ଥାନାନ୍ତର କରିବା ସମୟରେ ଆପଣ ସିଙ୍କ୍ କରିବାକୁ ଅସମର୍ଥ ହେବେ\n\nଆନୁମାନିକ ଅବଧି: %s</string>
-    <string name="scoped_storage_term_1">ମୁଁ ମୋର ଡାଟାର ବ୍ୟାକଅପ୍ ନେଇଛି</string>
-    <string name="scoped_storage_term_1_ankiweb">ମୁଁ ନିକଟରେ AnkiWeb ସହିତ ସିଙ୍କ୍ କରିଛି</string>
-    <string name="scoped_storage_term_2">ଡାଟା ଘୁଞ୍ଚାଇବାବେଳେ ମୁଁ ଆପ୍ ଅନଇନଷ୍ଟଲ୍ କରିବି ନାହିଁ</string>
-    <string name="scoped_storage_select_all_terms">ଜାରି ରଖିବାକୁ ଦୟାକରି ସମସ୍ତ ଆଇଟମ୍ ଗ୍ରହଣ କରନ୍ତୁ</string>
     <string name="scoped_storage_learn_more">ଅଧିକ ଜାଣନ୍ତୁ</string>
     <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
     <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>
     <string name="search_card_js_api_no_results">ସନ୍ଧାନ କୌଣସି ଫଳାଫଳ ଫେରସ୍ତ କଲା ନାହିଁ</string>
     <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
         %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
@@ -412,7 +402,7 @@
     <string name="already_logged_in">ଆଗରୁ ଲଗ୍ ଇନ୍ କରିସାରିଛନ୍ତି</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">ତାସଖଣ୍ଡଟି ଵିଦ୍ୟମାନ ଅଛି</string>
-    <string name="deck_created">Created deck</string>
+    <string name="deck_created">Deck created</string>
     <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
@@ -425,4 +415,7 @@
     <string name="browser_options_dialog_heading">Browser Options</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

@@ -243,6 +243,17 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
+    @Test // see #13391
+    fun newlyCreatedDeckIsShownAsOptionInBrowser() = runTest {
+        val deckOneId = addDeck("one")
+        val browser = browserWithNoNewCards
+        assertEquals(1, browser.validDecksForChangeDeck.size)
+        assertEquals(deckOneId, browser.validDecksForChangeDeck.first().id)
+        val deckTwoId = addDeck("two")
+        assertEquals(2, browser.validDecksForChangeDeck.size)
+        assertArrayEquals(longArrayOf(deckOneId, deckTwoId), browser.validDecksForChangeDeck.map { it.id }.toLongArray())
+    }
+
     @Test
     fun flagsAreShownInBigDecksTest() = runTest {
         val numberOfNotes = 75

@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Mostrar si hay espacio</string>
     <string name="custom_buttons_setting_menu_only">Sólo el menú</string>
     <string name="reset_custom_buttons" maxLength="41">Restaurar a predeterminado</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicaciones API de terceros</string>
     <string name="thirdparty_apps_summary">Vea una lista de aplicaciones que hacen uso de la API de AnkiDroid como diccionarios, utilidades.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuración de HTML / Javascript</string>
@@ -398,7 +400,7 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Eliminar colección</string>
     <string name="pref__delete_collection__summary">Eliminar colección, archivos multimedia y copias de seguridad. Los ajustes no se eliminarán</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Eliminar colección</string>
-    <string name="dialog__delete_collection__message">¿Estás seguro de que quieres eliminar tu colección, tus archivos multimedia y tus copias de seguridad?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar tu colección, tus archivos multimedia y tus copias de seguridad?</string>
     <string name="progress__deleting_collection">Eliminando colección...</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Eliminar todo</string>

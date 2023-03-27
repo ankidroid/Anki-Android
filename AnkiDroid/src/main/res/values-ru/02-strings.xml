@@ -331,7 +331,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
     <string name="anki_js_error_code">(Код ошибки: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Отладочная информация скопирована в буфер обмена</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
@@ -388,34 +388,26 @@
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
     <string name="home">Главная</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Карточка отложена</string>
-    <string name="buried_note">Запись отложена</string>
-    <string name="deleted_note">Запись удалена</string>
-    <string name="suspended_card">Карточка исключена</string>
-    <string name="suspended_note">Запись исключена</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="few">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Закрепить поле %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Перенос хранилища</string>
-    <string name="scoped_storage_initial_message">AnkiDroid должен перенести данные, чтобы соответствовать новым правилам конфиденциальности Android
-\n\nЕсли вы удалите AnkiDroid перед переносом, данные будут потеряны
-\n\nПожалуйста, выполните миграцию как можно скорее</string>
-    <string name="scoped_storage_terms_message">Перенос будет идти в фоне, и в это время нельзя будет синхронизироваться.\n\nПримерное время: %s</string>
-    <string name="scoped_storage_term_1">Вы сделали резервную копию</string>
-    <string name="scoped_storage_term_1_ankiweb">Недавно была синхронизация с AnkiWeb</string>
-    <string name="scoped_storage_term_2">Вы не будете удалять приложение во время переноса данных</string>
-    <string name="scoped_storage_select_all_terms">Подтвердите, что:</string>
     <string name="scoped_storage_learn_more">Подробнее</string>
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
     <string name="sync_impossible_during_migration">Синхронизация отключена до завершения переноса.\n
         Осталось пернести %1$d медиафайлов.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">Если вы переустановите AnkiDroid, он не сможет открыть вашу коллекцию.</string>
-    <string name="migration_update_request_dialog_download_warning">Если вы удалите AnkiDroid, вам придется заново загрузить всю коллекцию.</string>
-    <string name="migration_update_request">Политика доступа к хранилищу Android требует, чтобы мы изменили место хранения вашей коллекции. Когда ваши данные будут перенесены, AnkiDroid будет работать быстрее, а ваши данные будут в большей безопасности.
-    Вы не сможете синхронизироваться во время переноса хранилища.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Начало перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
 \nПеренос хранилища будет продолжаться в фоновом режиме.</string>
@@ -451,4 +443,7 @@
     <string name="browser_options_dialog_heading">Настройки браузера</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

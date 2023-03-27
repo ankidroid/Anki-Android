@@ -43,15 +43,28 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     }
 
     /**
-     * Read and handle Message which was stored via storeMessage()
+     * Returns the current message (if any) and stops further processing of it
      */
-    fun readMessage() {
+    fun popMessage(): Message? {
+        val toReturn = sStoredMessage
+        sStoredMessage = null
+        return toReturn
+    }
+
+    /**
+     * Read and handle Message which was stored via [storeMessage]
+     */
+    fun executeMessage() {
         Timber.d("Reading persistent message")
         if (sStoredMessage != null) {
-            Timber.i("Dispatching persistent message: %d", sStoredMessage!!.what)
-            sendMessage(sStoredMessage!!)
+            sendStoredMessage(sStoredMessage!!)
         }
         sStoredMessage = null
+    }
+
+    fun sendStoredMessage(message: Message) {
+        Timber.i("Dispatching persistent message: %d", message.what)
+        sendMessage(message)
     }
 
     companion object {
@@ -102,6 +115,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
                 WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG -> DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG -> ForceFullSyncDialog.fromMessage(message)
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
+                WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS -> MigrateStorageOnSyncSuccess.MigrateOnSyncSuccessHandler()
             }
         }
     }
@@ -116,7 +130,9 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG(5),
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
         MSG_SHOW_FORCE_FULL_SYNC_DIALOG(7),
-        MSG_DO_SYNC(8);
+        MSG_DO_SYNC(8),
+        MSG_MIGRATE_ON_SYNC_SUCCESS(9)
+        ;
         companion object {
             fun fromInt(value: Int) = WhichDialogHandler.values().first { it.what == value }
         }

@@ -151,7 +151,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 collection.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
-                (activity as DeckPicker).startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
+                (activity as DeckPicker).startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("Add selected")

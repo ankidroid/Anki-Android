@@ -22,6 +22,8 @@ import android.os.Environment
 import android.text.format.Formatter
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
+import com.ichi2.anki.AnkiDroidFolder.DeleteOnUninstall
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.libanki.Collection
@@ -460,7 +462,8 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            return if (!BuildConfig.LEGACY_STORAGE) {
+            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidFolder(context) != DeleteOnUninstall
+            return if (!legacyStorage) {
                 File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
             } else {
                 legacyAnkiDroidDirectory
@@ -530,6 +533,9 @@ open class CollectionHelper {
             return File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).absolutePath
         }
 
+        /** A temporary override for [getCurrentAnkiDroidDirectory] */
+        var ankiDroidDirectoryOverride: String? = null
+
         /**
          * @return the absolute path to the AnkiDroid directory.
          */
@@ -542,12 +548,26 @@ open class CollectionHelper {
                     getDefaultAnkiDroidDirectory(context),
                     "androidTest"
                 ).absolutePath
+            } else if (ankiDroidDirectoryOverride != null) {
+                ankiDroidDirectoryOverride!!
             } else {
                 PreferenceExtensions.getOrSetString(
                     preferences,
                     PREF_COLLECTION_PATH
                 ) { getDefaultAnkiDroidDirectory(context) }
             }
+        }
+
+        /**
+         * Resets the AnkiDroid directory to the [getDefaultAnkiDroidDirectory]
+         * Note: if [android.R.attr.preserveLegacyExternalStorage] is in use
+         * this will represent a change from `/AnkiDroid` to `/Android/data/...`
+         */
+        fun resetAnkiDroidDirectory(context: Context) {
+            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val directory = getDefaultAnkiDroidDirectory(context)
+            Timber.d("resetting AnkiDroid directory to %s", directory)
+            preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
         }
 
         /** Fetches additional collection data not required for

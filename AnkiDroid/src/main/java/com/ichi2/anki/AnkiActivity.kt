@@ -121,7 +121,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             SIMPLE_NOTIFICATION_ID
         )
         // Show any pending dialogs which were stored persistently
-        dialogHandler.readMessage()
+        dialogHandler.executeMessage()
     }
 
     override fun onDestroy() {
@@ -452,7 +452,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @param newFragment  the DialogFragment you want to show
      */
     open fun showDialogFragment(newFragment: DialogFragment) {
-        showDialogFragment(this, newFragment)
+        runOnUiThread {
+            showDialogFragment(this, newFragment)
+        }
     }
 
     /**

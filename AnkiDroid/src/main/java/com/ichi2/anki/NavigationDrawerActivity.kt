@@ -295,7 +295,7 @@ abstract class NavigationDrawerActivity :
                     } else {
                         com.ichi2.anki.pages.Statistics.getIntent(this)
                     }
-                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
+                    startActivityWithAnimation(intent, START)
                 }
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
@@ -329,7 +329,7 @@ abstract class NavigationDrawerActivity :
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId)
         }
-        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START)
+        startActivityWithAnimation(intent, START)
     }
 
     // Override this to specify a specific card id
@@ -401,8 +401,6 @@ abstract class NavigationDrawerActivity :
     companion object {
         // Intent request codes
         const val REQUEST_PREFERENCES_UPDATE = 100
-        const val REQUEST_BROWSE_CARDS = 101
-        const val REQUEST_STATISTICS = 102
         const val FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
 
         const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"

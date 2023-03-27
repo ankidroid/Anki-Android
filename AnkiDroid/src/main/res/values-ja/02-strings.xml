@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="drawer_close">引き出しメニューを閉じる</string>
-    <string name="CardEditorCardDeck">デッキ:</string>
+    <string name="CardEditorCardDeck">カードデッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
     <string name="CardEditorModel">ノートタイプ:</string>
     <string name="CardEditorTags">タグ: %1$s</string>
@@ -292,7 +292,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ビュー</string>
     <string name="anki_js_error_code">(エラーコード: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">デバッグ情報をクリップボードにコピーしました</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">デバッグ情報をクリップボードにコピー中にエラーが発生しました</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
@@ -349,31 +349,23 @@
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">デッキ名で検索</string>
     <string name="home">ホーム</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">カードを延期しました</string>
-    <string name="buried_note">ノートを延期しました</string>
-    <string name="deleted_note">ノートを削除しました</string>
-    <string name="suspended_card">カードを保留しました</string>
-    <string name="suspended_note">ノートを保留しました</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">フィールド「%s」の内容を固定する</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">ストレージ移行</string>
-    <string name="scoped_storage_initial_message">Androidがプライバシーに関する新しい方針を導入したことに伴い、AnkiDroidのデータの保存先（ストレージ）を変更する必要があります。\n\nこのストレージ移行を済ませる前にAnkiDroidをアンインストールした場合、AnkiDroidであなたが使用していたデッキやメディアファイルなどのデータも削除されます。\n\nできるだけ早期にストレージ移行を行うことを強く推奨します</string>
-    <string name="scoped_storage_terms_message">移行をバックグラウンドで行います。移行中は、同期は行えません\n\n移行終了までの時間（推定）: %s</string>
-    <string name="scoped_storage_term_1">データのバックアップを取りました</string>
-    <string name="scoped_storage_term_1_ankiweb">最近AnkiWebとの同期を行いました</string>
-    <string name="scoped_storage_term_2">データの移動中はアプリをアンインストールしません</string>
-    <string name="scoped_storage_select_all_terms">続行するにはすべての項目を承認してください</string>
     <string name="scoped_storage_learn_more">詳細</string>
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
     <string name="sync_impossible_during_migration">移行が完了するまで同期機能は使用できません。\n
         %1$d個のメディアファイルが移行待機中です。</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">AnkiDroidを再インストールすると、コレクションを開くことができなくなります。</string>
-    <string name="migration_update_request_dialog_download_warning">AnkiDroidをアンインストールする場合は、コレクションをもう一度ダウンロードする必要があります。</string>
-    <string name="migration_update_request">Androidのストレージアクセスポリシーの改定に伴い、AnkiDroidのコレクションの保存先（ストレージ）を変更する必要があります。ストレージを移行すると、AnkiDroidはより高速かつ安全にデータを処理できるようになります。\nなお、移行処理中は同期の機能が使えなくなります。</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">ストレージの移行を開始します。AnkiDroidの使用はまもなく再開できます。</string>
     <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。
 \nストレージの移行はバックグラウンドで続行されます。</string>
@@ -407,6 +399,9 @@
     <string name="toggle_browser_mode_help">ブラウザで、カードとノート、どちらのリストを表示するかを切り替えます</string>
     <string name="truncate_content_help">リスト画面において、カードまたはノートの内容の表示を１件につき３行までに制限します</string>
     <string name="browser_options_dialog_heading">ブラウザ オプション</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ストレージ移行中はこの機能は利用できません
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

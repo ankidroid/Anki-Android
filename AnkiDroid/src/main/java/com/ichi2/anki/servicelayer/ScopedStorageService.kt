@@ -31,6 +31,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
+import com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf
 import com.ichi2.utils.Permissions
@@ -235,6 +236,21 @@ object ScopedStorageService {
     }
 
     /**
+     * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
+     * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
+     * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
+     *
+     * @param setCollectionPath if `false`, null is returned. This stops an infinite loop
+     * if `isLegacyStorage` is called when obtaining the collection path
+     */
+    fun isLegacyStorage(context: Context, setCollectionPath: Boolean): Boolean? {
+        if (!setCollectionPath && !AnkiDroidApp.getSharedPrefs(context).contains(CollectionHelper.PREF_COLLECTION_PATH)) {
+            return null
+        }
+        return isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
+    }
+
+    /**
      * @return `true` if [currentDirPath] is a Legacy Storage Directory.
      */
     fun isLegacyStorage(currentDirPath: String, context: Context): Boolean {
@@ -250,7 +266,7 @@ object ScopedStorageService {
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
-        // for app-specific external or internal storage - the only directories which will be accessible without
+        // for app-private external or internal storage - the only directories which will be accessible without
         // permissions under scoped storage
         val scopedDirectories = externalScopedDirs + internalScopedDir
         var currentDirParent: File? = currentDir
@@ -263,22 +279,18 @@ object ScopedStorageService {
             currentDirParent = currentDirParent.parentFile?.canonicalFile
         }
 
-        // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
+        // If the current AnkiDroid directory isn't a sub directory of the app-private external or internal storage
         // directories, then it must be in a legacy storage directory
         return true
     }
 
     fun migrationStatus(context: Context): Status {
-        if (!isLegacyStorage(context) && !userMigrationIsInProgress(context)) {
+        if ((!isLegacyStorage(context) && !userMigrationIsInProgress(context))) {
             return Status.COMPLETED
         }
 
-        if (!Permissions.hasStorageAccessPermission(context)) {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Environment.isExternalStorageLegacy()) {
-                Status.PERMISSION_FAILED
-            } else {
-                Status.REQUIRES_PERMISSION
-            }
+        if (Permissions.allFileAccessPermissionGranted(context)) {
+            return Status.NOT_NEEDED
         }
 
         if (userMigrationIsInProgress(context)) {
@@ -290,9 +302,31 @@ object ScopedStorageService {
 
     enum class Status {
         NEEDS_MIGRATION,
-        REQUIRES_PERMISSION,
-        PERMISSION_FAILED,
         IN_PROGRESS,
-        COMPLETED
+        COMPLETED,
+        NOT_NEEDED
+    }
+
+    /**
+     * @return whether the user's current collection is now inaccessible due to a 'reinstall'
+     * @see android.R.attr.preserveLegacyExternalStorage
+     * @see android.R.attr.requestLegacyExternalStorage
+     */
+    fun collectionInaccessibleAfterUninstall(context: Context): Boolean {
+        // If we're < Q then `requestLegacyExternalStorage` was not introduced
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return false
+        }
+
+        if (Permissions.canManageExternalStorage(context)) {
+            return false
+        }
+
+        val collectionPath = File(CollectionHelper.getCollectionPath(context))
+        if (collectionPath.isInsideDirectoriesRemovedWithTheApp(context)) {
+            return false
+        }
+
+        return !Environment.isExternalStorageLegacy()
     }
 }

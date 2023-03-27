@@ -30,7 +30,7 @@ import timber.log.Timber
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
-    data class ImportOptions(val importColpkg: Boolean = true, val importApkg: Boolean = true, val importTextFile: Boolean = true)
+    data class ImportOptions(val importColpkg: Boolean, val importApkg: Boolean, val importTextFile: Boolean)
 
     companion object {
         fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker, options: ImportOptions): RecursivePictureMenu {

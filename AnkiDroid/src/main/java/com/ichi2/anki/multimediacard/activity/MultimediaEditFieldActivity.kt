@@ -35,9 +35,9 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.utils.CheckCameraPermission
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 import timber.log.Timber
 import java.io.File
 import java.text.DecimalFormat
@@ -97,7 +97,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         finishWithoutAnimation()
     }
 
-    private fun performPermissionRequest(field: IField): Boolean {
+    private fun hasPerformedPermissionRequestForField(field: IField): Boolean {
         // Request permission to record if audio field
         if (field is AudioRecordingField && !Permissions.canRecordAudio(this)) {
             Timber.d("Requesting Audio Permissions")
@@ -110,7 +110,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
 
         // Request permission to use the camera if image field
-        if (field is ImageField && CheckCameraPermission.manifestContainsPermission(this) &&
+        if (field is ImageField && this.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.CAMERA) &&
             !Permissions.canUseCamera(this)
         ) {
             Timber.d("Requesting Camera Permissions")
@@ -142,7 +142,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
         // If we went through the permission check once, we don't need to do it again.
         // As we only get here a second time if we have the required permissions
-        if (newUI.requiresPermissionCheck && performPermissionRequest(newUI.field)) {
+        if (newUI.requiresPermissionCheck && hasPerformedPermissionRequestForField(newUI.field)) {
             newUI.markAsPermissionRequested()
             return
         }

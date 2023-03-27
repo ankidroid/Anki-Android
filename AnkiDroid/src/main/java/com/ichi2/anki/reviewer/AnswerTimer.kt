@@ -18,12 +18,12 @@ package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.os.SystemClock
-import android.util.TypedValue
 import android.view.View
 import android.widget.Chronometer
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
+import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
  * Responsible for pause/resume of the card timer and the UI element displaying the amount of time to answer a card
@@ -74,21 +74,18 @@ class AnswerTimer(private val cardTimer: Chronometer) {
     }
 
     private fun resetTimerUI(newCard: Card) {
-        val typedValue = TypedValue()
         // Set normal timer color
-        getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true)
-        cardTimer.setTextColor(typedValue.data)
+        cardTimer.setTextColor(getColorFromAttr(context, android.R.attr.textColor))
 
         cardTimer.base = elapsedRealTime
         cardTimer.start()
 
         // Stop and highlight the timer if it reaches the time limit.
-        getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true)
         limit = newCard.timeLimit()
         cardTimer.setOnChronometerTickListener { chronometer: Chronometer ->
             val elapsed: Long = elapsedRealTime - chronometer.base
             if (elapsed >= limit) {
-                chronometer.setTextColor(typedValue.data)
+                chronometer.setTextColor(getColorFromAttr(context, R.attr.maxTimerColor))
                 chronometer.stop()
             }
         }

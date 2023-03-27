@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
@@ -90,21 +89,19 @@ class IntentHandler : Activity() {
             return
         }
 
-        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug, true)
+        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug_info, true)
     }
 
     /**
      * Execute the runnable if one of the two following conditions are satisfied:
      *
-     *  * AnkiDroid is using an app-specific directory to store user data
+     *  * AnkiDroid is using an app-private directory to store user data
      *  * AnkiDroid is using a legacy directory to store user data but has access to it since storage permission
-     * has been granted (as long as AnkiDroid targets API < 30 & requests legacy storage)
+     * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
      */
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
-        if (!ScopedStorageService.isLegacyStorage(this) ||
-            applicationInfo.targetSdkVersion < Build.VERSION_CODES.R && hasStorageAccessPermission(this)
-        ) {
+        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this)) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()
         } else {

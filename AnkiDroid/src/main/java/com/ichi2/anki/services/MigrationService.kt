@@ -42,7 +42,7 @@ import java.io.File
 import kotlin.concurrent.thread
 
 /**
- * A service which migrates the AnkiDroid collection from a legacy directory to an app-specific directory.
+ * A service which migrates the AnkiDroid collection from a legacy directory to an app-private directory.
  */
 class MigrationService : Service() {
     private lateinit var migrateUserDataTask: MigrateUserData

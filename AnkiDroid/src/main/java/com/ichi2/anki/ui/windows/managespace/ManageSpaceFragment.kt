@@ -42,6 +42,7 @@ import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.File
+import kotlin.system.exitProcess
 
 sealed interface Size {
     object Calculating : Size
@@ -286,10 +287,13 @@ class ManageSpaceFragment : SettingsFragment() {
 
     /************************************* Delete collection **************************************/
 
-    // TODO: Finish other AnkiDroid activities when the collection is deleted.
-    //   Note that this might be not quite trivial, as the activities might be visible to user.
-    //   One way would be to have the activities register broadcast receivers that perform finish;
-    //   Another would be maintaining weak references to them. Would be nice to find a better way.
+    /** While we are in this activity, we may have other activities opened.
+     * These activities might be visible to user, e.g. when using Split screen mode.
+     * When the collection is deleted, whatever these activities are showing may become invalid.
+     * To fix that, ideally we should refresh or finish these activities,
+     * however, as this task is not trivial, we opt for killing the process instead and exit the application.
+     * One major downside here is that killing the process makes this activity,
+     * and possibly even the settings app, vanish without animation. **/
     private suspend fun onDeleteCollectionClick() {
         val size = viewModel.flowOfDeleteCollectionSize.value
         if (size is Size.Bytes) {
@@ -306,7 +310,7 @@ class ManageSpaceFragment : SettingsFragment() {
                         viewModel.deleteCollection()
                     }
                 } finally {
-                    backupLimitsPresenter.refresh()
+                    exitProcess(0)
                 }
             }
         } else {

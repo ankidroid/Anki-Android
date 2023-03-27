@@ -91,6 +91,14 @@ open class CompatV21 : Compat {
         return packageManager.resolveService(intent, flags.value.toInt())
     }
 
+    override fun queryIntentActivities(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): List<ResolveInfo> {
+        return packageManager.queryIntentActivities(intent, flags.value.toInt())
+    }
+
     override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
         return bundle.getParcelable(key)
     }

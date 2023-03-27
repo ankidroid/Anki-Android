@@ -26,6 +26,7 @@ import android.widget.Spinner
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
@@ -46,6 +47,7 @@ import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.libanki.utils.set
+import com.ichi2.utils.*
 
 // TODO when the new backend becomes the default delete the old implementation ModelBrowser and its
 //  related classes
@@ -148,9 +150,9 @@ class ManageNotetypes : AnkiActivity() {
                 showSnackbar(getString(R.string.toast_last_model))
                 return@launchCatchingTask
             }
-            MaterialDialog(this@ManageNotetypes).show {
+            AlertDialog.Builder(this@ManageNotetypes).show {
                 title(R.string.model_browser_delete)
-                message(res = messageResourceId)
+                message(messageResourceId)
                 positiveButton(R.string.dialog_ok) {
                     launchCatchingTask {
                         runAndRefreshAfter { newBackend.removeNotetype(noteTypeUiModel.id) }

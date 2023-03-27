@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Tam ekran gezinme çekmecesi</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Ekranın üzerindeki herhangi bir yerden sağa doğru parmağınızı kaydırdığınızda bütün dosyaların genel görünümü için bir önizleme açılacaktır</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Hiçbiri</string>
     <string name="gestures_swipe_up" maxLength="41">Yukarı sürükleme</string>
     <string name="gestures_swipe_down" maxLength="41">Aşağı sürükleme</string>
     <string name="gestures_swipe_left" maxLength="41">Sola sürükleme</string>
@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Yer varsa göster</string>
     <string name="custom_buttons_setting_menu_only">Sadece menüde</string>
     <string name="reset_custom_buttons" maxLength="41">Varsayılana döndür</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Üçüncü parti API uygulamaları</string>
     <string name="thirdparty_apps_summary">AnkiDroid API\'ından faydalanan sözlük, araç gibi uygulamaların bir listesine bakın.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
@@ -229,10 +231,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Özel senkronizasyon sunucusu</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Kullanılmıyor</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb\'le senkronize etmeye alternatif olarak,
+        senkronizasyon için kendi sunucunuzu kullanabilirsiniz.
+        Ayarlanmazsa yerine varsayılan AnkiWeb sunucusu kullanılır.
+        <a href="%s">Daha fazlasını öğren</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
     <!-- Key Bindings -->
@@ -398,7 +400,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Koleksiyonu sil</string>
     <string name="pref__delete_collection__summary">Koleksiyonu, medyayı, ve yedekleri sil. Uygulama ayarları silinmez</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Koleksiyonu sil</string>
-    <string name="dialog__delete_collection__message">Koleksiyon, medya ve yedeklerinizi silmek istediğinize emin misiniz?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Koleksiyon, medya ve yedeklerinizi silmek istediğinize emin misiniz?</string>
     <string name="progress__deleting_collection">Koleksiyon siliniyor&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Her şeyi sil</string>

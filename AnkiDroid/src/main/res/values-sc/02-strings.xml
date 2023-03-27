@@ -311,7 +311,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Pòmpia</string>
     <string name="anki_js_error_code">(Còdighe de errore: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Informatziones de depuratzione copiadas in punta de billete</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">B\'at àpidu una faddina copiende sas informatziones de depuratzione in punta de billete</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore de cuntenutu de sa carta: carrigamentu de ‘%s’ fallidu</string>
@@ -368,34 +368,24 @@
     <string name="check_network">Verìfica sa connessione de retze tua</string>
     <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
     <string name="home">Pàgina printzipale</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Carta interrada</string>
-    <string name="buried_note">Nota interrada</string>
-    <string name="deleted_note">Nota iscantzellada</string>
-    <string name="suspended_card">Carta suspesa</string>
-    <string name="suspended_note">Nota suspesa</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Tràmuda de sos datos</string>
-    <string name="scoped_storage_initial_message">AnkiDroid depet mòvere sos datos suos pro rispetare sas règulas de riservadesa noas de Android
-\n\nSi as a disinstallare AnkiDroid in antis de su tramudòngiu sos datos tuos s\'ant a pèrdere
-\n\nPro praghere faghe su tramudòngiu su prus in presse chi podes</string>
-    <string name="scoped_storage_terms_message">Su tramudòngiu s\'at a fàghere in s\'isfundu. In su mentres no as a pòdere fàghere sincronizatziones\n\nDurada carculada: %s</string>
-    <string name="scoped_storage_term_1">Apo fatu una còpia de seguresa de sos datos meos</string>
-    <string name="scoped_storage_term_1_ankiweb">Apo fatu dae pagu una sicronizatzione cun AnkiWeb</string>
-    <string name="scoped_storage_term_2">No apo a disinstallare s\'aplicatzione durante su tramudòngiu de sos datos</string>
-    <string name="scoped_storage_select_all_terms">Atzeta totu sos elementos pro sighire</string>
     <string name="scoped_storage_learn_more">Àteras informatziones</string>
     <string name="scoped_storage_postpone">Postìtzipa</string>
     <string name="scoped_storage_migrate">Tràmuda</string>
     <string name="search_card_js_api_no_results">Sa chirca no at frunidu resurtados</string>
     <string name="sync_impossible_during_migration">Sa sincronizatzione est inabilitada finas a sa fine de sa tràmuda.\n
         %1$d documentos multimediales galu de tramudare.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">Si torras a installare AnkiDroid no as a pòdere abèrrere sa colletzione tua.</string>
-    <string name="migration_update_request_dialog_download_warning">Si disinstallas AnkiDroid as a dèpere torrare a iscarrigare totu sa colletzione tua.</string>
-    <string name="migration_update_request">Sa polìtica de archiviatzione de Android nos pedit de mudare su logu in ue sarvamus sa colletzione tua. Cando sos datos ant a èssere tramudados AnkiDroid at a èssere prus lestru e sos datos tuos ant a èssere prus seguros.
-    No as a pòdere fàghere sincronizatziones durante sa tràmuda de sa memòria.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Incumintzende sa tràmuda de sa memòria. As a pòdere sighire a impreare AnkiDroid luego.</string>
     <string name="migration_part_1_done_resume">Podes sighire a impreare AnkiDroid.
 \nSa tràmuda de sa memòria at a sighire in s\'isfundu.</string>
@@ -431,4 +421,7 @@
     <string name="browser_options_dialog_heading">Optziones de su navigadore</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>
