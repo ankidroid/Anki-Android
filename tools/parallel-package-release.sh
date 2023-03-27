@@ -38,7 +38,7 @@ for BUILD in $BUILDNAMES; do
       echo "Unable to build parallel target $BUILD"
       exit 1
     fi
-    cp AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-universal-release.apk ./AnkiDroid-$TAG.parallel.$BUILD.apk
+    cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-universal-release.apk ./AnkiDroid-$TAG.parallel.$BUILD.apk
 done
 git reset --hard
 git clean -f
