@@ -114,17 +114,17 @@ fi
 
 # Build signed APK using Gradle and publish to Play
 # Configuration for pushing to Play specified in build.gradle 'play' task
-echo "Running 'publishPlayReleaseApk' gradle target"
-if ! ./gradlew publishPlayReleaseApk
-then
+#echo "Running 'publishPlayReleaseApk' gradle target"
+#if ! ./gradlew publishPlayReleaseApk
+#then
   # APK contains problems
   # Normally we want to abort the release but right now we know google will reject us until
   # we have targetSdkVersion 30, so ignore.
 #  git checkout -- $GRADLEFILE # Revert version change  #API30
 #  exit 1  #API30
 #else  #API30
-  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
-fi  #API30
+#  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
+#fi  #API30
 #fi  #API30
 
 # Now build the universal release also
