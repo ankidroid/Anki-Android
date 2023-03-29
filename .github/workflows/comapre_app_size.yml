@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v1
         with:
           java-version: '11.x'
       - name: Grant execute permission to gradlew
