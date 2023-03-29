@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: base.txt
-          path: base.txt
+          path: ./base.txt
       - name: Checkout pull request branch
         uses: actions/checkout@v3
         with:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: base.txt
-          path: base.txt
+          path: ./
       - name: App Size Comparison
         shell: bash
         run: |
