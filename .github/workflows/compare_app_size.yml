@@ -36,7 +36,6 @@ jobs:
       - name: App Size Comparison
         shell: bash
         run: |
-          rm summary.md 2>/dev/null
           total=$(ls -1 base_apks/*.apk | wc -l | sed 's/^ *//')
           delta=$(du -m base_apks target_apks | awk '{diff=$1-last; last=$1} END {print diff}')
           result=$(echo "scale=5;  $delta / $total" | bc)
