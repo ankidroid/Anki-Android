@@ -1,0 +1,43 @@
+name: Compare App Size
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compare-app-size:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11.x'
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
+      - name: Build base app
+        shell: bash
+        run: |
+          ./gradlew assemblePlayDebug
+          mv AnkiDroid/build/outputs/apk/play/debug/ base_apks
+      - name: Checkout pull request branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Build target app
+        shell: bash
+        run: |
+          ./gradlew assemblePlayDebug
+          mv AnkiDroid/build/outputs/apk/play/debug/ target_apks
+      - name: App Size Comparison
+        shell: bash
+        run: |
+          rm summary.md 2>/dev/null
+          total=$(ls -1 base_apks/*.apk | wc -l | sed 's/^ *//')
+          delta=$(du -m base_apks target_apks | awk '{diff=$1-last; last=$1} END {print diff}')
+          result=$(echo "scale=5;  $delta / $total" | bc)
+          echo "APK size changed by: $result Mb"
