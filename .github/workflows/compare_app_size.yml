@@ -27,7 +27,7 @@ jobs:
           mv AnkiDroid/build/outputs/apk/play/debug/ base_apks
           du -m base_apks | cut -f1 >> base.txt
       - name: Upload base apk metrics
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: base.txt
           path: base.txt
@@ -42,7 +42,7 @@ jobs:
           mv AnkiDroid/build/outputs/apk/play/debug/ target_apks
           du -m target_apks | cut -f1 >> target.txt
       - name: Download base apk metrics
-      - uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: base.txt
           path: base.txt
