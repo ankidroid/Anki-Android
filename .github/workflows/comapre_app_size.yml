@@ -14,9 +14,9 @@ jobs:
         with:
           java-version: '11.x'
       - name: Checkout main branch
-          uses: actions/checkout@v2
-          with:
-            ref: main
+        uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
       - name: Build base app
