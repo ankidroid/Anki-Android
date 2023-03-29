@@ -34,12 +34,12 @@ jobs:
           ./gradlew assemblePlayDebug -DenableSeparateBuildPerCPUArchitecture=false
           mv AnkiDroid/build/outputs/apk/play/debug/AnkiDroid-play-debug.apk target.apk
       - name: App Size Comparison
-        uses: microsoft/android-app-size-diff@v1
+        uses: microsoft/android-app-size-diff@v1.0.5
         with:
           baseAppPath: base.apk
           baseAppLabel: 'Base App'
           targetAppPath: target.apk
           targetAppLabel: 'Target App'
           summaryOutputPath: summary.md
-      - name: Clean Up
-        run: rm base.apk target.apk
+      - name: Print Summary
+        run: cat summary.md
