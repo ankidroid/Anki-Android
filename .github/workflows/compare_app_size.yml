@@ -25,7 +25,7 @@ jobs:
         run: |
           ./gradlew assemblePlayDebug
           mv AnkiDroid/build/outputs/apk/play/debug/ base_apks
-          du -m base_apks | cut -f1 >> base.txt
+          du -m base_apks | cut -f1 | tr -d ' ' >> base.txt
       - name: Upload base apk metrics
         uses: actions/upload-artifact@v3
         with:
@@ -40,7 +40,7 @@ jobs:
         run: |
           ./gradlew assemblePlayDebug
           mv AnkiDroid/build/outputs/apk/play/debug/ target_apks
-          du -m target_apks | cut -f1 >> target.txt
+          du -m target_apks | cut -f1 | tr -d ' ' >> target.txt
       - name: Download base apk metrics
         uses: actions/download-artifact@v3
         with:
@@ -49,12 +49,11 @@ jobs:
       - name: App Size Comparison
         shell: bash
         run: |
-          ls
-          cat base.txt
           cat target.txt
-          total=$(ls -1 target_apks/*.apk | wc -l | sed 's/^ *//')
-          echo $total
+          cat base.txt
           delta=$(expr $(cat target.txt) - $(cat base.txt))
           echo $delta
+          total=$(ls -1 target_apks/*.apk | wc -l | sed 's/^ *//')
+          echo $total
           result=$(echo "scale=5;  $delta / $total" | bc)
           echo "APK size changed by: $result Mb"
