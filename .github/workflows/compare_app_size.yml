@@ -49,6 +49,7 @@ jobs:
       - name: App Size Comparison
         shell: bash
         run: |
+          ls
           total=$(ls -1 target_apks/*.apk | wc -l | sed 's/^ *//')
           delta=$(expr $(cat target.txt) - $(cat base.txt))
           result=$(echo "scale=5;  $delta / $total" | bc)
