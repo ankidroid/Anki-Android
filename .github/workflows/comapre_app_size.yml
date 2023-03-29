@@ -30,9 +30,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Build target app
         shell: bash
-          run: |
-            ./gradlew assemblePlayDebug -DenableSeparateBuildPerCPUArchitecture=false
-            mv AnkiDroid/build/outputs/apk/play/debug/AnkiDroid-play-debug.apk target.apk
+        run: |
+          ./gradlew assemblePlayDebug -DenableSeparateBuildPerCPUArchitecture=false
+          mv AnkiDroid/build/outputs/apk/play/debug/AnkiDroid-play-debug.apk target.apk
       - name: App Size Comparison
         uses: microsoft/android-app-size-diff@v1
         with:
