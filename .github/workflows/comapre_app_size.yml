@@ -1,0 +1,45 @@
+name: Compare App Size
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compare-app-size:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11.x'
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Build base app
+        shell: bash
+        run: |
+          ./gradlew assemblePlayDebug -DenableSeparateBuildPerCPUArchitecture=false
+          mv AnkiDroid/build/outputs/apk/play/debug/AnkiDroid-play-debug.apk base.apk
+      - name: Checkout pull request branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Build target app
+        shell: bash
+          run: |
+            ./gradlew assemblePlayDebug -DenableSeparateBuildPerCPUArchitecture=false
+            mv AnkiDroid/build/outputs/apk/play/debug/AnkiDroid-play-debug.apk target.apk
+      - name: App Size Comparison
+        uses: microsoft/android-app-size-diff@v1
+        with:
+          baseAppPath: base.apk
+          baseAppLabel: 'Base App'
+          targetAppPath: target.apk
+          targetAppLabel: 'Target App'
+          summaryOutputPath: summary.md
+      - name: Clean Up
+        run: rm base.apk target.apk
