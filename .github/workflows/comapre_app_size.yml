@@ -13,12 +13,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '11.x'
+      - name: Checkout main branch
+          uses: actions/checkout@v2
+          with:
+            ref: main
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
-      - name: Checkout main branch
-        uses: actions/checkout@v2
-        with:
-          ref: main
       - name: Build base app
         shell: bash
         run: |
