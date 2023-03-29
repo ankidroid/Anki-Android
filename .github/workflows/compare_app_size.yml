@@ -47,7 +47,7 @@ jobs:
         run: |
           cat base.txt
           cat target.txt
-          total=$(ls -1 target_apks/*.apk | wc -l | sed 's/^ *//')
+          total=4
           cat $total
           delta=$(expr $(cat target.txt) - $(cat base.txt))
           cat $delta
