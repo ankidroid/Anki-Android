@@ -693,7 +693,7 @@ open class Reviewer :
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (currentCard == null) {
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong))
+            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
         val intent = if (BackendFactory.defaultLegacySchema) {
