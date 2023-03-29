@@ -37,9 +37,9 @@ jobs:
         uses: microsoft/android-app-size-diff@v1.0.5
         with:
           baseAppPath: base.apk
-          baseAppLabel: 'Base App'
+          baseAppLabel: Base App
           targetAppPath: target.apk
-          targetAppLabel: 'Target App'
+          targetAppLabel: Target App
           summaryOutputPath: summary.md
       - name: Print Summary
         run: cat summary.md
