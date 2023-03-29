@@ -14,7 +14,7 @@ jobs:
         with:
           java-version: '11.x'
       - name: Checkout main branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: 'main'
           fetch-depth: 0
@@ -26,7 +26,7 @@ jobs:
           ./gradlew assemblePlayDebug
           mv AnkiDroid/build/outputs/apk/play/debug/ base_apks
       - name: Checkout pull request branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
       - name: Build target app
