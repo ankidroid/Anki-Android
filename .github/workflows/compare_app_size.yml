@@ -28,9 +28,9 @@ jobs:
           du -m base_apks | cut -f1 >> base.txt
       - name: Upload base apk metrics
       - uses: actions/upload-artifact@v3
-          with:
-            name: base.txt
-            path: base.txt
+        with:
+          name: base.txt
+          path: base.txt
       - name: Checkout pull request branch
         uses: actions/checkout@v3
         with:
