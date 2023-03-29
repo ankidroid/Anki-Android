@@ -40,6 +40,8 @@ jobs:
           baseAppLabel: Base App
           targetAppPath: target.apk
           targetAppLabel: Target App
+          metrics: apkSize, installSize, arscFile, nativeLibs, dexFiles
+          thresholds: 10, 10, 10, 10, 10
           summaryOutputPath: summary.md
       - name: Print Summary
         run: cat summary.md
