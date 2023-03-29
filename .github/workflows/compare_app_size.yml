@@ -48,9 +48,9 @@ jobs:
           cat base.txt
           cat target.txt
           total=4
-          cat $total
+          echo $total
           delta=$(expr $(cat target.txt) - $(cat base.txt))
-          cat $delta
+          echo $delta
           result=$(echo "scale=5;  $delta / $total" | bc)
-          cat $result
+          echo $result
           echo "APK size changed by: $result Mb"
