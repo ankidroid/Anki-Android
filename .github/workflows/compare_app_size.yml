@@ -16,7 +16,8 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: 'main'
+          fetch-depth: 0
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
       - name: Build base app
@@ -27,7 +28,7 @@ jobs:
       - name: Checkout pull request branch
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 1
       - name: Build target app
         shell: bash
         run: |
