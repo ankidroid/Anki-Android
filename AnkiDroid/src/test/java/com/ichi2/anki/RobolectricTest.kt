@@ -194,7 +194,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         mBackground = true
     }
 
-    @Deprecated("Use clickAlertDialogButton below")
     protected fun clickMaterialDialogButton(button: WhichButton?, @Suppress("SameParameterValue") checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
@@ -224,7 +223,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      *
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
-    @Deprecated("Use getAlertDialogText below")
     protected fun getMaterialDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
         val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
