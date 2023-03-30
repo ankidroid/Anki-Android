@@ -57,4 +57,5 @@ jobs:
             const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
             const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
             const delta = (target-base)/total;
-            console.log(`Apk size changed by ${delta}Mb`);
+            const core = require('@actions/core')
+            core.notice(`Apk size changed by ${delta}Mb`)
