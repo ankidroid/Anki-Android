@@ -47,16 +47,15 @@ jobs:
 #        with:
 #          name: base.txt
 #          path: ./
-      - name: App Size Comparison
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
+#      - name: App Size Comparison
+#        uses: actions/github-script@v6
+#        with:
+#          script: |
 #            const fs = require('fs');
 #            const base = parseInt(fs.readFileSync('base.txt', 'utf8'));
 #            const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
 #            const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
 #            const delta = (target-base)/total;
-            core.notice(`Apk size changed by`)
+#            core.notice(`Apk size changed by`)
     outputs:
       summary: ${{ job.status }} - My custom summary message
