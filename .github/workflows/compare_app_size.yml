@@ -57,13 +57,6 @@ jobs:
             const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
             const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
             const delta = (target-base)/total;
-            await github.rest.checks.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_run_id: context.runId,
-              output: {
-                title: 'Compare App Size',
-                summary: `Apk size changed by ${delta}Mb`,
-              },
-            });
-            
+            const summary = `### Apk size changed by ${delta}Mb`;
+            console.log(`::set-output name=step-summary::${summary}`);
+            console.log(`::set-env name=GITHUB_STEP_SUMMARY::${summary}`);
