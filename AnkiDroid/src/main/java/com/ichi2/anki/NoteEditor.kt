@@ -1798,12 +1798,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun suggestRemoveButton(
         button: CustomToolbarButton,
-        editToolbarItemDialog: AlertDialog.Builder
+        editToolbarItemDialog: AlertDialog
     ) {
         AlertDialog.Builder(this).show {
             title(R.string.remove_toolbar_item)
             positiveButton(R.string.dialog_positive_delete) {
-                editToolbarItemDialog.cancelable(true)
+                editToolbarItemDialog.dismiss()
                 removeButton(button)
             }
             negativeButton(R.string.dialog_cancel)
@@ -1826,11 +1826,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun displayAddToolbarDialog() {
         val v = layoutInflater.inflate(R.layout.note_editor_toolbar_add_custom_item, null)
+        v.setPadding(50, 0, 50, 0)
+        val view = ScrollView(this)
+        view.addView(v)
         toolbarDialog.show {
             title(R.string.add_toolbar_item)
-            setView(R.layout.note_editor_toolbar_add_custom_item)
+            setView(view)
             positiveButton(R.string.dialog_positive_create) {
-                val view = v
                 val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
                 val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
                 val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
@@ -1841,6 +1843,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {
         val view = layoutInflater.inflate(R.layout.note_editor_toolbar_edit_custom_item, null)
+        view.setPadding(50, 0, 50, 0)
+        val v = ScrollView(this)
+        v.addView(view)
         val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
         val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
         val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
@@ -1849,7 +1854,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         et.setText(currentButton.prefix)
         et2.setText(currentButton.suffix)
         val editToolbarDialog = toolbarDialog
-            .setView(view)
+            .setView(v)
             .positiveButton(R.string.save) {
                 editToolbarButton(
                     etIcon.text.toString(),
@@ -1858,6 +1863,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     currentButton
                 )
             }
+            .create()
         btnDelete.setOnClickListener {
             suggestRemoveButton(
                 currentButton,
