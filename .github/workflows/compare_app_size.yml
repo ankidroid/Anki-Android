@@ -18,44 +18,45 @@ jobs:
         with:
           ref: 'main'
           fetch-depth: 0
-      - name: Grant execute permission to gradlew
-        run: chmod +x gradlew
-      - name: Build base app
-        shell: bash
-        run: |
-          ./gradlew assemblePlayDebug
-          mv AnkiDroid/build/outputs/apk/play/debug/ base_apks
-          du -m base_apks | cut -f1 | tr -d ' ' >> base.txt
-      - name: Upload base apk metrics
-        uses: actions/upload-artifact@v3
-        with:
-          name: base.txt
-          path: ./base.txt
-      - name: Checkout pull request branch
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-      - name: Build target app
-        shell: bash
-        run: |
-          ./gradlew assemblePlayDebug
-          mv AnkiDroid/build/outputs/apk/play/debug/ target_apks
-          du -m target_apks | cut -f1 | tr -d ' ' >> target.txt
-          ls -1 target_apks/*.apk | wc -l | tr -d ' ' >> total.txt
-      - name: Download base apk metrics
-        uses: actions/download-artifact@v3
-        with:
-          name: base.txt
-          path: ./
+#      - name: Grant execute permission to gradlew
+#        run: chmod +x gradlew
+#      - name: Build base app
+#        shell: bash
+#        run: |
+#          ./gradlew assemblePlayDebug
+#          mv AnkiDroid/build/outputs/apk/play/debug/ base_apks
+#          du -m base_apks | cut -f1 | tr -d ' ' >> base.txt
+#      - name: Upload base apk metrics
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: base.txt
+#          path: ./base.txt
+#      - name: Checkout pull request branch
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 1
+#      - name: Build target app
+#        shell: bash
+#        run: |
+#          ./gradlew assemblePlayDebug
+#          mv AnkiDroid/build/outputs/apk/play/debug/ target_apks
+#          du -m target_apks | cut -f1 | tr -d ' ' >> target.txt
+#          ls -1 target_apks/*.apk | wc -l | tr -d ' ' >> total.txt
+#      - name: Download base apk metrics
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: base.txt
+#          path: ./
       - name: App Size Comparison
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const fs = require('fs');
-            const base = parseInt(fs.readFileSync('base.txt', 'utf8'));
-            const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
-            const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
-            const delta = (target-base)/total;
-            const core = require('@actions/core')
-            core.notice(`Apk size changed by ${delta}Mb`)
+#            const fs = require('fs');
+#            const base = parseInt(fs.readFileSync('base.txt', 'utf8'));
+#            const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
+#            const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
+#            const delta = (target-base)/total;
+            core.notice(`Apk size changed by`)
+    outputs:
+      summary: ${{ job.status }} - My custom summary message
