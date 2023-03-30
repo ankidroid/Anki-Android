@@ -78,6 +78,8 @@ class IntroductionActivity : AppIntro() {
         }
 
         this.setColorDoneText(getColorFromAttr(this, android.R.attr.textColorPrimary))
+        this.showSeparator(false)
+        isButtonsEnabled = false
     }
 
     private fun openLoginDialog() {
