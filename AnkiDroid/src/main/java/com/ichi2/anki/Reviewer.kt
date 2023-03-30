@@ -46,6 +46,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
@@ -53,7 +54,6 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
@@ -73,6 +73,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
@@ -150,10 +151,9 @@ open class Reviewer :
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                this,
+            showSnackbar(
                 resources.getQuantityString(toastResourceId, cardCount, cardCount),
-                true
+                Snackbar.LENGTH_SHORT
             )
         }
     }
@@ -448,10 +448,10 @@ open class Reviewer :
                 if (whiteboard != null) {
                     try {
                         val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
-                        showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
+                        showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
                     } catch (e: Exception) {
                         Timber.w(e)
-                        showThemedToast(this@Reviewer, getString(R.string.white_board_image_save_failed, e.localizedMessage), true)
+                        showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
                     }
                 }
             }
@@ -703,7 +703,7 @@ open class Reviewer :
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (currentCard == null) {
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
+            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
         val intent = if (BackendFactory.defaultLegacySchema) {
