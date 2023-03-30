@@ -57,7 +57,7 @@ jobs:
             const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
             const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
             const delta = (target-base)/total;
-            github.issues.createComment({
+            await github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
