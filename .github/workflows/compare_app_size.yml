@@ -57,11 +57,13 @@ jobs:
             const target = parseInt(fs.readFileSync('target.txt', 'utf8'));
             const total = parseInt(fs.readFileSync('total.txt', 'utf8'));
             const delta = (target-base)/total;
-            console.log(`Apk size changed by: ${delta} Mb`)
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            await github.rest.checks.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Apk size changed by: ${delta} Mb`
+              check_run_id: context.runId,
+              output: {
+                title: 'Compare App Size',
+                summary: `Apk size changed by ${delta}Mb`,
+              },
             });
             
