@@ -20,9 +20,12 @@ package com.ichi2.utils
 
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
+import android.view.View
+import android.widget.CheckBox
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
@@ -38,7 +41,7 @@ fun DialogInterfaceListener.toClickListener(): OnClickListener {
  */
 fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? = null): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         setTitle(stringRes)
@@ -49,7 +52,7 @@ fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? =
 
 fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSequence? = null): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         setMessage(stringRes)
@@ -73,7 +76,7 @@ fun AlertDialog.Builder.positiveButton(
     click: DialogInterfaceListener? = null
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         this.setPositiveButton(stringRes, click?.toClickListener())
@@ -88,7 +91,7 @@ fun AlertDialog.Builder.neutralButton(
     click: DialogInterfaceListener? = null
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         this.setNeutralButton(stringRes, click?.toClickListener())
@@ -103,7 +106,7 @@ fun AlertDialog.Builder.negativeButton(
     click: DialogInterfaceListener? = null
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `title` must be set")
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
     return if (stringRes != null) {
         this.setNegativeButton(stringRes, click?.toClickListener())
@@ -123,4 +126,34 @@ fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
 inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog.Builder = apply {
     this.block()
     this.show()
+}
+
+/**
+ * Adds a checkbox to the dialog, whilst continuing to display the value of [message]
+ * @param stringRes The string resource to display for the checkbox label.
+ * @param text The literal string to display for the checkbox label.
+ * @param isCheckedDefault Whether or not the checkbox is initially checked.
+ * @param onToggle A listener invoked when the checkbox is checked or unchecked.
+ */
+fun AlertDialog.Builder.checkBoxPrompt(
+    @StringRes stringRes: Int? = null,
+    text: CharSequence? = null,
+    isCheckedDefault: Boolean = false,
+    onToggle: (checked: Boolean) -> Unit
+): AlertDialog.Builder {
+    if (stringRes == null && text == null) {
+        throw IllegalArgumentException("either `stringRes` or `text` must be set")
+    }
+    val checkBoxView = View.inflate(this.context, R.layout.alert_dialog_checkbox, null)
+    val checkBox = checkBoxView.findViewById<CheckBox>(R.id.checkbox)
+
+    val checkBoxLabel = if (stringRes != null) context.getString(stringRes) else text
+    checkBox.text = checkBoxLabel
+    checkBox.isChecked = isCheckedDefault
+
+    checkBox.setOnCheckedChangeListener { _, isChecked ->
+        onToggle(isChecked)
+    }
+
+    return this.setView(checkBoxView)
 }

@@ -354,7 +354,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    @Suppress("deprecation") // get
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // All image modification methods come through here - this ensures that the state is consistent
 
@@ -393,7 +392,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
             ACTIVITY_DRAWING -> {
                 // receive image from drawing activity
-                val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
+                val savedImagePath = data!!.extras!!.getParcelableCompat<Uri>(DrawingActivity.EXTRA_RESULT_WHITEBOARD)
                 handleDrawingResult(savedImagePath)
             }
             else -> {
@@ -824,10 +823,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
 
         companion object {
-            @Suppress("deprecation") // getParcelable
             fun fromBundle(savedInstanceState: Bundle): ImageViewModel {
                 val imagePath = savedInstanceState.getString("mImagePath")
-                val imageUri = savedInstanceState.getParcelable<Uri>("mImageUri")
+                val imageUri = savedInstanceState.getParcelableCompat<Uri>("mImageUri")
                 return ImageViewModel(imagePath, imageUri)
             }
         }

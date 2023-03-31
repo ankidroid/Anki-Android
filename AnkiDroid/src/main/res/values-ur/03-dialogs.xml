@@ -44,46 +44,46 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
+    <string name="check_db_title">ڈاٹا بیس کو جانچ لیں؟</string>
+    <string name="check_db_warning">یہ ایک طویل وقت لگ سکتا ہے</string>
+    <string name="check_db_acknowledge">ڈیٹا بیس کی جانچ پڑتال</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="contextmenu_deckpicker_delete_deck">ڈیک کو حذف کریں</string>
+    <string name="delete_deck_default_deck">پہلے سے طے شدہ ڈیک کو حذف نہیں کیا جا سکتا</string>
+    <string name="delete_deck_title">ڈیک کو حذف کریں؟</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
     </plurals>
     <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="no_tts_available_message">متن سے تقریر کی کوئی زبان دستیاب نہیں ہے۔</string>
+    <string name="initializing_tts">ٹی ٹی ایس کو شروع کرنا&#8230;</string>
+    <string name="tts_no_tts">مت بولو</string>
+    <string name="unused_strings">\n\nغیر استعمال شدہ فائلیں:\n</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نظارہ</string>
+    <string name="reposition_card_dialog_title">نئے کارڈ کی جگہ</string>
+    <string name="reposition_card_dialog_message">شروع کی پوزیشن:</string>
+    <string name="reposition_card_not_new_error">صرف نئے کارڈز کی جگہ تبدیل کی جا سکتی ہے۔</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>
         <item quantity="other">%d cards repositioned</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
-    <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
+    <string name="reset_card_dialog_title">کارڈ کی پیشرفت کو دوبارہ ترتیب دیں۔</string>
+    <string name="reset_card_dialog_message">یہ کارڈ نئے کارڈ کی قطار کے آخر میں رکھا جائے گا۔</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
+        <item quantity="one">%d کارڈ ری سیٹ</item>
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
+        <item quantity="one">دوبارہ شیڈول %d کارڈ</item>
         <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
+        <item quantity="one">موجودہ وقفہ: %d دن</item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
+    <string name="reschedule_card_dialog_message">x دنوں میں جائزہ کے لیے دوبارہ شیڈول کریں۔</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
@@ -107,7 +107,7 @@
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Importing collection&#8230;</string>
+    <string name="importing_collection">مجموعہ درآمد کر رہا ہے...</string>
     <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
     <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>

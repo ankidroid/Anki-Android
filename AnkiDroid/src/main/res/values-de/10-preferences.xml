@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Anzeigen, falls genug Platz</string>
     <string name="custom_buttons_setting_menu_only">Nur Menü</string>
     <string name="reset_custom_buttons" maxLength="41">Auf Standard zurücksetzen</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">API-Apps von Drittanbietern</string>
     <string name="thirdparty_apps_summary">Eine Liste von Anwendungen anzeigen, die die AnkiDroid-API verwenden (z. B. Wörterbücher, Werkzeuge etc.)</string>
     <string name="html_javascript_debugging" maxLength="41">HTML/Javascript-Debugging</string>
@@ -397,7 +399,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Sammlung löschen</string>
     <string name="pref__delete_collection__summary">Sammlung, Medien und Sicherungen löschen. App-Einstellungen werden nicht gelöscht</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Sammlung löschen</string>
-    <string name="dialog__delete_collection__message">Sind Sie sicher, dass Sie Ihre Sammlung, Medien und Sicherungen löschen möchten?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Sind Sie sicher, dass Sie Ihre Sammlung, Medien und Sicherungen löschen möchten?</string>
     <string name="progress__deleting_collection">Sammlung wird gelöscht&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Alles löschen</string>

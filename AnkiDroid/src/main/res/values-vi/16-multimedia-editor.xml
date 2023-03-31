@@ -52,7 +52,7 @@
     <string name="multimedia_editor_pron_looking_up">Dò tìm cách phát âm</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Không thể phát âm</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">Chỉ hỗ trợ một từ một lần</string>
     <string name="multimedia_editor_word_search_try_lower_case">Chỉ sử dụng chữ thường</string>
     <string name="multimedia_editor_poweredbeolingus">Được tài trợ bởi Beolingus</string>
     <!-- Field editing general -->

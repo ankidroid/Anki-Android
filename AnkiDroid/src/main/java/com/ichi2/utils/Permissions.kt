@@ -49,7 +49,7 @@ object Permissions {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun isExternalStorageManager(): Boolean {
+    fun isExternalStorageManager(): Boolean {
         // BUG: Environment.isExternalStorageManager() crashes under robolectric
         // https://github.com/robolectric/robolectric/issues/7300
         if (isRobolectric) {

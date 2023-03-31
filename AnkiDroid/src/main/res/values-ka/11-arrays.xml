@@ -53,15 +53,15 @@
     <string name="new_order_random">ახალი ბარათები შემთხევით თანმიმდევრობაში</string>
     <string name="new_order_order_added">ახალი ბარათები დამატების თანმიმდევრობის მიხედვით</string>
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">ჯერ ბოლოს ნანახები</string>
     <string name="cram_deck_conf_order_random">შემთხვევით</string>
     <string name="cram_deck_conf_order_increasing_intervals">ზრდადი შუალედები</string>
     <string name="cram_deck_conf_order_decreasing_intervals">კლებადი შუალედები</string>
     <string name="cram_deck_conf_order_most_lapsed">ყველაზე ხშირად გადავიწყებული</string>
     <string name="cram_deck_conf_order_order_added">დამატების თანმიმდევრობა</string>
     <string name="cram_deck_conf_order_order_due">სასწავლო ბარათების თანმიმდევრობა</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_latest_added_first">ჯერ ბოლოს დამატებულები</string>
+    <string name="cram_deck_conf_order_relative_overdueness">შედარებით დაგვიანებული</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">მიმდინარე დასტის გამოყენება</string>
     <string name="add_to_deck_decide_by_note_type">შენიშვნის ტიპის მიხედვით გადაწყვეტა</string>
@@ -70,7 +70,7 @@
     <string name="new_spread_new_after_review">ახალი ბარათები გადახედვების შემდეგ</string>
     <string name="new_spread_new_before_review">ახალი ბარათები გადახედვებამდე</string>
     <!-- override_font_labels -->
-    <string name="override_font_if_missing">When no font specified on flashcards</string>
+    <string name="override_font_if_missing">როცა ბარათებზე შრიფტი არაა მითითებული</string>
     <string name="override_font_always" comment="Option to always override font">ყოველთვის</string>
     <!-- theme labels -->
     <string name="theme_follow_system">სისტემის მიხედვით</string>
@@ -107,12 +107,12 @@
     <string name="gesture_flag_remove">დროშის მოძრობა</string>
     <string name="gesture_page_up">გვერდით მაღლა</string>
     <string name="gesture_page_down">გვერდით დაბლა</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">სწავლის შეწყვეტა და სინქრონიზაცია</string>
     <string name="gesture_toggle_whiteboard">დაფის ჩართვა/გამორთვა</string>
     <string name="gesture_show_hint">მინიშნების ჩვენება</string>
     <string name="gesture_show_all_hints">ყველა მინიშნების ჩვენება</string>
     <string name="record_voice">ხმის ჩაწერა</string>
     <string name="replay_voice">ხმის გამეორება</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">რთული (კარგია, თუ არაა)</string>
+    <string name="automatic_answer_option_4">მარტივი (კარგია, თუ არაა)</string>
 </resources>

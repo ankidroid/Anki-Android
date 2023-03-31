@@ -305,7 +305,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Voir</string>
     <string name="anki_js_error_code">(Code d\'erreur : %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Informations de débogage copiées dans le presse-papiers</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Erreur lors de la copie des informations de débogage dans le presse-papiers</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
@@ -362,12 +362,13 @@
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
     <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
     <string name="home">Accueil</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Carte enterrée</string>
-    <string name="buried_note">Note enterrée</string>
-    <string name="deleted_note">Note supprimée</string>
-    <string name="suspended_card">Carte suspendus</string>
-    <string name="suspended_note">Note suspendue</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
     <!-- Scoped Storage Migration -->
@@ -378,10 +379,7 @@
     <string name="search_card_js_api_no_results">La recherche n\'a pas donné de résultats</string>
     <string name="sync_impossible_during_migration">La synchronisation est désactivée jusqu\'à ce que la migration soit terminée.\n
         %1$d fichiers multimédia restants à migrer.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">Si vous réinstallez AnkiDroid, il ne pourra pas ouvrir votre collection.</string>
-    <string name="migration_update_request_dialog_download_warning">Si vous désinstallez AnkiDroid, vous devrez télécharger à nouveau votre collection complète.</string>
-    <string name="migration_update_request">La politique d\'accès au stockage Android nous oblige à changer où nous stockons votre collection. Lorsque vos données seront migrées, AnkiDroid sera plus rapide et vos données seront plus sécurisées.
-    Vous ne pourrez pas synchroniser pendant la migration de stockage.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Démarrage de la migration du stockage. Vous pouvez reprendre votre utilisation d\'AnkiDroid sous peu.</string>
     <string name="migration_part_1_done_resume">Vous pouvez continuer à utiliser AnkiDroid.
 \nLa migration du stockage continuera en arrière-plan.</string>
@@ -417,4 +415,7 @@
     <string name="browser_options_dialog_heading">Options du navigateur</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

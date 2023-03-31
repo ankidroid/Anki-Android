@@ -88,7 +88,7 @@
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
     <string name="answering_error_report">エラーを報告する</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">AnkiDroidアプリを開くための十分な空き容量がストレージにありません。続行するには空き容量を確保してください。 </string>
     <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
     <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
@@ -253,14 +253,13 @@
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">コレクションをバックアップ</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_collection_message">しばらくコレクションをバックアップしていません。データの損失を防ぐためにすぐにバックアップを行うことを強く推奨します。</string>
     <string name="button_backup">バックアップ</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_disable_reminder">リマインダーを無効にする</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">今後表示しない</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="dismiss_backup_warning_title">データ損失の警告</string>
+    <string name="dismiss_backup_warning_new_user">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、あなたのコレクションや自動バックアップのデータもこの端末から削除されます。
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="dismiss_backup_warning_upgrade">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、現在のコレクションや自動バックアップのデータにアクセスできなくなります。</string>
 </resources>

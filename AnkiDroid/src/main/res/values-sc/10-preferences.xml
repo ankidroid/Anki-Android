@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Ammustra si b\'at logu</string>
     <string name="custom_buttons_setting_menu_only">Menù ebbia</string>
     <string name="reset_custom_buttons" maxLength="41">Torra a sos paràmetros predefinidos</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicatziones API esternas (de tertzas partes)</string>
     <string name="thirdparty_apps_summary">Pòmpia·ti una lista de aplicatziones chi impreant s\'API de AnkiDroid che a ditzionàrios o àteras ainas.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuratzione de còdighe HTML / Javascript</string>
@@ -401,7 +403,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
     <string name="progress__deleting_collection">Deleting collection&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>

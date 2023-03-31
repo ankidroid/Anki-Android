@@ -37,6 +37,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.*
 import android.webkit.WebView.HitTestResult
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -50,6 +51,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -758,6 +760,11 @@ abstract class AbstractFlashcardViewer :
         return text ?: ""
     }
 
+    val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+        Timber.i("Returned from deck options -> Restarting activity")
+        performReload()
+    }
+
     @Suppress("deprecation") // super.onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -785,8 +792,6 @@ abstract class AbstractFlashcardViewer :
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard()
             }
-        } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            performReload()
         }
     }
 
@@ -920,7 +925,7 @@ abstract class AbstractFlashcardViewer :
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
         dismiss(DeleteNote(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.deleted_note)
+            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note().numberOfCards()))
         }
     }
 
@@ -929,6 +934,15 @@ abstract class AbstractFlashcardViewer :
         duration: Int = Snackbar.LENGTH_SHORT
     ) {
         showSnackbarAboveAnswerButtons(textResource, duration) {
+            setAction(R.string.undo) { undo() }
+        }
+    }
+
+    private fun showSnackbarWithUndoButtonText(
+        text: String,
+        duration: Int = Snackbar.LENGTH_SHORT
+    ) {
+        showSnackbarAboveAnswerButtons(text, duration) {
             setAction(R.string.undo) { undo() }
         }
     }
@@ -1667,43 +1681,28 @@ abstract class AbstractFlashcardViewer :
         invalidateOptionsMenu()
     }
 
-    /**
-     * Select Text in the webview and automatically sends the selected text to the clipboard. From
-     * http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
-     */
-    @Suppress("deprecation") // Tracked separately in Github as #5024
-    private fun selectAndCopyText() {
-        mIsSelecting = try {
-            val shiftPressEvent = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0)
-            processCardAction { receiver: WebView? -> shiftPressEvent.dispatch(receiver) }
-            shiftPressEvent.isShiftPressed
-            true
-        } catch (e: Exception) {
-            throw AssertionError(e)
-        }
-    }
-
     internal fun buryCard(): Boolean {
         return dismiss(BuryCard(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.buried_card)
+            showSnackbarWithUndoButton(R.string.card_buried)
         }
     }
 
     internal fun suspendCard(): Boolean {
         return dismiss(SuspendCard(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.suspended_card)
+            showSnackbarWithUndoButtonText(TR.studyingCardSuspended())
         }
     }
 
     internal fun suspendNote(): Boolean {
         return dismiss(SuspendNote(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.suspended_note)
+            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note().numberOfCards(), currentCard!!.note().numberOfCards())
+            showSnackbarWithUndoButtonText(noteSuspended)
         }
     }
 
     internal fun buryNote(): Boolean {
         return dismiss(BuryNote(currentCard!!)) {
-            showSnackbarWithUndoButton(R.string.buried_note)
+            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note().numberOfCards()))
         }
     }
 
@@ -2635,7 +2634,6 @@ abstract class AbstractFlashcardViewer :
          * Available options performed by other activities.
          */
         const val EDIT_CURRENT_CARD = 0
-        const val DECK_OPTIONS = 1
         const val EASE_1 = 1
         const val EASE_2 = 2
         const val EASE_3 = 3

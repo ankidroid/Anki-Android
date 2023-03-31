@@ -21,17 +21,16 @@ import android.content.Context
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onCancel
-import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.*
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
@@ -156,11 +155,11 @@ fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
 
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
-        MaterialDialog(context).show {
+        AlertDialog.Builder(context).show {
             title(R.string.vague_error)
             message(text = msg)
             positiveButton(R.string.dialog_ok)
-            onDismiss {
+            setOnDismissListener {
                 CrashReportService.sendExceptionReport(
                     exception,
                     origin = context::class.java.simpleName
@@ -339,14 +338,14 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
         return true
     }
     return suspendCoroutine { coroutine ->
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             message(text = col.tr.deckConfigWillRequireFullSync()) // generic message
             positiveButton(R.string.dialog_ok) {
                 col.modSchemaNoCheck()
                 coroutine.resume(true)
             }
             negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
-            onCancel { coroutine.resume(false) }
+            setOnCancelListener { coroutine.resume(false) }
         }
     }
 }
@@ -356,11 +355,11 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
         return true
     }
     val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
-        MaterialDialog(this).show {
+        AlertDialog.Builder(this).show {
             message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
             positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
             negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
-            onCancel { coroutine.resume(false) }
+            setOnCancelListener { coroutine.resume(false) }
         }
     }
     if (hasAcceptedSchemaChange) {

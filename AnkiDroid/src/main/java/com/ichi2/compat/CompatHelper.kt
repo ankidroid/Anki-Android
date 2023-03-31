@@ -191,5 +191,19 @@ class CompatHelper private constructor() {
         inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
             compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
         }
+
+        /**
+         * Returns the value associated with the given key, or null if:
+         *
+         * * No mapping of the desired type exists for the given key.
+         * * A null value is explicitly associated with the key.
+         * * The object is not of type T.
+         *
+         * @param key a String, or null
+         * @return a [SparseArray] of T values, or null
+         */
+        inline fun <reified T : Parcelable> Bundle.getSparseParcelableArrayCompat(key: String): SparseArray<T>? {
+            return compat.getSparseParcelableArray(this, key, T::class.java)
+        }
     }
 }

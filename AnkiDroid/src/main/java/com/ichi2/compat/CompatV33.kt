@@ -84,4 +84,12 @@ open class CompatV33 : CompatV31(), Compat {
     override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
         return bundle.getParcelable(key, clazz)
     }
+
+    override fun <T : Parcelable> getSparseParcelableArray(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>
+    ): SparseArray<T>? {
+        return bundle.getSparseParcelableArray(key, clazz)
+    }
 }
