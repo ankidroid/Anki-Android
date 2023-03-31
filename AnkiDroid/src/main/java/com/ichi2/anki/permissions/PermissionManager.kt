@@ -116,7 +116,8 @@ class PermissionManager private constructor(
         if (permissions.requiresPermissionDialog) {
             this.launchPermissionDialog()
         } else {
-            callback.invoke(PermissionsRequestResults.allGranted(permissions))
+            launchPermissionDialog()
+            // callback.invoke(PermissionsRequestResults.allGranted(permissions))
         }
     }
 
