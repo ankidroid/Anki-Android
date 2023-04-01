@@ -400,6 +400,7 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="migration_progress_indicator">Migration progress indicator</string>
 
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
