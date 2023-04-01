@@ -33,7 +33,7 @@ typealias SnackbarBuilder = Snackbar.() -> Unit
 
 /**
  * An activity/fragment can implement this interface to specify a
- * default configuration for snackbars shown in the activity/fragment.
+ * base configuration for snackbars shown in the activity/fragment.
  */
 interface BaseSnackbarBuilderProvider {
     /**
