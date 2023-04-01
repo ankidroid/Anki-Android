@@ -217,6 +217,9 @@ open class MyAccount : AnkiActivity() {
         mLoggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null)
         mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in)
         val logoutButton = mLoggedIntoMyAccountView.findViewById<Button>(R.id.logout_button)
+        mLoggedIntoMyAccountView.let {
+            mAnkidroidLogo = it.findViewById(R.id.ankidroid_logo)
+        }
         logoutButton.setOnClickListener { logout() }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mPassword.setAutoFillListener {
