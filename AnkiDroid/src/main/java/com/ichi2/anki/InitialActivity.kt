@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.permissions.PermissionManager
 import com.ichi2.anki.permissions.PermissionsRequestResults
 import com.ichi2.anki.permissions.finishActivityAndShowAppPermissionManagementScreen
@@ -203,9 +204,20 @@ class StartupStoragePermissionManager private constructor(
      * for AnkiDroid's permissions
      */
     private fun onPermissionPermanentlyDenied() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            MaterialDialog(deckPicker).show {
+                title(R.string.storage_access)
+                message(R.string.storage_access_permission)
+                positiveButton(R.string.dialog_ok) {
+                    deckPicker.finishActivityAndShowAppPermissionManagementScreen()
+                }
+            }
+            return
+        }
         // User denied access to file storage  so show error toast and display "App Info"
         UIUtils.showThemedToast(deckPicker, R.string.startup_no_storage_permission, false)
-        // note: this may not be defined on some Phones. In which case we still have a toast
+//
+//            // note: this may not be defined on some Phones. In which case we still have a toast
         deckPicker.finishActivityAndShowAppPermissionManagementScreen()
     }
 
@@ -220,7 +232,10 @@ class StartupStoragePermissionManager private constructor(
         } else {
             if (displayError) {
                 Timber.w("doing nothing - app is probably broken")
-                CrashReportService.sendExceptionReport("Multiple errors obtaining permissions", "InitialActivity::permissionManager")
+                CrashReportService.sendExceptionReport(
+                    "Multiple errors obtaining permissions",
+                    "InitialActivity::permissionManager"
+                )
             }
             onPermissionPermanentlyDenied()
         }
