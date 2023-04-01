@@ -114,10 +114,9 @@ class PermissionManager private constructor(
     fun launchDialogOrExecuteCallbackNow() {
         val permissions = checkPermissions()
         if (permissions.requiresPermissionDialog) {
-            this.launchPermissionDialog()
+            this.callback.invoke(PermissionsRequestResults.allGranted(permissions))
         } else {
-            launchPermissionDialog()
-            // callback.invoke(PermissionsRequestResults.allGranted(permissions))
+            this.launchPermissionDialog()
         }
     }
 
