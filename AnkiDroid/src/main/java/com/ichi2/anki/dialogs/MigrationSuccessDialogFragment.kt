@@ -19,12 +19,10 @@ package com.ichi2.anki.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.R
 
-class MigrationSuccessDialog(
-    override val notificationMessage: String?,
-    override val notificationTitle: String
-) : AsyncDialogFragment() {
+class MigrationSuccessDialogFragment() : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())

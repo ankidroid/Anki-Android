@@ -21,10 +21,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import com.ichi2.anki.*
+import com.ichi2.anki.AnkiDroidApp.Companion.isAppInForeground
+import com.ichi2.anki.AnkiDroidApp.Companion.pendingMigrationCompleted
+import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
@@ -103,14 +107,22 @@ class MigrationService : Service() {
 
             // display a toast to the user.
             displayMigrationCompleted(result)
+
             stopSelf()
         }
 
         private fun displayMigrationCompleted(result: Boolean) {
-            // TODO: This should be discussed
+            val activity = AnkiDroidApp.currentActivity
+            if (isAppInForeground && activity is AppCompatActivity) {
+                val dialog = MigrationSuccessDialogFragment()
+                runOnUiThread {
+                    dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
+                }
+            } else {
+                pendingMigrationCompleted = true
+            }
             val message =
                 if (result) R.string.migration_successful_message else R.string.migration_failed_message
-
             // fixes: "Can't toast on a thread that has not called Looper.prepare()"
             runOnUiThread {
                 UIUtils.showThemedToast(context, message, true)

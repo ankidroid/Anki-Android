@@ -939,7 +939,6 @@ open class DeckPicker :
     fun onStorageMigrationCompleted() {
         migrationService.unbind(this)
         invalidateOptionsMenu() // reapply the sync icon
-        showAsyncDialogFragment(MigrationSuccessDialog(resources.getString(R.string.migration_completed), resources.getString(R.string.migration_successful_message)), Channel.SCOPED_STORAGE_MIGRATION)
     }
 
     override fun onStart() {

@@ -18,17 +18,20 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.system.Os
 import android.util.Log
 import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import com.ichi2.anki.CrashReportService.sendExceptionReport
@@ -36,6 +39,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
+import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
@@ -46,6 +50,7 @@ import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.io.InputStream
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -57,6 +62,54 @@ open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
+
+    private val activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
+
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            currentActivity = activity
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+            currentActivity = activity
+            isAppInForeground = true
+            showPendingDialogIfAny()
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+            currentActivity = activity
+            isAppInForeground = true
+            showPendingDialogIfAny()
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+            // Do nothing
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+            isAppInForeground = activity.isChangingConfigurations
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+            // Do nothing
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+            // Do nothing
+        }
+    }
+
+    private fun showPendingDialogIfAny() {
+        if (pendingMigrationCompleted && isAppInForeground) {
+            val activity = currentActivity
+            if (activity is AppCompatActivity) {
+                val dialog = MigrationSuccessDialogFragment()
+                runOnUiThread {
+                    dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
+                }
+                pendingMigrationCompleted = false
+            }
+        }
+    }
 
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
@@ -78,6 +131,7 @@ open class AnkiDroidApp : Application() {
         // because the SQL statement appeared later.
         //   Os.setenv("TRACESQL", "1", false);
         super.onCreate()
+        registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
             // 5887 - fix crash.
@@ -267,6 +321,11 @@ open class AnkiDroidApp : Application() {
     }
 
     companion object {
+        var isAppInForeground = false
+        var pendingMigrationCompleted = false
+        var currentActivity: Activity? = null
+            private set
+
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
         var INSTRUMENTATION_TESTING = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
