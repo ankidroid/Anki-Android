@@ -59,7 +59,6 @@ import java.util.*
 
 @NeedsTest("onCreate - to be done after preference migration (5019)")
 @KotlinCleanup("lateinit wherever possible")
-@KotlinCleanup("IDE lint")
 class DeckOptionsActivity :
     AppCompatPreferenceActivity<DeckOptionsActivity.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
