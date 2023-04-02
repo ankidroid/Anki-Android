@@ -31,6 +31,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
+import com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf
 import com.ichi2.utils.Permissions
@@ -292,14 +293,6 @@ object ScopedStorageService {
             return Status.NOT_NEEDED
         }
 
-        if (!Permissions.hasStorageAccessPermission(context)) {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Environment.isExternalStorageLegacy()) {
-                Status.PERMISSION_FAILED
-            } else {
-                Status.REQUIRES_PERMISSION
-            }
-        }
-
         if (userMigrationIsInProgress(context)) {
             return Status.IN_PROGRESS
         }
@@ -309,10 +302,31 @@ object ScopedStorageService {
 
     enum class Status {
         NEEDS_MIGRATION,
-        REQUIRES_PERMISSION,
-        PERMISSION_FAILED,
         IN_PROGRESS,
         COMPLETED,
         NOT_NEEDED
+    }
+
+    /**
+     * @return whether the user's current collection is now inaccessible due to a 'reinstall'
+     * @see android.R.attr.preserveLegacyExternalStorage
+     * @see android.R.attr.requestLegacyExternalStorage
+     */
+    fun collectionInaccessibleAfterUninstall(context: Context): Boolean {
+        // If we're < Q then `requestLegacyExternalStorage` was not introduced
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return false
+        }
+
+        if (Permissions.canManageExternalStorage(context)) {
+            return false
+        }
+
+        val collectionPath = File(CollectionHelper.getCollectionPath(context))
+        if (collectionPath.isInsideDirectoriesRemovedWithTheApp(context)) {
+            return false
+        }
+
+        return !Environment.isExternalStorageLegacy()
     }
 }

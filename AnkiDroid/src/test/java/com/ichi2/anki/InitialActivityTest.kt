@@ -159,7 +159,7 @@ class InitialActivityTest : RobolectricTest() {
     fun startupAfterQWithoutManageExternalStorage() {
         assertThat(
             selectAnkiDroidFolder(canManageExternalStorage = false),
-            instanceOf(DeleteOnUninstall::class.java)
+            instanceOf(AppPrivateFolder::class.java)
         )
     }
 

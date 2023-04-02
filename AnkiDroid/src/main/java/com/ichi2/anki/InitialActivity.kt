@@ -143,7 +143,7 @@ sealed interface AnkiDroidFolder {
      * No permission dialog is required.
      * Google will not allow [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE], so this is default on the Play Store.
      */
-    object DeleteOnUninstall : AnkiDroidFolder
+    object AppPrivateFolder : AnkiDroidFolder
 }
 
 /**
@@ -157,7 +157,7 @@ internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroid
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
         // since it's fast & safe up to & including 'Q'
         // If a user upgrades their OS from Android 10 to 11 then storage speed is severely reduced
-        // and a user should use one of the below options to provide aster speeds
+        // and a user should use one of the below options to provide faster speeds
         return AnkiDroidFolder.PublicFolder(
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -170,7 +170,7 @@ internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroid
     return if (canManageExternalStorage) {
         AnkiDroidFolder.PublicFolder(arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE))
     } else {
-        return AnkiDroidFolder.DeleteOnUninstall
+        return AnkiDroidFolder.AppPrivateFolder
     }
 }
 
@@ -189,13 +189,13 @@ internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroid
 @NeedsTest("Existing User: Changes Deck")
 class StartupStoragePermissionManager private constructor(
     private val deckPicker: DeckPicker,
-    uninstallPolicy: AnkiDroidFolder,
+    ankidroidFolder: AnkiDroidFolder,
     useCallbackIfActivityRecreated: Boolean
 ) {
     private var timesRequested: Int = 0
-    private val requiredPermissions = when (uninstallPolicy) {
-        is AnkiDroidFolder.DeleteOnUninstall -> noPermissionDialogRequired
-        is AnkiDroidFolder.PublicFolder -> uninstallPolicy.requiredPermissions
+    private val requiredPermissions = when (ankidroidFolder) {
+        is AnkiDroidFolder.AppPrivateFolder -> noPermissionDialogRequired
+        is AnkiDroidFolder.PublicFolder -> ankidroidFolder.requiredPermissions
     }
 
     /**

@@ -292,7 +292,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">檢視</string>
     <string name="anki_js_error_code">(錯誤代碼： %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">已經錯誤資訊複製到剪貼簿</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">將錯誤資訊複製到剪貼簿時發生錯誤</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
@@ -349,12 +349,12 @@
     <string name="check_network">請檢查你的網絡連接</string>
     <string name="search_using_deck_name">按卡片名字搜索</string>
     <string name="home">首页</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">暫時隱藏的卡片</string>
-    <string name="buried_note">隱藏之註記</string>
-    <string name="deleted_note">刪除之註記</string>
-    <string name="suspended_card">擱置之卡片</string>
-    <string name="suspended_note">擱置之註記</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">固定欄位 %s</string>
     <!-- Scoped Storage Migration -->
@@ -365,10 +365,7 @@
     <string name="search_card_js_api_no_results">搜尋沒有任何結果</string>
     <string name="sync_impossible_during_migration">同步功能被禁用，直到遷移完成。\n
         %1$d 個媒體檔案留待遷移。</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">如果您重新安裝AnkiDroid，它將無法打開您的牌組集。</string>
-    <string name="migration_update_request_dialog_download_warning">如果您解除安裝 AnkiDroid，您需要再次下載您的全部集合。</string>
-    <string name="migration_update_request">Android存儲訪問策略要求我們更改存儲牌組集的位置。 遷移數據後，AnkiDroid將更快，您的數據將更安全。
-    您將無法在存儲遷移過程中同步。</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">開始儲存遷移。 不久後您就可以繼續使用 AnkiDroid。</string>
     <string name="migration_part_1_done_resume">您可以繼續使用 AnkiDroid 了。
 \n儲存遷移將在背景繼續。</string>
@@ -404,4 +401,7 @@
     <string name="browser_options_dialog_heading">瀏覽器選項</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        此功能在儲存空間移轉期間無法使用
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

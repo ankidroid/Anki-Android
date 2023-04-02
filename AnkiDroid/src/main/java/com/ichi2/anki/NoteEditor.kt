@@ -48,6 +48,7 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -653,14 +654,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             changed = true
             sourceText = null
             refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-            UIUtils.showThemedToast(
-                this,
-                resources.getQuantityString(
-                    R.plurals.factadder_cards_added,
-                    noOfAddedCards,
-                    noOfAddedCards
-                ),
-                true
+            showSnackbar(
+                resources.getQuantityString(R.plurals.factadder_cards_added, noOfAddedCards, noOfAddedCards),
+                Snackbar.LENGTH_SHORT
             )
         } else {
             displayErrorSavingNote()
@@ -1019,7 +1015,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         addInstanceStateToBundle(noteEditorBundle)
         noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
         previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW)
+        startActivityWithoutAnimation(previewer)
     }
 
     /**
@@ -2221,7 +2217,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val REQUEST_ADD = 0
         const val REQUEST_MULTIMEDIA_EDIT = 2
         const val REQUEST_TEMPLATE_EDIT = 3
-        const val REQUEST_PREVIEW = 4
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"

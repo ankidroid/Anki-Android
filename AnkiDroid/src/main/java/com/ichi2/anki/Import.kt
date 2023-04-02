@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import androidx.core.content.edit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog
@@ -66,8 +67,17 @@ fun DeckPicker.showImportDialog(id: Int, messageList: ArrayList<String>) {
     val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
     showAsyncDialogFragment(newFragment)
 }
-
 fun DeckPicker.showImportDialog() {
+    showImportDialog(
+        ImportOptions(
+            importApkg = true,
+            importColpkg = true,
+            importTextFile = true
+        )
+    )
+}
+
+fun DeckPicker.showImportDialog(options: ImportOptions) {
     if (ScopedStorageService.userMigrationIsInProgress(this)) {
         showSnackbar(
             R.string.functionality_disabled_during_storage_migration,
@@ -75,12 +85,19 @@ fun DeckPicker.showImportDialog() {
         )
         return
     }
-    val options = ImportOptions(
-        importApkg = true,
-        importColpkg = true,
-        importTextFile = true
-    )
     showDialogFragment(ImportFileSelectionFragment.createInstance(this, options))
+}
+
+class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDirectory: String) : ImportColpkgListener {
+    override fun onImportColpkg(colpkgPath: String?) {
+        Timber.i("Database restoration correct")
+        AnkiDroidApp.getSharedPrefs(deckPicker).edit {
+            putString("deckPath", newAnkiDroidDirectory)
+        }
+        deckPicker.dismissAllDialogFragments()
+        deckPicker.importColpkgListener = null
+        CollectionHelper.ankiDroidDirectoryOverride = null
+    }
 }
 
 /* Legacy Backend */

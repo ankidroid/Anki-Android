@@ -59,8 +59,8 @@
     <string name="model_field_editor_rename">ველის სახელის შეცვლა</string>
     <string name="model_field_editor_language_hint">კლავიატურის ენის მინიშნების დაყენება</string>
     <string name="model_field_editor_reposition_menu">ველის გადაადგილება</string>
-    <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_reposition">ველის გადაადგილება (შეიყვანეთ რიცხვი %1$d–%2$d)</string>
+    <string name="model_field_editor_toggle_sticky">დამატებისას ბოლოს შეყვანილის დამახსოვრება</string>
     <string name="model_field_editor_changing">ველების განახლება</string>
     <string name="model_field_editor_sort_field">ამ ველის მიხედვით დახარისხება</string>
     <string name="model_clone_suffix">ასლი</string>
@@ -80,8 +80,8 @@
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">დასტაზე გადაწერა (ჩართული)</string>
     <string name="card_template_editor_deck_override_off">დასტაზე გადაწერა (გამორთული)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="model_manager_deck_override_added_message">„%1$s-თვის“ ნაგულისხმევი დასტა დაყენდა „%2$s-ზე“</string>
+    <string name="model_manager_deck_override_removed_message">მოშორდა „%s-თვის“ ნაგულისხმევი დასტა</string>
+    <string name="deck_override_explanation">აირჩიეთ დასტა, რომელსაც დაემატება ახალი „%s“ ბარათები</string>
     <string name="deck_picker_dialog_filter_decks">დასტების გაფილტვრა</string>
 </resources>

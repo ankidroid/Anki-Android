@@ -11,7 +11,7 @@ buildscript {
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.9.2'
     ext.coroutines_version = '1.6.4'
-    ext.fragments_version = "1.5.5"
+    ext.fragments_version = "1.5.6"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
@@ -30,7 +30,7 @@ buildscript {
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.2.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.3.1"
     }
 }
 

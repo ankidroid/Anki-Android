@@ -31,10 +31,12 @@ import anki.sync.syncAuth
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.HostNumFactory
+import com.ichi2.async.AsyncOperation
 import com.ichi2.async.Connection
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
@@ -61,6 +63,11 @@ object SyncPreferences {
 
     // Used in the legacy schema path
     const val HOSTNUM = "hostNum"
+}
+
+data class SyncCompletion(val isSuccess: Boolean)
+interface SyncCompletionListener {
+    fun onMediaSyncCompleted(data: SyncCompletion)
 }
 
 fun DeckPicker.syncAuth(): SyncAuth? {
@@ -323,6 +330,20 @@ private fun cancelMediaSync(backend: Backend) {
     backend.abortMediaSync()
 }
 
+/**
+ * Whether media should be fetched on sync. Options from preferences are:
+ * * Always
+ * * Only if unmetered
+ * * Never
+ */
+fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
+    val always = getString(R.string.sync_media_always_value)
+    val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
+    val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
+    return shouldFetchMedia == always ||
+        (shouldFetchMedia == onlyIfUnmetered && !NetworkUtils.isActiveNetworkMetered())
+}
+
 private suspend fun handleMediaSync(
     deckPicker: DeckPicker,
     auth: SyncAuth
@@ -356,9 +377,32 @@ private suspend fun handleMediaSync(
     } finally {
         dialog.dismiss()
     }
+    deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = true))
 }
 
-fun DeckPicker.createSyncListener() = object : Connection.CancellableTaskListener {
+/**
+ * Called from [DeckPicker.onMediaSyncCompleted] -> [DeckPicker.migrate] if the app is backgrounded
+ */
+class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
+    override val notificationMessage = res.getString(R.string.storage_migration_sync_notification)
+    override val notificationTitle = res.getString(R.string.sync_database_acknowledge)
+
+    override val handlerMessage: DialogHandlerMessage
+        get() = MigrateOnSyncSuccessHandler()
+
+    class MigrateOnSyncSuccessHandler : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS,
+        analyticName = "SyncSuccessHandler"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.migrate()
+        }
+
+        override fun toMessage() = emptyMessage(this.what)
+    }
+}
+
+fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connection.CancellableTaskListener {
     private var mCurrentMessage: String? = null
     private var mCountUp: Long = 0
     private var mCountDown: Long = 0
@@ -726,6 +770,9 @@ fun DeckPicker.createSyncListener() = object : Connection.CancellableTaskListene
                     // fragment here is fine since we build a fresh fragment on resume anyway.
                     Timber.w(e, "Failed to load StudyOptionsFragment after sync.")
                 }
+            }
+            if (isFetchingMedia) {
+                onMediaSyncCompleted(SyncCompletion(isSuccess = true))
             }
         }
     }

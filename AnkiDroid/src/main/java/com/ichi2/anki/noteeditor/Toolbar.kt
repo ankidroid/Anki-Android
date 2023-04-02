@@ -33,11 +33,10 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.children
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
@@ -46,6 +45,8 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import timber.log.Timber
 import java.util.*
 import kotlin.math.ceil
@@ -226,8 +227,8 @@ class Toolbar : FrameLayout {
         val results = resources.getStringArray(R.array.html_size_codes)
 
         // Might be better to add this as a fragment - let's see.
-        MaterialDialog(context).show {
-            listItems(R.array.html_size_code_labels) { _: MaterialDialog, index: Int, _: CharSequence ->
+        AlertDialog.Builder(context).show {
+            setItems(R.array.html_size_code_labels) { _, index ->
                 val formatter = TextWrapper(
                     prefix = "<span style=\"font-size:${results[index]}\">",
                     suffix = "</span>"
@@ -243,8 +244,10 @@ class Toolbar : FrameLayout {
      */
     @SuppressLint("CheckResult")
     private fun displayInsertHeadingDialog() {
-        MaterialDialog(context).show {
-            listItems(items = listOf("h1", "h2", "h3", "h4", "h5")) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
+        val headingList = arrayOf("h1", "h2", "h3", "h4", "h5")
+        AlertDialog.Builder(context).show {
+            setItems(headingList) { _, index ->
+                val charSequence = headingList[index]
                 val formatter = TextWrapper(prefix = "<$charSequence>", suffix = "</$charSequence>")
                 onFormat(formatter)
             }

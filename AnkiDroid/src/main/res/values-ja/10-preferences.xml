@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
     <string name="custom_buttons_setting_menu_only">文字メニューでのみ表示</string>
     <string name="reset_custom_buttons" maxLength="41">初期設定にリセット</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">サードパーティ製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
@@ -229,10 +231,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">指定なし</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        AnkiWebと同期する代わりに、 
+       あなた自身のサーバーを使用して同期することができます。
+        設定しない場合、デフォルトのAnkiWebサーバーを同期に使用します。
+        <a href="%s">詳細</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
     <!-- Key Bindings -->
@@ -396,7 +398,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">コレクションを削除</string>
-    <string name="dialog__delete_collection__message">本当にあなたのコレクション、メディア、バックアップを削除してもよろしいですか？</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にあなたのコレクション、メディア、バックアップを削除してもよろしいですか？</string>
     <string name="progress__deleting_collection">コレクションを削除しています&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">すべて削除</string>

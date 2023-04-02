@@ -163,6 +163,7 @@
     <string name="link_distributions">https://apps.ankiweb.net/#download</string>
     <string name="link_ankiweb_lost_email_instructions">https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions</string>
     <string name="link_scoped_storage_faq">https://github.com/ankidroid/Anki-Android/wiki/Storage-Migration-FAQ</string>
+    <string name="link_install_non_play_store_install">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
 
     <string-array name="leech_action_values">

@@ -51,7 +51,7 @@
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="other">%d notes shown</item>
     </plurals>
-    <string name="card_browser_all_decks">Tất cả chủ đề (Tập thẻ)</string>
+    <string name="card_browser_all_decks">Tất cả bộ thẻ</string>
     <string name="card_browser_delete_card">Xóa ghi chú</string>
     <string name="card_browser_suspend_card">Tạm dừng thẻ</string>
     <string name="card_browser_change_deck">Thay đổi bộ thẻ</string>
@@ -73,16 +73,16 @@
     <string name="card_browser_list_my_searches_remove_content">Xóa “%1$s”?</string>
     <string name="card_browser_change_display_order">Thay đổi thứ tự hiển thị</string>
     <string name="card_browser_change_display_order_title">Chọn thứ tự hiển thị</string>
-    <string name="card_browser_change_display_order_reverse">Chọn một loại hai lần để  xem mặt ngược lại</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Theo như/đúng như</string>
-    <string name="card_details_tags">Các từ khóa</string>
+    <string name="card_browser_change_display_order_reverse">Chọn một trường hai lần để đảo ngược</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Đến hạn</string>
+    <string name="card_details_tags">Thẻ</string>
     <string-array name="card_browser_order_labels">
-        <item>Không phân loại  (nhanh hơn)</item>
+        <item>Không sắp xếp (nhanh hơn)</item>
         <item>Theo trường sắp xếp</item>
         <item>Bằng thời gian tạo ra</item>
         <item>Theo thời gian sửa đổi ghi chú</item>
         <item>Theo thời gian sửa đổi thẻ</item>
-        <item>Bởi thời gian</item>
+        <item>Bởi thời gian hết hạn </item>
         <item>Bởi khoảng thời gian</item>
         <item>Bởi dễ dàng</item>
         <item>Bởi ôn tập</item>
@@ -96,9 +96,9 @@
     <string name="card_browser_no_cards_in_deck">Không tìm thấy thẻ nào trong bộ thẻ ‘%s’</string>
     <string name="card_browser_search_all_decks">Tìm kiếm tất cả các bộ thẻ</string>
     <string name="card_browser_unknown_deck_name">không xác định</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Cắt ngắn nội dung</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="other">Export cards</item>
+        <item quantity="other">Xuất thẻ</item>
     </plurals>
     <plurals name="card_browser_export_notes">
         <item quantity="other">Export notes</item>
