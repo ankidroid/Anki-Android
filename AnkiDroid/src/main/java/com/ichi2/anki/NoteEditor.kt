@@ -1826,16 +1826,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun displayAddToolbarDialog() {
         val v = layoutInflater.inflate(R.layout.note_editor_toolbar_add_custom_item, null)
-        v.setPadding(50, 0, 50, 0)
-        val view = ScrollView(this)
-        view.addView(v)
         toolbarDialog.show {
             title(R.string.add_toolbar_item)
-            setView(view)
+            setView(v)
             positiveButton(R.string.dialog_positive_create) {
-                val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
-                val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
-                val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
+                val etIcon = v.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
+                val et = v.findViewById<EditText>(R.id.note_editor_toolbar_before)
+                val et2 = v.findViewById<EditText>(R.id.note_editor_toolbar_after)
                 addToolbarButton(etIcon.text.toString(), et.text.toString(), et2.text.toString())
             }
         }
@@ -1843,9 +1840,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {
         val view = layoutInflater.inflate(R.layout.note_editor_toolbar_edit_custom_item, null)
-        view.setPadding(50, 0, 50, 0)
-        val v = ScrollView(this)
-        v.addView(view)
         val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
         val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
         val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
@@ -1854,7 +1848,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         et.setText(currentButton.prefix)
         et2.setText(currentButton.suffix)
         val editToolbarDialog = toolbarDialog
-            .setView(v)
+            .setView(view)
             .positiveButton(R.string.save) {
                 editToolbarButton(
                     etIcon.text.toString(),
