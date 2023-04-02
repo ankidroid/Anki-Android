@@ -34,7 +34,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -42,7 +41,6 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.libanki.utils.set
 import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
@@ -71,7 +69,7 @@ class DeckOptionsActivity :
         lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        val deckOptionsActivity: DeckOptionsActivity
+        private val deckOptionsActivity: DeckOptionsActivity
             get() = this@DeckOptionsActivity
 
         override fun cacheValues() {
@@ -457,23 +455,11 @@ class DeckOptionsActivity :
                 }
                 deck.put("conf", 1)
             }
-
-            private fun confChangeHandler(): ConfChangeHandler {
-                return ConfChangeHandler(this@DeckPreferenceHack)
-            }
         }
 
         override fun edit(): Editor {
             return Editor()
         }
-    }
-
-    class ConfChangeHandler(deckPreferenceHack: DeckPreferenceHack) :
-        TaskListenerWithContext<DeckPreferenceHack, Void?, Boolean?>(deckPreferenceHack) {
-
-        override fun actualOnPreExecute(context: DeckPreferenceHack) = context.preConfChange()
-
-        override fun actualOnPostExecute(context: DeckPreferenceHack, result: Boolean?) = context.postConfChange()
     }
 
     // conversion to fragments tracked as #5019 in github
@@ -566,8 +552,7 @@ class DeckOptionsActivity :
             } else if (pref is CheckBoxPreference) {
                 continue
             } else if (pref is ListPreference) {
-                val lp = pref
-                if (lp.entry != null) lp.entry.toString() else ""
+                if (pref.entry != null) pref.entry.toString() else ""
             } else {
                 this.pref.getString(key, "")
             }
@@ -588,7 +573,7 @@ class DeckOptionsActivity :
     }
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    protected fun buildLists() {
+    private fun buildLists() {
         val deckConfPref = findPreference("deckConf") as ListPreference
         val confs = col.decks.allConf()
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
