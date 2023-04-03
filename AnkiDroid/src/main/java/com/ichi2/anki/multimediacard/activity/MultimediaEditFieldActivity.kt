@@ -29,13 +29,11 @@ import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -295,17 +293,19 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 recreateEditingUIUsingCachedRequest()
                 return
             }
-            showSnackbar(
+            UIUtils.showThemedToast(
+                this,
                 resources.getString(R.string.multimedia_editor_audio_permission_refused),
-                Snackbar.LENGTH_SHORT
+                true
             )
             UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                showSnackbar(
+                UIUtils.showThemedToast(
+                    this,
                     resources.getString(R.string.multimedia_editor_camera_permission_refused),
-                    Snackbar.LENGTH_SHORT
+                    true
                 )
             }
 
@@ -316,7 +316,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     private fun cancelActivityWithAssertionFailure(logMessage: String) {
         Timber.e(logMessage)
-        showSnackbar(getString(R.string.mutimedia_editor_assertion_failed), Snackbar.LENGTH_SHORT)
+        UIUtils.showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false)
         finishCancel()
     }
 
