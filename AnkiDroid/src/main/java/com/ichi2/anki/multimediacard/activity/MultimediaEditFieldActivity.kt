@@ -295,14 +295,16 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 recreateEditingUIUsingCachedRequest()
                 return
             }
-            showSnackbar(resources.getString(R.string.multimedia_editor_audio_permission_refused),
+            showSnackbar(
+                resources.getString(R.string.multimedia_editor_audio_permission_refused),
                 Snackbar.LENGTH_SHORT
             )
             UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                showSnackbar(resources.getString(R.string.multimedia_editor_camera_permission_refused),
+                showSnackbar(
+                    resources.getString(R.string.multimedia_editor_camera_permission_refused),
                     Snackbar.LENGTH_SHORT
                 )
             }
