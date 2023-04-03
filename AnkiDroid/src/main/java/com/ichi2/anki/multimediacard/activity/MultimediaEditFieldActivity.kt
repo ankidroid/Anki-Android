@@ -32,7 +32,6 @@ import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.snackbar.showSnackbar
@@ -82,7 +81,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val intent = this.intent
         val extras = getFieldFromIntent(intent)
         if (extras == null) {
-            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)
+            showSnackbar(getString(R.string.multimedia_editor_failed), Snackbar.LENGTH_SHORT)
             finishCancel()
             return
         }
