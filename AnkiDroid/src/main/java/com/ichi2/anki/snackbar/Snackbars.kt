@@ -32,6 +32,17 @@ import timber.log.Timber
 typealias SnackbarBuilder = Snackbar.() -> Unit
 
 /**
+ * An activity/fragment can implement this interface to specify a
+ * base configuration for snackbars shown in the activity/fragment.
+ */
+interface BaseSnackbarBuilderProvider {
+    /**
+     * The SnackbarBuilder that will be run to provide a base configuration for snackbars shown.
+     */
+    val baseSnackbarBuilder: SnackbarBuilder
+}
+
+/**
  * Show a snackbar.
  *
  * You can create snackbars by calling `showSnackbar` on either an activity or a view.
@@ -98,7 +109,11 @@ fun Activity.showSnackbar(
     val view: View? = findViewById(R.id.root_layout)
 
     if (view != null) {
-        view.showSnackbar(text, duration, snackbarBuilder)
+        val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
+        view.showSnackbar(text, duration) {
+            baseSnackbarBuilder?.invoke(this)
+            snackbarBuilder?.invoke(this)
+        }
     } else {
         val errorMessage = "While trying to show a snackbar, " +
             "could not find a view with id root_layout in $this"
@@ -222,7 +237,11 @@ fun Fragment.showSnackbar(
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null
 ) {
-    requireActivity().showSnackbar(text, duration, snackbarBuilder)
+    val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
+    requireActivity().showSnackbar(text, duration) {
+        baseSnackbarBuilder?.invoke(this)
+        snackbarBuilder?.invoke(this)
+    }
 }
 
 /**
