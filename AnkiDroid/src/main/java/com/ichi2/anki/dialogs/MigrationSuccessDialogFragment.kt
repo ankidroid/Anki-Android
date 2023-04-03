@@ -21,10 +21,11 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.R
+import timber.log.Timber
 
 class MigrationSuccessDialogFragment() : DialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        Timber.i("Migration successful dialog")
         return AlertDialog.Builder(requireContext())
             .setTitle(resources.getString(R.string.migration_successful_message))
             .setMessage(resources.getString(R.string.migration_completed))

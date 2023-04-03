@@ -27,7 +27,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiDroidApp.Companion.isAppInForeground
-import com.ichi2.anki.AnkiDroidApp.Companion.pendingMigrationCompleted
+import com.ichi2.anki.AnkiDroidApp.Companion.pendingMigrationCompletedDialogOnActivityStart
 import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
@@ -119,7 +119,7 @@ class MigrationService : Service() {
                     dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
                 }
             } else {
-                pendingMigrationCompleted = true
+                pendingMigrationCompletedDialogOnActivityStart = true
             }
             val message =
                 if (result) R.string.migration_successful_message else R.string.migration_failed_message

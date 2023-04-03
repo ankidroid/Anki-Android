@@ -63,7 +63,7 @@ open class AnkiDroidApp : Application() {
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
 
-    private val activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
+    val activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             currentActivity = activity
@@ -99,14 +99,14 @@ open class AnkiDroidApp : Application() {
     }
 
     private fun showPendingDialogIfAny() {
-        if (pendingMigrationCompleted && isAppInForeground) {
+        if (pendingMigrationCompletedDialogOnActivityStart && isAppInForeground) {
             val activity = currentActivity
             if (activity is AppCompatActivity) {
                 val dialog = MigrationSuccessDialogFragment()
                 runOnUiThread {
                     dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
                 }
-                pendingMigrationCompleted = false
+                pendingMigrationCompletedDialogOnActivityStart = false
             }
         }
     }
@@ -322,7 +322,7 @@ open class AnkiDroidApp : Application() {
 
     companion object {
         var isAppInForeground = false
-        var pendingMigrationCompleted = false
+        var pendingMigrationCompletedDialogOnActivityStart = false
         var currentActivity: Activity? = null
             private set
 
