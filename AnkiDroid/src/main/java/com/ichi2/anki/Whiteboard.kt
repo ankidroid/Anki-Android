@@ -330,10 +330,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
                 penColor = redPenColor
             }
-            R.id.pen_color_green -> {
-                val greenPenColor = ContextCompat.getColor(context, R.color.material_green_500)
-                penColor = greenPenColor
-            }
             R.id.pen_color_blue -> {
                 val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
                 penColor = bluePenColor
@@ -341,6 +337,14 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             R.id.pen_color_yellow -> {
                 val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
                 penColor = yellowPenColor
+            }
+            R.id.undo_draw -> {
+                if (!undoEmpty()) {
+                    undo()
+                }
+            }
+            R.id.clear_button -> {
+                clear()
             }
             R.id.pen_color_custom -> {
                 ColorPickerPopUp(context).run {
@@ -561,10 +565,12 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
         // selecting pen color to draw
         mColorPalette = activity.findViewById(R.id.whiteboard_editor)
+        activity.findViewById<View>(R.id.undo_draw).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_red).setOnClickListener { view: View -> onClick(view) }
-        activity.findViewById<View>(R.id.pen_color_green).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.clear_button).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_white).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_custom).apply {
             setOnClickListener { view: View -> onClick(view) }
             (background as? VectorDrawable)?.setTint(foregroundColor)

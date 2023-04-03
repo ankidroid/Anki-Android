@@ -22,11 +22,6 @@
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
-        android:id="@+id/pen_color_green"
-        android:background="@color/material_green_500"
-        style="@style/reviewer_whiteboard_editor_button_style"/>
-
-    <Button
         android:id="@+id/pen_color_blue"
         android:background="@color/material_blue_500"
         style="@style/reviewer_whiteboard_editor_button_style"/>
@@ -45,6 +40,18 @@
     <Button
         android:id="@+id/stroke_width"
         android:background="@drawable/ic_mode_edit_white"
+        android:foreground="?selectableItemBackground"
+        style="@style/reviewer_whiteboard_editor_button_style"/>
+
+    <Button
+        android:id="@+id/undo_draw"
+        android:background="@drawable/ic_undo_selector"
+        android:foreground="?selectableItemBackground"
+        style="@style/reviewer_whiteboard_editor_button_style"/>
+
+    <Button
+        android:id="@+id/clear_button"
+        android:background="@drawable/ic_clear_white"
         android:foreground="?selectableItemBackground"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
