@@ -19,10 +19,11 @@ package com.ichi2.anki.workarounds
 import android.app.Activity
 import android.os.Bundle
 import android.os.Process
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Themes
 import timber.log.Timber
 
@@ -51,10 +52,9 @@ object AppLoadedFromBackupWorkaround {
         // * A restore took place
         // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
         Timber.w("Activity started with no application instance")
-        UIUtils.showThemedToast(
-            this,
+        showSnackbar(
             getString(R.string.ankidroid_cannot_open_after_backup_try_again),
-            false
+            Snackbar.LENGTH_SHORT
         )
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
