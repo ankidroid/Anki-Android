@@ -54,7 +54,7 @@ object AppLoadedFromBackupWorkaround {
         Timber.w("Activity started with no application instance")
         showSnackbar(
             getString(R.string.ankidroid_cannot_open_after_backup_try_again),
-            Snackbar.LENGTH_SHORT
+            Snackbar.LENGTH_LONG
         )
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
