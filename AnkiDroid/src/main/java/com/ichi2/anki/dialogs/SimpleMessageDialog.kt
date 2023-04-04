@@ -22,7 +22,6 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.utils.contentNullable
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
 import com.ichi2.utils.title
 
 class SimpleMessageDialog : AsyncDialogFragment() {
@@ -32,7 +31,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
-        return AlertDialog.Builder(requireActivity()).show {
+        return AlertDialog.Builder(requireContext()).apply {
             title(text = notificationTitle)
             contentNullable(notificationMessage)
             positiveButton(R.string.dialog_ok) {
