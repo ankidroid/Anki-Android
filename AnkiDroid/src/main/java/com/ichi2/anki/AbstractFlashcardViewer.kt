@@ -2370,6 +2370,18 @@ abstract class AbstractFlashcardViewer :
                         executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
                         true
                     }
+                    "pink" -> {
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_PINK)
+                        true
+                    }
+                    "turquoise" -> {
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_TURQUOISE)
+                        true
+                    }
+                    "purple" -> {
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_PURPLE)
+                        true
+                    }
                     else -> {
                         Timber.d("No such Flag found.")
                         true
