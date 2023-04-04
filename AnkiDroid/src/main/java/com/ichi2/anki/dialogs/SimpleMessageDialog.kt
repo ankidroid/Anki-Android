@@ -17,19 +17,22 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.utils.contentNullable
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 
 class SimpleMessageDialog : AsyncDialogFragment() {
     interface SimpleMessageDialogListener {
         fun dismissSimpleMessageDialog(reload: Boolean)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
-        return MaterialDialog(requireActivity()).show {
+        return AlertDialog.Builder(requireActivity()).show {
             title(text = notificationTitle)
             contentNullable(notificationMessage)
             positiveButton(R.string.dialog_ok) {
@@ -40,7 +43,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
                         )
                     )
             }
-        }
+        }.create()
     }
 
     override val notificationTitle: String
