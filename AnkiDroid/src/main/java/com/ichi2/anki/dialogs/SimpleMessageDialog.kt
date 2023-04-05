@@ -20,7 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.utils.contentNullable
+import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 
@@ -33,7 +33,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         super.onCreateDialog(savedInstanceState)
         return AlertDialog.Builder(requireContext()).apply {
             title(text = notificationTitle)
-            contentNullable(notificationMessage)
+            message(text = notificationMessage)
             positiveButton(R.string.dialog_ok) {
                 (activity as SimpleMessageDialogListener?)
                     ?.dismissSimpleMessageDialog(

@@ -61,11 +61,6 @@ fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSeq
     }
 }
 
-fun AlertDialog.Builder.contentNullable(message: CharSequence?): AlertDialog.Builder {
-    message?.let { this.message(text = it) }
-    return this
-}
-
 /**
  * Shows an icon to the left of the dialog title.
  */
