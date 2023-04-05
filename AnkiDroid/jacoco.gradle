@@ -3,13 +3,13 @@ import groovy.transform.Memoized
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.9"
 
 }
 
 android {
     testCoverage {
-        jacocoVersion '0.8.8'
+        jacocoVersion '0.8.9'
     }
 }
 
