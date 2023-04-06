@@ -81,7 +81,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val intent = this.intent
         val extras = getFieldFromIntent(intent)
         if (extras == null) {
-            showSnackbar(getString(R.string.multimedia_editor_failed), Snackbar.LENGTH_SHORT)
+            showSnackbar(getString(R.string.multimedia_editor_failed))
             finishCancel()
             return
         }
@@ -315,7 +315,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     private fun cancelActivityWithAssertionFailure(logMessage: String) {
         Timber.e(logMessage)
-        showSnackbar(getString(R.string.mutimedia_editor_assertion_failed), Snackbar.LENGTH_SHORT)
+        showSnackbar(getString(R.string.mutimedia_editor_assertion_failed))
         finishCancel()
     }
 
