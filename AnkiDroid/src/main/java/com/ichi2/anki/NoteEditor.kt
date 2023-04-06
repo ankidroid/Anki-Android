@@ -30,7 +30,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils.isEmpty
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -189,7 +188,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun displayErrorSavingNote() {
         val errorMessageId = addNoteErrorResource
-        UIUtils.showThemedToast(this, resources.getString(errorMessageId), false)
+        showSnackbar(resources.getString(errorMessageId))
     }
     // COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
 
@@ -595,20 +594,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                             return false
                         }
                     }
-                    UIUtils.showThemedToast(
-                        this@NoteEditor,
-                        resources.getString(R.string.intent_aedict_empty),
-                        false
-                    )
+                    showSnackbar(resources.getString(R.string.intent_aedict_empty))
                     return true
                 }
             }
         }
-        UIUtils.showThemedToast(
-            this@NoteEditor,
-            resources.getString(R.string.intent_aedict_category),
-            false
-        )
+        showSnackbar(resources.getString(R.string.intent_aedict_category))
         return true
     }
 
@@ -1199,11 +1190,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                              * type was changed without moving this
                              * card to another type. */
                         Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
-                        UIUtils.showThemedToast(
-                            this,
-                            getString(R.string.template_for_current_card_deleted),
-                            false
-                        )
+                        showSnackbar(getString(R.string.template_for_current_card_deleted))
                         closeNoteEditor()
                     } else {
                         Timber.d("onActivityResult() template edit return, in add mode, just re-display")
