@@ -135,9 +135,6 @@ open class AnkiDroidApp : Application() {
         super.onCreate()
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
         pendingMigrationDialog = getSharedPreferences("pendingMigration", Context.MODE_PRIVATE)
-        val flag = pendingMigrationDialog.edit()
-        flag.putBoolean(PENDING_MIGRATION_COMPLETED_DIALOG, false)
-        flag.commit()
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
             // 5887 - fix crash.
