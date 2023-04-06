@@ -63,7 +63,6 @@ open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
-    lateinit var pendingMigrationDialog: SharedPreferences
 
     val activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
 
@@ -134,7 +133,6 @@ open class AnkiDroidApp : Application() {
         //   Os.setenv("TRACESQL", "1", false);
         super.onCreate()
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
-        pendingMigrationDialog = getSharedPreferences("pendingMigration", Context.MODE_PRIVATE)
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
             // 5887 - fix crash.
