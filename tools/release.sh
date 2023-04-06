@@ -112,10 +112,23 @@ if [ "$KSTOREPWD" == "" ]; then
   export KEYPWD
 fi
 
+# Build the full set of release APKs for all flavors, with universals
+UCFLAVORS='Full Amazon Play'
+for UCFLAVOR in $UCFLAVORS; do
+  ./gradlew --stop
+  echo Running assemble"$UCFLAVOR"Release target with universal APK flag
+  if ! ./gradlew assemble"$UCFLAVOR"Release -Duniversal-apk=true
+  then
+    echo "unable to build release APKs for flavor $UCFLAVOR"
+    exit 1
+  fi
+done
+
 # Build signed APK using Gradle and publish to Play.
 # Do this before building universal of the play flavor so the universal is not uploaded to Play Store
 # Configuration for pushing to Play specified in build.gradle 'play' task
 #echo "Running 'publishPlayReleaseApk' gradle target"
+#./gradlew --stop
 #if ! ./gradlew publishPlayReleaseApk
 #then
   # APK contains problems
@@ -127,15 +140,6 @@ fi
 #  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
 #fi  #API30
 #fi  #API30
-
-# Now build the full set of release APKs for all flavors, with universals
-./gradlew --stop
-echo "Running assembleNNNRelease target for all flavors with universal APK flag"
-if ! ./gradlew assembleFullRelease assemblePlayRelease assembleAmazonRelease -Duniversal-apk=true
-then
-  echo "unable to build universal APKs all flavors"
-  exit 1
-fi
 
 # Copy full ABI APKs to cwd
 ABIS='arm64-v8a x86 x86_64 armeabi-v7a'
