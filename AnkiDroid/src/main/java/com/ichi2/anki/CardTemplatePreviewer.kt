@@ -19,9 +19,9 @@ package com.ichi2.anki
 import android.os.Bundle
 import android.view.View
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -250,13 +250,13 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
                 currentCard = getDummyCard(mEditedModel!!, mOrdinal)
                 if (currentCard == null) {
-                    showThemedToast(applicationContext, getString(R.string.invalid_template), false)
+                    showSnackbar(getString(R.string.invalid_template))
                     closeCardTemplatePreviewer()
                 }
             }
         }
         if (currentCard == null) {
-            showThemedToast(applicationContext, getString(R.string.invalid_template), false)
+            showSnackbar(getString(R.string.invalid_template))
             closeCardTemplatePreviewer()
             return
         }

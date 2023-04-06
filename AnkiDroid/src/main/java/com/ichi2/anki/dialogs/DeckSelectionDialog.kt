@@ -32,12 +32,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
 import com.ichi2.libanki.*
@@ -193,7 +194,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val dec = SelectableDeck(id, deckName)
             selectDeckAndClose(dec)
         } catch (ex: DeckRenameException) {
-            showThemedToast(requireActivity(), ex.getLocalizedMessage(resources), false)
+            showSnackbar(ex.getLocalizedMessage(resources))
         }
     }
 
@@ -250,7 +251,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
                     if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
-                        context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
+                        context?.let { showSnackbar(R.string.cannot_create_subdeck_for_all_decks, Snackbar.LENGTH_SHORT) }
                     } else {
                         showSubDeckDialog(deckName)
                     }

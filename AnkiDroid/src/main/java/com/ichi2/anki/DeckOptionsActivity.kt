@@ -33,6 +33,7 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.changeDeckConfiguration
 import com.ichi2.compat.CompatHelper
@@ -142,7 +143,7 @@ class DeckOptionsActivity :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                UIUtils.showThemedToast(this@DeckOptionsActivity, this@DeckOptionsActivity.resources.getString(R.string.deck_options_corrupt, e.localizedMessage), false)
+                showSnackbar(this@DeckOptionsActivity.resources.getString(R.string.deck_options_corrupt, e.localizedMessage))
                 finish()
             }
         }
@@ -279,11 +280,7 @@ class DeckOptionsActivity :
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
                                 // Don't remove the options group if it's the default group
-                                UIUtils.showThemedToast(
-                                    this@DeckOptionsActivity,
-                                    resources.getString(R.string.default_conf_delete_error),
-                                    false
-                                )
+                                showSnackbar(resources.getString(R.string.default_conf_delete_error))
                             } else {
                                 // Remove options group, handling the case where the user needs to confirm full sync
                                 try {
