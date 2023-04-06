@@ -100,10 +100,6 @@ git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
 
-# Push both commits and tag
-git push
-git push --tags
-
 # Read the key passwords if needed
 if [ "$KSTOREPWD" == "" ]; then
   read -rsp "Enter keystore password: " KSTOREPWD; echo
@@ -123,6 +119,10 @@ for UCFLAVOR in $UCFLAVORS; do
     exit 1
   fi
 done
+
+# Push both commits and tag before any of the builds leave the machine
+git push
+git push --tags
 
 # Build signed APK using Gradle and publish to Play.
 # Do this before building universal of the play flavor so the universal is not uploaded to Play Store
