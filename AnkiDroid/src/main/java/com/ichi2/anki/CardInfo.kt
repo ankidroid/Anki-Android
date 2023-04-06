@@ -30,7 +30,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getParcelableExtraCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -59,7 +59,7 @@ class CardInfo : AnkiActivity() {
         setContentView(R.layout.card_info)
         mCardId = getCardId(savedInstanceState)
         if (!hasValidCardId()) {
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false)
+            showSnackbar(getString(R.string.multimedia_editor_something_wrong))
             finishWithoutAnimation()
             return
         }
@@ -71,7 +71,7 @@ class CardInfo : AnkiActivity() {
         super.onCollectionLoaded(col)
         val c = getCard(col)
         if (c == null) {
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false)
+            showSnackbar(getString(R.string.multimedia_editor_something_wrong))
             finishWithoutAnimation()
             return
         }

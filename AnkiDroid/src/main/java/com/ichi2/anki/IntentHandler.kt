@@ -24,11 +24,12 @@ import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.FileProvider
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
@@ -65,8 +66,7 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
-        val launchType = getLaunchType(intent)
-        when (launchType) {
+        when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
             LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
             LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
@@ -85,11 +85,11 @@ class IntentHandler : Activity() {
         Timber.i("Copying debug info to clipboard")
         if (!this.copyToClipboard(intent.getStringExtra(CLIPBOARD_INTENT_EXTRA_DATA)!!)) {
             Timber.w("Failed to obtain ClipboardManager")
-            showThemedToast(this, R.string.something_wrong, true)
+            showSnackbar(R.string.something_wrong, Snackbar.LENGTH_SHORT)
             return
         }
 
-        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug_info, true)
+        showSnackbar(R.string.about_ankidroid_successfully_copied_debug_info, Snackbar.LENGTH_SHORT)
     }
 
     /**
@@ -106,7 +106,7 @@ class IntentHandler : Activity() {
             runnable.run()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
-            showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
+            showSnackbar(getString(R.string.intent_handler_failed_no_storage_permission))
             launchDeckPickerIfNoOtherTasks(reloadIntent)
         }
     }
