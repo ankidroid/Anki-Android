@@ -27,7 +27,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiDroidApp.Companion.isAppInForeground
-import com.ichi2.anki.AnkiDroidApp.Companion.pendingMigrationCompletedDialogOnActivityStart
 import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
@@ -44,6 +43,8 @@ import com.ichi2.utils.runOnUiThread
 import timber.log.Timber
 import java.io.File
 import kotlin.concurrent.thread
+
+const val PENDING_MIGRATION_COMPLETED_DIALOG = "pendingMigrationCompletedDialogOnActivityStart"
 
 /**
  * A service which migrates the AnkiDroid collection from a legacy directory to an app-private directory.
@@ -119,7 +120,7 @@ class MigrationService : Service() {
                     dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
                 }
             } else {
-                pendingMigrationCompletedDialogOnActivityStart = true
+                AnkiDroidApp.setMigrationCompleted(applicationContext, true)
             }
             val message =
                 if (result) R.string.migration_successful_message else R.string.migration_failed_message

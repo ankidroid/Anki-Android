@@ -43,6 +43,7 @@ import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
+import com.ichi2.anki.services.PENDING_MIGRATION_COMPLETED_DIALOG
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.*
@@ -62,6 +63,7 @@ open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
+    lateinit var pendingMigrationDialog: SharedPreferences
 
     val activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
 
@@ -99,14 +101,14 @@ open class AnkiDroidApp : Application() {
     }
 
     private fun showPendingDialogIfAny() {
-        if (pendingMigrationCompletedDialogOnActivityStart && isAppInForeground) {
+        if (getMigrationCompleted(applicationContext) && isAppInForeground) {
             val activity = currentActivity
             if (activity is AppCompatActivity) {
                 val dialog = MigrationSuccessDialogFragment()
                 runOnUiThread {
                     dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
                 }
-                pendingMigrationCompletedDialogOnActivityStart = false
+                setMigrationCompleted(applicationContext, false)
             }
         }
     }
@@ -132,6 +134,10 @@ open class AnkiDroidApp : Application() {
         //   Os.setenv("TRACESQL", "1", false);
         super.onCreate()
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
+        pendingMigrationDialog = getSharedPreferences("pendingMigration", Context.MODE_PRIVATE)
+        val flag = pendingMigrationDialog.edit()
+        flag.putBoolean(PENDING_MIGRATION_COMPLETED_DIALOG, false)
+        flag.commit()
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
             // 5887 - fix crash.
@@ -321,8 +327,20 @@ open class AnkiDroidApp : Application() {
     }
 
     companion object {
+
+        fun setMigrationCompleted(context: Context, value: Boolean) {
+            val pendingMigrationDialog = context.getSharedPreferences("pendingMigration", Context.MODE_PRIVATE)
+            val flag = pendingMigrationDialog.edit()
+            flag.putBoolean(PENDING_MIGRATION_COMPLETED_DIALOG, value)
+            flag.commit()
+        }
+
+        fun getMigrationCompleted(context: Context): Boolean {
+            val pendingMigrationDialog = context.getSharedPreferences("pendingMigration", Context.MODE_PRIVATE)
+            return pendingMigrationDialog.getBoolean(PENDING_MIGRATION_COMPLETED_DIALOG, false)
+        }
+
         var isAppInForeground = false
-        var pendingMigrationCompletedDialogOnActivityStart = false
         var currentActivity: Activity? = null
             private set
 
