@@ -207,7 +207,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      */
     protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as AlertDialog
-        Assert.assertTrue("Invalid button provided", ALERT_DIALOG_BUTTONS.contains(button))
 
         dialog.getButton(button).performClick()
         // Need to run UI thread tasks to actually run the onClickHandler
@@ -240,19 +239,19 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
      */
     protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
-        val dialog = ShadowDialog.getLatestDialog()
-        dialog as AlertDialog
+        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.findViewById<TextView>(android.R.id.message)?.text?.toString()
+        val messageViewWithinDialog = dialog.findViewById<TextView>(android.R.id.message)
+        Assert.assertFalse(messageViewWithinDialog == null)
+
+        return messageViewWithinDialog?.text?.toString()
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
     companion object {
-        val ALERT_DIALOG_BUTTONS = listOf(BUTTON_NEGATIVE, BUTTON_NEUTRAL, BUTTON_POSITIVE)
-
         private var mBackground = true
 
         // Robolectric needs a manual advance with the new PAUSED looper mode
