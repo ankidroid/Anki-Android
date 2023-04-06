@@ -72,9 +72,9 @@
     <string name="use_input_tag" maxLength="41">პასუხის აკრეფა ბარათში</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">ენების გადატვირთვა</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
-    <string name="reset_languages_question">Reset all language assignments?</string>
-    <string name="reset_confirmation">All states reset</string>
+    <string name="reset_languages_summ">ყველა დასტისთვის (ხმოვანი წამკითხველისთვის და ლექსიკონებისთვის) მისადაგებული ენების დაყენება საწყის პარამეტრებზე</string>
+    <string name="reset_languages_question">დაყენდეს ყველა მისადაგებული ენა საწყის პარამეტრებზე?</string>
+    <string name="reset_confirmation">დაყენდა ყველა საწყისი პარამეტრი</string>
     <string name="card_zoom" maxLength="41">ბარათის ზომა</string>
     <string name="image_zoom" maxLength="41">სურათის ზომა</string>
     <string name="button_size" maxLength="41">პასუხის ღილაკის ზომა</string>
@@ -85,7 +85,7 @@
     <string name="fullscreen_review" maxLength="41">სრულეკრანიანი რეჟიმი</string>
     <string name="full_screen_off">გამორთულია</string>
     <string name="full_screen_system">სისტემის ზოლების დამალვა</string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+    <string name="full_screen_complete">სისტემის ზოლების და პასუხის ღილაკების დამალვა</string>
     <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
         <item>ზევით</item>
@@ -182,7 +182,7 @@
     <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
     <string name="new_spread" maxLength="41">ახალი ბარათების პოზიცია</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="learn_cutoff" maxLength="41">წინასწარი სწავლის ლიმიტი</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="new_timezone" maxLength="41">ახალი სასაათო სარტყლის გათვალისწინება</string>
     <string name="day_offset_with_description" maxLength="41">ახალი დღის დასაწყისი</string>
@@ -200,9 +200,9 @@
     <string name="custom_buttons_setting_always_show">ყოველთვის ჩვენება</string>
     <string name="custom_buttons_setting_if_room">ჩვენება ადგილის არსებობის შემთხვევაში</string>
     <string name="custom_buttons_setting_menu_only">მხოლოდ მენიუ</string>
-    <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_custom_buttons" maxLength="41">საწყის პარამეტრებზე დაყენება</string>
+    <string name="reset_settings_to_default">პარამეტრების გადაყენება ნაგულისხმევზე</string>
+    <string name="reset">საწყისი პარამეტრების აღდგენა</string>
     <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">იხილეთ სია იმ აპლიკაციებისა, როგორებიცაა მაგალითად ლექსიკონები, რომლებიც AnkiDroid-ის API-ს მოიხმარებენ.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
@@ -230,7 +230,7 @@
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">გამოანგარიშების სიზუსტე</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">იტერაციათა რაოდენობა სიმულაციაში</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
+    <string name="custom_sync_server_title" maxLength="41">სინქრონიზაციის სხვა სერვერი</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">არ არის გამოყენებაში</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
@@ -291,7 +291,7 @@
     <string name="deck_conf_current_group" maxLength="41">მიმდინარე ჯგუფი</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">გადარქმევა</string>
     <string name="deck_conf_reset" maxLength="41">ნაგულისხმევის აღდგენა</string>
-    <string name="deck_conf_reset_message">Restore current options group to default values?</string>
+    <string name="deck_conf_reset_message">დაყენდეს მიმდინარე პარამეტრების ჯგუფი ნაგულისხმევ მონაცემებზე?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">კონფიგურაციის დამატება</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>

@@ -61,6 +61,8 @@
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">হোয়াইটবোর্ড সংরক্ষণ করুন</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>

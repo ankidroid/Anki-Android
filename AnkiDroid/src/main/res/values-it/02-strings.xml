@@ -61,6 +61,8 @@
     <string name="updated_version">Aggiornato alla versione %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Salva lavagna</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Abilita la lavagna</string>
     <string name="disable_whiteboard">Disabilita la lavagna</string>
     <string name="show_whiteboard">Mostra lavagna</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Visualizza</string>
     <string name="anki_js_error_code">(Codice errore: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copiato negli appunti</string>
     <string name="about_ankidroid_error_copy_debug_info">Errore nella copia delle informazioni di debug negli appunti</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
@@ -364,10 +366,10 @@
     <string name="home">Pagina principale</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Carta eliminata.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d Carta sospesa.</item>
+        <item quantity="other">%d Carte sospese.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Appunta il campo %s</string>
@@ -412,9 +414,9 @@
     <string name="toggle_browser_mode_help">Passa a Visualizzazione di carte o note nel browser</string>
     <string name="truncate_content_help">Tronca l\'altezza di ogni riga del browser per mostrare solo le prime 3 righe di contenuto</string>
     <string name="browser_options_dialog_heading">Opzioni Browser</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Questa funzionalità non è disponibile durante la migrazione nell\'archivio
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tocca per avviare la migrazione</string>
+    <string name="media_sync_required_title">Sincronizzazione del media richiesta</string>
+    <string name="media_sync_unavailable_message">La sincronizzazione media è disabilitata nelle impostazioni. Si prega di sincronizzare ed eseguire il backup di qualsiasi supporto che non è stato sincronizzato prima di continuare</string>
 </resources>

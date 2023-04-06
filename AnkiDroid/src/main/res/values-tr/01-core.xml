@@ -138,7 +138,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Lütfen ilerlemek için AnkiDroid\'e ‘Depolama’ yetkisini veriniz.</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">Lütfen devam etmek için AnkiDroid\'e \"Bütün dosyalara erişim\" iznini verin</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -248,12 +248,12 @@
     <string name="migration_successful_message">Taşıma başarılı</string>
     <string name="migration_failed_message">Taşıma başarısız</string>
     <string name="migration_transferred_size">%2$.0f MB\'tan %1$.0f MB\'ı taşındı</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksiyona erişilemiyor</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store Poliçesi\'ndeki bir değişiklikten dolayı AnkiDroid kaldırıldıktan sonra koleksiyonunuza erişemiyoruz\n\nVerileriniz güvende ve geri getirilebilir.\n%s\nadresinde bulunuyor.\n\nGeri getirmek için aşağıdakilerden birini seçin:</string>
+    <string name="restore_data_from_ankiweb">AnkiWeb\'den geri getir (önerilir)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Klasör erişimini geri getir (önerilir)</string>
+    <string name="install_non_play_store_ankidroid">Klasör erişimini geri getir (ileri düzey)</string>
+    <string name="restore_data_from_backup">.colpkg yedeğinden geri getir (ileri düzey)</string>
+    <string name="create_new_collection">Yeni bir koleksiyon oluştur</string>
+    <string name="new_unsafe_collection">Ankidroid\'i telefonunuzdan kaldırırsanız yeni koleksiyon silinecek</string>
 </resources>

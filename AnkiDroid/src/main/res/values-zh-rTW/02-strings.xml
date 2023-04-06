@@ -61,6 +61,8 @@
     <string name="updated_version">更新到版本 %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">儲存白板</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">開啟白板</string>
     <string name="disable_whiteboard">關閉白板</string>
     <string name="show_whiteboard">顯示白板</string>

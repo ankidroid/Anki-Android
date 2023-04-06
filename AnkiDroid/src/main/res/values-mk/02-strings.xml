@@ -61,6 +61,8 @@
     <string name="updated_version">Ажуриран на верзија %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Овозможи табла</string>
     <string name="disable_whiteboard">Оневозможи табла</string>
     <string name="show_whiteboard">Покажи ја таблата</string>
