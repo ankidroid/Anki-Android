@@ -59,8 +59,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600195
-        versionName="2.16alpha95"
+        versionCode=21600196
+        versionName="2.16alpha96"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 30 // change .tests_emulator.yml
