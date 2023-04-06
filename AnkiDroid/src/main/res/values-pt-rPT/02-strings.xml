@@ -61,6 +61,8 @@
     <string name="updated_version">Atualizada para a versão %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Activar quadro</string>
     <string name="disable_whiteboard">Desactivar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>

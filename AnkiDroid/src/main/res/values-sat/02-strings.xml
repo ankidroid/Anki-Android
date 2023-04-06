@@ -61,6 +61,8 @@
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ </string>

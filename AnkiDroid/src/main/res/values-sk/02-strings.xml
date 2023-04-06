@@ -61,6 +61,8 @@
     <string name="updated_version">Aktualizované na verziu %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Uložiť tabuľu</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Povoliť tabuľu</string>
     <string name="disable_whiteboard">Zakázať tabuľu</string>
     <string name="show_whiteboard">Zobraziť tabuľu</string>
