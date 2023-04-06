@@ -14,9 +14,13 @@
   ~  You should have received a copy of the GNU General Public License along with
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -67,3 +71,4 @@
 
 
 </LinearLayout>
+</ScrollView>
