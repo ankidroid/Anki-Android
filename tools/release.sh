@@ -145,7 +145,7 @@ done
 
 # Copy universal APKs for all flavors to cwd
 FLAVORS='full amazon play'
-for ABI in $ABIS; do
+for FLAVOR in $FLAVORS; do
   cp AnkiDroid/build/outputs/apk/"$FLAVOR"/release/AnkiDroid-"$FLAVOR"-universal-release.apk AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 
