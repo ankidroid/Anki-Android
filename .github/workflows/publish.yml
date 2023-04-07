@@ -6,7 +6,7 @@ on:
 jobs:
   release_app:
     name: 'Release App'
-    timeout-minutes: 80
+    timeout-minutes: 120
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
