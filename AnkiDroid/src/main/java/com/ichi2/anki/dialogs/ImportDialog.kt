@@ -31,7 +31,7 @@ class ImportDialog : AsyncDialogFragment() {
         fun dismissAllDialogFragments()
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         val type = requireArguments().getInt("dialogType")
         val dialog = MaterialDialog(requireActivity())

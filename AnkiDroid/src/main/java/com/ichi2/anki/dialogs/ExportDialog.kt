@@ -50,7 +50,7 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
     }
 
     @SuppressLint("CheckResult")
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         val exportData = requireArguments().toExportDialogParams()
         includeSched = exportData.includeScheduling

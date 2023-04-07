@@ -21,7 +21,7 @@ import com.ichi2.anki.R
 
 class DiscardChangesDialog {
     companion object {
-        fun showDialog(context: Context?, positiveMethod: () -> Unit): MaterialDialog {
+        fun showDialog(context: Context?, positiveMethod: () -> Unit): AlertDialog{
             return MaterialDialog(context!!).show {
                 message(R.string.discard_unsaved_changes)
                 positiveButton(R.string.dialog_ok) {

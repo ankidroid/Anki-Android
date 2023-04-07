@@ -38,7 +38,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
     }
 
     @SuppressLint("CheckResult")
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         val options = listOf(
             getString(R.string.export_select_save_app),

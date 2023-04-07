@@ -79,7 +79,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             mInitialDeckName = deckName
         }
 
-    fun showDialog(): MaterialDialog {
+    fun showDialog(): AlertDialog{
         @SuppressLint("CheckResult")
         val dialog = MaterialDialog(context).show {
             title(title)

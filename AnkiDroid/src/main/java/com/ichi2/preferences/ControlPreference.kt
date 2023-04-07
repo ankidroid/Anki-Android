@@ -103,7 +103,7 @@ class ControlPreference : ListPreference {
 
                     val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
 
-                    positiveButton(R.string.dialog_ok) { materialDialog ->
+                    positiveButton(R.string.dialog_ok) { AlertDialog->
                         val gesture = gesturePicker.getGesture() ?: return@positiveButton
                         val mappableBinding = fromGesture(gesture)
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {

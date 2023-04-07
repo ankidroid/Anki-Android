@@ -203,7 +203,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     @VisibleForTesting
-    fun showDiscardChangesDialog(): MaterialDialog {
+    fun showDiscardChangesDialog(): AlertDialog{
         val discardDialog = DiscardChangesDialog.showDialog(this) {
             Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
             // Clear the edited model from any cache files, and clear it from this objects memory to discard changes

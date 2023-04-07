@@ -208,7 +208,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
     protected fun getDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
-        val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
+        val dialog: AlertDialog= ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null

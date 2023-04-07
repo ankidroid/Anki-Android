@@ -42,7 +42,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
     }
 
     @Suppress("Deprecation") // Material dialog neutral button deprecation
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         val dialog = MaterialDialog(requireActivity())
             .title(text = title)

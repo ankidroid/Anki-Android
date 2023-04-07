@@ -317,7 +317,7 @@ data class ProgressContext(
 
 @Suppress("Deprecation") // ProgressDialog deprecation
 private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
-    // ideally this would show a progress bar, but MaterialDialog does not support
+    // ideally this would show a progress bar, but AlertDialogdoes not support
     // setting progress after starting with indeterminate progress, so we just use
     // this for now
     // this code has since been updated to ProgressDialog, and the above not rechecked

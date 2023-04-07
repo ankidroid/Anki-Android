@@ -92,7 +92,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      * @return The dialog
      */
     @Throws(RuntimeException::class)
-    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): MaterialDialog {
+    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): AlertDialog{
         return MaterialDialog(targetContext)
             .positiveButton {
                 try {

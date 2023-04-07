@@ -27,7 +27,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         fun dismissSimpleMessageDialog(reload: Boolean)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreateDialog(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)

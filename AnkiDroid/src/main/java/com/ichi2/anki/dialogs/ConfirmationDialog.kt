@@ -47,7 +47,7 @@ class ConfirmationDialog : DialogFragment() {
         mCancel = cancel
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         val res = requireActivity().resources
         val title = requireArguments().getString("title")

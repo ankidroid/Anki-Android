@@ -22,21 +22,21 @@ import androidx.annotation.DrawableRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.themes.Themes
 
-// Extension methods for MaterialDialog workarounds in Kotlin
+// Extension methods for AlertDialogworkarounds in Kotlin
 // Previously the methods accepted null into a non-null parameter,
 // and fixing this would break the fluent interface
 
-fun MaterialDialog.titleNullable(title: String?): MaterialDialog {
+fun MaterialDialog.titleNullable(title: String?): AlertDialog{
     title?.let { this.title(text = it) }
     return this
 }
 
-fun MaterialDialog.contentNullable(message: CharSequence?): MaterialDialog {
+fun MaterialDialog.contentNullable(message: CharSequence?): AlertDialog{
     message?.let { this.message(text = it) }
     return this
 }
 
-fun MaterialDialog.cancelListenerNullable(cancelListener: DialogInterface.OnCancelListener?): MaterialDialog {
+fun MaterialDialog.cancelListenerNullable(cancelListener: DialogInterface.OnCancelListener?): AlertDialog{
     cancelListener?.let { this.setOnCancelListener(it) }
     return this
 }
@@ -45,7 +45,7 @@ fun MaterialDialog.cancelListenerNullable(cancelListener: DialogInterface.OnCanc
  * Method to display keyboard when dialog is shown.
  *
  * @param editText EditText present in the dialog.
- * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
+ * @param AlertDialogDialog which contains the EditText and needs the keyboard to be displayed.
  */
 fun MaterialDialog.displayKeyboard(editText: EditText) {
     AndroidUiUtils.setFocusAndOpenKeyboard(editText, window!!)
@@ -56,6 +56,6 @@ fun MaterialDialog.displayKeyboard(editText: EditText) {
  */
 fun MaterialDialog.iconAttr(
     @DrawableRes res: Int
-): MaterialDialog = apply {
+): AlertDialog= apply {
     this.icon(Themes.getResFromAttr(this.context, res))
 }

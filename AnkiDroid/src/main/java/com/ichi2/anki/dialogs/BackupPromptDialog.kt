@@ -106,7 +106,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     }
 
     private fun build(isLoggedIn: Boolean, performBackup: () -> Unit) {
-        this.materialDialog = MaterialDialog(windowContext).apply {
+        this.AlertDialog= MaterialDialog(windowContext).apply {
             icon(R.drawable.ic_baseline_backup_24)
             title(R.string.backup_your_collection)
             message(R.string.backup_collection_message)

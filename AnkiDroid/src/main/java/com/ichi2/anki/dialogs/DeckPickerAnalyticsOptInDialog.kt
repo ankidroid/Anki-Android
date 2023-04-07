@@ -26,7 +26,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.analytics.UsageAnalytics
 
 class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
             title(R.string.analytics_dialog_title)

@@ -23,7 +23,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 
 class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
             title(R.string.storage_full_title)

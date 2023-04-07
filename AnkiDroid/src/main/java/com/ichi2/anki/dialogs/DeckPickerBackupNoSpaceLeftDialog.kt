@@ -25,7 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 
 class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         val res = resources
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))

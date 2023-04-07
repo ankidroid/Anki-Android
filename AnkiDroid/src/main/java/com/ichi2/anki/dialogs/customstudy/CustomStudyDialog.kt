@@ -98,7 +98,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Build a context menu for custom study
      * @param id the id type of the dialog
      */
-    private fun buildContextMenu(id: Int): MaterialDialog {
+    private fun buildContextMenu(id: Int): AlertDialog{
         val listIds = getListIds(ContextMenuConfiguration.fromInt(id)).map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
 
@@ -171,7 +171,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Build an input dialog that is used to get a parameter related to custom study from the user
      * @param contextMenuOption the option of the dialog
      */
-    private fun buildInputDialog(contextMenuOption: ContextMenuOption): MaterialDialog {
+    private fun buildInputDialog(contextMenuOption: ContextMenuOption): AlertDialog{
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)

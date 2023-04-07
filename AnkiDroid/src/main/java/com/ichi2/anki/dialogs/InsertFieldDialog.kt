@@ -41,7 +41,7 @@ class InsertFieldDialog : DialogFragment() {
     /**
      * A dialog for inserting field in card template editor
      */
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog{
         super.onCreate(savedInstanceState)
         mFieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
         val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
