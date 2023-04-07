@@ -81,7 +81,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val intent = this.intent
         val extras = getFieldFromIntent(intent)
         if (extras == null) {
-            showSnackbar(getString(R.string.multimedia_editor_failed))
+            showSnackbar(R.string.multimedia_editor_failed)
             finishCancel()
             return
         }
@@ -294,18 +294,12 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 recreateEditingUIUsingCachedRequest()
                 return
             }
-            showSnackbar(
-                resources.getString(R.string.multimedia_editor_audio_permission_refused),
-                Snackbar.LENGTH_SHORT
-            )
+            showSnackbar((R.string.multimedia_editor_audio_permission_refused), Snackbar.LENGTH_SHORT)
             UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                showSnackbar(
-                    resources.getString(R.string.multimedia_editor_camera_permission_refused),
-                    Snackbar.LENGTH_SHORT
-                )
+                showSnackbar((R.string.multimedia_editor_camera_permission_refused), Snackbar.LENGTH_SHORT)
             }
 
             // We check permissions to set visibility on the camera button, just recreate
@@ -315,7 +309,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     private fun cancelActivityWithAssertionFailure(logMessage: String) {
         Timber.e(logMessage)
-        showSnackbar(getString(R.string.mutimedia_editor_assertion_failed))
+        showSnackbar(R.string.mutimedia_editor_assertion_failed)
         finishCancel()
     }
 
