@@ -20,8 +20,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.title
 
 class SimpleMessageDialog : AsyncDialogFragment() {
     interface SimpleMessageDialogListener {
@@ -31,9 +29,9 @@ class SimpleMessageDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
         return AlertDialog.Builder(requireContext()).apply {
-            title(text = notificationTitle)
+            setTitle(notificationTitle)
             setMessage(notificationMessage)
-            positiveButton(R.string.dialog_ok) {
+            setPositiveButton(R.string.dialog_ok) { _, _ ->
                 (activity as SimpleMessageDialogListener?)
                     ?.dismissSimpleMessageDialog(
                         requireArguments().getBoolean(
