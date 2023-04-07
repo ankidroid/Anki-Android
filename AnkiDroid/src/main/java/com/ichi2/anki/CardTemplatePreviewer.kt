@@ -250,13 +250,13 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
                 currentCard = getDummyCard(mEditedModel!!, mOrdinal)
                 if (currentCard == null) {
-                    showSnackbar(getString(R.string.invalid_template))
+                    showSnackbar(R.string.invalid_template)
                     closeCardTemplatePreviewer()
                 }
             }
         }
         if (currentCard == null) {
-            showSnackbar(getString(R.string.invalid_template))
+            showSnackbar(R.string.invalid_template)
             closeCardTemplatePreviewer()
             return
         }

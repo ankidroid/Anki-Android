@@ -143,7 +143,7 @@ class DeckOptionsActivity :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                showSnackbar(resources.getString(R.string.deck_options_corrupt, e.localizedMessage))
+                showSnackbar(getString(R.string.deck_options_corrupt, e.localizedMessage))
                 finish()
             }
         }
@@ -280,7 +280,7 @@ class DeckOptionsActivity :
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
                                 // Don't remove the options group if it's the default group
-                                showSnackbar(resources.getString(R.string.default_conf_delete_error))
+                                showSnackbar(R.string.default_conf_delete_error)
                             } else {
                                 // Remove options group, handling the case where the user needs to confirm full sync
                                 try {
