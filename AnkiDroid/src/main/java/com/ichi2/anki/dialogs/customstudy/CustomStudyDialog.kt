@@ -471,7 +471,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             // issue
             Timber.w("Invalid Dynamic Deck: %s", dyn)
             CrashReportService.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession")
-            showSnackbar(getString(R.string.custom_study_rebuild_deck_corrupt))
+            showSnackbar((R.string.custom_study_rebuild_deck_corrupt))
             return
         }
         // and then set various options
