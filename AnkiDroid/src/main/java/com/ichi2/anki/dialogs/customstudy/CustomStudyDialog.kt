@@ -446,7 +446,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             Timber.i("Found deck: '%s'", customStudyDeck)
             if (cur.isStd) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
-                showSnackbar(getString(R.string.custom_study_deck_exists), Snackbar.LENGTH_SHORT)
+                showSnackbar(R.string.custom_study_deck_exists, Snackbar.LENGTH_SHORT)
                 return
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
