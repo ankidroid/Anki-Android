@@ -59,7 +59,7 @@ class CardInfo : AnkiActivity() {
         setContentView(R.layout.card_info)
         mCardId = getCardId(savedInstanceState)
         if (!hasValidCardId()) {
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong))
+            showSnackbar(R.string.multimedia_editor_something_wrong)
             finishWithoutAnimation()
             return
         }
@@ -71,7 +71,7 @@ class CardInfo : AnkiActivity() {
         super.onCollectionLoaded(col)
         val c = getCard(col)
         if (c == null) {
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong))
+            showSnackbar(R.string.multimedia_editor_something_wrong)
             finishWithoutAnimation()
             return
         }

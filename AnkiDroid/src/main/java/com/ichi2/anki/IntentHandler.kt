@@ -106,7 +106,7 @@ class IntentHandler : Activity() {
             runnable.run()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
-            showSnackbar(getString(R.string.intent_handler_failed_no_storage_permission))
+            showSnackbar(R.string.intent_handler_failed_no_storage_permission)
             launchDeckPickerIfNoOtherTasks(reloadIntent)
         }
     }
