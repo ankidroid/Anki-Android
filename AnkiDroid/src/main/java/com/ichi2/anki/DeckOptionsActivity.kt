@@ -143,7 +143,7 @@ class DeckOptionsActivity :
             } catch (e: JSONException) {
                 Timber.e(e, "DeckOptions - cacheValues")
                 CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues")
-                showSnackbar(this@DeckOptionsActivity.resources.getString(R.string.deck_options_corrupt, e.localizedMessage))
+                showSnackbar(resources.getString(R.string.deck_options_corrupt, e.localizedMessage))
                 finish()
             }
         }
