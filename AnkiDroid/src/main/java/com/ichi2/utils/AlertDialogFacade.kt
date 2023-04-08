@@ -20,12 +20,9 @@ package com.ichi2.utils
 
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
-import android.view.View
-import android.widget.CheckBox
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
@@ -39,6 +36,7 @@ fun DialogInterfaceListener.toClickListener(): OnClickListener {
  * Allows easier transformations from [MaterialDialog] to [AlertDialog].
  * Inline this file when material dialog is removed
  */
+@Deprecated("This method is deprecated as it is not type-safe. Use setTitle() instead.", ReplaceWith("setTitle(stringRes ?: text)"))
 fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? = null): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -50,6 +48,7 @@ fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? =
     }
 }
 
+@Deprecated("This method is deprecated as it is not type-safe. Use setMessage() instead.", ReplaceWith("setMessage(stringRes ?: text)"))
 fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSequence? = null): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -64,12 +63,14 @@ fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSeq
 /**
  * Shows an icon to the left of the dialog title.
  */
+@Deprecated("This method is deprecated as it is redundant. Use setIconAttribute() instead.", ReplaceWith("setIconAttribute(res)"))
 fun AlertDialog.Builder.iconAttr(
     @DrawableRes res: Int
 ) = apply {
     return this.setIcon(Themes.getResFromAttr(this.context, res))
 }
 
+@Deprecated("This method is deprecated as it is redundant. Use setPositiveButton() instead.", ReplaceWith("setPositiveButton(stringRes ?: text, click)"))
 fun AlertDialog.Builder.positiveButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
@@ -85,6 +86,7 @@ fun AlertDialog.Builder.positiveButton(
     }
 }
 
+@Deprecated("This method is deprecated as it is redundant. Use setNeutralButton() instead.", ReplaceWith("setNeutralButton(stringRes ?: text, click)"))
 fun AlertDialog.Builder.neutralButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
@@ -100,6 +102,7 @@ fun AlertDialog.Builder.neutralButton(
     }
 }
 
+@Deprecated("This method is deprecated as it is redundant. Use setNegativeButton() instead.", ReplaceWith("setNegativeButton(stringRes ?: text, click)"))
 fun AlertDialog.Builder.negativeButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
@@ -115,6 +118,7 @@ fun AlertDialog.Builder.negativeButton(
     }
 }
 
+@Deprecated("This method is deprecated as it is redundant. Use setCancelable() instead.", ReplaceWith("setCancelable(cancelable)"))
 fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
     return this.setCancelable(cancelable)
 }
@@ -123,37 +127,8 @@ fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
  * Executes the provided block, then creates an [AlertDialog] with the arguments supplied
  * and immediately displays the dialog
  */
+@Deprecated("This method is deprecated. Use showAlertDialog { ... } instead.")
 inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog.Builder = apply {
     this.block()
     this.show()
-}
-
-/**
- * Adds a checkbox to the dialog, whilst continuing to display the value of [message]
- * @param stringRes The string resource to display for the checkbox label.
- * @param text The literal string to display for the checkbox label.
- * @param isCheckedDefault Whether or not the checkbox is initially checked.
- * @param onToggle A listener invoked when the checkbox is checked or unchecked.
- */
-fun AlertDialog.Builder.checkBoxPrompt(
-    @StringRes stringRes: Int? = null,
-    text: CharSequence? = null,
-    isCheckedDefault: Boolean = false,
-    onToggle: (checked: Boolean) -> Unit
-): AlertDialog.Builder {
-    if (stringRes == null && text == null) {
-        throw IllegalArgumentException("either `stringRes` or `text` must be set")
-    }
-    val checkBoxView = View.inflate(this.context, R.layout.alert_dialog_checkbox, null)
-    val checkBox = checkBoxView.findViewById<CheckBox>(R.id.checkbox)
-
-    val checkBoxLabel = if (stringRes != null) context.getString(stringRes) else text
-    checkBox.text = checkBoxLabel
-    checkBox.isChecked = isCheckedDefault
-
-    checkBox.setOnCheckedChangeListener { _, isChecked ->
-        onToggle(isChecked)
-    }
-
-    return this.setView(checkBoxView)
 }

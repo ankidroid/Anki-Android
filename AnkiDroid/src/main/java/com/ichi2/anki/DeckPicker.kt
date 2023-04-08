@@ -92,6 +92,7 @@ import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.ServiceConnection
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
+import com.ichi2.anki.ui.dialogs.tools.setCheckBoxPrompt
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -2569,7 +2570,7 @@ open class DeckPicker :
             }
         // allow the user to dismiss the automatic dialog after it's been seen twice
         if (shownAutomatically && timesStorageMigrationPostponed > 1) {
-            dialog.checkBoxPrompt(R.string.button_do_not_show_again) { checked ->
+            dialog.setCheckBoxPrompt(R.string.button_do_not_show_again) { checked ->
                 Timber.d("Don't show again checked: %b", checked)
                 userCheckedDoNotShowAgain = checked
             }
