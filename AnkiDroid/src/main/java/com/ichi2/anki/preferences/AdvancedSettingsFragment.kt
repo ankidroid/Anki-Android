@@ -22,6 +22,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.*
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
@@ -31,6 +32,7 @@ import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.utils.show
 import net.ankiweb.rsdroid.BackendFactory
@@ -76,8 +78,14 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Third party apps
         requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
-            val ankiActivity = requireActivity() as AnkiActivity
-            CustomTabsFallback().openUri(ankiActivity, Uri.parse(getString(R.string.link_third_party_api_apps)))
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            CustomTabActivityHelper.openCustomTab(
+                requireActivity() as AnkiActivity,
+                customTabsIntent,
+                Uri.parse(getString(R.string.link_third_party_api_apps)),
+                CustomTabsFallback()
+            )
             true
         }
 
