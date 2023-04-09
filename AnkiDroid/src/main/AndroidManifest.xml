@@ -284,13 +284,13 @@
             android:name="com.ichi2.anki.MyAccount"
             android:label="@string/menu_my_account"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             />
         <activity
             android:name="com.ichi2.anki.preferences.Preferences"
             android:label="@string/settings"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             android:theme="@style/Theme_Light"
             >
             <intent-filter>
@@ -419,7 +419,7 @@
             android:name="com.ichi2.anki.LoginActivity"
             android:label="@string/menu_my_account"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             />
 
         <activity android:name=".IntroductionActivity"

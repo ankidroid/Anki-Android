@@ -13,7 +13,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -94,11 +93,6 @@ open class MyAccount : AnkiActivity() {
             switchToState(STATE_LOGGED_IN)
         } else {
             switchToState(STATE_LOG_IN)
-        }
-        if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo.visibility = View.GONE
-        } else {
-            mAnkidroidLogo.visibility = View.VISIBLE
         }
     }
 
@@ -328,24 +322,6 @@ open class MyAccount : AnkiActivity() {
             }
         }
         return exception.localizedMessage
-    }
-
-    private val isScreenSmall: Boolean
-        get() = (
-            (
-                this.applicationContext.resources.configuration.screenLayout
-                    and Configuration.SCREENLAYOUT_SIZE_MASK
-                )
-                < Configuration.SCREENLAYOUT_SIZE_LARGE
-            )
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo.visibility = View.GONE
-        } else {
-            mAnkidroidLogo.visibility = View.VISIBLE
-        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

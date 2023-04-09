@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top"
+        android:padding="15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username">
+
+            <!-- TODO: API 23: Use DrawableTint and deduplicate icon -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:drawablePadding="8dp"
+                android:inputType="textNoSuggestions|textEmailAddress"
+                android:layout_margin="@dimen/content_vertical_padding"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            app:passwordToggleEnabled="true">
+
+            <com.ichi2.ui.TextInputEditField
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword"
+                android:layout_margin="@dimen/content_vertical_padding"
+                android:paddingEnd="40dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/LargeFilledButtonStyle"
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:layout_gravity="center"
+            android:text="@string/log_in"
+            android:layout_margin="@dimen/content_vertical_padding"/>
+
+        <Button
+            android:id="@+id/reset_password_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:textColor="?attr/colorAccent"
+            android:singleLine="true"
+            android:padding="3dp"
+            android:layout_gravity="center"
+            android:text="@string/reset_password"
+            />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/no_account_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_description"
+            android:layout_gravity="center"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:textStyle="bold"/>
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/no_account_not_affiliated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_not_affiliated"
+            android:layout_gravity="center"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:textStyle="italic"/>
+
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:textColor="?attr/colorAccent"
+            android:padding="3dp"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:text="@string/sign_up" />
+
+        <!-- Added new button for lost email -->
+        <Button
+            android:id="@+id/lost_mail_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:textColor="?attr/colorAccent"
+            android:padding="3dp"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:text="@string/lost_mail_instructions" />
+    </LinearLayout>
+</ScrollView>
