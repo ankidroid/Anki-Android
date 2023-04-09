@@ -614,7 +614,7 @@ open class DeckPicker :
      *   relying instead on modifying it directly and/or using [onPrepareOptionsMenu].
      *   Note an issue with the latter: https://github.com/ankidroid/Anki-Android/issues/7755
      *
-     * TODO Add tooltip text to the image button.
+     * TODO BEFORE-RELEASE Add tooltip text to the image button.
      *   Menu items normally have titles that are shown on long tap.
      *   As this menu item delegates the UI to the action view, it is up to that to handle presses.
      *   When we decide on the text, use `TooltipCompat.setTooltipText` on the button to set it.
@@ -634,7 +634,7 @@ open class DeckPicker :
                     this.progress = (progress.ratio * Int.MAX_VALUE).toInt()
                 }
 
-                // TODO Perhaps handle the cases of success & failure differently?
+                // TODO BEFORE-RELEASE Perhaps handle the cases of success & failure differently?
                 is MigrationService.Progress.Done -> {
                     updateMenuState()
                     updateMenuFromState(menu)

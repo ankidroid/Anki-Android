@@ -67,7 +67,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
     private var serviceHasBeenStarted = false
 
-    // TODO Emit the according `flowOfProgress` here.
+    // TODO BEFORE-MERGE! Emit the according `flowOfProgress` here.
     //   I think it would simplify things if we could always bind to the service,
     //   even if `onStartCommand` is not going to be called.
     //   This way the UI elements that need service progress can always get it
@@ -84,9 +84,9 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
         serviceHasBeenStarted = true
 
-        // TODO `MigrateUserData.createInstance` is doing I/O and can throw I/O errors.
+        // TODO BEFORE-MERGE `MigrateUserData.createInstance` is doing I/O and can throw I/O errors.
         //   Figure out what's going on and move all I/O into a thread.
-        // TODO Previous code re-threw MigrateUserData.MissingDirectoryException.
+        // TODO BEFORE-MERGE Previous code re-threw MigrateUserData.MissingDirectoryException.
         //   Figure out why.
         val migrateUserDataTask = try {
             MigrateUserData.createInstance(AnkiDroidApp.getSharedPrefs(this))
@@ -96,7 +96,8 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             return START_STICKY
         }
 
-        // TODO Instead of returning `null,` have `MigrateUserData.createInstance` throw an exception.
+        // TODO BEFORE-MERGE Instead of returning `null`,
+        //   have `MigrateUserData.createInstance` throw an exception.
         if (migrateUserDataTask == null) {
             Timber.w("MigrationService started when a migration was not taking place")
             stopSelf()
@@ -117,7 +118,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     flowOfProgress.tryEmit(Progress.Transferring(transferredBytes, totalBytesToTransfer))
                 })
 
-                // TODO This is probably not supposed to be here
+                // TODO BEFORE-MERGE This is probably not supposed to be here
                 AnkiDroidApp.getSharedPrefs(this@MigrationService).edit {
                     remove(PREF_MIGRATION_DESTINATION)
                     remove(PREF_MIGRATION_SOURCE)
@@ -134,7 +135,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             flowOfProgress.collect { progress ->
                 startForeground(2, makeMigrationProgressNotification(progress))
 
-                // TODO Replace the toast with a dialog that is shown either
+                // TODO BEFORE-RELEASE Replace the toast with a dialog that is shown either
                 //   * now, if deck picker is shown,
                 //   * whenever the deck picker is shown, if not, perhaps even after app death.
                 if (progress is Progress.Success) {
@@ -157,12 +158,12 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         return START_STICKY
     }
 
-    // TODO This is inadequate, instead of calculating the remaining transfer size
+    // TODO BEFORE-RELEASE! This is inadequate, instead of calculating the remaining transfer size
     //   every time migration is started,
     //   we should be calculating this size only when starting migration for the first time,
     //   and keeping track of the transferred and the remaining files.
-    // TODO Between this call and the subsequent migration the contents of the folder can change.
-    //   This can lead to inconsistent readings in the UI.
+    // TODO BEFORE-RELEASE! Between this call and the subsequent migration
+    //   the contents of the folder can change. This can lead to inconsistent readings in the UI.
     private fun getRemainingTransferSize(task: MigrateUserData): Long {
         val ignoredFiles = MigrateEssentialFiles.iterateEssentialFiles(task.source) +
             File(task.source.directory, MoveConflictedFile.CONFLICT_DIRECTORY)
@@ -193,7 +194,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 }
 
 private fun Context.makeMigrationProgressNotification(progress: MigrationService.Progress): Notification {
-    val builder = NotificationCompat.Builder(this, Channel.SCOPED_STORAGE_MIGRATION.id )
+    val builder = NotificationCompat.Builder(this, Channel.SCOPED_STORAGE_MIGRATION.id)
         .setSmallIcon(R.drawable.ic_star_notify)
         .setContentTitle(getString(R.string.migration__migrating_data))
         .setPriority(NotificationCompat.PRIORITY_LOW)
@@ -220,7 +221,7 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
             builder.setContentText(getString(R.string.migration_successful_message))
         }
 
-        // TODO: Add a “Get help” button
+        // TODO BEFORE-RELEASE Add a “Get help” button
         is MigrationService.Progress.Failure -> {
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.e.stackTraceToString())
