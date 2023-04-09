@@ -27,6 +27,7 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -514,6 +515,21 @@ open class CardBrowser :
         }
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
+
+        onBackPressedDispatcher.addCallback(this) {
+            when {
+                isDrawerOpen -> closeDrawer()
+                isInMultiSelectMode -> endMultiSelectMode()
+                else -> {
+                    Timber.i("Back key pressed")
+                    val data = Intent()
+                    // Add reload flag to result intent so that schedule reset when returning to note editor
+                    data.putExtra("reloadRequired", mReloadRequired)
+                    closeCardBrowser(RESULT_OK, data)
+                }
+            }
+        }
+
         // initialize the lateinit variables
         // Load reference to action bar title
         mActionBarTitle = findViewById(R.id.toolbar_title)
@@ -875,20 +891,6 @@ open class CardBrowser :
         super.onDestroy()
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
-        }
-    }
-
-    override fun onBackPressed() {
-        when {
-            isDrawerOpen -> super.onBackPressed()
-            isInMultiSelectMode -> endMultiSelectMode()
-            else -> {
-                Timber.i("Back key pressed")
-                val data = Intent()
-                // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra("reloadRequired", mReloadRequired)
-                closeCardBrowser(RESULT_OK, data)
-            }
         }
     }
 

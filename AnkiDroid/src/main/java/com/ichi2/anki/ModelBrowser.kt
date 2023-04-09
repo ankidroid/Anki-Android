@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemLongClickListener
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
@@ -104,6 +105,11 @@ class ModelBrowser : AnkiActivity() {
         setContentView(R.layout.model_browser)
         mModelListView = findViewById(R.id.note_type_browser_list)
         mActionBar = enableToolbar()
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
+        }
+
         startLoadingCollection()
     }
 
@@ -118,11 +124,10 @@ class ModelBrowser : AnkiActivity() {
         return true
     }
 
-    @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 return true
             }
             R.id.action_add_new_note_type -> {

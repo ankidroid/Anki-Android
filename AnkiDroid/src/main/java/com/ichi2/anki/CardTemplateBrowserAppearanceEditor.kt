@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -38,8 +39,10 @@ import timber.log.Timber
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
  */
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
+
     private lateinit var mQuestionEditText: EditText
     private lateinit var mAnswerEditText: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -51,6 +54,12 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             finishActivityWithFade(this)
             return
         }
+
+        onBackPressedDispatcher.addCallback(this) {
+            Timber.i("Back Button Pressed")
+            closeWithDiscardWarning()
+        }
+
         initializeUiFromBundle(bundle)
     }
 
@@ -79,11 +88,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             else -> {}
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        Timber.i("Back Button Pressed")
-        closeWithDiscardWarning()
     }
 
     private fun closeWithDiscardWarning() {

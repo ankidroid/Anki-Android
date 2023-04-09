@@ -18,11 +18,15 @@
 package com.ichi2.anki
 
 import android.app.DownloadManager
-import android.content.*
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.*
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -80,6 +84,42 @@ class SharedDecksActivity : AnkiActivity() {
         setContentView(R.layout.activity_shared_decks)
         setTitle(R.string.download_deck)
 
+        /**
+         * If download screen is open:
+         *      If download is in progress: Show download cancellation dialog
+         *      If download is not in progress: Close the download screen
+         * If user can go back in WebView, navigate to previous webpage.
+         * Otherwise, close the WebView.
+         */
+        onBackPressedDispatcher.addCallback(this) {
+            when {
+                sharedDecksDownloadFragmentExists() -> {
+                    supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)?.let {
+                        if ((it as SharedDecksDownloadFragment).isDownloadInProgress) {
+                            Timber.i("Back pressed when download is in progress, show cancellation confirmation dialog")
+                            // Show cancel confirmation dialog if download is in progress
+                            it.showCancelConfirmationDialog()
+                        } else {
+                            Timber.i("Back pressed when download is not in progress but download screen is open, close fragment")
+                            // Remove fragment
+                            supportFragmentManager.commit {
+                                remove(it)
+                            }
+                        }
+                    }
+                    supportFragmentManager.popBackStackImmediate()
+                }
+                mWebView.canGoBack() -> {
+                    Timber.i("Back pressed when user can navigate back to other webpages inside WebView")
+                    mWebView.goBack()
+                }
+                else -> {
+                    Timber.i("Back pressed which would lead to closing of the WebView")
+                    finish()
+                }
+            }
+        }
+
         val webviewToolbar: Toolbar = findViewById(R.id.webview_toolbar)
         webviewToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
@@ -107,43 +147,6 @@ class SharedDecksActivity : AnkiActivity() {
         }
 
         mWebView.webViewClient = mWebViewClient
-    }
-
-    /**
-     * If download screen is open:
-     *      If download is in progress: Show download cancellation dialog
-     *      If download is not in progress: Close the download screen
-     * If user can go back in WebView, navigate to previous webpage.
-     * Otherwise, close the WebView.
-     */
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        when {
-            sharedDecksDownloadFragmentExists() -> {
-                supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)?.let {
-                    if ((it as SharedDecksDownloadFragment).isDownloadInProgress) {
-                        Timber.i("Back pressed when download is in progress, show cancellation confirmation dialog")
-                        // Show cancel confirmation dialog if download is in progress
-                        it.showCancelConfirmationDialog()
-                    } else {
-                        Timber.i("Back pressed when download is not in progress but download screen is open, close fragment")
-                        // Remove fragment
-                        supportFragmentManager.commit {
-                            remove(it)
-                        }
-                    }
-                }
-                supportFragmentManager.popBackStackImmediate()
-            }
-            mWebView.canGoBack() -> {
-                Timber.i("Back pressed when user can navigate back to other webpages inside WebView")
-                mWebView.goBack()
-            }
-            else -> {
-                Timber.i("Back pressed which would lead to closing of the WebView")
-                super.onBackPressed()
-            }
-        }
     }
 
     private fun sharedDecksDownloadFragmentExists(): Boolean {

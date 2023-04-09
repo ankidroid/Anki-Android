@@ -27,6 +27,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.webkit.WebView
 import android.widget.ProgressBar
+import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -73,6 +74,20 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anki_stats)
         initNavigationDrawer(findViewById(android.R.id.content))
+
+        onBackPressedDispatcher.addCallback(this) {
+            if (isDrawerOpen) {
+                closeDrawer()
+            } else {
+                Timber.i("Back key pressed")
+                val data = Intent()
+                if (intent.hasExtra("selectedDeck")) {
+                    data.putExtra("originalDeck", intent.getLongExtra("selectedDeck", 0L))
+                }
+                setResult(RESULT_CANCELED, data)
+                finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+            }
+        }
 
         slidingTabLayout = findViewById(R.id.sliding_tabs)
         startLoadingCollection()
@@ -474,20 +489,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
                 cancelTasks()
                 createStatisticOverview()
             }
-        }
-    }
-
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            val data = Intent()
-            if (intent.hasExtra("selectedDeck")) {
-                data.putExtra("originalDeck", intent.getLongExtra("selectedDeck", 0L))
-            }
-            setResult(RESULT_CANCELED, data)
-            finishWithAnimation(ActivityTransitionAnimation.Direction.END)
         }
     }
 

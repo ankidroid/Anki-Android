@@ -27,6 +27,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
@@ -72,6 +73,10 @@ class Previewer : AbstractFlashcardViewer() {
             return
         }
         showBackIcon()
+        onBackPressedDispatcher.addCallback(this) {
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        }
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe()
         startLoadingCollection()
@@ -163,11 +168,6 @@ class Previewer : AbstractFlashcardViewer() {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        setResult(RESULT_OK, resultIntent)
-        super.onBackPressed()
     }
 
     override fun onNavigationPressed() {

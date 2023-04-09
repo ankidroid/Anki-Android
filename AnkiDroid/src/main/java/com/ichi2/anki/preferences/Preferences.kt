@@ -25,6 +25,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
@@ -70,6 +71,10 @@ class Preferences :
         val actionBar = enableToolbar().apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
         }
 
         // Load initial fragment if activity is being first created.
@@ -224,10 +229,9 @@ class Preferences :
         }
     }
 
-    @Suppress("deprecation") // onBackPressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             return true
         }
         return false

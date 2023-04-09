@@ -28,6 +28,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import androidx.activity.addCallback
 import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.utils.AdaptionUtil
@@ -87,6 +88,14 @@ class Info : AnkiActivity() {
                 }
             } else {
                 visibility = View.GONE
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            if (mWebView!!.canGoBack()) {
+                mWebView!!.goBack()
+            } else {
+                finish()
             }
         }
 
@@ -168,15 +177,6 @@ class Info : AnkiActivity() {
 
     private fun finishWithAnimation() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.START)
-    }
-
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        if (mWebView!!.canGoBack()) {
-            mWebView!!.goBack()
-        } else {
-            super.onBackPressed()
-        }
     }
 
     companion object {

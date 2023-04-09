@@ -29,6 +29,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -190,6 +191,18 @@ abstract class NavigationDrawerActivity :
         super.setTitle(title)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this) {
+            if (isDrawerOpen) {
+                Timber.i("Back key pressed")
+                closeDrawer()
+            } else {
+                finish()
+            }
+        }
+    }
+
     /**
      * When using the ActionBarDrawerToggle, you must call it during
      * onPostCreate() and onConfigurationChanged()...
@@ -238,16 +251,6 @@ abstract class NavigationDrawerActivity :
             finishWithoutAnimation()
         } else {
             recreate()
-        }
-    }
-
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            Timber.i("Back key pressed")
-            closeDrawer()
-        } else {
-            super.onBackPressed()
         }
     }
 
@@ -377,7 +380,7 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled())
     }
 
-    private fun closeDrawer() {
+    public fun closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled())
     }
 

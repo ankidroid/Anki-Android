@@ -192,7 +192,8 @@ class NoteEditorTest : RobolectricTest() {
         enableNullCollection()
         ActivityScenario.launchActivityForResult(NoteEditor::class.java).use { scenario ->
             scenario.onActivity { noteEditor: NoteEditor ->
-                noteEditor.onBackPressed()
+                noteEditor.onBackPressedDispatcher.onBackPressed()
+
                 assertThat("Pressing back should finish the activity", noteEditor.isFinishing)
             }
             val result = scenario.result

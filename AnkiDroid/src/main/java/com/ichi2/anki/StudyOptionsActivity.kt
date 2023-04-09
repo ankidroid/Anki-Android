@@ -17,6 +17,7 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.fragment.app.commit
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
@@ -35,6 +36,16 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.studyoptions)
+
+        onBackPressedDispatcher.addCallback(this) {
+            if (isDrawerOpen) {
+                closeDrawer()
+            } else {
+                Timber.i("Back key pressed")
+                closeStudyOptions()
+            }
+        }
+
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(findViewById(android.R.id.content))
         if (savedInstanceState == null) {
@@ -71,15 +82,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         // mCompat.invalidateOptionsMenu(this);
         setResult(result)
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-    }
-
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            closeStudyOptions()
-        }
     }
 
     public override fun onStop() {

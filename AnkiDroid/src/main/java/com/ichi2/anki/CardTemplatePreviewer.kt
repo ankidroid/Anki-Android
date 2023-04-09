@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
@@ -94,6 +95,12 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                 closeCardTemplatePreviewer()
             }
         }
+
+        onBackPressedDispatcher.addCallback(this) {
+            Timber.i("CardTemplatePreviewer:: onBackPressed()")
+            closeCardTemplatePreviewer()
+        }
+
         showBackIcon()
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe()
@@ -113,11 +120,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         setResult(RESULT_OK)
         TemporaryModel.clearTempModelFiles()
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-    }
-
-    override fun onBackPressed() {
-        Timber.i("CardTemplatePreviewer:: onBackPressed()")
-        closeCardTemplatePreviewer()
     }
 
     override fun performReload() {

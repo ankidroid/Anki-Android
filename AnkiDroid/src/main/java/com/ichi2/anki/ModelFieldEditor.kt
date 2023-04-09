@@ -25,6 +25,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
@@ -78,6 +79,11 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             setTitle(R.string.model_field_editor_title)
             subtitle = intent.getStringExtra("title")
         }
+
+        onBackPressedDispatcher.addCallback(this) {
+            closeActivity()
+        }
+
         startLoadingCollection()
     }
 
@@ -459,7 +465,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             true
         }
         R.id.action_add_new_model -> {
@@ -471,10 +477,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private fun closeActivity() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-    }
-
-    override fun onBackPressed() {
-        closeActivity()
     }
 
     fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {

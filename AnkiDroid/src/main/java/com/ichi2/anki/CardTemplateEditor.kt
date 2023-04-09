@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
@@ -129,6 +130,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         mSlidingTabLayout = findViewById(R.id.sliding_tabs)
 
+        onBackPressedDispatcher.addCallback(this) {
+            if (modelHasChanged()) {
+                showDiscardChangesDialog()
+            } else {
+                finish()
+            }
+        }
+
         // Disable the home icon
         enableToolbar()
         startLoadingCollection()
@@ -146,18 +155,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        if (modelHasChanged()) {
-            showDiscardChangesDialog()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)

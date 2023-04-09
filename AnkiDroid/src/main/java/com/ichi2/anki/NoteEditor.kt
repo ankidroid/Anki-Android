@@ -37,6 +37,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
@@ -252,6 +253,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
         }
+
+        onBackPressedDispatcher.addCallback(this) {
+            Timber.i("NoteEditor:: onBackPressed()")
+            closeCardEditorWithCheck()
+        }
+
         // Set up toolbar
         toolbar = findViewById(R.id.editor_toolbar)
         toolbar.apply {
@@ -837,11 +844,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mEditorNote!!.load()
         // close note editor
         closeNoteEditor()
-    }
-
-    override fun onBackPressed() {
-        Timber.i("NoteEditor:: onBackPressed()")
-        closeCardEditorWithCheck()
     }
 
     override fun onDestroy() {

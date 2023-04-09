@@ -36,6 +36,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -322,6 +323,27 @@ open class DeckPicker :
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
+
+        onBackPressedDispatcher.addCallback(this) {
+            val preferences = getSharedPrefs(baseContext)
+            if (isDrawerOpen) {
+                closeDrawer()
+            } else {
+                Timber.i("Back key pressed")
+                if (mFloatingActionMenu.isFABOpen) {
+                    mFloatingActionMenu.closeFloatingActionMenu()
+                } else {
+                    if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
+                        automaticSync()
+                        finishWithAnimation()
+                    } else {
+                        showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
+                    }
+                    mBackButtonPressedToExit = true
+                    HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToExit = false }
+                }
+            }
+        }
 
         startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
 
@@ -991,29 +1013,6 @@ open class DeckPicker :
         if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
             Timber.i("Triggering Automatic Sync")
             sync()
-        }
-    }
-
-    @Suppress("DEPRECATION") // onBackPressed
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        val preferences = getSharedPrefs(baseContext)
-        if (isDrawerOpen) {
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            if (mFloatingActionMenu.isFABOpen) {
-                mFloatingActionMenu.closeFloatingActionMenu()
-            } else {
-                if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
-                    automaticSync()
-                    finishWithAnimation()
-                } else {
-                    showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
-                }
-                mBackButtonPressedToExit = true
-                HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToExit = false }
-            }
         }
     }
 

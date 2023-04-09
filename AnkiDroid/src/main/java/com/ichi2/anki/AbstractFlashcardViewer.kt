@@ -37,6 +37,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.*
 import android.webkit.WebView.HitTestResult
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
@@ -557,6 +558,21 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
+
+        onBackPressedDispatcher.addCallback(this) {
+            if (isDrawerOpen) {
+                closeDrawer()
+            } else {
+                Timber.i("Back key pressed")
+                if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
+                    closeReviewer(RESULT_DEFAULT, false)
+                } else {
+                    showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
+                }
+                mBackButtonPressedToReturn = true
+                executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToReturn = false }
+            }
+        }
     }
 
     override fun onStart() {
@@ -671,21 +687,6 @@ abstract class AbstractFlashcardViewer :
             mCardFrame!!.removeAllViews()
         }
         destroyWebView(webView) // OK to do without a lock
-    }
-
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
-                closeReviewer(RESULT_DEFAULT, false)
-            } else {
-                showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
-            }
-            mBackButtonPressedToReturn = true
-            executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToReturn = false }
-        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

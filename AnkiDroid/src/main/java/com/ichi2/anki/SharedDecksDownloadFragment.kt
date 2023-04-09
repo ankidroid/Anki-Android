@@ -402,14 +402,13 @@ class SharedDecksDownloadFragment : Fragment() {
      * If there are any pending downloads, continue with them.
      * Else, set mIsPreviousDownloadOngoing as false and unregister mOnComplete broadcast receiver.
      */
-    @Suppress("deprecation") // onBackPressed
     private fun checkDownloadStatusAndUnregisterReceiver(isSuccessful: Boolean, isInvalidDeckFile: Boolean = false) {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
                 context?.let { UIUtils.showThemedToast(it, R.string.import_log_no_apkg, false) }
                 // Go back if file is not a deck and cannot be imported
-                activity?.onBackPressed()
+                activity?.onBackPressedDispatcher?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
                 context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
@@ -428,7 +427,6 @@ class SharedDecksDownloadFragment : Fragment() {
         removeCancelConfirmationDialog()
     }
 
-    @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
             MaterialDialog(it).show {
@@ -437,7 +435,7 @@ class SharedDecksDownloadFragment : Fragment() {
                     mDownloadManager.remove(mDownloadId)
                     unregisterReceiver()
                     isDownloadInProgress = false
-                    activity?.onBackPressed()
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 }
                 negativeButton(R.string.dialog_continue) {
                     dismiss()
