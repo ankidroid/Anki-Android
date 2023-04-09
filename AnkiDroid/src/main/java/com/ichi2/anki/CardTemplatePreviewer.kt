@@ -18,7 +18,6 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
@@ -141,7 +140,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         super.initLayout()
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
-        findViewById<LinearLayout>(R.id.bottom_area_layout).visibility = View.VISIBLE
+        findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
         previewLayout = createAndDisplay(this, mToggleAnswerHandler)
         previewLayout!!.setOnPreviousCard { onPreviousTemplate() }
         previewLayout!!.setOnNextCard { onNextTemplate() }
