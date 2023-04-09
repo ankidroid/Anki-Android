@@ -86,6 +86,8 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListener
 import com.ichi2.async.updateCard
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -2287,7 +2289,6 @@ abstract class AbstractFlashcardViewer :
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
-        @Suppress("deprecation") // resolveActivity
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
                 launchCatchingTask {
@@ -2455,7 +2456,7 @@ abstract class AbstractFlashcardViewer :
                     }
                 }
                 if (intent != null) {
-                    if (packageManager.resolveActivity(intent, 0) == null) {
+                    if (packageManager.resolveActivityCompat(intent, ResolveInfoFlagsCompat.EMPTY) == null) {
                         val packageName = intent.getPackage()
                         if (packageName == null) {
                             Timber.d("Not using resolved intent uri because not available: %s", intent)
@@ -2466,7 +2467,7 @@ abstract class AbstractFlashcardViewer :
                                 Intent.ACTION_VIEW,
                                 Uri.parse("market://details?id=$packageName")
                             )
-                            if (packageManager.resolveActivity(intent, 0) == null) {
+                            if (packageManager.resolveActivityCompat(intent, ResolveInfoFlagsCompat.EMPTY) == null) {
                                 intent = null
                             }
                         }

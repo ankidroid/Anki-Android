@@ -61,6 +61,8 @@
     <string name="updated_version">به نسخه %s بروزرسانی شد</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ذخیره تخته سفید</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">فعال سازی تخته سفید</string>
     <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
     <string name="show_whiteboard">نمایش تخته سفید</string>

@@ -61,6 +61,8 @@
     <string name="updated_version">Actualizado á versión %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Activar encerado</string>
     <string name="disable_whiteboard">Desactivar encerado</string>
     <string name="show_whiteboard">Amosar encerado</string>

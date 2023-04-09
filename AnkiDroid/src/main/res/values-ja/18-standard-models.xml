@@ -29,8 +29,8 @@
     <string name="front_field_name">表</string>
     <string name="back_field_name">裏</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">テキスト</string>
-    <string name="extra_field_name_new">裏（追記）</string>
-    <string name="field_to_ask_front_name">裏面カードを追加する</string>
+    <string name="extra_field_name_new">裏 (追記)</string>
+    <string name="field_to_ask_front_name">任意の入力で反転カード追加</string>
     <!--Card type-->
     <string name="card_n_name">カード %d</string>
     <!--Note type-->
@@ -38,5 +38,5 @@
     <string name="cloze_model_name">穴埋め</string>
     <string name="basic_typing_model_name">基本 (解答タイピング入力)</string>
     <string name="forward_reverse_model_name">基本 (裏表反転カード付き)</string>
-    <string name="forward_optional_reverse_model_name">基本 (オプション付き裏表反転カード)</string>
+    <string name="forward_optional_reverse_model_name">基本 (裏表反転カード追加可能)</string>
 </resources>

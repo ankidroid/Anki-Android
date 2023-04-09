@@ -237,8 +237,8 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Gizlilik</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Gizlilik Politikası</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiDroid Gizlilik Politikası</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Gizlilik Poliçesi</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Gizlilik Poliçesi</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Şartları ve Koşulları</string>
     <string name="help_title_send_exception">Sorun giderme raporu gönder</string>
     <string name="help_dialog_exception_report_debounce">Rapor zaten gönderildi</string>

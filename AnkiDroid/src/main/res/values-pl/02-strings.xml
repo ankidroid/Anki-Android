@@ -61,6 +61,8 @@
     <string name="updated_version">Zaktualizowano do wersji %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Zapisz tablicę</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Włącz tablicę</string>
     <string name="disable_whiteboard">Wyłącz tablicę</string>
     <string name="show_whiteboard">Pokaż tablicę</string>

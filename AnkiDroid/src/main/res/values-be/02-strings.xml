@@ -61,6 +61,8 @@
     <string name="updated_version">Абноўлена да версіі %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Захаваць дошку</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
     <string name="show_whiteboard">Паказаць дошку</string>

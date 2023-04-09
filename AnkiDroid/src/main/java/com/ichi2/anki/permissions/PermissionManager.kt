@@ -45,7 +45,7 @@ class PermissionManager private constructor(
     val permissions: Array<String>,
     private val useCallbackIfActivityRecreated: Boolean,
     // callback must be supplied here to allow for recreation of the activity if destroyed
-    callback: (permissionDialogResult: PermissionsRequestRawResults) -> Unit
+    private val callback: (permissionDialogResult: PermissionsRequestRawResults) -> Unit
 ) {
 
     /**
@@ -66,7 +66,6 @@ class PermissionManager private constructor(
             callback.invoke(results)
         }
     private val activityRef = WeakReference(activity)
-    private lateinit var callback: ((PermissionsRequestResults) -> Unit)
 
     // Whether permissions were requested in this instance
     private var permissionsRequestedInCurrentInstance: Boolean = false
@@ -116,7 +115,7 @@ class PermissionManager private constructor(
         if (permissions.requiresPermissionDialog) {
             this.launchPermissionDialog()
         } else {
-            callback.invoke(PermissionsRequestResults.allGranted(permissions))
+            callback.invoke(permissions.toPermissionsRequestRawResult()!!)
         }
     }
 

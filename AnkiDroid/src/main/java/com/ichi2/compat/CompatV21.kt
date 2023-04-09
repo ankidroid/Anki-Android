@@ -83,6 +83,14 @@ open class CompatV21 : Compat {
         return bundle.getParcelableArrayList(key)
     }
 
+    override fun resolveActivity(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): ResolveInfo? {
+        return packageManager.resolveActivity(intent, flags.value.toInt())
+    }
+
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
