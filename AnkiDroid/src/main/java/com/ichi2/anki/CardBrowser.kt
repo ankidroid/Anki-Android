@@ -2693,6 +2693,15 @@ open class CardBrowser :
         }
     }
 
+    // For Keyboard shortcut
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        Timber.d("onKeyUp(): mSearchItem expand through External Keyboard")
+        if ((event?.isCtrlPressed == true) && (keyCode == KeyEvent.KEYCODE_F)) {
+            mSearchItem?.expandActionView()
+        }
+        return super.onKeyUp(keyCode, event)
+    }
+
     companion object {
         var cardBrowserCard: Card? = null
 
