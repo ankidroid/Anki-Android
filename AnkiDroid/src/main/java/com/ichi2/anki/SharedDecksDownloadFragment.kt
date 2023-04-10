@@ -432,14 +432,14 @@ class SharedDecksDownloadFragment : Fragment() {
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
             MaterialDialog(it).show {
-                title(R.string.cancel_download_question_title)
-                positiveButton(R.string.dialog_cancel) {
+                title(R.string.confirm_cancel)
+                positiveButton(R.string.dialog_yes) {
                     mDownloadManager.remove(mDownloadId)
                     unregisterReceiver()
                     isDownloadInProgress = false
                     activity?.onBackPressed()
                 }
-                negativeButton(R.string.dialog_continue) {
+                negativeButton(R.string.dialog_no) {
                     dismiss()
                 }
             }
