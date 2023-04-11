@@ -140,6 +140,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         super.initLayout()
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
+        findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
         previewLayout = createAndDisplay(this, mToggleAnswerHandler)
         previewLayout!!.setOnPreviousCard { onPreviousTemplate() }
         previewLayout!!.setOnNextCard { onNextTemplate() }
