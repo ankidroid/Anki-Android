@@ -17,12 +17,14 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.DialogInterface.*
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
@@ -42,10 +44,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.AndroidTest
-import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
-import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.TaskSchedulerRule
+import com.ichi2.testutils.*
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.runBlocking
@@ -62,6 +61,7 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
@@ -194,9 +194,24 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         mBackground = true
     }
 
-    protected fun clickDialogButton(button: WhichButton?, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+    protected fun clickMaterialDialogButton(button: WhichButton?, @Suppress("SameParameterValue") checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
+        if (checkDismissed) {
+            Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
+        }
+    }
+
+    /**
+     * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
+     */
+    protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+
+        dialog.getButton(button).performClick()
+        // Need to run UI thread tasks to actually run the onClickHandler
+        ShadowLooper.runUiThreadTasks()
+
         if (checkDismissed) {
             Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
         }
@@ -207,13 +222,32 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      *
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
-    protected fun getDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
+    protected fun getMaterialDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
         val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
         return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
+    }
+
+    /**
+     * Get the current dialog text for AlertDialogs (which are replacing MaterialDialogs). Will return null if no dialog visible
+     * *or* if you check for dismissed and it has been dismissed
+     *
+     * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
+     * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
+     */
+    protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
+        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
+            Timber.e("The latest dialog has already been dismissed.")
+            return null
+        }
+        val messageViewWithinDialog = dialog.findViewById<TextView>(android.R.id.message)
+        Assert.assertFalse(messageViewWithinDialog == null)
+
+        return messageViewWithinDialog?.text?.toString()
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
