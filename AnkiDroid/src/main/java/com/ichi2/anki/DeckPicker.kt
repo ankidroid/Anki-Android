@@ -514,7 +514,7 @@ open class DeckPicker :
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
                 } else {
                     val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
+                    startActivityWithoutAnimation(i)
                     showThemedToast(this, R.string.directory_inaccessible, false)
                 }
             }
@@ -1247,7 +1247,7 @@ open class DeckPicker :
                 if (skip != 0) {
                     startActivityWithAnimation(infoIntent, START)
                 } else {
-                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION)
+                    startActivityWithoutAnimation(infoIntent)
                 }
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
