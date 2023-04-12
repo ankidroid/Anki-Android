@@ -981,11 +981,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         intent.putExtra(EXTRA_DID, deckId)
         // mutate event with additional properties
         intentEnricher.accept(intent)
-        startActivityForResultWithAnimation(
-            intent,
-            REQUEST_ADD,
-            START
-        )
+        startActivityWithAnimation(intent, START)
     }
 
     // ----------------------------------------------------------------------------
@@ -1125,11 +1121,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             intent.putExtra("ordId", mCurrentEditedCard!!.ord)
             Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
         }
-        startActivityForResultWithAnimation(
-            intent,
-            REQUEST_TEMPLATE_EDIT,
-            START
-        )
+        startActivityWithAnimation(intent, START)
     }
 
     @Suppress("deprecation") // onActivityResult
@@ -1505,7 +1497,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
-        startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT)
+        startActivityWithoutAnimation(editCard)
     }
 
     private fun initFieldEditText(editText: FieldEditText?, index: Int, enabled: Boolean) {

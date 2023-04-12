@@ -157,14 +157,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             setOnClickListener {
                 val i = Intent(Intent.ACTION_PICK)
                 i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-                mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE)
+                mActivity.startActivityWithoutAnimation(i)
             }
         }
 
         val btnDraw = Button(mActivity).apply {
             text = gtxt(R.string.drawing)
             setOnClickListener {
-                mActivity.startActivityForResultWithoutAnimation(Intent(mActivity, DrawingActivity::class.java), ACTIVITY_DRAWING)
+                mActivity.startActivityWithoutAnimation(Intent(mActivity, DrawingActivity::class.java))
             }
         }
 
@@ -270,7 +270,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 return toReturn
             }
             try {
-                mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE)
+                mActivity.startActivityWithoutAnimation(cameraIntent)
             } catch (e: Exception) {
                 Timber.w(e, "Unable to take picture")
                 showSomethingWentWrong()
