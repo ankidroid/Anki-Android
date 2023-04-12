@@ -815,7 +815,7 @@ open class DeckPicker :
                     ModelBrowser::class.java
                 }
                 val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
+                startActivityWithAnimation(noteTypeBrowser, START)
                 return true
             }
             R.id.action_restore_backup -> {
@@ -1115,7 +1115,7 @@ open class DeckPicker :
     fun addNote() {
         val intent = Intent(this@DeckPicker, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, START)
+        startActivityWithAnimation(intent, START)
     }
 
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
@@ -1245,7 +1245,7 @@ open class DeckPicker :
                 val infoIntent = Intent(this, Info::class.java)
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
                 if (skip != 0) {
-                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION, START)
+                    startActivityWithAnimation(infoIntent, START)
                 } else {
                     startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION)
                 }
@@ -1549,7 +1549,7 @@ open class DeckPicker :
     override fun loginToSyncServer() {
         val myAccount = Intent(this, MyAccount::class.java)
         myAccount.putExtra("notLoggedIn", true)
-        startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, FADE)
+        startActivityWithAnimation(myAccount, FADE)
     }
 
     // Callback to import a file -- adding it to existing collection
@@ -1637,7 +1637,7 @@ open class DeckPicker :
             val intent = Intent()
             intent.putExtra("withDeckOptions", withDeckOptions)
             intent.setClass(this, StudyOptionsActivity::class.java)
-            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
+            startActivityWithAnimation(intent, START)
         }
     }
 
@@ -2137,7 +2137,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val reviewer = Intent(this, Reviewer::class.java)
-        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, START)
+        startActivityWithAnimation(reviewer, START)
     }
 
     override fun onCreateCustomStudySession() {
@@ -2366,7 +2366,6 @@ open class DeckPicker :
         private const val LOG_IN_FOR_SYNC = 6
         private const val SHOW_INFO_NEW_VERSION = 9
         const val SHOW_STUDYOPTIONS = 11
-        private const val ADD_NOTE = 12
         const val PICK_APKG_FILE = 13
         const val PICK_CSV_FILE = 14
 
