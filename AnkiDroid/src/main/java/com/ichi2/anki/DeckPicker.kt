@@ -295,7 +295,7 @@ open class DeckPicker :
         // #6208 - if the click is accepted before the sync completes, we get a failure.
         // We use the Deck ID as the deck likely doesn't exist any more.
         val message = getString(R.string.deck_picker_failed_deck_load, deckId.toString())
-        showThemedToast(this, message, false)
+        showSnackbar(message)
         Timber.w(message)
     }
 
@@ -384,10 +384,10 @@ open class DeckPicker :
             hasDeckPickerBackground = applyDeckPickerBackground(view)
         } catch (e: OutOfMemoryError) { // 6608 - OOM should be catchable here.
             Timber.w(e, "Failed to apply background - OOM")
-            showThemedToast(this, getString(R.string.background_image_too_large), false)
+            showSnackbar(getString(R.string.background_image_too_large))
         } catch (e: Exception) {
             Timber.w(e, "Failed to apply background")
-            showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.localizedMessage), false)
+            showSnackbar(getString(R.string.failed_to_apply_background_image, e.localizedMessage))
         }
 
         // create and set an adapter for the RecyclerView
@@ -515,7 +515,7 @@ open class DeckPicker :
                 } else {
                     val i = AdvancedSettingsFragment.getSubscreenIntent(this)
                     startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
-                    showThemedToast(this, R.string.directory_inaccessible, false)
+                    showSnackbar(R.string.directory_inaccessible)
                 }
             }
             FUTURE_ANKIDROID_VERSION -> {
@@ -1380,7 +1380,7 @@ open class DeckPicker :
     }
 
     fun onSdCardNotMounted() {
-        showThemedToast(this, resources.getString(R.string.sd_card_not_mounted), false)
+        showSnackbar(resources.getString(R.string.sd_card_not_mounted))
         finishWithoutAnimation()
     }
 
@@ -1403,7 +1403,7 @@ open class DeckPicker :
                 }
             }
             if (!result) {
-                showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
+                showSnackbar(resources.getString(R.string.deck_repair_error), Snackbar.LENGTH_SHORT)
                 showCollectionErrorDialog()
             }
         }
@@ -1671,7 +1671,7 @@ open class DeckPicker :
                         return@launchCatchingTask
                     }
                     withProgress { CollectionManager.updateScheduler() }
-                    showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
+                    showSnackbar(col.tr.schedulingUpdateDone())
                     refreshState()
                 }
             }
@@ -1984,14 +1984,14 @@ open class DeckPicker :
 
             // User report: "success" is true even if Vivo does not have permission
             if (AdaptionUtil.isVivo) {
-                showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false)
+                showSnackbar(getString(R.string.create_shortcut_error_vivo))
             }
             if (!success) {
-                showThemedToast(this, getString(R.string.create_shortcut_failed), false)
+                showSnackbar(getString(R.string.create_shortcut_failed))
             }
         } catch (e: Exception) {
             Timber.w(e)
-            showThemedToast(this, getString(R.string.create_shortcut_error, e.localizedMessage), false)
+            showSnackbar(getString(R.string.create_shortcut_error, e.localizedMessage))
         }
     }
 
@@ -2292,7 +2292,7 @@ open class DeckPicker :
             val count = databaseResult.cardsWithFixedHomeDeckCount
             if (count != 0) {
                 val message = resources.getString(R.string.integrity_check_fixed_no_home_deck, count)
-                showThemedToast(this@DeckPicker, message, false)
+                showSnackbar(message)
             }
             val msg: String
             val shrunkInMb = (databaseResult.sizeChangeInKb / 1024.0).roundToLong()
