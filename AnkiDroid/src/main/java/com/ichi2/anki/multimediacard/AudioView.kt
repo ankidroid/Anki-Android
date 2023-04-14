@@ -127,7 +127,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 mAudioRecorder.stopRecording()
             } catch (e: RuntimeException) {
                 Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
-                showSnackbar((R.string.multimedia_editor_audio_view_recording_failed), Snackbar.LENGTH_SHORT)
+                showSnackbar(R.string.multimedia_editor_audio_view_recording_failed, Snackbar.LENGTH_SHORT)
             }
             status = Status.IDLE
             if (mOnRecordingFinishEventListener != null) {
@@ -191,7 +191,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                         notifyPlay()
                     } catch (e: Exception) {
                         Timber.e(e)
-                        showSnackbar((R.string.multimedia_editor_audio_view_playing_failed), Snackbar.LENGTH_SHORT)
+                        showSnackbar(R.string.multimedia_editor_audio_view_playing_failed, Snackbar.LENGTH_SHORT)
                         status = Status.IDLE
                     }
                     Status.PAUSED -> {
@@ -275,7 +275,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 // We can get to this screen without permissions through the "Pronunciation" feature.
                 if (!canRecordAudio(mContext)) {
                     Timber.w("Audio recording permission denied.")
-                    showSnackbar((R.string.multimedia_editor_audio_permission_denied), Snackbar.LENGTH_SHORT)
+                    showSnackbar(R.string.multimedia_editor_audio_permission_denied, Snackbar.LENGTH_SHORT)
                     return
                 }
                 when (status) {
@@ -285,7 +285,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                         } catch (e: Exception) {
                             // either output file failed or codec didn't work, in any case fail out
                             Timber.e("RecordButton.onClick() :: error recording to %s\n%s", audioPath, e.message)
-                            showSnackbar((R.string.multimedia_editor_audio_view_recording_failed), Snackbar.LENGTH_SHORT)
+                            showSnackbar(R.string.multimedia_editor_audio_view_recording_failed, Snackbar.LENGTH_SHORT)
                             status = Status.STOPPED
                         }
                         status = Status.RECORDING
