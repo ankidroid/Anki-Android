@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -286,8 +287,10 @@ object ReadText {
                 Timber.w("TTS not successfully initialized")
             }
         }
-        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        showThemedToast(context, context.getString(R.string.initializing_tts), false)
+        // Show snackbar that it's getting initialized, as it can take a while before the sound plays the first time
+        if (context is Activity) { // verification needed to make test pass, as tests use an ApplicationContext
+            context.showSnackbar(context.getString(R.string.initializing_tts))
+        }
     }
 
     private fun openTtsHelpUrl(helpUrl: Uri) {
