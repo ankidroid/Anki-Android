@@ -2002,10 +2002,6 @@ open class CardBrowser :
             // List is never cleared, only reset to a new list. So it's safe here.
             val size = cards.size()
             if (size > 0 && visibleItemCount <= 0) {
-                // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
-                // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
-                // > lastVisibleItem 0 and visibleItemCount 0.
-
                 // This change ensure that we log more specifically case where #8821 could have occurred. That is, there are cards but we
                 // are asked to display nothing.
 
