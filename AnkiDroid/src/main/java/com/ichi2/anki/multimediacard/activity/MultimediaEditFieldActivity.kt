@@ -294,12 +294,12 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 recreateEditingUIUsingCachedRequest()
                 return
             }
-            showSnackbar((R.string.multimedia_editor_audio_permission_refused), Snackbar.LENGTH_SHORT)
+            showSnackbar(R.string.multimedia_editor_audio_permission_refused, Snackbar.LENGTH_SHORT)
             UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                showSnackbar((R.string.multimedia_editor_camera_permission_refused), Snackbar.LENGTH_SHORT)
+                showSnackbar(R.string.multimedia_editor_camera_permission_refused, Snackbar.LENGTH_SHORT)
             }
 
             // We check permissions to set visibility on the camera button, just recreate
