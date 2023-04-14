@@ -1548,7 +1548,6 @@ open class Collection(
                 )
             }
         )
-        // for each model
         for (m in models.all()) {
             executeIntegrityTask.accept(
                 FunctionalInterfaces.FunctionThrowable { callback: Runnable ->
