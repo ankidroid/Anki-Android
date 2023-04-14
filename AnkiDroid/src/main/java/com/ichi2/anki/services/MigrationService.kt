@@ -86,8 +86,6 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
         // TODO BEFORE-MERGE `MigrateUserData.createInstance` is doing I/O and can throw I/O errors.
         //   Figure out what's going on and move all I/O into a thread.
-        // TODO BEFORE-MERGE Previous code re-threw MigrateUserData.MissingDirectoryException.
-        //   Figure out why.
         val migrateUserDataTask = try {
             MigrateUserData.createInstance(AnkiDroidApp.getSharedPrefs(this))
         } catch (e: Exception) {
