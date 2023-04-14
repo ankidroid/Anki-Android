@@ -1143,8 +1143,7 @@ open class Collection(
                 format = fClozeTagStart.matcher(format)
                     .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
                 // the following line differs from libanki // TODO: why?
-                fields["FrontSide"] =
-                    d["q"]!! // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                fields["FrontSide"] = d["q"]!!
             }
             var html: String
             html = try {
