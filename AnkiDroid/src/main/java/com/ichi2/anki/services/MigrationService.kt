@@ -46,7 +46,15 @@ import java.io.File
 import kotlin.properties.ReadOnlyProperty
 
 /**
- * A service which migrates the AnkiDroid collection from a legacy directory to an app-private directory.
+ * A foreground service responsible for migrating the collection
+ * from a public directory to an app-private directory.
+ *
+ * TODO BEFORE-RELEASE Decide if this needs a wake lock.
+ *   Copying files might take a long time.
+ *   The user might decide to not use the phone for a while to let the migration run,
+ *   expecting it to finish in an hour or two,
+ *   only to find that during that time the migration has not progressed.
+ *   A wake lock might make things proceed faster, but it also means more battery drain.
  */
 class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<MigrationService> {
 
