@@ -154,7 +154,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting only card?",
             getResourceString(R.string.card_template_editor_cant_delete),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
 
@@ -271,9 +271,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting only card?",
             getResourceString(R.string.card_template_editor_would_delete_note),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertNull("Can delete used template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })

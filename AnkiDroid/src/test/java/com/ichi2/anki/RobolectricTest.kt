@@ -194,9 +194,9 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         mBackground = true
     }
 
-    protected fun clickMaterialDialogButton(button: WhichButton?, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+    protected fun clickMaterialDialogButton(button: WhichButton, @Suppress("SameParameterValue") checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
-        dialog.getActionButton(button!!).performClick()
+        dialog.getActionButton(button).performClick()
         if (checkDismissed) {
             Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
         }
