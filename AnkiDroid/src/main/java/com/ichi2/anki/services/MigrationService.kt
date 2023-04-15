@@ -30,6 +30,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
+import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
@@ -67,12 +68,11 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
     private var serviceHasBeenStarted = false
 
-    // TODO BEFORE-MERGE! Emit the according `flowOfProgress` here.
-    //   I think it would simplify things if we could always bind to the service,
-    //   even if `onStartCommand` is not going to be called.
-    //   This way the UI elements that need service progress can always get it
-    //   directly from the service, instead of relying on the last view model reading.
-    override fun onCreate() {}
+    // To simplify things by allowing binding to the service at any time,
+    // make sure the service has the correct progress emitted even if it is not going to be started.
+    override fun onCreate() {
+        if (userMigrationHasSucceeded) flowOfProgress.tryEmit(Progress.Success)
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.w("onStartCommand(%s, ...)", intent)
@@ -246,3 +246,12 @@ fun <O> O.migrationServiceWhileStartedOrNull(): ReadOnlyProperty<Any?, Migration
 
     return ReadOnlyProperty { _, _ -> service }
 }
+
+/**
+ * This assumes that the service is only created if the migration is, was, or is going to run,
+ * that is when it can "succeed" at all.
+ *
+ * See also the logic in [com.ichi2.anki.DeckPicker.shouldOfferToUpgrade]
+ */
+private val Context.userMigrationHasSucceeded get() =
+    !userMigrationIsInProgress(this) && !isLegacyStorage(this)
