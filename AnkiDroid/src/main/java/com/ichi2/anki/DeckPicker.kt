@@ -88,6 +88,7 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.servicelayer.ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.Undo
@@ -776,10 +777,11 @@ open class DeckPicker :
     }
 
     private fun shouldOfferToUpgrade(context: Context): Boolean {
+        // ALLOW_UNSAFE_MIGRATION skips ensuring that the user is backed up to AnkiWeb
         if (!BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn()) {
             return false
         }
-        return isLegacyStorage(context) && !userMigrationIsInProgress(context) && !Permissions.allFileAccessPermissionGranted(context)
+        return !userMigrationIsInProgress(context) && collectionWillBeMadeInaccessibleAfterUninstall(context)
     }
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
