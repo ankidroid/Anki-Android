@@ -99,7 +99,12 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     flowOfProgress.tryEmit(Progress.Transferring(transferredBytes, totalBytesToTransfer))
                 })
 
-                // TODO BEFORE-MERGE This is probably not supposed to be here
+                // TODO BEFORE-RELEASE Consolidate setting/removing migration-related preferences.
+                //   The existence of these determine if the *media* migration is taking place.
+                //   These are currently set in MigrateEssentialFiles.updatePreferences
+                //   on *background* thread, and removed here in another *background* thread.
+                //   These are read from other threads, mostly via userMigrationIsInProgress,
+                //   which might be a race condition and lead to subtle bugs.
                 AnkiDroidApp.getSharedPrefs(this@MigrationService).edit {
                     remove(PREF_MIGRATION_DESTINATION)
                     remove(PREF_MIGRATION_SOURCE)
