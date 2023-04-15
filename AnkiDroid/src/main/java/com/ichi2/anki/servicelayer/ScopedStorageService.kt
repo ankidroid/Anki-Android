@@ -308,16 +308,24 @@ object ScopedStorageService {
     }
 
     /**
-     * @return whether the user's current collection is now inaccessible due to a 'reinstall'
+     * Whether the user's current collection is now inaccessible due to a 'reinstall'
+     *
+     * @return `false` if:
+     * * ⚠️ The directory will be **removed** on uninstall
+     *    * The user installed with a newer Android version, and is more likely to expect this behavior.
+     * * The collection is currently accessible
+     * * the user is on Android Q or below and Android will not revoke permissions
+     * * The user has the potential to grant [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE]
      * @see android.R.attr.preserveLegacyExternalStorage
      * @see android.R.attr.requestLegacyExternalStorage
      */
-    fun collectionInaccessibleAfterUninstall(context: Context): Boolean {
+    fun collectionWasMadeInaccessibleAfterUninstall(context: Context): Boolean {
         // If we're < Q then `requestLegacyExternalStorage` was not introduced
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             return false
         }
 
+        // the user may not have MANAGE_EXTERNAL_STORAGE, but they could obtain it
         if (Permissions.canManageExternalStorage(context)) {
             return false
         }
