@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # enable/disable scoped storage: ./set_scoped_storage.sh [limited/full]
 
 
