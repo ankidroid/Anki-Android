@@ -23,6 +23,8 @@ import android.os.StatFs
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
 import java.util.*
@@ -205,5 +207,46 @@ object FileUtil {
             depth++
         }
         return depth
+    }
+    enum class FilePrefix {
+        EQUAL,
+        STRICT_PREFIX,
+        STRICT_SUFFIX,
+        NOT_PREFIX
+    }
+
+    /**
+     * @return whether how [potentialPrefixFile] related to [fullFile] as far as prefix goes
+     * @throws FileNotFoundException if a file is not found
+     * @throws IOException If an I/O error occurs
+     */
+    fun isPrefix(potentialPrefixFile: File, fullFile: File): FilePrefix {
+        var potentialPrefixBuffer: FileInputStream? = null
+        var fullFileBuffer: FileInputStream? = null
+        try {
+            potentialPrefixBuffer = FileInputStream(potentialPrefixFile)
+            fullFileBuffer = FileInputStream(fullFile)
+            while (true) {
+                val prefixContent = potentialPrefixBuffer.read()
+                val fullFileContent = fullFileBuffer.read()
+                val prefixFileEnded = prefixContent == -1
+                val fullFileEnded = fullFileContent == -1
+                if (prefixFileEnded && fullFileEnded) {
+                    return FilePrefix.EQUAL
+                }
+                if (prefixFileEnded) {
+                    return FilePrefix.STRICT_PREFIX
+                }
+                if (fullFileEnded) {
+                    return FilePrefix.STRICT_SUFFIX
+                }
+                if (prefixContent != fullFileContent) {
+                    return FilePrefix.NOT_PREFIX
+                }
+            }
+        } finally {
+            potentialPrefixBuffer?.close()
+            fullFileBuffer?.close()
+        }
     }
 }
