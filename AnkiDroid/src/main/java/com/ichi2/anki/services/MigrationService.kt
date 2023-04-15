@@ -84,30 +84,13 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
         serviceHasBeenStarted = true
 
-        // TODO BEFORE-MERGE `MigrateUserData.createInstance` is doing I/O and can throw I/O errors.
-        //   Figure out what's going on and move all I/O into a thread.
-        val migrateUserDataTask = try {
-            MigrateUserData.createInstance(AnkiDroidApp.getSharedPrefs(this))
-        } catch (e: Exception) {
-            Timber.e(e, "Could not instantiate MigrateUserData")
-            stopSelf()
-            return START_STICKY
-        }
-
-        // TODO BEFORE-MERGE Instead of returning `null`,
-        //   have `MigrateUserData.createInstance` throw an exception.
-        if (migrateUserDataTask == null) {
-            Timber.w("MigrationService started when a migration was not taking place")
-            stopSelf()
-            return START_STICKY
-        }
-
-        this.migrateUserDataTask = migrateUserDataTask
-
         lifecycleScope.launch(Dispatchers.IO) {
             flowOfProgress.emit(Progress.CalculatingTransferSize)
 
             try {
+                migrateUserDataTask = MigrateUserData
+                    .createInstance(AnkiDroidApp.getSharedPrefs(this@MigrationService))
+
                 val totalBytesToTransfer = getRemainingTransferSize(migrateUserDataTask)
                 var transferredBytes = 0L
 

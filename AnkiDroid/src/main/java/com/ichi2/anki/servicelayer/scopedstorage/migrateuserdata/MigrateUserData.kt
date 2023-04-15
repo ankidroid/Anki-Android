@@ -69,13 +69,15 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          * Creates an instance of [MigrateUserData] if valid, returns null if a migration is not in progress, or throws if data is invalid
          * @return null if a migration is not taking place, otherwise a valid [MigrateUserData] instance
          *
-         * @throws IllegalStateException If preferences are in an invalid state (should be logically impossible - currently unrecoverable)
+         * @throws IllegalStateException if migration is not taking place,
+         *   or if preferences are in an invalid state
+         *   (should be logically impossible - currently unrecoverable)
          * @throws MissingDirectoryException If either or both the source/destination do not exist
          */
-        fun createInstance(preferences: SharedPreferences): MigrateUserData? {
+        fun createInstance(preferences: SharedPreferences): MigrateUserData {
             val migrationPreferences = UserDataMigrationPreferences.createInstance(preferences)
             if (!migrationPreferences.migrationInProgress) {
-                return null
+                throw IllegalStateException("Migration is not in progress")
             }
 
             return createInstance(migrationPreferences)
