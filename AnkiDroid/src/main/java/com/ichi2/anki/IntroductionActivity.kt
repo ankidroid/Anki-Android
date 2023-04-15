@@ -116,7 +116,7 @@ class IntroductionActivity : AppIntro() {
         if (startupFailure == StartupFailure.WEBVIEW_FAILED) {
             AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
-                message(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage)
+                message(text = getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage))
                 positiveButton(R.string.close) { finish() }
                 cancelable(false)
             }
