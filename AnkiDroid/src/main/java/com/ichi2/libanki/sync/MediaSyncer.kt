@@ -178,8 +178,11 @@ class MediaSyncer(
                 }
                 con.publishProgress(
                     String.format(
-                        AnkiDroidApp.appResources.getString(R.string.sync_media_changes_count),
-                        toSend
+                        AnkiDroidApp.appResources.getQuantityString(
+                            R.plurals.sync_media_changes_count_new,
+                            toSend,
+                            toSend
+                        )
                     )
                 )
                 val changes = server.uploadChanges(zip)
@@ -246,8 +249,11 @@ class MediaSyncer(
                 }
                 con.publishProgress(
                     String.format(
-                        AnkiDroidApp.appResources.getString(R.string.sync_media_downloaded_count),
-                        mDownloadCount
+                        AnkiDroidApp.appResources.getQuantityString(
+                            R.plurals.sync_media_downloaded_count_new,
+                            mDownloadCount,
+                            mDownloadCount
+                        )
                     )
                 )
             } catch (e: IOException) {

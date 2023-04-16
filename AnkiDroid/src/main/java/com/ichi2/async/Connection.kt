@@ -407,7 +407,9 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                     mediaError = if (downloadedCount == 0 && uploadedCount == 0) {
                         "${AnkiDroidApp.appResources.getString(R.string.sync_media_error)}\n\n${e.localizedMessage}"
                     } else {
-                        "${AnkiDroidApp.appResources.getString(R.string.sync_media_partial_updated,downloadedCount,uploadedCount)}\n\n${e.localizedMessage}"
+                        "${AnkiDroidApp.appResources.getQuantityString(R.plurals.sync_media_partial_downloaded_files,downloadedCount, downloadedCount)}\n" +
+                            "${AnkiDroidApp.appResources.getQuantityString(R.plurals.sync_media_partial_uploaded_files,uploadedCount, uploadedCount)}\n" +
+                            "\n${e.localizedMessage}"
                     }
                 }
             }
