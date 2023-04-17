@@ -417,6 +417,10 @@ open class DeckPicker :
         mShortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
+
+        if (!hasStorageAccessPermission(this)) {
+            showSnackbar(R.string.intent_handler_failed_no_storage_permission)
+        }
     }
 
     private fun hasShownAppIntro(): Boolean {

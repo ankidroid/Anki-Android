@@ -500,7 +500,6 @@ open class CardBrowser :
         Timber.d("onCreate()")
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showSnackbar(R.string.intent_handler_failed_no_storage_permission)
             displayDeckPickerForPermissionsDialog()
             return
         }
