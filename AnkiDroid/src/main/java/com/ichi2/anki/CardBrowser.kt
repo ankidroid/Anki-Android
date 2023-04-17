@@ -1784,7 +1784,6 @@ open class CardBrowser :
     }
 
     private fun filterByTags(selectedTags: List<String>, option: Int) {
-        // TODO: Duplication between here and CustomStudyDialog:onSelectedTags
         mSearchView!!.setQuery("", false)
         val tags = selectedTags.toString()
         mSearchView!!.queryHint = resources.getString(
