@@ -31,11 +31,12 @@ import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.utils.*
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -77,7 +78,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     var isDownloadInProgress = false
 
-    private var mDownloadCancelConfirmationDialog: MaterialDialog? = null
+    private var mDownloadCancelConfirmationDialog: AlertDialog? = null
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 100L
@@ -431,7 +432,7 @@ class SharedDecksDownloadFragment : Fragment() {
     @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
-            MaterialDialog(it).show {
+            AlertDialog.Builder(it).show {
                 title(R.string.cancel_download_question_title)
                 positiveButton(R.string.dialog_yes) {
                     mDownloadManager.remove(mDownloadId)
@@ -440,9 +441,9 @@ class SharedDecksDownloadFragment : Fragment() {
                     activity?.onBackPressed()
                 }
                 negativeButton(R.string.dialog_no) {
-                    dismiss()
+                    removeCancelConfirmationDialog()
                 }
-            }
+            }.create()
         }
     }
 
