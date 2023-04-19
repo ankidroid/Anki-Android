@@ -116,11 +116,11 @@ class InitialActivityTest : RobolectricTest() {
 
         // force a safe startup before Q
         assertThat(
-            (selectAnkiDroidFolder(false) as PublicFolder).requiredPermissions.asIterable(),
+            (selectAnkiDroidFolder(false, hasLegacyStoragePermissions = false) as PublicFolder).requiredPermissions.asIterable(),
             contains(*expectedPermissions)
         )
         assertThat(
-            (selectAnkiDroidFolder(true) as PublicFolder).requiredPermissions.asIterable(),
+            (selectAnkiDroidFolder(true, hasLegacyStoragePermissions = false) as PublicFolder).requiredPermissions.asIterable(),
             contains(*expectedPermissions)
         )
     }
@@ -129,11 +129,11 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun startupQ() {
         assertThat(
-            selectAnkiDroidFolder(false),
+            selectAnkiDroidFolder(false, hasLegacyStoragePermissions = false),
             instanceOf(PublicFolder::class.java)
         )
         assertThat(
-            selectAnkiDroidFolder(true),
+            selectAnkiDroidFolder(true, hasLegacyStoragePermissions = false),
             instanceOf(PublicFolder::class.java)
         )
     }
@@ -145,7 +145,8 @@ class InitialActivityTest : RobolectricTest() {
         val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
 
         selectAnkiDroidFolder(
-            canManageExternalStorage = true
+            canManageExternalStorage = true,
+            hasLegacyStoragePermissions = false
         ).let {
             assertThat(
                 (it as PublicFolder).requiredPermissions.asIterable(),
@@ -158,7 +159,7 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun startupAfterQWithoutManageExternalStorage() {
         assertThat(
-            selectAnkiDroidFolder(canManageExternalStorage = false),
+            selectAnkiDroidFolder(canManageExternalStorage = false, hasLegacyStoragePermissions = false),
             instanceOf(AppPrivateFolder::class.java)
         )
     }
