@@ -196,7 +196,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     initialize()
                     this.dismiss()
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(R.string.dialog_cancel) {
+                    this.dismiss()
+                }
             }
                 .noAutoDismiss()
                 .displayKeyboard(_fieldNameInput)
