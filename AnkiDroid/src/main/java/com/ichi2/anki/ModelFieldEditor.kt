@@ -304,16 +304,30 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun renameFieldDialog() {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let { _fieldNameInput ->
+            // Add a text change listener to show a warning for duplicate
+            val textWatcher = object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val fieldName = s.toString().trim()
+                    if (mFieldsLabels.any { fieldName == it }) {
+                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
+                    }
+                    if (fieldName.isEmpty()) {
+                        _fieldNameInput.error = getString(R.string.toast_empty_name)
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            }
             _fieldNameInput.isSingleLine = true
             _fieldNameInput.setText(mFieldsLabels[currentPos])
             _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
+            _fieldNameInput.addTextChangedListener(textWatcher)
             MaterialDialog(this).show {
                 customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
-                    if (uniqueName(_fieldNameInput) == null) {
-                        return@positiveButton
-                    }
                     // Field is valid, now rename
                     try {
                         renameField()
@@ -335,10 +349,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
+                    this.dismiss()
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(R.string.dialog_cancel) {
+                    this.dismiss()
+                }
                 displayKeyboard(_fieldNameInput)
             }
+                .noAutoDismiss()
         }
     }
 
