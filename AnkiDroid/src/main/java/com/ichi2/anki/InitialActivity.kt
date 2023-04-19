@@ -283,7 +283,7 @@ class StartupStoragePermissionManager private constructor(
         fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
             return selectAnkiDroidFolder(
                 canManageExternalStorage = Permissions.canManageExternalStorage(context),
-                hasLegacyStoragePermissions = isLegacyStorage(context)
+                hasLegacyStoragePermissions = isLegacyStorage(context, false) == true
             )
         }
     }
