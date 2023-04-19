@@ -149,14 +149,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             offset++
         }
         input = input.substring(offset).trim { it <= ' ' }
-        if (input.isEmpty()) {
-            showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
-            return null
-        }
-        if (mFieldsLabels.any { input == it }) {
-            showThemedToast(this, resources.getString(R.string.toast_duplicate_field), true)
-            return null
-        }
         return input
     }
 
@@ -173,6 +165,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
                     val fieldName = uniqueName(_fieldNameInput)
+                    if (fieldName!!.isEmpty()) {
+                        _fieldNameInput.error = getString(R.string.toast_empty_name)
+                        return@positiveButton
+                    }
+                    if (mFieldsLabels.any { fieldName == it }) {
+                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
+                        return@positiveButton
+                    }
                     try {
                         addField(fieldName, true)
                     } catch (e: ConfirmModSchemaException) {
@@ -194,9 +194,11 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     }
                     collection.models.update(mModel)
                     initialize()
+                    this.dismiss()
                 }
                 negativeButton(R.string.dialog_cancel)
             }
+                .noAutoDismiss()
                 .displayKeyboard(_fieldNameInput)
         }
     }
