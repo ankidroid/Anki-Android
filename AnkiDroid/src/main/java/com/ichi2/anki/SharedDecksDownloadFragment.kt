@@ -430,6 +430,7 @@ class SharedDecksDownloadFragment : Fragment() {
         removeCancelConfirmationDialog()
     }
 
+    @Suppress("DEPRECATION")
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
             MaterialAlertDialogBuilder(it).show {
