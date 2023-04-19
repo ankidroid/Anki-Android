@@ -18,7 +18,9 @@ package com.ichi2.anki
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
@@ -158,7 +160,21 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun addFieldDialog() {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let { _fieldNameInput ->
+            // Add a text change listener to show a warning for duplicate
+            val textWatcher = object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val fieldName = s.toString().trim()
+                    if (mFieldsLabels.any { fieldName == it }) {
+                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            }
             _fieldNameInput.isSingleLine = true
+            _fieldNameInput.addTextChangedListener(textWatcher)
             MaterialDialog(this).show {
                 customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_add)
@@ -167,10 +183,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     val fieldName = uniqueName(_fieldNameInput)
                     if (fieldName!!.isEmpty()) {
                         _fieldNameInput.error = getString(R.string.toast_empty_name)
-                        return@positiveButton
-                    }
-                    if (mFieldsLabels.any { fieldName == it }) {
-                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
                         return@positiveButton
                     }
                     try {
