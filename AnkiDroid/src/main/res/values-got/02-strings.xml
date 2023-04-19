@@ -61,6 +61,8 @@
     <string name="updated_version">Updated to version %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Brukei ƕeitabaurd</string>
     <string name="disable_whiteboard">Unsatei ƕeitabaurd</string>
     <string name="show_whiteboard">Ataugei ƕeitabaurd</string>

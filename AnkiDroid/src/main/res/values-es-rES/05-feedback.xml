@@ -46,8 +46,8 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Informar de errores</string>
-    <string name="feedback_disclaimer">Aviso: No recopilamos información personal como su dirección de correo electrónico, número de teléfono o IMEI del teléfono. Recopilamos cierta información acerca de su dispositivo como fabricante, modelo y versión de Android, así como la naturaleza de los informes de errores y los pasos que llevaron a ellos.</string>
+    <string name="error_reporting_choice">Modo reportar errores</string>
+    <string name="feedback_disclaimer">Aviso: No recopilamos información personal como su dirección de correo electrónico, número de teléfono o su IMEI del teléfono. Aunque si recopilamos cierta información acerca de su dispositivo como fabricante, modelo y versión de Android, así como la naturaleza de los informes de errores y las ocurrencias que llevaron a ellos.</string>
     <string name="feedback_title">Comentarios AnkiDroid</string>
     <string name="feedback_default_text">Por favor, introduce tus sugerencias, o información sobre la naturaleza de cualquier error que estés experimentando.</string>
     <string name="feedback_auto_toast_text">AnkiDroid ha detectado un problema; se envía un informe a los desarrolladores...</string>

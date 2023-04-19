@@ -61,6 +61,8 @@
     <string name="updated_version">Actualitzeu a la versió %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Desar pissarra</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Activar pissarra</string>
     <string name="disable_whiteboard">Desactiva la pissarra</string>
     <string name="show_whiteboard">Mostra la pissarra</string>

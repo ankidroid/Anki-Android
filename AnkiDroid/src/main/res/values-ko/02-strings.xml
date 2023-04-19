@@ -61,6 +61,8 @@
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">칠판 저장</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">화이트보드 활성화</string>
     <string name="disable_whiteboard">화이트보드 비활성화</string>
     <string name="show_whiteboard">화이트보드 보이기</string>

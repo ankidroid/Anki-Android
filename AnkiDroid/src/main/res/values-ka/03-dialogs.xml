@@ -68,7 +68,7 @@
         <item quantity="one">%d card repositioned</item>
         <item quantity="other">%d cards repositioned</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reset_card_dialog_title">ბარათის პროგრესის გაუქმება</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ბარათი დაყენდა საწყის მდგომარეობაში</item>
@@ -267,7 +267,7 @@
     <string name="button_disable_reminder">Disable reminder</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">მოგვიანებით</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">აღარ მაჩვენო</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_title">მონაცემთა დაკარგვის გაფრთხილება</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled

@@ -238,8 +238,12 @@
         translatable="false"
         >@string/webview_crash_unknown</string>
 
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size…</string>
+    <string name="migration__transferred_x_of_y"
+        comment="The placeholders will be replaced with short localized byte amounts,
+        e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">Migration successful</string>
     <string name="migration_failed_message">Migration failed</string>
     <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>

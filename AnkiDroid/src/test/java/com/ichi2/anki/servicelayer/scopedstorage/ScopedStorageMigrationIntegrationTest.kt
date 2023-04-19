@@ -213,7 +213,12 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     private fun MigrateUserDataTester.execTask(): Boolean {
-        return this.migrateFiles(mock())
+        this.migrateFiles(mock())
+
+        // TODO BEFORE-RELEASE This method always returns true, as before this change
+        //   it returned the result of `migrateFiles`, which was also always true.
+        //   Figure out why and apply the necessary changes.
+        return true
     }
 }
 

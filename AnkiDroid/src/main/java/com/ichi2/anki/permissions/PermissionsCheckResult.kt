@@ -23,4 +23,14 @@ package com.ichi2.anki.permissions
 open class PermissionsCheckResult(val permissions: Map<String, Boolean>) {
     val allGranted = permissions.all { it.value }
     val requiresPermissionDialog: Boolean = permissions.any { !it.value }
+
+    /**
+     * @return A [PermissionsRequestRawResults], or `null` if a permissions dialog is required.
+     */
+    fun toPermissionsRequestRawResult(): PermissionsRequestRawResults? {
+        if (requiresPermissionDialog) {
+            return null
+        }
+        return permissions
+    }
 }

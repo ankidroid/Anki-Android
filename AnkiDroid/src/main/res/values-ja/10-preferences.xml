@@ -200,8 +200,8 @@
     <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
     <string name="custom_buttons_setting_menu_only">文字メニューでのみ表示</string>
     <string name="reset_custom_buttons" maxLength="41">初期設定にリセット</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">初期設定に戻す</string>
+    <string name="reset">リセット</string>
     <string name="thirdparty_apps_title" maxLength="41">サードパーティ製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
@@ -398,13 +398,13 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">コレクションを削除</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にあなたのコレクション、メディア、バックアップを削除してもよろしいですか？</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にあなたのコレクション、メディア、バックアップを削除しますか？\n\n注意：この操作を行うと、この設定画面が閉じます。</string>
     <string name="progress__deleting_collection">コレクションを削除しています&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">すべて削除</string>
     <string name="pref__delete_everything__summary">コレクション、メディア、バックアップ、設定を削除する</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">すべて削除</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にアプリデータを削除してもよろしいですか？　削除対象には、あなたのコレクション、メディア、バックアップ、アプリ内の設定が含まれています。\n\n注意: この操作を行うと、AnkiDroidアプリは強制終了され、現在ご覧になっているこの設定画面は閉じられます。</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">本当にアプリデータを削除しますか？　削除対象には、あなたのコレクション、メディア、バックアップ、アプリ内の設定が含まれています。\n\n注意：この操作を行うと、この設定画面が閉じます。</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">アプリのデータを削除</string>
     <string name="pref__delete_app_data__summary">設定やその他のアプリのデータを削除</string>

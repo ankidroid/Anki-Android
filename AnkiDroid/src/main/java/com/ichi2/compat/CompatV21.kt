@@ -83,6 +83,14 @@ open class CompatV21 : Compat {
         return bundle.getParcelableArrayList(key)
     }
 
+    override fun resolveActivity(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): ResolveInfo? {
+        return packageManager.resolveActivity(intent, flags.value.toInt())
+    }
+
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
@@ -101,6 +109,14 @@ open class CompatV21 : Compat {
 
     override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
         return bundle.getParcelable(key)
+    }
+
+    override fun <T : Parcelable> getSparseParcelableArray(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>
+    ): SparseArray<T>? {
+        return bundle.getSparseParcelableArray(key)
     }
 
     override fun <T : Serializable?> getSerializableExtra(

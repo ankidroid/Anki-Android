@@ -176,7 +176,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         createDeckDialog.showDialog()
     }
 
-    protected fun requireCollectionGetter(): CollectionGetter {
+    private fun requireCollectionGetter(): CollectionGetter {
         return requireContext() as CollectionGetter
     }
 
@@ -200,7 +200,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     /**
      * @param deck deck sent to the listener.
      */
-    protected fun onDeckSelected(deck: SelectableDeck?) {
+    private fun onDeckSelected(deck: SelectableDeck?) {
         deckSelectionListener!!.onDeckSelected(deck)
     }
 
@@ -234,9 +234,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
-        inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
+        inner class ViewHolder(private val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
             var deckName: String = ""
-            var deckID: Long = -1L
+            private var deckID: Long = -1L
 
             fun setDeck(deck: SelectableDeck) {
                 deckName = deck.name

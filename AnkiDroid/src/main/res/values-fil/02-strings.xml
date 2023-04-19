@@ -61,6 +61,8 @@
     <string name="updated_version">Nai-update na sa bersyong %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Paganahin ang whiteboard</string>
     <string name="disable_whiteboard">Huwag paganahin ang whiteboard</string>
     <string name="show_whiteboard">Ipakita ang whiteboard</string>

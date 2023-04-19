@@ -100,10 +100,6 @@ git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
 
-# Push both commits and tag
-git push
-git push --tags
-
 # Read the key passwords if needed
 if [ "$KSTOREPWD" == "" ]; then
   read -rsp "Enter keystore password: " KSTOREPWD; echo
@@ -112,34 +108,49 @@ if [ "$KSTOREPWD" == "" ]; then
   export KEYPWD
 fi
 
-# Build signed APK using Gradle and publish to Play
+# Build the full set of release APKs for all flavors, with universals
+UCFLAVORS='Full Amazon Play'
+for UCFLAVOR in $UCFLAVORS; do
+  ./gradlew --stop
+  echo Running assemble"$UCFLAVOR"Release target with universal APK flag
+  if ! ./gradlew assemble"$UCFLAVOR"Release -Duniversal-apk=true
+  then
+    echo "unable to build release APKs for flavor $UCFLAVOR"
+    exit 1
+  fi
+done
+
+# Push both commits and tag before any of the builds leave the machine
+git push
+git push --tags
+
+# Build signed APK using Gradle and publish to Play.
+# Do this before building universal of the play flavor so the universal is not uploaded to Play Store
 # Configuration for pushing to Play specified in build.gradle 'play' task
-echo "Running 'publishPlayReleaseApk' gradle target"
-if ! ./gradlew publishPlayReleaseApk
-then
+#echo "Running 'publishPlayReleaseApk' gradle target"
+#./gradlew --stop
+#if ! ./gradlew publishPlayReleaseApk
+#then
   # APK contains problems
   # Normally we want to abort the release but right now we know google will reject us until
   # we have targetSdkVersion 30, so ignore.
 #  git checkout -- $GRADLEFILE # Revert version change  #API30
 #  exit 1  #API30
 #else  #API30
-  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
-fi  #API30
+#  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
+#fi  #API30
 #fi  #API30
 
-# Now build the universal release also
-./gradlew --stop
-echo "Running 'assemblePlayRelease' target with universal APK flag"
-if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
-then
-  echo "unable to build universal APK for play release"
-  exit 1
-fi
-
-# Copy universal APK to cwd
-ABIS='universal arm64-v8a x86 x86_64 armeabi-v7a'
+# Copy full ABI APKs to cwd
+ABIS='arm64-v8a x86 x86_64 armeabi-v7a'
 for ABI in $ABIS; do
-  cp AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
+  cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
+done
+
+# Copy universal APKs for all flavors to cwd
+FLAVORS='full amazon play'
+for FLAVOR in $FLAVORS; do
+  cp AnkiDroid/build/outputs/apk/"$FLAVOR"/release/AnkiDroid-"$FLAVOR"-universal-release.apk AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 
 # Push to Github Releases.
@@ -155,24 +166,34 @@ else
 fi
 
 echo "Creating new Github release"
-github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "**For regular users:**<br/><br/>Install the main APK below, trying the 'universal' build first for new installs. If it refuses to install and run correctly or you have previously installed from the Play Store, you must pick the APK that matches CPU instruction set for your device.<br/><br/>This will be arm64-v8a for most phones from the last few years but [here is a guide to help you choose](https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/)<br/><br/><br/>**For testers and multiple profiles users:**<br/><br/>The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences" $PRE_RELEASE
+github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "**For regular users:**<br/>\
+<br/>\
+Install the main APK below, trying the 'full-universal' build first for new installs. If it refuses to install and run correctly or you have previously installed from the Play Store, you must pick the APK that matches CPU instruction set for your device.<br/>\
+<br/>\
+This will be arm64-v8a for most phones from the last few years but [here is a guide to help you choose](https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/)<br/>\
+<br/>\
+<br/>\
+**For testers and multiple profiles users:**<br/>\
+<br/>\
+The builds with 'full', 'play' or 'amazon' are useful for testing our builds for different app stores.<br/>\
+<br/>\
+The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences" $PRE_RELEASE
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
 
 for ABI in $ABIS; do
-  echo "Adding APK for $ABI to Github release"
+  echo "Adding full APK for $ABI to Github release"
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+done
+# Copy flavor universal APKs to cwd
+for FLAVOR in $FLAVORS; do
+  echo "Adding universal APK for $FLAVOR to Github release"
+  github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 
 if [ "$PUBLIC" = "public" ]; then
   ./gradlew --stop
-  echo "Running 'assembleAmazonRelease' gradle target with universal APK flag"
-  if ! ./gradlew assembleAmazonRelease  -Duniversal-apk=true
-  then
-    echo "Unable to build amazon release"
-    exit 1
-  fi
   echo "Running 'publishToAmazonAppStore' gradle target"
   if ! ./gradlew publishToAmazonAppStore
   then
