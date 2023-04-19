@@ -148,7 +148,6 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     } else {
                         AnkiDroidApp.setMigrationCompleted(applicationContext, true)
                     }
-                    // UIUtils.showThemedToast(this@MigrationService, R.string.migration_successful_message, true)
                 }
 
                 if (progress is Progress.Done) {
