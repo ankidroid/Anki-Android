@@ -19,7 +19,8 @@ package com.ichi2.anki.services
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
+import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -27,8 +28,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
-import com.ichi2.anki.AnkiDroidApp.Companion.isAppInForeground
-import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -45,8 +44,6 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.io.File
 import kotlin.properties.ReadOnlyProperty
-
-const val PENDING_MIGRATION_COMPLETED_DIALOG = "pendingMigrationCompletedDialogOnActivityStart"
 
 /**
  * A foreground service responsible for migrating the collection
@@ -121,139 +118,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     remove(PREF_MIGRATION_SOURCE)
                 }
 
-
-            // display a toast to the user.
-            displayMigrationCompleted(result)
-
-            stopSelf()
-        }
-
-        private fun displayMigrationCompleted(result: Boolean) {
-            val activity = AnkiDroidApp.currentActivity
-            if (isAppInForeground && activity is AppCompatActivity) {
-                val dialog = MigrationSuccessDialogFragment()
-                runOnUiThread {
-                    dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
-                }
-            } else {
-                AnkiDroidApp.setMigrationCompleted(applicationContext, true)
-            }
-            val message =
-                if (result) R.string.migration_successful_message else R.string.migration_failed_message
-            // fixes: "Can't toast on a thread that has not called Looper.prepare()"
-            runOnUiThread {
-                UIUtils.showThemedToast(context, message, true)
-            }
-        }
-
-        fun onError(e: Exception) {
-            notificationUpdater.terminate()
-            notification?.notifyError(e)
-        }
-    }
-
-    private class Notification private constructor(
-        private val context: Context,
-        private val manager: NotificationManagerCompat,
-        private val sourceSize: NumberOfBytes
-    ) {
-        private var notificationBuilder: NotificationCompat.Builder = NotificationCompat.Builder(
-            context,
-            Channel.SCOPED_STORAGE_MIGRATION.id
-        )
-            .setSmallIcon(R.drawable.ic_star_notify)
-            .setContentTitle(context.resources.getString(R.string.migrating_data_message))
-            .setContentText(context.resources.getString(R.string.migration_transferred_size, 0f, sourceSize / 1024f))
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setOngoing(true)
-            .setSilent(true)
-            .setProgress(100, 0, false)
-
-        /** The id of the notification for in-progress user data migration. */
-        val id = 2
-
-        fun build() = this.notificationBuilder.build()
-        fun notifyUpdate(currentProgress: NumberOfBytes) {
-            Timber.v("update: %d", currentProgress)
-            notificationBuilder.setProgress(sourceSize.toKB(), currentProgress.toKB(), false)
-            notificationBuilder.setContentText(
-                context.resources.getString(
-                    R.string.migration_transferred_size,
-                    currentProgress.toMB().toFloat(),
-                    sourceSize.toMB().toFloat()
-                )
-            )
-            manager.notify(id, notificationBuilder.build())
-        }
-
-        fun notifyCompletion(result: Boolean) {
-            val titleRes = if (result) R.string.migration_successful_message else R.string.migration_failed_message
-            val notificationTitle = context.resources.getString(titleRes)
-            notificationBuilder.setContentTitle(notificationTitle)
-                .setOngoing(false)
-                .hideProgressBar()
-            manager.notify(id, notificationBuilder.build())
-        }
-
-        fun notifyError(e: Exception) {
-            // TODO: Add a button for 'Get Help'
-            val copyIntent = IntentHandler.copyStringToClipboardIntent(this.context, e.toString())
-
-            val copyDebugIntent = compat.getImmutableActivityIntent(this.context, COPY_DEBUG, copyIntent, 0)
-            notificationBuilder.setContentTitle(context.getString(R.string.migration_failed_message))
-                .setContentText(e.toString())
-                .setOngoing(false)
-                .hideProgressBar()
-                .addAction(R.drawable.ic_star_notify, context.getString(R.string.feedback_copy_debug), copyDebugIntent)
-
-            manager.notify(id, notificationBuilder.build())
-        }
-
-        companion object {
-            const val COPY_DEBUG: Int = 1
-            fun createInstance(context: Context, sourceSize: NumberOfBytes): Notification {
-                val notificationManager = NotificationManagerCompat.from(context)
-                return Notification(context, notificationManager, sourceSize)
-            }
-        }
-    }
-
-    private fun getRestartBehavior() = START_STICKY
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // If a service is called twice, onStartCommand is called twice
-        if (isStarted) {
-            Timber.v("rejected onStartCommand")
-            return getRestartBehavior()
-        }
-        isStarted = true
-        Timber.d("onStartCommand")
-
-        val migrateUserDataTask = try {
-            MigrateUserData.createInstance(AnkiDroidApp.getSharedPrefs(this))
-        } catch (e: MigrateUserData.MissingDirectoryException) {
-            // TODO: Log and handle - likely SD card removal
-            throw e
-        } catch (e: Exception) {
-            stopSelf()
-            return getRestartBehavior()
-        }
-
-        // a migration is not taking place
-        if (migrateUserDataTask == null) {
-            Timber.w("MigrationService started when a migration was not taking place")
-            stopSelf()
-            return getRestartBehavior()
-        }
-
-        this.migrateUserDataTask = migrateUserDataTask
-        this.migrateDataThread = thread(name = "Storage Migration") {
-            this.totalToTransfer = getRemainingTransferSize(migrateUserDataTask)
-            val listener = MigrateUserDataProgressListener(this)
-            listener.initNotification(totalToTransfer)
-            try {
-                val result = migrateUserDataTask.migrateFiles { bytesTransferred -> listener.onProgressUpdate(bytesTransferred) }
-                listener.onResult(result)
+                flowOfProgress.emit(Progress.Success)
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "Storage migration failed")
                 flowOfProgress.emit(Progress.Failure(e))

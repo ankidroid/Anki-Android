@@ -245,9 +245,7 @@
         comment="The placeholders will be replaced with short localized byte amounts,
         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
-    <string name="migration_completed">The migration process has completed successfully</string>
+    <string name="migration__failed">Migration failed: %s</string>
 
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can't access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
