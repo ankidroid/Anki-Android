@@ -34,7 +34,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.*
@@ -433,7 +432,7 @@ class SharedDecksDownloadFragment : Fragment() {
     @Suppress("DEPRECATION")
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
-            MaterialAlertDialogBuilder(it).show {
+            AlertDialog.Builder(it).show {
                 title(R.string.cancel_download_question_title)
                 positiveButton(R.string.dialog_yes) {
                     mDownloadManager.remove(mDownloadId)
