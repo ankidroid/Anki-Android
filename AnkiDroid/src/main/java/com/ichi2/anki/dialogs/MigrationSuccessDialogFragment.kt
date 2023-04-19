@@ -28,7 +28,7 @@ class MigrationSuccessDialogFragment() : DialogFragment() {
         Timber.i("Migration successful dialog")
         return AlertDialog.Builder(requireContext())
             .setTitle(resources.getString(R.string.migration_successful_message))
-            .setMessage(resources.getString(R.string.migration_completed))
+            .setMessage(resources.getString(R.string.migration_successful))
             .setPositiveButton(R.string.dialog_ok) { _, _ ->
                 dismiss()
             }.create()
