@@ -432,18 +432,18 @@ class SharedDecksDownloadFragment : Fragment() {
     @Suppress("DEPRECATION")
     fun showCancelConfirmationDialog() {
         mDownloadCancelConfirmationDialog = context?.let {
-            AlertDialog.Builder(it)
-                .title(R.string.cancel_download_question_title)
-                .positiveButton(R.string.dialog_yes) {
+            AlertDialog.Builder(it).show {
+                title(R.string.cancel_download_question_title)
+                positiveButton(R.string.dialog_yes) {
                     mDownloadManager.remove(mDownloadId)
                     unregisterReceiver()
                     isDownloadInProgress = false
                     activity?.onBackPressed()
                 }
-                .negativeButton(R.string.dialog_no) {
+                negativeButton(R.string.dialog_no) {
                     removeCancelConfirmationDialog()
                 }
-                .show()
+            }.create()
         }
     }
 
