@@ -336,7 +336,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             MaterialDialog(this).show {
-                customView(view = _fieldNameInput, scrollable = true)
+                customView(view = _fieldNameInput, horizontalPadding = true)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
                     val newPosition = _fieldNameInput.text.toString()
@@ -344,11 +344,11 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         newPosition.toInt()
                     } catch (n: NumberFormatException) {
                         Timber.w(n)
-                        showThemedToast(this@ModelFieldEditor, resources.getString(R.string.toast_out_of_range), true)
+                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
                         return@positiveButton
                     }
                     if (pos < 1 || pos > mFieldsLabels.size) {
-                        showThemedToast(this@ModelFieldEditor, resources.getString(R.string.toast_out_of_range), true)
+                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
                     } else {
                         // Input is valid, now attempt to modify
                         try {
@@ -371,10 +371,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             c.setConfirm(confirm)
                             this@ModelFieldEditor.showDialogFragment(c)
                         }
+                        this.dismiss()
                     }
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(R.string.dialog_cancel) {
+                    this.dismiss()
+                }
             }
+                .noAutoDismiss()
                 .displayKeyboard(_fieldNameInput)
         }
     }
