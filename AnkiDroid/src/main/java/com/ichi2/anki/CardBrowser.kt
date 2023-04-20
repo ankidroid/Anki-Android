@@ -770,7 +770,7 @@ open class CardBrowser :
                 return true
             }
             KeyEvent.KEYCODE_F -> {
-                if(event.isCtrlPressed){
+                if (event.isCtrlPressed) {
                     Timber.i("Ctrl+F - Find notes")
                     mSearchItem?.expandActionView()
                     return true
