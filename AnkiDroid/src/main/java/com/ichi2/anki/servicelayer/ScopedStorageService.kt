@@ -25,8 +25,6 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
@@ -37,6 +35,8 @@ import com.ichi2.utils.FileUtil.isDescendantOf
 import com.ichi2.utils.Permissions
 import timber.log.Timber
 import java.io.File
+// import com.ichi2.anki.model.DiskFile
+// import com.ichi2.anki.model.RelativeFilePath
 
 /** A path to the AnkiDroid directory, named "AnkiDroid" by default */
 typealias AnkiDroidDirectory = Directory
@@ -48,6 +48,7 @@ typealias CollectionFilePath = String
 fun AnkiDroidDirectory.getCollectionAnki2Path(): CollectionFilePath =
     File(this.directory, CollectionHelper.COLLECTION_FILENAME).canonicalPath
 
+/* AnkiDroidDirectory.getRelativeFilePath() does not end up getting used
 /**
  * Returns the relative file path from a given [AnkiDroidDirectory]
  * @return null if the file was not inside the directory, or referred to the root directory
@@ -57,6 +58,7 @@ fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
         baseDir = this,
         file = file
     )
+*/
 
 /**
  * An [AnkiDroidDirectory] for an AnkiDroid collection which is under scoped storage
@@ -64,7 +66,7 @@ fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
  * and is much faster to access
  *
  * When uninstalling: A user will be asked if they want to delete this folder
- * A folder here may be modifiable via USB. In AnkiDroid's case, all collection folders should
+ * A folder here may be modifiable via USB. In the case of AnkiDroid, all collection folders should
  * be modifiable
  *
  * @see [isLegacyStorage]
@@ -154,7 +156,7 @@ object ScopedStorageService {
             try {
                 // MigrateEssentialFiles performs a COPY. Delete the data so we don't take up space.
                 bestProfileDirectory.deleteRecursively()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
             throw e
         }
