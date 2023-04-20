@@ -215,8 +215,15 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
             builder.setContentText(getString(R.string.migration_successful_message))
         }
 
-        // TODO BEFORE-RELEASE Add a “Get help” button
         is MigrationService.Progress.Failure -> {
+            val intent = Intent(this, DeckPicker::class.java)
+            intent.putExtra(DeckPicker.MIGRATION_FAILED, DeckPicker.MIGRATION_FAILED)
+            val pendingIntent = CompatHelper.compat.getImmutableActivityIntent(
+                this,
+                0,
+                intent,
+                0
+            )
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.e.stackTraceToString())
             val copyDebugInfoPendingIntent = CompatHelper.compat
@@ -224,6 +231,7 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
 
             builder.addAction(R.drawable.ic_star_notify, getString(R.string.feedback_copy_debug), copyDebugInfoPendingIntent)
             builder.setContentText(getString(R.string.migration__failed, progress.e))
+            builder.addAction(0, getString(R.string.help), pendingIntent)
         }
     }
 
