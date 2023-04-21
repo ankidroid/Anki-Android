@@ -23,7 +23,7 @@ import android.net.Uri
 
 class MigrationFailHelpReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        val helpURL = "https://github.com/ankidroid/ankidroiddocs"
+        val helpURL = "https://ankidroid.org/docs/help.html"
         val urlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(helpURL))
         urlIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context?.startActivity(urlIntent)
