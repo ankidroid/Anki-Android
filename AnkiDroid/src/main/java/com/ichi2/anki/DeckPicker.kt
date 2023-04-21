@@ -334,11 +334,6 @@ open class DeckPicker :
             mSyncOnResume = true
         }
 
-        val migrationFailed = intent.getStringExtra(MIGRATION_FAILED)
-        if (migrationFailed == MIGRATION_FAILED) {
-            setMigrationFailed(this, true)
-        }
-
         setContentView(R.layout.homescreen)
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
@@ -944,10 +939,6 @@ open class DeckPicker :
         val message = dialogHandler.popMessage()
         super.onResume()
         refreshState()
-        if (getMigrationFailed(this)) {
-            showDialogFragment(HelpDialog.createInstance())
-            setMigrationFailed(this, false)
-        }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
 
@@ -2380,19 +2371,6 @@ open class DeckPicker :
     }
 
     companion object {
-        const val MIGRATION_FAILED = "migrationFailure"
-
-        fun setMigrationFailed(context: Context, value: Boolean) {
-            val pendingHelpDialog = context.getSharedPreferences("migrationFailed", Context.MODE_PRIVATE)
-            val flag = pendingHelpDialog.edit()
-            flag.putBoolean(MIGRATION_FAILED, value)
-            flag.commit()
-        }
-
-        fun getMigrationFailed(context: Context): Boolean {
-            val pendingHelpDialog = context.getSharedPreferences("migrationFailed", Context.MODE_PRIVATE)
-            return pendingHelpDialog.getBoolean(MIGRATION_FAILED, false)
-        }
 
         private const val ONE_DAY_IN_SECONDS: Int = 60 * 60 * 24
 

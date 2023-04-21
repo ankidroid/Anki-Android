@@ -444,6 +444,13 @@
             android:foregroundServiceType="dataSync"
             />
 
+        <receiver android:name=".receiver.MigrationFailHelpReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.ichi2.anki.ACTION_OPEN_URL" />
+            </intent-filter>
+        </receiver>
+
         <!-- small widget -->
         <receiver
             android:name="com.ichi2.widget.AnkiDroidWidgetSmall"

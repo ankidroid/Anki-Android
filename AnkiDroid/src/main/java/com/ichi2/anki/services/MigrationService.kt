@@ -28,6 +28,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
+import com.ichi2.anki.receiver.MigrationFailHelpReceiver
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -216,14 +217,9 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
         }
 
         is MigrationService.Progress.Failure -> {
-            val intent = Intent(this, DeckPicker::class.java)
-            intent.putExtra(DeckPicker.MIGRATION_FAILED, DeckPicker.MIGRATION_FAILED)
-            val pendingIntent = CompatHelper.compat.getImmutableActivityIntent(
-                this,
-                0,
-                intent,
-                0
-            )
+            val intent = Intent(this, MigrationFailHelpReceiver::class.java)
+            intent.action = "com.ichi2.anki.ACTION_OPEN_URL"
+            val pendingIntent = CompatHelper.compat.getImmutableBroadcastIntent(this, 0, intent, 0)
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.e.stackTraceToString())
             val copyDebugInfoPendingIntent = CompatHelper.compat
