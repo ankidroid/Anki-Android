@@ -769,6 +769,13 @@ open class CardBrowser :
                 launchCatchingTask { deleteSelectedNote() }
                 return true
             }
+            KeyEvent.KEYCODE_F -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+F - Find notes")
+                    mSearchItem?.expandActionView()
+                    return true
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
