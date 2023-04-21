@@ -21,7 +21,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.format.Formatter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -29,8 +28,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
-import com.ichi2.anki.AnkiDroidApp.Companion.isAppInForeground
-import com.ichi2.anki.dialogs.MigrationSuccessDialogFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -40,7 +37,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.FileUtil
-import com.ichi2.utils.runOnUiThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -48,8 +44,6 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.io.File
 import kotlin.properties.ReadOnlyProperty
-
-const val PENDING_MIGRATION_COMPLETED_DIALOG = "pendingMigrationCompletedDialogOnActivityStart"
 
 /**
  * A foreground service responsible for migrating the collection
@@ -135,21 +129,6 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             flowOfProgress.collect { progress ->
                 startForeground(2, makeMigrationProgressNotification(progress))
 
-                // TODO BEFORE-RELEASE Replace the toast with a dialog that is shown either
-                //   * now, if deck picker is shown,
-                //   * whenever the deck picker is shown, if not, perhaps even after app death.
-                if (progress is Progress.Success) {
-                    val activity = AnkiDroidApp.currentActivity
-                    if (isAppInForeground && activity is AppCompatActivity) {
-                        val dialog = MigrationSuccessDialogFragment()
-                        runOnUiThread {
-                            dialog.show(activity.supportFragmentManager, "MigrationCompletedDialog")
-                        }
-                    } else {
-                        AnkiDroidApp.setMigrationCompleted(applicationContext, true)
-                    }
-                }
-
                 if (progress is Progress.Done) {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                         @Suppress("DEPRECATION")
@@ -159,6 +138,15 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     }
 
                     stopSelf()
+
+                    when (progress) {
+                        is Progress.Success ->
+                            AnkiDroidApp.instance.activityAgnosticDialogs
+                                .showOrScheduleStorageMigrationSucceededDialog()
+                        is Progress.Failure ->
+                            AnkiDroidApp.instance.activityAgnosticDialogs
+                                .showOrScheduleStorageMigrationFailedDialog(progress.e)
+                    }
                 }
             }
         }

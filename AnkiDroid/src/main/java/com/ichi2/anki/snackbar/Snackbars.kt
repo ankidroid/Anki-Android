@@ -106,7 +106,7 @@ fun Activity.showSnackbar(
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null
 ) {
-    val view: View? = findViewById(R.id.root_layout)
+    val view: View? = findViewById(R.id.root_layout) as? CoordinatorLayout
 
     if (view != null) {
         val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
@@ -280,6 +280,8 @@ fun Fragment.showSnackbar(
 }
 
 /* ********************************************************************************************** */
+
+fun Activity.canProperlyShowSnackbars() = findViewById<View>(R.id.root_layout) is CoordinatorLayout
 
 fun Snackbar.setMaxLines(maxLines: Int) {
     view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = maxLines

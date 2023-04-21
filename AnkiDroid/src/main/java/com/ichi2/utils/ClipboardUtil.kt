@@ -22,6 +22,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.CheckResult
+import androidx.annotation.StringRes
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.canProperlyShowSnackbars
+import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
 object ClipboardUtil {
@@ -88,4 +92,25 @@ fun Context.copyToClipboard(text: String): Boolean {
         )
     )
     return true
+}
+
+/**
+ * Copy given [text] to the clipboard,
+ * and show either a snackbar, if possible, or a toast, with the success or failure message.
+ *
+ * @see copyToClipboard
+ */
+fun Context.copyToClipboardAndShowConfirmation(
+    text: String,
+    @StringRes successMessageId: Int,
+    @StringRes failureMessageId: Int
+) {
+    val successfullyCopied = copyToClipboard(text)
+
+    val confirmationMessage = if (successfullyCopied) successMessageId else failureMessageId
+
+    when (this is Activity && this.canProperlyShowSnackbars()) {
+        true -> showSnackbar(confirmationMessage)
+        false -> showThemedToast(this, confirmationMessage, true)
+    }
 }
