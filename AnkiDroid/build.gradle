@@ -63,7 +63,7 @@ android {
         versionName="2.16alpha97"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
-        targetSdkVersion 30 // change .tests_emulator.yml
+        targetSdkVersion 31 // change .tests_emulator.yml
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
