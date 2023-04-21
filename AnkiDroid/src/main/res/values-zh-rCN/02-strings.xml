@@ -365,8 +365,6 @@
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
-    <string name="sync_impossible_during_migration">同步功能被禁用，直到迁移完成。\n
-        %1$d 个媒体文件留待迁移。</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid 需要迁移其存储空间以遵守 Android 10 安全政策。\n\n这将提高媒体同步性能。&lt;br&gt;&lt;br&gt;迁移过程中，您将无法同步，一些设置将被禁用。 迁移开始前为了保护您的数据安全，将会发生媒体同步。&lt;br&gt;&lt;br&gt;在此过程中使用或关闭 AnkiDroid 是安全的。</string>
     <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid 啦。</string>
     <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。

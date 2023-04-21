@@ -61,8 +61,8 @@
     <string name="updated_version">%s versiyonuna güncellendi</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Yazı tahtasını kaydet</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Kalem modunu aç</string>
+    <string name="disable_stylus">Kalem kodunu kapat</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
@@ -379,8 +379,6 @@
     <string name="scoped_storage_postpone">Ertele</string>
     <string name="scoped_storage_migrate">Taşı</string>
     <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
-    <string name="sync_impossible_during_migration">Geçiş yapılana kadar senkronizasyon devre dışı.\n
-        Geçirilecek %1$d medya dosyası kaldı.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid\'in Android 10 güvenlik poliçesine uyum sağlamak için depolamasını taşıması gerekiyor.\n\nBu, medya senkronizasyon performansını yükseltecek.&lt;br&gt;&lt;br&gt;Taşıma sırasında senkronizasyon yapılamaz ve bazı ayarlar değiştirilemez. Verilerinizi güvende tutmak için taşıma başlamadan önce bir medya senkronizasyonu gerçekleşecek.&lt;br&gt;&lt;br&gt;Bu işlem sırasında AnkiDroid\'i kullanmak veya kapatmak güvenlidir.</string>
     <string name="start_migration_progress_message">Depolama geçişi başlatılıyor. Kısa bir süre sonra AnkiDroid\'i kullanmaya devam edebilirsiniz.</string>
     <string name="migration_part_1_done_resume">AnkiDroid\'i kullanmaya devam edebilirsiniz.

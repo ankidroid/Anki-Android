@@ -48,8 +48,8 @@
     <string name="statistics_mature">Mature</string>
     <string name="statistics_young_and_learn">Young + Matuto</string>
     <string name="statistics_unlearned">Hindi nakikita</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Suspendido</string>
+    <string name="statistics_buried">Binaon</string>
     <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Muling matuto</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Matuto</string>
     <string name="statistics_cram">Cram</string>
@@ -65,7 +65,7 @@
     <string name="stats_answers">Mga sagot</string>
     <string name="stats_minutes">Minuto</string>
     <string name="stats_hours">Oras</string>
-    <string name="stats_percentage">Porsyento</string>
+    <string name="stats_percentage">Porsiyento</string>
     <string name="stats_period_month">Isang buwan</string>
     <string name="stats_period_year">Isang taon</string>
     <string name="stats_period_lifetime">buhay ng deck</string>
@@ -77,7 +77,7 @@
     <string name="stats_answer_type">Uri ng sagot</string>
     <string name="stats_today_again_count">Muling bilangin: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; tama)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Aralin: &lt;b&gt;%1$d&lt;/b&gt;, Repasuhin: &lt;b&gt;%2$d&lt;/b&gt;, Muling Aralin: &lt;b&gt;%3$d&lt;/b&gt;, Finilter: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Tamang sagot sa mga mature na mga cards: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Walang mature na mga cards na pinag-aralan ngayong araw</string>
     <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; na review</string>
@@ -86,10 +86,11 @@
     <string name="stats_overview_days_studied">Bilang ng araw ng pag-aaral: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">Average para sa araw na pinag-aralan: &lt;b&gt;%1$.1f&lt;/b&gt; review/araw</string>
     <string name="stats_overview_reviews_per_day_all">Kung nag-aral ka araw-araw: &lt;b&gt;%1$.1f&lt;/b&gt; review/araw</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">Kabuuan: &lt;b&gt;%d&lt;/b&gt; minuto</string>
     <string name="stats_overview_time_per_day_studydays">Average para sa araw na pinag-aralan: &lt;b&gt;%1$.1f&lt;/b&gt; minuto/araw</string>
     <string name="stats_overview_time_per_day_all">Kung pinag-aralan mo araw-araw:  &lt;b&gt;%1$.1f&lt;/b&gt; minuto/araw</string>
-    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
+    <string name="stats_overview_average_answer_time">Promedyo na oras ng pagsagot: &lt;b&gt;%1$.1fs&lt;/b&gt;
+(&lt;b&gt;%2$.2f&lt;/b&gt; na mga card/minuto)</string>
     <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; card/araw</string>
     <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; card</string>
     <string name="stats_overview_average_interval">"Average na agwat: "</string>

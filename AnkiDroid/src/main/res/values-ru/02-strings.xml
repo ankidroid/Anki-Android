@@ -61,8 +61,8 @@
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Сохранить написанное</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Включить режим стилуса</string>
+    <string name="disable_stylus">Выключить режим стилуса</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
@@ -205,10 +205,10 @@
         <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
-        <item quantity="few">Экспортировать %d выбранных записей как apkg файл?</item>
-        <item quantity="many">Экспортировать %d выбранных записей как apkg файл?</item>
-        <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
+        <item quantity="one">Экспортировать выбранную запись как apkg-файл?</item>
+        <item quantity="few">Экспортировать %d выбранных записей как apkg-файл?</item>
+        <item quantity="many">Экспортировать %d выбранных записей как apkg-файл?</item>
+        <item quantity="other">Экспортировать %d выбранных записей как apkg-файл?</item>
     </plurals>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
     <string name="export_success_title">Коллекция успешно экспортирована</string>
@@ -407,8 +407,6 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
-    <string name="sync_impossible_during_migration">Синхронизация отключена до завершения переноса.\n
-        Осталось перенести %1$d медиафайлов.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid должен перенести свое хранилище в соответствии с политикой безопасности Android 10.\n\nЭто улучшит производительность синхронизации медиафайлов.&lt;br&gt;&lt;br&gt;Во время переноса вы не сможете синхронизироваться и некоторые настройки будут недоступны. Чтобы ваши данные не потерялись, перед переносом хранилища произойдёт синхронизация медиафайлов.&lt;br&gt;&lt;br&gt;Использовать или закрывать AnkiDroid в ходе этого процесса безопасно</string>
     <string name="start_migration_progress_message">Начался перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.

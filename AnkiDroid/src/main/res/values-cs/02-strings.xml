@@ -61,8 +61,8 @@
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Uložit tabuli</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Povolit stylus režim</string>
+    <string name="disable_stylus">Zakázat stylus režim</string>
     <string name="enable_whiteboard">Povolit tabuli</string>
     <string name="disable_whiteboard">Zakázat tabuli</string>
     <string name="show_whiteboard">Zobrazit tabuli</string>
@@ -407,8 +407,6 @@
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Přesunout</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
-    <string name="sync_impossible_during_migration">Synchronizace je zakázána, dokud nebude dokončen přesun dat.\n
-        %1$d multimediálních souborů zbývá přesunout.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid potřebuje přesunout své úložiště, aby splňoval zásady zabezpečení Androidu 10.\n\nTo zlepší výkon synchronizace multimédií.&lt;br&gt;&lt;br&gt;Během přesunu dat nebudete moci synchronizovat a některá nastavení budou zakázána. Před spuštěním přesunu dat dojde k synchronizaci multimédií, aby byla vaše data v bezpečí.&lt;br&gt;&lt;br&gt;Během tohoto procesu je bezpečné používat AnkiDroid nebo ho zavřít.</string>
     <string name="start_migration_progress_message">Začíná přesun úložiště. Brzy můžete pokračovat v používání AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.

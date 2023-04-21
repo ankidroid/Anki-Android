@@ -138,7 +138,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">გთხოვთ მისცეთ AnkiDroid-ს მეხსიერებასთან წვდომა, რომ გავაგრძელოთ</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">გასაგრძელებლად გთხოვთ AnkiDroid-ს მიანიჭოთ ყველა ფაილზე წვდომის უფლება</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -243,17 +243,18 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ასლი</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ფაილზე %s ჩაწერა ვერ მოხერხდა ან ფაილი ვერ შეიქმნა</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">მონაცემემთა მიგრაცია</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">მიგრაცია წარმატებით დასრულდა</string>
-    <string name="migration_failed_message">მიგრაცია ვერ მოხერხდა</string>
-    <string name="migration_transferred_size">მიგრირებულია %1$.0f MB %2$.0f MB-დან</string>
+    <string name="migration__failed">Migration failed: %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">მიუწვდომელი კოლექცია</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store-ის პოლიტიკაში შეტანილი ცვლილებების შედეგად თქვენს კოლექციაზე წვდომა აღარ გვექნება, თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას\n\nთქვენი მონაცემები დაცულია და მათი აღდგენაც შესაძლებელია. ისინი შეგიძლიათ იხილოთ აქ:\n%s\n\nაღსადგენად შეგიძლიათ ჩამოთვლილთაგან რომელიმე აირჩიოთ:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb-იდან აღდგენა (რეკომენდებული)</string>
     <string name="install_non_play_store_ankidroid_recommended">საქაღალდეზე წვდომის აღდგენა (რეკომენდებული)</string>
     <string name="install_non_play_store_ankidroid">საქაღალდეზე წვდომის აღდგენა (გაღრმავებული პარამეტრი)</string>
     <string name="restore_data_from_backup">არდგენა .colpkg სარეზერვო ასლიდან (გაღრმავებული პარამეტრი)</string>
     <string name="create_new_collection">ახალი კოლექციის შექმნა</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="new_unsafe_collection">ახალი კოლექცია წაიშლება თქვენი მოწყობილობიდან თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას</string>
 </resources>

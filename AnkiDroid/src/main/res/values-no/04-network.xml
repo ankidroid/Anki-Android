@@ -45,28 +45,28 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
+    <string name="youre_offline">Du er frakoblet</string>
+    <string name="sync_even_if_offline">Prøv likevel</string>
+    <string name="sync_error">Synkroniseringsfeil</string>
+    <string name="vague_error" comment="Network error dialog title">Feil</string>
     <string name="retry">Prøv på nytt</string>
     <string name="menu_get_shared_decks">Få delte kortstokker</string>
-    <string name="connection_error_message">Det oppstod en nettverksfeil.</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="connection_error_message">Det har oppstått en nettverksfeil</string>
+    <string name="not_logged_in_title">Logg på AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
     <string name="username">E-postadresse</string>
     <string name="password">Passord</string>
-    <string name="log_in">Logg inn</string>
+    <string name="log_in">Logg på</string>
     <string name="sign_up_description">Har du ingen AnkiWeb-konto? Det er gratis!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+    <string name="sign_up_not_affiliated">Merk: AnkiWeb er ikke tilknyttet AnkiDroid</string>
     <string name="sign_up">Registrer deg</string>
-    <string name="logged_as">Logget inn som</string>
+    <string name="logged_as">Logget på som</string>
     <string name="log_out">Logg ut</string>
-    <string name="alert_logging_message">Logger inn, vennligst vent...</string>
-    <string name="invalid_username_password">Invalid email address or password</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="alert_logging_message">Logger på, vennligst vent...</string>
+    <string name="invalid_username_password">Ugyldig e-postadresse eller passord</string>
+    <string name="reset_password">Tilbakestill passord</string>
+    <string name="lost_mail_instructions">Glemt e-post?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_prepare_syncing">Forbereder synkronisering...</string>
@@ -88,7 +88,7 @@
     <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
     <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Synkroniserer slettede...</string>
+    <string name="sync_deletions_message">Synkroniserer slettinger...</string>
     <string name="sync_small_objects_message">Synkroniserer små objekter...</string>
     <string name="sync_finish_message">Avslutter synkronisering...</string>
     <string name="sync_log_finish_error">Feil ved sending av ferdigretning til server</string>
@@ -106,14 +106,14 @@
     <string name="sync_media_changes_count">%d media changes to upload</string>
     <string name="sync_media_downloaded_count">%d media files downloaded</string>
     <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
-    <string name="sync_media_sanity_failed">Mediesynkronisering fullført, men antallet media er enig det samme som på serveren. Neste mediesynkronisering blir en fullstendig synkronisering, for å rette eventuelle feil.</string>
+    <string name="sync_media_sanity_failed">Mediesynkronisering fullført, men antallet media er ikke det samme som på serveren. Neste mediesynkronisering bli fullstendig for å rette opp eventuelle feil.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Feil ved synkronisering av medie-data.</string>
+    <string name="sync_media_error">Feil ved synkronisering av mediadata.</string>
     <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
+    <string name="sync_sanity_local">Lokalt</string>
+    <string name="sync_sanity_remote">Ekstern </string>
     <string name="force_full_sync_title">Force full sync</string>
     <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
     <string name="force_full_sync_confirmation">Forced full sync</string>

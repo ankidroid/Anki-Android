@@ -259,11 +259,12 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">Копия %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Не удалось отредактировать или создать файл %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Данные переносятся</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">Данные успешно перенесены</string>
-    <string name="migration_failed_message">Не удалось перенести данные</string>
-    <string name="migration_transferred_size">Перенесено %1$.0f МБ из %2$.0f МБ</string>
+    <string name="migration__failed">Migration failed: %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступная коллекция</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можем получить доступ к вашей коллекции, так как AnkiDroid был удалён из-за изменения политики Play Store\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%s\n\nВыберите опцию для восстановления:</string>
     <string name="restore_data_from_ankiweb">Восстановить из AnkiWeb (рекомендуемый)</string>
