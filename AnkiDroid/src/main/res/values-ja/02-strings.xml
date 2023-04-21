@@ -263,7 +263,7 @@
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
-    <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
+    <string name="no_browser_notification">ブラウザが見つかりません。PCまたはスマートフォンのブラウザで次のウェブページをご覧ください： </string>
     <string name="web_page_error">ページの読み込みエラー: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
@@ -365,8 +365,6 @@
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
-    <string name="sync_impossible_during_migration">移行が完了するまで同期機能は使用できません。\n
-        %1$d個のメディアファイルが移行待機中です。</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android10のセキュリティポリシーに準拠するため、AnkiDroidのストレージを移行する必要があります。\n\n移行を行うと、メディアの同期が従来より短時間で行えるようになります。&lt;br&gt;&lt;br&gt;移行処理中は同期機能が使用できず、また、一部の設定の変更ができなくなります。移行処理を開始する前に、万一のデータ損失に備え、メディアを含めての同期を実行します。&lt;br&gt;&lt;br&gt;移行処理中もAnkiDroidを使用可能です。また、移行処理中にAnkiDroidを終了しても問題ありません。</string>
     <string name="start_migration_progress_message">ストレージの移行を開始します。AnkiDroidの使用はまもなく再開できます。</string>
     <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。

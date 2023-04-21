@@ -379,8 +379,6 @@
     <string name="scoped_storage_postpone">Posticipa</string>
     <string name="scoped_storage_migrate">Migra</string>
     <string name="search_card_js_api_no_results">La ricerca non ha restituito nessun risultato</string>
-    <string name="sync_impossible_during_migration">La sincronizzazione è disabilitata fino al completamento della migrazione.\n
-        %1$d file multimediali rimasti per migrare.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Avvio migrazione dell\'archivio. Potrai riprendere a usare AnkiDroid a breve.</string>
     <string name="migration_part_1_done_resume">Puoi riprendere l\'uso di AnkiDroid. \n La migrazione dell\'archivio continuerà in background.</string>

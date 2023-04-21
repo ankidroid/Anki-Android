@@ -48,7 +48,7 @@
     <string name="decks">ତାସଖଣ୍ଡଗୁଡ଼ିକ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="statistics">ପରିସଂଖ୍ୟାନ</string>
-    <string name="settings">ସେଟିଂସମୂହ</string>
+    <string name="settings">ସେଟିଂ</string>
     <string name="help">ସହାୟତା</string>
     <string name="drawing">ଚିତ୍ରାଙ୍କନ</string>
     <string name="send_feedback">ମତାମତ ପଠାନ୍ତୁ</string>
@@ -174,7 +174,7 @@
     <string name="studyoptions_congrats_more_new">ଦୈନିକ ସୀମା ପହଞ୍ଚିଛି। ଅଧିକ ନୂଆ ପତ୍ର ଉପଲବ୍ଧ ରହିଛି; ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ, କିନ୍ତୁ ଏହା ଆପଣଙ୍କ ସ୍ୱଳ୍ପକାଳୀନ ସମୀକ୍ଷା କାର୍ଯ୍ୟଭାର ବୃଦ୍ଧି କରିବ।</string>
     <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, “କଷ୍ଟମ୍ ଅଧ୍ୟୟନ” ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
-    <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
+    <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛିଟା କ୍ଲୋଜ୍-ଵିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସୀଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
@@ -243,11 +243,12 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ନକଲ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">ଆପଣଙ୍କ ଡାଟା ସ୍ଥାନାନ୍ତର ହେଉଅଛି</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">ସ୍ଥାନାନ୍ତରଣ ସଫଳ ହେଲା</string>
-    <string name="migration_failed_message">ସ୍ଥାନାନ୍ତରଣ ଵିଫଳ ହେଲା</string>
-    <string name="migration_transferred_size">%2$.0f MBର %1$.0f MB ସ୍ଥାନାନ୍ତରିତ</string>
+    <string name="migration__failed">Migration failed: %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>

@@ -259,11 +259,12 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Vaše data se přesouvají</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">Přesun dat byl úspěšný</string>
-    <string name="migration_failed_message">Přesun dat se nezdařil</string>
-    <string name="migration_transferred_size">Přesunuto %1$.0f MB z %2$.0f MB</string>
+    <string name="migration__failed">Migration failed: %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepřístupná kolekce</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Po odinstalování AnkiDroidu nelze otevřít vaši sbírku z důvodu změny zásad obchodu Play\n\nVaše data jsou v bezpečí a mohou být obnovena. Jsou umístěna v\n%s\n\nVyberte možnost níže, pokus je chcete obnovit:</string>
     <string name="restore_data_from_ankiweb">Obnovit z AnkiWeb (doporučeno)</string>

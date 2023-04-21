@@ -243,11 +243,12 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copia</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Impossibile scrivere su o creare il file %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrazione dei tuoi dati</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
     <string name="migration_successful_message">Migrazione riuscita</string>
-    <string name="migration_failed_message">Migrazione fallita</string>
-    <string name="migration_transferred_size">%1$.0f MB di %2$.0f MB migrati</string>
+    <string name="migration__failed">Migration failed: %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Collezione inaccessibile</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non è possibile accedere alla tua collezione dopo che AnkiDroid è stato disinstallato a causa di un cambiamento della politica del Google Play Store\n\nI tuoi dati sono al sicuro e possono essere ripristinati. Si trovano \n%s\n\nSelezione un\'opzione tra quelle qui sotto per ripristinare:</string>
     <string name="restore_data_from_ankiweb">Ripristina da AnkiWeb (consigliato)</string>

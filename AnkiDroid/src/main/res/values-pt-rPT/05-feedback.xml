@@ -48,12 +48,12 @@
     <string name="empty_string"></string>
     <string name="error_reporting_choice">Modo de comunicação de erros</string>
     <string name="feedback_disclaimer">Aviso: Não recolhemos dados pessoais tais como o seu endereço de e-mail, número de telefone ou o IMEI deste telefone. No entanto, recolhemos algumas informações relacionadas com o seu dispositivo, tais como a marca, o modelo e a versão do Android instalada, além de outras informações relacionadas com a natureza dos erros que está a comunicar.</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
+    <string name="feedback_title">Feedback do AnkiDroid</string>
     <string name="feedback_default_text">Digite os seus comentários ou as informações relacionadas com a natureza dos erros que está a comunicar.</string>
     <string name="feedback_auto_toast_text">O AnkiDroid encontrou um problema; está a ser enviado um relatório aos programadores&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
+    <string name="feedback_for_manual_toast_text">Está a ser preparado um relatório de erro para os programadores&#8230;</string>
     <string name="feedback_copy_debug">Copiar dados de depuração</string>
     <string name="feedback_report">Enviar</string>
     <string name="feedback_report_automatically">Enviar automaticamente os relatórios de erros</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">Não foram encontradas aplicações adequadas.</string>
 </resources>

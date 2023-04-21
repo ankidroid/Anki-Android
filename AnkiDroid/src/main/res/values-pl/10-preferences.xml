@@ -130,7 +130,7 @@
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Zawsze</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Tylko przy połączeniach bez opłat</string>
     <string name="sync_media_never">Nigdy</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
@@ -201,7 +201,7 @@
     <string name="custom_buttons_setting_menu_only">Tylko w menu</string>
     <string name="reset_custom_buttons" maxLength="41">Resetuj do domyślnych</string>
     <string name="reset_settings_to_default">Przywróć domyślne ustawienia</string>
-    <string name="reset">Reset</string>
+    <string name="reset">Zresetuj</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikacji stron trzecich</string>
     <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
     <string name="html_javascript_debugging" maxLength="41">Debugowanie HTML / Javascript</string>
@@ -387,12 +387,12 @@
     <string name="pref__manage_space__screen_title">Zarządzaj miejscem</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Błąd</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Obli-\nczanie&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="few">%1$d files\n%2$s</item>
-        <item quantity="many">%1$d files\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d plik\n%2$s</item>
+        <item quantity="few">%1$d pliki\n%2$s</item>
+        <item quantity="many">%1$d plików\n%2$s</item>
+        <item quantity="other">%1$d plików\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Usuń nieużywane pliki multimedialne</string>
@@ -411,9 +411,9 @@
     <string name="progress__deleting_collection">Usuwanie kolekcji&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Usuń wszystko</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__summary">Usuń kolekcję, media, kopie zapasowe i ustawienia</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Usuń wszystko</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Czy na pewno chcesz usunąć wszystkie dane? Obejmuje to kolekcję, media, kopie zapasowe i preferencje.\n\nUwaga: ta akcja zamknie okno.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Usuń dane aplikacji</string>
     <string name="pref__delete_app_data__summary">Usuń ustawienia i inne dane aplikacji</string>

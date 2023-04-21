@@ -56,7 +56,7 @@
     <string name="login_create_account_message">କ୍ଲାଉଡ୍ ସିଙ୍କ୍ ସେଵା ଵ୍ୟଵହାର କରିବାକୁ ଆପଣ ଏକ ତୃତୀୟ ପକ୍ଷ ଆକାଉଣ୍ଟକୁ ଲଗ୍ ଇନ୍ କରିନେବା ଆଵଶ୍ୟକ। ଆପଣ ପରଵର୍ତ୍ତୀ ପଦକ୍ଷେପରେ ଗୋଟିଏ ସୃଷ୍ଟି କରିପାରିବେ।</string>
     <!-- MyAccount.kt -->
     <string name="username">ଇମେଲ୍ ଠିକଣା</string>
-    <string name="password">ପାସ୍‍ୱାର୍ଡ଼</string>
+    <string name="password">ପାସ୍‍ୱର୍ଡ଼</string>
     <string name="log_in">ଲଗ୍‌ ଇନ୍‌</string>
     <string name="sign_up_description">AnkiWeb ଖାତା ନାହିଁ କି? ଏହା ମାଗଣା ଅଟେ!</string>
     <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
@@ -64,8 +64,8 @@
     <string name="logged_as">ଭାବେ ଲଗ୍ ଇନ୍ କରିଛନ୍ତି </string>
     <string name="log_out">ଲଗ୍ ଆଉଟ୍</string>
     <string name="alert_logging_message">ଲଗ୍ ହେଉଛି&#8230;</string>
-    <string name="invalid_username_password">ଅବୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍‍ୱାର୍ଡ଼</string>
-    <string name="reset_password">ପାସ୍‍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="invalid_username_password">ଅଵୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍‍ୱର୍ଡ଼</string>
+    <string name="reset_password">ପାସ୍‍ୱର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
@@ -80,14 +80,14 @@
     <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସିଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
-    <string name="sync_log_error_specific">ସିଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ବାର୍ତ୍ତା: %2$s</string>
+    <string name="sync_log_error_specific">ସୀଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ଵାର୍ତ୍ତା: %2$s</string>
     <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ। ସିଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପୂର୍ବରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରନ୍ତୁ।\n\nଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %s ଦେଖନ୍ତୁ।</string>
     <string name="sync_too_busy">ସର୍ଵର୍ ଵ୍ୟସ୍ତ ଅଛି। ପରେ ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_remote_db_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଡାଟାବେସ୍ ଦୁର୍ନୀତିଗ୍ରସ୍ତ ଥିଲା। ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_overwrite_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଦ୍ୱାରା ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହ ଓଭର୍ ରାଇଟ୍ ହୋଇପାରିବ ନାହିଁ</string>
     <string name="sync_connection_error">ସଂଯୋଗ ସମୟ ସମାପ୍ତ ହୋଇଛି। ହୁଏତ ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହେଉଛି, କିମ୍ବା ଆପଣଙ୍କର ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ବହୁତ ବଡ଼ ଫାଇଲ୍ ଅଛି।</string>
     <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">ଵିକଶିତ ସେଟିଂସ୍ ରେ କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍ ଅମାନ୍ୟ ଅଟେ (%s)। ଦୟାକରି ଏକ ଵୈଧ ସର୍ଵର୍ ପ୍ରଵେଶ କରନ୍ତୁ, ନହେଲେ ସେଟିଂଟିକୁ ଅକ୍ଷମ କରଦିଅନ୍ତୁ।</string>
+    <string name="sync_error_invalid_sync_server">ଵିକଶିତ ସେଟିଂରେ କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍ ଅମାନ୍ୟ ଅଟେ (%s)। ଦୟାକରି ଏକ ଵୈଧ ସର୍ଵର୍ ପ୍ରଵେଶ କରନ୍ତୁ, ନହେଲେ ସେଟିଂଟିକୁ ଅକ୍ଷମ କରଦିଅନ୍ତୁ।</string>
     <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
     <string name="sync_small_objects_message">ଛୋଟ ବସ୍ତୁଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରାହଉଛି&#8230;</string>
     <string name="sync_finish_message">ସିଙ୍କ୍ ସମାପ୍ତ ହେଲା&#8230;</string>

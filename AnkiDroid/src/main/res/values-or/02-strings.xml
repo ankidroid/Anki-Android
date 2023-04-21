@@ -61,8 +61,8 @@
     <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ସକ୍ଷମ କରିବା</string>
+    <string name="disable_stylus">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ଅକ୍ଷମ କରିବା</string>
     <string name="enable_whiteboard">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="disable_whiteboard">ଧଳାପଟା ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="show_whiteboard">ଧଳାପଟା ଦେଖାଅ</string>
@@ -73,7 +73,7 @@
     <string name="leech_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
     <string name="corrupt_font">ଖରାପ ଫଣ୍ଟ ଫାଇଲ୍ %s</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
-    <string name="webview_crash_unknwon_detailed">ଏହା WebView ରେ ଏକ ଆନ୍ତରିକ ତ୍ରୁଟି ଯୋଗୁଁ ହେଇଛି</string>
+    <string name="webview_crash_unknwon_detailed">ଏହା WebViewରେ ଏକ ଅନ୍ତଃ ତ୍ରୁଟି ଯୋଗୁ ଏହା ଘଟିଛି</string>
     <string name="webview_crash_oom">ମେମୋରୀ ସରିଗଲା</string>
     <string name="webview_crash_oom_details">WebView ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା। ଏହା ସାଧାରଣତଃ ଘଟେ ଯେତେବେଳେ ଆପ୍ ର ମେମୋରୀ ସରିଯାଏ, ପ୍ରାୟତଃ ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡ଼ିଆ ହେତୁ।</string>
     <string name="webview_crash_nonfatal">WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
@@ -156,7 +156,7 @@
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି ପତ୍ର</string>
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି&#8230;</string>
-    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ଵିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ର” ଵିକଳ୍ପ ଵ୍ୟଵହାର କରନ୍ତୁ।</string>
+    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରୀନରେ ଥିବା ଅଧିକ ଵିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ର” ଵିକଳ୍ପ ଵ୍ୟଵହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
     <string name="delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
@@ -179,7 +179,7 @@
     <string name="import_error_handle_exception">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବରେ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
+    <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱଚାଳିତ ଭାଵେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାଵେ ଆମଦାନୀ କରିବେ ଜାଣିବା ପାଇଁ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">ଏକାଧିକ colpkg ଫାଇଲ୍ ଚୟନ କରାଯାଇଥିଲା।</string>
     <string name="import_error_colpkg_apkg">ଉଭୟ apkg ଏବଂ colpkg ଫାଇଲଗୁଡ଼ିକ ଏକାସାଙ୍ଗରେ ଚୟନ କରାଯାଇଥିଲା।</string>
@@ -195,12 +195,12 @@
         <item quantity="other">Export %d selected cards as apkg file?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="one">ମନୋନୀତ ନୋଟ୍‍କୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
+        <item quantity="other">ମନୋନୀତ ନୋଟ୍‍ଗୁଡ଼ିକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
     </plurals>
     <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
     <string name="export_success_title">ସଂଗ୍ରହ ସଫଳତାର ସହିତ ରପ୍ତାନି ହେଲା</string>
-    <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
+    <string name="export_send_no_handlers">apkg ପରିଚାଳନା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଞ୍ଚୟ ହେଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
@@ -273,12 +273,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ Anki ର ଏକ ନୂତନ ସଂସ୍କରଣ ଆବଶ୍ୟକ କରେ।</string>
+    <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ Ankiର ଏକ ନୂଆ ସଂସ୍କରଣ ଲୋଡ଼େ।</string>
     <string name="activity_start_failed">ଏହି ସିଷ୍ଟମରେ ଏହି କାମ କରିବାଯୋଗ୍ୟ ଆପ୍ ସଂସ୍ଥାପିତ ହେଇନାହିଁ।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[କ୍ୟାମେରା ପ୍ରତିଛବିଗୁଡ଼ିକ ବଡ଼ ହେଇପାରେ। ମିଡ଼ିଆ ଡିରେକ୍ଟୋରୀରେ ଆପଣ ପ୍ରତିଛବିଗୁଡ଼ିକର ସଙ୍କୋଚନ ଏବଂ ଆକାର ପରିବର୍ତ୍ତନ କରିପାରିବେ]]></string>
     <string name="no_browser_notification">କୌଣସି ବ୍ରାଉଜର୍ ମିଳିଲା ନାହିଁ, ଦୟାକରି PC କିମ୍ୱା ମୋବାଇଲ୍ ଦ୍ୱାରା ୱେବ୍ ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ: </string>
     <string name="web_page_error">ପୃଷ୍ଠା ଲୋଡ୍ ହେବାରେ ତ୍ରୁଟି: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ବାହ୍ୟ ପୃଷ୍ଠା ଲିଙ୍କ ପତ୍ରରେ ରହିପାରିବନାହିଁ    </string>
+    <string name="no_outgoing_link_in_cardbrowser">ବହିଃ-ପୃଷ୍ଠା ଲିଙ୍କ୍ ପତ୍ରରେ ସମର୍ଥିତ ନୁହେଁ।</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">ଉଦ୍ଧାର ହେଇଥିବା ପତ୍ରଗୁଡ଼ିକ</string>
     <!-- Deckpicker Background -->
@@ -291,14 +291,14 @@
     <string name="basic_answer_sample_text">ଏକ ଉଦାହରଣ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ଖାଲି</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScript ବ୍ୟବହାର କରି ନେଵିଗେଶନ୍ ଡ୍ରୟର ଦେଖାଅ ବ୍ୟବହାର କରିବାଲାଗି ଦୟାକରି ପୂର୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScript ବ୍ୟବହାର କରି ବିକଳ୍ପ ଦେଖାଅ ମେନୁ ବ୍ୟବହାର କରିବାଲାଗି ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScript ଵ୍ୟଵହାର କରି ନେଵିଗେଶନ୍ ଡ୍ରୟର ଦେଖାଅ ଵ୍ୟଵହାର କରିବାଲାଗି ଦୟାକରି ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScript ଵ୍ୟଵହାର କରି ଵିକଳ୍ପ ଦେଖାଅ ମେନୁ ଵ୍ୟଵହାର କରିବାଲାଗି ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
     <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
     <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
-    <string name="user_is_a_robot">ସ୍ୱୟଂଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
+    <string name="user_is_a_robot">ସ୍ୱଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ ହୋଇଛି। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ଏହି ପତ୍ର ଅସମର୍ଥିତ AnkiDroid ବୈଶିଷ୍ଠ୍ୟଗୁଡ଼ିକ ବ୍ୟବହାର କରେ। ବିକାଶକାରୀ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ %1$s, କିମ୍ବା ୱିକି ଦେଖନ୍ତୁ। %2$s</string>
     <string name="invalid_json_data">ପତ୍ର ଅବୈଧ ତଥ୍ୟ ପ୍ରଦାନ କଲା। %s</string>
@@ -316,10 +316,10 @@
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
     <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
     <string name="ankidroid_init_failed_webview_title">ସାଂଘାତିକ ତ୍ରୁଟି</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍ ଭିୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହାକି ଉପଲବ୍ଧ ନାହିଁ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ସଂସ୍ଥାପନ କରୁଛି ତେବେ ଏହା ହୋଇପାରେ। ଦୟାକରି କିଛି ମିନିଟରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍‍ଵ୍ୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହା ଅନୁପଲବ୍ଧ ଅଟେ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ଅଧିସ୍ଥାପନ କରୁଥାଏ ତେବେ ଏହା ଘଟିପାରେ। ଦୟାକରି କିଛି ମିନିଟରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ଫଣ୍ଟ ଆକାର</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଅ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଇବା</string>
     <string name="format_insert_bold">ଅକ୍ଷରକୁ ଗାଢ଼ କରନ୍ତୁ</string>
     <string name="format_insert_italic">ଇଟାଲିକ୍ ଭାବରେ ଫର୍ମାଟ୍ କରନ୍ତୁ</string>
     <string name="format_insert_underline">ଲେଖା ତଳେ ଗାର ଦିଅନ୍ତୁ</string>
@@ -338,16 +338,16 @@
     <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ହୋମ୍ ସ୍କ୍ରିନ୍ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ଗୃହସ୍କ୍ରୀନ୍ AnkiDroidକୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାର ଅନୁମତି ଦିଏ ନାହିଁ</string>
     <string name="create_shortcut_error">ସର୍ଟକଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକ କ୍ୟାପିଟାଲାଇଜ୍ କରନ୍ତୁ</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ସ୍କ୍ରୋଲ୍ କରୁଥିବା ଉପକରଣ-ଦଣ୍ଡିକା</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକରେ ବଡ଼ ଅକ୍ଷର କରିବା</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ସ୍କ୍ରୋଲ୍ ହେଉଥିବା ଉପକରଣ-ଦଣ୍ଡିକା</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆଵଶ୍ୟକ ଅଟେ</string>
-    <string name="password_empty">ପାସ୍‍ୱାର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
+    <string name="password_empty">ପାସ୍‍ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
@@ -379,9 +379,7 @@
     <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
     <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>
     <string name="search_card_js_api_no_results">ସନ୍ଧାନ କୌଣସି ଫଳାଫଳ ଫେରସ୍ତ କଲା ନାହିଁ</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">ଆଣ୍ଡ୍ରଏଡ୍ 10 ସୁରକ୍ଷା ନୀତି ପାଳନ କରିବା ଲାଗି AnkiDroid ଏହାର ଷ୍ଟୋରେଜ୍‍କୁ ସ୍ଥାନାନ୍ତର କରିବା ଆଵଶ୍ୟକ।\n\nଏହା ମିଡ଼ିଆ ସୀଙ୍କ୍ କାର୍ଯ୍ୟଦକ୍ଷତାରେ ଉନ୍ନତି ଆଣିବ।&lt;br&gt;&lt;br&gt;ସ୍ଥାନାନ୍ତରଣ ସମୟରେ ଆପଣ ସୀଙ୍କ୍ କରିବାକୁ ଅସମର୍ଥ ହେବେ ଏଵଂ କିଛିଟା ସେଟିଂ ଅକ୍ଷମ ହେବ। ଆପଣଙ୍କ ଡାଟାକୁ ସୁରକ୍ଷିତ ରଖିବାକୁ ସ୍ଥାନାନ୍ତରଣ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ ଏକ ମିଡ଼ିଆ ସୀଙ୍କ୍ ଘଟିବ।&lt;br&gt;&lt;br&gt;ଏହି ପ୍ରକ୍ରିୟା ସମୟରେ AnkiDroid ଵ୍ୟଵହାର କିମ୍ବା ବନ୍ଦ କରିବା ନିରାପଦ ଅଟେ।</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
@@ -411,11 +409,11 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ପତ୍ର</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="toggle_cards_notes">ପତ୍ର/ନୋଟ୍ ଦେଖାଇବା ଟୋଗଲ୍ କରିବା</string>
+    <string name="toggle_browser_mode_help">ବ୍ରାଉଜର୍ ରେ ପତ୍ର କିମ୍ବା ନୋଟ୍ ଦେଖାଇବା ଟୋଗଲ୍ କରିବା</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="browser_options_dialog_heading">ବ୍ରାଉଜର ଵିକଳ୍ପ</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ଏକ ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ ସମୟରେ ଏହି କାର୍ଯ୍ୟକାରିତା ଉପଲବ୍ଧ ନାହିଁ
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ ଆରମ୍ଭ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="media_sync_required_title">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଆଵଶ୍ୟକ</string>
