@@ -19,6 +19,7 @@ package com.ichi2.anki.services
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
@@ -28,7 +29,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
-import com.ichi2.anki.receiver.MigrationFailHelpReceiver
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -217,9 +217,9 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
         }
 
         is MigrationService.Progress.Failure -> {
-            val intent = Intent(this, MigrationFailHelpReceiver::class.java)
-            intent.action = "com.ichi2.anki.ACTION_OPEN_URL"
-            val pendingIntent = CompatHelper.compat.getImmutableBroadcastIntent(this, 0, intent, 0)
+            val url = getString(R.string.migration_failed_help_url)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            val pendingIntent = CompatHelper.compat.getImmutableActivityIntent(this, 0, intent, 0)
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.e.stackTraceToString())
             val copyDebugInfoPendingIntent = CompatHelper.compat
