@@ -20,11 +20,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.ichi2.anki.R
 
 class MigrationFailHelpReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent != null) {
-            val helpURL = "https://ankidroid.org/docs/help.html"
+            val helpURL = context?.getString(R.string.migration_failed_help_url)
             val urlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(helpURL))
             urlIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context?.startActivity(urlIntent)

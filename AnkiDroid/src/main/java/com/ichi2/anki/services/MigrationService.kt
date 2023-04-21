@@ -212,8 +212,12 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
         }
 
         is MigrationService.Progress.Success -> {
+            val intent = Intent(this, MigrationFailHelpReceiver::class.java)
+            intent.action = "com.ichi2.anki.ACTION_OPEN_URL"
+            val pendingIntent = CompatHelper.compat.getImmutableBroadcastIntent(this, 0, intent, 0)
             builder.setProgress(100, 100, false)
             builder.setContentText(getString(R.string.migration_successful_message))
+            builder.addAction(0, getString(R.string.help), pendingIntent)
         }
 
         is MigrationService.Progress.Failure -> {
