@@ -35,8 +35,6 @@ import com.ichi2.utils.FileUtil.isDescendantOf
 import com.ichi2.utils.Permissions
 import timber.log.Timber
 import java.io.File
-// import com.ichi2.anki.model.DiskFile
-// import com.ichi2.anki.model.RelativeFilePath
 
 /** A path to the AnkiDroid directory, named "AnkiDroid" by default */
 typealias AnkiDroidDirectory = Directory
@@ -47,18 +45,6 @@ typealias CollectionFilePath = String
 /** The collection.anki2 CollectionFilePath of [this] AnkiDroid directory */
 fun AnkiDroidDirectory.getCollectionAnki2Path(): CollectionFilePath =
     File(this.directory, CollectionHelper.COLLECTION_FILENAME).canonicalPath
-
-/* AnkiDroidDirectory.getRelativeFilePath() does not end up getting used
-/**
- * Returns the relative file path from a given [AnkiDroidDirectory]
- * @return null if the file was not inside the directory, or referred to the root directory
- */
-fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
-    RelativeFilePath.fromPaths(
-        baseDir = this,
-        file = file
-    )
-*/
 
 /**
  * An [AnkiDroidDirectory] for an AnkiDroid collection which is under scoped storage
