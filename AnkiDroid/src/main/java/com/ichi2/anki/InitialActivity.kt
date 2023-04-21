@@ -20,6 +20,7 @@ import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.Environment
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import com.ichi2.anki.permissions.PermissionManager
@@ -153,8 +154,11 @@ sealed interface AnkiDroidFolder {
  * When impossible, we use the app-private directory.
  * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
  */
-internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean, hasLegacyStoragePermissions: Boolean): AnkiDroidFolder {
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || hasLegacyStoragePermissions) {
+internal fun selectAnkiDroidFolder(
+    canManageExternalStorage: Boolean,
+    currentFolderIsAccessibleAndLegacy: Boolean
+): AnkiDroidFolder {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || currentFolderIsAccessibleAndLegacy) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
         // since it's fast & safe up to & including 'Q'
         // If a user upgrades their OS from Android 10 to 11 then storage speed is severely reduced
@@ -281,9 +285,12 @@ class StartupStoragePermissionManager private constructor(
         }
 
         fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
+            val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
+            val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
+
             return selectAnkiDroidFolder(
                 canManageExternalStorage = Permissions.canManageExternalStorage(context),
-                hasLegacyStoragePermissions = isLegacyStorage(context, setCollectionPath = false) == true
+                currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
             )
         }
     }
