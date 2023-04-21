@@ -116,11 +116,11 @@ class InitialActivityTest : RobolectricTest() {
 
         // force a safe startup before Q
         assertThat(
-            (selectAnkiDroidFolder(false, hasLegacyStoragePermissions = false) as PublicFolder).requiredPermissions.asIterable(),
+            (selectAnkiDroidFolder(false) as PublicFolder).requiredPermissions.asIterable(),
             contains(*expectedPermissions)
         )
         assertThat(
-            (selectAnkiDroidFolder(true, hasLegacyStoragePermissions = false) as PublicFolder).requiredPermissions.asIterable(),
+            (selectAnkiDroidFolder(true) as PublicFolder).requiredPermissions.asIterable(),
             contains(*expectedPermissions)
         )
     }
@@ -129,11 +129,11 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun startupQ() {
         assertThat(
-            selectAnkiDroidFolder(false, hasLegacyStoragePermissions = false),
+            selectAnkiDroidFolder(false),
             instanceOf(PublicFolder::class.java)
         )
         assertThat(
-            selectAnkiDroidFolder(true, hasLegacyStoragePermissions = false),
+            selectAnkiDroidFolder(true),
             instanceOf(PublicFolder::class.java)
         )
     }
@@ -144,10 +144,7 @@ class InitialActivityTest : RobolectricTest() {
     fun startupAfterQWithManageExternalStorage() {
         val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
 
-        selectAnkiDroidFolder(
-            canManageExternalStorage = true,
-            hasLegacyStoragePermissions = false
-        ).let {
+        selectAnkiDroidFolder(canManageExternalStorage = true).let {
             assertThat(
                 (it as PublicFolder).requiredPermissions.asIterable(),
                 contains(*expectedPermissions)
@@ -159,8 +156,18 @@ class InitialActivityTest : RobolectricTest() {
     @Test
     fun startupAfterQWithoutManageExternalStorage() {
         assertThat(
-            selectAnkiDroidFolder(canManageExternalStorage = false, hasLegacyStoragePermissions = false),
+            selectAnkiDroidFolder(canManageExternalStorage = false),
             instanceOf(AppPrivateFolder::class.java)
+        )
+    }
+
+    private fun selectAnkiDroidFolder(
+        canManageExternalStorage: Boolean,
+        hasLegacyStoragePermissions: Boolean = false
+    ): AnkiDroidFolder {
+        return selectAnkiDroidFolder(
+            canManageExternalStorage = canManageExternalStorage,
+            hasLegacyStoragePermissions = hasLegacyStoragePermissions
         )
     }
 
