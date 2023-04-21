@@ -47,6 +47,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.negativeButton
 import com.ichi2.widget.WidgetStatus.update
 import kotlinx.coroutines.Job
 import timber.log.Timber
@@ -294,6 +295,7 @@ class ModelBrowser : AnkiActivity() {
         MaterialDialog(this).show {
             title(R.string.model_browser_add)
             positiveButton(R.string.dialog_ok)
+            negativeButton(R.string.dialog_cancel)
             listItemsSingleChoice(items = infos.map { it.label }) { _, index, _ ->
                 MaterialDialog(this@ModelBrowser).show {
                     title(R.string.model_browser_add)
