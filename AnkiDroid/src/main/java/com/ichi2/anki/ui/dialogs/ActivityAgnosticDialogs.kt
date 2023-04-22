@@ -17,18 +17,20 @@
 package com.ichi2.anki.ui.dialogs
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Application
 import android.app.Dialog
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import com.ichi2.anki.R
 import com.ichi2.anki.ui.windows.managespace.getUserFriendlyErrorText
 import com.ichi2.utils.copyToClipboardAndShowConfirmation
+import makeLinksClickable
 
 // TODO BEFORE-RELEASE Dismiss the related notification, if any, when the dialog is dismissed.
 //   Currently we are leaving the notification dangling after the migration has completed.
@@ -40,7 +42,7 @@ class MigrationSucceededDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
             .setTitle(R.string.migration_successful_message)
-            .setMessage(R.string.migration_successful)
+            .setMessage(R.string.migration__succeeded__message)
             .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }
             .create()
             .apply { setCanceledOnTouchOutside(false) }
@@ -54,9 +56,6 @@ class MigrationSucceededDialogFragment : DialogFragment() {
     }
 }
 
-// TODO BEFORE-RELEASE Add "Get help" button, like one to be added in the notification.
-//   See: https://github.com/ankidroid/Anki-Android/issues/13641
-//   See: https://github.com/ankidroid/Anki-Android/pull/13636
 // TODO BEFORE-RELEASE Add a "Retry" button,
 //   and also add instructions to fix the issue in case of easily fixable problems,
 //   such as running out of disk space.
@@ -65,9 +64,12 @@ class MigrationFailedDialogFragment : DialogFragment() {
         val errorText = arguments?.getString(ERROR_TEXT_KEY) ?: ""
         val stacktrace = arguments?.getString(STACKTRACE_KEY) ?: ""
 
+        val helpUrl = getString(R.string.link_migration_failed_dialog_learn_more_en)
+        val message = getString(R.string.migration__failed__message, errorText, helpUrl).parseAsHtml()
+
         return AlertDialog.Builder(requireContext())
-            .setTitle("Migration failed")
-            .setMessage("Error: $errorText")
+            .setTitle(R.string.migration__failed__title)
+            .setMessage(message)
             .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }
             .setNegativeButton(R.string.feedback_copy_debug) { _, _ ->
                 requireContext().copyToClipboardAndShowConfirmation(
@@ -77,7 +79,10 @@ class MigrationFailedDialogFragment : DialogFragment() {
                 )
             }
             .create()
-            .apply { setCanceledOnTouchOutside(false) }
+            .apply {
+                makeLinksClickable()
+                setCanceledOnTouchOutside(false)
+            }
     }
 
     companion object {
