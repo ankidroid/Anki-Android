@@ -29,7 +29,7 @@ import com.ichi2.anki.preferences.Preferences
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
-import com.ichi2.preferences.PreferenceExtensions
+import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooNewException
@@ -551,10 +551,7 @@ open class CollectionHelper {
             } else if (ankiDroidDirectoryOverride != null) {
                 ankiDroidDirectoryOverride!!
             } else {
-                PreferenceExtensions.getOrSetString(
-                    preferences,
-                    PREF_COLLECTION_PATH
-                ) { getDefaultAnkiDroidDirectory(context) }
+                preferences.getOrSetString(PREF_COLLECTION_PATH) { getDefaultAnkiDroidDirectory(context) }
             }
         }
 
