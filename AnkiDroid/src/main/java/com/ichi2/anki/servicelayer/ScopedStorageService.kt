@@ -289,12 +289,12 @@ object ScopedStorageService {
             return Status.COMPLETED
         }
 
-        if (!collectionWillBeMadeInaccessibleAfterUninstall(context)) {
-            return Status.NOT_NEEDED
-        }
-
         if (userMigrationIsInProgress(context)) {
             return Status.IN_PROGRESS
+        }
+
+        if (!collectionWillBeMadeInaccessibleAfterUninstall(context)) {
+            return Status.NOT_NEEDED
         }
 
         return Status.NEEDS_MIGRATION
