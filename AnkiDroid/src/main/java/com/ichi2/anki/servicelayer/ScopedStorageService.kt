@@ -31,7 +31,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
-import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf
@@ -101,13 +100,6 @@ object ScopedStorageService {
      * @see UserDataMigrationPreferences
      */
     const val PREF_MIGRATION_SOURCE = "migrationSourcePath"
-
-    /**
-     * Preference listing the total number of bytes that [MigrationService] expects to transfer.
-     *
-     * @see [MigrationService.getTotalTransferSize]
-     */
-    const val PREF_MIGRATION_TOTAL_TO_TRANSFER: String = "migrationServiceTotalBytes"
 
     /**
      * Preference listing the [AnkiDroidDirectory] where a scoped storage migration is migrating to.
