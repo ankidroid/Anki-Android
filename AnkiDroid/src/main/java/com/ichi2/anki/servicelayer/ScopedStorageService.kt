@@ -374,6 +374,6 @@ object ScopedStorageService {
             return false
         }
 
-        return !Environment.isExternalStorageLegacy()
+        return Environment.isExternalStorageLegacy()
     }
 }
