@@ -40,3 +40,14 @@ object PreferenceExtensions {
         return supplied
     }
 }
+
+@CheckResult // A "set" API should be used if the result is not required.
+fun SharedPreferences.getOrSetLong(key: String, supplier: Supplier<Long>): Long {
+    if (contains(key)) {
+        // the default is never returned
+        return getLong(key, -1337L)
+    }
+    val supplied = supplier.get()
+    edit { putLong(key, supplied) }
+    return supplied
+}

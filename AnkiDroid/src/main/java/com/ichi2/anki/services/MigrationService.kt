@@ -30,12 +30,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
+import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_TOTAL_TO_TRANSFER
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.compat.CompatHelper
+import com.ichi2.preferences.getOrSetLong
 import com.ichi2.utils.FileUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,6 +45,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.io.File
+import kotlin.math.max
 import kotlin.properties.ReadOnlyProperty
 
 /**
@@ -57,7 +60,6 @@ import kotlin.properties.ReadOnlyProperty
  *   A wake lock might make things proceed faster, but it also means more battery drain.
  */
 class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<MigrationService> {
-
     sealed interface Progress {
         object CalculatingTransferSize : Progress
 
@@ -99,8 +101,8 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                 migrateUserDataTask = MigrateUserData
                     .createInstance(AnkiDroidApp.getSharedPrefs(this@MigrationService))
 
-                val totalBytesToTransfer = getRemainingTransferSize(migrateUserDataTask)
-                var transferredBytes = 0L
+                val totalBytesToTransfer = getTotalTransferSize(migrateUserDataTask)
+                var transferredBytes = max(totalBytesToTransfer - getRemainingTransferSize(migrateUserDataTask), 0)
 
                 migrateUserDataTask.migrateFiles(progressListener = { deltaTransferredBytes ->
                     transferredBytes += deltaTransferredBytes
@@ -116,6 +118,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                 AnkiDroidApp.getSharedPrefs(this@MigrationService).edit {
                     remove(PREF_MIGRATION_DESTINATION)
                     remove(PREF_MIGRATION_SOURCE)
+                    remove(PREF_MIGRATION_TOTAL_TO_TRANSFER)
                 }
 
                 flowOfProgress.emit(Progress.Success)
@@ -166,6 +169,19 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         val remainingSpaceToMigrate = folderSize - ignoredSpace
         Timber.d("folder size: %d, safe: %d, remaining: %d", folderSize, ignoredSpace, remainingSpaceToMigrate)
         return remainingSpaceToMigrate
+    }
+
+    /**
+     * Returns the total number of bytes which the MigrationService expects to transfer
+     */
+    private fun getTotalTransferSize(task: MigrateUserData): Long {
+        // The first time that this is accessed will be on the first run of the service, so calculate the remaining transfer size.
+        // On subsequent runs, return the value we stored in Shared Preferences
+        return AnkiDroidApp.getSharedPrefs(this.baseContext).getOrSetLong(
+            PREF_MIGRATION_TOTAL_TO_TRANSFER
+        ) {
+            getRemainingTransferSize(task)
+        }
     }
 
     override fun onBind(intent: Intent) = SimpleBinder(this)
