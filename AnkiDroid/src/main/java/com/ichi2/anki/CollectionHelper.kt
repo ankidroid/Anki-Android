@@ -544,8 +544,9 @@ open class CollectionHelper {
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
+                val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) { getDefaultAnkiDroidDirectory(context) }
                 File(
-                    getDefaultAnkiDroidDirectory(context),
+                    currentCollectionDirectory,
                     "androidTest"
                 ).absolutePath
             } else if (ankiDroidDirectoryOverride != null) {
