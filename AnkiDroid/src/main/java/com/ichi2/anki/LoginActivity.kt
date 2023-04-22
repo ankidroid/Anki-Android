@@ -22,7 +22,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import androidx.lifecycle.Lifecycle
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
 /**
@@ -58,7 +59,7 @@ class LoginActivity : MyAccount() {
         if (newState == STATE_LOGGED_IN) {
             // This was intended to be shown from the 'app intro' where a user should not be logged in
             if (!lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                showThemedToast(this, R.string.already_logged_in, true)
+                showSnackbar(R.string.already_logged_in, Snackbar.LENGTH_SHORT)
                 Timber.w("LoginActivity shown when user was logged in")
             }
             setResult(RESULT_OK)
