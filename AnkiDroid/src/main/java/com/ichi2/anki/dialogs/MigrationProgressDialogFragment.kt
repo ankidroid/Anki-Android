@@ -65,15 +65,9 @@ class MigrationProgressDialogFragment : DialogFragment() {
                     textView.text = getString(R.string.migration__transferred_x_of_y, transferredSizeText, totalSizeText)
                 }
 
-                is MigrationService.Progress.Success -> {
-                    progressBar.isIndeterminate = false
-                    progressBar.progress = Int.MAX_VALUE
-                    textView.text = getString(R.string.migration_successful_message)
-                }
-
-                is MigrationService.Progress.Failure -> {
-                    textView.text = getString(R.string.migration__failed, progress.e)
-                }
+                // MigrationSucceededDialogFragment or MigrationFailedDialogFragment
+                // is going to be shown instead.
+                is MigrationService.Progress.Done -> dismiss()
             }
         }
 
