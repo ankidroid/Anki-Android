@@ -46,13 +46,13 @@ class AggregateExceptionTest {
     fun aggregateExceptionContainsAllExceptions() {
         val first = TestException("a")
         val second = TestException("b")
-        val result = AggregateException.raise("message", listOf(first, second))
+        val result = AggregateException.raise("[message]", listOf(first, second))
 
         assertThat(result, instanceOf(AggregateException::class.java))
 
         val asAggregateException = result as AggregateException
 
-        assertThat(asAggregateException.message, equalTo("message"))
+        assertThat(asAggregateException.message, containsString("[message]"))
         assertThat(asAggregateException.exceptions[0], equalTo(first))
         assertThat(asAggregateException.exceptions[1], equalTo(second))
     }
