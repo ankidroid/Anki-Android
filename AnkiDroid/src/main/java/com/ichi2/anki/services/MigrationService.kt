@@ -19,6 +19,7 @@ package com.ichi2.anki.services
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
@@ -234,8 +235,10 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
             builder.setContentText(getString(R.string.migration_successful_message))
         }
 
-        // TODO BEFORE-RELEASE Add a “Get help” button
         is MigrationService.Progress.Failure -> {
+            val url = getString(R.string.migration_failed_help_url)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            val pendingIntent = CompatHelper.compat.getImmutableActivityIntent(this, 0, intent, 0)
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.e.stackTraceToString())
             val copyDebugInfoPendingIntent = CompatHelper.compat
@@ -243,6 +246,7 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
 
             builder.addAction(R.drawable.ic_star_notify, getString(R.string.feedback_copy_debug), copyDebugInfoPendingIntent)
             builder.setContentText(getString(R.string.migration__failed, progress.e))
+            builder.addAction(0, getString(R.string.help), pendingIntent)
         }
     }
 
