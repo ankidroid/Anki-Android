@@ -252,7 +252,7 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">コレクションをバックアップ</string>
+    <string name="backup_your_collection">コレクションのバックアップ</string>
     <string name="backup_collection_message">しばらくコレクションをバックアップしていません。データの損失を防ぐためにすぐにバックアップを行うことを強く推奨します。</string>
     <string name="button_backup">バックアップ</string>
     <string name="button_disable_reminder">リマインダーを無効にする</string>
