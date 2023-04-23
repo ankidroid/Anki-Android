@@ -418,18 +418,8 @@ open class Collection(
      * Disconnect from DB.
      */
     @Synchronized
-    fun close() {
-        close(true)
-    }
-
-    @Synchronized
-    fun close(save: Boolean) {
-        close(save, false)
-    }
-
-    @Synchronized
     @KotlinCleanup("remove/rename val db")
-    fun close(save: Boolean, downgrade: Boolean, forFullSync: Boolean = false) {
+    fun close(save: Boolean = true, downgrade: Boolean = false, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
                 val db = db.database
