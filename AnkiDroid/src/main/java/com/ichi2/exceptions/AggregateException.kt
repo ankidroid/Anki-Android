@@ -16,6 +16,8 @@
 
 package com.ichi2.exceptions
 
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
 import java.lang.Exception
 import java.lang.RuntimeException
 
@@ -25,6 +27,19 @@ import java.lang.RuntimeException
  * the successful completion of an operation
  */
 class AggregateException(message: String, val exceptions: List<Exception>) : RuntimeException(message) {
+
+    override val message: String
+        get() = "${exceptions.size} errors, the last being: '${exceptions.last().message}' [${super.message}]"
+
+    override fun getLocalizedMessage(): String {
+        return AnkiDroidApp.instance.resources.getQuantityString(
+            R.plurals.aggregate_exception_user_facing_message,
+            exceptions.size,
+            super.message,
+            exceptions.size,
+            exceptions.last().localizedMessage
+        )
+    }
 
     override fun toString(): String {
         return "$message\n ${exceptions.joinToString(separator = "\n") { it.stackTraceToString() }}"
