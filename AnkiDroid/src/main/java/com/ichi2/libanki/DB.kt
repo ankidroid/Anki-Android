@@ -35,10 +35,6 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.RuntimeException
-import java.util.ArrayList
-import kotlin.Throws
 
 /**
  * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
@@ -274,6 +270,9 @@ class DB(db: SupportSQLiteDatabase) {
             safeEndInTransaction(database)
         }
     }
+    fun safeEndInTransaction() {
+        safeEndInTransaction(database)
+    }
 
     companion object {
         private val MOD_SQL_STATEMENTS = arrayOf("insert", "update", "delete")
@@ -298,10 +297,6 @@ class DB(db: SupportSQLiteDatabase) {
          */
         fun withRustBackend(backend: Backend): DB {
             return DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
-        }
-
-        fun safeEndInTransaction(database: DB) {
-            safeEndInTransaction(database.database)
         }
 
         fun safeEndInTransaction(database: SupportSQLiteDatabase) {
