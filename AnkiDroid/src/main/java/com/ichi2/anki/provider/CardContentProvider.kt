@@ -49,7 +49,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Supported URIs:
@@ -1110,7 +1109,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 db.database.setTransactionSuccessful()
             } finally {
-                DB.safeEndInTransaction(db)
+                db.safeEndInTransaction()
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "answerCard - RuntimeException on answering card")

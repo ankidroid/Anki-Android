@@ -240,7 +240,7 @@ class Syncer(
                 publishProgress(con, R.string.sync_writing_db)
                 col.db.database.setTransactionSuccessful()
             } finally {
-                DB.safeEndInTransaction(col.db)
+                col.db.safeEndInTransaction()
             }
         } catch (e: IllegalStateException) {
             throw RuntimeException(e)
