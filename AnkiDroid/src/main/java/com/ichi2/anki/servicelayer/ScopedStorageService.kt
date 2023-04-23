@@ -334,8 +334,7 @@ object ScopedStorageService {
             return false
         }
 
-        val collectionPath = File(CollectionHelper.getCollectionPath(context))
-        if (collectionPath.isInsideDirectoriesRemovedWithTheApp(context)) {
+        if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
             return false
         }
 
@@ -369,11 +368,14 @@ object ScopedStorageService {
             return false
         }
 
-        val collectionPath = File(CollectionHelper.getCollectionPath(context))
-        if (collectionPath.isInsideDirectoriesRemovedWithTheApp(context)) {
+        if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
             return false
         }
 
         return Environment.isExternalStorageLegacy()
+    }
+
+    fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean {
+        return File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(context)
     }
 }
