@@ -47,10 +47,10 @@
     <string name="check_db_title">I-tsek ang database?</string>
     <string name="check_db_warning">It ay maaaring tumagal ng mahabang oras</string>
     <string name="check_db_acknowledge">Sinuri ang database</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Nasuri at na-optimize na ang database.\nLumiit ito ng %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Burahin ang deck</string>
     <string name="delete_deck_default_deck">Ang default na deck ay hindi maaaring matanggal</string>
-    <string name="delete_deck_title">Tanggalin ang deck?</string>
+    <string name="delete_deck_title">Burahin ang deck?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Tanggalin ang lahat ng mga kard sa %1$s? Naglalaman ito ng %2$d kard.</item>
         <item quantity="other">Tanggalin ang lahat ng mga kard sa %1$s? Naglalaman ito ng %2$d kard.</item>
@@ -59,34 +59,34 @@
     <string name="no_tts_available_message">Walang available na wika sa text-to-speech</string>
     <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">Huwag magsalita</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nHindi nagamit na mga file:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">I-preview</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Iposisyon muli ang card</string>
+    <string name="reposition_card_dialog_message">Panimulang posisyon:</string>
+    <string name="reposition_card_not_new_error">Mga bagong card lamang ang maaaring iposisyon muli</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d card ang pinosisyon muli</item>
+        <item quantity="other">%d mga card ang pinosisyon muli</item>
     </plurals>
     <string name="reset_card_dialog_title">I-reset ang progreso ng kard</string>
     <string name="reset_card_dialog_message">Ang kard na ito ay ilalagay sa dulo ng bagong queue kard</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d card ang na-reset</item>
+        <item quantity="other">%d mga card ang na-reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">Iiskedyul muli ang %d card</item>
+        <item quantity="other">Iiskedyul muli ang %d mga card</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Kasalukuyang agwat: %d araw</item>
+        <item quantity="other">Kasalukuyang agwat: %d araw</item>
     </plurals>
     <string name="reschedule_card_dialog_message">I - reeschedule para sa pag - aaral sa mga x araw:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d card ang naiskedyul muli</item>
+        <item quantity="other">%d mga card ang naiskedyul muli</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
@@ -116,20 +116,20 @@
         <item quantity="one">Cards imported: %2$d</item>
         <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
+    <string name="storage_full_title">Puno na ang storage</string>
+    <string name="storage_almost_full_title">Malapit nang mapuno ang storage</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Walang espasyo</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Ibalik ang backup?</string>
     <string name="restore_backup">Ang iyong koleksyon ay mapapalitan ng mas lumang kopya. Ang anumang pag-unlad na hindi na - isave ay mawawala.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Pumili ng iba pa</string>
     <string name="dialog_cancel">Kanselahin</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Kumpirmahin</string>
+    <string name="dialog_no">Hindi</string>
     <string name="dialog_yes">Oo</string>
     <string name="dialog_continue">Magpatuloy</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Pinoproseso...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Gumawa</string>
     <string name="dialog_positive_delete">Burahin</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -154,11 +154,11 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="check_media_no_unused_missing">Walang nagamit o nawawalang file na nahanap</string>
     <string name="check_media_db_updated">Itinayo muli ang database ng media</string>
     <string name="check_media_delete_unused">Tanggalin ang hindi ginagamit</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Binubura ang media&#8230;</string>
+    <string name="delete_media_result_title">Resulta ng pagbura</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d file ang nabura</item>
+        <item quantity="other">%d mga file ang nabura</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Lahat ng mga kard</string>

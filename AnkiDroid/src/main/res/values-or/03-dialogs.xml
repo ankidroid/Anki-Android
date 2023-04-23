@@ -111,7 +111,7 @@
     <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
     <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରଵର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
     <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା।</string>
-    <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
+    <string name="import_update_ignored">ନୋଟ୍ ପ୍ରକାର ବଦଳିଥିବାରୁ କିଛିଟା ଅଦ୍ୟତନ ଅଣଦେଖା ହୋଇଛି</string>
     <plurals name="import_complete_message">
         <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
         <item quantity="other">%1$dଟି ଫାଇଲ୍ ଆମଦାନୀ ହୋଇଛି\nସର୍ବମୋଟ %2$dଟି ପତ୍ର ଆମଦାନୀ କରାଗଲା</item>
@@ -119,7 +119,7 @@
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">ଜାରି ରଖିବାକୁ AnkiDroid %s ମାଗଣା ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଆବଶ୍ୟକ କରେ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">ଜାରି ରଖିବାପାଇଁ AnkiDroid %s ଖାଲି ଷ୍ଟୋରେଜ୍ ସ୍ଥାନ ଲୋଡ଼େ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
@@ -183,7 +183,7 @@
     <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ।\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଵାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କ ପାଖରେ ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି।</string>
     <string name="integrity_check_fixed_no_home_deck">ଭୁଲ ଘରୋଇ ତାସଖଣ୍ଡ ସହିତ %dଟି ପତ୍ର ଉଦ୍ଧାର କରାଯାଇଛି। ଅଧିକ ସୂଚନା ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରିହେଲା ନାହିଁ</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିଵର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->
@@ -193,7 +193,7 @@
     <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">ଡାଟାବେସ୍ ଲକ୍ ହୋଇଛି</string>
-    <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ ଦ୍ୱାରା ବ୍ୟବହୃତ ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପକୁ ବନ୍ଦ କରନ୍ତୁ ତାପରେ AnkiDroidକୁ ଖୋଲନ୍ତୁ।</string>
+    <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପ୍‍ଟିକୁ ବନ୍ଦ କରି AnkiDroid ଖୋଲନ୍ତୁ।</string>
     <string name="incompatible_database_version_title">ଅସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ </string>
     <string name="incompatible_database_version_summary">AnkiDroid ର ଏହି ସଂସ୍କରଣ ଡାଟାବେସ୍ ସହିତ କାମ କରିପାରିବନାହିଁ। ଏହାକୁ ଖୋଲିବା ପାଇଁ AnkiDroid କୁ ଅଦ୍ୟତନ କରନ୍ତୁ କିମ୍ବା ଡାଟାବେସ୍ କୁ ଡାଉନଗ୍ରେଡ୍ କରନ୍ତୁ\n\nସମର୍ଥିତ ସଂସ୍କରଣ: %1$d\nଡାଟାବେସ୍ ସଂସ୍କରଣ: %2$d\n\nନିମ୍ନଲିଖିତ ପୁନରୁଦ୍ଧାର ବିକଳ୍ପଗୁଡ଼ିକ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହକୁ ନବଲିଖନ କରିବ, ସମ୍ଭବତଃ ଏକ ସୁସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ ସହିତ:</string>
     <!-- Deck Picker Background-->
@@ -203,7 +203,7 @@
     <string name="error_selecting_image">ପ୍ରତିଛବି ବାଛିବାରେ ତ୍ରୁଟି। ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ। %s</string>
     <string name="error_deleting_image">ଛବି ବିଲୋପ କରିବାରେ ତ୍ରୁଟି</string>
     <string name="failed_to_apply_background_image">ପୃଷ୍ଠପଟ ପ୍ରତିଛବି ପ୍ରୟୋଗ କରିବାରେ ବିଫଳ %s</string>
-    <string name="background_image_too_large">AnkiDroid ର ମୂଳ ସ୍କ୍ରିନ୍ ପୃଷ୍ଠପଟ ଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ</string>
+    <string name="background_image_too_large">AnkiDroidର ମୂଳ ସ୍କ୍ରୀନ୍ ପୃଷ୍ଠପଟ ଛଵି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ</string>
     <string name="image_max_size_allowed">ସର୍ବାଧିକ ପ୍ରତିଛବି ଆକାର %d MB ଅନୁମୋଦିତ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -244,8 +244,8 @@
     <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
-        <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
+        <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
+        <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
     </plurals>
     <string name="metered_sync_warning">ଆପଣଙ୍କ ସଂଯୋଜନା ମିଟର୍ ହେଉଛି। ଡାଟା ଅନ୍ତରଣରେ ଟଙ୍କା ଖର୍ଚ୍ଚ ହୋଇପାରେ</string>
     <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>

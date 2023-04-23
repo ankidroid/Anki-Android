@@ -165,8 +165,8 @@
     <string name="link_scoped_storage_faq">https://github.com/ankidroid/Anki-Android/wiki/Storage-Migration-FAQ</string>
     <string name="link_install_non_play_store_install">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
-    <!-- TODO BEFORE-RELEASE Insert an actual link here. See https://github.com/ankidroid/ankidroiddocs/pull/106 -->
     <string name="link_migration_failed_dialog_learn_more_en">https://docs.ankidroid.org/storage-migration-error.html</string>
+    <string name="migration_failed_help_url">https://docs.ankidroid.org/storage-migration-error.html</string>
 
     <string-array name="leech_action_values">
         <item>0</item>

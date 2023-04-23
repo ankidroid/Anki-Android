@@ -15,6 +15,7 @@
  */
 package com.ichi2.utils
 
+import com.ichi2.utils.FileUtil.isPrefix
 import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
@@ -176,5 +177,36 @@ class FileUtilTest {
         }
 
         assertThat("Should return file lengths", sizeFromDir(temporaryRootDir), equalTo(expectedLength))
+    }
+
+    @Test
+    fun filePrefixTest() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        val prefixFile = File(temporaryRootDir, "prefix")
+        writeStringToFile(prefixFile, "Hello ")
+        val fullFile = File(temporaryRootDir, "full")
+        writeStringToFile(fullFile, "Hello World")
+        assertEquals(FileUtil.FilePrefix.STRICT_PREFIX, isPrefix(prefixFile, fullFile))
+        assertEquals(FileUtil.FilePrefix.STRICT_SUFFIX, isPrefix(fullFile, prefixFile))
+    }
+
+    @Test
+    fun fileNotPrefixTest() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        val prefixFile = File(temporaryRootDir, "prefix")
+        writeStringToFile(prefixFile, "Hi World")
+        val fullFile = File(temporaryRootDir, "full")
+        writeStringToFile(fullFile, "Hello World")
+        assertEquals(FileUtil.FilePrefix.NOT_PREFIX, isPrefix(prefixFile, fullFile))
+    }
+
+    @Test
+    fun fileEqualTest() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        val prefixFile = File(temporaryRootDir, "prefix")
+        writeStringToFile(prefixFile, "Hello World")
+        val fullFile = File(temporaryRootDir, "full")
+        writeStringToFile(fullFile, "Hello World")
+        assertEquals(FileUtil.FilePrefix.EQUAL, isPrefix(prefixFile, fullFile))
     }
 }

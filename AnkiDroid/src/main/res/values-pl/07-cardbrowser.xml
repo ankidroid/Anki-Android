@@ -52,7 +52,7 @@
         <item quantity="other">%d kart pokazanych</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
+        <item quantity="one">%d notatka pokazana</item>
         <item quantity="few">%d notatek pokazanych</item>
         <item quantity="many">%d notatek pokazanych</item>
         <item quantity="other">%d notatek pokazanych</item>

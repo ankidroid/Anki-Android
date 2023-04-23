@@ -301,8 +301,10 @@ class ModelBrowser : AnkiActivity() {
                     input(prefill = infos[index].makeSuggestedName()) { _, text ->
                         addNewModel(infos[index], text.toString())
                     }
+                    negativeButton(R.string.dialog_cancel)
                 }
             }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 

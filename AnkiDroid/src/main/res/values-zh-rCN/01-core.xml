@@ -235,11 +235,12 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">迁移数据</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">迁移数据</string>
+    <string name="migration__calculating_transfer_size">正在计算传输大小&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">传输了 %1$s，共 %2$s</string>
     <string name="migration_successful_message">迁移成功</string>
-    <string name="migration_failed_message">迁移失败</string>
-    <string name="migration_transferred_size">迁移了 %1$.0f MB，共 %2$.0f MB</string>
+    <string name="migration__failed">迁移失败： %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">无法访问牌组</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">卸载 AnkiDroid 后由于 Play Store 政策更改，我们无法访问您的牌组\n\n您的数据是安全的且可以被恢复。数据位于\n%s\n\n选择下方的一个选项进行还原：</string>
     <string name="restore_data_from_ankiweb">从AnkiWeb还原(推荐)</string>

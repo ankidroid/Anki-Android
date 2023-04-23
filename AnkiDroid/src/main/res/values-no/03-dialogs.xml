@@ -45,7 +45,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kontroller database</string>
-    <string name="check_db_warning">Dette kan ta en lang tid</string>
+    <string name="check_db_warning">Dette kan ta et øyeblikk</string>
     <string name="check_db_acknowledge">Database checked</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Slett kortstokk</string>
@@ -60,7 +60,7 @@
     <string name="initializing_tts">Initialiserer TTS&#8230;</string>
     <string name="tts_no_tts">Ikke snakk</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Forhåndsvisning</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -68,7 +68,7 @@
         <item quantity="one">%d card repositioned</item>
         <item quantity="other">%d cards repositioned</item>
     </plurals>
-    <string name="reset_card_dialog_title">Tilbakestille fremdrift for kort</string>
+    <string name="reset_card_dialog_title">Tilbakestill kortfremskritt</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
@@ -107,38 +107,38 @@
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Importing collection&#8230;</string>
+    <string name="importing_collection">Importerer samling...</string>
     <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
     <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
     <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one"> %2$d av kortene importert</item>
+        <item quantity="other">Filer importert: %1$d\nTotalt mengde kort importert: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Lagring fullt</string>
+    <string name="storage_almost_full_title">Lagring nesten full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Velg en annen</string>
     <string name="dialog_cancel">Avbryt</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Bekreft</string>
+    <string name="dialog_no">Nei</string>
     <string name="dialog_yes">Ja</string>
     <string name="dialog_continue">Fortsett</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Opprett</string>
     <string name="dialog_positive_delete">Slett</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Slå av</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_remove">Remove</string>
+    <string name="dialog_positive_remove">Fjern</string>
     <string name="dialog_positive_repair">Reparer</string>
     <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_positive_restore">Restore</string>
+    <string name="dialog_positive_restore">Gjenopprett</string>
     <string name="dialog_positive_set">Set</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
@@ -152,8 +152,8 @@
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
     <string name="check_media_no_unused_missing">No unused or missing files found</string>
     <string name="check_media_db_updated">Media database rebuilt</string>
-    <string name="check_media_delete_unused">Delete unused</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="check_media_delete_unused">Slett ubrukte</string>
+    <string name="delete_media_message">Sletter media&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d file deleted</item>
@@ -162,13 +162,13 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Alle kort</string>
     <string name="tags_dialog_option_new_cards">Nye</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Forfaller</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">No empty cards</string>
-    <string name="empty_cards_count">Cards to delete: %d</string>
-    <string name="empty_cards_deleted">Cards deleted: %d</string>
+    <string name="emtpy_cards_finding">Leter etter tomme kort&#8230;</string>
+    <string name="confirm_cancel">Vil du avbryte?</string>
+    <string name="empty_cards_none">Ingen tomme kort</string>
+    <string name="empty_cards_count">Kort å slette: %d</string>
+    <string name="empty_cards_deleted">Kort slettet: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
@@ -177,15 +177,15 @@
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
+    <string name="integrity_check_startup_title">AnkiDroid oppgradert</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">Fortsett likevel</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="video_creation_error">Kunne ikke spille av video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Kan ikke endre kortstokk</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
     <string name="undo_succeeded">Undone \"%s\"</string>
@@ -197,11 +197,11 @@
     <string name="incompatible_database_version_title">Incompatible Database Version</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
+    <string name="background_image_applied">Bakgrunnsbilde lagt til</string>
+    <string name="background_image_removed">Bakgrunnsbilde fjernet</string>
+    <string name="no_image_selected">Ingen bilde valgt</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
+    <string name="error_deleting_image">Feil ved sletting av bilde</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
@@ -215,59 +215,59 @@
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">Noen flerspråklige tastaturer slik som GBoard, støtter bytte av språk når du redigerer tekst\n\nVennligst be om \"setImeHintLocales\"-funksjonen fra din tastaturprodusent hvis tastaturet ikke endrer språk.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">Å bruke AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid brukerveiledning</string>
+    <string name="help_item_anki_manual">Anki brukerveiledning</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_get_help">Få hjelp</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="help_item_report_bug">Rapporter feil</string>
+    <string name="help_title_support_ankidroid">Støtt AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donér</string>
+    <string name="help_item_support_develop_ankidroid">Utvikle</string>
+    <string name="help_item_support_rate_ankidroid">Gi vurdering</string>
+    <string name="help_item_support_other_ankidroid">Annet</string>
+    <string name="multimedia_editor_trans_translate">Oversett</string>
     <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">Anki forum</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
+    <string name="help_title_privacy">Personvern</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Vilkår og betingelser</string>
+    <string name="help_title_send_exception">Send feilsøkingsrapport</string>
+    <string name="help_dialog_exception_report_debounce">Rapporten er allerede sendt inn</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Antall kort å gjennomgå i dag i denne stokken.</string>
+    <string name="deck_picker_rev">Antall kort som forfaller i dag i denne stokken.</string>
+    <string name="deck_picker_lrn">Antall kort å lære i dag i denne stokken.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_deck_package">Kortstokkpakke (.apkg)</string>
+    <string name="import_collection_package">Samlingspakke (.colpkg)</string>
+    <string name="import_csv">Tekstfil (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="backup_your_collection">Lag en sikkerhetskopi for din samling</string>
+    <string name="backup_collection_message">Du har ikke laget sikkerhetskopi av samlingen din på en stund. Gjør dette nå for å unngå å miste dine data.</string>
+    <string name="button_backup">Lag sikkerhetskopi</string>
+    <string name="button_disable_reminder">Slå av påminnelse</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Ikke nå</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ikke vis dette igjen</string>
+    <string name="dismiss_backup_warning_title">Advarsel om datatap</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled

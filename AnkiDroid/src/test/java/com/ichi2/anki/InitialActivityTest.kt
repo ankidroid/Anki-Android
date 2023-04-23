@@ -141,11 +141,33 @@ class InitialActivityTest : RobolectricTest() {
     @SuppressLint("InlinedApi")
     @Config(sdk = [R_OR_AFTER])
     @Test
-    fun startupAfterQWithManageExternalStorage() {
+    fun `Android 11 - After upgrade from AnkiDroid 2 15 (with MANAGE_EXTERNAL_STORAGE)`() {
+        // after an upgrade, all we need is READ/WRITE. Once we reinstall, we need MANAGE_EXTERNAL_STORAGE
+        val expectedPermissions = arrayOf(
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        selectAnkiDroidFolder(
+            canManageExternalStorage = true,
+            currentFolderIsAccessibleAndLegacy = true
+        ).let {
+            assertThat(
+                (it as PublicFolder).requiredPermissions.asIterable(),
+                contains(*expectedPermissions)
+            )
+        }
+    }
+
+    @SuppressLint("InlinedApi")
+    @Config(sdk = [R_OR_AFTER])
+    @Test
+    fun `Android 11 - After reinstall (with MANAGE_EXTERNAL_STORAGE)`() {
         val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
 
         selectAnkiDroidFolder(
-            canManageExternalStorage = true
+            canManageExternalStorage = true,
+            currentFolderIsAccessibleAndLegacy = false
         ).let {
             assertThat(
                 (it as PublicFolder).requiredPermissions.asIterable(),
@@ -160,6 +182,19 @@ class InitialActivityTest : RobolectricTest() {
         assertThat(
             selectAnkiDroidFolder(canManageExternalStorage = false),
             instanceOf(AppPrivateFolder::class.java)
+        )
+    }
+
+    /**
+     * Helper for [com.ichi2.anki.selectAnkiDroidFolder], making `currentFolderIsAccessibleAndLegacy` optional
+     */
+    private fun selectAnkiDroidFolder(
+        canManageExternalStorage: Boolean,
+        currentFolderIsAccessibleAndLegacy: Boolean = false
+    ): AnkiDroidFolder {
+        return com.ichi2.anki.selectAnkiDroidFolder(
+            canManageExternalStorage = canManageExternalStorage,
+            currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
         )
     }
 

@@ -407,8 +407,6 @@
     <string name="scoped_storage_postpone">Адкласці</string>
     <string name="scoped_storage_migrate">Перанесці </string>
     <string name="search_card_js_api_no_results">Пошук не даў ніякіх вынікаў</string>
-    <string name="sync_impossible_during_migration">Сінхранізацыя адключана да завяршэння пераносу.\n
-        Засталося перанесці медыяфайлаў: %1$d</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Пачынаецца перанос сховішча. Неўзабаве вы зможаце працягнуць выкарыстоўваць AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Вы можаце працягнуць выкарыстанне AnkiDroid.

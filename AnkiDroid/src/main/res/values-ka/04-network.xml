@@ -77,7 +77,7 @@
     <string name="sync_log_uploading_message">სრული სინქრონიზაცია ლოკალურიდან</string>
     <string name="sync_log_clocks_unsynchronized">თქვენი მოწყობილობის საათი არასწორია %1$d წამით%2$s. დარწმუნდით, რომ დაყენებულია სწორი თარიღი, დრო და სასაათო სარტყელი და ხელახლა სცადეთ სინქრონიზაცია.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
-    <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
+    <string name="sync_log_clocks_unsynchronized_date">, შესაძლოა თარიღი იყოს არასწორი</string>
     <string name="sync_no_changes_message">ცვლილებები ვერ მოიძებნა</string>
     <string name="sync_database_acknowledge">კოლექციის სინქრონიზაცია წარმატებით განხორციელდა</string>
     <string name="sync_log_error_specific">სინქრონიზაციის შეცდომა, ტიპი: %1$s, შეტყობინება: %2$s</string>
