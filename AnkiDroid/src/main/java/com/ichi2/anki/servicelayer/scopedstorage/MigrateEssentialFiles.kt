@@ -61,7 +61,7 @@ import java.io.File
  * * Collection is not corrupt and can be opened
  * * Collection basic check passes [UserActionRequiredException.CheckDatabaseException]
  * * Collection can be closed and locked
- * * User has space to mve files [UserActionRequiredException.OutOfSpaceException] (the size of essential files + [SAFETY_MARGIN_BYTES]
+ * * User has space to move files [UserActionRequiredException.OutOfSpaceException] (the size of essential files + [SAFETY_MARGIN_BYTES]
  * * A migration is not currently taking place
  */
 open class MigrateEssentialFiles
