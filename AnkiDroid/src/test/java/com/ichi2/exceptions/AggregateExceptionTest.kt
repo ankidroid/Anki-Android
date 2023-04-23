@@ -17,7 +17,9 @@
 package com.ichi2.exceptions
 
 import com.ichi2.testutils.TestException
+import com.ichi2.testutils.testExceptionWithStackTrace
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
@@ -53,5 +55,21 @@ class AggregateExceptionTest {
         assertThat(asAggregateException.message, equalTo("message"))
         assertThat(asAggregateException.exceptions[0], equalTo(first))
         assertThat(asAggregateException.exceptions[1], equalTo(second))
+    }
+
+    @Test
+    fun aggregateExceptionStackTrace() {
+        val first = testExceptionWithStackTrace("[aa]")
+        val second = testExceptionWithStackTrace("[bb]")
+        val result = AggregateException.raise("message", listOf(first, second))
+
+        val asAggregateException = result as AggregateException
+
+        val stackTrace = asAggregateException.stackTraceToString()
+
+        assertThat(stackTrace, containsString("[aa]"))
+        assertThat(stackTrace, containsString("[bb]"))
+        assertThat(stackTrace, containsString("message"))
+        assertThat(stackTrace, containsString("testExceptionWithStackTrace"))
     }
 }
