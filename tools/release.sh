@@ -108,6 +108,21 @@ if [ "$KSTOREPWD" == "" ]; then
   export KEYPWD
 fi
 
+# Build signed APK using Gradle and publish to Play.
+# Do this before building universal of the play flavor so the universal is not uploaded to Play Store
+# Configuration for pushing to Play specified in build.gradle 'play' task
+echo "Running 'publishPlayReleaseApk' gradle target"
+./gradlew --stop
+if ! ./gradlew publishPlayReleaseApk
+then
+  # APK contains problems, abort release
+  exit 1
+fi
+
+# If the Play Store accepted the builds, the version bump should be pushed / made concrete
+git push
+git push --tags
+
 # Build the full set of release APKs for all flavors, with universals
 UCFLAVORS='Full Amazon Play'
 for UCFLAVOR in $UCFLAVORS; do
@@ -119,27 +134,6 @@ for UCFLAVOR in $UCFLAVORS; do
     exit 1
   fi
 done
-
-# Push both commits and tag before any of the builds leave the machine
-git push
-git push --tags
-
-# Build signed APK using Gradle and publish to Play.
-# Do this before building universal of the play flavor so the universal is not uploaded to Play Store
-# Configuration for pushing to Play specified in build.gradle 'play' task
-#echo "Running 'publishPlayReleaseApk' gradle target"
-#./gradlew --stop
-#if ! ./gradlew publishPlayReleaseApk
-#then
-  # APK contains problems
-  # Normally we want to abort the release but right now we know google will reject us until
-  # we have targetSdkVersion 30, so ignore.
-#  git checkout -- $GRADLEFILE # Revert version change  #API30
-#  exit 1  #API30
-#else  #API30
-#  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
-#fi  #API30
-#fi  #API30
 
 # Copy full ABI APKs to cwd
 ABIS='arm64-v8a x86 x86_64 armeabi-v7a'
