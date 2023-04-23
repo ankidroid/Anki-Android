@@ -142,13 +142,6 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             flowOfProgress.collect { progress ->
                 startForeground(2, makeMigrationProgressNotification(progress))
 
-                // TODO BEFORE-RELEASE Replace the toast with a dialog that is shown either
-                //   * now, if deck picker is shown,
-                //   * whenever the deck picker is shown, if not, perhaps even after app death.
-                if (progress is Progress.Success) {
-                    UIUtils.showThemedToast(this@MigrationService, R.string.migration_successful_message, true)
-                }
-
                 if (progress is Progress.Done) {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                         @Suppress("DEPRECATION")
@@ -158,6 +151,15 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     }
 
                     stopSelf()
+
+                    when (progress) {
+                        is Progress.Success ->
+                            AnkiDroidApp.instance.activityAgnosticDialogs
+                                .showOrScheduleStorageMigrationSucceededDialog()
+                        is Progress.Failure ->
+                            AnkiDroidApp.instance.activityAgnosticDialogs
+                                .showOrScheduleStorageMigrationFailedDialog(progress.e)
+                    }
                 }
             }
         }
