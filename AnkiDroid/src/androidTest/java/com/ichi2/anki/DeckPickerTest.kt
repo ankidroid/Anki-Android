@@ -35,6 +35,7 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils.sleep
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
+import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
@@ -49,6 +50,9 @@ class DeckPickerTest {
 
     @get:Rule
     val mRuntimePermissionRule = grantPermissions(storagePermission, notificationPermission)
+
+    @get:Rule
+    val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()
 
     @Ignore("This test appears to be flaky everywhere")
     @Test
