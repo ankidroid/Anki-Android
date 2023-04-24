@@ -202,11 +202,6 @@ class SharedDecksDownloadFragment : Fragment() {
                             "Download completion related to some other download might have been received. " +
                             "Deck download might still be going on, when it completes then the method would be called again."
                     )
-                    // Send ACRA report
-                    CrashReportService.sendExceptionReport(
-                        "Download ID does not match with the ID of the completed download",
-                        "SharedDecksDownloadFragment::verifyDeckIsImportable"
-                    )
                     return false
                 }
 
