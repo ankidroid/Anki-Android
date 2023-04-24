@@ -106,7 +106,7 @@ fun Activity.showSnackbar(
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null
 ) {
-    val view: View? = findViewById(R.id.root_layout) as? CoordinatorLayout
+    val view: View? = findViewById(R.id.root_layout)
 
     if (view != null) {
         val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
