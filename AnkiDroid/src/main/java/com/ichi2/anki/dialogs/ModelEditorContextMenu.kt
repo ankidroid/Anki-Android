@@ -8,9 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -33,13 +32,13 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         }
         availableItems = availableItems.sortedBy { it.order }
 
-        return MaterialDialog(requireActivity()).show {
-            title(text = requireArguments().getString(KEY_LABEL))
-            listItems(items = availableItems.map { resources.getString(it.actionTextId) }) { _, index, _ ->
+        return AlertDialog.Builder(requireActivity()).apply {
+            setTitle(requireArguments().getString(KEY_LABEL))
+            setItems(availableItems.map { resources.getString(it.actionTextId) }.toTypedArray()) { _, index ->
                 (activity as? ModelFieldEditor)?.run { handleAction(availableItems[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
             }
-        }
+        }.create()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
