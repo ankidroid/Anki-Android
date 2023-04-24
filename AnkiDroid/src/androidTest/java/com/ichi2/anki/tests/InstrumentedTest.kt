@@ -21,7 +21,9 @@ import android.content.Context
 import android.os.Build
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import com.ichi2.libanki.Collection
+import org.junit.Rule
 import java.io.File
 import java.io.IOException
 
@@ -32,6 +34,9 @@ abstract class InstrumentedTest {
     @get:Throws(IOException::class)
     protected val emptyCol: Collection
         get() = Shared.getEmptyCol(testContext)
+
+    @get:Rule
+    val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
