@@ -125,7 +125,8 @@ android {
 
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
             if (project.hasProperty("customSuffix")) {
-                applicationIdSuffix project.property("customSuffix")
+                // the suffix needs a '.' at the start
+                applicationIdSuffix project.property("customSuffix").replaceFirst(/^\.*/, ".")
                 resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
             } else {
                 resValue "string", "applicationId", defaultConfig.applicationId
