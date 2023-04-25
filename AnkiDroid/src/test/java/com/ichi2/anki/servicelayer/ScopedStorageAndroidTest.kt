@@ -122,7 +122,7 @@ class ScopedStorageAndroidTest {
      */
     private fun runTestWithTwoExternalDirectories(externalDirectories: Array<File>, test: (Array<File>) -> Unit) {
         mockkObject(CollectionHelper) {
-            every { CollectionHelper.getAppSpecificExternalDirectories(any()) } returns externalDirectories
+            every { CollectionHelper.getAppSpecificExternalDirectories(any()) } returns externalDirectories.toList()
             test(externalDirectories)
         }
     }

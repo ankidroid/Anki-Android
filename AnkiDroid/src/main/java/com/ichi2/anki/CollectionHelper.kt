@@ -507,8 +507,8 @@ open class CollectionHelper {
          * @return Returns an array of [File]s reflecting the directories that AnkiDroid can access without storage permissions
          * @see android.content.Context.getExternalFilesDirs
          */
-        fun getAppSpecificExternalDirectories(context: Context): Array<File> {
-            return context.getExternalFilesDirs(null)
+        fun getAppSpecificExternalDirectories(context: Context): List<File> {
+            return context.getExternalFilesDirs(null).filterNotNull()
         }
 
         /**
