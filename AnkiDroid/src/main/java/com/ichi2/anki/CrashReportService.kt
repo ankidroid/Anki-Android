@@ -70,7 +70,7 @@ object CrashReportService {
     private lateinit var mApplication: Application
     private const val WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME"
     private const val MIN_INTERVAL_MS = 60000
-    private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
+    private const val EXCEPTION_MESSAGE = "Exception report sent by user manually. See: 'Comment/USER_COMMENT'"
 
     private enum class ToastType(@StringRes private val toastMessageRes: Int) {
         AUTO_TOAST(R.string.feedback_auto_toast_text),
