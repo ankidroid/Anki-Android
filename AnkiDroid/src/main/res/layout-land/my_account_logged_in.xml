@@ -13,15 +13,6 @@
     android:padding="15dp"
     android:layout_centerInParent="true">
 
-    <ImageView
-        android:id="@+id/ankidroid_logo"
-        android:layout_width="200dp"
-        app:srcCompat="@drawable/ankidroid_logo"
-        android:layout_marginBottom="0dp"
-        android:layout_gravity="center"
-        android:layout_height="200dp"
-        />
-
     <com.ichi2.ui.FixedTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
