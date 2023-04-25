@@ -30,6 +30,7 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
@@ -57,6 +58,7 @@ class IntentHandler : Activity() {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
+        Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.progress_bar)
         val intent = intent
@@ -67,8 +69,7 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
-        val launchType = getLaunchType(intent)
-        when (launchType) {
+        when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
             LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
             LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })

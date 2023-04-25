@@ -51,6 +51,7 @@ import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.upgradeJSONIfNecessary
@@ -2562,4 +2563,15 @@ open class Collection(
 
         private const val SQLITE_WINDOW_SIZE_KB = 2048
     }
+}
+
+/**
+ * @throws JSONException object can't be cast
+ */
+@NotInLibAnki
+fun Collection.get_config_int(key: String, defaultValue: Int): Int {
+    if (has_config_not_null(key)) {
+        return get_config_int(key)
+    }
+    return defaultValue
 }
