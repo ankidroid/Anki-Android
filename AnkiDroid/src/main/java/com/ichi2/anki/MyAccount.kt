@@ -28,12 +28,15 @@ import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.setFragmentResult
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.LoginActivity.Companion.EXTRA_FINISH_ACTIVITY_AFTER_LOGIN
 import com.ichi2.anki.LoginActivity.Companion.EXTRA_HIDE_REGISTER
+import com.ichi2.anki.preferences.SyncSettingsFragment
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.HostNumFactory.getInstance
 import com.ichi2.async.Connection
@@ -216,6 +219,12 @@ class MyAccount : Fragment() {
             replace(R.id.fragment_container, LoggedInFragment())
             addToBackStack(null)
         }
+        setFragmentResult(
+            SyncSettingsFragment.LOGIN_STATUS_CHANGED_REQUEST_KEY,
+            bundleOf(
+                SyncSettingsFragment.LOGIN_STATUS_CHANGED_REQUEST_KEY to true
+            )
+        )
     }
 
     private val loginListener: Connection.TaskListener = object : Connection.TaskListener {

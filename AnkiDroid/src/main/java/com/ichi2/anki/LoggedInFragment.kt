@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.setFragmentResult
+import com.ichi2.anki.preferences.SyncSettingsFragment.Companion.LOGIN_STATUS_CHANGED_REQUEST_KEY
 import com.ichi2.anki.web.HostNumFactory
 
 /**
@@ -41,6 +44,7 @@ class LoggedInFragment : Fragment() {
             replace(R.id.fragment_container, MyAccount())
             addToBackStack(null)
         }
+        setFragmentResult(LOGIN_STATUS_CHANGED_REQUEST_KEY, bundleOf(LOGIN_STATUS_CHANGED_REQUEST_KEY to true))
     }
 
     private fun logout() {
