@@ -293,6 +293,7 @@ object ImportUtils {
             AlertDialog.Builder(activity).show {
                 title(text = title)
                 message(text = errorMessage!!)
+                setCancelable(false)
                 positiveButton(R.string.dialog_ok) {
                     if (exitActivity) {
                         AnkiActivity.finishActivityWithFade(activity)
