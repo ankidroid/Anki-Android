@@ -223,6 +223,14 @@ suspend fun <T> FragmentActivity.withProgress(
     }
 }
 
+suspend fun <T> Fragment.withProgress(
+    extractProgress: ProgressContext.() -> Unit,
+    onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
+    op: suspend () -> T
+): T {
+    return requireActivity().withProgress(extractProgress, onCancel, op)
+}
+
 /**
  * Run the provided operation, showing a progress window with the provided
  * message until the operation completes.
@@ -231,7 +239,7 @@ suspend fun <T> FragmentActivity.withProgress(
  * flashes of a dialog.
  */
 suspend fun <T> Activity.withProgress(
-    message: String = resources.getString(R.string.dialog_processing),
+    message: String = getString(R.string.dialog_processing),
     op: suspend () -> T
 ): T = withProgressDialog(
     context = this@withProgress,
@@ -243,7 +251,7 @@ suspend fun <T> Activity.withProgress(
 }
 
 /** @see withProgress(String, ...) */
-suspend fun <T> Fragment.withProgress(message: String, block: suspend () -> T): T =
+suspend fun <T> Fragment.withProgress(message: String = getString(R.string.dialog_processing), block: suspend () -> T): T =
     requireActivity().withProgress(message, block)
 
 /** @see withProgress(String, ...) */
@@ -251,7 +259,7 @@ suspend fun <T> Activity.withProgress(@StringRes messageId: Int, block: suspend 
     withProgress(resources.getString(messageId), block)
 
 /** @see withProgress(String, ...) */
-suspend fun <T> Fragment.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
+suspend fun <T> Fragment.withProgress(@StringRes messageId: Int = R.string.dialog_processing, block: suspend () -> T): T =
     requireActivity().withProgress(messageId, block)
 
 @Suppress("Deprecation") // ProgressDialog deprecation
