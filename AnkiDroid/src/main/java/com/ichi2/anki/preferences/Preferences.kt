@@ -103,7 +103,7 @@ class Preferences :
             }
         }
         supportFragmentManager.commit {
-            replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
+            replace(R.id.fragment_container, initialFragment, initialFragment::class.java.name)
         }
     }
 
@@ -128,7 +128,7 @@ class Preferences :
         )
         fragment.arguments = pref.extras
         supportFragmentManager.commit {
-            replace(R.id.settings_container, fragment)
+            replace(R.id.fragment_container, fragment)
             addToBackStack(null)
         }
         return true
@@ -139,7 +139,7 @@ class Preferences :
      */
     private fun configureSearchBar(): SearchConfiguration {
         val searchConfig = SearchConfiguration(this).apply {
-            setFragmentContainerViewId(R.id.settings_container)
+            setFragmentContainerViewId(R.id.fragment_container)
             setBreadcrumbsEnabled(true)
             setFuzzySearchEnabled(false)
             setHistoryEnabled(true)
@@ -211,7 +211,7 @@ class Preferences :
     }
 
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
-        val fragment = fragmentManager.findFragmentById(R.id.settings_container)
+        val fragment = fragmentManager.findFragmentById(R.id.fragment_container)
 
         if (fragment is SearchPreferenceFragment) {
             return
@@ -219,6 +219,7 @@ class Preferences :
 
         actionBar?.title = when (fragment) {
             is SettingsFragment -> fragment.preferenceScreen.title
+            is MyAccount -> getString(R.string.sync_account)
             is AboutFragment -> getString(R.string.pref_cat_about_title)
             else -> getString(R.string.settings)
         }
@@ -276,7 +277,7 @@ class Preferences :
         // it isn't necessary to create it again
         val fragmentToHighlight = if (currentFragment::class != resultFragment::class) {
             supportFragmentManager.commit {
-                replace(R.id.settings_container, resultFragment, resultFragment.javaClass.name)
+                replace(R.id.fragment_container, resultFragment, resultFragment.javaClass.name)
                 addToBackStack(resultFragment.javaClass.name)
             }
             resultFragment

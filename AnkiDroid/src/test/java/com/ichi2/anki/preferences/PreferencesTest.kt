@@ -81,7 +81,7 @@ class PreferencesTest : RobolectricTest() {
         activityScenario.onActivity { activity ->
             PreferenceUtils.getAllPreferencesFragments(activity).forEach {
                 activity.supportFragmentManager.commitNow {
-                    add(R.id.settings_container, it)
+                    add(R.id.fragment_container, it)
                 }
             }
         }
