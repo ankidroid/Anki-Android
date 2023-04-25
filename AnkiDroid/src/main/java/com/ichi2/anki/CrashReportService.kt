@@ -109,7 +109,7 @@ object CrashReportService {
                 ReportField.INSTALLATION_ID,
                 ReportField.ENVIRONMENT,
                 ReportField.SHARED_PREFERENCES,
-                ReportField.MEDIA_CODEC_LIST,
+                // ReportField.MEDIA_CODEC_LIST,
                 ReportField.THREAD_DETAILS
             )
             .withLogcatArguments(*logcatArgs)
