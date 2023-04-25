@@ -81,7 +81,10 @@ class IntroductionActivity : AppIntro() {
     }
 
     private fun openLoginDialog() {
-        onLoginResult.launch(Intent(this, LoginActivity::class.java))
+        val intent = Intent(this, LoginActivity::class.java).apply {
+            putExtra(LoginActivity.EXTRA_HIDE_REGISTER, true)
+        }
+        onLoginResult.launch(intent)
     }
 
     override fun onSkipPressed(currentFragment: Fragment?) {

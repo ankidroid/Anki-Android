@@ -426,9 +426,6 @@
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-
-    <string name="already_logged_in">Already logged in</string>
-
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>

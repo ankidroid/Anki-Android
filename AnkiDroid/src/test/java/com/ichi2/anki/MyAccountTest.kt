@@ -32,7 +32,7 @@ class MyAccountTest : RobolectricTest() {
     @Test
     fun testLoginFailsNoEmailProvided() {
         val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
+            LoginActivity::class.java,
             Intent()
         )
 
@@ -47,7 +47,7 @@ class MyAccountTest : RobolectricTest() {
     @Test
     fun testLoginFailsNoPasswordProvided() {
         val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
+            LoginActivity::class.java,
             Intent()
         )
 

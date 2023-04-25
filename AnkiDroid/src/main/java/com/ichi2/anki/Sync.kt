@@ -28,7 +28,6 @@ import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -172,7 +171,7 @@ fun DeckPicker.handleNewSync(
 }
 
 fun MyAccount.handleNewLogin(username: String, password: String) {
-    val endpoint = getEndpoint(this)
+    val endpoint = getEndpoint(requireContext())
     launchCatchingTask {
         val auth = try {
             withProgress({}, onCancel = ::cancelSync) {
@@ -182,11 +181,11 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; clear out login details
-            updateLogin(baseContext, "", "")
+            updateLogin(requireContext(), "", "")
             throw exc
         }
-        updateLogin(baseContext, username, auth.hkey)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
+        updateLogin(requireContext(), username, auth.hkey)
+        parentFragmentManager.popBackStack()
     }
 }
 

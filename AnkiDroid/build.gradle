@@ -115,7 +115,6 @@ android {
             // make the icon red if in debug mode
             resValue 'color', 'anki_foreground_icon_color_0', "#FFFF0000"
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
-            resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
         release {
             minifyEnabled true
@@ -126,9 +125,6 @@ android {
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
             if (project.hasProperty("customSuffix")) {
                 applicationIdSuffix project.property("customSuffix")
-                resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
-            } else {
-                resValue "string", "applicationId", defaultConfig.applicationId
             }
             if (project.hasProperty("customName")) {
                 resValue "string", "app_name", project.property("customName")

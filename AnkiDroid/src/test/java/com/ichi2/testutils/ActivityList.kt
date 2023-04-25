@@ -56,7 +56,6 @@ object ActivityList {
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(VideoPlayer::class.java),
-            get(MyAccount::class.java),
             get(Preferences::class.java),
             get(DeckOptionsActivity::class.java),
             get(CropImageActivity::class.java),

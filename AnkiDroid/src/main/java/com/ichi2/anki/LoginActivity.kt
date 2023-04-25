@@ -16,58 +16,44 @@
 
 package com.ichi2.anki
 
-import android.app.Activity.RESULT_CANCELED
-import android.app.Activity.RESULT_OK
 import android.os.Bundle
-import android.view.View
-import android.view.View.GONE
-import androidx.lifecycle.Lifecycle
-import com.ichi2.anki.UIUtils.showThemedToast
+import androidx.fragment.app.commit
 import com.ichi2.annotations.NeedsTest
-import timber.log.Timber
 
 /**
- * An activity which **only** involves logging in to an account:
+ * Activity used to log in into an AnkiWeb account, which can:
  *
- * * Logging in
- * * Resetting the password
+ * * Log in
+ * * Reset the password
+ * * Sign up
  *
- * This was created for a 'load from AnkiWeb' flow, in which we only wanted to encourage an existing
- * user to sync from AnkiWeb, to ensure that they don't have two collections, causing a sync conflict.
+ * [EXTRA_HIDE_REGISTER] hides the sign up option, which can be useful
+ * for a 'load from AnkiWeb' flow, in which we only wanted to encourage an
+ * existing user to sync from AnkiWeb, to ensure that they don't have two collections,
+ * causing a sync conflict.
  *
- * Use [MyAccount] if you want to handle the 'logged in' state, and creating a new account
- *
- * Activity Results:
- * * [RESULT_OK] - login was successful OR login had already occurred
- * * [RESULT_CANCELED] - login did not occur
- *
- * TODO: Move this to a fragment
+ * Most responsibilities are on [MyAccount] and [LoggedInFragment].
+ * This class only is necessary while [DeckPicker] and other callers can't handle using Fragments
  */
 @NeedsTest("check result codes based on login result")
 @NeedsTest("activity is closed if started when logged in")
-class LoginActivity : MyAccount() {
-
+class LoginActivity : AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        findViewById<View>(R.id.sign_up_button)?.visibility = GONE
-        findViewById<View>(R.id.no_account_text)?.visibility = GONE
-    }
-
-    /**
-     * Handles closing the activity and setting the result when the user is logged in
-     */
-    override fun switchToState(newState: Int) {
-        if (newState == STATE_LOGGED_IN) {
-            // This was intended to be shown from the 'app intro' where a user should not be logged in
-            if (!lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                showThemedToast(this, R.string.already_logged_in, true)
-                Timber.w("LoginActivity shown when user was logged in")
-            }
-            setResult(RESULT_OK)
-            finish()
+        if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        super.switchToState(newState)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.login_layout)
+        enableToolbar().apply {
+            setTitle(R.string.sync_account)
+        }
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, if (isLoggedIn()) LoggedInFragment() else MyAccount())
+        }
+    }
+
+    companion object {
+        const val EXTRA_HIDE_REGISTER = "hide_register"
+        const val EXTRA_FINISH_ACTIVITY_AFTER_LOGIN = "finish_after_login"
     }
 }

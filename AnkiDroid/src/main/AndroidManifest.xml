@@ -281,12 +281,6 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             />
         <activity
-            android:name="com.ichi2.anki.MyAccount"
-            android:label="@string/menu_my_account"
-            android:exported="false"
-            android:configChanges="keyboardHidden|screenSize"
-            />
-        <activity
             android:name="com.ichi2.anki.preferences.Preferences"
             android:label="@string/settings"
             android:exported="false"

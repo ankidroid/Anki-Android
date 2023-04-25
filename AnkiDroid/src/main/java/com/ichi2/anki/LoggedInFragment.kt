@@ -7,12 +7,22 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.ichi2.anki.web.HostNumFactory
 
 /**
  * Shows the AnkiWeb logged-in e-mail and a button to logout ([R.layout.my_account_logged_in])
  */
 class LoggedInFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (!isLoggedIn()) {
+            changeToLoginFragment()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,7 +36,11 @@ class LoggedInFragment : Fragment() {
     }
 
     private fun changeToLoginFragment() {
-        TODO() // will be changed on a later commit
+        parentFragmentManager.popBackStack()
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container, MyAccount())
+            addToBackStack(null)
+        }
     }
 
     private fun logout() {
