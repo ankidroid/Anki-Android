@@ -29,6 +29,7 @@ import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
@@ -55,6 +56,7 @@ class IntentHandler : Activity() {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
+        Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.progress_bar)
         val intent = intent
