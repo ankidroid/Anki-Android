@@ -32,7 +32,7 @@ import com.ichi2.annotations.NeedsTest
  * existing user to sync from AnkiWeb, to ensure that they don't have two collections,
  * causing a sync conflict.
  *
- * Most responsibilities are on [MyAccount] and [LoggedInFragment].
+ * Most responsibilities are on [LoginFragment] and [LoggedInFragment].
  * This class only is necessary while [DeckPicker] and other callers can't handle using Fragments
  */
 @NeedsTest("check result codes based on login result")
@@ -48,7 +48,7 @@ class LoginActivity : AnkiActivity() {
             setTitle(R.string.sync_account)
         }
         supportFragmentManager.commit {
-            replace(R.id.fragment_container, if (isLoggedIn()) LoggedInFragment() else MyAccount())
+            replace(R.id.fragment_container, if (isLoggedIn()) LoggedInFragment() else LoginFragment())
         }
     }
 

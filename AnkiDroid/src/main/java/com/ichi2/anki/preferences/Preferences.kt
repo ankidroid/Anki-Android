@@ -219,7 +219,7 @@ class Preferences :
 
         actionBar?.title = when (fragment) {
             is SettingsFragment -> fragment.preferenceScreen.title
-            is MyAccount, is LoggedInFragment -> getString(R.string.sync_account)
+            is LoginFragment, is LoggedInFragment -> getString(R.string.sync_account)
             is AboutFragment -> getString(R.string.pref_cat_about_title)
             else -> getString(R.string.settings)
         }

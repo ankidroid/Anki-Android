@@ -60,7 +60,7 @@ import java.net.UnknownHostException
  * existing user to sync from AnkiWeb, to ensure that they don't have two collections,
  * causing a sync conflict.
  */
-class MyAccount : Fragment() {
+class LoginFragment : Fragment() {
     private lateinit var username: EditText
     private lateinit var password: TextInputEditField
 

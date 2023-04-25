@@ -27,7 +27,7 @@ import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class MyAccountTest : RobolectricTest() {
+class LoginTest : RobolectricTest() {
 
     @Test
     fun testLoginFailsNoEmailProvided() {

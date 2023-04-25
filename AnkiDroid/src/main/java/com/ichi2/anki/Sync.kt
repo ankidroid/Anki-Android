@@ -170,7 +170,7 @@ fun DeckPicker.handleNewSync(
     }
 }
 
-fun MyAccount.handleNewLogin(username: String, password: String) {
+fun LoginFragment.handleNewLogin(username: String, password: String) {
     val endpoint = getEndpoint(requireContext())
     launchCatchingTask {
         val auth = try {

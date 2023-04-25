@@ -41,7 +41,7 @@ class LoggedInFragment : Fragment() {
     private fun changeToLoginFragment() {
         parentFragmentManager.popBackStack()
         parentFragmentManager.commit {
-            replace(R.id.fragment_container, MyAccount())
+            replace(R.id.fragment_container, LoginFragment())
             addToBackStack(null)
         }
         setFragmentResult(LOGIN_STATUS_CHANGED_REQUEST_KEY, bundleOf(LOGIN_STATUS_CHANGED_REQUEST_KEY to true))
