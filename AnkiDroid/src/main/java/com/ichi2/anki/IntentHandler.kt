@@ -29,6 +29,7 @@ import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
@@ -36,6 +37,7 @@ import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
@@ -101,8 +103,9 @@ class IntentHandler : Activity() {
      * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
      */
+    @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
-        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this)) {
+        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()
         } else {

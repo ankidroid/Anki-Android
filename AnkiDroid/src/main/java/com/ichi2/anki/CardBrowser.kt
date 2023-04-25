@@ -506,7 +506,7 @@ open class CardBrowser :
         mExportingDelegate = ActivityExportingDelegate(this) { col }
         super.onCreate(savedInstanceState)
         Timber.d("onCreate()")
-        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
+        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
             displayDeckPickerForPermissionsDialog()
