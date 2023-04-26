@@ -9,7 +9,7 @@ buildscript {
     ext.acra_version = '5.9.7'
     ext.ankidroid_backend_version = '0.1.21-anki2.1.61'
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.9.2'
+    ext.junit_version = '5.9.3'
     ext.coroutines_version = '1.6.4'
     ext.fragments_version = "1.5.7"
     ext.espresso_version = '3.5.1'
