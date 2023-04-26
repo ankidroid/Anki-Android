@@ -20,6 +20,8 @@ import com.ichi2.utils.TagsUtil.getTagAncestors
 import com.ichi2.utils.TagsUtil.getTagRoot
 import com.ichi2.utils.UniqueArrayList
 import com.ichi2.utils.UniqueArrayList.Companion.from
+import org.apache.commons.collections4.CollectionUtils.addAll
+import org.slf4j.MDC.clear
 import java.util.*
 
 /**
@@ -282,7 +284,7 @@ class TagsList constructor(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        mAllTags.sortWith { lhs: String?, rhs: String? ->
+        val sortedTags = sortedWith { lhs: String?, rhs: String? ->
             val lhsRoot = getTagRoot(lhs!!)
             val rhsRoot = getTagRoot(rhs!!)
             val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
@@ -293,6 +295,8 @@ class TagsList constructor(
                 compareTag(lhs, rhs)
             }
         }
+        clear()
+        addAll(sortedTags)
     }
 
     /**
