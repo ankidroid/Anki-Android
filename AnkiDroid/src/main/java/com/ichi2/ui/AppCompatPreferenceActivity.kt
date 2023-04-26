@@ -323,6 +323,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
                 positiveButton(R.string.dialog_ok) { dialogInterface ->
                     dialogInterface.dismiss()
                 }
+                negativeButton(R.string.dialog_cancel)
             }
         }
     }
